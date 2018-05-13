@@ -30,20 +30,30 @@ namespace MusicLibraryBLL.Services
             this.genreService = genreService;
         }
 
-        public async Task<bool> ProcessFile(string path)
+        public async Task<MediaData> ProcessFile(string path)
         {
-            bool isProcessed = false;
+            MediaData mediaData = default(MediaData);
 
             try
             {
                 File file = await Task.Run(() => File.Create(path));
                 Tag tag = file.Tag;
-                int artistId = await artistService.AddArtist(tag.Performers),
-                    genreId = await genreService.AddGenre(tag.Genres),
-                    albumId = await albumService.AddAlbum(tag.Album, tag.Year, artistId, genreId);
-                Track track = new Track();
-                
-                isProcessed = true;
+                MediaData data = new MediaData
+                {
+                    Album = tag.Album,
+                    Artists = tag.JoinedPerformers,
+                    AlbumArtists = tag.JoinedAlbumArtists,
+                    Comment = tag.Comment,
+                    Copyright = tag.Copyright,
+                    FileName = file.Name,
+                    Duration = (file.Properties.MediaTypes != MediaTypes.None) ? file.Properties.Duration.TotalSeconds : 0,
+                    Title = tag.Title,
+                    Track = tag.Track,
+                    TrackCount = tag.TrackCount,
+                    Year = tag.Year
+                };
+
+                mediaData = data;
             }
             catch (Exception ex)
             {
@@ -51,11 +61,9 @@ namespace MusicLibraryBLL.Services
                 {
 
                 }
-
-                isProcessed = false;
             }
 
-            return isProcessed;
+            return mediaData;
         }
 
 

@@ -71,6 +71,7 @@
     <Compile Include="Models\Mappings\TrackMapping.cs" />
     <Compile Include="Models\Playlist.cs" />
     <Compile Include="Models\Podcast.cs" />
+    <Compile Include="Models\MediaData.cs" />
     <Compile Include="Models\Track.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

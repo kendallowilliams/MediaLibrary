@@ -10,6 +10,6 @@ namespace MusicLibraryBLL.Services.Interfaces
 {
     public interface IId3Service
     {
-        Task<bool> ProcessFile(string path);
+        Task<MediaData> ProcessFile(string path);
     }
 }

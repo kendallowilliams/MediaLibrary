@@ -11,16 +11,18 @@ namespace MusicLibraryBLL.Models
     {
         public Track() { }
 
-        public Track(Tag tag, string fileName, int pathId, int albumId, int genreId, int artistId, int duration)
+        public Track(string title, string fileName, int pathId, int albumId, 
+                     int genreId, int artistId, int duration, uint position,
+                     uint year)
         {
-            Title = tag.Title;
+            Title = title;
             FileName = fileName;
             PathId = pathId;
             AlbumId = albumId;
             GenreId = genreId;
             ArtistId = artistId;
-            Number = tag.Track;
-            Year = tag.Year;
+            Position = position;
+            Year = year;
             Duration = duration;
             PlayCount = 0;
         }
@@ -31,9 +33,9 @@ namespace MusicLibraryBLL.Models
         public int AlbumId { get; set; }
         public int GenreId { get; set; }
         public int ArtistId { get; set; }
-        public uint Number { get; set; }
+        public uint Position { get; set; }
         public uint Year { get; set; }
-        public int Duration { get; set; }
+        public double Duration { get; set; }
         public int PlayCount { get; set; }
     }
 }
