@@ -9,6 +9,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 {
     public interface IGenreService
     {
+        Task<int> AddGenre(string[] genres);
+
         Task<Genre> GetGenre(object id);
 
         Task<IEnumerable<Genre>> GetGenres();

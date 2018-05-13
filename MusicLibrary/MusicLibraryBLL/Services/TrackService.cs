@@ -9,7 +9,7 @@ using MusicLibraryBLL.Services.Interfaces;
 
 namespace MusicLibraryBLL.Services
 {
-    [Export(typeof(ITrackService))]
+    [Export(typeof(ITrackService)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class TrackService : ITrackService
     {
         [Import]

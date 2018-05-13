@@ -9,7 +9,7 @@ using MusicLibraryBLL.Services.Interfaces;
 
 namespace MusicLibraryBLL.Services
 {
-    [Export(typeof(IAlbumService))]
+    [Export(typeof(IAlbumService)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class AlbumService : IAlbumService
     {
         [Import]
@@ -18,6 +18,20 @@ namespace MusicLibraryBLL.Services
         [ImportingConstructor]
         public AlbumService()
         { }
+
+        public async Task<int> AddAlbum(string title, uint year, int artistId, int genreId)
+        {
+            string existsQuery = $"SELECT id FROM album WHERE title = @title";
+            int id = await dataService.ExecuteScalar<int>(existsQuery, new { title });
+            Album album = new Album(title, artistId, genreId, year);
+
+            if (id == 0)
+            {
+                id = await dataService.Insert<Album, int>(album);
+            }
+
+            return id;
+        }
 
         public async Task<IEnumerable<Album>> GetAlbums() => await dataService.GetList<Album>();
 

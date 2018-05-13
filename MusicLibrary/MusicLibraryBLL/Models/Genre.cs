@@ -8,6 +8,13 @@ namespace MusicLibraryBLL.Models
 {
     public class Genre : BaseModel
     {
+        public Genre() { }
+
+        public Genre(string name)
+        {
+            Name = name;
+        }
+
         public string Name { get; set; }
     }
 }

@@ -17,14 +17,17 @@ namespace MusicLibraryBLL.Services
         private readonly IArtistService artistService;
         private readonly IAlbumService albumService;
         private readonly ITrackService trackService;
+        private readonly IGenreService genreService;
 
         [ImportingConstructor]
-        public Id3Service(IFileService fileService, IArtistService artistService, IAlbumService albumService, ITrackService trackService)
+        public Id3Service(IFileService fileService, IArtistService artistService, IAlbumService albumService, 
+                          ITrackService trackService, IGenreService genreService)
         {
             this.fileService = fileService;
             this.artistService = artistService;
             this.albumService = albumService;
             this.trackService = trackService;
+            this.genreService = genreService;
         }
 
         public async Task<bool> ProcessFile(string path)
@@ -34,8 +37,10 @@ namespace MusicLibraryBLL.Services
             try
             {
                 File file = await Task.Run(() => File.Create(path));
-                Artist artist = new Artist { Name = string.Join("; ", file.Tag.Performers.Select(name => name.Trim())) };
-                Album album = new Album();
+                Tag tag = file.Tag;
+                int artistId = await artistService.AddArtist(tag.Performers),
+                    genreId = await genreService.AddGenre(tag.Genres),
+                    albumId = await albumService.AddAlbum(tag.Album, tag.Year, artistId, genreId);
                 Track track = new Track();
                 
                 isProcessed = true;

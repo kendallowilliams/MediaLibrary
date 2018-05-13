@@ -21,9 +21,10 @@ namespace MusicLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<int> AddArtist(string name)
+        public async Task<int> AddArtist(string[] artists)
         {
-            string existsQuery = $"SELECT id FROM artist WHERE name = @name";
+            string existsQuery = $"SELECT id FROM artist WHERE name = @name",
+                   name = string.Join("; ", artists);
             int id = await dataService.ExecuteScalar<int>(existsQuery, new { name });
             Artist artist = new Artist(name);
 
