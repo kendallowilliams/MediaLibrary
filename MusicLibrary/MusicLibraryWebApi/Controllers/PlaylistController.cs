@@ -1,5 +1,5 @@
-﻿using MusicLibraryWebApi.Models;
-using MusicLibraryWebApi.Services.Interfaces;
+﻿using MusicLibraryBLL.Models;
+using MusicLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

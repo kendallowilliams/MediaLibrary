@@ -1,4 +1,4 @@
-﻿using MusicLibraryWebApi.Models.Interfaces;
+﻿using MusicLibraryBLL.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;

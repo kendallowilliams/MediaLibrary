@@ -7,3 +7,5 @@
 /MusicLibrary/packages
 /MusicLibrary/.vs
 /.vs
+/MusicLibrary/MusicLibraryBLL/bin/Debug
+/MusicLibrary/MusicLibraryBLL/obj/Debug

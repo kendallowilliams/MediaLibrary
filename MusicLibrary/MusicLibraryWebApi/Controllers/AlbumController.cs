@@ -1,6 +1,6 @@
-﻿using MusicLibraryWebApi.Models;
-using MusicLibraryWebApi.Services;
-using MusicLibraryWebApi.Services.Interfaces;
+﻿using MusicLibraryBLL.Models;
+using MusicLibraryBLL.Services;
+using MusicLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
