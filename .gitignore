@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/MusicLibrary/MusicLibraryWebApi/bin
+/MusicLibrary/MusicLibraryWebApi/obj
+/MusicLibrary/packages
+/MusicLibrary/.vs
+/.vs
