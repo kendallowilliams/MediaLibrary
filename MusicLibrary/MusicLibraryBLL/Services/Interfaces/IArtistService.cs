@@ -9,7 +9,7 @@ namespace MusicLibraryBLL.Services.Interfaces
 {
     public interface IArtistService
     {
-        Task<int> AddArtist(string[] artists);
+        Task<int?> AddArtist(string artists);
 
         Task<Artist> GetArtist(object id);
 

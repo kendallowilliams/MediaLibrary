@@ -19,15 +19,19 @@ namespace MusicLibraryBLL.Services
         public AlbumService()
         { }
 
-        public async Task<int> AddAlbum(string title, uint year, int artistId, int genreId)
+        public async Task<int?> AddAlbum(Album album)
         {
-            string existsQuery = $"SELECT id FROM album WHERE title = @title";
-            int id = await dataService.ExecuteScalar<int>(existsQuery, new { title });
-            Album album = new Album(title, artistId, genreId, year);
+            int? id = default(int?);
 
-            if (id == 0)
+            if (album != null)
             {
-                id = await dataService.Insert<Album, int>(album);
+                string existsQuery = $"SELECT id FROM album WHERE title = @title";
+                id = await dataService.ExecuteScalar<int?>(existsQuery, new { album.Title });
+
+                if (!id.HasValue)
+                {
+                    id = await dataService.Insert<Album, int>(album);
+                }
             }
 
             return id;

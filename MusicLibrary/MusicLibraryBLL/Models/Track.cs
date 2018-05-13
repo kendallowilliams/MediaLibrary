@@ -11,30 +11,28 @@ namespace MusicLibraryBLL.Models
     {
         public Track() { }
 
-        public Track(string title, string fileName, int pathId, int albumId, 
-                     int genreId, int artistId, int duration, uint position,
-                     uint year)
+        public Track(MediaData data, int? pathId, int? genreId, int? albumId, int? artistId)
         {
-            Title = title;
-            FileName = fileName;
+            Title = data.Title;
+            FileName = data.FileName;
             PathId = pathId;
             AlbumId = albumId;
             GenreId = genreId;
             ArtistId = artistId;
-            Position = position;
-            Year = year;
-            Duration = duration;
+            Position = (int)data.Track;
+            Year = (int)data.Year;
+            Duration = data.Duration;
             PlayCount = 0;
         }
 
         public string Title { get; set; }
         public string FileName { get; set; }
-        public int PathId { get; set; }
-        public int AlbumId { get; set; }
-        public int GenreId { get; set; }
-        public int ArtistId { get; set; }
-        public uint Position { get; set; }
-        public uint Year { get; set; }
+        public int? PathId { get; set; }
+        public int? AlbumId { get; set; }
+        public int? GenreId { get; set; }
+        public int? ArtistId { get; set; }
+        public int Position { get; set; }
+        public int Year { get; set; }
         public double Duration { get; set; }
         public int PlayCount { get; set; }
     }

@@ -9,17 +9,17 @@ namespace MusicLibraryBLL.Models
     {
         public Album() { }
 
-        public Album(string title, int artistId, int genreId, uint year)
+        public Album(MediaData data, int? artistId, int? genreId)
         {
-            Title = title;
+            Title = data.Title;
             ArtistId = artistId;
             GenreId = genreId;
-            Year = year;
+            Year = (int)data.Year;
         }
 
         public string Title { get; set; }
-        public int ArtistId { get; set; }
-        public int GenreId { get; set; }
-        public uint Year { get; set; }
+        public int? ArtistId { get; set; }
+        public int? GenreId { get; set; }
+        public int Year { get; set; }
     }
 }

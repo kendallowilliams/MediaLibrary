@@ -21,16 +21,21 @@ namespace MusicLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<int> AddArtist(string[] artists)
+        public async Task<int?> AddArtist(string artists)
         {
-            string existsQuery = $"SELECT id FROM artist WHERE name = @name",
-                   name = string.Join("; ", artists);
-            int id = await dataService.ExecuteScalar<int>(existsQuery, new { name });
-            Artist artist = new Artist(name);
+            int? id = default(int?);
 
-            if (id == 0)
+            if (!string.IsNullOrWhiteSpace(artists))
             {
-                id = await dataService.Insert<Artist,int>(artist);
+                string existsQuery = $"SELECT id FROM artist WHERE name = @artists";
+                Artist artist = new Artist(artists);
+
+                id = await dataService.ExecuteScalar<int?>(existsQuery, new { artists });
+
+                if (!id.HasValue)
+                {
+                    id = await dataService.Insert<Artist, int>(artist);
+                }
             }
 
             return id;

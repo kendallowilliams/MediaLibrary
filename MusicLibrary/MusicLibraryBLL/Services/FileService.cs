@@ -48,5 +48,9 @@ namespace MusicLibraryBLL.Services
         {
             await Task.Run(() => File.WriteAllText(path, data));
         }
+
+        public async Task<bool> Exists(string path) => await Task.Run(() => File.Exists(path));
+
+        public async Task Delete(string path) => await Task.Run(() => File.Delete(path));
     }
 }

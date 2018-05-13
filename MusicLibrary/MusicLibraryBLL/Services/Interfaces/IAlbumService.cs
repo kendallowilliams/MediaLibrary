@@ -9,7 +9,7 @@ namespace MusicLibraryBLL.Services.Interfaces
 {
     public interface IAlbumService
     {
-        Task<int> AddAlbum(string title, uint year, int artistId, int genreId);
+        Task<int?> AddAlbum(Album album);
 
         Task<Album> GetAlbum(object id);
 

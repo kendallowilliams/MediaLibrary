@@ -19,16 +19,20 @@ namespace MusicLibraryBLL.Services
         public GenreService()
         { }
 
-        public async Task<int> AddGenre(string[] genres)
+        public async Task<int?> AddGenre(string genres)
         {
-            string existsQuery = $"SELECT id FROM genre WHERE name = @name",
-                   name = string.Join("; ", genres);
-            int id = await dataService.ExecuteScalar<int>(existsQuery, new { name });
-            Genre genre = new Genre(name);
+            int? id = default(int?);
 
-            if (id == 0)
+            if (!string.IsNullOrWhiteSpace(genres))
             {
-                id = await dataService.Insert<Genre, int>(genre);
+                string existsQuery = $"SELECT id FROM genre WHERE name = @genres";
+                id = await dataService.ExecuteScalar<int?>(existsQuery, new { genres });
+                Genre genre = new Genre(genres);
+
+                if (!id.HasValue)
+                {
+                    id = await dataService.Insert<Genre, int>(genre);
+                }
             }
 
             return id;

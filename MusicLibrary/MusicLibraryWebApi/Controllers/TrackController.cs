@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace MusicLibraryWebApi.Controllers
@@ -14,7 +15,11 @@ namespace MusicLibraryWebApi.Controllers
     public class TrackController : ApiController
     {
         private ITrackService trackService => MefConfig.Container.GetExportedValue<ITrackService>();
+        private IArtistService artistService => MefConfig.Container.GetExportedValue<IArtistService>();
+        private IAlbumService albumService => MefConfig.Container.GetExportedValue<IAlbumService>();
+        private IGenreService genreService => MefConfig.Container.GetExportedValue<IGenreService>();
         private IFileService fileService => MefConfig.Container.GetExportedValue<IFileService>();
+        private IId3Service id3Service => MefConfig.Container.GetExportedValue<IId3Service>();
 
         // GET: api/Track
         public async Task<IEnumerable<Track>> Get()
@@ -29,10 +34,23 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // POST: api/Track
-        public async Task Post([FromBody]string data)
+        public async Task Post()
         {
-            string path = Path.GetTempFileName();
-            await fileService.Write(path, data);
+            HttpFileCollection files = HttpContext.Current.Request.Files;
+
+            foreach(string key in files.AllKeys)
+            {
+                string directory = Path.GetTempPath(),
+                       path = Path.Combine(directory, files[key].FileName);
+                await Task.Run(() => files[key].SaveAs(path));
+                MediaData data = await id3Service.ProcessFile(path);
+                int? genreId = await genreService.AddGenre(data.Genres),
+                    artistId = await artistService.AddArtist(data.Artists),
+                    albumId = await albumService.AddAlbum(new Album(data, artistId, genreId)),
+                    pathId = await trackService.AddPath(directory);
+                Track track = new Track(data, pathId, genreId, albumId, artistId);
+                await trackService.InsertTrack(track);
+            }
         }
 
         // PUT: api/Track/5

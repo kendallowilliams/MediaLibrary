@@ -45,7 +45,7 @@ namespace MusicLibraryBLL.Services
                     AlbumArtists = tag.JoinedAlbumArtists,
                     Comment = tag.Comment,
                     Copyright = tag.Copyright,
-                    FileName = file.Name,
+                    FileName = System.IO.Path.GetFileName(file.Name),
                     Duration = (file.Properties.MediaTypes != MediaTypes.None) ? file.Properties.Duration.TotalSeconds : 0,
                     Title = tag.Title,
                     Track = tag.Track,
