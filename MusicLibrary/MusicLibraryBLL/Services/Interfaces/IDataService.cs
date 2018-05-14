@@ -24,6 +24,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<bool> Update<T>(T entity) where T : BaseModel;
 
+        Task<IEnumerable<T>> Query<T>(string sql, object parameters) where T : BaseModel;
+
         Task<T> ExecuteScalar<T>(string sql, object parameters);
 
         Task<int> Count<T>() where T : BaseModel;

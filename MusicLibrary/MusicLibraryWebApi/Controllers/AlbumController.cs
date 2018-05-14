@@ -27,21 +27,5 @@ namespace MusicLibraryWebApi.Controllers
         {
             return await albumService.GetAlbum(id);
         }
-
-        // POST: api/Album
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Album/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Album/5
-        public async Task Delete(int id)
-        {
-            await albumService.DeleteAlbum(id);
-        }
     }
 }

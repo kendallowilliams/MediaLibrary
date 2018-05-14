@@ -124,6 +124,18 @@ namespace MusicLibraryBLL.Services
             return result;
         }
 
+        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters)
+        {
+            IEnumerable<T> result = Enumerable.Empty<T>();
+
+            using (IDbConnection conn = GetNewConnection())
+            {
+                result = await conn.QueryAsync<T>(sql, parameters);
+            }
+
+            return result;
+        }
+
         public async Task<T> ExecuteScalar<T>(string sql, object parameters)
         {
             T result = default(T);

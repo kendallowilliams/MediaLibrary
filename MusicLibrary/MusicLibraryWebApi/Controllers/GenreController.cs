@@ -27,21 +27,5 @@ namespace MusicLibraryWebApi.Controllers
         {
             return await genreService.GetGenre(id);
         }
-
-        // POST: api/Genre
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Genre/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Genre/5
-        public async Task Delete(int id)
-        {
-            await genreService.DeleteGenre(id);
-        }
     }
 }

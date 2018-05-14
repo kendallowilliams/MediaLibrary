@@ -34,23 +34,33 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // POST: api/Track
-        public async Task Post()
+        public async Task<HttpResponseMessage> Post()
         {
             HttpFileCollection files = HttpContext.Current.Request.Files;
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
 
-            foreach(string key in files.AllKeys)
+            try
             {
-                string directory = Path.GetTempPath(),
-                       path = Path.Combine(directory, files[key].FileName);
-                await Task.Run(() => files[key].SaveAs(path));
-                MediaData data = await id3Service.ProcessFile(path);
-                int? genreId = await genreService.AddGenre(data.Genres),
-                    artistId = await artistService.AddArtist(data.Artists),
-                    albumId = await albumService.AddAlbum(new Album(data, artistId, genreId)),
-                    pathId = await trackService.AddPath(directory);
-                Track track = new Track(data, pathId, genreId, albumId, artistId);
-                await trackService.InsertTrack(track);
+                foreach (string key in files.AllKeys)
+                {
+                    string directory = Path.GetTempPath(),
+                           path = Path.Combine(directory, files[key].FileName);
+                    await Task.Run(() => files[key].SaveAs(path));
+                    MediaData data = await id3Service.ProcessFile(path);
+                    int? genreId = await genreService.AddGenre(data.Genres),
+                        artistId = await artistService.AddArtist(data.Artists),
+                        albumId = await albumService.AddAlbum(new Album(data, artistId, genreId)),
+                        pathId = await trackService.AddPath(directory);
+                    Track track = new Track(data, pathId, genreId, albumId, artistId);
+                    await trackService.InsertTrack(track);
+                }
             }
+            catch(Exception ex)
+            {
+                response = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+            return response;
         }
 
         // PUT: api/Track/5
