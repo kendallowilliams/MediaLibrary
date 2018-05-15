@@ -15,6 +15,12 @@ namespace MusicLibraryWebApi
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "RootApi",
+                routeTemplate: "api/root/{action}",
+                defaults: new { controller = "track" }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

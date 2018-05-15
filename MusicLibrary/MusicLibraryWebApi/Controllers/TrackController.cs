@@ -1,5 +1,6 @@
 ﻿using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,11 +16,7 @@ namespace MusicLibraryWebApi.Controllers
     public class TrackController : ApiController
     {
         private ITrackService trackService => MefConfig.Container.GetExportedValue<ITrackService>();
-        private IArtistService artistService => MefConfig.Container.GetExportedValue<IArtistService>();
-        private IAlbumService albumService => MefConfig.Container.GetExportedValue<IAlbumService>();
-        private IGenreService genreService => MefConfig.Container.GetExportedValue<IGenreService>();
         private IFileService fileService => MefConfig.Container.GetExportedValue<IFileService>();
-        private IId3Service id3Service => MefConfig.Container.GetExportedValue<IId3Service>();
 
         // GET: api/Track
         public async Task<IEnumerable<Track>> Get()
@@ -46,13 +43,7 @@ namespace MusicLibraryWebApi.Controllers
                     string directory = Path.GetTempPath(),
                            path = Path.Combine(directory, files[key].FileName);
                     await Task.Run(() => files[key].SaveAs(path));
-                    MediaData data = await id3Service.ProcessFile(path);
-                    int? genreId = await genreService.AddGenre(data.Genres),
-                        artistId = await artistService.AddArtist(data.Artists),
-                        albumId = await albumService.AddAlbum(new Album(data, artistId, genreId)),
-                        pathId = await trackService.AddPath(directory);
-                    Track track = new Track(data, pathId, genreId, albumId, artistId);
-                    await trackService.InsertTrack(track);
+                    await fileService.ReadMediaFile(path, true);
                 }
             }
             catch(Exception ex)
@@ -72,6 +63,36 @@ namespace MusicLibraryWebApi.Controllers
         public async Task Delete(int id)
         {
             await trackService.DeleteTrack(id);
+        }
+
+        public async Task<HttpResponseMessage> Read()
+        {
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            string data = HttpContext.Current.Request.Params["data"];
+            IDictionary<string,string> dictionary = data?.Split(new[] { '&' })
+                                                         .Where(pair => pair.Contains("="))
+                                                         .Select(pair => pair.Split(new[] { '=' }))
+                                                         .ToDictionary(pair => pair[0], pair => pair[1]);
+            string path = string.Empty;
+            bool copyFiles = false,
+                 recursive = false;
+            bool validData = !string.IsNullOrWhiteSpace(data) &&
+                             dictionary.TryGetValue("path", out path) &&
+                             dictionary.TryGetValue("copy", out string inCopyFiles) && 
+                             bool.TryParse(inCopyFiles, out copyFiles) &&
+                             dictionary.TryGetValue("recursive", out string inRecursive) && 
+                             bool.TryParse(inRecursive, out recursive);
+            try
+            {
+                if (validData) { await fileService.ReadDirectory(path, recursive, copyFiles); }
+                else response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, $"Invalid Data: {JsonConvert.SerializeObject(dictionary)}");
+            }
+            catch(Exception ex)
+            {
+                response = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+
+            return response;
         }
     }
 }

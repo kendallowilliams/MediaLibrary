@@ -13,21 +13,10 @@ namespace MusicLibraryBLL.Services
     [Export(typeof(IId3Service))]
     public class Id3Service : IId3Service
     {
-        private readonly IFileService fileService;
-        private readonly IArtistService artistService;
-        private readonly IAlbumService albumService;
-        private readonly ITrackService trackService;
-        private readonly IGenreService genreService;
 
         [ImportingConstructor]
-        public Id3Service(IFileService fileService, IArtistService artistService, IAlbumService albumService, 
-                          ITrackService trackService, IGenreService genreService)
+        public Id3Service()
         {
-            this.fileService = fileService;
-            this.artistService = artistService;
-            this.albumService = albumService;
-            this.trackService = trackService;
-            this.genreService = genreService;
         }
 
         public async Task<MediaData> ProcessFile(string path)

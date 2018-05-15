@@ -124,7 +124,7 @@ namespace MusicLibraryBLL.Services
             return result;
         }
 
-        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters)
+        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters) where T : BaseModel
         {
             IEnumerable<T> result = Enumerable.Empty<T>();
 
