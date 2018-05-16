@@ -4,12 +4,14 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Fody;
 using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
 
 namespace MusicLibraryBLL.Services
 {
-    [Export(typeof(IPodcastService))]
+    [ConfigureAwait(false)]
+    [Export(typeof(IPodcastService)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PodcastService : IPodcastService
     {
         [Import]

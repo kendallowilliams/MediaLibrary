@@ -1,4 +1,5 @@
-﻿using MusicLibraryBLL.Models;
+﻿using Fody;
+using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -6,12 +7,14 @@ using System.ComponentModel.Composition;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace MusicLibraryBLL.Services
 {
-    [Export(typeof(IFileService))]
+    [ConfigureAwait(false)]
+    [Export(typeof(IFileService)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class FileService : IFileService
     {
         private readonly IId3Service id3Service;
@@ -31,10 +34,10 @@ namespace MusicLibraryBLL.Services
             this.trackService = trackService;
         }
 
-        public async Task<IEnumerable<string>> EnumerateDirectories(string path, string searchPattern = null)
+        public async Task<IEnumerable<string>> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false)
         {
-            return await Task.Run(() => string.IsNullOrWhiteSpace(searchPattern) ? Directory.EnumerateDirectories(path) :
-                                                                                   Directory.EnumerateDirectories(path, searchPattern));
+            SearchOption searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            return await Task.Run(() => Directory.EnumerateDirectories(path, searchPattern, searchOption));
         }
 
         public async Task<IEnumerable<string>> EnumerateFiles(string path, string searchPattern = null)
@@ -59,15 +62,14 @@ namespace MusicLibraryBLL.Services
 
         public async Task ReadDirectory(string path, bool recursive = true, bool copyFiles = false)
         {
-            IEnumerable<string> directories = await EnumerateDirectories(path);
+            IEnumerable<string> directories = await EnumerateDirectories(path, recursive: recursive);
             IEnumerable<string> fileTypes = ConfigurationManager.AppSettings["FileTypes"].Split(new[] { ',' })
                                                                                          .Select(fileType => fileType.ToLower());
-
             foreach(string directory in directories.AsParallel())
             {
                 IEnumerable<string> files = (await EnumerateFiles(directory)).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()));
                 foreach (string file in files) { await ReadMediaFile(file, copyFiles); }
-                if (recursive) { await ReadDirectory(directory, recursive, copyFiles); }
+                System.Diagnostics.Debug.WriteLine($"Thread Id: {Thread.CurrentThread.ManagedThreadId}");
             }
         }
 

@@ -84,8 +84,12 @@ namespace MusicLibraryWebApi.Controllers
                              bool.TryParse(inRecursive, out recursive);
             try
             {
+                TimeSpan begin = DateTime.Now.TimeOfDay,
+                         end = DateTime.MaxValue.TimeOfDay;
                 if (validData) { await fileService.ReadDirectory(path, recursive, copyFiles); }
                 else response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, $"Invalid Data: {JsonConvert.SerializeObject(dictionary)}");
+                end = DateTime.Now.TimeOfDay;
+                System.Diagnostics.Debug.WriteLine($"Total Time: {end - begin}");
             }
             catch(Exception ex)
             {

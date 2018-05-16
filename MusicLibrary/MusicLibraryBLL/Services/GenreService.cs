@@ -4,11 +4,13 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Fody;
 using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
 
 namespace MusicLibraryBLL.Services
 {
+    [ConfigureAwait(false)]
     [Export(typeof(IGenreService)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class GenreService : IGenreService
     {

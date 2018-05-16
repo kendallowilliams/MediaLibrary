@@ -1,4 +1,5 @@
-﻿using MusicLibraryBLL.Models;
+﻿using Fody;
+using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,8 @@ using TagLib;
 
 namespace MusicLibraryBLL.Services
 {
-    [Export(typeof(IId3Service))]
+    [ConfigureAwait(false)]
+    [Export(typeof(IId3Service)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class Id3Service : IId3Service
     {
 
@@ -27,6 +29,7 @@ namespace MusicLibraryBLL.Services
             {
                 File file = await Task.Run(() => File.Create(path));
                 Tag tag = file.Tag;
+                string fileName = System.IO.Path.GetFileName(file.Name);
                 MediaData data = new MediaData
                 {
                     Album = tag.Album,
@@ -34,9 +37,9 @@ namespace MusicLibraryBLL.Services
                     AlbumArtists = tag.JoinedAlbumArtists,
                     Comment = tag.Comment,
                     Copyright = tag.Copyright,
-                    FileName = System.IO.Path.GetFileName(file.Name),
+                    FileName = fileName,
                     Duration = (file.Properties.MediaTypes != MediaTypes.None) ? file.Properties.Duration.TotalSeconds : 0,
-                    Title = tag.Title,
+                    Title = tag.Title ?? fileName,
                     Track = tag.Track,
                     TrackCount = tag.TrackCount,
                     Year = tag.Year

@@ -4,12 +4,14 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Fody;
 using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
 
 namespace MusicLibraryBLL.Services
 {
-    [Export(typeof(IPlaylistService))]
+    [ConfigureAwait(false)]
+    [Export(typeof(IPlaylistService)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaylistService : IPlaylistService
     {
         [Import]

@@ -12,9 +12,11 @@ using System.Threading.Tasks;
 using System.Configuration;
 using MusicLibraryBLL.Models;
 using System.Linq.Expressions;
+using Fody;
 
 namespace MusicLibraryBLL.Services
 {
+    [ConfigureAwait(false)]
     [Export(typeof(IDataService))]
     public class DataService : IDataService
     {
