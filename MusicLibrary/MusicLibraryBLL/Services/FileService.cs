@@ -40,10 +40,10 @@ namespace MusicLibraryBLL.Services
             return await Task.Run(() => Directory.EnumerateDirectories(path, searchPattern, searchOption));
         }
 
-        public async Task<IEnumerable<string>> EnumerateFiles(string path, string searchPattern = null)
+        public async Task<IEnumerable<string>> EnumerateFiles(string path, string searchPattern = "*", bool recursive = false)
         {
-            return await Task.Run(() => string.IsNullOrWhiteSpace(searchPattern) ? Directory.EnumerateFiles(path) :
-                                                                                   Directory.EnumerateFiles(path, searchPattern));
+            SearchOption searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+            return await Task.Run(() => Directory.EnumerateFiles(path, searchPattern, searchOption));
         }
 
         public async Task Write(string path, byte[] data)
@@ -62,15 +62,17 @@ namespace MusicLibraryBLL.Services
 
         public async Task ReadDirectory(string path, bool recursive = true, bool copyFiles = false)
         {
-            IEnumerable<string> directories = await EnumerateDirectories(path, recursive: recursive);
             IEnumerable<string> fileTypes = ConfigurationManager.AppSettings["FileTypes"].Split(new[] { ',' })
                                                                                          .Select(fileType => fileType.ToLower());
-            foreach(string directory in directories.AsParallel())
+            IEnumerable<string> allFiles = await EnumerateFiles(path, recursive: recursive);
+            var fileGroups = allFiles.AsParallel()
+                                     .Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()))
+                                     .GroupBy(file => new { directory = Path.GetFullPath(file) });
+            Parallel.ForEach(fileGroups, group =>
             {
-                IEnumerable<string> files = (await EnumerateFiles(directory)).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()));
-                foreach (string file in files) { await ReadMediaFile(file, copyFiles); }
+                foreach (string file in group) { ReadMediaFile(file, copyFiles).Wait(); }
                 System.Diagnostics.Debug.WriteLine($"Thread Id: {Thread.CurrentThread.ManagedThreadId}");
-            }
+            });
         }
 
         public async Task ReadMediaFile(string path, bool copyFiles = false)
