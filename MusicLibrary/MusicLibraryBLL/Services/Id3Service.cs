@@ -42,7 +42,8 @@ namespace MusicLibraryBLL.Services
                     Title = tag.Title ?? fileName,
                     Track = tag.Track,
                     TrackCount = tag.TrackCount,
-                    Year = tag.Year
+                    Year = tag.Year,
+                    Genres = tag.JoinedGenres
                 };
 
                 mediaData = data;

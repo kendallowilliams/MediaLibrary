@@ -15,7 +15,7 @@ namespace MusicLibraryBLL.Models
         public string Copyright { get; set; }
         public string Title { get; set; }
         public string AlbumArtists { get; set; }
-        public string Genres { get; }
+        public string Genres { get; set; }
         public string Album { get; set; }
         public string Comment { get; set; }
         public uint Year { get; set; }
