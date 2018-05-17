@@ -68,11 +68,11 @@ namespace MusicLibraryBLL.Services
             var fileGroups = allFiles.AsParallel()
                                      .Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()))
                                      .GroupBy(file => new { directory = Path.GetDirectoryName(file) });
-            Parallel.ForEach(fileGroups, group =>
+            foreach(var group in fileGroups)
             {
-                foreach (string file in group) { ReadMediaFile(file, copyFiles).Wait(); }
+                foreach (string file in group) { await ReadMediaFile(file, copyFiles); }
                 System.Diagnostics.Debug.WriteLine($"Thread Id: {Thread.CurrentThread.ManagedThreadId}");
-            });
+            }
         }
 
         public async Task ReadMediaFile(string path, bool copyFiles = false)
