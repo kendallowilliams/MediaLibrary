@@ -67,7 +67,7 @@ namespace MusicLibraryBLL.Services
             IEnumerable<string> allFiles = await EnumerateFiles(path, recursive: recursive);
             var fileGroups = allFiles.AsParallel()
                                      .Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()))
-                                     .GroupBy(file => new { directory = Path.GetFullPath(file) });
+                                     .GroupBy(file => new { directory = Path.GetDirectoryName(file) });
             Parallel.ForEach(fileGroups, group =>
             {
                 foreach (string file in group) { ReadMediaFile(file, copyFiles).Wait(); }
@@ -81,7 +81,7 @@ namespace MusicLibraryBLL.Services
             int? genreId = await genreService.AddGenre(data.Genres),
                 artistId = await artistService.AddArtist(data.Artists),
                 albumId = await albumService.AddAlbum(new Album(data, artistId, genreId)),
-                pathId = await trackService.AddPath(Path.GetFullPath(path));
+                pathId = await trackService.AddPath(Path.GetDirectoryName(path));
             Track track = new Track(data, pathId, genreId, albumId, artistId);
             await trackService.InsertTrack(track);
         }
