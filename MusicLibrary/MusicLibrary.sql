@@ -88,6 +88,19 @@ CREATE TABLE playlist_track
   FOREIGN KEY (track_id) REFERENCES track(id) 
 )
 
+DROP TABLE IF EXISTS podcast;
+CREATE TABLE podcast
+(
+  id int NOT NULL IDENTITY(1,1),
+  title varchar(150) NOT NULL,
+  url varchar(MAX) NOT NULL,
+  content varchar(MAX) NOT NULL,
+  last_update_date DATETIME NOT NULL,
+  create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  modify_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+)
+
 DROP TABLE IF EXISTS app_log;
 CREATE TABLE app_log
 (

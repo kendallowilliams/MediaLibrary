@@ -37,9 +37,9 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // DELETE: api/Playlist/5
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            await playlistService.DeletePlaylist(id);
+            return await playlistService.DeletePlaylist(id);
         }
     }
 }

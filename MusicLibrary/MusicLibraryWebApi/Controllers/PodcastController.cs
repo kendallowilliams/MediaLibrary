@@ -1,9 +1,7 @@
 ﻿using MusicLibraryBLL.Models;
-using MusicLibraryBLL.Services;
 using MusicLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -39,9 +37,9 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // DELETE: api/Podcast/5
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            await podcastService.DeletePodcast(id);
+            return await podcastService.DeletePodcast(id);
         }
     }
 }

@@ -138,6 +138,18 @@ namespace MusicLibraryBLL.Services
             return result;
         }
 
+        public async Task<int> Execute(string sql, object parameters)
+        {
+            int result = default(int);
+
+            using (IDbConnection conn = GetNewConnection())
+            {
+                result = await conn.ExecuteAsync(sql, parameters);
+            }
+
+            return result;
+        }
+
         public async Task<T> ExecuteScalar<T>(string sql, object parameters)
         {
             T result = default(T);

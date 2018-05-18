@@ -6,9 +6,9 @@ using DapperExtensions.Mapper;
 
 namespace MusicLibraryBLL.Models.Mappings
 {
-    public class PathMapping : ClassMapper<TrackPath>
+    public class TrackPathMapping : ClassMapper<TrackPath>
     {
-        public PathMapping()
+        public TrackPathMapping()
         {
             Table("path");
 

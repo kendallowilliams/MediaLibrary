@@ -28,6 +28,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<T> ExecuteScalar<T>(string sql, object parameters);
 
+        Task<int> Execute(string sql, object parameters);
+
         Task<int> Count<T>() where T : BaseModel;
     }
 }

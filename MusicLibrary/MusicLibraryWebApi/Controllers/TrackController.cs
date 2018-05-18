@@ -1,6 +1,7 @@
 ﻿using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,12 +39,19 @@ namespace MusicLibraryWebApi.Controllers
 
             try
             {
-                foreach (string key in files.AllKeys)
+                if (files.AllKeys.Any())
                 {
-                    string directory = Path.GetTempPath(),
-                           path = Path.Combine(directory, files[key].FileName);
-                    await Task.Run(() => files[key].SaveAs(path));
-                    await fileService.ReadMediaFile(path, true);
+                    foreach (string key in files.AllKeys)
+                    {
+                        string directory = Path.GetTempPath(),
+                               path = Path.Combine(directory, files[key].FileName);
+                        await Task.Run(() => files[key].SaveAs(path));
+                        await fileService.ReadMediaFile(path, true);
+                    }
+                }
+                else
+                {
+                    response = Request.CreateResponse(HttpStatusCode.NoContent);
                 }
             }
             catch(Exception ex)
@@ -55,8 +63,9 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // PUT: api/Track/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Track track)
         {
+
         }
 
         // DELETE: api/Track/5
@@ -65,29 +74,22 @@ namespace MusicLibraryWebApi.Controllers
             await trackService.DeleteTrack(id);
         }
 
-        public async Task<HttpResponseMessage> Read()
+        public async Task<HttpResponseMessage> Read([FromBody] JObject inData)
         {
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
-            string data = HttpContext.Current.Request.Params["data"];
-            IDictionary<string,string> dictionary = data?.Split(new[] { '&' })
-                                                         .Where(pair => pair.Contains("="))
-                                                         .Select(pair => pair.Split(new[] { '=' }))
-                                                         .ToDictionary(pair => pair[0], pair => pair[1]);
-            string path = string.Empty;
-            bool copyFiles = false,
-                 recursive = false;
-            bool validData = !string.IsNullOrWhiteSpace(data) &&
-                             dictionary.TryGetValue("path", out path) &&
-                             dictionary.TryGetValue("copy", out string inCopyFiles) && 
-                             bool.TryParse(inCopyFiles, out copyFiles) &&
-                             dictionary.TryGetValue("recursive", out string inRecursive) && 
-                             bool.TryParse(inRecursive, out recursive);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Accepted);
+
             try
             {
+                string path = inData["path"]?.ToString();
+                bool copyFiles = false,
+                     recursive = false,
+                     validData = !string.IsNullOrWhiteSpace(path) &&
+                                 bool.TryParse(inData["copy"]?.ToString(), out copyFiles) &&
+                                 bool.TryParse(inData["recursive"]?.ToString(), out recursive);
                 TimeSpan begin = DateTime.Now.TimeOfDay,
                          end = DateTime.MaxValue.TimeOfDay;
                 if (validData) { await fileService.ReadDirectory(path, recursive, copyFiles); }
-                else response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, $"Invalid Data: {JsonConvert.SerializeObject(dictionary)}");
+                else response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, $"Invalid Data: [{inData}]");
                 end = DateTime.Now.TimeOfDay;
                 System.Diagnostics.Debug.WriteLine($"Total Time: {end - begin}");
             }
