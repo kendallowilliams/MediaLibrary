@@ -13,6 +13,7 @@ namespace MusicLibraryBLL.Models.Mappings
             Table("path");
 
             Map(x => x.Id).Key(KeyType.Identity);
+            Map(x => x.LastScanDate).Column("last_scan_date");
             Map(x => x.ModifyDate).Column("modify_date");
             Map(x => x.CreateDate).Column("create_date");
 

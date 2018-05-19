@@ -16,5 +16,6 @@ namespace MusicLibraryBLL.Models
         }
 
         public string Location { get; set; }
+        public DateTime LastScanDate { get; set; }
     }
 }
