@@ -70,23 +70,11 @@ CREATE TABLE playlist
 (
   id int NOT NULL IDENTITY(1,1),
   name varchar(150) NOT NULL,
+  track_ids varchar(max) NOT NULL,
   create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   modify_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 ) 
-
-DROP TABLE IF EXISTS playlist_track;
-CREATE TABLE playlist_track
-(
-  id int NOT NULL IDENTITY(1,1),
-  playlist_id int NOT NULL,
-  track_id int NOT NULL,
-  create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  modify_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (id),
-  FOREIGN KEY (playlist_id) REFERENCES playlist(id),
-  FOREIGN KEY (track_id) REFERENCES track(id) 
-)
 
 DROP TABLE IF EXISTS podcast;
 CREATE TABLE podcast

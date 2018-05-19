@@ -31,11 +31,6 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeletePlaylist(Playlist playlist) => await dataService.Delete(playlist);
 
-        public async Task<bool> UpdatePlaylist(Playlist playlist)
-        {
-            string sql = @"INSERT INTO playlist_track (playlist_id,track_id) VALUES (@playlist_id,@track_id)";
-            foreach(int trackId in playlist.TrackIds) { await dataService.Execute(sql, new { playlist_id = playlist.Id, track_id = trackId }); }
-            return await dataService.Update(playlist);
-        }
+        public async Task<bool> UpdatePlaylist(Playlist playlist) => await dataService.Update(playlist);
     }
 }

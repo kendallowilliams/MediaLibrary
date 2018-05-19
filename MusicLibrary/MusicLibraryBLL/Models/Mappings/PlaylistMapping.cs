@@ -13,10 +13,9 @@ namespace MusicLibraryBLL.Models.Mappings
             Table("playlist");
 
             Map(x => x.Id).Key(KeyType.Identity);
+            Map(x => x.TrackIds).Column("track_ids");
             Map(x => x.ModifyDate).Column("modify_date");
             Map(x => x.CreateDate).Column("create_date");
-
-            Map(x => x.TrackIds).Ignore();
 
             AutoMap();
         }

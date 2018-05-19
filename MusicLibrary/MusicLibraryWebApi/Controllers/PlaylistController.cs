@@ -27,13 +27,15 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // POST: api/Playlist
-        public void Post([FromBody]string value)
+        public async Task<int> Post([FromBody] Playlist playlist)
         {
+            return await playlistService.InsertPlaylist(playlist);
         }
 
         // PUT: api/Playlist/5
-        public void Put(int id, [FromBody]string value)
+        public async Task<bool> Put(int id, [FromBody] Playlist playlist)
         {
+            return await playlistService.UpdatePlaylist(playlist);
         }
 
         // DELETE: api/Playlist/5
