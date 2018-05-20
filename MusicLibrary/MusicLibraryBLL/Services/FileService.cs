@@ -70,7 +70,6 @@ namespace MusicLibraryBLL.Services
             foreach(var group in fileGroups)
             {
                 foreach (string file in group) { await ReadMediaFile(file, copyFiles); }
-                System.Diagnostics.Debug.WriteLine($"Thread Id: {Thread.CurrentThread.ManagedThreadId}");
             }
         }
 
