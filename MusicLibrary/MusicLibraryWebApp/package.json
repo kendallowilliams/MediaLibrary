@@ -1,0 +1,9 @@
+{
+  "name": "music-library-web-app",
+  "version": "0.0.0",
+  "description": "MusicLibraryWebApp",
+  "main": "server.js",
+  "author": {
+    "name": "KOW"
+  }
+}
