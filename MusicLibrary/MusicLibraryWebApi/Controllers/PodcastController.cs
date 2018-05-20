@@ -27,13 +27,13 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // POST: api/Podcast
-        public async Task<int> Post([FromBody] Podcast podcast)
+        public async Task<int> Post([FromBody]Podcast podcast)
         {
             return await podcastService.InsertPodcast(podcast);
         }
 
         // PUT: api/Podcast/5
-        public async Task<bool> Put([FromBody] Podcast podcast)
+        public async Task<bool> Put(int id, [FromBody]Podcast podcast)
         {
             return await podcastService.UpdatePodcast(podcast);
         }
