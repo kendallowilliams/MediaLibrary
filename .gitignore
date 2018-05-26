@@ -9,3 +9,5 @@
 /.vs
 /MusicLibrary/MusicLibraryBLL/bin/Debug
 /MusicLibrary/MusicLibraryBLL/obj/Debug
+/MusicLibrary/MusicLibraryWebApp/obj/Debug
+/MusicLibrary/MusicLibraryWebApp/bin
