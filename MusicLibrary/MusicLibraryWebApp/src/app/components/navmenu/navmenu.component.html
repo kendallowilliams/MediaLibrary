@@ -1,0 +1,31 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/app-music">Music Library</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class='navbar-nav nav'>
+            <li [routerLinkActive]="['link-active']">
+                <a class="nav-link" [routerLink]="['/app-music']">
+                    <span class='glyphicon glyphicon-home'></span>My Music
+                </a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+                <a class="nav-link" [routerLink]="['/app-podcasts']">
+                    <span class='glyphicon glyphicon-education'></span>Podcasts
+                </a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+                <a class="nav-link" [routerLink]="['/app-nowplaying']">
+                    <span class='glyphicon glyphicon-th-list'></span>Now Playing
+                </a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+                <a class="nav-link" [routerLink]="['/app-playlists']">
+                    <span class='glyphicon glyphicon-th-list'></span>Playlists
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
