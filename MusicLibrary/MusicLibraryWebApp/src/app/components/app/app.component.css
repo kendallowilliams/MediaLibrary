@@ -1,0 +1,33 @@
+/* Layout */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+}
+
+header {
+  grid-column: span 2;
+}
+
+footer {
+  grid-column: span 2;
+}
+
+main {
+    flex: 1;
+}
+
+nav {
+  z-index: 100;
+  position: static;
+  left: 0px;
+  top: 0px;
+}
