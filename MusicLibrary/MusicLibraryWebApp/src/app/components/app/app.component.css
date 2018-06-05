@@ -25,8 +25,5 @@ main {
     flex: 1;
 }
 
-nav {
-  position: static;
-  left: 0px;
-  top: 0px;
-}
+/*nav {
+}*/
