@@ -1,8 +1,10 @@
-<div class="layout">
-  <header></header>
-  <app-navmenu></app-navmenu>
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-  <footer></footer>
+<div class='container-fluid'>
+  <div class='row'>
+      <div class='col-sm-3'>
+          <app-navmenu></app-navmenu>
+      </div>
+      <div class='col-sm-9 body-content'>
+          <router-outlet></router-outlet>
+      </div>
+  </div>
 </div>
