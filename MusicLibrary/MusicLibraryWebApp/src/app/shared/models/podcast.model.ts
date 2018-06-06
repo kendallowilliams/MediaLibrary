@@ -1,6 +1,11 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
 
 export class Podcast implements Deserializable {
+    id: number;
+    title: string;
+    url: string;
+    content: string;
+    lastUpdateDate: Date;
 
     deserialize(input: any) {
         Object.assign(this, input);

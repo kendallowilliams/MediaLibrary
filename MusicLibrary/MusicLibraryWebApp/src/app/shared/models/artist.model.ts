@@ -1,10 +1,8 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
 
 export class Artist implements Deserializable {
-    title: string;
-    artistId: number;
-    genreId: number;
-    year: number;
+    id: number;
+    name: string;
 
     deserialize(input: any) {
         Object.assign(this, input);

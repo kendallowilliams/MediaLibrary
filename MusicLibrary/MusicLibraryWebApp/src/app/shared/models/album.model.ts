@@ -1,8 +1,11 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
 
 export class Album implements Deserializable {
-    name: string;
-    trackIds: number[];
+    id: number;
+    title: string;
+    artistId: number;
+    genreId: number;
+    year: number;
 
     deserialize(input: any) {
         Object.assign(this, input);

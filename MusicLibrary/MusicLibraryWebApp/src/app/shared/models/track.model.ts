@@ -1,6 +1,7 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
 
 export class Track implements Deserializable {
+    id: number;
     title: string;
     fileName: string;
     pathId: number;
