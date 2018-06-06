@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './components/app/app.component';
 import { NavmenuComponent } from './components/navmenu/navmenu.component';
@@ -30,7 +31,8 @@ import { NowPlayingComponent } from './components/nowplaying/nowplaying.componen
         { path: 'app-settings', component: SettingsComponent },
         { path: 'app-playlists', component: PlaylistsComponent },
         { path: '**', redirectTo: 'app-music' }
-    ])
+    ]),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
