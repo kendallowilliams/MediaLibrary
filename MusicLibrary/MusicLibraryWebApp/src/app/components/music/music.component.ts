@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
   templateUrl: './music.component.html',
   styleUrls: ['./music.component.css']
 })
+
 export class MusicComponent implements OnInit {
   tracks: Track[];
 

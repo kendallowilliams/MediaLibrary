@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -10,6 +12,7 @@ namespace MusicLibraryWebApi
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            ConfigureJson(config);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -25,6 +28,14 @@ namespace MusicLibraryWebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+        }
+
+        private static void ConfigureJson(HttpConfiguration config)
+        {
+            var jsonFormatter = config.Formatters.JsonFormatter;
+            var settings = jsonFormatter.SerializerSettings;
+            jsonFormatter.UseDataContractJsonSerializer = false;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }
