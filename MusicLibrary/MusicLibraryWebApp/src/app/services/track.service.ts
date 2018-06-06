@@ -8,12 +8,9 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 })
 
 export class TrackService {
-  tracks: Observable<Track[]>;
-
   constructor(private http: HttpClient) { }
 
   getTracks(): Observable<Track[]> {
-    this.tracks = this.http.get<Track[]>('/api/track');
-    return this.tracks;
+    return this.http.get<Track[]>('/api/Track');
   }
 }

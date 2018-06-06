@@ -9,12 +9,15 @@ import { Observable } from 'rxjs';
   styleUrls: ['./music.component.css']
 })
 export class MusicComponent implements OnInit {
-  tracks: Observable<Track[]>;
+  tracks: Track[];
 
   constructor(private trackService: TrackService) { }
 
   ngOnInit() {
-    this.tracks = this.trackService.getTracks();
+    this.getTracks();
   }
 
+  getTracks(): void {
+    this.trackService.getTracks().subscribe(tracks => this.tracks = tracks);
+  }
 }
