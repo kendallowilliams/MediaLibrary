@@ -10,9 +10,9 @@ import { PodcastsComponent } from './components/podcasts/podcasts.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { PlaylistsComponent } from './components/playlists/playlists.component';
 import { NowPlayingComponent } from './components/nowplaying/nowplaying.component';
-import { TrackComponent } from './components/track/track.component';
-import { AlbumComponent } from './components/album/album.component';
-import { ArtistComponent } from './components/artist/artist.component';
+import { TrackComponent } from './components/music/track/track.component';
+import { AlbumComponent } from './components/music/album/album.component';
+import { ArtistComponent } from './components/music/artist/artist.component';
 
 @NgModule({
   declarations: [
