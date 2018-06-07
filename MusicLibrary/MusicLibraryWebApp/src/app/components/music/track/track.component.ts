@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
+
 import { Track } from '../../../shared/models/track.model';
 import { Artist } from '../../../shared/models/artist.model';
 import { Album } from '../../../shared/models/album.model';
+import { Genre } from '../../../shared/models/genre.model';
 
 @Component({
   selector: 'app-track',
@@ -13,10 +15,16 @@ export class TrackComponent implements OnInit {
   @Input() track: Track;
   @Input() artists: Artist[];
   @Input() albums: Album[];
+  @Input() genres: Genre[];
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  getGenreNameById(id: number): string {
+    const foundGenre = this.genres.find(genre => genre.id === id);
+    return foundGenre !== undefined && foundGenre !== null ? foundGenre.name : '';
   }
 
   getAlbumTitleById(id: number): string {

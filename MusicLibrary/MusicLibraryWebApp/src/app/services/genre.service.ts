@@ -12,8 +12,8 @@ export class GenreService {
 
   constructor(private http: HttpClient) { }
 
-  getPlaylists(): Observable<Genre[]> {
-    return this.http.get<Genre[]>('/api/Playlist')
+  getGenres(): Observable<Genre[]> {
+    return this.http.get<Genre[]>('/api/Genre')
                     .pipe(map(genres => genres.map(genre => new Genre().deserialize(genre))));
   }
 }
