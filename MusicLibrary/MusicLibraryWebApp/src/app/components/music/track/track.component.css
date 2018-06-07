@@ -1,0 +1,46 @@
+.track-row {
+    width: 100%;
+    display: flex;
+}
+
+.track-checkbox {
+    visibility: hidden;
+}
+
+.track-now-playing {
+    display: none;
+}
+
+.track-title-group {
+    display: flex;
+    flex-grow: 1;
+}
+
+.track-title {
+    display: flex;
+    flex-grow: 1;
+}
+
+.track-buttons {
+    display: none;
+}
+
+.track-artist {
+    width: 200px;
+}
+
+.track-album {
+    width: 200px;
+}
+
+.track-year {
+    width: 50px;
+}
+
+.track-genre {
+    width: 200px;
+}
+
+.track-duration {
+    width: 50px;
+}
