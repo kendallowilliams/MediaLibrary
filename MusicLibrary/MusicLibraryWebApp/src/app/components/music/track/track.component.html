@@ -1,8 +1,12 @@
-<div class="d-none">
+<div>
   <span>{{track.title}}</span>
-  <span>{{track.artistId}}</span>
-  <span>{{track.albumId}}</span>
+  <span>
+      <i class="fa fa-play"></i>
+      <i class="fa fa-plus"></i>
+  </span>
+  <span>{{getArtistNameById(track.artistId)}}</span>
+  <span>{{getAlbumTitleById(track.albumId)}}</span>
   <span>{{track.year}}</span>
   <span>{{track.genreId}}</span>
-  <span>{{track.duration}}</span>
+  <span>{{getDurationDisplay(track.duration)}}</span>
 </div>
