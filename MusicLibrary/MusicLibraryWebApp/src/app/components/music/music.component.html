@@ -21,7 +21,7 @@
   </div>
   <div class="tab-pane fade" id="nav-albums" role="tabpanel" aria-labelledby="nav-albums-tab">
     <div *ngFor="let album of albums">
-      <app-album [album]=album></app-album>
+      <app-album [album]=album [artists]=artists></app-album>
     </div>
   </div>
 </div>
