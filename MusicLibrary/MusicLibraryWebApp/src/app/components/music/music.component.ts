@@ -11,6 +11,20 @@ import { Track } from '../../shared/models/track.model';
 import { Artist } from '../../shared/models/artist.model';
 import { Genre } from '../../shared/models/genre.model';
 
+enum TrackSortEnum {
+  DateAdded,
+  AtoZ,
+  Artist,
+  Album
+}
+
+enum AlbumSortEnum {
+  DateAdded,
+  AtoZ,
+  ReleaseYear,
+  Artist
+}
+
 @Component({
   selector: 'app-music',
   templateUrl: './music.component.html',
@@ -22,9 +36,28 @@ export class MusicComponent implements OnInit {
   artists: Artist[];
   albums: Album[];
   genres: Genre[];
+  currentTrackSort: TrackSortEnum;
+  currentAlbumSort: AlbumSortEnum;
+  trackSortOptions: any[];
+  albumSortOptions: any[];
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
-              private albumService: AlbumService, private genreService: GenreService) { }
+    private albumService: AlbumService, private genreService: GenreService) {
+    this.currentAlbumSort = AlbumSortEnum.DateAdded;
+    this.currentTrackSort = TrackSortEnum.AtoZ;
+    this.trackSortOptions = [
+      { id: TrackSortEnum.DateAdded, name: 'Date added' },
+      { id: TrackSortEnum.AtoZ, name: 'A to Z' },
+      { id: TrackSortEnum.Artist, name: 'Artist' },
+      { id: TrackSortEnum.Album, name: 'Album' }
+    ];
+    this.albumSortOptions = [
+      { id: AlbumSortEnum.DateAdded, name: 'Date added' },
+      { id: AlbumSortEnum.AtoZ, name: 'A to Z' },
+      { id: AlbumSortEnum.ReleaseYear, name: 'Release year' },
+      { id: AlbumSortEnum.Artist, name: 'Artist' }
+    ];
+  }
 
   ngOnInit() {
     this.getTracks();
