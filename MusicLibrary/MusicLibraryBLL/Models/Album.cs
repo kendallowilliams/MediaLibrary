@@ -11,7 +11,7 @@ namespace MusicLibraryBLL.Models
 
         public Album(MediaData data, int? artistId, int? genreId)
         {
-            Title = data.Title;
+            Title = data.Album;
             ArtistId = artistId;
             GenreId = genreId;
             Year = (int)data.Year;
