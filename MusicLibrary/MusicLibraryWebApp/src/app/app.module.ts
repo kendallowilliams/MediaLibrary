@@ -20,6 +20,7 @@ import { AlbumsResolver } from './components/music/resolvers/albums.resolver';
 import { GenresResolver } from './components/music/resolvers/genres.resolver';
 import { ControlsComponent } from './components/controls/controls.component';
 import { TrackListComponent } from './components/music/track-list/track-list.component';
+import { MusicSettingsComponent } from './components/music/music-settings/music-settings.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TrackListComponent } from './components/music/track-list/track-list.com
     AlbumComponent,
     ArtistComponent,
     ControlsComponent,
-    TrackListComponent
+    TrackListComponent,
+    MusicSettingsComponent
   ],
   imports: [
     BrowserModule,

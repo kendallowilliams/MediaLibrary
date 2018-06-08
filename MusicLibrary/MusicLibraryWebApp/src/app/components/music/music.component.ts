@@ -12,19 +12,7 @@ import { Artist } from '../../shared/models/artist.model';
 import { Genre } from '../../shared/models/genre.model';
 import { ActivatedRoute } from '@angular/router';
 
-enum TrackSortEnum {
-  DateAdded,
-  AtoZ,
-  Artist,
-  Album
-}
-
-enum AlbumSortEnum {
-  DateAdded,
-  AtoZ,
-  ReleaseYear,
-  Artist
-}
+import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 
 @Component({
   selector: 'app-music',
@@ -42,24 +30,13 @@ export class MusicComponent implements OnInit {
   trackSortOptions: any[];
   albumSortOptions: any[];
   trackSortGroups: any[];
+  selectMusicTab: MusicTabEnum;
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
     private albumService: AlbumService, private genreService: GenreService,
     private route: ActivatedRoute) {
-    this.currentAlbumSort = AlbumSortEnum.DateAdded;
+    this.currentAlbumSort = AlbumSortEnum.AtoZ;
     this.currentTrackSort = TrackSortEnum.AtoZ;
-    this.trackSortOptions = [
-      { id: TrackSortEnum.DateAdded, name: 'Date added' },
-      { id: TrackSortEnum.AtoZ, name: 'A to Z' },
-      { id: TrackSortEnum.Artist, name: 'Artist' },
-      { id: TrackSortEnum.Album, name: 'Album' }
-    ];
-    this.albumSortOptions = [
-      { id: AlbumSortEnum.DateAdded, name: 'Date added' },
-      { id: AlbumSortEnum.AtoZ, name: 'A to Z' },
-      { id: AlbumSortEnum.ReleaseYear, name: 'Release year' },
-      { id: AlbumSortEnum.Artist, name: 'Artist' }
-    ];
   }
 
   ngOnInit() {
@@ -90,8 +67,9 @@ export class MusicComponent implements OnInit {
         break;
       case TrackSortEnum.DateAdded:
         groups = this.tracks.map(track => track.createDate)
-                            .map(date => ({ title: date, tracks: this.tracks.filter(track => track.createDate === date) }));
+                            .map(date => ({ title: date, tracks: this.tracks.filter(track => track.createDate.toString() === date) }));
         break;
+      case TrackSortEnum.None:
       default:
         groups = [];
         break;

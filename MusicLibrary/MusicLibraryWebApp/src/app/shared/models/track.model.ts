@@ -14,7 +14,7 @@ export class Track implements Deserializable {
     position: number;
     year: number;
     duration: number;
-    durationDisplay: string;
+    durationDisplay: Date;
     playCount: number;
     createDate: string;
 
