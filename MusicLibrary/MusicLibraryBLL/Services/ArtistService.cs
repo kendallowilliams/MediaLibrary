@@ -12,7 +12,7 @@ using MusicLibraryBLL.Services.Interfaces;
 namespace MusicLibraryBLL.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IArtistService)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IArtistService))]
     public class ArtistService : IArtistService
     {
         private readonly IDataService dataService;

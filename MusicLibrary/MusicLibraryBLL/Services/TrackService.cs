@@ -11,7 +11,7 @@ using MusicLibraryBLL.Services.Interfaces;
 namespace MusicLibraryBLL.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(ITrackService)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(ITrackService))]
     public class TrackService : ITrackService
     {
         [Import]

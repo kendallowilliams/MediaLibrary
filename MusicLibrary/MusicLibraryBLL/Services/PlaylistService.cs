@@ -11,7 +11,7 @@ using MusicLibraryBLL.Services.Interfaces;
 namespace MusicLibraryBLL.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IPlaylistService)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IPlaylistService))]
     public class PlaylistService : IPlaylistService
     {
         [Import]

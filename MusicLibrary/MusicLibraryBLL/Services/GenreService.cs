@@ -11,7 +11,7 @@ using MusicLibraryBLL.Services.Interfaces;
 namespace MusicLibraryBLL.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IGenreService)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IGenreService))]
     public class GenreService : IGenreService
     {
         [Import]

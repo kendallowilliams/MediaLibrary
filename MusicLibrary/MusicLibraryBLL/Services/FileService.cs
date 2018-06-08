@@ -14,7 +14,7 @@ using System.Web;
 namespace MusicLibraryBLL.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IFileService)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IFileService))]
     public class FileService : IFileService
     {
         private readonly IId3Service id3Service;

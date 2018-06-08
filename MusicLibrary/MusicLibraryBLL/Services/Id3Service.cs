@@ -12,7 +12,7 @@ using TagLib;
 namespace MusicLibraryBLL.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IId3Service)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IId3Service))]
     public class Id3Service : IId3Service
     {
         [ImportingConstructor]

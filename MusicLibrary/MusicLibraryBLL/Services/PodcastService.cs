@@ -11,7 +11,7 @@ using MusicLibraryBLL.Services.Interfaces;
 namespace MusicLibraryBLL.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IPodcastService)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IPodcastService))]
     public class PodcastService : IPodcastService
     {
         [Import]
