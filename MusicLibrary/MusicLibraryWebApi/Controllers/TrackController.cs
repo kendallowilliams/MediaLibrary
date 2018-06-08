@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,16 +15,18 @@ using System.Web.Http;
 
 namespace MusicLibraryWebApi.Controllers
 {
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class TrackController : ApiController
     {
         private ITrackService trackService;
         private IFileService fileService;
 
-        public TrackController()
+        [ImportingConstructor]
+        public TrackController(ITrackService trackService, IFileService fileService)
         {
-            trackService = MefConfig.Container.GetExportedValue<ITrackService>();
-            fileService = MefConfig.Container.GetExportedValue<IFileService>();
-    }
+            this.trackService = trackService;
+            this.fileService = fileService;
+        }
 
         // GET: api/Track
         public async Task<IEnumerable<Track>> Get()

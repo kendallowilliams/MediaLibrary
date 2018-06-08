@@ -12,13 +12,12 @@ namespace MusicLibraryWebApi
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            MefConfig.Initialize();
+            MefConfig.Register(GlobalConfiguration.Configuration);
             DapperExtensionsConfig.Initialize();
         }
 
         protected void Application_End()
         {
-            MefConfig.Dispose();
         }
     }
 }

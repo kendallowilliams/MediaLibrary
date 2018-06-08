@@ -12,13 +12,15 @@ using System.Web.Http;
 
 namespace MusicLibraryWebApi.Controllers
 {
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class ArtistController : ApiController
     {
         private IArtistService artistService;
 
-        public ArtistController()
+        [ImportingConstructor]
+        public ArtistController(IArtistService artistService)
         {
-            artistService = MefConfig.Container.GetExportedValue<IArtistService>();
+            this.artistService = artistService;
         }
 
         // GET: api/Artist
