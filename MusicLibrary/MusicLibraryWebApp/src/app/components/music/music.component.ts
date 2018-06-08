@@ -37,6 +37,7 @@ export class MusicComponent implements OnInit {
     private route: ActivatedRoute) {
     this.currentAlbumSort = AlbumSortEnum.AtoZ;
     this.currentTrackSort = TrackSortEnum.AtoZ;
+    this.selectMusicTab = MusicTabEnum.Songs;
   }
 
   ngOnInit() {
