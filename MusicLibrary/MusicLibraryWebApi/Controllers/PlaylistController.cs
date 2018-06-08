@@ -12,7 +12,12 @@ namespace MusicLibraryWebApi.Controllers
 {
     public class PlaylistController : ApiController
     {
-        private IPlaylistService playlistService => MefConfig.Container.GetExportedValue<IPlaylistService>();
+        private IPlaylistService playlistService;
+
+        public PlaylistController()
+        {
+            playlistService = MefConfig.Container.GetExportedValue<IPlaylistService>();
+        }
 
         // GET: api/Playlist
         public async Task<IEnumerable<Playlist>> Get()

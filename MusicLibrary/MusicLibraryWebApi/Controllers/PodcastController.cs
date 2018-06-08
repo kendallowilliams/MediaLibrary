@@ -12,7 +12,12 @@ namespace MusicLibraryWebApi.Controllers
 {
     public class PodcastController : ApiController
     {
-        private IPodcastService podcastService => MefConfig.Container.GetExportedValue<IPodcastService>();
+        private IPodcastService podcastService;
+
+        public PodcastController()
+        {
+            podcastService = MefConfig.Container.GetExportedValue<IPodcastService>();
+        }
 
         // GET: api/Podcast
         public async Task<IEnumerable<Podcast>> Get()

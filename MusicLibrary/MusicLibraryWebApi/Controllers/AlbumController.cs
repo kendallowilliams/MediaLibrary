@@ -14,7 +14,12 @@ namespace MusicLibraryWebApi.Controllers
 {
     public class AlbumController : ApiController
     {
-        private IAlbumService albumService => MefConfig.Container.GetExportedValue<IAlbumService>();
+        private IAlbumService albumService;
+
+        public AlbumController()
+        {
+            albumService = MefConfig.Container.GetExportedValue<IAlbumService>();
+        }
 
         // GET: api/Album
         public async Task<IEnumerable<Album>> Get()

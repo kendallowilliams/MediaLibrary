@@ -15,7 +15,6 @@ namespace MusicLibraryBLL.Services
     [Export(typeof(IId3Service)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class Id3Service : IId3Service
     {
-
         [ImportingConstructor]
         public Id3Service()
         {

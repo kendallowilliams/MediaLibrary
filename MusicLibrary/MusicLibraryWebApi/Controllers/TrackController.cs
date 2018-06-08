@@ -16,8 +16,14 @@ namespace MusicLibraryWebApi.Controllers
 {
     public class TrackController : ApiController
     {
-        private ITrackService trackService => MefConfig.Container.GetExportedValue<ITrackService>();
-        private IFileService fileService => MefConfig.Container.GetExportedValue<IFileService>();
+        private ITrackService trackService;
+        private IFileService fileService;
+
+        public TrackController()
+        {
+            trackService = MefConfig.Container.GetExportedValue<ITrackService>();
+            fileService = MefConfig.Container.GetExportedValue<IFileService>();
+    }
 
         // GET: api/Track
         public async Task<IEnumerable<Track>> Get()
