@@ -14,6 +14,11 @@ import { TrackComponent } from './components/music/track/track.component';
 import { AlbumComponent } from './components/music/album/album.component';
 import { ArtistComponent } from './components/music/artist/artist.component';
 
+import { TracksResolver } from './components/music/resolvers/tracks.resolver';
+import { ArtistsResolver } from './components/music/resolvers/artists.resolver';
+import { AlbumsResolver } from './components/music/resolvers/albums.resolver';
+import { GenresResolver } from './components/music/resolvers/genres.resolver';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +36,11 @@ import { ArtistComponent } from './components/music/artist/artist.component';
     BrowserModule,
     RouterModule.forRoot([
         { path: '', redirectTo: 'app-music', pathMatch: 'full' },
-        { path: 'app-music', component: MusicComponent },
+        { path: 'app-music', component: MusicComponent,
+          resolve: {
+            tracks: TracksResolver, artists: ArtistsResolver, albums: AlbumsResolver, genres: GenresResolver
+          }
+        },
         { path: 'app-nowplaying', component: NowPlayingComponent },
         { path: 'app-podcasts', component: PodcastsComponent },
         { path: 'app-settings', component: SettingsComponent },
@@ -40,7 +49,7 @@ import { ArtistComponent } from './components/music/artist/artist.component';
     ]),
     HttpClientModule
   ],
-  providers: [],
+  providers: [TracksResolver, ArtistsResolver, AlbumsResolver, GenresResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

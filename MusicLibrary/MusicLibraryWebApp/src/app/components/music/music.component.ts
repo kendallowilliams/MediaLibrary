@@ -10,6 +10,7 @@ import { Album } from '../../shared/models/album.model';
 import { Track } from '../../shared/models/track.model';
 import { Artist } from '../../shared/models/artist.model';
 import { Genre } from '../../shared/models/genre.model';
+import { ActivatedRoute } from '@angular/router';
 
 enum TrackSortEnum {
   DateAdded,
@@ -42,7 +43,8 @@ export class MusicComponent implements OnInit {
   albumSortOptions: any[];
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
-    private albumService: AlbumService, private genreService: GenreService) {
+    private albumService: AlbumService, private genreService: GenreService,
+    private route: ActivatedRoute) {
     this.currentAlbumSort = AlbumSortEnum.DateAdded;
     this.currentTrackSort = TrackSortEnum.AtoZ;
     this.trackSortOptions = [
@@ -67,18 +69,18 @@ export class MusicComponent implements OnInit {
   }
 
   getGenres(): void {
-    this.genreService.getGenres().subscribe(genres => this.genres = genres);
+    this.genres = this.route.snapshot.data['genres'];
   }
 
   getTracks(): void {
-    this.trackService.getTracks().subscribe(tracks => this.tracks = tracks);
+    this.tracks = this.route.snapshot.data['tracks'];
   }
 
   getAlbums(): void {
-    this.albumService.getAlbums().subscribe(albums => this.albums = albums);
+    this.albums = this.route.snapshot.data['albums'];
   }
 
   getArtists(): void {
-    this.artistService.getArtists().subscribe(artists => this.artists = artists);
+    this.artists = this.route.snapshot.data['artists'];
   }
 }
