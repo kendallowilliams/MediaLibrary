@@ -1,0 +1,6 @@
+<div *ngFor="let group of trackSortGroups">
+  <div>{{group.title}}</div>
+  <div *ngFor="let track of group.tracks">
+    <app-track [track]=track></app-track>
+  </div>
+</div>

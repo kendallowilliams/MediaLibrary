@@ -13,9 +13,9 @@
       <i class="fa fa-plus"></i>
     </div>
   </div>
-  <div class="track-artist d-none d-md-block">{{getArtistNameById(track.artistId)}}</div>
-  <div class="track-album d-none d-xl-block">{{getAlbumTitleById(track.albumId)}}</div>
+  <div class="track-artist d-none d-md-block">{{track.artist}}</div>
+  <div class="track-album d-none d-xl-block">{{track.album}}</div>
   <div class="track-year d-none d-xl-block">{{track.year}}</div>
-  <div class="track-genre d-none d-lg-block">{{getGenreNameById(track.genreId)}}</div>
-  <div class="track-duration">{{getDurationDisplay(track.duration)}}</div>
+  <div class="track-genre d-none d-lg-block">{{track.genre}}</div>
+  <div class="track-duration">{{track.durationDisplay}}</div>
 </div>

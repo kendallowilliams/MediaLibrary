@@ -41,6 +41,7 @@ export class MusicComponent implements OnInit {
   currentAlbumSort: AlbumSortEnum;
   trackSortOptions: any[];
   albumSortOptions: any[];
+  trackSortGroups: any[];
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
     private albumService: AlbumService, private genreService: GenreService,
@@ -66,6 +67,45 @@ export class MusicComponent implements OnInit {
     this.getArtists();
     this.getAlbums();
     this.getGenres();
+    this.updateTracks();
+    this.trackSortGroups = this.getTrackSortGroups();
+  }
+
+  getTrackSortGroups(): any[] {
+    let groups = [];
+
+    switch (this.currentTrackSort) {
+      case TrackSortEnum.Album:
+        groups = this.albums.map(album => album.title)
+                            .map(album => ({ title: album, tracks: this.tracks.filter(track => track.album === album) }));
+        break;
+      case TrackSortEnum.Artist:
+        groups = this.artists.map(artist => artist.name)
+                             .map(artist => ({ title: artist, tracks: this.tracks.filter(track => track.artist === artist) }));
+        break;
+      case TrackSortEnum.AtoZ:
+        const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        groups = ['&', '#'].concat(letters.map(letter => letter.toUpperCase()))
+                           .map(char => ({ title: char, tracks: this.tracks.filter(track => track.title[0] === char) }));
+        break;
+      case TrackSortEnum.DateAdded:
+        groups = this.tracks.map(track => track.createDate)
+                            .map(date => ({ title: date, tracks: this.tracks.filter(track => track.createDate === date) }));
+        break;
+      default:
+        groups = [];
+        break;
+    }
+
+    return groups;
+  }
+
+  updateTracks(): void {
+    this.tracks.forEach(track => {
+      track.album = this.getAlbumTitleById(track.albumId);
+      track.artist = this.getArtistNameById(track.artistId);
+      track.genre = this.getGenreNameById(track.genreId);
+    });
   }
 
   getGenres(): void {
@@ -82,5 +122,20 @@ export class MusicComponent implements OnInit {
 
   getArtists(): void {
     this.artists = this.route.snapshot.data['artists'];
+  }
+
+  getGenreNameById(id: number): string {
+    const foundGenre = this.genres.find(genre => genre.id === id);
+    return foundGenre !== undefined && foundGenre !== null ? foundGenre.name : '';
+  }
+
+  getAlbumTitleById(id: number): string {
+    const foundAlbum = this.albums.find(album => album.id === id);
+    return foundAlbum !== undefined && foundAlbum !== null ? foundAlbum.title : '';
+  }
+
+  getArtistNameById(id: number): string {
+    const foundArtist = this.artists.find(artist => artist.id === id);
+    return foundArtist !== undefined && foundArtist !== null ? foundArtist.name : '';
   }
 }

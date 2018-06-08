@@ -22,6 +22,8 @@ namespace MusicLibraryBLL.Models.Mappings
             Map(x => x.ModifyDate).Column("modify_date");
             Map(x => x.CreateDate).Column("create_date");
 
+            Map(x => x.DurationDisplay).Ignore();
+
             AutoMap();
         }
     }

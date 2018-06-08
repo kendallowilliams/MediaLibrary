@@ -18,6 +18,8 @@ import { TracksResolver } from './components/music/resolvers/tracks.resolver';
 import { ArtistsResolver } from './components/music/resolvers/artists.resolver';
 import { AlbumsResolver } from './components/music/resolvers/albums.resolver';
 import { GenresResolver } from './components/music/resolvers/genres.resolver';
+import { ControlsComponent } from './components/controls/controls.component';
+import { TrackListComponent } from './components/music/track-list/track-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { GenresResolver } from './components/music/resolvers/genres.resolver';
     SettingsComponent,
     TrackComponent,
     AlbumComponent,
-    ArtistComponent
+    ArtistComponent,
+    ControlsComponent,
+    TrackListComponent
   ],
   imports: [
     BrowserModule,

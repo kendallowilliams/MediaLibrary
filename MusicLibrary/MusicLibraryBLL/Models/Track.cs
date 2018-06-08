@@ -34,6 +34,7 @@ namespace MusicLibraryBLL.Models
         public int Position { get; set; }
         public int Year { get; set; }
         public double Duration { get; set; }
+        public string DurationDisplay => TimeSpan.FromSeconds(Duration).ToString(@"m\:ss");
         public int PlayCount { get; set; }
     }
 }

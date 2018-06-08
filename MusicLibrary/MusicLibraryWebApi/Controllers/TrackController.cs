@@ -31,7 +31,7 @@ namespace MusicLibraryWebApi.Controllers
         // GET: api/Track
         public async Task<IEnumerable<Track>> Get()
         {
-            return await trackService.GetTracks();
+            return (await trackService.GetTracks()).OrderBy(track => track.Title);
         }
 
         // GET: api/Track/5
