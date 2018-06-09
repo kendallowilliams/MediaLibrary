@@ -18,7 +18,7 @@ namespace MusicLibraryWebApi
             AggregateCatalog catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(IDataModel).Assembly));
             catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-            CompositionContainer container = new CompositionContainer(catalog);
+            CompositionContainer container = new CompositionContainer(catalog, true);
             config.DependencyResolver = new MefResolver(container);
         }
     }
