@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './components/app/app.component';
 import { NavmenuComponent } from './components/navmenu/navmenu.component';
@@ -54,8 +53,7 @@ import { MusicSettingsComponent } from './components/music/music-settings/music-
         { path: 'app-playlists', component: PlaylistsComponent },
         { path: '**', redirectTo: 'app-music' }
     ]),
-    HttpClientModule,
-    NgbModule.forRoot()
+    HttpClientModule
   ],
   providers: [TracksResolver, ArtistsResolver, AlbumsResolver, GenresResolver],
   bootstrap: [AppComponent]
