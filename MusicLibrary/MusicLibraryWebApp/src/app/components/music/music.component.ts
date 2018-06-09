@@ -55,20 +55,29 @@ export class MusicComponent implements OnInit {
     switch (this.currentTrackSort) {
       case TrackSortEnum.Album:
         groups = this.albums.map(album => album.title)
-                            .map(album => ({ title: album, tracks: this.tracks.filter(track => track.album === album) }));
+                            .map(album => ({ title: album,
+                                             tracks: this.tracks.filter(track => track.album === album),
+                                             isLoaded: false }));
         break;
       case TrackSortEnum.Artist:
         groups = this.artists.map(artist => artist.name)
-                             .map(artist => ({ title: artist, tracks: this.tracks.filter(track => track.artist === artist) }));
+                             .map(artist => ({ title: artist,
+                                              tracks: this.tracks.filter(track => track.artist === artist),
+                                              isLoaded: false }));
         break;
       case TrackSortEnum.AtoZ:
         const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
         groups = ['&', '#'].concat(letters.map(letter => letter.toUpperCase()))
-                           .map(char => ({ title: char, tracks: this.tracks.filter(track => track.title[0] === char) }));
+                           .map(char => ({ title: char,
+                                           tracks: this.tracks.filter(track => track.title[0] === char),
+                                           isLoaded: false }));
         break;
       case TrackSortEnum.DateAdded:
         groups = this.tracks.map(track => track.createDate)
-                            .map(date => ({ title: date, tracks: this.tracks.filter(track => track.createDate.toString() === date) }));
+                            .map(date => ({ title: date,
+                                            tracks: this.tracks.filter(track => track.createDate.toString() === date),
+                                            isLoaded: false
+                                          }));
         break;
       case TrackSortEnum.None:
       default:
@@ -76,7 +85,7 @@ export class MusicComponent implements OnInit {
         break;
     }
 
-    return groups;
+    return groups.filter(group => group.tracks && group.tracks.length > 0);
   }
 
   updateTracks(): void {
