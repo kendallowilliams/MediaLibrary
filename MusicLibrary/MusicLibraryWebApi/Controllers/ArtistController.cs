@@ -26,7 +26,7 @@ namespace MusicLibraryWebApi.Controllers
         // GET: api/Artist
         public async Task<IEnumerable<Artist>> Get()
         {
-            return await artistService.GetArtists();
+            return (await artistService.GetArtists()).OrderBy(artist => artist.Name);
         }
 
         // GET: api/Artist/5

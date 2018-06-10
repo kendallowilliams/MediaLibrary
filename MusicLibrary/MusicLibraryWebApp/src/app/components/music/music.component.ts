@@ -21,6 +21,8 @@ import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 })
 
 export class MusicComponent implements OnInit {
+  public MusicTabs = MusicTabEnum;
+
   tracks: Track[];
   artists: Artist[];
   albums: Album[];
