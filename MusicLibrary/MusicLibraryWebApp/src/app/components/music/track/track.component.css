@@ -1,46 +1,46 @@
-.track-row {
+.ml-track {
   width: 100%;
   display: flex;
 }
 
-.track-checkbox {
+.ml-track-checkbox {
   visibility: hidden;
 }
 
-.track-now-playing {
+.ml-track-now-playing {
   display: none;
 }
 
-.track-title-group {
+.ml-track-title-group {
   display: flex;
   flex-grow: 1;
 }
 
-.track-title {
+.ml-track-title {
   display: flex;
   flex-grow: 1;
 }
 
-.track-buttons {
+.ml-track-buttons {
   display: none;
 }
 
-.track-artist {
+.ml-track-artist {
   width: 200px;
 }
 
-.track-album {
+.ml-track-album {
   width: 200px;
 }
 
-.track-year {
+.ml-track-year {
   width: 50px;
 }
 
-.track-genre {
+.ml-track-genre {
   width: 200px;
 }
 
-.track-duration {
+.ml-track-duration {
   width: 50px;
 }
