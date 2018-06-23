@@ -23,6 +23,7 @@ import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 export class MusicComponent implements OnInit {
   public MusicTabs = MusicTabEnum;
 
+  letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
   tracks: Track[];
   artists: Artist[];
   albums: Album[];
@@ -68,10 +69,9 @@ export class MusicComponent implements OnInit {
                                               isLoaded: false }));
         break;
       case TrackSortEnum.AtoZ:
-        const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
-        groups = ['&', '#'].concat(letters.map(letter => letter.toUpperCase()))
+        groups = ['&', '#'].concat(this.letters.map(letter => letter.toUpperCase()))
                            .map(char => ({ title: char,
-                                           tracks: this.tracks.filter(track => track.title[0] === char),
+                                           tracks: this.getTracksAtoZ(char),
                                            isLoaded: false }));
         break;
       case TrackSortEnum.DateAdded:
@@ -89,6 +89,26 @@ export class MusicComponent implements OnInit {
 
     return groups.filter(group => group.tracks && group.tracks.length > 0);
   }
+
+  getTracksAtoZ(char: string): Track[] {
+    let tracks = null;
+
+    switch(char)
+    {
+      case "&":
+        tracks = this.tracks.filter(track => isNaN(parseInt(track.title[0])) &&
+          !this.letters.includes(track.title[0].toUpperCase()));
+        break;
+      case "#":
+        tracks = this.tracks.filter(track => !isNaN(parseInt(track.title[0])));
+        break;
+      default:
+        tracks = this.tracks.filter(track => track.title[0].toUpperCase() === char);
+        break;
+    }
+
+    return tracks;
+  };
 
   updateTracks(): void {
     this.tracks.forEach(track => {

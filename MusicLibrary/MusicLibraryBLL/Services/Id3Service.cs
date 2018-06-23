@@ -31,18 +31,18 @@ namespace MusicLibraryBLL.Services
                 string fileName = System.IO.Path.GetFileName(file.Name);
                 MediaData data = new MediaData
                 {
-                    Album = tag.Album,
-                    Artists = tag.JoinedPerformers,
-                    AlbumArtists = tag.JoinedAlbumArtists,
-                    Comment = tag.Comment,
-                    Copyright = tag.Copyright,
+                    Album = tag.Album.Trim(),
+                    Artists = tag.JoinedPerformers.Trim(),
+                    AlbumArtists = tag.JoinedAlbumArtists.Trim(),
+                    Comment = tag.Comment.Trim(),
+                    Copyright = tag.Copyright.Trim(),
                     FileName = fileName,
                     Duration = (file.Properties.MediaTypes != MediaTypes.None) ? file.Properties.Duration.TotalSeconds : 0,
-                    Title = tag.Title ?? fileName,
+                    Title = tag.Title?.Trim() ?? fileName,
                     Track = tag.Track,
                     TrackCount = tag.TrackCount,
                     Year = tag.Year,
-                    Genres = tag.JoinedGenres
+                    Genres = tag.JoinedGenres.Trim()
                 };
 
                 mediaData = data;

@@ -20,7 +20,7 @@ namespace MusicLibraryWebApi
             config.Routes.MapHttpRoute(
                 name: "RootApi",
                 routeTemplate: "api/root/{action}",
-                defaults: new { controller = "track" }
+                defaults: new { controller = "root" }
             );
 
             config.Routes.MapHttpRoute(

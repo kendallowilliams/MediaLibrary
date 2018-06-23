@@ -1,3 +1,10 @@
+DROP DATABASE IF EXISTS MusicLibrary;
+CREATE DATABASE MusicLibrary;
+
+GO
+
+USE MusicLibrary;
+
 DROP TABLE IF EXISTS artist;
 CREATE TABLE artist 
 (
