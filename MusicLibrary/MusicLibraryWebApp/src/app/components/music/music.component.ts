@@ -23,7 +23,7 @@ import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 export class MusicComponent implements OnInit {
   public MusicTabs = MusicTabEnum;
 
-  letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  letters = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter => letter.toUpperCase());
   tracks: Track[];
   artists: Artist[];
   albums: Album[];
@@ -69,7 +69,7 @@ export class MusicComponent implements OnInit {
                                               isLoaded: false }));
         break;
       case TrackSortEnum.AtoZ:
-        groups = ['&', '#'].concat(this.letters.map(letter => letter.toUpperCase()))
+        groups = ['&', '#'].concat(this.letters)
                            .map(char => ({ title: char,
                                            tracks: this.getTracksAtoZ(char),
                                            isLoaded: false }));
@@ -95,11 +95,11 @@ export class MusicComponent implements OnInit {
 
     switch(char)
     {
-      case "&":
+      case '&':
         tracks = this.tracks.filter(track => isNaN(parseInt(track.title[0])) &&
           !this.letters.includes(track.title[0].toUpperCase()));
         break;
-      case "#":
+      case '#':
         tracks = this.tracks.filter(track => !isNaN(parseInt(track.title[0])));
         break;
       default:
