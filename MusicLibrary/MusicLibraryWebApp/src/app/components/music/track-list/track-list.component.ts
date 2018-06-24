@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ElementRef, Output } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Output, APP_INITIALIZER } from '@angular/core';
 import { Track } from '../../../shared/models/track.model';
+import { ITrackList } from '../../../shared/interfaces/music.interface';
 
 @Component({
   selector: 'app-track-list',
@@ -7,17 +8,22 @@ import { Track } from '../../../shared/models/track.model';
   styleUrls: ['./track-list.component.css']
 })
 export class TrackListComponent implements OnInit {
-  @Input() group: any;
-  @Output() tracks: Track[];
+  @Input() group: ITrackList;
+  @Input() tracks: Track[];
 
-   private height: number;
-   private top: number;
+  private height: number;
+  private top: number;
 
 
-  constructor(private el: ElementRef) {
+  constructor() {
   }
 
   ngOnInit() {
+    this.group.load = () => this.load();
+  }
+
+  load(): void {
+    this.tracks = this.group.tracks;
   }
 
   trackByTracks(index: number, track: Track): number {

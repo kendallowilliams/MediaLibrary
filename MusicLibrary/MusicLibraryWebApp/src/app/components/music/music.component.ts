@@ -53,6 +53,10 @@ export class MusicComponent implements OnInit {
     this.trackSortGroups = this.getTrackSortGroups();
   }
 
+  loadTracks(): void {
+    this.trackSortGroups.forEach(group => group.load());
+  }
+
   getTrackSortGroups(): ITrackList[] {
     let groups = [];
 
