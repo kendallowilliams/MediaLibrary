@@ -1,4 +1,2 @@
-<div *ngFor="let group of trackSortGroups" class="ml-track-group">
-  <div>{{group.title}}</div>
-  <app-track [track]=track *ngFor="let track of group.tracks"></app-track>
-</div>
+<div>{{group.title}}</div>
+<app-track [track]=track *ngFor="let track of tracks"></app-track>

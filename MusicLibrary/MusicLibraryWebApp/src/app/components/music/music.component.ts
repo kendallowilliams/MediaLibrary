@@ -13,6 +13,7 @@ import { Genre } from '../../shared/models/genre.model';
 import { ActivatedRoute } from '@angular/router';
 
 import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
+import { ITrackList } from '../../shared/interfaces/music.interface';
 
 @Component({
   selector: 'app-music',
@@ -32,7 +33,7 @@ export class MusicComponent implements OnInit {
   currentAlbumSort: AlbumSortEnum;
   trackSortOptions: any[];
   albumSortOptions: any[];
-  trackSortGroups: any[];
+  trackSortGroups: ITrackList[];
   selectMusicTab: MusicTabEnum;
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
@@ -52,34 +53,37 @@ export class MusicComponent implements OnInit {
     this.trackSortGroups = this.getTrackSortGroups();
   }
 
-  getTrackSortGroups(): any[] {
+  getTrackSortGroups(): ITrackList[] {
     let groups = [];
 
     switch (this.currentTrackSort) {
       case TrackSortEnum.Album:
         groups = this.albums.map(album => album.title)
-                            .map(album => ({ title: album,
-                                             tracks: this.tracks.filter(track => track.album === album),
-                                             isLoaded: false }));
+                            .map(album => ({
+                              title: album,
+                              tracks: this.tracks.filter(track => track.album === album)
+                            }));
         break;
       case TrackSortEnum.Artist:
         groups = this.artists.map(artist => artist.name)
-                             .map(artist => ({ title: artist,
-                                              tracks: this.tracks.filter(track => track.artist === artist),
-                                              isLoaded: false }));
+                             .map(artist => ({
+                                title: artist,
+                                tracks: this.tracks.filter(track => track.artist === artist)
+                              }));
         break;
       case TrackSortEnum.AtoZ:
         groups = ['&', '#'].concat(this.letters)
-                           .map(char => ({ title: char,
-                                           tracks: this.getTracksAtoZ(char),
-                                           isLoaded: false }));
+                           .map(char => ({
+                              title: char,
+                              tracks: this.getTracksAtoZ(char)
+                            }));
         break;
       case TrackSortEnum.DateAdded:
         groups = this.tracks.map(track => track.createDate)
-                            .map(date => ({ title: date,
-                                            tracks: this.tracks.filter(track => track.createDate.toString() === date),
-                                            isLoaded: false
-                                          }));
+                            .map(date => ({
+                              title: date,
+                              tracks: this.tracks.filter(track => track.createDate.toString() === date)
+                            }));
         break;
       case TrackSortEnum.None:
       default:
