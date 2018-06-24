@@ -1,16 +1,16 @@
 <nav>
   <div class="nav nav-tabs" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-songs" role="tab" aria-controls="nav-songs"
-      aria-selected="true" (click)="selectMusicTab = MusicTabs.Songs">Songs</a>
+      aria-selected="true" (click)="updateMusicTab(MusicTabs.Songs)">Songs</a>
     <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-artists" role="tab" aria-controls="nav-artists"
-      aria-selected="false" (click)="selectMusicTab = MusicTabs.Artists">Artists</a>
+      aria-selected="false" (click)="updateMusicTab(MusicTabs.Artists)">Artists</a>
     <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-albums" role="tab" aria-controls="nav-albums"
-      aria-selected="false" (click)="selectMusicTab = MusicTabs.Albums">Albums</a>
+      aria-selected="false" (click)="updateMusicTab(MusicTabs.Albums)">Albums</a>
   </div>
 </nav>
 <button (click)="loadTracks()">test</button>
 <div class="tab-content" id="nav-tabContent">
-  <app-music-settings [itemCount]="tracks.length" [albumSort]="currentAlbumSort" [trackSort]="currentTrackSort" [selectedMusicTab]="selectMusicTab"
+  <app-music-settings [itemCount]="musicCount" [albumSort]="currentAlbumSort" [trackSort]="currentTrackSort" [selectedMusicTab]="selectMusicTab"
     [genres]=genres></app-music-settings>
   <div class="tab-pane fade show active ml-tracks" id="nav-songs" role="tabpanel" aria-labelledby="nav-songs-tab">
     <div #trackList *ngFor="let group of trackSortGroups">

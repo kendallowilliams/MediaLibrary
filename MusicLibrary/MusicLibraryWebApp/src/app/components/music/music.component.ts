@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AlbumService } from '../../services/album.service';
@@ -24,6 +24,8 @@ import { ITrackList, IAlbumList, IArtistList } from '../../shared/interfaces/mus
 export class MusicComponent implements OnInit {
   public MusicTabs = MusicTabEnum;
 
+  @Input() musicCount: number;
+
   letters = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter => letter.toUpperCase());
   tracks: Track[];
   artists: Artist[];
@@ -43,6 +45,7 @@ export class MusicComponent implements OnInit {
     private route: ActivatedRoute) {
     this.currentAlbumSort = AlbumSortEnum.AtoZ;
     this.currentTrackSort = TrackSortEnum.AtoZ;
+    this.musicCount = 0;
   }
 
   ngOnInit() {
@@ -62,12 +65,15 @@ export class MusicComponent implements OnInit {
     {
       case MusicTabEnum.Songs:
         this.trackSortGroups = this.getTrackSortGroups();
+        this.musicCount = this.tracks.length;
         break;
       case MusicTabEnum.Artists:
         this.artistSortGroups = this.getArtistSortGroups();
+        this.musicCount = this.artists.length;
         break;
       case MusicTabEnum.Albums:
         this.albumSortGroups = this.getAlbumSortGroups();
+        this.musicCount = this.albums.length;
         break;
       case MusicTabEnum.None:
         this.albumSortGroups = [];

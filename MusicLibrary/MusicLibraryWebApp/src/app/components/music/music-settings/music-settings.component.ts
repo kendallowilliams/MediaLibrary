@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from '../enums/music-enum';
 import { Genre } from '../../../shared/models/genre.model';
@@ -9,6 +9,7 @@ import { Genre } from '../../../shared/models/genre.model';
   styleUrls: ['./music-settings.component.css']
 })
 export class MusicSettingsComponent implements OnInit {
+  public MusicTabs = MusicTabEnum;
   trackSortOptions = [
     { id: TrackSortEnum.Album, name: this.getTrackSortEnumDisplay(TrackSortEnum.Album) },
     { id: TrackSortEnum.Artist, name: this.getTrackSortEnumDisplay(TrackSortEnum.Artist) },
@@ -22,15 +23,30 @@ export class MusicSettingsComponent implements OnInit {
     { id: AlbumSortEnum.ReleaseYear, name: this.getAlbumSortEnumDisplay(AlbumSortEnum.ReleaseYear) }
   ];
 
+  private selectedGenreId: number;
+
   @Input() itemCount: number;
   @Input() trackSort: TrackSortEnum;
   @Input() albumSort: AlbumSortEnum;
   @Input() selectedMusicTab: MusicTabEnum;
   @Input() genres: Genre[];
 
+  @Output() genreUpdated = new EventEmitter<number>();
+  @Output() trackSortUpdated = new EventEmitter<TrackSortEnum>();
+  @Output() albumSortUpdated = new EventEmitter<AlbumSortEnum>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  genreSelectionChanged(genreId: number): void {
+    this.genreUpdated.emit(genreId);
+    this.selectedGenreId = genreId;
+  }
+
+  trackSortSelectionChanged(): void {
+
   }
 
   getSortDisplay(): string {

@@ -4,8 +4,21 @@
   </div>
   <div>
     Sort by: {{getSortDisplay()}}
+    <select *ngIf="selectedMusicTab == MusicTabs.Songs">
+        <option value="{{option.id}}" *ngFor="let option of trackSortOptions">{{option.name}}</option>
+    </select>
+    <select *ngIf="selectedMusicTab == MusicTabs.Albums">
+      <option value="{{option.id}}" *ngFor="let option of albumSortOptions">{{option.name}}</option>
+    </select>
+    <select *ngIf="selectedMusicTab == MusicTabs.Artists" disabled="true">
+      <option>A to Z</option>
+    </select>
   </div>
-  <div>
+  <div *ngIf="selectedMusicTab != MusicTabs.Artists">
     Genre:
+    <select (change)="genreSelectionChanged($event.target.value)">
+        <option value="-1">All genres</option>
+        <option value="{{genre.id}}" *ngFor="let genre of genres">{{genre.name}}</option>
+    </select>
   </div>
 </div>
