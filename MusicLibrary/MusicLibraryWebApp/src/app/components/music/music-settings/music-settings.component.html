@@ -16,7 +16,7 @@
   </div>
   <div *ngIf="selectedMusicTab != MusicTabs.Artists">
     Genre:
-    <select (change)="genreSelectionChanged($event.target.value)">
+    <select (change)="genreSelectionChanged($event.target.value)" value="selectedGenreId">
         <option value="-1">All genres</option>
         <option value="{{genre.id}}" *ngFor="let genre of genres">{{genre.name}}</option>
     </select>

@@ -24,10 +24,10 @@ export class MusicSettingsComponent implements OnInit {
   ];
 
   private selectedGenreId: number;
+  private trackSort: TrackSortEnum;
+  private albumSort: AlbumSortEnum;
 
   @Input() itemCount: number;
-  @Input() trackSort: TrackSortEnum;
-  @Input() albumSort: AlbumSortEnum;
   @Input() selectedMusicTab: MusicTabEnum;
   @Input() genres: Genre[];
 
