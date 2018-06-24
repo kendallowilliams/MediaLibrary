@@ -5,7 +5,7 @@ import { Artist } from "../models/artist.model";
 export interface ITrackList {
   title:string;
   tracks: Track[];
-  load();
+  loadCallback();
 }
 
 export interface IAlbumList {

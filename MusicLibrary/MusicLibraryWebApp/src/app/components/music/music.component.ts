@@ -54,7 +54,7 @@ export class MusicComponent implements OnInit {
   }
 
   loadTracks(): void {
-    this.trackSortGroups.forEach(group => group.load());
+    this.trackSortGroups.forEach(group => group.loadCallback());
   }
 
   getTrackSortGroups(): ITrackList[] {

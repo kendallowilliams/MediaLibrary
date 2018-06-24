@@ -19,7 +19,7 @@ export class TrackListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.group.load = () => this.load();
+    this.group.loadCallback = () => this.load();
   }
 
   load(): void {
