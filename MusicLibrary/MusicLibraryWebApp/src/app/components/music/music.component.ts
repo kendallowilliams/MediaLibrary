@@ -13,7 +13,7 @@ import { Genre } from '../../shared/models/genre.model';
 import { ActivatedRoute } from '@angular/router';
 
 import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
-import { ITrackList } from '../../shared/interfaces/music.interface';
+import { ITrackList, IAlbumList, IArtistList } from '../../shared/interfaces/music.interface';
 
 @Component({
   selector: 'app-music',
@@ -34,6 +34,8 @@ export class MusicComponent implements OnInit {
   trackSortOptions: any[];
   albumSortOptions: any[];
   trackSortGroups: ITrackList[];
+  artistSortGroups: IArtistList[];
+  albumSortGroups: IAlbumList[];
   selectMusicTab: MusicTabEnum;
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
@@ -41,7 +43,6 @@ export class MusicComponent implements OnInit {
     private route: ActivatedRoute) {
     this.currentAlbumSort = AlbumSortEnum.AtoZ;
     this.currentTrackSort = TrackSortEnum.AtoZ;
-    this.selectMusicTab = MusicTabEnum.Songs;
   }
 
   ngOnInit() {
@@ -50,7 +51,29 @@ export class MusicComponent implements OnInit {
     this.getAlbums();
     this.getGenres();
     this.updateTracks();
-    this.trackSortGroups = this.getTrackSortGroups();
+    this.updateAlbums();
+    this.updateMusicTab(MusicTabEnum.Songs);
+  }
+
+  updateMusicTab(musicTab: MusicTabEnum): void {
+    this.selectMusicTab = musicTab;
+
+    switch(musicTab)
+    {
+      case MusicTabEnum.Songs:
+        this.trackSortGroups = this.getTrackSortGroups();
+        break;
+      case MusicTabEnum.Artists:
+        this.artistSortGroups = this.getArtistSortGroups();
+        break;
+      case MusicTabEnum.Albums:
+        this.albumSortGroups = this.getAlbumSortGroups();
+        break;
+      case MusicTabEnum.None:
+        this.albumSortGroups = [];
+      default:
+        break;
+    }
   }
 
   loadTracks(): void {
@@ -58,7 +81,7 @@ export class MusicComponent implements OnInit {
   }
 
   getTrackSortGroups(): ITrackList[] {
-    let groups = [];
+    let groups: ITrackList[] = [];
 
     switch (this.currentTrackSort) {
       case TrackSortEnum.Album:
@@ -95,14 +118,62 @@ export class MusicComponent implements OnInit {
         break;
     }
 
-    return groups.filter(group => group.tracks && group.tracks.length > 0);
+    return groups.filter(group => group.tracks.length > 0);
+  }
+
+  getArtistSortGroups(): IArtistList[] {
+    return ['&', '#'].concat(this.letters).map(char => ({
+      title: char,
+      artists: this.getArtistsAtoZ(char)
+    }));
+  }
+
+  getAlbumSortGroups(): IAlbumList[] {
+    let groups: IAlbumList[] = [];
+
+    switch(this.currentAlbumSort)
+    {
+      case AlbumSortEnum.Artist:
+        groups = this.artists.map(artist => artist.name)
+                             .map(artist => ({
+                               title: artist,
+                               albums: this.albums.filter(album => album.artist === artist)
+                            }));
+        break;
+      case AlbumSortEnum.AtoZ:
+        groups = ['&', '#'].concat(this.letters)
+                          .map(char => ({
+                              title: char,
+                              albums: this.getAlbumsAtoZ(char)
+                            }));
+        break;
+      case AlbumSortEnum.DateAdded:
+        groups = this.albums.map(track => track.createDate)
+                            .map(date => ({
+                              title: date,
+                              albums: this.tracks.filter(album => album.createDate.toString() === date)
+                            }));
+        break;
+      case AlbumSortEnum.ReleaseYear:
+        groups = this.albums.map(album => album.year)
+                            .map(year => ({
+                              title: year.toString(),
+                              albums: this.albums.filter(album => album.year === year)
+                            }));
+        break;
+      case AlbumSortEnum.None:
+      default:
+        groups = [];
+        break;
+    }
+
+    return groups;
   }
 
   getTracksAtoZ(char: string): Track[] {
-    let tracks = null;
+    let tracks = [];
 
-    switch(char)
-    {
+    switch(char) {
       case '&':
         tracks = this.tracks.filter(track => isNaN(parseInt(track.title[0])) &&
           !this.letters.includes(track.title[0].toUpperCase()));
@@ -118,11 +189,56 @@ export class MusicComponent implements OnInit {
     return tracks;
   };
 
+  getArtistsAtoZ(char: string): Artist[] {
+    let artists = [];
+
+    switch(char) {
+      case '&':
+        artists = this.artists.filter(artist => isNaN(parseInt(artist.name[0])) &&
+          !this.letters.includes(artist.name[0].toUpperCase()));
+        break;
+      case '#':
+        artists = this.artists.filter(artist => !isNaN(parseInt(artist.name[0])));
+        break;
+      default:
+        artists = this.artists.filter(artist => artist.name[0].toUpperCase() === char);
+        break;
+    }
+
+    return artists;
+  };
+
+  getAlbumsAtoZ(char: string): Album[] {
+    let albums = [];
+
+    switch(char) {
+      case '&':
+        albums = this.albums.filter(album => isNaN(parseInt(album.title[0])) &&
+          !this.letters.includes(album.title[0].toUpperCase()));
+        break;
+      case '#':
+        albums = this.albums.filter(album => !isNaN(parseInt(album.title[0])));
+        break;
+      default:
+        albums = this.albums.filter(album => album.title[0].toUpperCase() === char);
+        break;
+    }
+
+    return albums;
+  };
+
   updateTracks(): void {
     this.tracks.forEach(track => {
       track.album = this.getAlbumTitleById(track.albumId);
       track.artist = this.getArtistNameById(track.artistId);
       track.genre = this.getGenreNameById(track.genreId);
+    });
+  }
+
+  updateAlbums(): void {
+    this.albums.forEach(album => {
+      album.artist = this.getArtistNameById(album.artistId);
+      album.genre = this.getGenreNameById(album.genreId);
     });
   }
 

@@ -5,15 +5,15 @@ import { Artist } from "../models/artist.model";
 export interface ITrackList {
   title:string;
   tracks: Track[];
-  loadCallback();
+  loadCallback?();
 }
 
 export interface IAlbumList {
   title:string;
-  tracks: Album[];
+  albums: Album[];
 }
 
 export interface IArtistList {
   title:string;
-  tracks: Artist[];
+  artists: Artist[];
 }
