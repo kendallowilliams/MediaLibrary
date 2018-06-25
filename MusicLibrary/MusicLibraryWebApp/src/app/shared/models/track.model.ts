@@ -14,12 +14,13 @@ export class Track implements Deserializable {
     position: number;
     year: number;
     duration: number;
-    durationDisplay: Date;
+    durationDisplay: string;
     playCount: number;
-    createDate: string;
+    createDate: Date;
 
     deserialize(input: any) {
         Object.assign(this, input);
+        this.createDate = new Date(input.createDate);
         return this;
     }
 }

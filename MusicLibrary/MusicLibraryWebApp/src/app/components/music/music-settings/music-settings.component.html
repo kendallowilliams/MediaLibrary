@@ -4,10 +4,10 @@
   </div>
   <div>
     Sort by: {{getSortDisplay()}}
-    <select *ngIf="selectedMusicTab == MusicTabs.Songs">
+    <select *ngIf="selectedMusicTab == MusicTabs.Songs" (change)="trackSortSelectionChanged($event.target.value)">
         <option value="{{option.id}}" *ngFor="let option of trackSortOptions">{{option.name}}</option>
     </select>
-    <select *ngIf="selectedMusicTab == MusicTabs.Albums">
+    <select *ngIf="selectedMusicTab == MusicTabs.Albums" (change)="albumSortSelectionChanged($event.target.value)">
       <option value="{{option.id}}" *ngFor="let option of albumSortOptions">{{option.name}}</option>
     </select>
     <select *ngIf="selectedMusicTab == MusicTabs.Artists" disabled="true">

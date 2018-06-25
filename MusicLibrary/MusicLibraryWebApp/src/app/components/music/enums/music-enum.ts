@@ -1,9 +1,9 @@
 export enum TrackSortEnum {
-  DateAdded,
-  AtoZ,
-  Artist,
-  Album,
-  None = -1
+  DateAdded = "0",
+  AtoZ = "1",
+  Artist = "2",
+  Album = "3",
+  None = "-1"
 }
 
 export enum AlbumSortEnum {

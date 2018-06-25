@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 import { ITrackList, IAlbumList, IArtistList } from '../../shared/interfaces/music.interface';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-music',
@@ -82,6 +83,16 @@ export class MusicComponent implements OnInit {
     }
   }
 
+  updateTrackSort(trackSort: TrackSortEnum): void {
+    this.currentTrackSort = trackSort;
+    this.trackSortGroups = this.getTrackSortGroups();
+  }
+
+  updateAlbumSort(albumSort: AlbumSortEnum): void {
+    this.currentAlbumSort = albumSort;
+    this.albumSortGroups = this.getAlbumSortGroups();
+  }
+
   loadTracks(): void {
     this.trackSortGroups.forEach(group => group.loadCallback());
   }
@@ -112,10 +123,11 @@ export class MusicComponent implements OnInit {
                             }));
         break;
       case TrackSortEnum.DateAdded:
-        groups = this.tracks.map(track => track.createDate)
+        let dates = this.tracks.map(track => track.createDate.toDateString());
+        groups = dates.filter((date, index, dates) => dates.findIndex(item => item === date) == index)
                             .map(date => ({
                               title: date,
-                              tracks: this.tracks.filter(track => track.createDate.toString() === date)
+                              tracks: this.tracks.filter(track => track.createDate.toDateString() === date)
                             }));
         break;
       case TrackSortEnum.None:
@@ -154,10 +166,10 @@ export class MusicComponent implements OnInit {
                             }));
         break;
       case AlbumSortEnum.DateAdded:
-        groups = this.albums.map(track => track.createDate)
+        groups = this.albums.map(album => album.createDate)
                             .map(date => ({
-                              title: date,
-                              albums: this.tracks.filter(album => album.createDate.toString() === date)
+                              title: date.toString(),
+                              albums: this.tracks.filter(album => album.createDate === date)
                             }));
         break;
       case AlbumSortEnum.ReleaseYear:

@@ -8,7 +8,7 @@ export class Album implements Deserializable {
     genreId: number;
     genre: string;
     year: number;
-    createDate: string;
+    createDate: Date;
 
     deserialize(input: any) {
         Object.assign(this, input);
