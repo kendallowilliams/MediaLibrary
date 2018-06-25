@@ -10,7 +10,7 @@
 </nav>
 <button (click)="loadTracks()">test</button>
 <div class="tab-content" id="nav-tabContent">
-  <app-music-settings [itemCount]="musicCount" [selectedMusicTab]="selectMusicTab" (albumsortupdated)="null" (genreupdated)="null"
+  <app-music-settings [itemCount]="musicCount" [selectedMusicTab]="selectMusicTab" (albumsortupdated)="updateAlbumSort($event)" (genreupdated)="null"
   (tracksortupdated)="updateTrackSort($event)"></app-music-settings>
   <div class="tab-pane fade show active ml-tracks" id="nav-songs" role="tabpanel" aria-labelledby="nav-songs-tab">
     <div #trackList *ngFor="let group of trackSortGroups">

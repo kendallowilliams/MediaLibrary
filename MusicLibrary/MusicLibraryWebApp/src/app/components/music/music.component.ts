@@ -125,10 +125,10 @@ export class MusicComponent implements OnInit {
       case TrackSortEnum.DateAdded:
         let dates = this.tracks.map(track => track.createDate.toDateString());
         groups = dates.filter((date, index, dates) => dates.findIndex(item => item === date) == index)
-                            .map(date => ({
-                              title: date,
-                              tracks: this.tracks.filter(track => track.createDate.toDateString() === date)
-                            }));
+                      .map(date => ({
+                        title: date,
+                        tracks: this.tracks.filter(track => track.createDate.toDateString() === date)
+                      }));
         break;
       case TrackSortEnum.None:
       default:
@@ -166,11 +166,12 @@ export class MusicComponent implements OnInit {
                             }));
         break;
       case AlbumSortEnum.DateAdded:
-        groups = this.albums.map(album => album.createDate)
-                            .map(date => ({
-                              title: date.toString(),
-                              albums: this.tracks.filter(album => album.createDate === date)
-                            }));
+        let dates = this.albums.map(album => album.createDate.toDateString());
+        groups = dates.filter((date, index, dates) => dates.findIndex(item => item === date) == index)
+                      .map(date => ({
+                        title: date.toString(),
+                        albums: this.tracks.filter(album => album.createDate.toDateString() === date)
+                      }));
         break;
       case AlbumSortEnum.ReleaseYear:
         groups = this.albums.map(album => album.year)

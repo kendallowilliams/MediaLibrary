@@ -12,6 +12,7 @@ export class Album implements Deserializable {
 
     deserialize(input: any) {
         Object.assign(this, input);
+        this.createDate = new Date(input.createDate);
         return this;
     }
 }
