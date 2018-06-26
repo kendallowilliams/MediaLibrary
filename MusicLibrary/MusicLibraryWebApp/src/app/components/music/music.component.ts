@@ -171,7 +171,7 @@ export class MusicComponent implements OnInit {
         groups = dates.filter((date, index, dates) => dates.findIndex(item => item === date) == index)
                       .map(date => ({
                         title: date.toString(),
-                        albums: this.tracks.filter(album => album.createDate.toDateString() === date)
+                        albums: this.albums.filter(album => album.createDate.toDateString() === date)
                       }));
         break;
       case AlbumSortEnum.ReleaseYear:
