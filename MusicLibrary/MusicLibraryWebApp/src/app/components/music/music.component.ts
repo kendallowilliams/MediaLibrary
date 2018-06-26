@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { AlbumService } from '../../services/album.service';
 import { ArtistService } from '../../services/artist.service';
@@ -14,7 +13,6 @@ import { ActivatedRoute } from '@angular/router';
 
 import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 import { ITrackList, IAlbumList, IArtistList } from '../../shared/interfaces/music.interface';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-music',
@@ -44,8 +42,6 @@ export class MusicComponent implements OnInit {
   constructor(private trackService: TrackService, private artistService: ArtistService,
     private albumService: AlbumService, private genreService: GenreService,
     private route: ActivatedRoute) {
-    this.currentAlbumSort = AlbumSortEnum.AtoZ;
-    this.currentTrackSort = TrackSortEnum.AtoZ;
     this.musicCount = 0;
   }
 
@@ -65,7 +61,6 @@ export class MusicComponent implements OnInit {
     switch(musicTab)
     {
       case MusicTabEnum.Songs:
-        this.trackSortGroups = this.getTrackSortGroups();
         this.musicCount = this.tracks.length;
         break;
       case MusicTabEnum.Artists:
@@ -73,7 +68,6 @@ export class MusicComponent implements OnInit {
         this.musicCount = this.artists.length;
         break;
       case MusicTabEnum.Albums:
-        this.albumSortGroups = this.getAlbumSortGroups();
         this.musicCount = this.albums.length;
         break;
       case MusicTabEnum.None:
@@ -84,13 +78,17 @@ export class MusicComponent implements OnInit {
   }
 
   updateTrackSort(trackSort: TrackSortEnum): void {
-    this.currentTrackSort = trackSort;
-    this.trackSortGroups = this.getTrackSortGroups();
+    if (this.currentTrackSort != trackSort) {
+      this.currentTrackSort = trackSort;
+      this.trackSortGroups = this.getTrackSortGroups();
+    }
   }
 
   updateAlbumSort(albumSort: AlbumSortEnum): void {
-    this.currentAlbumSort = albumSort;
-    this.albumSortGroups = this.getAlbumSortGroups();
+    if (this.currentAlbumSort != albumSort) {
+      this.currentAlbumSort = albumSort;
+      this.albumSortGroups = this.getAlbumSortGroups();
+    }
   }
 
   loadTracks(): void {
@@ -123,7 +121,7 @@ export class MusicComponent implements OnInit {
                             }));
         break;
       case TrackSortEnum.DateAdded:
-        let dates = this.tracks.map(track => track.createDate.toDateString());
+        let dates = this.tracks.map(track => track.createDate.toDateString()).sort().reverse();
         groups = dates.filter((date, index, dates) => dates.findIndex(item => item === date) == index)
                       .map(date => ({
                         title: date,
@@ -166,7 +164,7 @@ export class MusicComponent implements OnInit {
                             }));
         break;
       case AlbumSortEnum.DateAdded:
-        let dates = this.albums.map(album => album.createDate.toDateString());
+        let dates = this.albums.map(album => album.createDate.toDateString()).sort().reverse();
         groups = dates.filter((date, index, dates) => dates.findIndex(item => item === date) == index)
                       .map(date => ({
                         title: date.toString(),
@@ -174,11 +172,12 @@ export class MusicComponent implements OnInit {
                       }));
         break;
       case AlbumSortEnum.ReleaseYear:
-        groups = this.albums.map(album => album.year)
-                            .map(year => ({
-                              title: year.toString(),
-                              albums: this.albums.filter(album => album.year === year)
-                            }));
+        let years = this.albums.map(album => album.year).sort().reverse();
+        groups = years.filter((year, index, years) => years.findIndex(item => item === year) == index)
+                      .map(year => ({
+                        title: year == 0 ? "unknown" : year.toString(),
+                        albums: this.albums.filter(album => album.year === year)
+                      }));
         break;
       case AlbumSortEnum.None:
       default:

@@ -3,11 +3,11 @@
     <i class="fa fa-random"></i> Shuffle all ({{itemCount}})
   </div>
   <div>
-    Sort by: {{getSortDisplay()}}
-    <select *ngIf="selectedMusicTab == MusicTabs.Songs" (change)="trackSortSelectionChanged($event.target.value)">
+    Sort by:
+    <select *ngIf="selectedMusicTab == MusicTabs.Songs" value="{{trackSort}}" (change)="trackSortSelectionChanged($event.target.value)">
         <option value="{{option.id}}" *ngFor="let option of trackSortOptions">{{option.name}}</option>
     </select>
-    <select *ngIf="selectedMusicTab == MusicTabs.Albums" (change)="albumSortSelectionChanged($event.target.value)">
+    <select *ngIf="selectedMusicTab == MusicTabs.Albums" value="{{albumSort}}" (change)="albumSortSelectionChanged($event.target.value)">
       <option value="{{option.id}}" *ngFor="let option of albumSortOptions">{{option.name}}</option>
     </select>
     <select *ngIf="selectedMusicTab == MusicTabs.Artists" disabled="true">

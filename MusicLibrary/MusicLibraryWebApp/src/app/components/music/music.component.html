@@ -13,18 +13,18 @@
   <app-music-settings [itemCount]="musicCount" [selectedMusicTab]="selectMusicTab" (albumsortupdated)="updateAlbumSort($event)" (genreupdated)="null"
   (tracksortupdated)="updateTrackSort($event)"></app-music-settings>
   <div class="tab-pane fade show active ml-tracks" id="nav-songs" role="tabpanel" aria-labelledby="nav-songs-tab">
-    <div #trackList *ngFor="let group of trackSortGroups">
+    <div *ngFor="let group of trackSortGroups">
       <app-track-list [group]="group"></app-track-list>
     </div>
   </div>
   <div class="tab-pane fade ml-tracks" id="nav-artists" role="tabpanel" aria-labelledby="nav-artists-tab">
-    <div *ngFor="let artist of artists">
-      <app-artist [artist]=artist></app-artist>
+    <div *ngFor="let group of artistSortGroups">
+      <app-artist-list [group]="group"></app-artist-list>
     </div>
   </div>
   <div class="tab-pane fade ml-tracks" id="nav-albums" role="tabpanel" aria-labelledby="nav-albums-tab">
-    <div *ngFor="let album of albums">
-      <app-album [album]=album [artists]=artists></app-album>
+    <div *ngFor="let group of albumSortGroups">
+      <app-album-list [group]="group"></app-album-list>
     </div>
   </div>
 </div>

@@ -10,15 +10,9 @@ import { Artist } from '../../../shared/models/artist.model';
 
 export class AlbumComponent implements OnInit {
   @Input() album: Album;
-  @Input() artists: Artist[];
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  getArtistNameById(id: number): string {
-    const foundArtist = this.artists.find(artist => artist.id === id);
-    return foundArtist !== undefined && foundArtist !== null ? foundArtist.name : '';
   }
 }

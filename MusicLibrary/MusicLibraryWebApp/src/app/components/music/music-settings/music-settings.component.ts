@@ -40,6 +40,8 @@ export class MusicSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.genreService.getGenres().subscribe(genres => this.genres = genres);
+    this.trackSortSelectionChanged(TrackSortEnum.AtoZ);
+    this.albumSortSelectionChanged(AlbumSortEnum.AtoZ);
   }
 
   genreSelectionChanged(genreId: number): void {
