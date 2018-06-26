@@ -64,7 +64,7 @@ export class MusicComponent implements OnInit {
         this.musicCount = this.tracks.length;
         break;
       case MusicTabEnum.Artists:
-        this.artistSortGroups = this.getArtistSortGroups();
+        this.artistSortGroups = this.getArtistSortGroups(); // currently atoz only option
         this.musicCount = this.artists.length;
         break;
       case MusicTabEnum.Albums:
@@ -100,18 +100,20 @@ export class MusicComponent implements OnInit {
 
     switch (this.currentTrackSort) {
       case TrackSortEnum.Album:
-        groups = this.albums.map(album => album.title)
-                            .map(album => ({
-                              title: album,
-                              tracks: this.tracks.filter(track => track.album === album)
-                            }));
+        let albums = this.albums.map(album => album.title);
+        groups = albums.filter((album, index, albums) => albums.findIndex(item => item === album) == index)
+                       .map(album => ({
+                        title: album,
+                        tracks: this.tracks.filter(track => track.album === album)
+                       }));
         break;
       case TrackSortEnum.Artist:
-        groups = this.artists.map(artist => artist.name)
-                             .map(artist => ({
-                                title: artist,
-                                tracks: this.tracks.filter(track => track.artist === artist)
-                              }));
+        let artists = this.artists.map(artist => artist.name);
+        groups = artists.filter((artist, index, artists) => artists.findIndex(item => item === artist) == index)
+                        .map(artist => ({
+                          title: artist,
+                          tracks: this.tracks.filter(track => track.artist === artist)
+                        }));
         break;
       case TrackSortEnum.AtoZ:
         groups = ['&', '#'].concat(this.letters)
@@ -150,15 +152,16 @@ export class MusicComponent implements OnInit {
     switch(this.currentAlbumSort)
     {
       case AlbumSortEnum.Artist:
-        groups = this.artists.map(artist => artist.name)
-                             .map(artist => ({
-                               title: artist,
-                               albums: this.albums.filter(album => album.artist === artist)
-                            }));
+        let artists = this.artists.map(artist => artist.name);
+        groups = artists.filter((artist, index, artists) => artists.findIndex(item => item === artist) == index)
+                        .map(artist => ({
+                          title: artist,
+                          albums: this.albums.filter(album => album.artist === artist)
+                        }));
         break;
       case AlbumSortEnum.AtoZ:
         groups = ['&', '#'].concat(this.letters)
-                          .map(char => ({
+                            .map(char => ({
                               title: char,
                               albums: this.getAlbumsAtoZ(char)
                             }));
@@ -185,7 +188,7 @@ export class MusicComponent implements OnInit {
         break;
     }
 
-    return groups;
+    return groups.filter(group => group.albums.length > 0);
   }
 
   getTracksAtoZ(char: string): Track[] {
