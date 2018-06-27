@@ -3,7 +3,7 @@ import { Album } from "../models/album.model";
 import { Artist } from "../models/artist.model";
 
 export interface ITrackList {
-  title:string;
+  title: string;
   tracks: Track[];
   loadCallback?();
 }
