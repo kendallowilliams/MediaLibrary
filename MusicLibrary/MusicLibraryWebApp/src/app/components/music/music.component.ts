@@ -13,6 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 import { ITrackList, IAlbumList, IArtistList } from '../../shared/interfaces/music.interface';
+import { TrackListComponent } from './track-list/track-list.component';
+import { TrackComponent } from './track/track.component';
 
 @Component({
   selector: 'app-music',
@@ -22,6 +24,7 @@ import { ITrackList, IAlbumList, IArtistList } from '../../shared/interfaces/mus
 
 export class MusicComponent implements OnInit {
   public MusicTabs = MusicTabEnum;
+  private songsHeight: number;
 
   @Input() musicCount: number;
 
@@ -81,6 +84,8 @@ export class MusicComponent implements OnInit {
     if (this.currentTrackSort != trackSort) {
       this.currentTrackSort = trackSort;
       this.trackSortGroups = this.getTrackSortGroups();
+      this.songsHeight = (TrackListComponent.TrackListHeaderHeight * this.trackSortGroups.length) +
+        (TrackComponent.TrackHeight * this.tracks.length);
     }
   }
 

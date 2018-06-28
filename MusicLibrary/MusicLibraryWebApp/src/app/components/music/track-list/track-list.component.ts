@@ -9,6 +9,8 @@ import { TrackComponent } from '../track/track.component';
   styleUrls: ['./track-list.component.css']
 })
 export class TrackListComponent implements OnInit {
+  public static TrackListHeaderHeight: number = 30;
+
   @Input() group: ITrackList;
   @Input() tracks: Track[];
 
