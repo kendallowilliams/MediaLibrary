@@ -9,10 +9,16 @@ import { Track } from '../../../shared/models/track.model';
 })
 
 export class TrackComponent implements OnInit {
+  public static TrackHeight: number = 40;
+
   @Input() track: Track;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  getTrackHeight(): number {
+    return TrackComponent.TrackHeight;
   }
 }

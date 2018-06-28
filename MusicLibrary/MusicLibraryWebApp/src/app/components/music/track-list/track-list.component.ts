@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ElementRef, Output, APP_INITIALIZER } from '@angular/core';
 import { Track } from '../../../shared/models/track.model';
 import { ITrackList } from '../../../shared/interfaces/music.interface';
+import { TrackComponent } from '../track/track.component';
 
 @Component({
   selector: 'app-track-list',
@@ -11,7 +12,7 @@ export class TrackListComponent implements OnInit {
   @Input() group: ITrackList;
   @Input() tracks: Track[];
 
-  private height: number;
+  private tracksHeight: number;
   private top: number;
 
 
@@ -19,6 +20,7 @@ export class TrackListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tracksHeight = this.group.tracks.length * TrackComponent.TrackHeight;
     this.group.loadCallback = () => this.load();
   }
 
