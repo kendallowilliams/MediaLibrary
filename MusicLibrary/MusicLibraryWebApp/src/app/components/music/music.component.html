@@ -17,12 +17,12 @@
       <app-track-list [group]="group"></app-track-list>
     </div>
   </div>
-  <div class="tab-pane fade ml-tracks" id="nav-artists" role="tabpanel" aria-labelledby="nav-artists-tab">
+  <div class="tab-pane fade" id="nav-artists" role="tabpanel" aria-labelledby="nav-artists-tab">
     <div *ngFor="let group of artistSortGroups">
       <app-artist-list [group]="group"></app-artist-list>
     </div>
   </div>
-  <div class="tab-pane fade ml-tracks" id="nav-albums" role="tabpanel" aria-labelledby="nav-albums-tab">
+  <div class="tab-pane fade" id="nav-albums" role="tabpanel" aria-labelledby="nav-albums-tab">
     <div *ngFor="let group of albumSortGroups">
       <app-album-list [group]="group"></app-album-list>
     </div>
