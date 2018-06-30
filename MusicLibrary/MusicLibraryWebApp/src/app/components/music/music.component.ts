@@ -298,4 +298,8 @@ export class MusicComponent implements OnInit {
     const foundArtist = this.artists.find(artist => artist.id === id);
     return foundArtist !== undefined && foundArtist !== null ? foundArtist.name : '';
   }
+
+  handleScroll(evt: any): void {
+    alert(evt);
+  }
 }
