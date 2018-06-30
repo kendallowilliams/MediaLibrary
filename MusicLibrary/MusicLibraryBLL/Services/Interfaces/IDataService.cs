@@ -12,7 +12,7 @@ namespace MusicLibraryBLL.Services.Interfaces
     {
         Task<T> Get<T>(object id) where T: BaseModel;
 
-        Task<IEnumerable<T>> GetList<T>() where T : BaseModel;
+        Task<IEnumerable<T>> GetList<T>(object predicate = null) where T : BaseModel;
         
         Task Insert<T>(T entity) where T : BaseModel;
 
@@ -30,6 +30,6 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<int> Execute(string sql, object parameters);
 
-        Task<int> Count<T>() where T : BaseModel;
+        Task<int> Count<T>(object predicate = null) where T : BaseModel;
     }
 }

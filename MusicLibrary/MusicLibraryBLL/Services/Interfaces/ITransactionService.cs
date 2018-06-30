@@ -12,7 +12,7 @@ namespace MusicLibraryBLL.Services.Interfaces
     {
         Task<Transaction> GetTransaction(object id);
 
-        Task<IEnumerable<Transaction>> GetTransactions();
+        Task<IEnumerable<Transaction>> GetTransactions(object predicate = null);
 
         Task<int> InsertTransaction(Transaction transaction);
 
@@ -25,5 +25,7 @@ namespace MusicLibraryBLL.Services.Interfaces
         Task UpdateTransactionInProcess(Transaction transaction);
 
         Task UpdateTransactionErrored(Transaction transaction, Exception exception);
+
+        Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType);
     }
 }

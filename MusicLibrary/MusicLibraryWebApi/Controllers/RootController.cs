@@ -30,7 +30,8 @@ namespace MusicLibraryWebApi.Controllers
         public async Task<HttpResponseMessage> Read([FromBody] JObject inData)
         {
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Accepted);
-            Transaction transaction = null;
+            Transaction transaction = null,
+                        existingTransaction = null;
 
             try
             {
@@ -40,19 +41,31 @@ namespace MusicLibraryWebApi.Controllers
                      validData = !string.IsNullOrWhiteSpace(path) &&
                                  bool.TryParse(inData["copy"]?.ToString(), out copyFiles) &&
                                  bool.TryParse(inData["recursive"]?.ToString(), out recursive);
-                string invalidDataMessage = $"Invalid Data: [{inData}]";
+                string responseMessage = $"Invalid Data: [{inData}]",
+                       transactionType = Enum.GetName(typeof(TransactionTypes), TransactionTypes.Read);
 
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
-
-                if (validData)
+                existingTransaction = await transactionService.GetActiveTransactionByType(TransactionTypes.Read);
+                
+                if (validData && existingTransaction== null)
                 {
                     await transactionService.UpdateTransactionInProcess(transaction);
                     HostingEnvironment.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, path, recursive, copyFiles));
                 }
                 else
                 {
-                    await transactionService.UpdateTransactionCompleted(transaction, invalidDataMessage);
-                    response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, invalidDataMessage);
+                    if (existingTransaction != null)
+                    {
+                        responseMessage = $"{transactionType} is already running. See transaction #{existingTransaction.Id}";
+                        response = Request.CreateResponse(HttpStatusCode.Conflict, responseMessage);
+                    }
+                    else if (!validData)
+                    {
+                        responseMessage = $"Invalid Data: [{inData}]";
+                        response = Request.CreateErrorResponse(HttpStatusCode.BadRequest, responseMessage);
+                    }
+
+                    await transactionService.UpdateTransactionCompleted(transaction, responseMessage);
                 }
             }
             catch (Exception ex)

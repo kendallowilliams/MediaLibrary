@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using DapperExtensions;
 using Fody;
 using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
@@ -22,7 +23,7 @@ namespace MusicLibraryBLL.Services
         public TransactionService()
         { }
 
-        public async Task<IEnumerable<Transaction>> GetTransactions() => await dataService.GetList<Transaction>();
+        public async Task<IEnumerable<Transaction>> GetTransactions(object predicate = null) => await dataService.GetList<Transaction>(predicate);
 
         public async Task<Transaction> GetTransaction(object id) => await dataService.Get<Transaction>(id);
 
@@ -70,6 +71,18 @@ namespace MusicLibraryBLL.Services
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
             }
+        }
+
+        public async Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType)
+        {
+            Transaction transaction = null;
+            var group = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
+
+            group.Predicates.Add(Predicates.Field<Transaction>(t => t.Type, Operator.Eq, transactionType));
+            group.Predicates.Add(Predicates.Field<Transaction>(t => t.Status, Operator.Eq, TransactionStatus.InProcess));
+            transaction = (await GetTransactions(group)).FirstOrDefault();
+
+            return transaction;
         }
     }
 }

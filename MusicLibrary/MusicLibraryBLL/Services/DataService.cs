@@ -28,13 +28,13 @@ namespace MusicLibraryBLL.Services
             connectionString = ConfigurationManager.ConnectionStrings["MusicLibraryConnectionString"].ConnectionString;
         }
 
-        public async Task<IEnumerable<T>> GetList<T>() where T: BaseModel
+        public async Task<IEnumerable<T>> GetList<T>(object predicate = null) where T: BaseModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
             using (IDbConnection conn = GetNewConnection())
             {
-                results = await conn.GetListAsync<T>();
+                results = await conn.GetListAsync<T>(predicate);
             }
 
             return results;
@@ -114,13 +114,13 @@ namespace MusicLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Count<T>() where T : BaseModel
+        public async Task<int> Count<T>(object predicate = null) where T : BaseModel
         {
             int result = default(int);
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.CountAsync<T>();
+                result = await conn.CountAsync<T>(predicate);
             }
 
             return result;
