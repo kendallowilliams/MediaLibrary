@@ -13,7 +13,7 @@ using static MusicLibraryBLL.Enums.TransactionEnums;
 
 namespace MusicLibraryWebApi.Controllers
 {
-    [Export]
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class GenreController : ApiController
     {
         private readonly IGenreService genreService;
