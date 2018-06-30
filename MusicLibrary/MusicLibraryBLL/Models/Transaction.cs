@@ -9,10 +9,10 @@ namespace MusicLibraryBLL.Models
 {
     public class Transaction: BaseModel
     {
-        public Transaction()
+        public Transaction(TransactionTypes transactionType)
         {
             Status = TransactionStatus.NotStarted;
-            Type = TransactionTypes.None;
+            Type = transactionType;
         }
 
         public TransactionTypes Type { get; set; }

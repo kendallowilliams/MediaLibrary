@@ -9,30 +9,61 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using static MusicLibraryBLL.Enums.TransactionEnums;
 
 namespace MusicLibraryWebApi.Controllers
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export]
     public class GenreController : ApiController
     {
-        private IGenreService genreService;
+        private readonly IGenreService genreService;
+        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
-        public GenreController(IGenreService genreService)
+        public GenreController(IGenreService genreService, ITransactionService transactionService)
         {
             this.genreService = genreService;
+            this.transactionService = transactionService;
         }
 
         // GET: api/Genre
         public async Task<IEnumerable<Genre>> Get()
         {
-            return (await genreService.GetGenres()).OrderBy(genre => genre.Name);
+            IEnumerable<Genre> genres = Enumerable.Empty<Genre>();
+            Transaction transaction = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.GetGenres);
+                genres = await genreService.GetGenres();
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
+
+            return genres.OrderBy(genre => genre.Name);
         }
 
         // GET: api/Genre/5
         public async Task<Genre> Get(int id)
         {
-            return await genreService.GetGenre(id);
+            Genre genre = null;
+            Transaction transaction = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.GetGenre);
+                genre = await genreService.GetGenre(id);
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
+
+            return genre;
         }
     }
 }

@@ -22,16 +22,18 @@ namespace MusicLibraryBLL.Services
         private readonly IAlbumService albumService;
         private readonly IGenreService genreService;
         private readonly ITrackService trackService;
+        private readonly ITransactionService transactionService;
 
-         [ImportingConstructor]
+        [ImportingConstructor]
         public FileService(IId3Service id3Service, IArtistService artistService, IAlbumService albumService,
-                           IGenreService genreService, ITrackService trackService)
+                           IGenreService genreService, ITrackService trackService, ITransactionService transactionService)
         {
             this.id3Service = id3Service;
             this.artistService = artistService;
             this.albumService = albumService;
             this.genreService = genreService;
             this.trackService = trackService;
+            this.transactionService = transactionService;
         }
 
         public async Task<IEnumerable<string>> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false)
@@ -60,16 +62,25 @@ namespace MusicLibraryBLL.Services
 
         public async Task Delete(string path) => await Task.Run(() => File.Delete(path));
 
-        public async Task ReadDirectory(string path, bool recursive = true, bool copyFiles = false)
+        public async Task ReadDirectory(Transaction transaction, string path, bool recursive = true, bool copyFiles = false)
         {
             IEnumerable<string> fileTypes = ConfigurationManager.AppSettings["FileTypes"].Split(new[] { ',' })
                                                                                          .Select(fileType => fileType.ToLower());
             IEnumerable<string> allFiles = await EnumerateFiles(path, recursive: recursive);
             var fileGroups = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()))
                                      .GroupBy(file => new { directory = Path.GetDirectoryName(file) });
-            foreach(var group in fileGroups)
+            try
             {
-                foreach (string file in group) { await ReadMediaFile(file, copyFiles); }
+                foreach (var group in fileGroups)
+                {
+                    foreach (string file in group) { await ReadMediaFile(file, copyFiles); }
+                }
+
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch(Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
             }
         }
 

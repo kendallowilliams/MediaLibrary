@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MusicLibraryBLL.Enums.TransactionEnums;
 
 namespace MusicLibraryBLL.Services.Interfaces
 {
@@ -16,5 +17,13 @@ namespace MusicLibraryBLL.Services.Interfaces
         Task<int> InsertTransaction(Transaction transaction);
 
         Task<bool> UpdateTransaction(Transaction transaction);
+
+        Task<Transaction> GetNewTransaction(TransactionTypes transactionType);
+
+        Task UpdateTransactionCompleted(Transaction transaction, string statusMessage = "");
+
+        Task UpdateTransactionInProcess(Transaction transaction);
+
+        Task UpdateTransactionErrored(Transaction transaction, Exception exception);
     }
 }

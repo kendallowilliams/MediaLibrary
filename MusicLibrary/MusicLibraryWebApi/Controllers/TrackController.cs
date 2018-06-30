@@ -12,32 +12,63 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using static MusicLibraryBLL.Enums.TransactionEnums;
 
 namespace MusicLibraryWebApi.Controllers
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export]
     public class TrackController : ApiController
     {
-        private ITrackService trackService;
-        private IFileService fileService;
+        private readonly ITrackService trackService;
+        private readonly IFileService fileService;
+        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
-        public TrackController(ITrackService trackService, IFileService fileService)
+        public TrackController(ITrackService trackService, IFileService fileService, ITransactionService transactionService)
         {
             this.trackService = trackService;
             this.fileService = fileService;
+            this.transactionService = transactionService;
         }
 
         // GET: api/Track
         public async Task<IEnumerable<Track>> Get()
         {
-            return (await trackService.GetTracks()).OrderBy(track => track.Title);
+            IEnumerable<Track> tracks = Enumerable.Empty<Track>();
+            Transaction transaction = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTracks);
+                tracks = await trackService.GetTracks();
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch(Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
+
+            return tracks.OrderBy(track => track.Title);
         }
 
         // GET: api/Track/5
         public async Task<Track> Get(int id)
         {
-            return await trackService.GetTrack(id);
+            Transaction transaction = null;
+            Track track = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTrack);
+                track = await trackService.GetTrack(id);
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch(Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
+
+            return track;
         }
 
         // POST: api/Track
@@ -45,9 +76,12 @@ namespace MusicLibraryWebApi.Controllers
         {
             HttpFileCollection files = HttpContext.Current.Request.Files;
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            Transaction transaction = null;
 
             try
             {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.AddTrack);
+
                 if (files.AllKeys.Any())
                 {
                     foreach (string key in files.AllKeys)
@@ -58,13 +92,12 @@ namespace MusicLibraryWebApi.Controllers
                         await fileService.ReadMediaFile(path, true);
                     }
                 }
-                else
-                {
-                    response = Request.CreateResponse(HttpStatusCode.NoContent);
-                }
+
+                await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch(Exception ex)
             {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
                 response = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
 
@@ -80,7 +113,18 @@ namespace MusicLibraryWebApi.Controllers
         // DELETE: api/Track/5
         public async Task Delete(int id)
         {
-            await trackService.DeleteTrack(id);
+            Transaction transaction = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.RemoveTrack);
+                await trackService.DeleteTrack(id);
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
     }
 }

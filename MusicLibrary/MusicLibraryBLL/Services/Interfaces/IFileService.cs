@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicLibraryBLL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task Write(string path, byte[] data);
 
-        Task ReadDirectory(string path, bool recursive = true, bool copyFiles = false);
+        Task ReadDirectory(Transaction transaction, string path, bool recursive = true, bool copyFiles = false);
 
         Task ReadMediaFile(string path, bool copyFiles = false);
     }

@@ -97,12 +97,14 @@ CREATE TABLE podcast
   PRIMARY KEY (id)
 )
 
-DROP TABLE IF EXISTS app_log;
-CREATE TABLE app_log
+DROP TABLE IF EXISTS _transaction;
+CREATE TABLE _transaction
 (
-  id int NOT NULL IDENTITY(1,1),
-  description TEXT NOT NULL,
-  is_error bit NOT NULL DEFAULT 0,
+  id INT NOT NULL IDENTITY(1,1),
+  status INT NOT NULL,
+  status_message TEXT NULL,
+  error_message TEXT NULL,
+  type INT NOT NULL,
   create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   modify_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)

@@ -10,9 +10,18 @@ namespace MusicLibraryBLL.Enums
     {
         public enum TransactionTypes
         {
-            GetTracks,
-            GetAlbums,
-            GetArtists,
+            GetTracks, GetTrack, AddTrack, RemoveTrack, ReplaceTrack,
+
+            GetAlbums, GetAlbum, AddAlbum, RemoveAlbum, ReplaceAlbum,
+
+            GetArtists, GetArtist, AddArtist, RemoveArtist, ReplaceArtist,
+
+            GetGenres, GetGenre,
+
+            GetPlaylists, GetPlaylist, AddPlaylist, RemovePlaylist, ReplacePlaylist,
+
+            GetPodcasts, GetPodcast, AddPodcast, RemovePodcast, ReplacePodcast,
+
             Read,
             None = -1
         }
@@ -21,10 +30,10 @@ namespace MusicLibraryBLL.Enums
         {
             NotStarted,
             Started,
-            InProgres,
+            InProcess,
             Errored,
             Cancelled,
-            Done
+            Completed
         }
     }
 }
