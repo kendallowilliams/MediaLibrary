@@ -61,8 +61,7 @@ export class MusicComponent implements OnInit {
   updateMusicTab(musicTab: MusicTabEnum): void {
     this.selectMusicTab = musicTab;
 
-    switch(musicTab)
-    {
+    switch (musicTab) {
       case MusicTabEnum.Songs:
         this.musicCount = this.tracks.length;
         break;
@@ -74,14 +73,14 @@ export class MusicComponent implements OnInit {
         this.musicCount = this.albums.length;
         break;
       case MusicTabEnum.None:
-        this.albumSortGroups = [];
       default:
+        this.albumSortGroups = [];
         break;
     }
   }
 
   updateTrackSort(trackSort: TrackSortEnum): void {
-    if (this.currentTrackSort != trackSort) {
+    if (this.currentTrackSort !== trackSort) {
       this.currentTrackSort = trackSort;
       this.trackSortGroups = this.getTrackSortGroups();
       this.songsHeight = (TrackListComponent.TrackListHeaderHeight * this.trackSortGroups.length) +
@@ -90,7 +89,7 @@ export class MusicComponent implements OnInit {
   }
 
   updateAlbumSort(albumSort: AlbumSortEnum): void {
-    if (this.currentAlbumSort != albumSort) {
+    if (this.currentAlbumSort !== albumSort) {
       this.currentAlbumSort = albumSort;
       this.albumSortGroups = this.getAlbumSortGroups();
     }
@@ -105,35 +104,35 @@ export class MusicComponent implements OnInit {
 
     switch (this.currentTrackSort) {
       case TrackSortEnum.Album:
-        let albums = this.albums.map(album => album.title);
-        groups = albums.filter((album, index, albums) => albums.findIndex(item => item === album) == index)
-                       .map(album => ({
-                        title: album,
-                        tracks: this.tracks.filter(track => track.album === album)
-                       }));
+        const albums = this.albums.map(album => album.title);
+        groups = albums.filter((album, index, _albums) => _albums.findIndex(item => item === album) === index)
+          .map(album => ({
+            title: album,
+            tracks: this.tracks.filter(track => track.album === album)
+          }));
         break;
       case TrackSortEnum.Artist:
-        let artists = this.artists.map(artist => artist.name);
-        groups = artists.filter((artist, index, artists) => artists.findIndex(item => item === artist) == index)
-                        .map(artist => ({
-                          title: artist,
-                          tracks: this.tracks.filter(track => track.artist === artist)
-                        }));
+        const artists = this.artists.map(artist => artist.name);
+        groups = artists.filter((artist, index, _artists) => _artists.findIndex(item => item === artist) === index)
+          .map(artist => ({
+            title: artist,
+            tracks: this.tracks.filter(track => track.artist === artist)
+          }));
         break;
       case TrackSortEnum.AtoZ:
         groups = ['&', '#'].concat(this.letters)
-                           .map(char => ({
-                              title: char,
-                              tracks: this.getTracksAtoZ(char)
-                            }));
+          .map(char => ({
+            title: char,
+            tracks: this.getTracksAtoZ(char)
+          }));
         break;
       case TrackSortEnum.DateAdded:
-        let dates = this.tracks.map(track => track.createDate.toDateString()).sort().reverse();
-        groups = dates.filter((date, index, dates) => dates.findIndex(item => item === date) == index)
-                      .map(date => ({
-                        title: date,
-                        tracks: this.tracks.filter(track => track.createDate.toDateString() === date)
-                      }));
+        const dates = this.tracks.map(track => track.createDate.toDateString()).sort().reverse();
+        groups = dates.filter((date, index, _dates) => _dates.findIndex(item => item === date) === index)
+          .map(date => ({
+            title: date,
+            tracks: this.tracks.filter(track => track.createDate.toDateString() === date)
+          }));
         break;
       case TrackSortEnum.None:
       default:
@@ -154,38 +153,37 @@ export class MusicComponent implements OnInit {
   getAlbumSortGroups(): IAlbumList[] {
     let groups: IAlbumList[] = [];
 
-    switch(this.currentAlbumSort)
-    {
+    switch (this.currentAlbumSort) {
       case AlbumSortEnum.Artist:
-        let artists = this.artists.map(artist => artist.name);
-        groups = artists.filter((artist, index, artists) => artists.findIndex(item => item === artist) == index)
-                        .map(artist => ({
-                          title: artist,
-                          albums: this.albums.filter(album => album.artist === artist)
-                        }));
+        const artists = this.artists.map(artist => artist.name);
+        groups = artists.filter((artist, index, _artists) => _artists.findIndex(item => item === artist) === index)
+          .map(artist => ({
+            title: artist,
+            albums: this.albums.filter(album => album.artist === artist)
+          }));
         break;
       case AlbumSortEnum.AtoZ:
         groups = ['&', '#'].concat(this.letters)
-                            .map(char => ({
-                              title: char,
-                              albums: this.getAlbumsAtoZ(char)
-                            }));
+          .map(char => ({
+            title: char,
+            albums: this.getAlbumsAtoZ(char)
+          }));
         break;
       case AlbumSortEnum.DateAdded:
-        let dates = this.albums.map(album => album.createDate.toDateString()).sort().reverse();
-        groups = dates.filter((date, index, dates) => dates.findIndex(item => item === date) == index)
-                      .map(date => ({
-                        title: date.toString(),
-                        albums: this.albums.filter(album => album.createDate.toDateString() === date)
-                      }));
+        const dates = this.albums.map(album => album.createDate.toDateString()).sort().reverse();
+        groups = dates.filter((date, index, _dates) => _dates.findIndex(item => item === date) === index)
+          .map(date => ({
+            title: date.toString(),
+            albums: this.albums.filter(album => album.createDate.toDateString() === date)
+          }));
         break;
       case AlbumSortEnum.ReleaseYear:
-        let years = this.albums.map(album => album.year).sort().reverse();
-        groups = years.filter((year, index, years) => years.findIndex(item => item === year) == index)
-                      .map(year => ({
-                        title: year == 0 ? "unknown" : year.toString(),
-                        albums: this.albums.filter(album => album.year === year)
-                      }));
+        const years = this.albums.map(album => album.year).sort().reverse();
+        groups = years.filter((year, index, _years) => _years.findIndex(item => item === year) === index)
+          .map(year => ({
+            title: year === 0 ? 'unknown' : year.toString(),
+            albums: this.albums.filter(album => album.year === year)
+          }));
         break;
       case AlbumSortEnum.None:
       default:
@@ -199,13 +197,13 @@ export class MusicComponent implements OnInit {
   getTracksAtoZ(char: string): Track[] {
     let tracks = [];
 
-    switch(char) {
+    switch (char) {
       case '&':
-        tracks = this.tracks.filter(track => isNaN(parseInt(track.title[0])) &&
+        tracks = this.tracks.filter(track => isNaN(parseInt(track.title[0], 10)) &&
           !this.letters.includes(track.title[0].toUpperCase()));
         break;
       case '#':
-        tracks = this.tracks.filter(track => !isNaN(parseInt(track.title[0])));
+        tracks = this.tracks.filter(track => !isNaN(parseInt(track.title[0], 10)));
         break;
       default:
         tracks = this.tracks.filter(track => track.title[0].toUpperCase() === char);
@@ -213,18 +211,18 @@ export class MusicComponent implements OnInit {
     }
 
     return tracks;
-  };
+  }
 
   getArtistsAtoZ(char: string): Artist[] {
     let artists = [];
 
-    switch(char) {
+    switch (char) {
       case '&':
-        artists = this.artists.filter(artist => isNaN(parseInt(artist.name[0])) &&
+        artists = this.artists.filter(artist => isNaN(parseInt(artist.name[0], 10)) &&
           !this.letters.includes(artist.name[0].toUpperCase()));
         break;
       case '#':
-        artists = this.artists.filter(artist => !isNaN(parseInt(artist.name[0])));
+        artists = this.artists.filter(artist => !isNaN(parseInt(artist.name[0], 10)));
         break;
       default:
         artists = this.artists.filter(artist => artist.name[0].toUpperCase() === char);
@@ -232,18 +230,18 @@ export class MusicComponent implements OnInit {
     }
 
     return artists;
-  };
+  }
 
   getAlbumsAtoZ(char: string): Album[] {
     let albums = [];
 
-    switch(char) {
+    switch (char) {
       case '&':
-        albums = this.albums.filter(album => isNaN(parseInt(album.title[0])) &&
+        albums = this.albums.filter(album => isNaN(parseInt(album.title[0], 10)) &&
           !this.letters.includes(album.title[0].toUpperCase()));
         break;
       case '#':
-        albums = this.albums.filter(album => !isNaN(parseInt(album.title[0])));
+        albums = this.albums.filter(album => !isNaN(parseInt(album.title[0], 10)));
         break;
       default:
         albums = this.albums.filter(album => album.title[0].toUpperCase() === char);
@@ -251,7 +249,7 @@ export class MusicComponent implements OnInit {
     }
 
     return albums;
-  };
+  }
 
   updateTracks(): void {
     this.tracks.forEach(track => {
@@ -300,6 +298,5 @@ export class MusicComponent implements OnInit {
   }
 
   handleScroll(evt: any): void {
-    alert(evt);
   }
 }

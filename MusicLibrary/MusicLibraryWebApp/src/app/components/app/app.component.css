@@ -1,1 +1,29 @@
+.ml-app {
+  height: 100%;
+}
 
+.ml-header {
+  height: 0px;
+}
+
+@media (min-height: 0px) {
+  .ml-header {
+    height: 0px;
+  }
+}
+
+.ml-body {
+
+}
+
+.ml-navigation {
+
+}
+
+.ml-content {
+
+}
+
+.ml-footer {
+
+}
