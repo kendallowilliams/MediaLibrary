@@ -9,7 +9,7 @@ import { TrackComponent } from '../track/track.component';
   styleUrls: ['./track-list.component.css']
 })
 export class TrackListComponent implements OnInit {
-  public static TrackListHeaderHeight = 30;
+  public static HeaderHeight = 30;
 
   @Input() group: ITrackList;
   @Input() tracks: Track[];
@@ -23,13 +23,14 @@ export class TrackListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.headerHeight = TrackListComponent.TrackListHeaderHeight;
+    this.headerHeight = TrackListComponent.HeaderHeight;
     this.tracksHeight = this.group.tracks.length * TrackComponent.TrackHeight;
     this.group.loadCallback = () => this.load();
   }
 
   load(): void {
     this.tracks = this.group.tracks;
+    this.group.height = this.tracksHeight + this.headerHeight;
   }
 
   trackByTracks(index: number, track: Track): number {

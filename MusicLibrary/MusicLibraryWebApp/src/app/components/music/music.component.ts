@@ -25,6 +25,7 @@ import { TrackComponent } from './track/track.component';
 export class MusicComponent implements OnInit {
   public MusicTabs = MusicTabEnum;
   private songsHeight: number;
+  private self: MusicComponent;
 
   @Input() musicCount: number;
 
@@ -46,6 +47,7 @@ export class MusicComponent implements OnInit {
     private albumService: AlbumService, private genreService: GenreService,
     private route: ActivatedRoute) {
     this.musicCount = 0;
+    this.self = this;
   }
 
   ngOnInit() {
@@ -83,8 +85,6 @@ export class MusicComponent implements OnInit {
     if (this.currentTrackSort !== trackSort) {
       this.currentTrackSort = trackSort;
       this.trackSortGroups = this.getTrackSortGroups();
-      this.songsHeight = (TrackListComponent.TrackListHeaderHeight * this.trackSortGroups.length) +
-        (TrackComponent.TrackHeight * this.tracks.length);
     }
   }
 
@@ -139,6 +139,8 @@ export class MusicComponent implements OnInit {
         groups = [];
         break;
     }
+
+    groups.forEach(group => group.height = (group.tracks.length * TrackComponent.TrackHeight) + TrackListComponent.HeaderHeight);
 
     return groups.filter(group => group.tracks.length > 0);
   }
@@ -297,6 +299,7 @@ export class MusicComponent implements OnInit {
     return foundArtist !== undefined && foundArtist !== null ? foundArtist.name : '';
   }
 
-  handleScroll(evt: any): void {
+  handleScroll(thisArg: MusicComponent, evt: any): void {
+    alert(thisArg.trackSortGroups.map(group => group.height).reduce((sum, current) => sum + current));
   }
 }

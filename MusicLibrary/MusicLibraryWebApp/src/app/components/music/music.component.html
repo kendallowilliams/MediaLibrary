@@ -14,7 +14,7 @@
       (genreupdated)="null" (tracksortupdated)="updateTrackSort($event)"></app-music-settings>
   </div>
   <div class="tab-content ml-music-content" id="nav-tabContent">
-    <div class="tab-pane fade show active ml-tracks" id="nav-songs" role="tabpanel" aria-labelledby="nav-songs-tab" (scroll)="handleScroll($event)">
+    <div class="tab-pane fade show active ml-tracks" id="nav-songs" role="tabpanel" aria-labelledby="nav-songs-tab" (scroll)="handleScroll(this,$event)">
       <div *ngFor="let group of trackSortGroups">
         <app-track-list [group]="group"></app-track-list>
       </div>
