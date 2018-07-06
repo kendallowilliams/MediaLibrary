@@ -299,7 +299,22 @@ export class MusicComponent implements OnInit {
     return foundArtist !== undefined && foundArtist !== null ? foundArtist.name : '';
   }
 
-  handleScroll(thisArg: MusicComponent, evt: any): void {
-    alert(thisArg.trackSortGroups.map(group => group.height).reduce((sum, current) => sum + current));
+  handleScroll(thisArg: MusicComponent, height: number, scrollTop: number): void {
+    const parentTop = scrollTop,
+          parentBottom = parentTop + height;
+
+    thisArg.trackSortGroups.reduce((acc, current) => {
+      const listTop = acc,
+            listBottom = acc + current.height;
+
+      if ((listTop >= parentTop && listTop <= parentBottom) ||
+          (listBottom >= parentTop && listBottom <= parentBottom) ||
+          (parentTop >= listTop && parentTop <= listBottom) ||
+          (parentBottom >= listTop && parentBottom <= listBottom)) {
+        current.loadCallback();
+      }
+
+      return listBottom;
+    }, 0);
   }
 }
