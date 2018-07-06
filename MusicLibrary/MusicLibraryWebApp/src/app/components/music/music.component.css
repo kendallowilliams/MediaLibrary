@@ -1,8 +1,23 @@
+.ml-music {
+  --music-nav-height: 50px;
+  --music-settings-height: 50px;
+
+  height: 100%;
+}
+
 .ml-music-nav {
+  height: var(--music-nav-height);
+}
+
+.ml-music-settings {
+  height: var(--music-settings-height);
 }
 
 .ml-music-content {
+  height: calc(100% - var(--music-nav-height) - var(--music-settings-height));
 }
 
 .ml-tracks {
+  height: 100%;
+  overflow-y: auto;
 }
