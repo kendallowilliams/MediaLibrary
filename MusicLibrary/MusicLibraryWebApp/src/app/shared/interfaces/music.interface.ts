@@ -6,7 +6,8 @@ export interface ITrackList {
   title: string;
   tracks: Track[];
   height?: number;
-  loadCallback?();
+  showTracks?();
+  hideTracks?();
 }
 
 export interface IAlbumList {

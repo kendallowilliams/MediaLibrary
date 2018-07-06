@@ -95,10 +95,6 @@ export class MusicComponent implements OnInit {
     }
   }
 
-  loadTracks(): void {
-    this.trackSortGroups.forEach(group => group.loadCallback());
-  }
-
   getTrackSortGroups(): ITrackList[] {
     let groups: ITrackList[] = [];
 
@@ -311,7 +307,9 @@ export class MusicComponent implements OnInit {
           (listBottom >= parentTop && listBottom <= parentBottom) ||
           (parentTop >= listTop && parentTop <= listBottom) ||
           (parentBottom >= listTop && parentBottom <= listBottom)) {
-        current.loadCallback();
+        current.showTracks();
+      } else {
+        current.hideTracks();
       }
 
       return listBottom;

@@ -1,6 +1,7 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
+import { ITrack } from '../interfaces/track.interface';
 
-export class Track implements Deserializable {
+export class Track implements Deserializable, ITrack {
     id: number;
     title: string;
     fileName: string;
@@ -17,6 +18,7 @@ export class Track implements Deserializable {
     durationDisplay: string;
     playCount: number;
     createDate: Date;
+    hidden: boolean;
 
     deserialize(input: any) {
         Object.assign(this, input);

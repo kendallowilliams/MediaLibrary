@@ -16,7 +16,7 @@ export class TrackListComponent implements OnInit {
 
   private tracksHeight: number;
   private headerHeight: number;
-  private top: number;
+  private loaded: boolean;
 
 
   constructor() {
@@ -25,12 +25,32 @@ export class TrackListComponent implements OnInit {
   ngOnInit() {
     this.headerHeight = TrackListComponent.HeaderHeight;
     this.tracksHeight = this.group.tracks.length * TrackComponent.TrackHeight;
-    this.group.loadCallback = () => this.load();
+    this.group.showTracks = () => this.show();
+    this.group.hideTracks = () => this.hide();
   }
 
   load(): void {
-    this.tracks = this.group.tracks;
-    this.group.height = this.tracksHeight + this.headerHeight;
+    if (!this.loaded) {
+      this.tracks = this.group.tracks;
+      this.group.height = this.tracksHeight + this.headerHeight;
+      this.loaded = true;
+    }
+  }
+
+  show(): void {
+    this.load();
+
+    if (this.loaded) {
+      this.tracks.forEach(track => track.hidden = false);
+    }
+  }
+
+  hide(): void {
+    this.load();
+
+    if (this.loaded) {
+      this.tracks.forEach(track => track.hidden = true);
+    }
   }
 
   trackByTracks(index: number, track: Track): number {

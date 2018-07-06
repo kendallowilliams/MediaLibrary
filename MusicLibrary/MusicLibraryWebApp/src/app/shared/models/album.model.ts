@@ -1,6 +1,7 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
+import { IAlbum } from '../interfaces/album.interface';
 
-export class Album implements Deserializable {
+export class Album implements Deserializable, IAlbum {
     id: number;
     title: string;
     artistId: number;
