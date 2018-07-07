@@ -1,9 +1,8 @@
 .ml-track-list-header {
   background-color: lightgray;
   line-height: 100%;
-  padding: auto;
 }
 
-.ml-track-list {
-
+.ml-track-list[data-ml-tracks-hidden='true'] * {
+  display: none;
 }

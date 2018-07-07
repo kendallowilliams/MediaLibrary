@@ -13,8 +13,6 @@ export class TrackComponent implements OnInit {
 
   @Input() track: Track;
 
-  private hidden = true;
-
   constructor() { }
 
   ngOnInit() {

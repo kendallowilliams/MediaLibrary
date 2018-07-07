@@ -24,8 +24,6 @@ import { TrackComponent } from './track/track.component';
 
 export class MusicComponent implements OnInit {
   public MusicTabs = MusicTabEnum;
-  private songsHeight: number;
-  private self: MusicComponent;
 
   @Input() musicCount: number;
 
@@ -47,7 +45,6 @@ export class MusicComponent implements OnInit {
     private albumService: AlbumService, private genreService: GenreService,
     private route: ActivatedRoute) {
     this.musicCount = 0;
-    this.self = this;
   }
 
   ngOnInit() {

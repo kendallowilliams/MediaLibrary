@@ -17,6 +17,7 @@ export class TrackListComponent implements OnInit {
   private tracksHeight: number;
   private headerHeight: number;
   private loaded: boolean;
+  private tracksHidden = true;
 
 
   constructor() {
@@ -39,14 +40,11 @@ export class TrackListComponent implements OnInit {
 
   show(): void {
     this.load();
-
-    if (this.loaded) {
-    }
+    this.tracksHidden = false;
   }
 
   hide(): void {
-    if (this.loaded) {
-    }
+    this.tracksHidden = true;
   }
 
   trackByTracks(index: number, track: Track): number {
