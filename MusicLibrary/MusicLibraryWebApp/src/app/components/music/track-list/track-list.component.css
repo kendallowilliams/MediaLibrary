@@ -1,8 +1,11 @@
 .ml-track-list-header {
   background-color: lightgray;
-  line-height: 100%;
 }
 
-.ml-track-list[data-ml-tracks-hidden='true'] * {
+.ml-track-list-title {
+  font-weight: bold;
+}
+
+.ml-track-list-body[data-ml-tracks-hidden='true'] * {
   display: none;
 }
