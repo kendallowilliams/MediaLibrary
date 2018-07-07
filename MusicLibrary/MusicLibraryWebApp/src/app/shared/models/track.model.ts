@@ -20,9 +20,6 @@ export class Track implements Deserializable, ITrack {
     playCount: number;
     createDate: Date;
 
-    showTrack?();
-    hideTrack?();
-
     deserialize(input: any) {
         Object.assign(this, input);
         this.createDate = new Date(input.createDate);

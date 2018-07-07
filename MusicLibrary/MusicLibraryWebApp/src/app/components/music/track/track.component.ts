@@ -18,19 +18,9 @@ export class TrackComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.track.hideTrack = () => this.hide();
-    this.track.showTrack = () => this.show();
   }
 
   getTrackHeight(): number {
     return TrackComponent.TrackHeight;
-  }
-
-  show(): void {
-    this.hidden = false;
-  }
-
-  hide(): void {
-    this.hidden = true;
   }
 }

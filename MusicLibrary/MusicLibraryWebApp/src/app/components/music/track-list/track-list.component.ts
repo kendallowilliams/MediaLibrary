@@ -41,15 +41,11 @@ export class TrackListComponent implements OnInit {
     this.load();
 
     if (this.loaded) {
-      this.tracks.forEach(track => track.showTrack && track.showTrack());
     }
   }
 
   hide(): void {
-    this.load();
-
     if (this.loaded) {
-      this.tracks.forEach(track => track.hideTrack && track.hideTrack());
     }
   }
 

@@ -1,4 +1,4 @@
-<div [style.height.px]="headerHeight">{{group.title}}</div>
-<div [style.height.px]="tracksHeight">
+<div class='ml-track-list-header' [style.height.px]="headerHeight">{{group.title}}</div>
+<div class='ml-track-list' [style.height.px]="tracksHeight">
   <app-track [track]=track *ngFor="let track of tracks"></app-track>
 </div>
