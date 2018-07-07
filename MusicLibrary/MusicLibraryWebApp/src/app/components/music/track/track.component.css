@@ -5,42 +5,52 @@
 
 .ml-track-checkbox {
   visibility: hidden;
+  align-self: center;
 }
 
 .ml-track-now-playing {
   display: none;
+  align-self: center;
 }
 
 .ml-track-title-group {
   display: flex;
   flex-grow: 1;
+  align-self: center;
 }
 
 .ml-track-title {
   display: flex;
   flex-grow: 1;
+  align-self: center;
 }
 
 .ml-track-buttons {
   display: none;
+  align-self: center;
 }
 
 .ml-track-artist {
   width: 200px;
+  align-self: center;
 }
 
 .ml-track-album {
   width: 200px;
+  align-self: center;
 }
 
 .ml-track-year {
   width: 50px;
+  align-self: center;
 }
 
 .ml-track-genre {
   width: 200px;
+  align-self: center;
 }
 
 .ml-track-duration {
   width: 50px;
+  align-self: center;
 }
