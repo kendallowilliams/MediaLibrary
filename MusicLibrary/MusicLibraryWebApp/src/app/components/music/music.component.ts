@@ -292,11 +292,11 @@ export class MusicComponent implements OnInit {
     return foundArtist !== undefined && foundArtist !== null ? foundArtist.name : '';
   }
 
-  handleScroll(thisArg: MusicComponent, height: number, scrollTop: number): void {
+  handleScroll(height: number, scrollTop: number): void {
     const parentTop = scrollTop,
           parentBottom = parentTop + height;
 
-    thisArg.trackSortGroups.reduce((acc, current) => {
+    this.trackSortGroups.reduce((acc, current) => {
       const listTop = acc,
             listBottom = acc + current.height;
 
