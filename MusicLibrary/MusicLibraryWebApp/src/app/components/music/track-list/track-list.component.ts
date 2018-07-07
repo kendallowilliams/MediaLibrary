@@ -41,7 +41,7 @@ export class TrackListComponent implements OnInit {
     this.load();
 
     if (this.loaded) {
-      this.tracks.forEach(track => track.hidden = false);
+      this.tracks.forEach(track => track.showTrack());
     }
   }
 
@@ -49,7 +49,7 @@ export class TrackListComponent implements OnInit {
     this.load();
 
     if (this.loaded) {
-      this.tracks.forEach(track => track.hidden = true);
+      this.tracks.forEach(track => track.hideTrack());
     }
   }
 

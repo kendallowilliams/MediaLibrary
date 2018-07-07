@@ -1,5 +1,6 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
 import { ITrack } from '../interfaces/track.interface';
+import { Observable } from 'rxjs';
 
 export class Track implements Deserializable, ITrack {
     id: number;
@@ -18,7 +19,9 @@ export class Track implements Deserializable, ITrack {
     durationDisplay: string;
     playCount: number;
     createDate: Date;
-    hidden: boolean;
+
+    showTrack?();
+    hideTrack?();
 
     deserialize(input: any) {
         Object.assign(this, input);
