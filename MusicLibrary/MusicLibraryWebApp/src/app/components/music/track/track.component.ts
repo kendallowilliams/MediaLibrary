@@ -13,6 +13,9 @@ export class TrackComponent implements OnInit {
 
   @Input() track: Track;
 
+  private selected = false;
+  private checked = false;
+
   constructor() { }
 
   ngOnInit() {
@@ -20,5 +23,9 @@ export class TrackComponent implements OnInit {
 
   getTrackHeight(): number {
     return TrackComponent.TrackHeight;
+  }
+
+  selectTrack(): void {
+    this.selected = true;
   }
 }
