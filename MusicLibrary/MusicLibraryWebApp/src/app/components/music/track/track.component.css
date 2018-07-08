@@ -1,9 +1,10 @@
 .ml-track {
-  --ml-track-artist-height: 200px;
-  --ml-track-album-height: 200px;
-  --ml-track-genre-height: 200px;
-  --ml-track-year-height: 50px;
-  --ml-track-duration-height: 50px;
+  --ml-track-artist-width: 200px;
+  --ml-track-album-width: 200px;
+  --ml-track-genre-width: 200px;
+  --ml-track-year-width: 50px;
+  --ml-track-duration-width: 50px;
+  --ml-track-checkbox-width: 25px;
 
   display: flex;
 }
@@ -17,7 +18,7 @@
 }
 
 .ml-track:hover .ml-track-unchecked {
-  visibility: visible;
+  display: initial;
 }
 
 .ml-track[data-track-selected='true'] {
@@ -25,23 +26,28 @@
 }
 
 .ml-track[data-track-selected='true'] .ml-track-unchecked {
-  visibility: visible;
+  display: initial;
   color: white;
 }
 
+.ml-track[data-track-checked='true'] .ml-track-unchecked {
+  display: none;
+}
+
 .ml-track[data-track-checked='true'] .ml-track-checked {
-  visibility: visible;
+  display: initial;
 }
 
 .ml-track-unchecked {
-  visibility: hidden;
+  display: none;
 }
 
 .ml-track-checked {
-  visibility: hidden;
+  display: none;
 }
 
 .ml-track-checkbox {
+  flex: 0 0 var(--ml-track-checkbox-width);
   align-self: center;
 }
 
@@ -66,26 +72,26 @@
 }
 
 .ml-track-artist {
-  flex: 0 0 var(--ml-track-artist-height);
+  flex: 0 0 var(--ml-track-artist-width);
   align-self: center;
 }
 
 .ml-track-album {
-  flex: 0 0 var(--ml-track-album-height);
+  flex: 0 0 var(--ml-track-album-width);
   align-self: center;
 }
 
 .ml-track-year {
-  flex: 0 0 var(--ml-track-year-height);
+  flex: 0 0 var(--ml-track-year-width);
   align-self: center;
 }
 
 .ml-track-genre {
-  flex: 0 0 var(--ml-track-genre-height);
+  flex: 0 0 var(--ml-track-genre-width);
   align-self: center;
 }
 
 .ml-track-duration {
-  flex: 0 0 var(--ml-track-duration-height);
+  flex: 0 0 var(--ml-track-duration-width);
   align-self: center;
 }

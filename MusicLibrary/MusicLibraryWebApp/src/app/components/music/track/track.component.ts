@@ -26,6 +26,6 @@ export class TrackComponent implements OnInit {
   }
 
   selectTrack(): void {
-    this.selected = true;
+    this.selected = !this.selected;
   }
 }
