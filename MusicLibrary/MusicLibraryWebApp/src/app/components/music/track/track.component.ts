@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Track } from '../../../shared/models/track.model';
 
@@ -13,8 +13,13 @@ export class TrackComponent implements OnInit {
 
   @Input() track: Track;
 
-  private selected = false;
-  private checked = false;
+  @Output() select: EventEmitter<number> = new EventEmitter<number>();
+  @Output() check: EventEmitter<number> = new EventEmitter<number>();
+  @Output() play: EventEmitter<number> = new EventEmitter<number>();
+
+  isSelected = false;
+  isChecked = false;
+  isPlaying = false;
 
   constructor() { }
 
@@ -26,6 +31,17 @@ export class TrackComponent implements OnInit {
   }
 
   selectTrack(): void {
-    this.selected = !this.selected;
+    this.isSelected = !this.isSelected;
+    this.select.emit(this.track.id);
+  }
+
+  checkTrack(evt: any): void {
+    this.isChecked = !this.isChecked;
+    this.check.emit(this.track.id);
+  }
+
+  playTrack(): void {
+    this.isPlaying = !this.isPlaying;
+    this.play.emit(this.track.id);
   }
 }

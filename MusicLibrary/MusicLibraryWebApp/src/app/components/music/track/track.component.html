@@ -1,7 +1,8 @@
-<div class="ml-track" [style.height.px]="getTrackHeight()" [attr.data-track-checked]="checked" (click)="selectTrack()" [attr.data-track-selected]="selected">
+<div class="ml-track" [style.height.px]="getTrackHeight()" [attr.data-track-checked]="isChecked" (click)="selectTrack()" [attr.data-track-selected]="isSelected"
+  [attr.data-track-playing]="isPlaying">
   <div class="ml-track-checkbox">
-    <i class="far fa-square ml-track-unchecked" (click)="this.checked=!this.checked"></i>
-    <i class="fas fa-check ml-track-checked" (click)="this.checked=!this.checked"></i>
+    <i class="far fa-square ml-track-unchecked" (click)="checkTrack($event)"></i>
+    <i class="fas fa-check ml-track-checked" (click)="checkTrack($event)"></i>
   </div>
   <div class="ml-track-now-playing">
     <i class="fas fa-music"></i>

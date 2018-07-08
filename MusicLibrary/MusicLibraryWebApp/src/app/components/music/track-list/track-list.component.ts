@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, Output, APP_INITIALIZER } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Output, APP_INITIALIZER, ViewChildren, QueryList } from '@angular/core';
 import { Track } from '../../../shared/models/track.model';
 import { ITrackList } from '../../../shared/interfaces/music.interface';
 import { TrackComponent } from '../track/track.component';
@@ -11,6 +11,8 @@ import { TrackComponent } from '../track/track.component';
 export class TrackListComponent implements OnInit {
   public static HeaderHeight = 30;
 
+  @ViewChildren(TrackComponent) children = new QueryList<TrackComponent>();
+
   @Input() group: ITrackList;
   @Input() tracks: Track[];
 
@@ -18,7 +20,6 @@ export class TrackListComponent implements OnInit {
   private headerHeight: number;
   private loaded: boolean;
   private tracksHidden = true;
-
 
   constructor() {
   }
@@ -49,5 +50,21 @@ export class TrackListComponent implements OnInit {
 
   trackByTracks(index: number, track: Track): number {
     return track.id;
+  }
+
+  playTrack(id: number): void {
+
+  }
+
+  selectTrack(id: number): void {
+    this.children.filter(child => child.track.id !== id).forEach(child => child.isSelected = false);
+  }
+
+  checkTrack(id: number): void {
+    const atLeastOneChildChecked = this.children.some(child => child.isChecked);
+
+    if (atLeastOneChildChecked) {
+
+    }
   }
 }

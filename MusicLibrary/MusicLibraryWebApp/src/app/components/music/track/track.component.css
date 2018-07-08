@@ -17,7 +17,7 @@
   background-color: lightgray;
 }
 
-.ml-track:hover .ml-track-unchecked {
+.ml-track[data-track-checked='false']:hover .ml-track-unchecked {
   display: initial;
 }
 
@@ -25,17 +25,14 @@
   background-color: lightslategray;
 }
 
-.ml-track[data-track-selected='true'] .ml-track-unchecked {
+.ml-track[data-track-selected='true'][data-track-checked='false'] .ml-track-unchecked {
   display: initial;
   color: white;
 }
 
-.ml-track[data-track-checked='true'] .ml-track-unchecked {
-  display: none;
-}
-
 .ml-track[data-track-checked='true'] .ml-track-checked {
   display: initial;
+  color: white;
 }
 
 .ml-track-unchecked {

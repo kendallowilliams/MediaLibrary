@@ -2,5 +2,5 @@
   <span class='ml-track-list-title'>{{group.title}}</span>
 </div>
 <div class='ml-track-list-body' [style.height.px]="tracksHeight" [attr.data-ml-tracks-hidden]="tracksHidden">
-  <app-track [track]=track *ngFor="let track of tracks"></app-track>
+  <app-track [track]=track *ngFor="let track of tracks" (play)="playTrack($event)" (select)="selectTrack($event)" (check)="checkTrack($event)"></app-track>
 </div>
