@@ -17,9 +17,33 @@ export class TrackComponent implements OnInit {
   @Output() check: EventEmitter<number> = new EventEmitter<number>();
   @Output() play: EventEmitter<number> = new EventEmitter<number>();
 
-  isSelected = false;
-  isChecked = false;
-  isPlaying = false;
+  private _isSelected: boolean;
+  private _isChecked: boolean;
+  private _isPlaying: boolean;
+
+  get isSelected() {
+    return this._isSelected;
+  }
+
+  set isSelected(value: boolean) {
+    this._isSelected = value;
+  }
+
+  get isChecked() {
+    return this._isChecked;
+  }
+
+  set isChecked(value: boolean) {
+    this._isChecked = value;
+  }
+
+  get isPlaying() {
+    return this._isPlaying;
+  }
+
+  set isPlaying(value: boolean) {
+    this._isPlaying = value;
+  }
 
   constructor() { }
 

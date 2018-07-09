@@ -35,6 +35,11 @@
   color: white;
 }
 
+.ml-track[data-track-playing='true'] {
+  color: green;
+}
+
+
 .ml-track-unchecked {
   display: none;
 }

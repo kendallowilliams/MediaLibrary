@@ -53,7 +53,7 @@ export class TrackListComponent implements OnInit {
   }
 
   playTrack(id: number): void {
-
+    this.children.filter(child => child.track.id !== id).forEach(child => child.isPlaying = false);
   }
 
   selectTrack(id: number): void {

@@ -1,5 +1,5 @@
-<div class="ml-track" [style.height.px]="getTrackHeight()" [attr.data-track-checked]="isChecked" (click)="selectTrack()" [attr.data-track-selected]="isSelected"
-  [attr.data-track-playing]="isPlaying">
+<div class="ml-track" [style.height.px]="getTrackHeight()" (click)="selectTrack()" [attr.data-track-selected]="isSelected"
+  [attr.data-track-playing]="isPlaying" (dblclick)="playTrack()">
   <div class="ml-track-checkbox">
     <i class="far fa-square ml-track-unchecked" (click)="checkTrack($event)"></i>
     <i class="fas fa-check ml-track-checked" (click)="checkTrack($event)"></i>
