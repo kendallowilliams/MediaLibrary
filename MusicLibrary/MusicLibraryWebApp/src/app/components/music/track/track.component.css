@@ -5,12 +5,16 @@
   --ml-track-year-width: 50px;
   --ml-track-duration-width: 50px;
   --ml-track-checkbox-width: 25px;
+  --ml-track-play-width: 10px;
+  --ml-track-play-height: 10px;
+  --ml-track-plus-width: 10px;
+  --ml-track-plus-height: 10px;
 
   display: flex;
 }
 
 .ml-track:hover {
-  background-color: lightpink;
+  background-color: lightyellow;
 }
 
 .ml-track:active {
@@ -23,6 +27,10 @@
 
 .ml-track[data-track-selected='true'] {
   background-color: lightslategray;
+}
+
+.ml-track[data-track-selected='true'] .ml-track-buttons {
+  display: initial;
 }
 
 .ml-track[data-track-selected='true'][data-track-checked='false'] .ml-track-unchecked {
@@ -59,18 +67,31 @@
 }
 
 .ml-track-title-group {
+  display: flex;
   flex: 1 1 auto;
   align-self: center;
 }
 
 .ml-track-title {
-  display: flex;
+  flex: 1 1 auto;
   align-self: center;
+}
+
+.ml-track-play {
+  width: var(--ml-track-play-width);
+  height: var(--ml-track-play-height);
+}
+
+.ml-track-plus {
+  width: var(--ml-track-play-width);
+  height: var(--ml-track-play-height);
 }
 
 .ml-track-buttons {
   display: none;
   align-self: center;
+  flex-direction: row;
+  flex: 0 0 20px;
 }
 
 .ml-track-artist {
