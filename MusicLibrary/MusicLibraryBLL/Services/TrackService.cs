@@ -59,7 +59,7 @@ namespace MusicLibraryBLL.Services
         {
             TrackPath path = await dataService.Get<TrackPath>(pathId);
             string filePath = Path.Combine(path.Location, fileName);
-            byte[] data = File.ReadAllBytes(fileName);
+            byte[] data = File.ReadAllBytes(filePath);
             TrackFile file = new TrackFile(trackId, data, fileName);
 
             return await dataService.Insert<TrackFile,int>(file);
