@@ -84,14 +84,19 @@ namespace MusicLibraryBLL.Services
             }
         }
 
-        public async Task ReadMediaFile(string path, bool copyFiles = false)
+        public async Task ReadMediaFile(string path, bool copyFile = false)
         {
             MediaData data = await id3Service.ProcessFile(path);
             int? genreId = await genreService.AddGenre(data.Genres),
                 artistId = await artistService.AddArtist(data.Artists),
                 albumId = await albumService.AddAlbum(new Album(data, artistId, genreId)),
-                pathId = await trackService.AddPath(Path.GetDirectoryName(path));
+                pathId = await trackService.AddPath(Path.GetDirectoryName(path)),
+                fileId = null;
             Track track = new Track(data, pathId, genreId, albumId, artistId);
+
+            if (copyFile) { fileId = await trackService.AddTrackFile(track.Id, pathId.Value, track.FileName); }
+            track.FileId = fileId;
+
             await trackService.InsertTrack(track);
         }
     }

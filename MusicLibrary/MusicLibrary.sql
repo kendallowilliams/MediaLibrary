@@ -57,6 +57,7 @@ CREATE TABLE track
   id int NOT NULL IDENTITY(1,1),
   file_name varchar(256) NOT NULL,
   path_id int NULL,
+  file_id INT NULL,
   title varchar(150) NOT NULL,
   album_id int NULL,
   genre_id int NULL,
@@ -70,7 +71,8 @@ CREATE TABLE track
   PRIMARY KEY (id),
   FOREIGN KEY (path_id) REFERENCES path(id),
   FOREIGN KEY (album_id) REFERENCES album(id),
-  FOREIGN KEY (artist_id) REFERENCES artist(id)
+  FOREIGN KEY (artist_id) REFERENCES artist(id),
+  FOREIGN KEY (file_id) REFERENCES track_file(id)
 )
 
 DROP TABLE IF EXISTS playlist;
@@ -108,4 +110,17 @@ CREATE TABLE _transaction
   create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   modify_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
+)
+
+DROP TABLE IF EXISTS track_file;
+CREATE TABLE track_file
+(
+  id INT NOT NULL IDENTITY(1,1),
+  name VARCHAR(256) NOT NULL,
+  track_id INT NOT NULL,
+  data VARBINARY(MAX) NOT NULL,
+  create_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  modify_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY (track_id) REFERENCES track(id),
 )

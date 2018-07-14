@@ -22,5 +22,9 @@ namespace MusicLibraryBLL.Services.Interfaces
         Task<bool> UpdateTrack(Track track);
 
         Task<int?> AddPath(string location);
+
+        Task<int?> AddTrackFile(int trackId, int pathId, string fileName);
+
+        Task<TrackFile> GetTrackFile(int id);
     }
 }

@@ -68,9 +68,11 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Mappings\TrackFileMapping.cs" />
     <Compile Include="Models\Mappings\TransactionMapping.cs" />
     <Compile Include="Models\Mappings\PodcastMapping.cs" />
     <Compile Include="Models\Mappings\TrackPathMapping.cs" />
+    <Compile Include="Models\TrackFile.cs" />
     <Compile Include="Models\TrackPath.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Interfaces\IDataModel.cs" />

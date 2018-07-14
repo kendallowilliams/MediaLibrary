@@ -10,19 +10,27 @@ namespace MusicLibraryBLL.Enums
     {
         public enum TransactionTypes
         {
-            GetTracks, GetTrack, AddTrack, RemoveTrack, ReplaceTrack,
+            /* Tracks: 0 - 50 */
+            GetTracks = 0, GetTrack = 1, AddTrack = 2, RemoveTrack = 3, ReplaceTrack = 4, GetTrackFile = 5,
 
-            GetAlbums, GetAlbum, AddAlbum, RemoveAlbum, ReplaceAlbum,
+            /* Tracks: 51 - 100 */
+            GetAlbums = 51, GetAlbum = 52, AddAlbum = 53, RemoveAlbum = 54, ReplaceAlbum = 55,
 
-            GetArtists, GetArtist, AddArtist, RemoveArtist, ReplaceArtist,
+            /* Tracks: 101 - 150 */
+            GetArtists = 101, GetArtist = 102, AddArtist = 103, RemoveArtist = 104, ReplaceArtist = 105,
 
-            GetGenres, GetGenre,
+            /* Tracks: 151 - 200 */
+            GetGenres = 151, GetGenre = 152,
 
-            GetPlaylists, GetPlaylist, AddPlaylist, RemovePlaylist, ReplacePlaylist,
+            /* Tracks: 201 - 250 */
+            GetPlaylists = 201, GetPlaylist = 202, AddPlaylist = 203, RemovePlaylist = 204, ReplacePlaylist = 205,
 
-            GetPodcasts, GetPodcast, AddPodcast, RemovePodcast, ReplacePodcast,
+            /* Tracks: 251 - 300 */
+            GetPodcasts = 251, GetPodcast = 252, AddPodcast = 253, RemovePodcast = 254, ReplacePodcast = 255,
 
-            Read,
+            /* Tracks: 301 - 350 */
+            Read = 301,
+
             None = -1
         }
 

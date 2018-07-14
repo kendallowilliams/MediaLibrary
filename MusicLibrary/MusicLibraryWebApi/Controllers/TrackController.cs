@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -125,6 +126,42 @@ namespace MusicLibraryWebApi.Controllers
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
+        }
+
+        [Route("api/Track/GetTrackFile/{id}")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetTrackFile(int id)
+        {
+            HttpResponseMessage message = new HttpResponseMessage();
+            Transaction transaction = null;
+            string range = HttpContext.Current.Request.Headers["Range"];
+
+            try
+            {
+                TrackFile file = null;
+                MemoryStream stream = null;
+
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTrackFile);
+                file = await trackService.GetTrackFile(id);
+                stream = new MemoryStream(file.Data);
+
+                if (Request.Headers.Range == null)
+                {
+                    message.Content = new StreamContent(stream);
+                    message.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(MimeMapping.GetMimeMapping(file.Name));
+                }
+                else
+                {
+                    message.Content = new ByteRangeStreamContent(stream, Request.Headers.Range, MimeMapping.GetMimeMapping(file.Name));
+                }
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+    }
+
+            return message;
         }
     }
 }

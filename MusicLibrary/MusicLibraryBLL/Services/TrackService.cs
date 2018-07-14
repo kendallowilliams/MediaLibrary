@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -52,6 +53,37 @@ namespace MusicLibraryBLL.Services
             }
 
             return id;
+        }
+
+        public async Task<int?> AddTrackFile(int trackId, int pathId, string fileName)
+        {
+            TrackPath path = await dataService.Get<TrackPath>(pathId);
+            string filePath = Path.Combine(path.Location, fileName);
+            byte[] data = File.ReadAllBytes(fileName);
+            TrackFile file = new TrackFile(trackId, data, fileName);
+
+            return await dataService.Insert<TrackFile,int>(file);
+        }
+
+        public async Task<TrackFile> GetTrackFile(int id)
+        {
+            Track track = await GetTrack(id);
+            TrackFile file = null;
+
+            if (track.FileId.HasValue)
+            {
+                file = await dataService.Get<TrackFile>(id);
+            }
+            else
+            {
+                TrackPath path = await dataService.Get<TrackPath>(track.PathId);
+                string fileName = Path.Combine(path.Location, track.FileName);
+                byte[] data = File.ReadAllBytes(fileName);
+
+                file = new TrackFile { Name = fileName, Data = data };
+            }
+
+            return file;
         }
     }
 }
