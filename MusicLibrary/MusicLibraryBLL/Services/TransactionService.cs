@@ -41,12 +41,12 @@ namespace MusicLibraryBLL.Services
             return transaction;
         }
 
-        public async Task UpdateTransactionCompleted(Transaction transaction, string statusMessage = "")
+        public async Task UpdateTransactionCompleted(Transaction transaction, string statusMessage = null)
         {
             if (transaction != null)
             {
                 transaction.Status = TransactionStatus.Completed;
-                transaction.StatusMessage = statusMessage;
+                transaction.StatusMessage = statusMessage ?? TransactionStatus.Completed.ToString();
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
             }

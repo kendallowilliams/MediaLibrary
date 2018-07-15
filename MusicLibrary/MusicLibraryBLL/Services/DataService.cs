@@ -21,10 +21,12 @@ namespace MusicLibraryBLL.Services
     public class DataService : IDataService
     {
         private string connectionString;
+        private int timeout;
 
         [ImportingConstructor]
         public DataService()
         {
+            timeout = 120;
             connectionString = ConfigurationManager.ConnectionStrings["MusicLibraryConnectionString"].ConnectionString;
         }
 
@@ -34,7 +36,7 @@ namespace MusicLibraryBLL.Services
 
             using (IDbConnection conn = GetNewConnection())
             {
-                results = await conn.GetListAsync<T>(predicate);
+                results = await conn.GetListAsync<T>(predicate, commandTimeout: timeout);
             }
 
             return results;
@@ -46,7 +48,7 @@ namespace MusicLibraryBLL.Services
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.GetAsync<T>(id);
+                result = await conn.GetAsync<T>(id, commandTimeout: timeout);
             }
 
             return result;
@@ -58,7 +60,7 @@ namespace MusicLibraryBLL.Services
             {
                 entity.ModifyDate = DateTime.Now;
                 entity.CreateDate = DateTime.Now;
-                await conn.InsertAsync(entity);
+                await conn.InsertAsync(entity, commandTimeout: timeout);
             }
         }
 
@@ -70,7 +72,7 @@ namespace MusicLibraryBLL.Services
             {
                 entity.ModifyDate = DateTime.Now;
                 entity.CreateDate = DateTime.Now;
-                result = await conn.InsertAsync(entity);
+                result = await conn.InsertAsync(entity, commandTimeout: timeout);
             }
 
             return result;
@@ -83,7 +85,7 @@ namespace MusicLibraryBLL.Services
             using (IDbConnection conn = GetNewConnection())
             {
                 var predicate = Predicates.Field<T>(f => f.Id, Operator.Eq, id);
-                result = await conn.DeleteAsync(predicate);
+                result = await conn.DeleteAsync(predicate, commandTimeout: timeout);
             }
 
             return result;
@@ -95,7 +97,7 @@ namespace MusicLibraryBLL.Services
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.DeleteAsync(entity);
+                result = await conn.DeleteAsync(entity, commandTimeout: timeout);
             }
 
             return result;
@@ -108,7 +110,7 @@ namespace MusicLibraryBLL.Services
             using (IDbConnection conn = GetNewConnection())
             {
                 entity.ModifyDate = DateTime.Now;
-                result = await conn.UpdateAsync(entity);
+                result = await conn.UpdateAsync(entity, commandTimeout: timeout);
             }
 
             return result;
@@ -120,7 +122,7 @@ namespace MusicLibraryBLL.Services
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.CountAsync<T>(predicate);
+                result = await conn.CountAsync<T>(predicate, commandTimeout: timeout);
             }
 
             return result;
@@ -132,7 +134,7 @@ namespace MusicLibraryBLL.Services
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.QueryAsync<T>(sql, parameters);
+                result = await conn.QueryAsync<T>(sql, parameters, commandTimeout: timeout);
             }
 
             return result;
@@ -144,7 +146,7 @@ namespace MusicLibraryBLL.Services
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.ExecuteAsync(sql, parameters);
+                result = await conn.ExecuteAsync(sql, parameters, commandTimeout: timeout);
             }
 
             return result;
@@ -156,7 +158,7 @@ namespace MusicLibraryBLL.Services
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.ExecuteScalarAsync<T>(sql, parameters);
+                result = await conn.ExecuteScalarAsync<T>(sql, parameters, commandTimeout: timeout);
             }
 
             return result;

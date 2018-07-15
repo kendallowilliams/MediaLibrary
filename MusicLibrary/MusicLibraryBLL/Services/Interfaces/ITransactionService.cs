@@ -20,7 +20,7 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<Transaction> GetNewTransaction(TransactionTypes transactionType);
 
-        Task UpdateTransactionCompleted(Transaction transaction, string statusMessage = "");
+        Task UpdateTransactionCompleted(Transaction transaction, string statusMessage = null);
 
         Task UpdateTransactionInProcess(Transaction transaction);
 

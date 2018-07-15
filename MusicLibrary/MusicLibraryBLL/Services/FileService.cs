@@ -66,11 +66,12 @@ namespace MusicLibraryBLL.Services
         {
             IEnumerable<string> fileTypes = ConfigurationManager.AppSettings["FileTypes"].Split(new[] { ',' })
                                                                                          .Select(fileType => fileType.ToLower());
-            IEnumerable<string> allFiles = await EnumerateFiles(path, recursive: recursive);
-            var fileGroups = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()))
-                                     .GroupBy(file => new { directory = Path.GetDirectoryName(file) });
             try
             {
+                IEnumerable<string> allFiles = await EnumerateFiles(path, recursive: recursive);
+                var fileGroups = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()))
+                                         .GroupBy(file => new { directory = Path.GetDirectoryName(file) });
+
                 foreach (var group in fileGroups)
                 {
                     foreach (string file in group) { await ReadMediaFile(file, copyFiles); }
