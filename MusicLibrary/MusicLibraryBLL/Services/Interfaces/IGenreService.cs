@@ -21,6 +21,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<bool> DeleteGenre(Genre genre);
 
+        Task DeleteAllGenres();
+
         Task<bool> UpdateGenre(Genre genre);
     }
 }

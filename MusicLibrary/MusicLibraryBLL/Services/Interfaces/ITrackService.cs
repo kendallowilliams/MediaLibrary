@@ -19,6 +19,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<bool> DeleteTrack(Track track);
 
+        Task DeleteAllTracks();
+
         Task<bool> UpdateTrack(Track track);
 
         Task<int?> AddPath(string location);

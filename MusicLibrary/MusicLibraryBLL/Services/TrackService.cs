@@ -32,6 +32,12 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeleteTrack(Track track) => await dataService.Delete(track);
 
+        public async Task DeleteAllTracks()
+        {
+            await dataService.Execute(@"DELETE track;");
+            await dataService.Execute(@"DELETE track_file;");
+        }
+
         public async Task<bool> UpdateTrack(Track track) => await dataService.Update(track);
 
         public async Task<int?> AddPath(string location)

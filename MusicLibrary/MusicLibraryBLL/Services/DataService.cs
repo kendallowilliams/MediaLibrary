@@ -126,7 +126,7 @@ namespace MusicLibraryBLL.Services
             return result;
         }
 
-        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters) where T : BaseModel
+        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters = null) where T : BaseModel
         {
             IEnumerable<T> result = Enumerable.Empty<T>();
 
@@ -138,7 +138,7 @@ namespace MusicLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Execute(string sql, object parameters)
+        public async Task<int> Execute(string sql, object parameters = null)
         {
             int result = default(int);
 
@@ -150,7 +150,7 @@ namespace MusicLibraryBLL.Services
             return result;
         }
 
-        public async Task<T> ExecuteScalar<T>(string sql, object parameters)
+        public async Task<T> ExecuteScalar<T>(string sql, object parameters = null)
         {
             T result = default(T);
 

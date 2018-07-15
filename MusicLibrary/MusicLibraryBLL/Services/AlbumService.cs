@@ -49,6 +49,8 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeleteAlbum(Album album) => await dataService.Delete(album);
 
+        public async Task DeleteAllAlbums() => await dataService.Execute(@"DELETE album;");
+
         public async Task<bool> UpdateAlbum(Album album) => await dataService.Update(album);
     }
 }

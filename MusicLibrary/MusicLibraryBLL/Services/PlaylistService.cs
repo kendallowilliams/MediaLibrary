@@ -31,6 +31,12 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeletePlaylist(Playlist playlist) => await dataService.Delete(playlist);
 
+        public async Task DeleteAllPlaylists()
+        {
+            await dataService.Execute(@"DELETE playlist_track;");
+            await dataService.Execute(@"DELETE playlist;");
+        }
+
         public async Task<bool> UpdatePlaylist(Playlist playlist) => await dataService.Update(playlist);
     }
 }

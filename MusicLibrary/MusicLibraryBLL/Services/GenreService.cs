@@ -50,6 +50,8 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeleteGenre(Genre genre) => await dataService.Delete(genre);
 
+        public async Task DeleteAllGenres() => await dataService.Execute(@"DELETE genre;");
+
         public async Task<bool> UpdateGenre(Genre genre) => await dataService.Update(genre);
     }
 }

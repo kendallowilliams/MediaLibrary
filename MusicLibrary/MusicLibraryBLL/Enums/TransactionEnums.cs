@@ -29,7 +29,7 @@ namespace MusicLibraryBLL.Enums
             GetPodcasts = 251, GetPodcast = 252, AddPodcast = 253, RemovePodcast = 254, ReplacePodcast = 255,
 
             /* Tracks: 301 - 350 */
-            Read = 301,
+            Read = 301, ResetData = 302,
 
             None = -1
         }

@@ -21,6 +21,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<bool> DeleteAlbum(Album album);
 
+        Task DeleteAllAlbums();
+
         Task<bool> UpdateAlbum(Album album);
     }
 }
