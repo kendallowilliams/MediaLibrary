@@ -57,6 +57,7 @@ namespace MusicLibraryBLL.Services
             if (transaction != null)
             {
                 transaction.Status = TransactionStatus.InProcess;
+                transaction.StatusMessage = TransactionStatus.InProcess.ToString();
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
             }
@@ -67,6 +68,7 @@ namespace MusicLibraryBLL.Services
             if (transaction != null)
             {
                 transaction.Status = TransactionStatus.Errored;
+                transaction.StatusMessage = TransactionStatus.Errored.ToString();
                 transaction.ErrorMessage = exception.Message;
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
