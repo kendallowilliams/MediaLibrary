@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './components/app/app.component';
@@ -23,6 +23,7 @@ import { TrackListComponent } from './components/music/track-list/track-list.com
 import { AlbumListComponent } from './components/music/album-list/album-list.component';
 import { ArtistListComponent } from './components/music/artist-list/artist-list.component';
 import { MusicSettingsComponent } from './components/music/music-settings/music-settings.component';
+import { MlRouteReuseStrategy } from './route_reuse_strategies/route-reuse-strategy';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,9 @@ import { MusicSettingsComponent } from './components/music/music-settings/music-
     ]),
     HttpClientModule
   ],
-  providers: [TracksResolver, ArtistsResolver, AlbumsResolver, GenresResolver],
+  providers: [TracksResolver, ArtistsResolver, AlbumsResolver, GenresResolver,
+    { provide: RouteReuseStrategy, useClass: MlRouteReuseStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
