@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { AlbumService } from '../../services/album.service';
 import { ArtistService } from '../../services/artist.service';
@@ -15,6 +15,7 @@ import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 import { ITrackList, IAlbumList, IArtistList } from '../../shared/interfaces/music.interface';
 import { TrackListComponent } from './track-list/track-list.component';
 import { TrackComponent } from './track/track.component';
+import { AppService } from '../../services/app.service';
 
 @Component({
   selector: 'app-music',
@@ -26,6 +27,7 @@ export class MusicComponent implements OnInit {
   public MusicTabs = MusicTabEnum;
 
   @Input() musicCount: number;
+  @Output() play: EventEmitter<number> = new EventEmitter<number>();
 
   letters = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter => letter.toUpperCase());
   tracks: Track[] = [];
@@ -43,8 +45,9 @@ export class MusicComponent implements OnInit {
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
     private albumService: AlbumService, private genreService: GenreService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private appService: AppService) {
     this.musicCount = 0;
+    this.appService.musicComponent = this;
   }
 
   ngOnInit() {

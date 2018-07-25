@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ElementRef, Output, APP_INITIALIZER, ViewChil
 import { Track } from '../../../shared/models/track.model';
 import { ITrackList } from '../../../shared/interfaces/music.interface';
 import { TrackComponent } from '../track/track.component';
+import { AppService } from '../../../services/app.service';
 
 @Component({
   selector: 'app-track-list',
@@ -21,7 +22,7 @@ export class TrackListComponent implements OnInit {
   private loaded: boolean;
   private tracksHidden = true;
 
-  constructor() {
+  constructor(private appService: AppService) {
   }
 
   ngOnInit() {
@@ -54,6 +55,7 @@ export class TrackListComponent implements OnInit {
 
   playTrack(id: number): void {
     this.children.filter(child => child.track.id !== id).forEach(child => child.isPlaying = false);
+    this.appService.controlsComponent.play(id);
   }
 
   selectTrack(id: number): void {

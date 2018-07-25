@@ -1,5 +1,5 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
-import { Track } from '../models/track.model';
+import { Track } from './track.model';
 
 export class Podcast implements Deserializable {
     id: number;
