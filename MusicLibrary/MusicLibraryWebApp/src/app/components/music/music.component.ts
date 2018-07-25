@@ -28,17 +28,17 @@ export class MusicComponent implements OnInit {
   @Input() musicCount: number;
 
   letters = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter => letter.toUpperCase());
-  tracks: Track[];
-  artists: Artist[];
-  albums: Album[];
-  genres: Genre[];
+  tracks: Track[] = [];
+  artists: Artist[] = [];
+  albums: Album[] = [];
+  genres: Genre[] = [];
   currentTrackSort: TrackSortEnum;
   currentAlbumSort: AlbumSortEnum;
-  trackSortOptions: any[];
-  albumSortOptions: any[];
-  trackSortGroups: ITrackList[];
-  artistSortGroups: IArtistList[];
-  albumSortGroups: IAlbumList[];
+  trackSortOptions: any[] = [];
+  albumSortOptions: any[] = [];
+  trackSortGroups: ITrackList[] = [];
+  artistSortGroups: IArtistList[] = [];
+  albumSortGroups: IAlbumList[] = [];
   selectMusicTab: MusicTabEnum;
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
@@ -48,13 +48,23 @@ export class MusicComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTracks();
     this.getArtists();
-    this.getAlbums();
     this.getGenres();
-    this.updateTracks();
-    this.updateAlbums();
-    this.updateMusicTab(MusicTabEnum.Songs);
+
+    this.artistSortGroups = this.getArtistSortGroups();
+
+    this.albumService.getAlbums().subscribe(albums => {
+      this.albums = albums;
+      this.albumSortGroups = this.getAlbumSortGroups();
+      this.updateAlbums();
+    });
+
+    this.trackService.getTracks().subscribe(tracks => {
+      this.tracks = tracks;
+      this.updateTracks();
+      this.trackSortGroups = this.getTrackSortGroups();
+      this.updateMusicTab(MusicTabEnum.Songs);
+    });
   }
 
   updateMusicTab(musicTab: MusicTabEnum): void {
@@ -65,7 +75,6 @@ export class MusicComponent implements OnInit {
         this.musicCount = this.tracks.length;
         break;
       case MusicTabEnum.Artists:
-        this.artistSortGroups = this.getArtistSortGroups(); // currently atoz only option
         this.musicCount = this.artists.length;
         break;
       case MusicTabEnum.Albums:
@@ -263,14 +272,6 @@ export class MusicComponent implements OnInit {
 
   getGenres(): void {
     this.genres = this.route.snapshot.data['genres'];
-  }
-
-  getTracks(): void {
-    this.tracks = this.route.snapshot.data['tracks'];
-  }
-
-  getAlbums(): void {
-    this.albums = this.route.snapshot.data['albums'];
   }
 
   getArtists(): void {
