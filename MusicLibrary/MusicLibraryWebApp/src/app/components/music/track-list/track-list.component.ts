@@ -15,12 +15,13 @@ export class TrackListComponent implements OnInit {
   @ViewChildren(TrackComponent) children = new QueryList<TrackComponent>();
 
   @Input() group: ITrackList;
-  @Input() tracks: Track[];
 
   private tracksHeight: number;
   private headerHeight: number;
   private loaded: boolean;
   private tracksHidden = true;
+  private readonly tracksPerGroup: number = 100;
+  private trackGroups: Array<Track[]>;
 
   constructor(private appService: AppService) {
   }
@@ -34,10 +35,21 @@ export class TrackListComponent implements OnInit {
 
   load(): void {
     if (!this.loaded) {
-      this.tracks = this.group.tracks;
+      this.trackGroups = this.splitTracksIntoGroups(this.group.tracks);
       this.group.height = this.tracksHeight + this.headerHeight;
       this.loaded = true;
     }
+  }
+
+  splitTracksIntoGroups(_tracks: Track[]): Array<Track[]> {
+    const trackGroups: Array<Track[]> = [];
+    const tracks = Array.from(_tracks);
+
+    while (tracks.length > 0) {
+      trackGroups.push(tracks.splice(0, this.tracksPerGroup));
+    }
+
+    return trackGroups;
   }
 
   show(): void {
