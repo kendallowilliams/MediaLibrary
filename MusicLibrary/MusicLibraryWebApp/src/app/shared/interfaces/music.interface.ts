@@ -30,5 +30,5 @@ export interface IScrollData {
   top: number;
   height: number;
   timeout: number;
-  timeoutId?: NodeJS.Timer;
+  timeoutId?: any;
 }
