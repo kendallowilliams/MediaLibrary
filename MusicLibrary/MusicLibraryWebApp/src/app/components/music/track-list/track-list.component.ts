@@ -63,7 +63,9 @@ export class TrackListComponent implements OnInit {
   }
 
   hide(): void {
-    this.trackGroups.forEach(group => group.visible = false);
+    if (this.loaded) {
+      this.trackGroups.forEach(group => group.visible = false);
+    }
   }
 
   trackByTracks(index: number, track: Track): number {
