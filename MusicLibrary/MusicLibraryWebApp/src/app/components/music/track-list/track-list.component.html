@@ -2,7 +2,7 @@
   <span class='ml-track-list-title'>{{group.title}}</span>
 </div>
 <div class='ml-track-list-body' [style.height.px]="tracksHeight">
-  <div class='ml-track-group' *ngFor="let group of trackGroups" [attr.data-ml-tracks-hidden]="tracksHidden">
-    <app-track [track]=track *ngFor="let track of group" (play)="playTrack($event)" (select)="selectTrack($event)" (check)="checkTrack($event)"></app-track>
+  <div class='ml-track-group' *ngFor="let group of trackGroups" [attr.data-ml-tracks-hidden]="!group.visible">
+    <app-track [track]=track *ngFor="let track of group.tracks" (play)="playTrack($event)" (select)="selectTrack($event)" (check)="checkTrack($event)"></app-track>
   </div>
 </div>

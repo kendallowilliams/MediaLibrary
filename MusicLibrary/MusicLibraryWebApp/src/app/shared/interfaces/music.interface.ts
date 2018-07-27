@@ -6,7 +6,7 @@ export interface ITrackList {
   title: string;
   tracks: Track[];
   height?: number;
-  showTracks?();
+  showTracks?(top: number, bottom: number);
   hideTracks?();
 }
 
@@ -18,4 +18,9 @@ export interface IAlbumList {
 export interface IArtistList {
   title: string;
   artists: Artist[];
+}
+
+export interface ITrackGroup {
+  visible?: boolean;
+  tracks: Track[];
 }

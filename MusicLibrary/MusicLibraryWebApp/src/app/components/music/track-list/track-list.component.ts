@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ElementRef, Output, APP_INITIALIZER, ViewChildren, QueryList } from '@angular/core';
 import { Track } from '../../../shared/models/track.model';
-import { ITrackList } from '../../../shared/interfaces/music.interface';
+import { ITrackList, ITrackGroup } from '../../../shared/interfaces/music.interface';
 import { TrackComponent } from '../track/track.component';
 import { AppService } from '../../../services/app.service';
 
@@ -19,9 +19,8 @@ export class TrackListComponent implements OnInit {
   private tracksHeight: number;
   private headerHeight: number;
   private loaded: boolean;
-  private tracksHidden = true;
   private readonly tracksPerGroup: number = 100;
-  private trackGroups: Array<Track[]>;
+  private trackGroups: ITrackGroup[];
 
   constructor(private appService: AppService) {
   }
@@ -29,7 +28,7 @@ export class TrackListComponent implements OnInit {
   ngOnInit() {
     this.headerHeight = TrackListComponent.HeaderHeight;
     this.tracksHeight = this.group.tracks.length * TrackComponent.TrackHeight;
-    this.group.showTracks = () => this.show();
+    this.group.showTracks = (top, bottom) => this.show(top, bottom);
     this.group.hideTracks = () => this.hide();
   }
 
@@ -41,24 +40,30 @@ export class TrackListComponent implements OnInit {
     }
   }
 
-  splitTracksIntoGroups(_tracks: Track[]): Array<Track[]> {
-    const trackGroups: Array<Track[]> = [];
+  splitTracksIntoGroups(_tracks: Track[]): ITrackGroup[] {
+    const groupCount: number = Math.ceil(_tracks.length / this.tracksPerGroup);
+    const trackGroups: ITrackGroup[] = [];
     const tracks = Array.from(_tracks);
 
     while (tracks.length > 0) {
-      trackGroups.push(tracks.splice(0, this.tracksPerGroup));
+      trackGroups.push({ tracks: tracks.splice(0, this.tracksPerGroup) });
     }
 
     return trackGroups;
   }
 
-  show(): void {
+  show(viewTop: number, viewBottom: number): void {
     this.load();
-    this.tracksHidden = false;
+    this.trackGroups.forEach((group, index) => {
+      const groupTop: number = index * this.tracksPerGroup,
+            groupBottom: number = groupTop + (group.tracks.length * TrackComponent.TrackHeight);
+      group.visible = (viewTop >= groupTop && viewTop <= groupBottom) ||
+        (viewBottom >= groupTop && viewBottom <= groupBottom);
+    });
   }
 
   hide(): void {
-    this.tracksHidden = true;
+    this.trackGroups.forEach(group => group.visible = false);
   }
 
   trackByTracks(index: number, track: Track): number {

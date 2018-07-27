@@ -302,13 +302,15 @@ export class MusicComponent implements OnInit {
 
     this.trackSortGroups.reduce((acc, current) => {
       const listTop = acc,
-            listBottom = acc + current.height;
+            listBottom = acc + current.height,
+            viewTop = parentTop - listTop > 0 ? parentTop - listTop : 0,
+            viewBottom = viewTop + height;
 
       if ((listTop >= parentTop && listTop <= parentBottom) ||
           (listBottom >= parentTop && listBottom <= parentBottom) ||
           (parentTop >= listTop && parentTop <= listBottom) ||
           (parentBottom >= listTop && parentBottom <= listBottom)) {
-        current.showTracks();
+        current.showTracks(viewTop, viewBottom);
       } else {
         current.hideTracks();
       }
