@@ -8,6 +8,6 @@
   align-self: center;
 }
 
-.ml-track-list-body[data-ml-tracks-hidden='true'] * {
+.ml-track-group[data-ml-tracks-hidden='true'] * {
   display: none;
 }

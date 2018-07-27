@@ -1,8 +1,8 @@
 <div class='ml-track-list-header' [style.height.px]="headerHeight">
   <span class='ml-track-list-title'>{{group.title}}</span>
 </div>
-<div class='ml-track-list-body' [style.height.px]="tracksHeight" [attr.data-ml-tracks-hidden]="tracksHidden">
-  <div *ngFor="let group of trackGroups">
+<div class='ml-track-list-body' [style.height.px]="tracksHeight">
+  <div *ngFor="let group of trackGroups" [attr.data-ml-tracks-hidden]="tracksHidden">
     <app-track [track]=track *ngFor="let track of group" (play)="playTrack($event)" (select)="selectTrack($event)" (check)="checkTrack($event)"></app-track>
   </div>
 </div>
