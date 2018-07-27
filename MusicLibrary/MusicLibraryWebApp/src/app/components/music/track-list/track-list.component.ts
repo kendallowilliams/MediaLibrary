@@ -55,7 +55,7 @@ export class TrackListComponent implements OnInit {
   show(viewTop: number, viewBottom: number): void {
     this.load();
     this.trackGroups.forEach((group, index) => {
-      const groupTop: number = index * this.tracksPerGroup,
+      const groupTop: number = index * this.tracksPerGroup * TrackComponent.TrackHeight,
             groupBottom: number = groupTop + (group.tracks.length * TrackComponent.TrackHeight);
       group.visible = (viewTop >= groupTop && viewTop <= groupBottom) ||
         (viewBottom >= groupTop && viewBottom <= groupBottom);
