@@ -12,7 +12,7 @@ import { Genre } from '../../shared/models/genre.model';
 import { ActivatedRoute } from '@angular/router';
 
 import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
-import { ITrackList, IAlbumList, IArtistList } from '../../shared/interfaces/music.interface';
+import { ITrackList, IAlbumList, IArtistList, IScrollData } from '../../shared/interfaces/music.interface';
 import { TrackListComponent } from './track-list/track-list.component';
 import { TrackComponent } from './track/track.component';
 import { AppService } from '../../services/app.service';
@@ -42,6 +42,7 @@ export class MusicComponent implements OnInit {
   artistSortGroups: IArtistList[] = [];
   albumSortGroups: IAlbumList[] = [];
   selectMusicTab: MusicTabEnum;
+  scrollData: IScrollData = { top: 0, height: 0, timeout: 100 };
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
     private albumService: AlbumService, private genreService: GenreService,
@@ -297,6 +298,18 @@ export class MusicComponent implements OnInit {
   }
 
   handleScroll(height: number, scrollTop: number): void {
+    this.scrollData.top = scrollTop;
+    this.scrollData.height = height;
+
+    if (this.scrollData.timeoutId) {
+      clearTimeout(this.scrollData.timeoutId);
+    }
+
+    this.scrollData.timeoutId = setTimeout((_height, _scrollTop) => this.handleScrollCallback(_height, _scrollTop),
+      this.scrollData.timeout, height, scrollTop);
+  }
+
+  handleScrollCallback(height: number, scrollTop: number): void {
     const parentTop = scrollTop,
           parentBottom = parentTop + height;
 
