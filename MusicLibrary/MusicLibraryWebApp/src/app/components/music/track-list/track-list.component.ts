@@ -59,6 +59,7 @@ export class TrackListComponent implements OnInit {
             groupBottom: number = groupTop + (group.tracks.length * TrackComponent.TrackHeight);
       group.visible = (viewTop >= groupTop && viewTop <= groupBottom) ||
         (viewBottom >= groupTop && viewBottom <= groupBottom);
+      group.height = group.tracks.length * TrackComponent.TrackHeight;
     });
   }
 

@@ -22,5 +22,6 @@ export interface IArtistList {
 
 export interface ITrackGroup {
   visible?: boolean;
+  height?: number;
   tracks: Track[];
 }
