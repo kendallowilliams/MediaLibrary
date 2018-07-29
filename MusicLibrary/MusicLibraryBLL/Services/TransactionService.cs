@@ -36,6 +36,7 @@ namespace MusicLibraryBLL.Services
             Transaction transaction = new Transaction(transactionType);
 
             transaction.Status = TransactionStatus.Started;
+            transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
             transaction.Id = await InsertTransaction(transaction);
 
             return transaction;
@@ -46,7 +47,7 @@ namespace MusicLibraryBLL.Services
             if (transaction != null)
             {
                 transaction.Status = TransactionStatus.Completed;
-                transaction.StatusMessage = statusMessage ?? transaction.Status.ToString();
+                transaction.StatusMessage = statusMessage ?? $"{transaction.Status} [{transaction.Type}]";
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
             }
@@ -57,7 +58,7 @@ namespace MusicLibraryBLL.Services
             if (transaction != null)
             {
                 transaction.Status = TransactionStatus.InProcess;
-                transaction.StatusMessage = transaction.Status.ToString();
+                transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
             }
@@ -68,7 +69,7 @@ namespace MusicLibraryBLL.Services
             if (transaction != null)
             {
                 transaction.Status = TransactionStatus.Errored;
-                transaction.StatusMessage = transaction.Status.ToString();
+                transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
                 transaction.ErrorMessage = exception.Message;
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
