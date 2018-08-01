@@ -76,14 +76,16 @@ export class TrackService {
           break;
       }
 
+      _lists.forEach(list => list.height = this.getTrackListHeight(list.groups));
+
       return _lists;
     }));
 
-    lists.forEach(list => list.forEach((_list, _index) =>
-      _list.groups.forEach(_group =>
-        _list.height = (_group.tracks.length * TrackComponent.TrackHeight) + TrackListComponent.HeaderHeight)));
-
     return lists.pipe(map(_lists => _lists.filter(list => list.groups.length > 0)));
+  }
+
+  getTrackListHeight(groups: ITrackGroup[]): number {
+    return (groups.reduce((acc, current) => acc + current.tracks.length, 0) * TrackComponent.TrackHeight) + TrackListComponent.HeaderHeight;
   }
 
   getTracksAtoZ(char: string, tracks: Track[]): Track[] {
