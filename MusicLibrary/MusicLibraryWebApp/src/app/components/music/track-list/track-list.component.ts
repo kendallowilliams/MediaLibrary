@@ -27,33 +27,21 @@ export class TrackListComponent implements OnInit {
 
   ngOnInit() {
     this.headerHeight = TrackListComponent.HeaderHeight;
-    this.tracksHeight = this.list.groups.length * TrackComponent.TrackHeight;
+    this.tracksHeight = this.list.groups.reduce((_previous, _current) => 
+      _previous + _current.tracks.length, 0) * TrackComponent.TrackHeight;
     this.list.showTracks = (top, bottom) => this.show(top, bottom);
     this.list.hideTracks = () => this.hide();
   }
 
   load(): void {
     if (!this.loaded) {
-      this.list.height = this.tracksHeight + this.headerHeight;
       this.loaded = true;
     }
   }
 
-  splitTracksIntoGroups(_tracks: Track[]): ITrackGroup[] {
-    const groupCount: number = Math.ceil(_tracks.length / this.tracksPerGroup);
-    const trackGroups: ITrackGroup[] = [];
-    const tracks = Array.from(_tracks);
-
-    while (tracks.length > 0) {
-      trackGroups.push({ tracks: tracks.splice(0, this.tracksPerGroup) });
-    }
-
-    return trackGroups;
-  }
-
   show(viewTop: number, viewBottom: number): void {
     this.load();
-    this.trackGroups.forEach((group, index) => {
+    this.list.groups.forEach((group, index) => {
       const groupTop: number = index * this.tracksPerGroup * TrackComponent.TrackHeight,
             groupBottom: number = groupTop + (group.tracks.length * TrackComponent.TrackHeight);
       group.visible = (viewTop >= groupTop && viewTop <= groupBottom) ||
@@ -64,7 +52,7 @@ export class TrackListComponent implements OnInit {
 
   hide(): void {
     if (this.loaded) {
-      this.trackGroups.forEach(group => group.visible = false);
+      this.list.groups.forEach(group => group.visible = false);
     }
   }
 

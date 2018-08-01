@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 
 import { AlbumService } from '../../services/album.service';
 import { ArtistService } from '../../services/artist.service';
@@ -13,10 +13,9 @@ import { ActivatedRoute } from '@angular/router';
 
 import { TrackSortEnum, AlbumSortEnum, MusicTabEnum } from './enums/music-enum';
 import { ITrackList, IAlbumList, IArtistList, IScrollData } from '../../shared/interfaces/music.interface';
-import { TrackListComponent } from './track-list/track-list.component';
-import { TrackComponent } from './track/track.component';
 import { AppService } from '../../services/app.service';
 import { Observable } from '../../../../node_modules/rxjs';
+import { TrackListComponent } from './track-list/track-list.component';
 
 @Component({
   selector: 'app-music',
@@ -29,6 +28,7 @@ export class MusicComponent implements OnInit {
 
   @Input() musicCount: number;
   @Output() play: EventEmitter<number> = new EventEmitter<number>();
+  @ViewChildren(TrackListComponent) children = new QueryList<TrackListComponent>();
 
   letters = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter => letter.toUpperCase());
   tracks: Track[] = [];
@@ -248,10 +248,10 @@ export class MusicComponent implements OnInit {
   handleScrollCallback(height: number, scrollTop: number): void {
     const parentTop = scrollTop,
           parentBottom = parentTop + height;
-/*
-    this.trackSortGroups.reduce((acc, current) => {
+
+    this.children.reduce((acc, current) => {
       const listTop = acc,
-            listBottom = acc + current.height,
+            listBottom = acc + current.list.height,
             viewTop = parentTop - listTop > 0 ? parentTop - listTop : 0,
             viewBottom = viewTop + height;
 
@@ -259,12 +259,12 @@ export class MusicComponent implements OnInit {
           (listBottom >= parentTop && listBottom <= parentBottom) ||
           (parentTop >= listTop && parentTop <= listBottom) ||
           (parentBottom >= listTop && parentBottom <= listBottom)) {
-        current.showTracks(viewTop, viewBottom);
+        current.list.showTracks(viewTop, viewBottom);
       } else {
-        current.hideTracks();
+        current.list.hideTracks();
       }
 
       return listBottom;
-    }, 0);*/
+    }, 0);
   }
 }
