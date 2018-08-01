@@ -16,6 +16,7 @@ import { ITrackList, IAlbumList, IArtistList, IScrollData } from '../../shared/i
 import { TrackListComponent } from './track-list/track-list.component';
 import { TrackComponent } from './track/track.component';
 import { AppService } from '../../services/app.service';
+import { Observable } from '../../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-music',
@@ -38,7 +39,7 @@ export class MusicComponent implements OnInit {
   currentAlbumSort: AlbumSortEnum;
   trackSortOptions: any[] = [];
   albumSortOptions: any[] = [];
-  trackSortGroups: ITrackList[] = [];
+  trackSortLists$: Observable<ITrackList[]>;
   artistSortGroups: IArtistList[] = [];
   albumSortGroups: IAlbumList[] = [];
   selectMusicTab: MusicTabEnum;
@@ -66,7 +67,7 @@ export class MusicComponent implements OnInit {
     this.trackService.getTracks().subscribe(tracks => {
       this.tracks = tracks;
       this.updateTracks();
-      this.trackSortGroups = this.getTrackSortGroups();
+      this.trackSortLists$ = this.trackService.getTrackSortLists(this.currentTrackSort);
       this.updateMusicTab(MusicTabEnum.Songs);
     });
   }
@@ -94,7 +95,7 @@ export class MusicComponent implements OnInit {
   updateTrackSort(trackSort: TrackSortEnum): void {
     if (this.currentTrackSort !== trackSort) {
       this.currentTrackSort = trackSort;
-      this.trackSortGroups = this.getTrackSortGroups();
+      this.trackSortLists$ = this.trackService.getTrackSortLists(trackSort);
     }
   }
 
@@ -103,52 +104,6 @@ export class MusicComponent implements OnInit {
       this.currentAlbumSort = albumSort;
       this.albumSortGroups = this.getAlbumSortGroups();
     }
-  }
-
-  getTrackSortGroups(): ITrackList[] {
-    let groups: ITrackList[] = [];
-
-    switch (this.currentTrackSort) {
-      case TrackSortEnum.Album:
-        const albums = this.albums.map(album => album.title);
-        groups = albums.filter((album, index, _albums) => _albums.findIndex(item => item === album) === index)
-          .map(album => ({
-            title: album,
-            tracks: this.tracks.filter(track => track.album === album)
-          }));
-        break;
-      case TrackSortEnum.Artist:
-        const artists = this.artists.map(artist => artist.name);
-        groups = artists.filter((artist, index, _artists) => _artists.findIndex(item => item === artist) === index)
-          .map(artist => ({
-            title: artist,
-            tracks: this.tracks.filter(track => track.artist === artist)
-          }));
-        break;
-      case TrackSortEnum.AtoZ:
-        groups = ['&', '#'].concat(this.letters)
-          .map(char => ({
-            title: char,
-            tracks: this.getTracksAtoZ(char)
-          }));
-        break;
-      case TrackSortEnum.DateAdded:
-        const dates = this.tracks.map(track => track.createDate.toDateString()).sort().reverse();
-        groups = dates.filter((date, index, _dates) => _dates.findIndex(item => item === date) === index)
-          .map(date => ({
-            title: date,
-            tracks: this.tracks.filter(track => track.createDate.toDateString() === date)
-          }));
-        break;
-      case TrackSortEnum.None:
-      default:
-        groups = [];
-        break;
-    }
-
-    groups.forEach(group => group.height = (group.tracks.length * TrackComponent.TrackHeight) + TrackListComponent.HeaderHeight);
-
-    return groups.filter(group => group.tracks.length > 0);
   }
 
   getArtistSortGroups(): IArtistList[] {
@@ -200,25 +155,6 @@ export class MusicComponent implements OnInit {
     }
 
     return groups.filter(group => group.albums.length > 0);
-  }
-
-  getTracksAtoZ(char: string): Track[] {
-    let tracks = [];
-
-    switch (char) {
-      case '&':
-        tracks = this.tracks.filter(track => isNaN(parseInt(track.title[0], 10)) &&
-          !this.letters.includes(track.title[0].toUpperCase()));
-        break;
-      case '#':
-        tracks = this.tracks.filter(track => !isNaN(parseInt(track.title[0], 10)));
-        break;
-      default:
-        tracks = this.tracks.filter(track => track.title[0].toUpperCase() === char);
-        break;
-    }
-
-    return tracks;
   }
 
   getArtistsAtoZ(char: string): Artist[] {
@@ -312,7 +248,7 @@ export class MusicComponent implements OnInit {
   handleScrollCallback(height: number, scrollTop: number): void {
     const parentTop = scrollTop,
           parentBottom = parentTop + height;
-
+/*
     this.trackSortGroups.reduce((acc, current) => {
       const listTop = acc,
             listBottom = acc + current.height,
@@ -329,6 +265,6 @@ export class MusicComponent implements OnInit {
       }
 
       return listBottom;
-    }, 0);
+    }, 0);*/
   }
 }

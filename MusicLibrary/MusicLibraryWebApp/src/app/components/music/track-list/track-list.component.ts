@@ -14,7 +14,7 @@ export class TrackListComponent implements OnInit {
 
   @ViewChildren(TrackComponent) children = new QueryList<TrackComponent>();
 
-  @Input() group: ITrackList;
+  @Input() list: ITrackList;
 
   private tracksHeight: number;
   private headerHeight: number;
@@ -27,15 +27,14 @@ export class TrackListComponent implements OnInit {
 
   ngOnInit() {
     this.headerHeight = TrackListComponent.HeaderHeight;
-    this.tracksHeight = this.group.tracks.length * TrackComponent.TrackHeight;
-    this.group.showTracks = (top, bottom) => this.show(top, bottom);
-    this.group.hideTracks = () => this.hide();
+    this.tracksHeight = this.list.groups.length * TrackComponent.TrackHeight;
+    this.list.showTracks = (top, bottom) => this.show(top, bottom);
+    this.list.hideTracks = () => this.hide();
   }
 
   load(): void {
     if (!this.loaded) {
-      this.trackGroups = this.splitTracksIntoGroups(this.group.tracks);
-      this.group.height = this.tracksHeight + this.headerHeight;
+      this.list.height = this.tracksHeight + this.headerHeight;
       this.loaded = true;
     }
   }

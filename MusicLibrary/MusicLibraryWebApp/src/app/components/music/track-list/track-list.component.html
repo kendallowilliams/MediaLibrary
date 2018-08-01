@@ -1,5 +1,5 @@
 <div class='ml-track-list-header' [style.height.px]="headerHeight">
-  <span class='ml-track-list-title'>{{group.title}}</span>
+  <span class='ml-track-list-title'>{{list.title | async}}</span>
 </div>
 <div class='ml-track-list-body' [style.height.px]="tracksHeight">
   <div class='ml-track-group' *ngFor="let group of trackGroups" [attr.data-ml-tracks-hidden]="!group.visible" [style.height.px]="group.height">

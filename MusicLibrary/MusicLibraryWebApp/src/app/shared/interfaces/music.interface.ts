@@ -1,10 +1,11 @@
 import { Track } from '../models/track.model';
 import { Album } from '../models/album.model';
 import { Artist } from '../models/artist.model';
+import { Observable } from '../../../../node_modules/rxjs';
 
 export interface ITrackList {
-  title: string;
-  tracks: Track[];
+  title: Observable<string>;
+  groups: ITrackGroup[];
   height?: number;
   showTracks?(top: number, bottom: number);
   hideTracks?();

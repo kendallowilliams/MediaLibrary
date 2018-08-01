@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Album } from '../shared/models/album.model';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +16,10 @@ export class AlbumService {
   getAlbums(): Observable<Album[]> {
     return this.http.get<Album[]>('/api/Album')
                     .pipe(map(albums => albums.map(album => new Album().deserialize(album))));
+  }
+
+  getAlbum(id: number): Observable<Album> {
+    return this.http.get<Album>('/api/Album/' + id)
+                    .pipe(map(album => new Album().deserialize(album)));
   }
 }
