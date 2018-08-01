@@ -20,14 +20,13 @@ export class TrackListComponent implements OnInit {
   private headerHeight: number;
   private loaded: boolean;
   private readonly tracksPerGroup: number = 100;
-  private trackGroups: ITrackGroup[];
 
   constructor(private appService: AppService) {
   }
 
   ngOnInit() {
     this.headerHeight = TrackListComponent.HeaderHeight;
-    this.tracksHeight = this.list.groups.reduce((_previous, _current) => 
+    this.tracksHeight = this.list.groups.reduce((_previous, _current) =>
       _previous + _current.tracks.length, 0) * TrackComponent.TrackHeight;
     this.list.showTracks = (top, bottom) => this.show(top, bottom);
     this.list.hideTracks = () => this.hide();
