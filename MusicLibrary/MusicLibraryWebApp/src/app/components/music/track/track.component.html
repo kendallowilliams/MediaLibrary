@@ -14,9 +14,9 @@
       <i class="fa fa-plus ml-track-plus"></i>
     </div>
   </div>
-  <div class="ml-track-artist d-none d-md-block ellipsis">{{track.artist}}</div>
-  <div class="ml-track-album d-none d-xl-block ellipsis">{{track.album}}</div>
+  <div class="ml-track-artist d-none d-md-block ellipsis">{{track.artist | async}}</div>
+  <div class="ml-track-album d-none d-xl-block ellipsis">{{track.album | async}}</div>
   <div class="ml-track-year d-none d-xl-block">{{track.year}}</div>
-  <div class="ml-track-genre d-none d-lg-block ellipsis">{{track.genre}}</div>
+  <div class="ml-track-genre d-none d-lg-block ellipsis">{{track.genre | async}}</div>
   <div class="ml-track-duration">{{track.durationDisplay}}</div>
 </div>

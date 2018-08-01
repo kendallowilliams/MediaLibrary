@@ -14,12 +14,13 @@ namespace MusicLibraryBLL.Services
     [Export(typeof(IAlbumService))]
     public class AlbumService : IAlbumService
     {
-        [Import]
-        private IDataService dataService { get; set; }
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public AlbumService()
-        { }
+        public AlbumService(IDataService dataService)
+        {
+            this.dataService = dataService;
+        }
 
         public async Task<int?> AddAlbum(Album album)
         {

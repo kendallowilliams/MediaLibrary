@@ -15,6 +15,12 @@ namespace MusicLibraryBLL.Models
             Name = name;
         }
 
+        public Genre(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
         public string Name { get; set; }
     }
 }

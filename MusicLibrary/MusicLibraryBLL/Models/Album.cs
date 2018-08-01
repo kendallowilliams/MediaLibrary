@@ -9,6 +9,14 @@ namespace MusicLibraryBLL.Models
     {
         public Album() { }
 
+        public Album(int id, string title)
+        {
+            Id = id;
+            Title = title;
+            ArtistId = -1;
+            GenreId = -1;
+        }
+
         public Album(MediaData data, int? artistId, int? genreId)
         {
             Title = data.Album;

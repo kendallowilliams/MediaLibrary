@@ -1,14 +1,16 @@
+import { Observable } from '../../../../node_modules/rxjs';
+
 export interface ITrack {
   id: number;
   title: string;
   fileName: string;
   pathId: number;
   albumId: number;
-  album: string;
+  album: Observable<string>;
   genreId: number;
-  genre: string;
+  genre: Observable<string>;
   artistId: number;
-  artist: string;
+  artist: Observable<string>;
   position: number;
   year: number;
   duration: number;

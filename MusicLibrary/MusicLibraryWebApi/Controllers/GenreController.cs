@@ -18,12 +18,14 @@ namespace MusicLibraryWebApi.Controllers
     {
         private readonly IGenreService genreService;
         private readonly ITransactionService transactionService;
+        private readonly Genre unknownGenre;
 
         [ImportingConstructor]
         public GenreController(IGenreService genreService, ITransactionService transactionService)
         {
             this.genreService = genreService;
             this.transactionService = transactionService;
+            this.unknownGenre = new Genre(-1, "Unknown Genre");
         }
 
         // GET: api/Genre
@@ -43,7 +45,7 @@ namespace MusicLibraryWebApi.Controllers
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
 
-            return genres.OrderBy(genre => genre.Name);
+            return genres.OrderBy(genre => genre.Name).Concat(Enumerable.Repeat(unknownGenre, 1));
         }
 
         // GET: api/Genre/5
@@ -55,7 +57,7 @@ namespace MusicLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetGenre);
-                genre = await genreService.GetGenre(id);
+                genre = id > -1 ? await genreService.GetGenre(id): unknownGenre;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

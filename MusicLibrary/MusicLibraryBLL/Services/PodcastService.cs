@@ -14,12 +14,13 @@ namespace MusicLibraryBLL.Services
     [Export(typeof(IPodcastService))]
     public class PodcastService : IPodcastService
     {
-        [Import]
-        private IDataService dataService { get; set; }
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PodcastService()
-        { }
+        public PodcastService(IDataService dataService)
+        {
+            this.dataService = dataService;
+        }
 
         public async Task<IEnumerable<Podcast>> GetPodcasts() => await dataService.GetList<Podcast>();
 

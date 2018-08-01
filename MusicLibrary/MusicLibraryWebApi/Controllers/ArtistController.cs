@@ -18,12 +18,14 @@ namespace MusicLibraryWebApi.Controllers
     {
         private readonly IArtistService artistService;
         private readonly ITransactionService transactionService;
+        private readonly Artist unknownArtist;
 
         [ImportingConstructor]
         public ArtistController(IArtistService artistService, ITransactionService transactionService)
         {
             this.artistService = artistService;
             this.transactionService = transactionService;
+            this.unknownArtist = new Artist(-1, "Unknown Artist");
         }
 
         // GET: api/Artist
@@ -43,7 +45,7 @@ namespace MusicLibraryWebApi.Controllers
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
 
-            return artists;
+            return artists.Concat(Enumerable.Repeat(unknownArtist, 1)).OrderBy(artist => artist.Name);
         }
 
         // GET: api/Artist/5
@@ -55,7 +57,7 @@ namespace MusicLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetArtist);
-                artist = await artistService.GetArtist(id);
+                artist = id > -1 ? await artistService.GetArtist(id) : unknownArtist;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

@@ -9,17 +9,20 @@ import { TrackComponent } from '../components/music/track/track.component';
 import { TrackListComponent } from '../components/music/track-list/track-list.component';
 import { AlbumService } from './album.service';
 import { ArtistService } from './artist.service';
+import { GenreService } from './genre.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class TrackService {
+  static readonly TracksPerGroup: number = 100;
+
   private letters: Array<string> = 'abcdefghijklmnopqrstuvwxyz'.split('').map(letter => letter.toUpperCase());
   private tracks: Track[] = [];
-  private readonly tracksPerGroup: number = 100;
 
-  constructor(private http: HttpClient, private albumService: AlbumService, private artistService: ArtistService) { }
+  constructor(private http: HttpClient, private albumService: AlbumService, private artistService: ArtistService,
+    private genreService: GenreService) { }
 
   getTracks(): Observable<Track[]> {
     return this.http.get<Track[]>('/api/Track')
@@ -41,6 +44,8 @@ export class TrackService {
 
     lists = tracks.pipe(map((_tracks, _index) => {
       let _lists: ITrackList[] = [];
+
+      this.updateTracks(_tracks);
 
       switch (trackSort) {
         case TrackSortEnum.Album:
@@ -118,9 +123,19 @@ export class TrackService {
   }
 
   splitTracksIntoGroups(tracks: Track[]): ITrackGroup[] {
-    const groupCount: number = Math.ceil(tracks.length / this.tracksPerGroup);
+    const tracksPerGroup = TrackService.TracksPerGroup,
+          groupCount: number = Math.ceil(tracks.length / tracksPerGroup);
+
     return Array.from(Array(groupCount).keys()).map((index, _) => ({
-      tracks: tracks.slice(index * this.tracksPerGroup, this.tracksPerGroup)
+      tracks: tracks.slice(index * tracksPerGroup, tracksPerGroup)
     }));
+  }
+
+  updateTracks(tracks: Track[]): void {
+    tracks.forEach(track => {
+      track.album = this.albumService.getAlbum(track.albumId).pipe(map(album => album.title));
+      track.artist = this.artistService.getArtist(track.artistId).pipe(map(artist => artist.name));
+      track.genre = this.genreService.getGenre(track.genreId).pipe(map(genre => genre.name));
+    });
   }
 }

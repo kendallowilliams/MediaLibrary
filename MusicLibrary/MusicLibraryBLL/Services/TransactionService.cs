@@ -16,12 +16,13 @@ namespace MusicLibraryBLL.Services
     [Export(typeof(ITransactionService))]
     public class TransactionService : ITransactionService
     {
-        [Import]
-        private IDataService dataService { get; set; }
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public TransactionService()
-        { }
+        public TransactionService(IDataService dataService)
+        {
+            this.dataService = dataService;
+        }
 
         public async Task<IEnumerable<Transaction>> GetTransactions(object predicate = null) => await dataService.GetList<Transaction>(predicate);
 

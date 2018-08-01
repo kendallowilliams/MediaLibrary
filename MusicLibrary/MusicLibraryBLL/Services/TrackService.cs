@@ -15,12 +15,13 @@ namespace MusicLibraryBLL.Services
     [Export(typeof(ITrackService))]
     public class TrackService : ITrackService
     {
-        [Import]
-        private IDataService dataService { get; set; }
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public TrackService()
-        { }
+        public TrackService(IDataService dataService)
+        {
+            this.dataService = dataService;
+        }
 
         public async Task<IEnumerable<Track>> GetTracks() => await dataService.GetList<Track>();
 

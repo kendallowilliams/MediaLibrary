@@ -18,12 +18,14 @@ namespace MusicLibraryWebApi.Controllers
     {
         private readonly IAlbumService albumService;
         private readonly ITransactionService transactionService;
+        private readonly Album unknownAlbum;
 
         [ImportingConstructor]
         public AlbumController(IAlbumService albumService, ITransactionService transactionService)
         {
             this.albumService = albumService;
             this.transactionService = transactionService;
+            unknownAlbum = new Album(-1, "Unknown Album");
         }
 
         // GET: api/Album
@@ -43,7 +45,7 @@ namespace MusicLibraryWebApi.Controllers
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
 
-            return albums.OrderBy(album => album.Title);
+            return albums.Concat(Enumerable.Repeat(unknownAlbum, 1)).OrderBy(album => album.Title);
         }
 
         // GET: api/Album/5
@@ -55,7 +57,7 @@ namespace MusicLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetAlbum);
-                album = await albumService.GetAlbum(id);
+                album = id > -1 ? await albumService.GetAlbum(id): unknownAlbum;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

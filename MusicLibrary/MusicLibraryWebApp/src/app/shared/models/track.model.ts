@@ -8,11 +8,11 @@ export class Track implements Deserializable, ITrack {
     fileName: string;
     pathId: number;
     albumId: number;
-    album: string;
+    album: Observable<string>;
     genreId: number;
-    genre: string;
+    genre: Observable<string>;
     artistId: number;
-    artist: string;
+    artist: Observable<string>;
     position: number;
     year: number;
     duration: number;

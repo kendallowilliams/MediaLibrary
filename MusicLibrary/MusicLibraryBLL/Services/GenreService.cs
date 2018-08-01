@@ -14,12 +14,13 @@ namespace MusicLibraryBLL.Services
     [Export(typeof(IGenreService))]
     public class GenreService : IGenreService
     {
-        [Import]
-        private IDataService dataService { get; set; }
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public GenreService()
-        { }
+        public GenreService(IDataService dataService)
+        {
+            this.dataService = dataService;
+        }
 
         public async Task<int?> AddGenre(string genres)
         {

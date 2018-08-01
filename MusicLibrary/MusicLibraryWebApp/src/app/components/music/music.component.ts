@@ -66,7 +66,6 @@ export class MusicComponent implements OnInit {
 
     this.trackService.getTracks().subscribe(tracks => {
       this.tracks = tracks;
-      this.updateTracks();
       this.trackSortLists$ = this.trackService.getTrackSortLists(this.currentTrackSort);
       this.updateMusicTab(MusicTabEnum.Songs);
     });
@@ -193,14 +192,6 @@ export class MusicComponent implements OnInit {
     }
 
     return albums;
-  }
-
-  updateTracks(): void {
-    this.tracks.forEach(track => {
-      track.album = this.getAlbumTitleById(track.albumId);
-      track.artist = this.getArtistNameById(track.artistId);
-      track.genre = this.getGenreNameById(track.genreId);
-    });
   }
 
   updateAlbums(): void {
