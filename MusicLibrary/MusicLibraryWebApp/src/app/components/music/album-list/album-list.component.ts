@@ -9,13 +9,11 @@ import { IAlbumList } from '../../../shared/interfaces/music.interface';
 })
 export class AlbumListComponent implements OnInit {
   @Input() list: IAlbumList;
-  @Input() albums: Album[];
 
   constructor() {
   }
 
   ngOnInit() {
-    this.albums = this.list.albums;
   }
 
   trackByAlbums(index: number, album: Album): number {
