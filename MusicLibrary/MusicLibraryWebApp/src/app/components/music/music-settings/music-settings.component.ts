@@ -32,9 +32,9 @@ export class MusicSettingsComponent implements OnInit {
   @Input() itemCount: number;
   @Input() selectedMusicTab: MusicTabEnum;
 
-  @Output("genreupdated") genreUpdated = new EventEmitter<number>();
-  @Output("tracksortupdated") trackSortUpdated = new EventEmitter<TrackSortEnum>();
-  @Output("albumsortupdated") albumSortUpdated = new EventEmitter<AlbumSortEnum>();
+  @Output('genreupdated') genreUpdated = new EventEmitter<number>();
+  @Output('tracksortupdated') trackSortUpdated = new EventEmitter<TrackSortEnum>();
+  @Output('albumsortupdated') albumSortUpdated = new EventEmitter<AlbumSortEnum>();
 
   constructor(private genreService: GenreService) { }
 
