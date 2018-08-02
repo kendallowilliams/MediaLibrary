@@ -133,21 +133,6 @@ export class MusicComponent implements OnInit {
     this.artists = this.route.snapshot.data['artists'];
   }
 
-  getGenreNameById(id: number): string {
-    const foundGenre = this.genres.find(genre => genre.id === id);
-    return foundGenre !== undefined && foundGenre !== null ? foundGenre.name : '';
-  }
-
-  getAlbumTitleById(id: number): string {
-    const foundAlbum = this.albums.find(album => album.id === id);
-    return foundAlbum !== undefined && foundAlbum !== null ? foundAlbum.title : '';
-  }
-
-  getArtistNameById(id: number): string {
-    const foundArtist = this.artists.find(artist => artist.id === id);
-    return foundArtist !== undefined && foundArtist !== null ? foundArtist.name : '';
-  }
-
   handleScroll(height: number, scrollTop: number): void {
     this.scrollData.top = scrollTop;
     this.scrollData.height = height;

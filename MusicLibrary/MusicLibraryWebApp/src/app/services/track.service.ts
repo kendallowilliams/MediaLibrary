@@ -34,10 +34,6 @@ export class TrackService {
       .pipe(map(track => new Track().deserialize(track)));
   }
 
-  getTrackLists(trackSort: TrackSortEnum): ITrackList[] {
-    return null;
-  }
-
   getTrackSortLists(trackSort: TrackSortEnum): Observable<ITrackList[]> {
     let lists: Observable<ITrackList[]> = of();
     const tracks: Observable<Track[]> = this.getTracks();

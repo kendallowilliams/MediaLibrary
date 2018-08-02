@@ -59,7 +59,7 @@ export class AlbumService {
           _lists = ['&', '#'].concat(this.letters)
             .map(char => ({
               title: of(char),
-              albums: this.getAlbumsAtoZ(char)
+              albums: this.getAlbumsAtoZ(char, _albums)
             }));
           break;
         case AlbumSortEnum.DateAdded:
@@ -88,23 +88,23 @@ export class AlbumService {
     return lists.pipe(map(_lists => _lists.filter(list => list.albums.length > 0)));
   }
 
-  getAlbumsAtoZ(char: string): Album[] {
-    let albums = [];
+  getAlbumsAtoZ(char: string, albums: Album[]): Album[] {
+    let _albums = [];
 
     switch (char) {
       case '&':
-        albums = this.albums.filter(album => isNaN(parseInt(album.title[0], 10)) &&
+        _albums = albums.filter(album => isNaN(parseInt(album.title[0], 10)) &&
           !this.letters.includes(album.title[0].toUpperCase()));
         break;
       case '#':
-        albums = this.albums.filter(album => !isNaN(parseInt(album.title[0], 10)));
+        _albums = albums.filter(album => !isNaN(parseInt(album.title[0], 10)));
         break;
       default:
-        albums = this.albums.filter(album => album.title[0].toUpperCase() === char);
+        _albums = albums.filter(album => album.title[0].toUpperCase() === char);
         break;
     }
 
-    return albums;
+    return _albums;
   }
 
   getArtistIds(albums: Album[]): number[] {
