@@ -69,7 +69,7 @@ export class TrackService {
           break;
         case TrackSortEnum.DateAdded:
           const dates = _tracks.map(track => track.createDate.toDateString()).sort().reverse();
-          _lists = dates.filter((date, index, _) => dates.findIndex(item => item === date) === index)
+          _lists = dates.filter((date, index) => dates.findIndex(item => item === date) === index)
             .map(date => ({
               title: of(date),
               groups: this.splitTracksIntoGroups(_tracks.filter(track => track.createDate.toDateString() === date))
@@ -126,9 +126,15 @@ export class TrackService {
     const tracksPerGroup = TrackService.TracksPerGroup,
           groupCount: number = Math.ceil(tracks.length / tracksPerGroup);
 
-    return Array.from(Array(groupCount).keys()).map((index, _) => ({
-      tracks: tracks.slice(index * tracksPerGroup, tracksPerGroup)
-    }));
+    return Array.from(Array(groupCount).keys()).map(index => {
+      const start: number = index * tracksPerGroup,
+            end: number = start + tracksPerGroup;
+      const _tracks: Track[] = tracks.slice(start, end);
+      return ({
+        tracks: _tracks,
+        height: _tracks.length * TrackComponent.TrackHeight
+      });
+    });
   }
 
   updateTracks(tracks: Track[]): void {
