@@ -47,7 +47,7 @@ import { MlRouteReuseStrategy } from './route_reuse_strategies/route-reuse-strat
         { path: '', redirectTo: 'app-music', pathMatch: 'full' },
         { path: 'app-music', component: MusicComponent,
           resolve: {
-           artists: ArtistsResolver, genres: GenresResolver
+           artists: ArtistsResolver
           }
         },
         { path: 'app-nowplaying', component: NowPlayingComponent },

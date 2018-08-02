@@ -129,10 +129,6 @@ export class MusicComponent implements OnInit {
     return artists;
   }
 
-  getGenres(): void {
-    this.genres = this.route.snapshot.data['genres'];
-  }
-
   getArtists(): void {
     this.artists = this.route.snapshot.data['artists'];
   }
