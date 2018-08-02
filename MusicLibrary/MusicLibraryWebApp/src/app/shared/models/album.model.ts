@@ -1,13 +1,14 @@
 import { Deserializable } from '../interfaces/deserializable.interface';
 import { IAlbum } from '../interfaces/album.interface';
+import { Observable } from '../../../../node_modules/rxjs';
 
 export class Album implements Deserializable, IAlbum {
     id: number;
     title: string;
     artistId: number;
-    artist: string;
+    artist: Observable<string>;
     genreId: number;
-    genre: string;
+    genre: Observable<string>;
     year: number;
     createDate: Date;
 

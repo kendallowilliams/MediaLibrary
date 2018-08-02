@@ -8,18 +8,14 @@ import { IAlbumList } from '../../../shared/interfaces/music.interface';
   styleUrls: ['./album-list.component.css']
 })
 export class AlbumListComponent implements OnInit {
-  @Input() group: IAlbumList;
+  @Input() list: IAlbumList;
   @Input() albums: Album[];
-
-  private height: number;
-  private top: number;
-
 
   constructor() {
   }
 
   ngOnInit() {
-    this.albums = this.group.albums;
+    this.albums = this.list.albums;
   }
 
   trackByAlbums(index: number, album: Album): number {

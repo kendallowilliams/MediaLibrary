@@ -26,8 +26,8 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-albums" role="tabpanel" aria-labelledby="nav-albums-tab">
-      <div *ngFor="let group of albumSortGroups">
-        <app-album-list [group]="group"></app-album-list>
+      <div *ngFor="let list of albumSortLists | async">
+        <app-album-list [list]="list"></app-album-list>
       </div>
     </div>
   </div>

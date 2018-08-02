@@ -12,7 +12,7 @@ export interface ITrackList {
 }
 
 export interface IAlbumList {
-  title: string;
+  title: Observable<string>;
   albums: Album[];
 }
 
