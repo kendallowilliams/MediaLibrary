@@ -15,7 +15,7 @@
   </div>
   <div class="tab-content ml-music-content" id="nav-tabContent">
     <div class="tab-pane fade show active ml-tracks" id="nav-songs" role="tabpanel" aria-labelledby="nav-songs-tab"
-      (scroll)="handleScroll($event.srcElement.clientHeight,$event.srcElement.scrollTop)">
+      (scroll)="handleScroll($event.target.clientHeight,$event.target.scrollTop)">
       <div *ngFor="let list of trackSortLists$ | async">
         <app-track-list [list]="list"></app-track-list>
       </div>
