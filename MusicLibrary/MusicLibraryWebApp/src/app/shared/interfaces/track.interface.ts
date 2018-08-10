@@ -6,11 +6,8 @@ export interface ITrack {
   fileName: string;
   pathId: number;
   albumId: number;
-  album: Observable<string>;
   genreId: number;
-  genre: Observable<string>;
   artistId: number;
-  artist: Observable<string>;
   position: number;
   year: number;
   duration: number;

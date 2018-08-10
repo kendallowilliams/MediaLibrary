@@ -7,6 +7,7 @@ import { IAlbumList } from '../shared/interfaces/music.interface';
 import { AlbumSortEnum } from '../components/music/enums/music-enum';
 import { ArtistService } from './artist.service';
 import { GenreService } from './genre.service';
+import { IAlbum } from '../shared/interfaces/album.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AlbumService {
   }
 
   getAlbums(): Observable<Album[]> {
-    return this.http.get<Album[]>('/api/Album')
+    return this.http.get<IAlbum[]>('/api/Album')
       .pipe(map(albums => albums.map(album => new Album().deserialize(album))),
         map(albums => this.albums = albums));
   }
@@ -32,7 +33,7 @@ export class AlbumService {
     if (!!this.albums) {
       album = of(this.albums.find(_album => _album.id === albumId));
     } else {
-      album = this.http.get<Album>('/api/Album/' + id)
+      album = this.http.get<IAlbum>('/api/Album/' + id)
         .pipe(map(_album => new Album().deserialize(_album)));
     }
 

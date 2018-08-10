@@ -10,6 +10,7 @@ import { TrackListComponent } from '../components/music/track-list/track-list.co
 import { AlbumService } from './album.service';
 import { ArtistService } from './artist.service';
 import { GenreService } from './genre.service';
+import { ITrack } from '../shared/interfaces/track.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +26,23 @@ export class TrackService {
     private genreService: GenreService) { }
 
   getTracks(): Observable<Track[]> {
-    return this.http.get<Track[]>('/api/Track')
-      .pipe(map(tracks => tracks.map(track => new Track().deserialize(track))));
+    return this.http.get<ITrack[]>('/api/Track')
+      .pipe(map(tracks => tracks.map(track => new Track().deserialize(track))),
+            map(tracks => this.tracks = tracks));
   }
 
   getTrack(id: number): Observable<Track> {
-    return this.http.get<Track>('/api/Track/' + id)
-      .pipe(map(track => new Track().deserialize(track)));
+      const trackId: number = !!id ? id : -1;
+      let track: Observable<Track>;
+
+      if (!!this.tracks) {
+        track = of(this.tracks.find(_track => _track.id === trackId));
+      } else {
+        track = this.http.get<Track>('/api/Track/' + id)
+          .pipe(map(_track => new Track().deserialize(_track)));
+      }
+
+      return track;
   }
 
   getTrackSortLists(trackSort: TrackSortEnum): Observable<ITrackList[]> {
