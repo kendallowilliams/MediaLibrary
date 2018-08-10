@@ -4,7 +4,9 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml;
 using Fody;
+using Microsoft.SyndicationFeed.Rss;
 using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
 
@@ -27,6 +29,12 @@ namespace MusicLibraryBLL.Services
         public async Task AddPodcast(Podcast podcast)
         {
             byte[] data = await webService.DownloadData(podcast.Url);
+
+            using (var xmlReader = XmlReader.Create(podcast.Url, new XmlReaderSettings { Async = true }))
+            {
+                var feedReader = new RssFeedReader(xmlReader);
+                //await feedReader.Read();
+            }
         }
 
         public async Task<IEnumerable<Podcast>> GetPodcasts() => await dataService.GetList<Podcast>();
