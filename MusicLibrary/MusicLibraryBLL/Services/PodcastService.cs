@@ -15,11 +15,18 @@ namespace MusicLibraryBLL.Services
     public class PodcastService : IPodcastService
     {
         private readonly IDataService dataService;
+        private readonly IWebService webService;
 
         [ImportingConstructor]
-        public PodcastService(IDataService dataService)
+        public PodcastService(IDataService dataService, IWebService webService)
         {
             this.dataService = dataService;
+            this.webService = webService;
+        }
+
+        public async Task AddPodcast(Podcast podcast)
+        {
+            byte[] data = await webService.DownloadData(podcast.Url);
         }
 
         public async Task<IEnumerable<Podcast>> GetPodcasts() => await dataService.GetList<Podcast>();

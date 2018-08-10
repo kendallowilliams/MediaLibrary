@@ -9,6 +9,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 {
     public interface IPodcastService
     {
+        Task AddPodcast(Podcast podcast);
+
         Task<Podcast> GetPodcast(object id);
 
         Task<IEnumerable<Podcast>> GetPodcasts();
