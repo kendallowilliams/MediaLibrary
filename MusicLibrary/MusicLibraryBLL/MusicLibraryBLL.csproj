@@ -103,10 +103,12 @@
     <Compile Include="Services\Interfaces\IPodcastService.cs" />
     <Compile Include="Services\Interfaces\ITransactionService.cs" />
     <Compile Include="Services\Interfaces\ITrackService.cs" />
+    <Compile Include="Services\Interfaces\IWebService.cs" />
     <Compile Include="Services\PlaylistService.cs" />
     <Compile Include="Services\PodcastService.cs" />
     <Compile Include="Services\TransactionService.cs" />
     <Compile Include="Services\TrackService.cs" />
+    <Compile Include="Services\WebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

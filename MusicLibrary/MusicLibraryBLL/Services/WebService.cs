@@ -12,7 +12,7 @@ using MusicLibraryBLL.Services.Interfaces;
 namespace MusicLibraryBLL.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IAlbumService))]
+    [Export(typeof(IWebService))]
     public class WebService : IWebService
     {
         [ImportingConstructor]
