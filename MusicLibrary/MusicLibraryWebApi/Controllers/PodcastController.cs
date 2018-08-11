@@ -74,7 +74,7 @@ namespace MusicLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPodcast);
-                await podcastService.AddPodcast(podcast);
+                await podcastService.AddPodcast(podcast.Url);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

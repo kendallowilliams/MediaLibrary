@@ -148,11 +148,11 @@ namespace MusicLibraryWebApi.Controllers
                 if (Request.Headers.Range == null)
                 {
                     message.Content = new StreamContent(stream);
-                    message.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(MimeMapping.GetMimeMapping(file.Name));
+                    message.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(file.Type);
                 }
                 else
                 {
-                    message.Content = new ByteRangeStreamContent(stream, Request.Headers.Range, MimeMapping.GetMimeMapping(file.Name));
+                    message.Content = new ByteRangeStreamContent(stream, Request.Headers.Range, file.Type);
                 }
                 await transactionService.UpdateTransactionCompleted(transaction);
             }

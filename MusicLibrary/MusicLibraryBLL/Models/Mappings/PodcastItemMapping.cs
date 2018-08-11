@@ -6,13 +6,16 @@ using DapperExtensions.Mapper;
 
 namespace MusicLibraryBLL.Models.Mappings
 {
-    public class TrackFileMapping : ClassMapper<TrackFile>
+    public class PodcastItemMapping : ClassMapper<PodcastItem>
     {
-        public TrackFileMapping()
+        public PodcastItemMapping()
         {
-            Table("track_file");
+            Table("podcast_item");
 
             Map(x => x.Id).Key(KeyType.Identity);
+            Map(x => x.FileId).Column("file_id");
+            Map(x => x.PodcastId).Column("podcast_id");
+            Map(x => x.PublishDate).Column("publish_date");
             Map(x => x.ModifyDate).Column("modify_date");
             Map(x => x.CreateDate).Column("create_date");
 

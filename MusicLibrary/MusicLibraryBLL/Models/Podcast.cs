@@ -10,16 +10,14 @@ namespace MusicLibraryBLL.Models
     {
         public Podcast() { }
 
-        public Podcast(string title, string url, string content)
+        public Podcast(string title, string url)
         {
             Title = title;
             Url = url;
-            Content = content;
         }
 
         public string Title { get; set; }
         public string Url { get; set; }
-        public string Content { get; set; }
-        public DateTime LastUpdateDate { get; set; } = DateTime.Now;
+        public DateTime LastUpdateDate { get; set; } = DateTime.MinValue;
     }
 }

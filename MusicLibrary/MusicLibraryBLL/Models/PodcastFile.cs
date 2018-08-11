@@ -6,11 +6,11 @@ using System.Web;
 
 namespace MusicLibraryBLL.Models
 {
-    public class TrackFile : BaseModel
+    public class PodcastFile : BaseModel
     {
-        public TrackFile() { }
+        public PodcastFile() { }
 
-        public TrackFile(byte[] data, string type)
+        public PodcastFile(byte[] data, string type)
         {
             Data = data;
             Type = type;

@@ -25,7 +25,7 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<int?> AddPath(string location);
 
-        Task<int?> AddTrackFile(int trackId, int pathId, string fileName);
+        Task<int?> AddTrackFile(int trackId);
 
         Task<TrackFile> GetTrackFile(int id);
     }

@@ -26,11 +26,15 @@ namespace MusicLibraryBLL.Services
 
             using (WebClient client = new WebClient())
             {
-                client.DownloadDataCompleted += (sender, args) => { tcs.SetResult(args.Result); };
-
                 try
                 {
                     Uri uri = new Uri(address);
+
+                    client.DownloadDataCompleted += (sender, args) =>
+                    {
+                        if (args.Error == null) { tcs.SetResult(args.Result); }
+                        else { tcs.SetException(args.Error); }
+                    };
                     client.DownloadDataAsync(uri);
                 }
                 catch(Exception ex)

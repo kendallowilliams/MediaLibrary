@@ -62,14 +62,18 @@ namespace MusicLibraryBLL.Services
             return id;
         }
 
-        public async Task<int?> AddTrackFile(int trackId, int pathId, string fileName)
+        public async Task<int?> AddTrackFile(int trackId)
         {
-            TrackPath path = await dataService.Get<TrackPath>(pathId);
-            string filePath = Path.Combine(path.Location, fileName);
+            Track track = await GetTrack(trackId);
+            TrackPath path = await dataService.Get<TrackPath>(track.PathId);
+            string filePath = Path.Combine(path.Location, track.FileName);
             byte[] data = File.ReadAllBytes(filePath);
-            TrackFile file = new TrackFile(trackId, data, fileName);
+            TrackFile file = new TrackFile(data, MimeMapping.GetMimeMapping(track.FileName));
 
-            return await dataService.Insert<TrackFile,int>(file);
+            track.FileId = await dataService.Insert<TrackFile, int>(file);
+            await UpdateTrack(track);
+
+            return track.FileId;
         }
 
         public async Task<TrackFile> GetTrackFile(int id)
@@ -87,7 +91,7 @@ namespace MusicLibraryBLL.Services
                 string fileName = Path.Combine(path.Location, track.FileName);
                 byte[] data = File.ReadAllBytes(fileName);
 
-                file = new TrackFile { Name = fileName, Data = data };
+                file = new TrackFile { Data = data, Type = MimeMapping.GetMimeMapping(track.FileName) };
             }
 
             return file;

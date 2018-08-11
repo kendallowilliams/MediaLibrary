@@ -95,7 +95,7 @@ namespace MusicLibraryBLL.Services
                 fileId = null;
             Track track = new Track(data, pathId, genreId, albumId, artistId);
 
-            if (copyFile) { fileId = await trackService.AddTrackFile(track.Id, pathId.Value, track.FileName); }
+            if (copyFile) { fileId = await trackService.AddTrackFile(track.Id); }
             track.FileId = fileId;
 
             await trackService.InsertTrack(track);

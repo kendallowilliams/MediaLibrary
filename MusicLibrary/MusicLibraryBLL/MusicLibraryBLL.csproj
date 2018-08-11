@@ -56,6 +56,7 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,10 +75,14 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\Mappings\PodcastItemMapping.cs" />
+    <Compile Include="Models\Mappings\PodcastFileMapping.cs" />
     <Compile Include="Models\Mappings\TrackFileMapping.cs" />
     <Compile Include="Models\Mappings\TransactionMapping.cs" />
     <Compile Include="Models\Mappings\PodcastMapping.cs" />
     <Compile Include="Models\Mappings\TrackPathMapping.cs" />
+    <Compile Include="Models\PodcastItem.cs" />
+    <Compile Include="Models\PodcastFile.cs" />
     <Compile Include="Models\TrackFile.cs" />
     <Compile Include="Models\TrackPath.cs" />
     <Compile Include="Models\Genre.cs" />
