@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 using Fody;
+using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;
 using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
@@ -29,12 +30,7 @@ namespace MusicLibraryBLL.Services
         public async Task AddPodcast(Podcast podcast)
         {
             byte[] data = await webService.DownloadData(podcast.Url);
-
-            using (var xmlReader = XmlReader.Create(podcast.Url, new XmlReaderSettings { Async = true }))
-            {
-                var feedReader = new RssFeedReader(xmlReader);
-                //await feedReader.Read();
-            }
+            await ParseRssFeed(podcast.Url);
         }
 
         public async Task<IEnumerable<Podcast>> GetPodcasts() => await dataService.GetList<Podcast>();
@@ -50,5 +46,45 @@ namespace MusicLibraryBLL.Services
         public async Task DeleteAllPodcasts() => await dataService.Execute(@"DELETE podcast;");
 
         public async Task<bool> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
+
+        public async Task<Podcast> ParseRssFeed(string address)
+        {
+            Podcast podcast = new Podcast();
+
+            using (var xmlReader = XmlReader.Create(address, new XmlReaderSettings { Async = true }))
+            {
+                var feedReader = new RssFeedReader(xmlReader);
+
+                while (await feedReader.Read())
+                {
+                    switch(feedReader.ElementType)
+                    {
+                        case SyndicationElementType.Category:
+                            ISyndicationCategory category = await feedReader.ReadCategory();
+                            break;
+                        case SyndicationElementType.Content:
+                            ISyndicationContent content = await feedReader.ReadContent();
+                            break;
+                        case SyndicationElementType.Image:
+                            ISyndicationImage image = await feedReader.ReadImage();
+                            break;
+                        case SyndicationElementType.Item:
+                            ISyndicationItem item = await feedReader.ReadItem();
+                            break;
+                        case SyndicationElementType.Link:
+                            ISyndicationLink link = await feedReader.ReadLink();
+                            break;
+                        case SyndicationElementType.Person:
+                            ISyndicationPerson person = await feedReader.ReadPerson();
+                            break;
+                        case SyndicationElementType.None:
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            return podcast;
+        }
     }
 }
