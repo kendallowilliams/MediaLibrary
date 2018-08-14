@@ -9,7 +9,7 @@ namespace MusicLibraryBLL.Services.Interfaces
 {
     public interface IPodcastService
     {
-        Task AddPodcast(string url);
+        Task<Podcast> AddPodcast(string url);
 
         Task<Podcast> GetPodcast(object id);
 
@@ -26,5 +26,9 @@ namespace MusicLibraryBLL.Services.Interfaces
         Task DeleteAllPodcasts();
 
         Task<bool> UpdatePodcast(Podcast podcast);
+
+        Task<int?> AddPodcastFile(int podcastItemId);
+
+        Task<PodcastFile> GetPodcastFile(int id);
     }
 }

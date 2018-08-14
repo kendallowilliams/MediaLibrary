@@ -29,9 +29,9 @@ namespace MusicLibraryBLL.Services
             this.webService = webService;
         }
 
-        public async Task AddPodcast(string url)
+        public async Task<Podcast> AddPodcast(string url)
         {
-            await ParseRssFeed(url);
+            return await ParseRssFeed(url);
         }
 
         public async Task<IEnumerable<Podcast>> GetPodcasts() => await dataService.GetList<Podcast>();
@@ -51,7 +51,7 @@ namespace MusicLibraryBLL.Services
         public async Task<bool> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
         public async Task<bool> UpdatePodcastItem(PodcastItem podcastItem) => await dataService.Update(podcastItem);
 
-        public async Task ParseRssFeed(string address)
+        public async Task<Podcast> ParseRssFeed(string address)
         {
             string title = string.Empty;
             DateTime pubDate = DateTime.MinValue;
@@ -108,6 +108,8 @@ namespace MusicLibraryBLL.Services
 
                 foreach (var item in podcastItems) { item.Id = await InsertPodcastItem(item); }
             }
+
+            return podcast;
         }
 
         public async Task<int?> AddPodcastFile(int podcastItemId)

@@ -1,5 +1,6 @@
 ﻿using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -66,23 +67,32 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // POST: api/Podcast
-        public async Task<int> Post([FromBody]Podcast podcast)
+        public async Task<Podcast> Post([FromBody] JObject inData)
         {
             Transaction transaction = null;
-            int podcastId = -1;
+            Podcast podcast = null;
 
             try
             {
+                string path = inData["path"]?.ToString();
+                bool copyFiles = false,
+                     validData = !string.IsNullOrWhiteSpace(path) &&
+                                 bool.TryParse(inData["copy"]?.ToString(), out copyFiles);
+                string responseMessage = $"Invalid Data: [{inData}]",
+                       transactionType = Enum.GetName(typeof(TransactionTypes), TransactionTypes.AddPodcast);
+
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPodcast);
-                await podcastService.AddPodcast(podcast.Url);
-                await transactionService.UpdateTransactionCompleted(transaction);
+                if (validData) { podcast = await podcastService.AddPodcast(path); }
+                else { responseMessage = $"Invalid Data: [{inData}]"; }
+
+                await transactionService.UpdateTransactionCompleted(transaction, responseMessage);
             }
             catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
 
-            return podcastId;
+            return podcast;
         }
 
         // PUT: api/Podcast/5
@@ -123,6 +133,43 @@ namespace MusicLibraryWebApi.Controllers
             }
 
             return isRemoved;
+        }
+
+        [Route("api/Podcast/DownloadEpisode")]
+        public async Task<int?> DownloadEpisode([FromBody] int podcastItemId)
+        {
+            Transaction transaction = null;
+            int? id = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.DownloadEpisode);
+                id = await podcastService.AddPodcastFile(podcastItemId);
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
+
+            return id;
+        }
+
+        [Route("api/Podcast/DownloadAllEpisodes")]
+        public async Task DownloadAllEpisodes(int podcastId)
+        {
+            Transaction transaction = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.DownloadAllEpisodes);
+                await Task.FromResult(default(int?));
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
     }
 }
