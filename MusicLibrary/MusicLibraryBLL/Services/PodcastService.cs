@@ -46,7 +46,11 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeletePodcast(Podcast podcast) => await dataService.Delete(podcast);
 
-        public async Task DeleteAllPodcasts() => await dataService.Execute(@"DELETE podcast;");
+        public async Task DeleteAllPodcasts()
+        {
+            await dataService.Execute(@"DELETE podcast_item;");
+            await dataService.Execute(@"DELETE podcast;");
+        }
 
         public async Task<bool> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
         public async Task<bool> UpdatePodcastItem(PodcastItem podcastItem) => await dataService.Update(podcastItem);
