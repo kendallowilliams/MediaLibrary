@@ -21,12 +21,14 @@ namespace MusicLibraryBLL.Services
     {
         private readonly IDataService dataService;
         private readonly IWebService webService;
+        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
-        public PodcastService(IDataService dataService, IWebService webService)
+        public PodcastService(IDataService dataService, IWebService webService, ITransactionService transactionService)
         {
             this.dataService = dataService;
             this.webService = webService;
+            this.transactionService = transactionService;
         }
 
         public async Task<Podcast> AddPodcast(string url)
@@ -116,14 +118,25 @@ namespace MusicLibraryBLL.Services
             return podcast;
         }
 
-        public async Task<int?> AddPodcastFile(int podcastItemId)
+        public async Task<int?> AddPodcastFile(Transaction transaction, int podcastItemId)
         {
-            PodcastItem podcastItem = await dataService.Get<PodcastItem>(podcastItemId);
-            byte[] data = await webService.DownloadData(podcastItem.Url);
-            string fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
-            podcastItem.FileId = await dataService.Insert<PodcastFile, int>(new PodcastFile(data, MimeMapping.GetMimeMapping(fileName)));
-            await UpdatePodcastItem(podcastItem);
-            return podcastItem.FileId;
+            PodcastItem podcastItem = null;
+
+            try
+            {
+                podcastItem = await dataService.Get<PodcastItem>(podcastItemId);
+                byte[] data = await webService.DownloadData(podcastItem.Url);
+                string fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
+                podcastItem.FileId = await dataService.Insert<PodcastFile, int>(new PodcastFile(data, MimeMapping.GetMimeMapping(fileName)));
+                await UpdatePodcastItem(podcastItem);
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch(Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
+
+            return podcastItem?.FileId;
         }
 
         public async Task<PodcastFile> GetPodcastFile(int id) => await dataService.Get<PodcastFile>(id);

@@ -14,7 +14,7 @@ using static MusicLibraryBLL.Enums.TransactionEnums;
 namespace MusicLibraryWebApi.Controllers
 {
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
-    public class GenreController : ApiController
+    public class GenreController : ApiControllerBase
     {
         private readonly IGenreService genreService;
         private readonly ITransactionService transactionService;

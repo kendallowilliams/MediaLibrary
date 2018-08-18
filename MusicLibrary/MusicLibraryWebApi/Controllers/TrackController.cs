@@ -18,7 +18,7 @@ using static MusicLibraryBLL.Enums.TransactionEnums;
 namespace MusicLibraryWebApi.Controllers
 {
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
-    public class TrackController : ApiController
+    public class TrackController : ApiControllerBase
     {
         private readonly ITrackService trackService;
         private readonly IFileService fileService;

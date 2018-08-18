@@ -14,7 +14,7 @@ using static MusicLibraryBLL.Enums.TransactionEnums;
 namespace MusicLibraryWebApi.Controllers
 {
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
-    public class PodcastController : ApiController
+    public class PodcastController : ApiControllerBase
     {
         private readonly IPodcastService podcastService;
         private readonly ITransactionService transactionService;
@@ -136,23 +136,19 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         [Route("api/Podcast/DownloadEpisode")]
-        public async Task<int?> DownloadEpisode([FromBody] int podcastItemId)
+        public async Task DownloadEpisode([FromBody] int podcastItemId)
         {
             Transaction transaction = null;
-            int? id = null;
 
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.DownloadEpisode);
-                id = await podcastService.AddPodcastFile(podcastItemId);
-                await transactionService.UpdateTransactionCompleted(transaction);
+                QueueBackgroundWorkItem(ct => podcastService.AddPodcastFile(transaction, podcastItemId), transaction);
             }
             catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
-
-            return id;
         }
 
         [Route("api/Podcast/DownloadAllEpisodes")]

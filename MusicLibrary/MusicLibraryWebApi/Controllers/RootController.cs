@@ -7,6 +7,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
@@ -15,10 +16,9 @@ using static MusicLibraryBLL.Enums.TransactionEnums;
 namespace MusicLibraryWebApi.Controllers
 {
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
-    public class RootController : ApiController
+    public class RootController : ApiControllerBase
     {
         private readonly IFileService fileService;
-        private readonly ITransactionService transactionService;
         private readonly IAlbumService albumService;
         private readonly IArtistService artistService;
         private readonly ITrackService trackService;
@@ -64,8 +64,7 @@ namespace MusicLibraryWebApi.Controllers
 
                 if (validData && existingTransaction == null)
                 {
-                    await transactionService.UpdateTransactionInProcess(transaction);
-                    HostingEnvironment.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, path, recursive, copyFiles));
+                    QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, path, recursive, copyFiles), transaction);
                 }
                 else
                 {
