@@ -64,7 +64,7 @@ export class AlbumService {
             }));
           break;
         case AlbumSortEnum.DateAdded:
-          const dates = _albums.map(track => track.createDate.toDateString()).sort().reverse();
+          const dates = _albums.map(album => album.createDate.toDateString()).sort().reverse();
           _lists = dates.filter((date, index) => dates.findIndex(item => item === date) === index).map(date => ({
               title: of(date.toString()),
               albums: this.albums.filter(album => album.createDate.toDateString() === date)
