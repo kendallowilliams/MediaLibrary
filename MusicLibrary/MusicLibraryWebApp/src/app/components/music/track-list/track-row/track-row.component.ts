@@ -1,14 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
-import { Track } from '../../../shared/models/track.model';
+import { Track } from '../../../../shared/models/track.model';
 
 @Component({
   selector: 'app-track',
-  templateUrl: './track.component.html',
-  styleUrls: ['./track.component.css']
+  templateUrl: './track-row.component.html',
+  styleUrls: ['./track-row.component.css']
 })
 
-export class TrackComponent implements OnInit {
+export class TrackRowComponent implements OnInit {
   public static TrackHeight = 40;
 
   @Input() track: Track;
@@ -51,7 +50,7 @@ export class TrackComponent implements OnInit {
   }
 
   getTrackHeight(): number {
-    return TrackComponent.TrackHeight;
+    return TrackRowComponent.TrackHeight;
   }
 
   selectTrack(): void {

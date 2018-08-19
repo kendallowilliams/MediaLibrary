@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ElementRef, Output, APP_INITIALIZER, ViewChildren, QueryList } from '@angular/core';
 import { Track } from '../../../shared/models/track.model';
 import { ITrackList, ITrackGroup } from '../../../shared/interfaces/music.interface';
-import { TrackComponent } from '../track/track.component';
+import { TrackRowComponent } from './track-row/track-row.component';
 import { AppService } from '../../../services/app.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { AppService } from '../../../services/app.service';
 export class TrackListComponent implements OnInit {
   public static HeaderHeight = 30;
 
-  @ViewChildren(TrackComponent) children = new QueryList<TrackComponent>();
+  @ViewChildren(TrackRowComponent) children = new QueryList<TrackRowComponent>();
 
   @Input() list: ITrackList;
 
@@ -27,7 +27,7 @@ export class TrackListComponent implements OnInit {
   ngOnInit() {
     this.headerHeight = TrackListComponent.HeaderHeight;
     this.tracksHeight = this.list.groups.reduce((_previous, _current) =>
-      _previous + _current.tracks.length, 0) * TrackComponent.TrackHeight;
+      _previous + _current.tracks.length, 0) * TrackRowComponent.TrackHeight;
     this.list.showTracks = (top, bottom) => this.show(top, bottom);
     this.list.hideTracks = () => this.hide();
   }
@@ -41,8 +41,8 @@ export class TrackListComponent implements OnInit {
   show(viewTop: number, viewBottom: number): void {
     this.load();
     this.list.groups.forEach((group, index) => {
-      const groupTop: number = index * this.tracksPerGroup * TrackComponent.TrackHeight,
-            groupBottom: number = groupTop + (group.tracks.length * TrackComponent.TrackHeight);
+      const groupTop: number = index * this.tracksPerGroup * TrackRowComponent.TrackHeight,
+            groupBottom: number = groupTop + (group.tracks.length * TrackRowComponent.TrackHeight);
       group.visible = (viewTop >= groupTop && viewTop <= groupBottom) ||
         (viewBottom >= groupTop && viewBottom <= groupBottom);
     });

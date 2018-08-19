@@ -10,7 +10,7 @@ import { PodcastsComponent } from './components/podcasts/podcasts.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { PlaylistsComponent } from './components/playlists/playlists.component';
 import { NowPlayingComponent } from './components/nowplaying/nowplaying.component';
-import { TrackComponent } from './components/music/track/track.component';
+import { TrackRowComponent } from './components/music/track-list/track-row/track-row.component';
 import { AlbumComponent } from './components/music/album/album.component';
 import { ArtistComponent } from './components/music/artist/artist.component';
 
@@ -32,7 +32,7 @@ import { MlRouteReuseStrategy } from './route_reuse_strategies/route-reuse-strat
     PlaylistsComponent,
     PodcastsComponent,
     SettingsComponent,
-    TrackComponent,
+    TrackRowComponent,
     AlbumComponent,
     ArtistComponent,
     ControlsComponent,

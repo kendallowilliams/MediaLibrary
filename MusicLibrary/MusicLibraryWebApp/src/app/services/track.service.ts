@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ITrackList, ITrackGroup } from '../shared/interfaces/music.interface';
 import { TrackSortEnum } from '../components/music/enums/music-enum';
-import { TrackComponent } from '../components/music/track/track.component';
+import { TrackRowComponent } from '../components/music/track-list/track-row/track-row.component';
 import { TrackListComponent } from '../components/music/track-list/track-list.component';
 import { AlbumService } from './album.service';
 import { ArtistService } from './artist.service';
@@ -96,7 +96,8 @@ export class TrackService {
   }
 
   getTrackListHeight(groups: ITrackGroup[]): number {
-    return (groups.reduce((acc, current) => acc + current.tracks.length, 0) * TrackComponent.TrackHeight) + TrackListComponent.HeaderHeight;
+    return (groups.reduce((acc, current) => acc + current.tracks.length, 0) * TrackRowComponent.TrackHeight) +
+            TrackListComponent.HeaderHeight;
   }
 
   getTracksAtoZ(char: string, tracks: Track[]): Track[] {
@@ -138,7 +139,7 @@ export class TrackService {
       const _tracks: Track[] = tracks.slice(start, end);
       return ({
         tracks: _tracks,
-        height: _tracks.length * TrackComponent.TrackHeight
+        height: _tracks.length * TrackRowComponent.TrackHeight
       });
     });
   }
