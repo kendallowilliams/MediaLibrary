@@ -25,18 +25,26 @@ export class TrackService {
   constructor(private http: HttpClient, private albumService: AlbumService, private artistService: ArtistService,
     private genreService: GenreService) { }
 
-  getTracks(): Observable<Track[]> {
-    return this.http.get<ITrack[]>('/api/Track')
-      .pipe(map(tracks => tracks.map(track => new Track().deserialize(track))),
-            map(tracks => this.tracks = tracks));
+  getTracks(refresh: boolean = false): Observable<Track[]> {
+    let tracks: Observable<Track[]> = of();
+
+    if (this.tracks.length === 0 || refresh) {
+      tracks = this.http.get<ITrack[]>('/api/Track').pipe(map(data => data.map(track => new Track().deserialize(track))),
+                                                          map(data => this.tracks = data));
+    } else {
+      tracks = of(this.tracks);
+    }
+
+    return tracks;
   }
 
   getTrack(id: number): Observable<Track> {
       const trackId: number = !!id ? id : -1;
       let track: Observable<Track>;
+      const foundTrack: Track = this.tracks.find(_track => _track.id === trackId);
 
-      if (!!this.tracks) {
-        track = of(this.tracks.find(_track => _track.id === trackId));
+      if (!!foundTrack) {
+        track = of(foundTrack);
       } else {
         track = this.http.get<Track>('/api/Track/' + id)
           .pipe(map(_track => new Track().deserialize(_track)));
@@ -47,7 +55,7 @@ export class TrackService {
 
   getTrackSortLists(trackSort: TrackSortEnum): Observable<ITrackList[]> {
     let lists: Observable<ITrackList[]> = of();
-    const tracks: Observable<Track[]> = this.getTracks();
+    const tracks: Observable<Track[]> = this.getTracks(true);
 
     lists = tracks.pipe(map((_tracks, _index) => {
       let _lists: ITrackList[] = [];
