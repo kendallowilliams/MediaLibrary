@@ -23,6 +23,8 @@ namespace MusicLibraryBLL.Models
 
         public TransactionTypes Type { get; set; }
 
+        public string Message { get; set; }
+
         public TransactionStatus Status { get; set; }
 
         public string StatusMessage { get; set; }

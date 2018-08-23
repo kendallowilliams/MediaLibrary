@@ -143,6 +143,7 @@ CREATE TABLE _transaction
 (
   id INT NOT NULL IDENTITY(1,1),
   status INT NOT NULL,
+  message TEXT NULL,
   status_message TEXT NULL,
   error_message TEXT NULL,
   type INT NOT NULL,

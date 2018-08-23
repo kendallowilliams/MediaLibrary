@@ -67,6 +67,7 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // POST: api/Podcast
+        [Route("api/Podcast")]
         public async Task<Podcast> Post([FromBody] JObject inData)
         {
             Transaction transaction = null;
@@ -143,6 +144,7 @@ namespace MusicLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.DownloadEpisode);
+                transaction.Message = $"{podcastItemId}";
                 QueueBackgroundWorkItem(ct => podcastService.AddPodcastFile(transaction, podcastItemId), transaction);
             }
             catch (Exception ex)
