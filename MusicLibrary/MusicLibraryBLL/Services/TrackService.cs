@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,8 +17,11 @@ namespace MusicLibraryBLL.Services
     public class TrackService : ITrackService
     {
         private readonly IDataService dataService;
+        private readonly string findPathsStoredProcedure = @"FindPaths",
+                                deleteAllPathsStoredProcedure = @"DeleteAllPaths",
+                                getTrackFileStoredProcedure = @"GetTrackFile";
 
-        [ImportingConstructor]
+         [ImportingConstructor]
         public TrackService(IDataService dataService)
         {
             this.dataService = dataService;
@@ -33,11 +37,7 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeleteTrack(Track track) => await dataService.Delete(track);
 
-        public async Task DeleteAllTracks()
-        {
-            await dataService.Execute(@"DELETE track;");
-            await dataService.Execute(@"DELETE track_file;");
-        }
+        public async Task DeleteAllTracks() => await dataService.Execute(deleteAllPathsStoredProcedure, commandType: CommandType.StoredProcedure);
 
         public async Task<bool> UpdateTrack(Track track) => await dataService.Update(track);
 
@@ -48,15 +48,12 @@ namespace MusicLibraryBLL.Services
 
             if (!string.IsNullOrWhiteSpace(location))
             {
-                string existsQuery = $"SELECT id FROM path WHERE location = @location";
+                object parameters = new { location };
                 TrackPath path = new TrackPath(location);
+                IEnumerable<TrackPath> paths = await dataService.Query<TrackPath>(findPathsStoredProcedure, parameters, CommandType.StoredProcedure);
 
-                id = await dataService.ExecuteScalar<int?>(existsQuery, new { location });
-
-                if (!id.HasValue)
-                {
-                    id = await dataService.Insert<TrackPath, int>(path);
-                }
+                if (paths.Any()) { id = paths.FirstOrDefault().Id; }
+                else { id = await dataService.Insert<TrackPath, int>(path); }
             }
 
             return id;
@@ -66,32 +63,34 @@ namespace MusicLibraryBLL.Services
         {
             Track track = await GetTrack(trackId);
             TrackPath path = await dataService.Get<TrackPath>(track.PathId);
+            TrackFile trackFile = null;
             string filePath = Path.Combine(path.Location, track.FileName);
             byte[] data = File.ReadAllBytes(filePath);
-            TrackFile file = new TrackFile(data, MimeMapping.GetMimeMapping(track.FileName));
 
-            track.FileId = await dataService.Insert<TrackFile, int>(file);
-            await UpdateTrack(track);
+            trackFile = new TrackFile(data, MimeMapping.GetMimeMapping(track.FileName), trackId);
+            trackFile.Id = await dataService.Insert<TrackFile, int>(trackFile);
 
-            return track.FileId;
+            return trackFile.Id;
         }
 
         public async Task<TrackFile> GetTrackFile(int id)
         {
-            Track track = await GetTrack(id);
-            TrackFile file = null;
+            object parameters = new { track_id = id };
+            IEnumerable<TrackFile> files = await dataService.Query<TrackFile>(getTrackFileStoredProcedure, parameters, CommandType.StoredProcedure);
+            TrackFile file = files.FirstOrDefault();
 
-            if (track.FileId.HasValue)
+            if (file == null)
             {
-                file = await dataService.Get<TrackFile>(id);
-            }
-            else
-            {
-                TrackPath path = await dataService.Get<TrackPath>(track.PathId);
-                string fileName = Path.Combine(path.Location, track.FileName);
-                byte[] data = File.ReadAllBytes(fileName);
+                Track track = await dataService.Get<Track>(id);
 
-                file = new TrackFile { Data = data, Type = MimeMapping.GetMimeMapping(track.FileName) };
+                if (track != null)
+                {
+                    TrackPath path = await dataService.Get<TrackPath>(track.PathId);
+                    string fileName = Path.Combine(path.Location, track.FileName);
+                    byte[] data = File.ReadAllBytes(fileName);
+
+                    file = new TrackFile { Data = data, Type = MimeMapping.GetMimeMapping(track.FileName) };
+                }
             }
 
             return file;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,8 +23,9 @@ namespace MusicLibraryBLL.Services
         private readonly IDataService dataService;
         private readonly IWebService webService;
         private readonly ITransactionService transactionService;
+        private readonly string deleteAllPodcastsStoredProcedure = @"DeleteAllPodcasts";
 
-        [ImportingConstructor]
+         [ImportingConstructor]
         public PodcastService(IDataService dataService, IWebService webService, ITransactionService transactionService)
         {
             this.dataService = dataService;
@@ -48,11 +50,7 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeletePodcast(Podcast podcast) => await dataService.Delete(podcast);
 
-        public async Task DeleteAllPodcasts()
-        {
-            await dataService.Execute(@"DELETE podcast_item;");
-            await dataService.Execute(@"DELETE podcast;");
-        }
+        public async Task DeleteAllPodcasts() => await dataService.Execute(deleteAllPodcastsStoredProcedure, commandType: CommandType.StoredProcedure);
 
         public async Task<bool> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
         public async Task<bool> UpdatePodcastItem(PodcastItem podcastItem) => await dataService.Update(podcastItem);
@@ -120,15 +118,19 @@ namespace MusicLibraryBLL.Services
 
         public async Task<int?> AddPodcastFile(Transaction transaction, int podcastItemId)
         {
-            PodcastItem podcastItem = null;
+            PodcastFile podcastFile = null;
 
             try
             {
+                byte[] data = null;
+                string fileName = string.Empty;
+                PodcastItem podcastItem = null;
+
                 podcastItem = await dataService.Get<PodcastItem>(podcastItemId);
-                byte[] data = await webService.DownloadData(podcastItem.Url);
-                string fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
-                podcastItem.FileId = await dataService.Insert<PodcastFile, int>(new PodcastFile(data, MimeMapping.GetMimeMapping(fileName)));
-                await UpdatePodcastItem(podcastItem);
+                data = await webService.DownloadData(podcastItem.Url);
+                fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
+                podcastFile = new PodcastFile(data, MimeMapping.GetMimeMapping(fileName), podcastItem.PodcastId, podcastItem.Id);
+                podcastFile.Id = await dataService.Insert<PodcastFile, int>(podcastFile);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch(Exception ex)
@@ -136,7 +138,7 @@ namespace MusicLibraryBLL.Services
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
 
-            return podcastItem?.FileId;
+            return podcastFile?.Id;
         }
 
         public async Task<PodcastFile> GetPodcastFile(int id) => await dataService.Get<PodcastFile>(id);

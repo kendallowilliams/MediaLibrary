@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,6 +16,8 @@ namespace MusicLibraryBLL.Services
     public class PlaylistService : IPlaylistService
     {
         private readonly IDataService dataService;
+        private readonly string deletePlaylistStoredProcedure = "DeletePlaylist",
+                                deleteAllPlaylistsStoredProcedure = "DeleteAllPlaylists";
 
         [ImportingConstructor]
         public PlaylistService(IDataService dataService)
@@ -28,14 +31,9 @@ namespace MusicLibraryBLL.Services
 
         public async Task<int> InsertPlaylist(Playlist playlist) => await dataService.Insert<Playlist,int>(playlist);
 
-        public async Task<bool> DeletePlaylist(int id) => await dataService.Delete<Playlist>(id);
+        public async Task DeletePlaylist(int id) => await dataService.Execute(deletePlaylistStoredProcedure, new { playlist_id = id} , commandType: CommandType.StoredProcedure);
 
-        public async Task<bool> DeletePlaylist(Playlist playlist) => await dataService.Delete(playlist);
-
-        public async Task DeleteAllPlaylists()
-        {
-            await dataService.Execute(@"DELETE playlist;");
-        }
+        public async Task DeleteAllPlaylists() => await dataService.Execute(deleteAllPlaylistsStoredProcedure, commandType: CommandType.StoredProcedure);
 
         public async Task<bool> UpdatePlaylist(Playlist playlist) => await dataService.Update(playlist);
     }

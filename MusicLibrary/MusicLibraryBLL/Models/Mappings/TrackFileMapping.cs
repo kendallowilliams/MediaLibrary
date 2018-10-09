@@ -13,6 +13,7 @@ namespace MusicLibraryBLL.Models.Mappings
             Table("track_file");
 
             Map(x => x.Id).Key(KeyType.Identity);
+            Map(x => x.TrackId).Column("track_id");
             Map(x => x.ModifyDate).Column("modify_date");
             Map(x => x.CreateDate).Column("create_date");
 

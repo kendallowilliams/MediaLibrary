@@ -11,3 +11,8 @@
 /MusicLibrary/MusicLibraryBLL/obj/Debug
 /MusicLibrary/MusicLibraryWebApp/obj/Debug
 /MusicLibrary/MusicLibraryWebApp/bin
+/MusicLibrary/MusicLibraryDB/bin/Debug
+/MusicLibrary/MusicLibraryDB/Import Schema Logs
+*.dbmdl
+*.jfm
+*.refactorlog

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,6 +16,8 @@ namespace MusicLibraryBLL.Services
     public class GenreService : IGenreService
     {
         private readonly IDataService dataService;
+        private readonly string findGenresStoredProcedure = "FindGenres",
+                                deleteAllGenresStoredProcedure = "DeleteAllGenres";
 
         [ImportingConstructor]
         public GenreService(IDataService dataService)
@@ -22,20 +25,18 @@ namespace MusicLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<int?> AddGenre(string genres)
+        public async Task<int?> AddGenre(string strGenres)
         {
             int? id = default(int?);
 
-            if (!string.IsNullOrWhiteSpace(genres))
+            if (!string.IsNullOrWhiteSpace(strGenres))
             {
-                string existsQuery = $"SELECT id FROM genre WHERE name = @genres";
-                id = await dataService.ExecuteScalar<int?>(existsQuery, new { genres });
-                Genre genre = new Genre(genres);
+                object parameters = new { name = strGenres };
+                IEnumerable<Genre> genres = await dataService.Query<Genre>(findGenresStoredProcedure, parameters, CommandType.StoredProcedure);
+                Genre genre = new Genre(strGenres);
 
-                if (!id.HasValue)
-                {
-                    id = await dataService.Insert<Genre, int>(genre);
-                }
+                if (genres.Any()) { id = genres.FirstOrDefault().Id; }
+                else { id = await dataService.Insert<Genre, int>(genre); }
             }
 
             return id;
@@ -51,7 +52,7 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeleteGenre(Genre genre) => await dataService.Delete(genre);
 
-        public async Task DeleteAllGenres() => await dataService.Execute(@"DELETE genre;");
+        public async Task DeleteAllGenres() => await dataService.Execute(deleteAllGenresStoredProcedure, commandType: CommandType.StoredProcedure);
 
         public async Task<bool> UpdateGenre(Genre genre) => await dataService.Update(genre);
     }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -44,7 +45,7 @@ namespace MusicLibraryWebApi.Controllers
                 tracks = await trackService.GetTracks();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
@@ -64,7 +65,7 @@ namespace MusicLibraryWebApi.Controllers
                 track = await trackService.GetTrack(id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
@@ -96,7 +97,7 @@ namespace MusicLibraryWebApi.Controllers
 
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
                 response = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
@@ -143,7 +144,9 @@ namespace MusicLibraryWebApi.Controllers
 
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTrackFile);
                 file = await trackService.GetTrackFile(id);
-                stream = new MemoryStream(file.Data);
+
+                if (file == null) { throw new FileNotFoundException(); }
+                stream = new MemoryStream(file?.Data);
 
                 if (Request.Headers.Range == null)
                 {
@@ -158,8 +161,11 @@ namespace MusicLibraryWebApi.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.GetType() == typeof(FileNotFoundException)) { message.StatusCode = HttpStatusCode.NotFound; }
+                message.Content = new StreamContent(new MemoryStream(Encoding.UTF8.GetBytes(ex.Message)));
+                message.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
                 await transactionService.UpdateTransactionErrored(transaction, ex);
-    }
+            }
 
             return message;
         }

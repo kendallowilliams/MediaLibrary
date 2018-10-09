@@ -25,7 +25,6 @@ namespace MusicLibraryBLL.Models
         public string Description { get; set; }
         public string Url { get; set; }
         public long Length { get; set; }
-        public int? FileId { get; set; }
         public DateTime PublishDate { get; set; } = DateTime.MinValue;
     }
 }

@@ -15,7 +15,6 @@ namespace MusicLibraryBLL.Models.Mappings
             Map(x => x.Id).Key(KeyType.Identity);
             Map(x => x.FileName).Column("file_name");
             Map(x => x.PathId).Column("path_id");
-            Map(x => x.FileId).Column("file_id");
             Map(x => x.AlbumId).Column("album_id");
             Map(x => x.GenreId).Column("genre_id");
             Map(x => x.ArtistId).Column("artist_id");

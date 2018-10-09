@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,6 +16,8 @@ namespace MusicLibraryBLL.Services
     public class AlbumService : IAlbumService
     {
         private readonly IDataService dataService;
+        private readonly string findAlbumsStoredProcedure = "FindAlbums",
+                                deleteAllAlbumsStoredProcedure = "DeleteAllAlbums";
 
         [ImportingConstructor]
         public AlbumService(IDataService dataService)
@@ -28,13 +31,11 @@ namespace MusicLibraryBLL.Services
 
             if (album != null)
             {
-                string existsQuery = $"SELECT id FROM album WHERE title = @title";
-                id = await dataService.ExecuteScalar<int?>(existsQuery, new { album.Title });
+                object parameters = new { title = album.Title };
+                IEnumerable<Album> albums = await dataService.Query<Album>(findAlbumsStoredProcedure, parameters, CommandType.StoredProcedure);
 
-                if (!id.HasValue)
-                {
-                    id = await dataService.Insert<Album, int>(album);
-                }
+                if (albums.Any()) { id = albums.FirstOrDefault().Id; }
+                else { id = await dataService.Insert<Album, int>(album); }
             }
 
             return id;
@@ -50,7 +51,7 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeleteAlbum(Album album) => await dataService.Delete(album);
 
-        public async Task DeleteAllAlbums() => await dataService.Execute(@"DELETE album;");
+        public async Task DeleteAllAlbums() => await dataService.Execute(deleteAllAlbumsStoredProcedure, commandType: CommandType.StoredProcedure);
 
         public async Task<bool> UpdateAlbum(Album album) => await dataService.Update(album);
     }

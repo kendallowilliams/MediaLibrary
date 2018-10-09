@@ -106,23 +106,20 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // DELETE: api/Playlist/5
-        public async Task<bool> Delete(int id)
+        public async Task Delete(int id)
         {
             Transaction transaction = null;
-            bool isRemoved = false;
 
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.RemovePlaylist);
-                isRemoved = await playlistService.DeletePlaylist(id);
+                await playlistService.DeletePlaylist(id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
-
-            return isRemoved;
         }
     }
 }

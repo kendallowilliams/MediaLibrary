@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,6 +17,8 @@ namespace MusicLibraryBLL.Services
     public class ArtistService : IArtistService
     {
         private readonly IDataService dataService;
+        private readonly string findArtistsStoredProcedure = "FindArtists",
+                                deleteAllArtistsStoredProcedure = "DeleteAllArtists";
 
         [ImportingConstructor]
         public ArtistService(IDataService dataService)
@@ -23,21 +26,18 @@ namespace MusicLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<int?> AddArtist(string artists)
+        public async Task<int?> AddArtist(string strArtists)
         {
             int? id = default(int?);
 
-            if (!string.IsNullOrWhiteSpace(artists))
+            if (!string.IsNullOrWhiteSpace(strArtists))
             {
-                string existsQuery = $"SELECT id FROM artist WHERE name = @artists";
-                Artist artist = new Artist(artists);
+                object parameters = new { name = strArtists };
+                Artist artist = new Artist(strArtists);
+                IEnumerable<Artist> artists = await dataService.Query<Artist>(findArtistsStoredProcedure, parameters, CommandType.StoredProcedure);
 
-                id = await dataService.ExecuteScalar<int?>(existsQuery, new { artists });
-
-                if (!id.HasValue)
-                {
-                    id = await dataService.Insert<Artist, int>(artist);
-                }
+                if (artists.Any()) { id = artists.FirstOrDefault().Id; }
+                else { id = await dataService.Insert<Artist, int>(artist); }
             }
 
             return id;
@@ -53,7 +53,7 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeleteArtist(Artist artist) => await dataService.Delete(artist);
 
-        public async Task DeleteAllArtists() => await dataService.Execute(@"DELETE artist;");
+        public async Task DeleteAllArtists() => await dataService.Execute(deleteAllArtistsStoredProcedure, commandType: CommandType.StoredProcedure);
 
         public async Task<bool> UpdateArtist(Artist artist) => await dataService.Update(artist);
     }

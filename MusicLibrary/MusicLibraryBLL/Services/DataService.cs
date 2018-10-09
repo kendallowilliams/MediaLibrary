@@ -128,37 +128,37 @@ namespace MusicLibraryBLL.Services
             return result;
         }
 
-        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters = null) where T : BaseModel
+        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters = null, CommandType commandType = CommandType.Text) where T : BaseModel
         {
             IEnumerable<T> result = Enumerable.Empty<T>();
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.QueryAsync<T>(sql, parameters, commandTimeout: timeout);
+                result = await conn.QueryAsync<T>(sql, parameters, commandTimeout: timeout, commandType: commandType);
             }
 
             return result;
         }
 
-        public async Task<int> Execute(string sql, object parameters = null)
+        public async Task<int> Execute(string sql, object parameters = null, CommandType commandType = CommandType.Text)
         {
             int result = default(int);
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.ExecuteAsync(sql, parameters, commandTimeout: timeout);
+                result = await conn.ExecuteAsync(sql, parameters, commandTimeout: timeout, commandType: commandType);
             }
 
             return result;
         }
 
-        public async Task<T> ExecuteScalar<T>(string sql, object parameters = null)
+        public async Task<T> ExecuteScalar<T>(string sql, object parameters = null, CommandType commandType = CommandType.Text)
         {
             T result = default(T);
 
             using (IDbConnection conn = GetNewConnection())
             {
-                result = await conn.ExecuteScalarAsync<T>(sql, parameters, commandTimeout: timeout);
+                result = await conn.ExecuteScalarAsync<T>(sql, parameters, commandTimeout: timeout, commandType: commandType);
             }
 
             return result;

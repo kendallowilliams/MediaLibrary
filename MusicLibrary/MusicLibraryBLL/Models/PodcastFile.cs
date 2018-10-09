@@ -10,12 +10,16 @@ namespace MusicLibraryBLL.Models
     {
         public PodcastFile() { }
 
-        public PodcastFile(byte[] data, string type)
+        public PodcastFile(byte[] data, string type, int podcastId, int podcastItemId)
         {
             Data = data;
             Type = type;
+            PodcastId = podcastId;
+            PodcastItemId = podcastItemId;
         }
 
+        public int PodcastItemId { get; set; }
+        public int PodcastId { get; set; }
         public byte[] Data { get; set; }
         public string Type { get; set; }
     }

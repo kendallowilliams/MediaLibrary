@@ -91,13 +91,10 @@ namespace MusicLibraryBLL.Services
             int? genreId = await genreService.AddGenre(data.Genres),
                 artistId = await artistService.AddArtist(data.Artists),
                 albumId = await albumService.AddAlbum(new Album(data, artistId, genreId)),
-                pathId = await trackService.AddPath(Path.GetDirectoryName(path)),
-                fileId = null;
+                pathId = await trackService.AddPath(Path.GetDirectoryName(path));
             Track track = new Track(data, pathId, genreId, albumId, artistId);
 
-            if (copyFile) { fileId = await trackService.AddTrackFile(track.Id); }
-            track.FileId = fileId;
-
+            if (copyFile) { await trackService.AddTrackFile(track.Id); }
             await trackService.InsertTrack(track);
         }
     }

@@ -11,12 +11,11 @@ namespace MusicLibraryBLL.Models
     {
         public Track() { }
 
-        public Track(MediaData data, int? pathId, int? genreId, int? albumId, int? artistId, int? fileId = null)
+        public Track(MediaData data, int? pathId, int? genreId, int? albumId, int? artistId)
         {
             Title = data.Title;
             FileName = data.FileName;
             PathId = pathId;
-            FileId = fileId;
             AlbumId = albumId;
             GenreId = genreId;
             ArtistId = artistId;
@@ -29,7 +28,6 @@ namespace MusicLibraryBLL.Models
         public string Title { get; set; }
         public string FileName { get; set; }
         public int? PathId { get; set; }
-        public int? FileId { get; set; }
         public int? AlbumId { get; set; }
         public int? GenreId { get; set; }
         public int? ArtistId { get; set; }

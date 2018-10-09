@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace MusicLibraryBLL.Services.Interfaces
 {
@@ -24,11 +25,11 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<bool> Update<T>(T entity) where T : BaseModel;
 
-        Task<IEnumerable<T>> Query<T>(string sql, object parameters) where T : BaseModel;
+        Task<IEnumerable<T>> Query<T>(string sql, object parameters, CommandType commandType = CommandType.Text) where T : BaseModel;
 
-        Task<T> ExecuteScalar<T>(string sql, object parameters);
+        Task<T> ExecuteScalar<T>(string sql, object parameters, CommandType commandType = CommandType.Text);
 
-        Task<int> Execute(string sql, object parameters = null);
+        Task<int> Execute(string sql, object parameters = null, CommandType commandType = CommandType.Text);
 
         Task<int> Count<T>(object predicate = null) where T : BaseModel;
     }

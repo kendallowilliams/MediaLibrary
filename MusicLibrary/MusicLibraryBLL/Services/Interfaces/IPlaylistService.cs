@@ -15,9 +15,7 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<int> InsertPlaylist(Playlist playlist);
 
-        Task<bool> DeletePlaylist(int id);
-
-        Task<bool> DeletePlaylist(Playlist playlist);
+        Task DeletePlaylist(int id);
 
         Task DeleteAllPlaylists();
 
