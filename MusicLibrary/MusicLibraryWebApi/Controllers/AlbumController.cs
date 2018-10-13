@@ -17,7 +17,6 @@ namespace MusicLibraryWebApi.Controllers
     public class AlbumController : ApiControllerBase
     {
         private readonly IAlbumService albumService;
-        private readonly ITransactionService transactionService;
         private readonly Album unknownAlbum;
 
         [ImportingConstructor]

@@ -17,15 +17,15 @@ namespace MusicLibraryWebApi.Controllers
 
         public ApiControllerBase() { }
 
-        public async void QueueBackgroundWorkItem(Func<CancellationToken, Task> workItem, Transaction transaction)
+        public void QueueBackgroundWorkItem(Func<CancellationToken, Task> workItem, Transaction transaction)
         {
-            await transactionService.UpdateTransactionInProcess(transaction);
+            transactionService.UpdateTransactionInProcess(transaction).Wait();
             HostingEnvironment.QueueBackgroundWorkItem(workItem);
         }
 
-        public async void QueueBackgroundWorkItem(Action<CancellationToken> workItem, Transaction transaction)
+        public void QueueBackgroundWorkItem(Action<CancellationToken> workItem, Transaction transaction)
         {
-            await transactionService.UpdateTransactionInProcess(transaction);
+            transactionService.UpdateTransactionInProcess(transaction).Wait();
             HostingEnvironment.QueueBackgroundWorkItem(workItem);
         }
     }

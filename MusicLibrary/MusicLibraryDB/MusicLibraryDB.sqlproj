@@ -86,9 +86,11 @@
     <Build Include="dbo\Stored Procedures\DeletePlaylist.sql" />
     <Build Include="dbo\Stored Procedures\DeleteAllPodcasts.sql" />
     <Build Include="dbo\Stored Procedures\DeletePodcast.sql" />
-    <Build Include="dbo\Stored Procedures\FindAllTracks.sql" />
+    <Build Include="dbo\Stored Procedures\FindTracks.sql" />
     <Build Include="dbo\Stored Procedures\DeleteAllTracks.sql" />
     <Build Include="dbo\Stored Procedures\GetTrackFile.sql" />
+    <Build Include="dbo\Stored Procedures\FindPaths.sql" />
+    <Build Include="dbo\Stored Procedures\FindTransactions.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MusicLibraryDB.refactorlog" />

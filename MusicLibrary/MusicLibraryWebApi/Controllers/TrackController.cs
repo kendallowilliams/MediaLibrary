@@ -23,7 +23,6 @@ namespace MusicLibraryWebApi.Controllers
     {
         private readonly ITrackService trackService;
         private readonly IFileService fileService;
-        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
         public TrackController(ITrackService trackService, IFileService fileService, ITransactionService transactionService)

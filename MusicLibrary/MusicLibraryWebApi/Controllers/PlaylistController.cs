@@ -16,7 +16,6 @@ namespace MusicLibraryWebApi.Controllers
     public class PlaylistController : ApiControllerBase
     {
         private readonly IPlaylistService playlistService;
-        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
         public PlaylistController(IPlaylistService playlistService, ITransactionService transactionService)

@@ -17,7 +17,6 @@ namespace MusicLibraryWebApi.Controllers
     public class PodcastController : ApiControllerBase
     {
         private readonly IPodcastService podcastService;
-        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
         public PodcastController(IPodcastService podcastService, ITransactionService transactionService)

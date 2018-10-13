@@ -18,7 +18,7 @@ namespace MusicLibraryBLL.Services
     {
         private readonly IDataService dataService;
         private readonly string findPathsStoredProcedure = @"FindPaths",
-                                deleteAllPathsStoredProcedure = @"DeleteAllPaths",
+                                deleteAllTracksStoredProcedure = @"DeleteAllTracks",
                                 getTrackFileStoredProcedure = @"GetTrackFile";
 
          [ImportingConstructor]
@@ -37,7 +37,7 @@ namespace MusicLibraryBLL.Services
 
         public async Task<bool> DeleteTrack(Track track) => await dataService.Delete(track);
 
-        public async Task DeleteAllTracks() => await dataService.Execute(deleteAllPathsStoredProcedure, commandType: CommandType.StoredProcedure);
+        public async Task DeleteAllTracks() => await dataService.Execute(deleteAllTracksStoredProcedure, commandType: CommandType.StoredProcedure);
 
         public async Task<bool> UpdateTrack(Track track) => await dataService.Update(track);
 

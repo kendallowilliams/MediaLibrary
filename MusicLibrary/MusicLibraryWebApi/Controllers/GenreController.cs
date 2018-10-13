@@ -17,7 +17,6 @@ namespace MusicLibraryWebApi.Controllers
     public class GenreController : ApiControllerBase
     {
         private readonly IGenreService genreService;
-        private readonly ITransactionService transactionService;
         private readonly Genre unknownGenre;
 
         [ImportingConstructor]

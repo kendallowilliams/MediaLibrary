@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[FindAllTracks]
+﻿CREATE PROCEDURE [dbo].[FindTracks]
 	@title int = NULL,
 	@path_id int = NULL,
 	@artist_id int = NULL,
