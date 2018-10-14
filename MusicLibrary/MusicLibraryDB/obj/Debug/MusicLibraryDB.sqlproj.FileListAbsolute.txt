@@ -1,5 +1,0 @@
-C:\Users\Kendall Williams\Source\Repos\MusicLibraryRefactor\MusicLibrary\MusicLibraryDB\bin\Debug\MusicLibraryDB.dacpac
-C:\Users\Kendall Williams\Source\Repos\MusicLibraryRefactor\MusicLibrary\MusicLibraryDB\bin\Debug\MusicLibraryDB.dll
-C:\Users\Kendall Williams\Source\Repos\MusicLibraryRefactor\MusicLibrary\MusicLibraryDB\bin\Debug\MusicLibraryDB.pdb
-C:\Users\Kendall Williams\Source\Repos\MusicLibraryRefactor\MusicLibrary\MusicLibraryDB\obj\Debug\MusicLibraryDB.dll
-C:\Users\Kendall Williams\Source\Repos\MusicLibraryRefactor\MusicLibrary\MusicLibraryDB\obj\Debug\MusicLibraryDB.pdb
