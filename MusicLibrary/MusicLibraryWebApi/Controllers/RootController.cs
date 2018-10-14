@@ -102,9 +102,9 @@ namespace MusicLibraryWebApi.Controllers
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.ResetData);
                 await trackService.DeleteAllTracks();
                 await playlistService.DeleteAllPlaylists();
+                await albumService.DeleteAllAlbums();
                 await genreService.DeleteAllGenres();
                 await artistService.DeleteAllArtists();
-                await albumService.DeleteAllAlbums();
                 await podcastService.DeleteAllPodcasts();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
