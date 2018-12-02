@@ -15,7 +15,6 @@ import { AlbumComponent } from './components/music/album/album.component';
 import { ArtistComponent } from './components/music/artist/artist.component';
 
 import { ArtistsResolver } from './components/music/resolvers/artists.resolver';
-import { GenresResolver } from './components/music/resolvers/genres.resolver';
 import { ControlsComponent } from './components/controls/controls.component';
 import { TrackListComponent } from './components/music/track-list/track-list.component';
 import { AlbumListComponent } from './components/music/album-list/album-list.component';
@@ -58,7 +57,7 @@ import { MlRouteReuseStrategy } from './route_reuse_strategies/route-reuse-strat
     ]),
     HttpClientModule
   ],
-  providers: [ ArtistsResolver, GenresResolver,
+  providers: [ ArtistsResolver,
     { provide: RouteReuseStrategy, useClass: MlRouteReuseStrategy }
   ],
   bootstrap: [AppComponent]
