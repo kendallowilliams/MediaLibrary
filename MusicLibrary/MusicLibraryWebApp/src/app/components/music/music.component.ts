@@ -16,6 +16,7 @@ import { ITrackList, IAlbumList, IArtistList, IScrollData } from '../../shared/i
 import { AppService } from '../../services/app.service';
 import { Observable } from '../../../../node_modules/rxjs';
 import { TrackListComponent } from './track-list/track-list.component';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-music',
@@ -56,13 +57,7 @@ export class MusicComponent implements OnInit {
     this.getArtists();
 
     this.artistSortGroups = this.getArtistSortGroups();
-
-    this.albumSortLists$ = this.albumService.getAlbumSortLists(this.currentAlbumSort);
     this.trackSortLists$ = this.trackService.getTrackSortLists(this.currentTrackSort);
-
-    this.albumService.getAlbums().subscribe(albums => {
-      this.albums = albums;
-    });
 
     this.trackService.getTracks().subscribe(tracks => {
       this.tracks = tracks;
@@ -99,7 +94,8 @@ export class MusicComponent implements OnInit {
   updateAlbumSort(albumSort: AlbumSortEnum): void {
     if (this.currentAlbumSort !== albumSort) {
       this.currentAlbumSort = albumSort;
-      this.albumSortLists$ = this.albumService.getAlbumSortLists(albumSort);
+      this.albumSortLists$ = this.albumService.getAlbumSortLists(albumSort)
+                                              .pipe(tap(lists => this.albums = [].concat(lists.map(list => list.albums))));
     }
   }
 
