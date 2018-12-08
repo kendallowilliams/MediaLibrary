@@ -54,7 +54,7 @@ import { MlRouteReuseStrategy } from './route_reuse_strategies/route-reuse-strat
         { path: 'app-settings', component: SettingsComponent },
         { path: 'app-playlists', component: PlaylistsComponent },
         { path: '**', redirectTo: 'app-music' }
-    ]),
+    ], { useHash: true }),
     HttpClientModule
   ],
   providers: [ ArtistsResolver,
