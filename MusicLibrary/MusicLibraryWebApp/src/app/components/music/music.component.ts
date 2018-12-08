@@ -55,39 +55,39 @@ export class MusicComponent implements OnInit {
 
   ngOnInit() {
     this.getArtists();
-
     this.artistSortGroups = this.getArtistSortGroups();
-    this.trackSortLists$ = this.trackService.getTrackSortLists(this.currentTrackSort);
-
-    this.trackService.getTracks().subscribe(tracks => {
-      this.tracks = tracks;
-      this.updateMusicTab(MusicTabEnum.Songs);
-    });
   }
 
   updateMusicTab(musicTab: MusicTabEnum): void {
-    this.selectMusicTab = musicTab;
+    if (this.selectMusicTab !== musicTab) {
+      this.selectMusicTab = musicTab;
 
-    switch (musicTab) {
-      case MusicTabEnum.Songs:
-        this.musicCount = this.tracks.length;
-        break;
-      case MusicTabEnum.Artists:
-        this.musicCount = this.artists.length;
-        break;
-      case MusicTabEnum.Albums:
-        this.musicCount = this.albums.length;
-        break;
-      case MusicTabEnum.None:
-      default:
-        break;
+      switch (musicTab) {
+        case MusicTabEnum.Songs:
+          this.musicCount = this.tracks.length;
+          break;
+        case MusicTabEnum.Artists:
+          this.musicCount = this.artists.length;
+          break;
+        case MusicTabEnum.Albums:
+          this.musicCount = this.albums.length;
+          break;
+        case MusicTabEnum.None:
+        default:
+          break;
+      }
     }
   }
 
   updateTrackSort(trackSort: TrackSortEnum): void {
     if (this.currentTrackSort !== trackSort) {
+      this.tracks = [];
       this.currentTrackSort = trackSort;
-      this.trackSortLists$ = this.trackService.getTrackSortLists(trackSort);
+      this.trackSortLists$ = this.trackService.getTrackSortLists(trackSort)
+                                 .pipe(tap(lists =>
+                                    lists.forEach(list =>
+                                      list.groups.forEach(group => Array.prototype.push.apply(this.tracks, group.tracks)))),
+                                    tap(() => this.updateMusicTab(this.selectMusicTab || MusicTabEnum.Songs)));
     }
   }
 
