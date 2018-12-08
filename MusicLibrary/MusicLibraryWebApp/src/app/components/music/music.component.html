@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="tab-pane fade" id="nav-artists" role="tabpanel" aria-labelledby="nav-artists-tab">
-      <div *ngFor="let group of artistSortGroups">
+      <div *ngFor="let group of artistSortGroups$ | async">
         <app-artist-list [group]="group"></app-artist-list>
       </div>
     </div>
