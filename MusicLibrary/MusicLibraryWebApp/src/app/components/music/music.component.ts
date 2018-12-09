@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 
 import { AlbumService } from '../../services/album.service';
 import { ArtistService } from '../../services/artist.service';
@@ -22,7 +22,7 @@ import { IArtist } from 'src/app/shared/interfaces/artist.interface';
   styleUrls: ['./music.component.css']
 })
 
-export class MusicComponent implements OnInit {
+export class MusicComponent implements OnInit, AfterViewInit {
   public MusicTabs = MusicTabEnum;
 
   @Input() musicCount: number;
@@ -58,6 +58,9 @@ export class MusicComponent implements OnInit {
                                                .pipe(tap(groups => this.artistCount = groups.reduce(groupAcc, 0)));
   }
 
+  ngAfterViewInit(): void {
+  }
+
   updateMusicTab(musicTab: MusicTabEnum): void {
     this.selectMusicTab = musicTab;
 
@@ -85,6 +88,7 @@ export class MusicComponent implements OnInit {
       this.currentTrackSort = trackSort;
       this.trackSortLists$ = this.trackService.getTrackSortLists(trackSort)
                                               .pipe(tap(lists => this.trackCount = lists.reduce(listAcc, 0)),
+                                                    tap(() => this.handleScroll(window.innerHeight, 0)),
                                                     tap(() => this.updateMusicTab(this.selectMusicTab || MusicTabEnum.Songs)));
     }
   }
