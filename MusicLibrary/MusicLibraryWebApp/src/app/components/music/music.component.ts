@@ -43,7 +43,7 @@ export class MusicComponent implements OnInit, AfterViewInit {
   artistSortGroups$: Observable<IArtistList[]>;
   albumSortLists$: Observable<IAlbumList[]>;
   selectMusicTab: MusicTabEnum;
-  scrollData: IScrollData = { top: 0, height: 0, timeout: 200 };
+  scrollData: IScrollData = { top: 0, height: 0, timeout: 100 };
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
     private albumService: AlbumService, private genreService: GenreService,
