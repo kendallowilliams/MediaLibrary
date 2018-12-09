@@ -16,19 +16,19 @@
   <div class="tab-content ml-music-content" id="nav-tabContent">
     <div class="tab-pane fade show active ml-tracks" id="nav-songs" role="tabpanel" aria-labelledby="nav-songs-tab"
       (scroll)="handleScroll($event.target.clientHeight,$event.target.scrollTop)">
-      <div *ngFor="let list of trackSortLists$ | async">
+      <ng-container *ngFor="let list of trackSortLists$ | async">
         <app-track-list [list]="list"></app-track-list>
-      </div>
+      </ng-container>
     </div>
-    <div class="tab-pane fade" id="nav-artists" role="tabpanel" aria-labelledby="nav-artists-tab">
-      <div *ngFor="let group of artistSortGroups$ | async">
+    <div class="tab-pane fade ml-artists" id="nav-artists" role="tabpanel" aria-labelledby="nav-artists-tab">
+      <ng-container *ngFor="let group of artistSortGroups$ | async">
         <app-artist-list [group]="group"></app-artist-list>
-      </div>
+      </ng-container>
     </div>
-    <div class="tab-pane fade" id="nav-albums" role="tabpanel" aria-labelledby="nav-albums-tab">
-      <div *ngFor="let list of albumSortLists$ | async">
+    <div class="tab-pane fade ml-albums" id="nav-albums" role="tabpanel" aria-labelledby="nav-albums-tab">
+      <ng-container *ngFor="let list of albumSortLists$ | async">
         <app-album-list [list]="list"></app-album-list>
-      </div>
+      </ng-container>
     </div>
   </div>
 </div>

@@ -18,7 +18,7 @@
   height: calc(100% - var(--music-nav-height) - var(--music-settings-height));
 }
 
-.ml-tracks {
+.ml-tracks, .ml-artists, .ml-albums {
   height: 100%;
   overflow-y: auto;
 }
