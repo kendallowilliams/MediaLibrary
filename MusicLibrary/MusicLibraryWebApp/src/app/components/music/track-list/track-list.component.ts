@@ -16,8 +16,8 @@ export class TrackListComponent implements OnInit {
 
   @Input() list: ITrackList;
 
-  private tracksHeight: number;
-  private headerHeight: number;
+  protected tracksHeight: number;
+  protected headerHeight: number;
   private loaded: boolean;
   private readonly tracksPerGroup: number = 100;
 
