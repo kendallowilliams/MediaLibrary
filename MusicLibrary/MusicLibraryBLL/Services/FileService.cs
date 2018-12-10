@@ -36,16 +36,16 @@ namespace MusicLibraryBLL.Services
             this.transactionService = transactionService;
         }
 
-        public async Task<IEnumerable<string>> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false)
+        public IEnumerable<string> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false)
         {
             SearchOption searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-            return await Task.Run(() => Directory.EnumerateDirectories(path, searchPattern, searchOption));
+            return Directory.EnumerateDirectories(path, searchPattern, searchOption);
         }
 
-        public async Task<IEnumerable<string>> EnumerateFiles(string path, string searchPattern = "*", bool recursive = false)
+        public IEnumerable<string> EnumerateFiles(string path, string searchPattern = "*", bool recursive = false)
         {
             SearchOption searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-            return await Task.Run(() => Directory.EnumerateFiles(path, searchPattern, searchOption));
+            return Directory.EnumerateFiles(path, searchPattern, searchOption);
         }
 
         public async Task Write(string path, byte[] data)
@@ -68,7 +68,7 @@ namespace MusicLibraryBLL.Services
                                                                                          .Select(fileType => fileType.ToLower());
             try
             {
-                IEnumerable<string> allFiles = await EnumerateFiles(path, recursive: recursive);
+                IEnumerable<string> allFiles = EnumerateFiles(path, recursive: recursive);
                 var fileGroups = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()))
                                          .GroupBy(file => new { directory = Path.GetDirectoryName(file) });
 

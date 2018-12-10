@@ -9,9 +9,9 @@ namespace MusicLibraryBLL.Services.Interfaces
 {
     public interface IFileService
     {
-        Task<IEnumerable<string>> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false);
+        IEnumerable<string> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false);
 
-        Task<IEnumerable<string>> EnumerateFiles(string path, string searchPattern = "*", bool recursive = false);
+        IEnumerable<string> EnumerateFiles(string path, string searchPattern = "*", bool recursive = false);
 
         Task Write(string path, string data);
 
