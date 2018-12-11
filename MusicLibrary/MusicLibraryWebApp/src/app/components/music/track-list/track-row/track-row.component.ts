@@ -67,4 +67,7 @@ export class TrackRowComponent implements OnInit {
     this.isPlaying = !this.isPlaying;
     this.play.emit(this.track.id);
   }
+
+  addTrack(): void {
+  }
 }
