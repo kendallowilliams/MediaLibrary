@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PodcastService } from 'src/app/services/podcast.service';
+import { Observable } from 'rxjs';
+import { Podcast } from 'src/app/shared/models/podcast.model';
 
 @Component({
   selector: 'app-podcasts',
@@ -6,10 +9,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./podcasts.component.css']
 })
 export class PodcastsComponent implements OnInit {
+  protected podcasts$: Observable<Podcast[]>;
 
-  constructor() { }
+  constructor(private podcastService: PodcastService) { }
 
   ngOnInit() {
+    this.podcasts$ = this.podcastService.getPodcasts();
   }
 
 }

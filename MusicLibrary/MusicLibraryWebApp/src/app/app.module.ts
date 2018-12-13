@@ -20,6 +20,7 @@ import { AlbumListComponent } from './components/music/album-list/album-list.com
 import { ArtistListComponent } from './components/music/artist-list/artist-list.component';
 import { MusicSettingsComponent } from './components/music/music-settings/music-settings.component';
 import { MlRouteReuseStrategy } from './route_reuse_strategies/route-reuse-strategy';
+import { PodcastComponent } from './components/podcasts/podcast/podcast.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { MlRouteReuseStrategy } from './route_reuse_strategies/route-reuse-strat
     TrackListComponent,
     AlbumListComponent,
     ArtistListComponent,
-    MusicSettingsComponent
+    MusicSettingsComponent,
+    PodcastComponent
   ],
   imports: [
     BrowserModule,

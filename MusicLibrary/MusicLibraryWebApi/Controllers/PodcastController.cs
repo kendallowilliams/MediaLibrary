@@ -66,7 +66,6 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // POST: api/Podcast
-        [Route("api/Podcast")]
         public async Task<Podcast> Post([FromBody] JObject inData)
         {
             Transaction transaction = null;
@@ -135,7 +134,7 @@ namespace MusicLibraryWebApi.Controllers
             return isRemoved;
         }
 
-        [Route("api/Podcast/DownloadEpisode")]
+        /*
         public async Task DownloadEpisode([FromBody] int podcastItemId)
         {
             Transaction transaction = null;
@@ -151,8 +150,7 @@ namespace MusicLibraryWebApi.Controllers
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
         }
-
-        [Route("api/Podcast/DownloadAllEpisodes")]
+        
         public async Task DownloadAllEpisodes(int podcastId)
         {
             Transaction transaction = null;
@@ -167,6 +165,6 @@ namespace MusicLibraryWebApi.Controllers
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
-        }
+        }*/
     }
 }

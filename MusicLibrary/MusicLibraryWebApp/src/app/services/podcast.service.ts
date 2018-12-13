@@ -14,7 +14,7 @@ export class PodcastService {
   constructor(private http: HttpClient) { }
 
   getPodcasts(): Observable<Podcast[]> {
-    return this.http.get<Podcast[]>('/api/Track')
+    return this.http.get<Podcast[]>('/api/Podcast')
                     .pipe(map(podcasts => podcasts.map(podcast => new Podcast().deserialize(podcast))));
   }
 }

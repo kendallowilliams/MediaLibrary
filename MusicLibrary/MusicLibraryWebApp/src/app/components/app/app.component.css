@@ -1,5 +1,5 @@
 .ml-app {
-  --header-height: 50px;
+  --header-height: 0px;
   --footer-height: 100px;
   --navigation-height: 100px;
   --settings-height: 50px;
@@ -32,10 +32,6 @@
 @media (max-width: 768px) {
   .ml-header {
     height: var(--header-height);
-  }
-
-  .ml-navigation {
-    display: none;
   }
 
   .ml-body {
