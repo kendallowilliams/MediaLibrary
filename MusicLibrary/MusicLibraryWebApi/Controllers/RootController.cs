@@ -1,5 +1,6 @@
 ﻿using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
+using MusicLibraryWebApi.Services.Interfaces;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -25,11 +26,12 @@ namespace MusicLibraryWebApi.Controllers
         private readonly IPodcastService podcastService;
         private readonly IPlaylistService playlistService;
         private readonly IGenreService genreService;
+        private readonly IControllerService controllerService;
 
         [ImportingConstructor]
         public RootController(IFileService fileService, ITransactionService transactionService, IAlbumService albumService,
                               IArtistService artistService, ITrackService trackService, IPodcastService podcastService,
-                              IPlaylistService playlistService, IGenreService genreService)
+                              IPlaylistService playlistService, IGenreService genreService, IControllerService controllerService)
         {
             this.fileService = fileService;
             this.transactionService = transactionService;
@@ -39,6 +41,7 @@ namespace MusicLibraryWebApi.Controllers
             this.podcastService = podcastService;
             this.playlistService = playlistService;
             this.genreService = genreService;
+            this.controllerService = controllerService;
         }
 
         [HttpPost]
@@ -64,7 +67,7 @@ namespace MusicLibraryWebApi.Controllers
 
                 if (validData && existingTransaction == null)
                 {
-                    QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, path, recursive, copyFiles), transaction);
+                    controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, path, recursive, copyFiles), transaction);
                 }
                 else
                 {

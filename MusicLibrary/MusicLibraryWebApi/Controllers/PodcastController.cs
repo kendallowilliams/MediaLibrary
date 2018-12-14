@@ -1,5 +1,6 @@
 ﻿using MusicLibraryBLL.Models;
 using MusicLibraryBLL.Services.Interfaces;
+using MusicLibraryWebApi.Services.Interfaces;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,14 @@ namespace MusicLibraryWebApi.Controllers
     public class PodcastController : ApiControllerBase
     {
         private readonly IPodcastService podcastService;
+        private readonly IControllerService controllerService;
 
         [ImportingConstructor]
-        public PodcastController(IPodcastService podcastService, ITransactionService transactionService)
+        public PodcastController(IPodcastService podcastService, ITransactionService transactionService, IControllerService controllerService)
         {
             this.podcastService = podcastService;
             this.transactionService = transactionService;
+            this.controllerService = controllerService;
         }
 
         // GET: api/Podcast
@@ -134,7 +137,7 @@ namespace MusicLibraryWebApi.Controllers
             return isRemoved;
         }
 
-        /*
+        [Route("api/Podcast/DownloadEpisode")]
         public async Task DownloadEpisode([FromBody] int podcastItemId)
         {
             Transaction transaction = null;
@@ -143,14 +146,15 @@ namespace MusicLibraryWebApi.Controllers
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.DownloadEpisode);
                 transaction.Message = $"{podcastItemId}";
-                QueueBackgroundWorkItem(ct => podcastService.AddPodcastFile(transaction, podcastItemId), transaction);
+                controllerService.QueueBackgroundWorkItem(ct => podcastService.AddPodcastFile(transaction, podcastItemId), transaction);
             }
             catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
         }
-        
+
+        [Route("api/Podcast/DownloadAllEpisodes")]
         public async Task DownloadAllEpisodes(int podcastId)
         {
             Transaction transaction = null;
@@ -165,6 +169,6 @@ namespace MusicLibraryWebApi.Controllers
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
-        }*/
+        }
     }
 }

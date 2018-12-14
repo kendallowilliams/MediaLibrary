@@ -57,7 +57,9 @@ namespace MusicLibraryBLL.Services
 
         public async Task<Podcast> ParseRssFeed(string address)
         {
-            string title = string.Empty;
+            string title = string.Empty,
+                   imageUrl = string.Empty,
+                   description = string.Empty;
             DateTime pubDate = DateTime.MinValue;
             List<ISyndicationItem> items = new List<ISyndicationItem>();
             IEnumerable<PodcastItem> podcastItems = Enumerable.Empty<PodcastItem>();
@@ -78,9 +80,11 @@ namespace MusicLibraryBLL.Services
                             ISyndicationContent content = await feedReader.ReadContent();
                             if (content.Name == "title") { title = content.Value; }
                             if (content.Name == "pubDate") { DateTime.TryParse(content.Value, out pubDate); }
+                            if (content.Name == "description") { description = content.Value; }
                             break;
                         case SyndicationElementType.Image:
                             ISyndicationImage image = await feedReader.ReadImage();
+                            imageUrl = image.Url?.AbsoluteUri;
                             break;
                         case SyndicationElementType.Item:
                             ISyndicationItem item = await feedReader.ReadItem();
@@ -98,7 +102,7 @@ namespace MusicLibraryBLL.Services
                     }
                 }
 
-                podcast = new Podcast(title, address) { LastUpdateDate = pubDate == DateTime.MinValue ? DateTime.Now : pubDate };
+                podcast = new Podcast(title, address, imageUrl, description) { LastUpdateDate = pubDate == DateTime.MinValue ? DateTime.Now : pubDate };
                 podcast.Id = await InsertPodcast(podcast);
                 podcastItems = items.Select(item => new
                 {

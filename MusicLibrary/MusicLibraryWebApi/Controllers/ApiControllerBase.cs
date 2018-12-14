@@ -16,17 +16,5 @@ namespace MusicLibraryWebApi.Controllers
         protected ITransactionService transactionService;
 
         public ApiControllerBase() { }
-
-        public void QueueBackgroundWorkItem(Func<CancellationToken, Task> workItem, Transaction transaction)
-        {
-            transactionService.UpdateTransactionInProcess(transaction).Wait();
-            HostingEnvironment.QueueBackgroundWorkItem(workItem);
-        }
-
-        public void QueueBackgroundWorkItem(Action<CancellationToken> workItem, Transaction transaction)
-        {
-            transactionService.UpdateTransactionInProcess(transaction).Wait();
-            HostingEnvironment.QueueBackgroundWorkItem(workItem);
-        }
     }
 }

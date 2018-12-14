@@ -13,6 +13,7 @@ namespace MusicLibraryBLL.Models.Mappings
             Table("podcast");
 
             Map(x => x.Id).Key(KeyType.Identity);
+            Map(x => x.ImageUrl).Column("image_url");
             Map(x => x.LastUpdateDate).Column("last_update_date");
             Map(x => x.ModifyDate).Column("modify_date");
             Map(x => x.CreateDate).Column("create_date");
