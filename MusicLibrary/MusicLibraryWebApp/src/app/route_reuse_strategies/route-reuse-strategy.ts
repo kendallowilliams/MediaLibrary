@@ -2,9 +2,10 @@ import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from 
 
 export class MlRouteReuseStrategy implements RouteReuseStrategy {
   _cacheRouters: { [key: string]: any } = {};
+  routesToIgnore: string[] = ['podcast'];
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
-    return true;
+    return this.routesToIgnore.indexOf(route.routeConfig.path) === -1;
   }
 
   store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
@@ -26,6 +27,10 @@ export class MlRouteReuseStrategy implements RouteReuseStrategy {
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    return future.routeConfig === curr.routeConfig;
+    if (this.routesToIgnore.indexOf(future.routeConfig && future.routeConfig.path) > 1) {
+      return false;
+    } else {
+      return future.routeConfig === curr.routeConfig;
+    }
   }
 }

@@ -1,4 +1,8 @@
-<div class="ml-album">
-  <div>{{album.title}}</div>
-  <div>{{album.artist | async}}</div>
+<div class="card ml-album" style="width: 18rem;">
+  <img class="card-img-top" src="" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{album.title}}</h5>
+    <p class="card-text">{{album.artist | async}}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
 </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Dapper;
 using DapperExtensions;
 using MusicLibraryBLL.Models.Mappings;
 
@@ -12,6 +13,7 @@ namespace MusicLibraryWebApi
         public static void Initialize()
         {
             DapperAsyncExtensions.SetMappingAssemblies(new[] { typeof(AlbumMapping).Assembly });
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
     }
 }

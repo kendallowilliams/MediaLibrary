@@ -91,6 +91,7 @@
     <Build Include="dbo\Stored Procedures\GetTrackFile.sql" />
     <Build Include="dbo\Stored Procedures\FindPaths.sql" />
     <Build Include="dbo\Stored Procedures\FindTransactions.sql" />
+    <Build Include="dbo\Stored Procedures\FindPodcastItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MusicLibraryDB.refactorlog" />

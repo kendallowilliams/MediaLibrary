@@ -21,6 +21,8 @@ import { ArtistListComponent } from './components/music/artist-list/artist-list.
 import { MusicSettingsComponent } from './components/music/music-settings/music-settings.component';
 import { MlRouteReuseStrategy } from './route_reuse_strategies/route-reuse-strategy';
 import { PodcastComponent } from './components/podcasts/podcast/podcast.component';
+import { PodcastItemsComponent } from './components/podcasts/podcast-items/podcast-items.component';
+import { PodcastItemComponent } from './components/podcasts/podcast-items/podcast-item/podcast-item.component';
 
 @NgModule({
   declarations: [
@@ -39,18 +41,21 @@ import { PodcastComponent } from './components/podcasts/podcast/podcast.componen
     AlbumListComponent,
     ArtistListComponent,
     MusicSettingsComponent,
-    PodcastComponent
+    PodcastComponent,
+    PodcastItemsComponent,
+    PodcastItemComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-        { path: '', redirectTo: 'app-music', pathMatch: 'full' },
-        { path: 'app-music', component: MusicComponent },
-        { path: 'app-nowplaying', component: NowPlayingComponent },
-        { path: 'app-podcasts', component: PodcastsComponent },
-        { path: 'app-settings', component: SettingsComponent },
-        { path: 'app-playlists', component: PlaylistsComponent },
-        { path: '**', redirectTo: 'app-music' }
+        { path: '', redirectTo: 'music', pathMatch: 'full' },
+        { path: 'music', component: MusicComponent },
+        { path: 'nowplaying', component: NowPlayingComponent },
+        { path: 'podcasts', component: PodcastsComponent },
+        { path: 'settings', component: SettingsComponent },
+        { path: 'playlists', component: PlaylistsComponent },
+        { path: 'podcast', component: PodcastItemsComponent },
+        { path: '**', redirectTo: 'music' }
     ], { useHash: true }),
     HttpClientModule
   ],

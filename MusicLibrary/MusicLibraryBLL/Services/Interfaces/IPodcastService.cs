@@ -15,6 +15,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<IEnumerable<Podcast>> GetPodcasts();
 
+        Task<IEnumerable<PodcastItem>> GetPodcastItems(int podcastId);
+
         Task<int> InsertPodcast(Podcast podcast);
 
         Task<int> InsertPodcastItem(PodcastItem podcastItem);

@@ -4,6 +4,7 @@
     [url]              VARCHAR (MAX) NOT NULL,
     [image_url]        VARCHAR (MAX) NULL,
 	[description]	   VARCHAR (MAX) NULL,
+    [author]		   VARCHAR (MAX) NULL,
     [last_update_date] DATETIME      NOT NULL,
     [create_date]      DATETIME      DEFAULT (getdate()) NOT NULL,
     [modify_date]      DATETIME      DEFAULT (getdate()) NOT NULL,

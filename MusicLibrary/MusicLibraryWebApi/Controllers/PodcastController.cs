@@ -68,6 +68,28 @@ namespace MusicLibraryWebApi.Controllers
             return podcast;
         }
 
+        // GET: api/Podcast/GetPodcastItems/5
+        [Route("api/Podcast/GetPodcastItems/{id}")]
+        public async Task<IEnumerable<PodcastItem>> GetPodcastItems(int id)
+        {
+            Transaction transaction = null;
+            IEnumerable<PodcastItem> items = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcastItems);
+                items = await podcastService.GetPodcastItems(id);
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+                items = Enumerable.Empty<PodcastItem>();
+            }
+
+            return items.OrderByDescending(item => item.PublishDate);
+        }
+
         // POST: api/Podcast
         public async Task<Podcast> Post([FromBody] JObject inData)
         {

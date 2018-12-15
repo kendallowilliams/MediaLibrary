@@ -23,7 +23,8 @@ namespace MusicLibraryBLL.Services
         private readonly IDataService dataService;
         private readonly IWebService webService;
         private readonly ITransactionService transactionService;
-        private readonly string deleteAllPodcastsStoredProcedure = @"DeleteAllPodcasts";
+        private readonly string deleteAllPodcastsStoredProcedure = @"DeleteAllPodcasts",
+                                findPodcastItemsStoredProcedure = @"FindPodcastItems";
 
          [ImportingConstructor]
         public PodcastService(IDataService dataService, IWebService webService, ITransactionService transactionService)
@@ -42,6 +43,10 @@ namespace MusicLibraryBLL.Services
 
         public async Task<Podcast> GetPodcast(object id) =>  await dataService.Get<Podcast>(id);
 
+        public async Task<IEnumerable<PodcastItem>> GetPodcastItems(int podcastId) => await dataService.Query<PodcastItem>(findPodcastItemsStoredProcedure,
+            new { podcast_id = podcastId },
+            commandType: CommandType.StoredProcedure);
+
         public async Task<int> InsertPodcast(Podcast podcast) => await dataService.Insert<Podcast,int>(podcast);
 
         public async Task<int> InsertPodcastItem(PodcastItem podcastItem) => await dataService.Insert<PodcastItem, int>(podcastItem);
@@ -59,7 +64,8 @@ namespace MusicLibraryBLL.Services
         {
             string title = string.Empty,
                    imageUrl = string.Empty,
-                   description = string.Empty;
+                   description = string.Empty,
+                   author = string.Empty;
             DateTime pubDate = DateTime.MinValue;
             List<ISyndicationItem> items = new List<ISyndicationItem>();
             IEnumerable<PodcastItem> podcastItems = Enumerable.Empty<PodcastItem>();
@@ -81,6 +87,7 @@ namespace MusicLibraryBLL.Services
                             if (content.Name == "title") { title = content.Value; }
                             if (content.Name == "pubDate") { DateTime.TryParse(content.Value, out pubDate); }
                             if (content.Name == "description") { description = content.Value; }
+                            if (content.Name == "author") { author = content.Value; }
                             break;
                         case SyndicationElementType.Image:
                             ISyndicationImage image = await feedReader.ReadImage();
@@ -102,7 +109,7 @@ namespace MusicLibraryBLL.Services
                     }
                 }
 
-                podcast = new Podcast(title, address, imageUrl, description) { LastUpdateDate = pubDate == DateTime.MinValue ? DateTime.Now : pubDate };
+                podcast = new Podcast(title, address, imageUrl, description, author) { LastUpdateDate = pubDate == DateTime.MinValue ? DateTime.Now : pubDate };
                 podcast.Id = await InsertPodcast(podcast);
                 podcastItems = items.Select(item => new
                 {
