@@ -1,5 +1,5 @@
 <div class="ml-podcast-items">
-  <a [routerLink]="['/podcasts']" class="previous round">&#8249;</a>
+  <a [routerLink]="['/podcasts']" class="btn btn-primary">&#8249;</a>
   <ul class="list-group">
     <li class="list-group-item" *ngFor="let item of items$ | async">
       <app-podcast-item [item]="item"></app-podcast-item>

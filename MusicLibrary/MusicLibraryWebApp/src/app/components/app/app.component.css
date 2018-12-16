@@ -1,40 +1,6 @@
 .ml-app {
-  --header-height: 0px;
-  --footer-height: 100px;
-  --navigation-height: 100px;
-  --settings-height: 50px;
-}
-
-.ml-app {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
   height: 100vh;
-}
-
-.ml-header {
-  height: 0px;
-}
-
-.ml-body {
-  height: calc(100vh - var(--footer-height));
-}
-
-.ml-navigation {
-  height: 100%;
-}
-
-.ml-content {
-  height: 100%;
-}
-
-.ml-footer {
-  height: var(--footer-height);
-}
-
-@media (max-width: 768px) {
-  .ml-header {
-    height: var(--header-height);
-  }
-
-  .ml-body {
-    height: calc(100vh - var(--footer-height) - var(--header-height));
-  }
 }

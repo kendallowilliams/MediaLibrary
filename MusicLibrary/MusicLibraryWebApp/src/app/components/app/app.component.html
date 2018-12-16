@@ -1,14 +1,13 @@
 <div class="ml-app">
-  <div class="ml-header"></div>
-  <div class="ml-body row m-0 p-0">
-    <div class="ml-navigation col-md-3 m-0 p-0">
+  <div class="ml-body d-flex flex-column flex-md-row flex-grow-1">
+    <div class="col-md-4 bg-light flex-shrink-0">
       <app-navmenu></app-navmenu>
     </div>
-    <main class="ml-content col-md-9 m-0 p-0">
+    <main class="col-md-8 m-0 p-0 flex-grow-1 flex-shrink-1">
       <router-outlet></router-outlet>
     </main>
   </div>
-  <div class="ml-footer">
+  <div class="ml-controls">
     <app-controls></app-controls>
   </div>
 </div>
