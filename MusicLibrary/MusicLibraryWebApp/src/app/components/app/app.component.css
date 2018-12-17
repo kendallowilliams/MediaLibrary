@@ -23,11 +23,16 @@
 }
 
 @media (min-width: 768px) {
-  .ml-nav {
-    width: 300px
-  }
-
   .ml-nav_content {
     flex-direction: row;
+  }
+
+  .ml-nav {
+    width: 300px;
+    flex: 0 0 auto;
+  }
+
+  .ml-content {
+    flex: 1 1 auto;
   }
 }
