@@ -4,3 +4,30 @@
   flex: 0 0 auto;
   height: 100vh;
 }
+
+.ml-nav_content {
+  display: flex;
+  flex-direction: column;
+}
+
+.ml-nav {
+  
+}
+
+.ml-content {
+  display: flex;
+}
+
+.ml-controls {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .ml-nav {
+    width: 300px
+  }
+
+  .ml-nav_content {
+    flex-direction: row;
+  }
+}
