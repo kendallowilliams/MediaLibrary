@@ -8,6 +8,7 @@
 .ml-nav_content {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
 }
 
 .ml-nav {
@@ -33,6 +34,5 @@
   }
 
   .ml-content {
-    flex: 1 1 auto;
   }
 }
