@@ -1,26 +1,28 @@
 .ml-app {
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 auto;
   height: 100vh;
 }
 
 .ml-nav_content {
+  --ml-controls-height: 100px;
+
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  height: calc(100vh - var(--ml-controls-height));
 }
 
 .ml-nav {
-  
+  flex: 0 0 auto;
 }
 
 .ml-content {
-  display: flex;
+  flex: 1 1 auto;
 }
 
 .ml-controls {
-  display: block;
+  --ml-controls-height: 100px;
+
+  height: var(--ml-controls-height);
+  background-color: black;
 }
 
 @media (min-width: 768px) {
@@ -29,10 +31,12 @@
   }
 
   .ml-nav {
-    width: 300px;
-    flex: 0 0 auto;
-  }
+    --nav-width: 350px;
 
+    flex: 0 0 var(--nav-width);
+  }
+  
   .ml-content {
+    flex: 1 1 auto;
   }
 }
