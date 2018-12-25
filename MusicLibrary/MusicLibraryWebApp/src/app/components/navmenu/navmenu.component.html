@@ -11,9 +11,17 @@
           <i class="fa fa-music"></i> My Music
         </a>
       </li>
-      <li class="nav-item" [routerLinkActive]="['active']">
+      <li class="nav-item" [routerLinkActive]="['active']" [hidden]="podcast$ | async">
         <a class="nav-link" [routerLink]="['/podcasts']">
           <i class="fa fa-podcast"></i> Podcasts
+        </a>
+      </li>
+      <li class="nav-item" [routerLinkActive]="['active']" [hidden]="!!!(podcast$ | async)">
+        <a class="nav-link" [routerLink]="['/podcast']" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
+          <i class="fa fa-podcast"></i>
+          <ng-container *ngIf="podcast$ | async as podcast">
+            <span [title]="podcast?.title"> Podcast: {{podcast?.title}}</span>
+          </ng-container>
         </a>
       </li>
       <li class="nav-item" [routerLinkActive]="['active']">

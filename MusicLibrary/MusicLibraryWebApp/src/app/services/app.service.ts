@@ -29,12 +29,4 @@ export class AppService {
   set controlsComponent(component: ControlsComponent) {
     this._controlsComponent = component;
   }
-
-  get navMenuComponent(): NavmenuComponent {
-    return this._navMenuComponent;
-  }
-
-  set navMenuComponent(component: NavmenuComponent) {
-    this._navMenuComponent = component;
-  }
 }

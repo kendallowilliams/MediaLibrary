@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from '../../services/app.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Observable } from 'rxjs';
+import { PodcastService } from 'src/app/services/podcast.service';
+import { Podcast } from 'src/app/shared/models/podcast.model';
 
 @Component({
   selector: 'app-navmenu',
@@ -7,12 +10,18 @@ import { AppService } from '../../services/app.service';
   styleUrls: ['./navmenu.component.css']
 })
 export class NavmenuComponent implements OnInit {
+  protected podcast$: Observable<Podcast>;
 
-  constructor(private appService: AppService) {
-    this.appService.navMenuComponent = this;
+  constructor(private route: ActivatedRoute, private podcastService: PodcastService) {
   }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => this.queryParamsChanged(params));
   }
 
+  queryParamsChanged(params: Params) {
+    if (!!params) {
+      this.podcast$ = !!(params.podcastId) ? this.podcastService.getPodcast(params.podcastId) : null;
+    }
+  }
 }

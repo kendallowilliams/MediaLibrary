@@ -19,8 +19,13 @@ export class PodcastService {
                     .pipe(map(podcasts => podcasts.map(podcast => new Podcast().deserialize(podcast))));
   }
 
+  getPodcast(id: number): Observable<Podcast> {
+    return this.http.get<Podcast>('/api/Podcast/' + (id || 0))
+                    .pipe(map(podcast => new Podcast().deserialize(podcast)));
+  }
+
   getPodcastItems(id: number): Observable<PodcastItem[]> {
-    return this.http.get<Podcast[]>('/api/Podcast/GetPodcastItems/' + id)
+    return this.http.get<Podcast[]>('/api/Podcast/GetPodcastItems/' + (id || 0))
                     .pipe(map(items => items.map(item => new PodcastItem().deserialize(item))));
   }
 }
