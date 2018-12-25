@@ -4,7 +4,7 @@
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse d-md-block" id="navbarContent">
+  <div class="collapse navbar-collapse d-md-block w-100" id="navbarContent">
     <ul class="navbar-nav nav">
       <li class="nav-item" [routerLinkActive]="['active']">
         <a class="nav-link" [routerLink]="['/music']">
@@ -17,7 +17,7 @@
         </a>
       </li>
       <li class="nav-item" [routerLinkActive]="['active']" [hidden]="!!!(podcast$ | async)">
-        <a class="nav-link" [routerLink]="['/podcast']" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden">
+        <a class="nav-link" [routerLink]="['/podcast']">
           <i class="fa fa-podcast"></i>
           <ng-container *ngIf="podcast$ | async as podcast">
             <span [title]="podcast?.title"> Podcast: {{podcast?.title}}</span>

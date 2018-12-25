@@ -40,7 +40,8 @@
     --nav-width: 350px;
 
     height: 100%;
-    flex: 0 0 var(--nav-width);
+    width: var(--nav-width);
+    flex: 0 0 auto;
   }
   
   .ml-content {

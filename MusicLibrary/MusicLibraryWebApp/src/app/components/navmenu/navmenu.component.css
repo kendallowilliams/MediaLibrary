@@ -1,3 +1,9 @@
+a {
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden;
+}
+
 .ml-navbar {
     position: fixed;
     top: 0;
