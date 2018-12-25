@@ -16,7 +16,7 @@ export class PodcastItemsComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute, private podcastService: PodcastService) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => this.podcastId = params.podcastId);
+    this.route.params.subscribe(params => this.podcastId = params.podcastId);
   }
 
   ngAfterViewInit(): void {

@@ -2,7 +2,7 @@ import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from 
 
 export class MlRouteReuseStrategy implements RouteReuseStrategy {
   _cacheRouters: { [key: string]: any } = {};
-  routesToIgnore: string[] = ['podcast'];
+  routesToIgnore: string[] = ['podcasts'];
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     return this.routesToIgnore.indexOf(route.routeConfig.path) === -1;

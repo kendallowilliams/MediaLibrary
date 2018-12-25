@@ -51,10 +51,13 @@ import { PodcastItemComponent } from './components/podcasts/podcast-items/podcas
         { path: '', redirectTo: 'music', pathMatch: 'full' },
         { path: 'music', component: MusicComponent },
         { path: 'nowplaying', component: NowPlayingComponent },
-        { path: 'podcasts', component: PodcastsComponent },
+        { path: 'podcasts', children: [
+            { path: '', component: PodcastsComponent },
+            { path: ':podcastId', component: PodcastItemsComponent }
+          ]
+        },
         { path: 'settings', component: SettingsComponent },
         { path: 'playlists', component: PlaylistsComponent },
-        { path: 'podcast', component: PodcastItemsComponent },
         { path: '**', redirectTo: 'music' }
     ], { useHash: true }),
     HttpClientModule
