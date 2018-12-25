@@ -16,7 +16,7 @@ export class NavmenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => this.queryParamsChanged(params));
+    this.route.params.subscribe(params => this.queryParamsChanged(params));
   }
 
   queryParamsChanged(params: Params) {
