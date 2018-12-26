@@ -3,13 +3,17 @@
     margin: 0px 5px 5px 0px;
     flex-direction: row;
     align-items: center;
-    padding-left: 5px;
+    padding: 0px 10px 0px 5px;
 }
 
 .ml-podcast-image {
     width: 105px;
     height: 105px;
-    vertical-align: middle;
+    flex: 0 0 auto;
+}
+
+.ml-podcast-options {
+    flex: 0 0 auto;
 }
 
 @media (min-width: 768px) {
