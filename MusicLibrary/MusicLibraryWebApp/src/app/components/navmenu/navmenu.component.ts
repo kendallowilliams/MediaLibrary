@@ -12,16 +12,14 @@ import { Podcast } from 'src/app/shared/models/podcast.model';
 export class NavmenuComponent implements OnInit {
   protected podcast$: Observable<Podcast>;
 
-  constructor(private route: ActivatedRoute, private podcastService: PodcastService) {
+  constructor(private podcastService: PodcastService) {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => this.queryParamsChanged(params));
+    this.podcastService.getCurrentPodcastId().subscribe(id => this.podcastIdChanged(id));
   }
 
-  queryParamsChanged(params: Params) {
-    if (!!params) {
-      this.podcast$ = !!(params.podcastId) ? this.podcastService.getPodcast(params.podcastId) : null;
-    }
+  podcastIdChanged(id: number) {
+    this.podcast$ = !!id ? this.podcastService.getPodcast(id) : null;
   }
 }

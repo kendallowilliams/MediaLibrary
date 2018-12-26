@@ -10,7 +10,6 @@ import { NavmenuComponent } from '../components/navmenu/navmenu.component';
 export class AppService {
   private _musicComponent: MusicComponent;
   private _controlsComponent: ControlsComponent;
-  private _navMenuComponent: NavmenuComponent;
 
   constructor() { }
 

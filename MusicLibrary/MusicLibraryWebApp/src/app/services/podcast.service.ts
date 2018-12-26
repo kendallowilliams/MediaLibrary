@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Podcast } from '../shared/models/podcast.model';
-import { Observable, of } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, } from '@angular/common/http';
 import { PodcastItem } from '../shared/models/podcast-item.model';
 
 @Injectable({
@@ -10,9 +10,12 @@ import { PodcastItem } from '../shared/models/podcast-item.model';
 })
 
 export class PodcastService {
-  podcasts: Podcast[];
+  private podcasts: Podcast[];
+  private podcastSubject: BehaviorSubject<number>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.podcastSubject = new BehaviorSubject<number>(0);
+  }
 
   getPodcasts(): Observable<Podcast[]> {
     return this.http.get<Podcast[]>('/api/Podcast')
@@ -27,5 +30,13 @@ export class PodcastService {
   getPodcastItems(id: number): Observable<PodcastItem[]> {
     return this.http.get<Podcast[]>('/api/Podcast/GetPodcastItems/' + (id || 0))
                     .pipe(map(items => items.map(item => new PodcastItem().deserialize(item))));
+  }
+
+  setCurrentPodcastId(id: number) {
+    this.podcastSubject.next(id);
+  }
+
+  getCurrentPodcastId(): Observable<number> {
+    return this.podcastSubject.asObservable();
   }
 }
