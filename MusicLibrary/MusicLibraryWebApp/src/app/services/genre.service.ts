@@ -22,7 +22,7 @@ export class GenreService {
     const genreId: number = !!id ? id : -1;
     let genre: Observable<Genre>;
 
-    if (!!this.genres) {
+    if (!!this.genres && this.genres.length > 0) {
       genre = of(this.genres.find(_genre => _genre.id === genreId));
     } else {
       genre = this.http.get<Genre>('/api/Genre/' + id)

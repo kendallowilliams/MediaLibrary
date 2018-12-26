@@ -25,7 +25,7 @@ export class ArtistService {
     const artistId: number = !!id ? id : -1;
     let artist: Observable<Artist>;
 
-    if (!!this.artists) {
+    if (!!this.artists && this.artists.length > 0) {
       artist = of(this.artists.find(_artist => _artist.id === artistId));
     } else {
       artist = this.http.get<Artist>('/api/Artist/' + artistId)

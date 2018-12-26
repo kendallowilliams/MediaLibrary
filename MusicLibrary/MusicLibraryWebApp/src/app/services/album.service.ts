@@ -30,7 +30,7 @@ export class AlbumService {
     const albumId: number = !!id ? id : -1;
     let album: Observable<Album>;
 
-    if (!!this.albums) {
+    if (!!this.albums && this.albums.length > 0) {
       album = of(this.albums.find(_album => _album.id === albumId));
     } else {
       album = this.http.get<IAlbum>('/api/Album/' + id)
