@@ -14,6 +14,7 @@
 
 @media (min-width: 768px) {
     .ml-podcast {
-        width: 33%;
+        display: inline-flex;
+        width: 45%;
     }
 }

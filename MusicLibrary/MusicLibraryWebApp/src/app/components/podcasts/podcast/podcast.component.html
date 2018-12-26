@@ -1,8 +1,8 @@
-<div class="card bg-light ml-podcast">
-  <img class="ml-podcast-image" [src]="podcast?.imageUrl" />
+<div class="card bg-light ml-podcast" [title]="podcast?.title" (click)="podcastClicked(podcast?.id)">
+  <img class="ml-podcast-image" [src]="podcast?.imageUrl" [alt]="podcast?.title" />
   <div class="card-body">
     <h5 class="card-title">{{podcast?.title}}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">{{podcast?.author}}</h6>
-    <span><i class="fa fa-calendar-alt"></i> {{getNumberOfDays(podcast?.lastUpdateDate)}} days ago</span>
+    <h6 class="card-subtitle text-muted">{{podcast?.author}}</h6>
+    <div><i class="fa fa-calendar-alt"></i> {{getNumberOfDays(podcast?.lastUpdateDate)}} days ago</div>
   </div>
 </div>
