@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[podcast_item] (
     [id]           INT           IDENTITY (1, 1) NOT NULL,
     [title]        VARCHAR (150) NOT NULL,
-    [description]  VARCHAR (MAX) NOT NULL,
+    [description]  VARCHAR (MAX) NULL,
     [length]       INT           NULL,
     [url]          VARCHAR (MAX) NOT NULL,
     [podcast_id]   INT           NOT NULL,

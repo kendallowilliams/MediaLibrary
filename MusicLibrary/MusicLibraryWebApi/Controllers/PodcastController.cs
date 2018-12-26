@@ -91,22 +91,27 @@ namespace MusicLibraryWebApi.Controllers
         }
 
         // POST: api/Podcast
-        public async Task<Podcast> Post([FromBody] JObject inData)
+        public async Task<IEnumerable<Podcast>> Post([FromBody] JObject inData)
         {
             Transaction transaction = null;
-            Podcast podcast = null;
+            IEnumerable<Task<Podcast>> tasks = Enumerable.Empty<Task<Podcast>>();
+            IEnumerable<Podcast> podcasts = Enumerable.Empty<Podcast>();
 
             try
             {
-                string path = inData["path"]?.ToString();
+                IEnumerable<string> paths = inData["paths"].Values<string>() ?? Enumerable.Empty<string>();
                 bool copyFiles = false,
-                     validData = !string.IsNullOrWhiteSpace(path) &&
+                     validData = paths.Any() &&
                                  bool.TryParse(inData["copy"]?.ToString(), out copyFiles);
                 string responseMessage = $"Invalid Data: [{inData}]",
                        transactionType = Enum.GetName(typeof(TransactionTypes), TransactionTypes.AddPodcast);
 
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPodcast);
-                if (validData) { podcast = await podcastService.AddPodcast(path); }
+                if (validData)
+                {
+                    tasks = paths.Select(path => podcastService.AddPodcast(path));
+                    podcasts = await Task.WhenAll(tasks);
+                }
                 else { responseMessage = $"Invalid Data: [{inData}]"; }
 
                 await transactionService.UpdateTransactionCompleted(transaction, responseMessage);
@@ -116,7 +121,7 @@ namespace MusicLibraryWebApi.Controllers
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
 
-            return podcast;
+            return podcasts;
         }
 
         // PUT: api/Podcast/5
