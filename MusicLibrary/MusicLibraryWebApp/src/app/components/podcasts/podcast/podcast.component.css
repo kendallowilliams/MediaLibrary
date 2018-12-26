@@ -1,5 +1,4 @@
 .ml-podcast {
-    cursor: pointer;
     margin: 0px 5px 5px 0px;
     flex-direction: row;
     align-items: center;
@@ -12,8 +11,13 @@
     flex: 0 0 auto;
 }
 
+.ml-podcast-body {
+    cursor: pointer;
+}
+
 .ml-podcast-options {
     flex: 0 0 auto;
+    cursor: pointer;
 }
 
 @media (min-width: 768px) {
