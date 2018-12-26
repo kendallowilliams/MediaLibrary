@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { PodcastItem } from 'src/app/shared/models/podcast-item.model';
 import { PodcastService } from 'src/app/services/podcast.service';
 import { ActivatedRoute } from '@angular/router';
@@ -9,14 +9,20 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './podcast-items.component.html',
   styleUrls: ['./podcast-items.component.css']
 })
-export class PodcastItemsComponent implements OnInit {
+export class PodcastItemsComponent implements OnInit, OnDestroy {
   private podcastId: number;
   protected items$: Observable<PodcastItem[]>;
+  private subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private podcastService: PodcastService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => this.initPodcast(params.podcastId));
+    this.subscription = this.route.params.subscribe(params => this.initPodcast(params.podcastId));
+  }
+
+  ngOnDestroy(): void {
+    this.podcastService.setCurrentPodcastId(0);
+    this.subscription.unsubscribe();
   }
 
   initPodcast(id: number) {
