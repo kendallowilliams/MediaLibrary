@@ -1,4 +1,5 @@
 .ml-podcasts {
   height: 100%;
   overflow-y: auto;
+  padding: 5px;
 }

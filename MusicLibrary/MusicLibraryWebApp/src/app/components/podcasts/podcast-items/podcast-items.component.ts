@@ -10,7 +10,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./podcast-items.component.css']
 })
 export class PodcastItemsComponent implements OnInit, OnDestroy {
-  private podcastId: number;
   protected items$: Observable<PodcastItem[]>;
   private subscription: Subscription;
 

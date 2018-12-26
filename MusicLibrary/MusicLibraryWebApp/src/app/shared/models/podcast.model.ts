@@ -16,6 +16,7 @@ export class Podcast implements Deserializable, IPodcast {
 
     deserialize(input: any) {
         Object.assign(this, input);
+        this.lastUpdateDate = new Date(input.lastUpdateDate);
         return this;
     }
 }

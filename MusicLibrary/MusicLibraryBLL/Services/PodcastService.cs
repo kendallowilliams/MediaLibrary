@@ -85,7 +85,6 @@ namespace MusicLibraryBLL.Services
                         case SyndicationElementType.Content:
                             ISyndicationContent content = await feedReader.ReadContent();
                             if (content.Name == "title") { title = content.Value; }
-                            if (content.Name == "pubDate") { DateTime.TryParse(content.Value, out pubDate); }
                             if (content.Name == "description") { description = content.Value; }
                             if (content.Name == "author") { author = content.Value; }
                             break;
@@ -109,6 +108,7 @@ namespace MusicLibraryBLL.Services
                     }
                 }
 
+                pubDate = items.Max(item => item.Published.DateTime);
                 podcast = new Podcast(title, address, imageUrl, description, author) { LastUpdateDate = pubDate == DateTime.MinValue ? DateTime.Now : pubDate };
                 podcast.Id = await InsertPodcast(podcast);
                 podcastItems = items.Select(item => new
