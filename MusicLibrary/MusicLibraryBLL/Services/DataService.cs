@@ -85,7 +85,7 @@ namespace MusicLibraryBLL.Services
             using (IDbConnection conn = GetNewConnection())
             {
                 var predicate = Predicates.Field<T>(f => f.Id, Operator.Eq, id);
-                result = await conn.DeleteAsync(predicate, commandTimeout: timeout);
+                result = await conn.DeleteAsync<T>(predicate, commandTimeout: timeout);
             }
 
             return result;

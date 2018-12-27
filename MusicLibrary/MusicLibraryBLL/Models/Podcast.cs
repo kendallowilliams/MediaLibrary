@@ -18,7 +18,7 @@ namespace MusicLibraryBLL.Models
             Description = description;
             Author = author;
         }
-
+        
         public string Title { get; set; }
         public string Url { get; set; }
         public string ImageUrl { get; set; }

@@ -1,9 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { Podcast } from 'src/app/shared/models/podcast.model';
-import { PodcastItem } from 'src/app/shared/models/podcast-item.model';
-import { PodcastService } from 'src/app/services/podcast.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-podcast',
@@ -12,12 +9,10 @@ import { Observable } from 'rxjs';
 })
 export class PodcastComponent implements OnInit {
   @Input() podcast: Podcast;
-  protected items$: Observable<PodcastItem[]>;
 
-  constructor(private podcastService: PodcastService, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.items$ = this.podcastService.getPodcastItems(this.podcast.id);
   }
 
   getNumberOfDays(date: Date): number {

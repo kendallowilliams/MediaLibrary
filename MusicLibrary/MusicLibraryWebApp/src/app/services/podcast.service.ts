@@ -10,7 +10,6 @@ import { PodcastItem } from '../shared/models/podcast-item.model';
 })
 
 export class PodcastService {
-  private podcasts: Podcast[];
   private podcastSubject: BehaviorSubject<number>;
 
   constructor(private http: HttpClient) {
@@ -30,6 +29,10 @@ export class PodcastService {
   getPodcastItems(id: number): Observable<PodcastItem[]> {
     return this.http.get<Podcast[]>('/api/Podcast/GetPodcastItems/' + (id || 0))
                     .pipe(map(items => items.map(item => new PodcastItem().deserialize(item))));
+  }
+
+  deletePodcast(id: number): Observable<any> {
+    return this.http.delete('/api/Podcast/' + (id || 0));
   }
 
   setCurrentPodcastId(id: number) {
