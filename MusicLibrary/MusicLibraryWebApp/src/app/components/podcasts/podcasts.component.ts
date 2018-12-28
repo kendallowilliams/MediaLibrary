@@ -47,8 +47,10 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
 
   unfollowPodcast() {
     const unfollowBtn = this.modal.find('button[data-action="unfollow"]');
-    this.podcastService.deletePodcast(unfollowBtn.val() as number).subscribe(success => {
-      if (success) { this.reloadPodcasts(); }
+    const podcast: Podcast = this.podcasts.find(_podcast => _podcast.id === parseInt(unfollowBtn.val() as string, null));
+    this.podcastService.deletePodcast(podcast.id).subscribe(success => {
+      const index: number = this.podcasts.indexOf(podcast);
+      if (success) { this.podcasts.splice(index, 1); }
     });
     this.modal.find('button[data-dismiss="modal"]').click();
   }
