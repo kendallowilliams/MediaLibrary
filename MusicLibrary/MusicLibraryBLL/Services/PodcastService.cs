@@ -24,7 +24,8 @@ namespace MusicLibraryBLL.Services
         private readonly IWebService webService;
         private readonly ITransactionService transactionService;
         private readonly string deleteAllPodcastsStoredProcedure = @"DeleteAllPodcasts",
-                                findPodcastItemsStoredProcedure = @"FindPodcastItems";
+                                findPodcastItemsStoredProcedure = @"FindPodcastItems",
+                                deletePodcastStoredProcedure = @"DeletePodcast";
 
          [ImportingConstructor]
         public PodcastService(IDataService dataService, IWebService webService, ITransactionService transactionService)
@@ -51,9 +52,7 @@ namespace MusicLibraryBLL.Services
 
         public async Task<int> InsertPodcastItem(PodcastItem podcastItem) => await dataService.Insert<PodcastItem, int>(podcastItem);
 
-        public async Task<bool> DeletePodcast(int id) => await dataService.Delete<Podcast>(id);
-
-        public async Task<bool> DeletePodcast(Podcast podcast) => await dataService.Delete(podcast);
+        public async Task<bool> DeletePodcast(int id) => await dataService.ExecuteScalar<bool>(deletePodcastStoredProcedure, new { podcast_id = id }, commandType: CommandType.StoredProcedure);
 
         public async Task DeleteAllPodcasts() => await dataService.Execute(deleteAllPodcastsStoredProcedure, commandType: CommandType.StoredProcedure);
 

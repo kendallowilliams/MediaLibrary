@@ -23,8 +23,6 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<bool> DeletePodcast(int id);
 
-        Task<bool> DeletePodcast(Podcast podcast);
-
         Task DeleteAllPodcasts();
 
         Task<bool> UpdatePodcast(Podcast podcast);

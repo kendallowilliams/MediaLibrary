@@ -31,8 +31,8 @@ export class PodcastService {
                     .pipe(map(items => items.map(item => new PodcastItem().deserialize(item))));
   }
 
-  deletePodcast(id: number): Observable<any> {
-    return this.http.delete('/api/Podcast/' + (id || 0));
+  deletePodcast(id: number): Observable<boolean> {
+    return this.http.delete('/api/Podcast/' + (id || 0)).pipe(map(result => result as boolean));
   }
 
   setCurrentPodcastId(id: number) {

@@ -17,7 +17,7 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
   constructor(private podcastService: PodcastService) { }
 
   ngOnInit() {
-    this.podcasts$ = this.podcastService.getPodcasts().pipe(map(podcasts => this.podcasts = podcasts));
+    this.reloadPodcasts();
   }
 
   ngAfterViewInit() {
@@ -39,7 +39,13 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
 
   unfollowPodcast() {
     const unfollowBtn = this.modal.find('button[data-action="unfollow"]');
-    this.podcastService.deletePodcast(unfollowBtn.val() as number).subscribe();
+    this.podcastService.deletePodcast(unfollowBtn.val() as number).subscribe(success => {
+      if (success) { this.reloadPodcasts(); }
+    });
     this.modal.find('button[data-dismiss="modal"]').click();
+  }
+
+  reloadPodcasts() {
+    this.podcasts$ = this.podcastService.getPodcasts().pipe(map(podcasts => this.podcasts = podcasts));
   }
 }
