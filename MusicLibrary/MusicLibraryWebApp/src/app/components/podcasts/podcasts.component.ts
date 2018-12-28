@@ -12,7 +12,8 @@ import { map } from 'rxjs/operators';
 export class PodcastsComponent implements OnInit, AfterViewInit {
   protected podcasts$: Observable<Podcast[]>;
   private podcasts: Podcast[];
-  private modal: JQuery<HTMLElement>;
+  private editModal: JQuery<HTMLElement>;
+  private addModal: JQuery<HTMLElement>;
 
   constructor(private podcastService: PodcastService) { }
 
@@ -21,18 +22,23 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.modal = $('#podcastModal');
-    this.modal.on('show.bs.modal', evt => {
+    this.editModal = $('#editPodcastModal');
+    this.addModal = $('#addPodcastModal');
+    this.editModal.on('show.bs.modal', evt => {
       const button = $((evt as any).relatedTarget);
       const podcastId = button.data('podcast-id');
       const podcast: Podcast = this.podcasts.find(_podcast => _podcast.id === podcastId);
-      this.modal.find('.modal-title').text(podcast.title + ' Options');
-      this.modal.find('.modal-body button').val(podcast.id);
+      this.editModal.find('.editModal-title').text(podcast.title + ' Options');
+      this.editModal.find('.modal-body button').val(podcast.id);
+    });
+    this.addModal.on('show.bs.modal', evt => {
+      this.addModal.find('.modal-body input[type="text"]').val('');
+      this.addModal.find('.modal-body input[type="checkbox"]').val('false');
     });
   }
 
   refreshPodcast() {
-    const unfollowBtn = this.modal.find('button[data-action="refresh"]');
+    const unfollowBtn = this.editModal.find('button[data-action="refresh"]');
     const podcast: Podcast = this.podcasts.find(_podcast => _podcast.id === parseInt(unfollowBtn.val() as string, null));
     this.podcastService.refreshPodcast(podcast).subscribe(_podcast => {
       podcast.author = _podcast.author;
@@ -42,20 +48,28 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
       podcast.title = _podcast.title;
       podcast.url = _podcast.url;
     });
-    this.modal.find('button[data-dismiss="modal"]').click();
+    this.editModal.find('button[data-dismiss="modal"]').click();
   }
 
   unfollowPodcast() {
-    const unfollowBtn = this.modal.find('button[data-action="unfollow"]');
+    const unfollowBtn = this.editModal.find('button[data-action="unfollow"]');
     const podcast: Podcast = this.podcasts.find(_podcast => _podcast.id === parseInt(unfollowBtn.val() as string, null));
     this.podcastService.deletePodcast(podcast.id).subscribe(success => {
       const index: number = this.podcasts.indexOf(podcast);
       if (success) { this.podcasts.splice(index, 1); }
     });
-    this.modal.find('button[data-dismiss="modal"]').click();
+    this.editModal.find('button[data-dismiss="modal"]').click();
   }
 
   reloadPodcasts() {
     this.podcasts$ = this.podcastService.getPodcasts().pipe(map(podcasts => this.podcasts = podcasts));
+  }
+
+  addPodcast() {
+    const feed = this.addModal.find('.modal-body input[type="text"]').val();
+    const copy = this.addModal.find('.modal-body input[type="checkbox"]').prop('checked');
+    this.podcastService.addPodcast(feed as string, copy).subscribe(podcasts => {
+      this.podcasts.push(...podcasts);
+    });
   }
 }

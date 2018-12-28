@@ -2,4 +2,10 @@
   height: 100%;
   overflow-y: auto;
   padding: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ml-podcasts-controls {
+  margin: 5px;
 }

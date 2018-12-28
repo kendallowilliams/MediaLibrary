@@ -39,6 +39,12 @@ export class PodcastService {
     return this.http.post('/api/Podcast/Refresh', podcast).pipe(map(_podcast => new Podcast().deserialize(_podcast)));
   }
 
+  addPodcast(feed: string, copy: boolean): Observable<Podcast[]> {
+    const data = { paths: [feed], copy };
+    return this.http.post<Podcast[]>('/api/Podcast', data)
+      .pipe(map(podcasts => podcasts.map(podcast => new Podcast().deserialize(podcast))));
+  }
+
   setCurrentPodcastId(id: number) {
     this.podcastSubject.next(id);
   }

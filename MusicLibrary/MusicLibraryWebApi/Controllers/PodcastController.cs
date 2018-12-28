@@ -109,7 +109,8 @@ namespace MusicLibraryWebApi.Controllers
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPodcast);
                 if (validData)
                 {
-                    tasks = paths.Select(path => podcastService.AddPodcast(path));
+                    tasks = paths.Where(path => !string.IsNullOrWhiteSpace(path))
+                                 .Select(path => podcastService.AddPodcast(path));
                     podcasts = await Task.WhenAll(tasks);
                 }
                 else { responseMessage = $"Invalid Data: [{inData}]"; }
