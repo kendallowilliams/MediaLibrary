@@ -27,6 +27,8 @@ namespace MusicLibraryBLL.Services.Interfaces
 
         Task<bool> UpdatePodcast(Podcast podcast);
 
+        Task<Podcast> RefreshPodcast(Podcast podcast);
+
         Task<int?> AddPodcastFile(Transaction transaction, int podcastItemId);
 
         Task<PodcastFile> GetPodcastFile(int id);

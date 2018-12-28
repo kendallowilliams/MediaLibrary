@@ -197,5 +197,25 @@ namespace MusicLibraryWebApi.Controllers
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
         }
+
+        [Route("api/Podcast/Refresh")]
+        public async Task<Podcast> Refresh([FromBody] Podcast data)
+        {
+            Transaction transaction = null;
+            Podcast podcast = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.RefreshPodcast);
+                podcast = await podcastService.RefreshPodcast(data);
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
+
+            return podcast;
+        }
     }
 }

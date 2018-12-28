@@ -27,7 +27,7 @@ namespace MusicLibraryBLL.Enums
 
             /* Podcasts: 251 - 300 */
             GetPodcasts = 251, GetPodcast = 252, AddPodcast = 253, RemovePodcast = 254, ReplacePodcast = 255, DownloadEpisode = 256, DownloadAllEpisodes = 257,
-            GetPodcastItems = 258,
+            GetPodcastItems = 258, RefreshPodcast = 259,
 
             /* Root: 301 - 350 */
             Read = 301, ResetData = 302,

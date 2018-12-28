@@ -35,6 +35,10 @@ export class PodcastService {
     return this.http.delete('/api/Podcast/' + (id || 0)).pipe(map(result => result as boolean));
   }
 
+  refreshPodcast(podcast: Podcast): Observable<Podcast> {
+    return this.http.post('/api/Podcast/Refresh', podcast).pipe(map(_podcast => new Podcast().deserialize(_podcast)));
+  }
+
   setCurrentPodcastId(id: number) {
     this.podcastSubject.next(id);
   }

@@ -33,7 +33,15 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
 
   refreshPodcast() {
     const unfollowBtn = this.modal.find('button[data-action="refresh"]');
-    this.podcastService.deletePodcast(unfollowBtn.val() as number);
+    const podcast: Podcast = this.podcasts.find(_podcast => _podcast.id === parseInt(unfollowBtn.val() as string, null));
+    this.podcastService.refreshPodcast(podcast).subscribe(_podcast => {
+      podcast.author = _podcast.author;
+      podcast.description = _podcast.description;
+      podcast.imageUrl = _podcast.imageUrl;
+      podcast.lastUpdateDate = _podcast.lastUpdateDate;
+      podcast.title = _podcast.title;
+      podcast.url = _podcast.url;
+    });
     this.modal.find('button[data-dismiss="modal"]').click();
   }
 

@@ -35,10 +35,7 @@ namespace MusicLibraryBLL.Services
             this.transactionService = transactionService;
         }
 
-        public async Task<Podcast> AddPodcast(string url)
-        {
-            return await ParseRssFeed(url);
-        }
+        public async Task<Podcast> AddPodcast(string url) => await ParseRssFeed(new Podcast { Url = url });
 
         public async Task<IEnumerable<Podcast>> GetPodcasts() => await dataService.GetList<Podcast>();
 
@@ -57,20 +54,24 @@ namespace MusicLibraryBLL.Services
         public async Task DeleteAllPodcasts() => await dataService.Execute(deleteAllPodcastsStoredProcedure, commandType: CommandType.StoredProcedure);
 
         public async Task<bool> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
+
+        public async Task<Podcast> RefreshPodcast(Podcast podcast) => await ParseRssFeed(podcast, true);
+
         public async Task<bool> UpdatePodcastItem(PodcastItem podcastItem) => await dataService.Update(podcastItem);
 
-        public async Task<Podcast> ParseRssFeed(string address)
+        public async Task<Podcast> ParseRssFeed(Podcast podcastData, bool isUpdate = false)
         {
             string title = string.Empty,
                    imageUrl = string.Empty,
                    description = string.Empty,
                    author = string.Empty;
-            DateTime pubDate = DateTime.MinValue;
+            DateTime pubDate = DateTime.MinValue,
+                     lastUpdateDate = DateTime.MinValue;
             List<ISyndicationItem> items = new List<ISyndicationItem>();
             IEnumerable<PodcastItem> podcastItems = Enumerable.Empty<PodcastItem>();
             Podcast podcast = null;
 
-            using (var xmlReader = XmlReader.Create(address, new XmlReaderSettings { Async = true }))
+            using (var xmlReader = XmlReader.Create(podcastData.Url, new XmlReaderSettings { Async = true }))
             {
                 var feedReader = new RssFeedReader(xmlReader);
 
@@ -108,8 +109,24 @@ namespace MusicLibraryBLL.Services
                 }
 
                 pubDate = items.Max(item => item.Published.DateTime);
-                podcast = new Podcast(title, address, imageUrl, description, author) { LastUpdateDate = pubDate == DateTime.MinValue ? DateTime.Now : pubDate };
-                podcast.Id = await InsertPodcast(podcast);
+
+                if (isUpdate)
+                {
+                    lastUpdateDate = podcastData.LastUpdateDate;
+                    podcastData.Author = author;
+                    podcastData.Title = title;
+                    podcastData.ImageUrl = imageUrl;
+                    podcastData.Description = description;
+                    podcastData.LastUpdateDate = pubDate;
+                    podcast = podcastData;
+                    await UpdatePodcast(podcast);
+                }
+                else
+                {
+                    podcast = new Podcast(title, podcastData.Url, imageUrl, description, author) { LastUpdateDate = pubDate == DateTime.MinValue ? DateTime.Now : pubDate };
+                    podcast.Id = await InsertPodcast(podcast);
+                }
+
                 podcastItems = items.Select(item => new
                 {
                     item.Title,
@@ -118,7 +135,8 @@ namespace MusicLibraryBLL.Services
                     PublishDate = item.Published.DateTime
 
                 }).Select(data => new PodcastItem(data.Title, data.Description, data.Enclosure.Uri.OriginalString,
-                                                  data.Enclosure.Length, data.PublishDate, podcast.Id));
+                                                  data.Enclosure.Length, data.PublishDate, podcast.Id))
+                  .Where(item => item.PublishDate >= lastUpdateDate);
 
                 foreach (var item in podcastItems) { item.Id = await InsertPodcastItem(item); }
             }
