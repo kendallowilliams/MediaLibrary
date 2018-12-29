@@ -28,7 +28,7 @@ export class PodcastsComponent implements OnInit, AfterViewInit {
       const button = $((evt as any).relatedTarget);
       const podcastId = button.data('podcast-id');
       const podcast: Podcast = this.podcasts.find(_podcast => _podcast.id === podcastId);
-      this.editModal.find('.editModal-title').text(podcast.title + ' Options');
+      this.editModal.find('.modal-title').text(podcast.title + ' Options');
       this.editModal.find('.modal-body button').val(podcast.id);
     });
     this.addModal.on('show.bs.modal', evt => {
