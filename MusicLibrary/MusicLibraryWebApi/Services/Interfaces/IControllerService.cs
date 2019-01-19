@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MusicLibraryWebApi.Services.Interfaces
+namespace MediaLibraryWebApi.Services.Interfaces
 {
     public interface IControllerService
     {

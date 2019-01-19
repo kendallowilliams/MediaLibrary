@@ -6,10 +6,10 @@ using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
-using MusicLibraryWebApi.Resolvers;
+using MediaLibraryWebApi.Resolvers;
 using System.Reflection;
 
-namespace MusicLibraryWebApi
+namespace MediaLibraryWebApi
 {
     public static class MefConfig
     {

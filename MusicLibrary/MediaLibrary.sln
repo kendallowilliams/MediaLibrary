@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicLibraryWebApi", "MusicLibraryWebApi\MusicLibraryWebApi.csproj", "{29E2FFD9-1085-4273-B432-C8B6854B45D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWebApi", "MusicLibraryWebApi\MediaLibraryWebApi.csproj", "{29E2FFD9-1085-4273-B432-C8B6854B45D7}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MusicLibraryDB", "MusicLibraryDB\MusicLibraryDB.sqlproj", "{CE8D2185-A6D8-40FC-8F8F-9A31F6D8F845}"
 EndProject

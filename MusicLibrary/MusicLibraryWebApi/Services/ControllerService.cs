@@ -1,6 +1,6 @@
 ﻿using MediaLibraryBLL.Models;
 using MediaLibraryBLL.Services.Interfaces;
-using MusicLibraryWebApi.Services.Interfaces;
+using MediaLibraryWebApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 
-namespace MusicLibraryWebApi.Services
+namespace MediaLibraryWebApi.Services
 {
     [Export(typeof(IControllerService)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class ControllerService : IControllerService

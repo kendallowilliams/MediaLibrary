@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
 
-namespace MusicLibraryWebApi.Controllers
+namespace MediaLibraryWebApi.Controllers
 {
     public abstract class ApiControllerBase : ApiController
     {

@@ -1,6 +1,6 @@
 ﻿using MediaLibraryBLL.Models;
 using MediaLibraryBLL.Services.Interfaces;
-using MusicLibraryWebApi.Services.Interfaces;
+using MediaLibraryWebApi.Services.Interfaces;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using static MediaLibraryBLL.Enums.TransactionEnums;
 
-namespace MusicLibraryWebApi.Controllers
+namespace MediaLibraryWebApi.Controllers
 {
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class PodcastController : ApiControllerBase

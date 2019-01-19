@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using static MediaLibraryBLL.Enums.TransactionEnums;
 
-namespace MusicLibraryWebApi.Controllers
+namespace MediaLibraryWebApi.Controllers
 {
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class AlbumController : ApiControllerBase

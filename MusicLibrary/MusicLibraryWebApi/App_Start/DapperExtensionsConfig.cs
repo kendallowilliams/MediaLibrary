@@ -6,7 +6,7 @@ using Dapper;
 using DapperExtensions;
 using MediaLibraryBLL.Models.Mappings;
 
-namespace MusicLibraryWebApi
+namespace MediaLibraryWebApi
 {
     public static class DapperExtensionsConfig
     {

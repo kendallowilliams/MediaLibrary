@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http.Dependencies;
 
-namespace MusicLibraryWebApi.Resolvers
+namespace MediaLibraryWebApi.Resolvers
 {
     public class MefResolver : IDependencyResolver
     {
