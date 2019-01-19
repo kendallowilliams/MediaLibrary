@@ -16,3 +16,5 @@
 /MusicLibrary/MusicLibraryDB/Import Schema Logs
 *.dbmdl
 *.jfm
+/MusicLibrary/MediaLibraryBLL/bin/Debug
+/MusicLibrary/MediaLibraryBLL/obj

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Dapper;
 using DapperExtensions;
-using MusicLibraryBLL.Models.Mappings;
+using MediaLibraryBLL.Models.Mappings;
 
 namespace MusicLibraryWebApi
 {

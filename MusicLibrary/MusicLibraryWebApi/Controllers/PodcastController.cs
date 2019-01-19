@@ -1,5 +1,5 @@
-﻿using MusicLibraryBLL.Models;
-using MusicLibraryBLL.Services.Interfaces;
+﻿using MediaLibraryBLL.Models;
+using MediaLibraryBLL.Services.Interfaces;
 using MusicLibraryWebApi.Services.Interfaces;
 using Newtonsoft.Json.Linq;
 using System;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using static MusicLibraryBLL.Enums.TransactionEnums;
+using static MediaLibraryBLL.Enums.TransactionEnums;
 
 namespace MusicLibraryWebApi.Controllers
 {

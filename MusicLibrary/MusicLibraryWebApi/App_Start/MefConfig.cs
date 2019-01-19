@@ -1,4 +1,4 @@
-﻿using MusicLibraryBLL.Models.Interfaces;
+﻿using MediaLibraryBLL.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

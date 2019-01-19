@@ -1,5 +1,5 @@
-﻿using MusicLibraryBLL.Models;
-using MusicLibraryBLL.Services.Interfaces;
+﻿using MediaLibraryBLL.Models;
+using MediaLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

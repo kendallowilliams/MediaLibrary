@@ -123,9 +123,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MusicLibraryBLL\MusicLibraryBLL.csproj">
-      <Project>{20c73bd0-b591-4d8c-9cc9-6125239069c1}</Project>
-      <Name>MusicLibraryBLL</Name>
+    <ProjectReference Include="..\MediaLibraryBLL\MediaLibraryBLL.csproj">
+      <Project>{337378f1-bf20-4749-bbdf-ccf9f3948847}</Project>
+      <Name>MediaLibraryBLL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
