@@ -18,3 +18,5 @@
 *.jfm
 /MusicLibrary/MediaLibraryBLL/bin/Debug
 /MusicLibrary/MediaLibraryBLL/obj
+/MusicLibrary/MediaLibraryDB/bin/Debug
+/MusicLibrary/MediaLibraryDB/obj/Debug

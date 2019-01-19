@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWebApi", "MusicLibraryWebApi\MediaLibraryWebApi.csproj", "{29E2FFD9-1085-4273-B432-C8B6854B45D7}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MusicLibraryDB", "MusicLibraryDB\MusicLibraryDB.sqlproj", "{CE8D2185-A6D8-40FC-8F8F-9A31F6D8F845}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryBLL", "MediaLibraryBLL\MediaLibraryBLL.csproj", "{337378F1-BF20-4749-BBDF-CCF9F3948847}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MediaLibraryDB", "MediaLibraryDB\MediaLibraryDB.sqlproj", "{2DE251E5-1A58-4003-85F0-2C2F5739E436}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,16 @@ Global
 		{29E2FFD9-1085-4273-B432-C8B6854B45D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29E2FFD9-1085-4273-B432-C8B6854B45D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29E2FFD9-1085-4273-B432-C8B6854B45D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE8D2185-A6D8-40FC-8F8F-9A31F6D8F845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE8D2185-A6D8-40FC-8F8F-9A31F6D8F845}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE8D2185-A6D8-40FC-8F8F-9A31F6D8F845}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE8D2185-A6D8-40FC-8F8F-9A31F6D8F845}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{337378F1-BF20-4749-BBDF-CCF9F3948847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{337378F1-BF20-4749-BBDF-CCF9F3948847}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{337378F1-BF20-4749-BBDF-CCF9F3948847}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{337378F1-BF20-4749-BBDF-CCF9F3948847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
