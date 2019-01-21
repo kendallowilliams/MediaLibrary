@@ -1,0 +1,23 @@
+.ml-controls-container {
+    display: flex;
+    height: 100%;
+}
+
+.ml-playback-controls {
+    display: flex;
+    vertical-align: middle;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ml-previous-button {
+    color: white;
+}
+
+.ml-play-button {
+    color: white;
+}
+
+.ml-next-button {
+    color: white;
+}

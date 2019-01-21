@@ -11,6 +11,7 @@ import { AlbumService } from './album.service';
 import { ArtistService } from './artist.service';
 import { GenreService } from './genre.service';
 import { ITrack } from '../shared/interfaces/track.interface';
+import { NowPlayingService } from './now-playing.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class TrackService {
   private tracks: Track[] = [];
 
   constructor(private http: HttpClient, private albumService: AlbumService, private artistService: ArtistService,
-    private genreService: GenreService) { }
+    private genreService: GenreService, private nowPlayingService: NowPlayingService) { }
 
   getTracks(refresh: boolean = false): Observable<Track[]> {
     let tracks: Observable<Track[]> = of();
@@ -55,6 +56,7 @@ export class TrackService {
 
   getTrackSortLists(trackSort: TrackSortEnum): Observable<ITrackList[]> {
     let lists: Observable<ITrackList[]> = of();
+    let trackIds: number[] = [];
     const tracks: Observable<Track[]> = this.getTracks(true);
 
     lists = tracks.pipe(map((_tracks, _index) => {
@@ -96,6 +98,8 @@ export class TrackService {
       }
 
       _lists.forEach(list => list.height = this.getTrackListHeight(list.groups));
+      _lists.forEach(list => list.groups.forEach(group => trackIds = trackIds.concat(group.tracks.map(track => track.id))));
+      this.nowPlayingService.setTrackIds(trackIds);
 
       return _lists;
     }));

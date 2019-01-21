@@ -15,6 +15,7 @@ import { Observable } from '../../../../node_modules/rxjs';
 import { TrackListComponent } from './track-list/track-list.component';
 import { tap } from 'rxjs/operators';
 import { IArtist } from 'src/app/shared/interfaces/artist.interface';
+import { NowPlayingService } from 'src/app/services/now-playing.service';
 
 @Component({
   selector: 'app-music',
@@ -47,7 +48,8 @@ export class MusicComponent implements OnInit, AfterViewInit {
 
   constructor(private trackService: TrackService, private artistService: ArtistService,
     private albumService: AlbumService, private genreService: GenreService,
-    private route: ActivatedRoute, private appService: AppService) {
+    private route: ActivatedRoute, private appService: AppService,
+    private nowPlayingService: NowPlayingService) {
     this.musicCount = 0;
     this.appService.musicComponent = this;
   }

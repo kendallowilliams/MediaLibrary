@@ -3,6 +3,9 @@ import { Track } from '../../../shared/models/track.model';
 import { ITrackList, ITrackGroup } from '../../../shared/interfaces/music.interface';
 import { TrackRowComponent } from './track-row/track-row.component';
 import { AppService } from '../../../services/app.service';
+import { NowPlayingService } from 'src/app/services/now-playing.service';
+import { Guid } from 'guid-typescript';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-track-list',
@@ -13,7 +16,6 @@ export class TrackListComponent implements OnInit {
   public static HeaderHeight = 30;
 
   @ViewChildren(TrackRowComponent) children = new QueryList<TrackRowComponent>();
-
   @Input() list: ITrackList;
 
   protected tracksHeight: number;
@@ -21,7 +23,7 @@ export class TrackListComponent implements OnInit {
   private loaded: boolean;
   private readonly tracksPerGroup: number = 100;
 
-  constructor(private appService: AppService) {
+  constructor(private appService: AppService, private nowPlayingService: NowPlayingService) {
   }
 
   ngOnInit() {
@@ -30,6 +32,11 @@ export class TrackListComponent implements OnInit {
       _previous + _current.tracks.length, 0) * TrackRowComponent.TrackHeight;
     this.list.showTracks = (top, bottom) => this.show(top, bottom);
     this.list.hideTracks = () => this.hide();
+    this.nowPlayingService.getCurrentTrackId().subscribe(id => {
+      if (!!id) {
+        this.children.forEach(child => child.isPlaying = child.track.id === id);
+      }
+    });
   }
 
   load(): void {
@@ -58,9 +65,8 @@ export class TrackListComponent implements OnInit {
     return track.id;
   }
 
-  playTrack(id: number): void {
-    this.children.filter(child => child.track.id !== id).forEach(child => child.isPlaying = false);
-    this.appService.controlsComponent.play(id);
+  playTrack(trackId: number): void {
+    this.nowPlayingService.setCurrentTrackId(trackId);
   }
 
   selectTrack(id: number): void {
