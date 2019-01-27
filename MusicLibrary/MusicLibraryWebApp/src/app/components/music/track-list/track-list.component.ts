@@ -6,6 +6,7 @@ import { AppService } from '../../../services/app.service';
 import { NowPlayingService } from 'src/app/services/now-playing.service';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
+import { IListItem } from 'src/app/shared/interfaces/list-item.interface';
 
 @Component({
   selector: 'app-track-list',
@@ -32,9 +33,9 @@ export class TrackListComponent implements OnInit {
       _previous + _current.tracks.length, 0) * TrackRowComponent.TrackHeight;
     this.list.showTracks = (top, bottom) => this.show(top, bottom);
     this.list.hideTracks = () => this.hide();
-    this.nowPlayingService.getCurrentTrackId().subscribe(id => {
-      if (!!id) {
-        this.children.forEach(child => child.isPlaying = child.track.id === id);
+    this.nowPlayingService.getCurrentTrackId().subscribe(item => {
+      if (!!item) {
+        this.children.forEach(child => child.isPlaying = child.track.id === item.value);
       }
     });
   }
@@ -66,7 +67,9 @@ export class TrackListComponent implements OnInit {
   }
 
   playTrack(trackId: number): void {
-    this.nowPlayingService.setCurrentTrackId(trackId);
+    const item: IListItem = { id: null, value: trackId };
+
+    this.nowPlayingService.setCurrentTrackId(item);
   }
 
   selectTrack(id: number): void {

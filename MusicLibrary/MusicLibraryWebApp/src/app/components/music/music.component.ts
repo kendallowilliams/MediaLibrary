@@ -52,12 +52,12 @@ export class MusicComponent implements OnInit, AfterViewInit {
     private nowPlayingService: NowPlayingService) {
     this.musicCount = 0;
     this.appService.musicComponent = this;
-  }
-
-  ngOnInit() {
     const groupAcc = (acc: number, group: IArtistList) => acc + group.artists.length;
     this.artistSortGroups$ = this.artistService.getArtistSortGroups()
                                                .pipe(tap(groups => this.artistCount = groups.reduce(groupAcc, 0)));
+  }
+
+  ngOnInit() {
   }
 
   ngAfterViewInit(): void {

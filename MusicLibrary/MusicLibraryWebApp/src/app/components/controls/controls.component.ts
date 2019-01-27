@@ -13,6 +13,8 @@ export class ControlsComponent implements OnInit {
   private player: HTMLAudioElement;
   private isPlaying: boolean;
   private nextPreviousClicked: boolean;
+  private isRepeatAll: boolean;
+  private isRepeatOne: boolean;
 
   constructor(private nowPlayingService: NowPlayingService, private appService: AppService) {
     this.appService.controlsComponent = this;
@@ -20,9 +22,14 @@ export class ControlsComponent implements OnInit {
 
   ngOnInit() {
     this.player = this.playerRef.nativeElement;
-    this.nowPlayingService.getCurrentTrackId().subscribe(id => this.loadPlayer(id));
+    this.nowPlayingService.getCurrentTrackId().subscribe(item => {
+      if (!!item) {
+        this.loadPlayer(item.value);
+      }
+    });
     this.player.onplay = evt => this.isPlaying = true;
-    this.player.onpause = evt => this.isPlaying = false;
+    // this.player.onpause = evt => this.isPlaying = false;
+    this.player.onended = evt => this.next();
   }
 
   play(): void {
@@ -33,18 +40,19 @@ export class ControlsComponent implements OnInit {
 
   pause(): void {
     this.player.pause();
+    this.isPlaying = false;
   }
 
   next(): void {
-    const trackId = this.nowPlayingService.getNextTrackId();
+    const item = this.nowPlayingService.getNextTrackId(this.isRepeatAll);
     this.nextPreviousClicked = true;
-    this.nowPlayingService.setCurrentTrackId(trackId);
+    this.nowPlayingService.setCurrentTrackId(item);
   }
 
   previous(): void {
-    const trackId = this.nowPlayingService.getPreviousTrackId();
+    const item = this.nowPlayingService.getPreviousTrackId();
     this.nextPreviousClicked = true;
-    this.nowPlayingService.setCurrentTrackId(trackId);
+    this.nowPlayingService.setCurrentTrackId(item);
   }
 
   loadPlayer(id: number): void {
