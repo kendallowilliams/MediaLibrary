@@ -15,6 +15,7 @@ export class ControlsComponent implements OnInit {
   private nextPreviousClicked: boolean;
   private isRepeatAll: boolean;
   private isRepeatOne: boolean;
+  private playerTimeout: number;
 
   constructor(private nowPlayingService: NowPlayingService, private appService: AppService) {
     this.appService.controlsComponent = this;
@@ -30,12 +31,14 @@ export class ControlsComponent implements OnInit {
     this.player.onplay = evt => this.isPlaying = true;
     // this.player.onpause = evt => this.isPlaying = false;
     this.player.onended = evt => this.next();
+    this.player.onerror = evt => console.log(evt);
   }
 
   play(): void {
     if (this.player.readyState !== ReadyStateEnum.HAVE_NOTHING) {
       this.player.play();
     }
+    this.playerTimeout = null;
   }
 
   pause(): void {
@@ -58,8 +61,13 @@ export class ControlsComponent implements OnInit {
   loadPlayer(id: number): void {
     if (!!id && id > 0) {
       this.player.src = 'api/Track/GetTrackFile/' + id;
-      if (!this.nextPreviousClicked || this.isPlaying) { this.player.play(); }
-      this.nextPreviousClicked = false;
+      if (!this.nextPreviousClicked || this.isPlaying) {
+        if (!!this.playerTimeout) {
+          clearTimeout(this.playerTimeout);
+        }
+        this.playerTimeout = setTimeout.call(this, () => this.play(), 1000);
+      }
     }
+    this.nextPreviousClicked = false;
   }
 }
