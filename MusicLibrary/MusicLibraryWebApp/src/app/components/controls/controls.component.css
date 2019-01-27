@@ -14,6 +14,10 @@
     color: white;
 }
 
+.ml-previous-button:hover, .ml-play-button:hover, .ml-next-button:hover {
+    color: lightgray;
+}
+
 .ml-play-button {
     color: white;
 }
