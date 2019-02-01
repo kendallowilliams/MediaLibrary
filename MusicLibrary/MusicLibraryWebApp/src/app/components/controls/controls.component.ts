@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NowPlayingService } from '../../services/now-playing.service';
 import { AppService } from 'src/app/services/app.service';
 import { ReadyStateEnum } from '../music/enums/player-enum';
+import { nextTick } from 'q';
 
 @Component({
   selector: 'app-controls',
@@ -28,10 +29,11 @@ export class ControlsComponent implements OnInit {
         this.loadPlayer(item.value);
       }
     });
-    this.player.onplay = evt => this.isPlaying = true;
+    // this.player.onplay = evt => this.isPlaying = true;
     // this.player.onpause = evt => this.isPlaying = false;
     this.player.onended = evt => this.next();
-    this.player.onerror = evt => console.log(evt);
+    this.player.onerror = evt => this.handlePlayerError(evt as Event);
+    this.nextPreviousClicked = this.isRepeatOne = this.isRepeatAll = this.isPlaying = false;
   }
 
   play(): void {
@@ -39,6 +41,7 @@ export class ControlsComponent implements OnInit {
       this.player.play();
     }
     this.playerTimeout = null;
+    this.isPlaying = true;
   }
 
   pause(): void {
@@ -69,5 +72,12 @@ export class ControlsComponent implements OnInit {
       }
     }
     this.nextPreviousClicked = false;
+  }
+
+  handlePlayerError(evt: Event): void {
+    console.log(this.player.error.code + ' ' + this.player.error.message);
+    if (this.isPlaying) {
+      this.next();
+    }
   }
 }
