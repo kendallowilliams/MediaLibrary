@@ -39,9 +39,9 @@ export class ControlsComponent implements OnInit {
   play(): void {
     if (this.player.readyState !== ReadyStateEnum.HAVE_NOTHING) {
       this.player.play();
+      this.isPlaying = true;
     }
     this.playerTimeout = null;
-    this.isPlaying = true;
   }
 
   pause(): void {
@@ -75,7 +75,7 @@ export class ControlsComponent implements OnInit {
   }
 
   handlePlayerError(evt: Event): void {
-    console.log(this.player.error.code + ' ' + this.player.error.message);
+    console.log(this.player.error.code + ' ' + this.player.error['message']);
     if (this.isPlaying) {
       this.next();
     }
