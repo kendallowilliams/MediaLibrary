@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Artist } from '../shared/models/artist.model';
 import { Observable, of } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IArtistList } from '../shared/interfaces/music.interface';
 
