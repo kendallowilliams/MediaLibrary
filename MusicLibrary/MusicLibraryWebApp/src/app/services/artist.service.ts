@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Artist } from '../shared/models/artist.model';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IArtistList } from '../shared/interfaces/music.interface';
 
@@ -46,7 +46,7 @@ export class ArtistService {
       })
     )));
 
-    return lists;
+    return lists.pipe(map(list => list.filter(item => item.artists.length > 0)));
   }
 
   getArtistsAtoZ(char: string, artists: Artist[]): Artist[] {
