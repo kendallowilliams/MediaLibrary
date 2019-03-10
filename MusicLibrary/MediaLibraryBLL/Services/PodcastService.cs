@@ -7,12 +7,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
-using DapperExtensions;
 using Fody;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.Services.Interfaces;
+using System.Linq.Expressions;
 
 namespace MediaLibraryBLL.Services
 {
@@ -23,9 +24,6 @@ namespace MediaLibraryBLL.Services
         private readonly IDataService dataService;
         private readonly IWebService webService;
         private readonly ITransactionService transactionService;
-        private readonly string deleteAllPodcastsStoredProcedure = @"DeleteAllPodcasts",
-                                findPodcastItemsStoredProcedure = @"FindPodcastItems",
-                                deletePodcastStoredProcedure = @"DeletePodcast";
 
          [ImportingConstructor]
         public PodcastService(IDataService dataService, IWebService webService, ITransactionService transactionService)
@@ -37,27 +35,30 @@ namespace MediaLibraryBLL.Services
 
         public async Task<Podcast> AddPodcast(string url) => await ParseRssFeed(new Podcast { Url = url });
 
-        public async Task<IEnumerable<Podcast>> GetPodcasts() => await dataService.GetList<Podcast>();
+        public IEnumerable<Podcast> GetPodcasts(Expression<Func<Podcast, bool>> expression = null) => dataService.GetList(expression);
 
-        public async Task<Podcast> GetPodcast(object id) =>  await dataService.Get<Podcast>(id);
+        public Podcast GetPodcast(Expression<Func<Podcast, bool>> expression = null) =>  dataService.Get(expression);
 
-        public async Task<IEnumerable<PodcastItem>> GetPodcastItems(int podcastId) => await dataService.Query<PodcastItem>(findPodcastItemsStoredProcedure,
-            new { podcast_id = podcastId },
-            commandType: CommandType.StoredProcedure);
+        public IEnumerable<PodcastItem> GetPodcastItems(int podcastId) => dataService.GetList<PodcastItem>(item => item.Id == podcastId);
 
-        public async Task<int> InsertPodcast(Podcast podcast) => await dataService.Insert<Podcast,int>(podcast);
+        public async Task<int> InsertPodcast(Podcast podcast) => await dataService.Insert(podcast);
 
-        public async Task<int> InsertPodcastItem(PodcastItem podcastItem) => await dataService.Insert<PodcastItem, int>(podcastItem);
+        public async Task<int> InsertPodcastItem(PodcastItem podcastItem) => await dataService.Insert(podcastItem);
 
-        public async Task<bool> DeletePodcast(int id) => await dataService.ExecuteScalar<bool>(deletePodcastStoredProcedure, new { podcast_id = id }, commandType: CommandType.StoredProcedure);
+        public async Task<int> DeletePodcast(int id) => await dataService.Delete<Podcast>(id);
 
-        public async Task DeleteAllPodcasts() => await dataService.Execute(deleteAllPodcastsStoredProcedure, commandType: CommandType.StoredProcedure);
+        public async Task DeleteAllPodcasts()
+        {
+            await dataService.DeleteAll<PodcastFile>();
+            await dataService.DeleteAll<PodcastItem>();
+            await dataService.DeleteAll<Podcast>();
+        }
 
-        public async Task<bool> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
+        public async Task<int> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
 
         public async Task<Podcast> RefreshPodcast(Podcast podcast) => await ParseRssFeed(podcast, true);
 
-        public async Task<bool> UpdatePodcastItem(PodcastItem podcastItem) => await dataService.Update(podcastItem);
+        public async Task<int> UpdatePodcastItem(PodcastItem podcastItem) => await dataService.Update(podcastItem);
 
         public async Task<Podcast> ParseRssFeed(Podcast podcastData, bool isUpdate = false)
         {
@@ -154,11 +155,11 @@ namespace MediaLibraryBLL.Services
                 string fileName = string.Empty;
                 PodcastItem podcastItem = null;
 
-                podcastItem = await dataService.Get<PodcastItem>(podcastItemId);
+                podcastItem = dataService.Get<PodcastItem>(item => item.Id == podcastItemId);
                 data = await webService.DownloadData(podcastItem.Url);
                 fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
                 podcastFile = new PodcastFile(data, MimeMapping.GetMimeMapping(fileName), podcastItem.PodcastId, podcastItem.Id);
-                podcastFile.Id = await dataService.Insert<PodcastFile, int>(podcastFile);
+                podcastFile.Id = await dataService.Insert(podcastFile);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch(Exception ex)
@@ -169,6 +170,6 @@ namespace MediaLibraryBLL.Services
             return podcastFile?.Id;
         }
 
-        public async Task<PodcastFile> GetPodcastFile(int id) => await dataService.Get<PodcastFile>(id);
+        public PodcastFile GetPodcastFile(int id) => dataService.Get<PodcastFile>(file => file.Id == id);
     }
 }

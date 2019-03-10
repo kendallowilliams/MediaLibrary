@@ -1,7 +1,8 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,18 +12,18 @@ namespace MediaLibraryBLL.Services.Interfaces
     {
         Task<int?> AddArtist(string artists);
 
-        Task<Artist> GetArtist(object id);
+        Artist GetArtist(Expression<Func<Artist, bool>> expression = null);
 
-        Task<IEnumerable<Artist>> GetArtists();
+        IEnumerable<Artist> GetArtists(Expression<Func<Artist, bool>> expression = null);
 
         Task<int> InsertArtist(Artist artist);
 
-        Task<bool> DeleteArtist(int id);
+        Task<int> DeleteArtist(int id);
 
-        Task<bool> DeleteArtist(Artist artist);
+        Task<int> DeleteArtist(Artist artist);
 
         Task DeleteAllArtists();
 
-        Task<bool> UpdateArtist(Artist artist);
+        Task<int> UpdateArtist(Artist artist);
     }
 }

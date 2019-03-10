@@ -6,7 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 
 namespace MediaLibraryBLL.Services

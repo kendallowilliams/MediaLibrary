@@ -50,6 +50,12 @@
     <Reference Include="DapperExtensions, Version=1.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DapperExtensions.1.6.3\lib\net45\DapperExtensions.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -91,7 +97,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\DapperExtensionsConfig.cs" />
     <Compile Include="App_Start\MefConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
@@ -126,6 +131,10 @@
     <ProjectReference Include="..\MediaLibraryBLL\MediaLibraryBLL.csproj">
       <Project>{337378f1-bf20-4749-bbdf-ccf9f3948847}</Project>
       <Name>MediaLibraryBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MediaLibraryDAL\MediaLibraryDAL.csproj">
+      <Project>{15905c13-faa9-4fe5-b6a0-359eb83cd9e3}</Project>
+      <Name>MediaLibraryDAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

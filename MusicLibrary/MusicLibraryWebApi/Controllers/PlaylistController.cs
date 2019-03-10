@@ -1,4 +1,4 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using static MediaLibraryBLL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -33,7 +33,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPlaylists);
-                playlists = await playlistService.GetPlaylists();
+                playlists = playlistService.GetPlaylists();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPlaylist);
-                playlist = await playlistService.GetPlaylist(id);
+                playlist = playlistService.GetPlaylist(item => item.Id == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -93,7 +93,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.ReplacePlaylist);
-                isReplaced = await playlistService.UpdatePlaylist(playlist);
+                isReplaced = await playlistService.UpdatePlaylist(playlist) > 0;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

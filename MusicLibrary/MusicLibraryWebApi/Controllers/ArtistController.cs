@@ -1,4 +1,4 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services;
 using MediaLibraryBLL.Services.Interfaces;
 using System;
@@ -9,7 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using static MediaLibraryBLL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -36,7 +36,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetArtists);
-                artists = await artistService.GetArtists();
+                artists = artistService.GetArtists();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetArtist);
-                artist = id > -1 ? await artistService.GetArtist(id) : unknownArtist;
+                artist = id > -1 ? artistService.GetArtist(item => item.Id == id) : unknownArtist;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

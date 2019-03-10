@@ -1,4 +1,4 @@
-﻿using MediaLibraryBLL.Models.Interfaces;
+﻿using MediaLibraryDAL.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http;
 using MediaLibraryWebApi.Resolvers;
 using System.Reflection;
+using MediaLibraryBLL.Services.Interfaces;
 
 namespace MediaLibraryWebApi
 {
@@ -17,6 +18,7 @@ namespace MediaLibraryWebApi
         {
             AggregateCatalog catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(IDataModel).Assembly));
+            catalog.Catalogs.Add(new AssemblyCatalog(typeof(IAlbumService).Assembly));
             catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
             CompositionContainer container = new CompositionContainer(catalog, true);
             config.DependencyResolver = new MefResolver(container);

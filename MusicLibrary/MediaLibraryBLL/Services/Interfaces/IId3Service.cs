@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using TagLib;
 
 namespace MediaLibraryBLL.Services.Interfaces

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static MediaLibraryBLL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryBLL.Models
 {

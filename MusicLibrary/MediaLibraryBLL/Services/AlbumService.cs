@@ -6,8 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.Services.Interfaces;
+using System.Linq.Expressions;
 
 namespace MediaLibraryBLL.Services
 {
@@ -16,8 +18,6 @@ namespace MediaLibraryBLL.Services
     public class AlbumService : IAlbumService
     {
         private readonly IDataService dataService;
-        private readonly string findAlbumsStoredProcedure = "FindAlbums",
-                                deleteAllAlbumsStoredProcedure = "DeleteAllAlbums";
 
         [ImportingConstructor]
         public AlbumService(IDataService dataService)
@@ -31,28 +31,27 @@ namespace MediaLibraryBLL.Services
 
             if (album != null)
             {
-                object parameters = new { title = album.Title };
-                IEnumerable<Album> albums = await dataService.Query<Album>(findAlbumsStoredProcedure, parameters, CommandType.StoredProcedure);
+                Album dbAlbum = dataService.Get<Album>(item => item.Title == album.Title);
 
-                if (albums.Any()) { id = albums.FirstOrDefault().Id; }
-                else { id = await dataService.Insert<Album, int>(album); }
+                if (dbAlbum != null) { id = dbAlbum.Id; }
+                else { id = await dataService.Insert(album); }
             }
 
             return id;
         }
 
-        public async Task<IEnumerable<Album>> GetAlbums() => await dataService.GetList<Album>();
+        public IEnumerable<Album> GetAlbums(Expression<Func<Album, bool>> expression = null) => dataService.GetList(expression);
 
-        public async Task<Album> GetAlbum(object id) =>  await dataService.Get<Album>(id);
+        public Album GetAlbum(Expression<Func<Album, bool>> expression = null) =>  dataService.Get(expression);
 
-        public async Task<int> InsertAlbum(Album album) => await dataService.Insert<Album,int>(album);
+        public async Task<int> InsertAlbum(Album album) => await dataService.Insert<Album>(album);
 
-        public async Task<bool> DeleteAlbum(int id) => await dataService.Delete<Album>(id);
+        public async Task<int> DeleteAlbum(int id) => await dataService.Delete<Album>(id);
 
-        public async Task<bool> DeleteAlbum(Album album) => await dataService.Delete(album);
+        public async Task<int> DeleteAlbum(Album album) => await dataService.Delete(album);
 
-        public async Task DeleteAllAlbums() => await dataService.Execute(deleteAllAlbumsStoredProcedure, commandType: CommandType.StoredProcedure);
+        public async Task DeleteAllAlbums() => await dataService.DeleteAll<Album>();
 
-        public async Task<bool> UpdateAlbum(Album album) => await dataService.Update(album);
+        public async Task<int> UpdateAlbum(Album album) => await dataService.Update(album);
     }
 }

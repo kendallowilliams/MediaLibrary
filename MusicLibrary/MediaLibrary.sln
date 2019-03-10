@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryBLL", "MediaLib
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MediaLibraryDB", "MediaLibraryDB\MediaLibraryDB.sqlproj", "{2DE251E5-1A58-4003-85F0-2C2F5739E436}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryDAL", "MediaLibraryDAL\MediaLibraryDAL.csproj", "{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2DE251E5-1A58-4003-85F0-2C2F5739E436}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

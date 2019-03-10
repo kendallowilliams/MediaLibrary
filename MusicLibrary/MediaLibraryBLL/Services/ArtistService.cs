@@ -7,8 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.Services.Interfaces;
+using System.Linq.Expressions;
 
 namespace MediaLibraryBLL.Services
 {
@@ -17,8 +19,6 @@ namespace MediaLibraryBLL.Services
     public class ArtistService : IArtistService
     {
         private readonly IDataService dataService;
-        private readonly string findArtistsStoredProcedure = "FindArtists",
-                                deleteAllArtistsStoredProcedure = "DeleteAllArtists";
 
         [ImportingConstructor]
         public ArtistService(IDataService dataService)
@@ -34,27 +34,27 @@ namespace MediaLibraryBLL.Services
             {
                 object parameters = new { name = strArtists };
                 Artist artist = new Artist(strArtists);
-                IEnumerable<Artist> artists = await dataService.Query<Artist>(findArtistsStoredProcedure, parameters, CommandType.StoredProcedure);
+                Artist dbArtist = dataService.Get<Artist>(item => item.Name == strArtists);
 
-                if (artists.Any()) { id = artists.FirstOrDefault().Id; }
-                else { id = await dataService.Insert<Artist, int>(artist); }
+                if (dbArtist != null) { id = dbArtist.Id; }
+                else { id = await dataService.Insert(artist); }
             }
 
             return id;
         }
 
-        public async Task<IEnumerable<Artist>> GetArtists() => await dataService.GetList<Artist>();
+        public IEnumerable<Artist> GetArtists(Expression<Func<Artist, bool>> expression = null) => dataService.GetList(expression);
 
-        public async Task<Artist> GetArtist(object id) => await dataService.Get<Artist>(id);
+        public Artist GetArtist(Expression<Func<Artist, bool>> expression = null) => dataService.Get(expression);
 
-        public async Task<int> InsertArtist(Artist artist) => await dataService.Insert<Artist,int>(artist);
+        public async Task<int> InsertArtist(Artist artist) => await dataService.Insert<Artist>(artist);
 
-        public async Task<bool> DeleteArtist(int id) => await dataService.Delete<Artist>(id);
+        public async Task<int> DeleteArtist(int id) => await dataService.Delete<Artist>(id);
 
-        public async Task<bool> DeleteArtist(Artist artist) => await dataService.Delete(artist);
+        public async Task<int> DeleteArtist(Artist artist) => await dataService.Delete(artist);
 
-        public async Task DeleteAllArtists() => await dataService.Execute(deleteAllArtistsStoredProcedure, commandType: CommandType.StoredProcedure);
+        public async Task DeleteAllArtists() => await dataService.DeleteAll<Artist>();
 
-        public async Task<bool> UpdateArtist(Artist artist) => await dataService.Update(artist);
+        public async Task<int> UpdateArtist(Artist artist) => await dataService.Update(artist);
     }
 }

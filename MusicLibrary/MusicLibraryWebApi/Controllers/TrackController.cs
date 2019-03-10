@@ -1,4 +1,4 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using static MediaLibraryBLL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -41,7 +41,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTracks);
-                tracks = await trackService.GetTracks();
+                tracks = trackService.GetTracks();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTrack);
-                track = await trackService.GetTrack(id);
+                track = trackService.GetTrack(item => item.Id == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -142,7 +142,7 @@ namespace MediaLibraryWebApi.Controllers
                 MemoryStream stream = null;
 
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTrackFile);
-                file = await trackService.GetTrackFile(id);
+                file = trackService.GetTrackFile(id);
 
                 if (file == null) { throw new FileNotFoundException(); }
                 stream = new MemoryStream(file?.Data);

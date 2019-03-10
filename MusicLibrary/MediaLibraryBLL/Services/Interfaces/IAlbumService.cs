@@ -1,7 +1,8 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,18 +12,18 @@ namespace MediaLibraryBLL.Services.Interfaces
     {
         Task<int?> AddAlbum(Album album);
 
-        Task<Album> GetAlbum(object id);
+        Album GetAlbum(Expression<Func<Album, bool>> expression = null);
 
-        Task<IEnumerable<Album>> GetAlbums();
+        IEnumerable<Album> GetAlbums(Expression<Func<Album, bool>> expression = null);
 
         Task<int> InsertAlbum(Album album);
 
-        Task<bool> DeleteAlbum(int id);
+        Task<int> DeleteAlbum(int id);
 
-        Task<bool> DeleteAlbum(Album album);
+        Task<int> DeleteAlbum(Album album);
 
         Task DeleteAllAlbums();
 
-        Task<bool> UpdateAlbum(Album album);
+        Task<int> UpdateAlbum(Album album);
     }
 }

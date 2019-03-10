@@ -1,4 +1,4 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryWebApi.Services.Interfaces;
 using Newtonsoft.Json.Linq;
@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
-using static MediaLibraryBLL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -63,7 +63,7 @@ namespace MediaLibraryWebApi.Controllers
                        transactionType = Enum.GetName(typeof(TransactionTypes), TransactionTypes.Read);
 
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
-                existingTransaction = await transactionService.GetActiveTransactionByType(TransactionTypes.Read);
+                existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
 
                 if (validData && existingTransaction == null)
                 {

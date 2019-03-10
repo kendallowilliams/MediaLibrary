@@ -7,8 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.Services.Interfaces;
+using System.Linq.Expressions;
 
 namespace MediaLibraryBLL.Services
 {
@@ -17,9 +19,6 @@ namespace MediaLibraryBLL.Services
     public class TrackService : ITrackService
     {
         private readonly IDataService dataService;
-        private readonly string findPathsStoredProcedure = @"FindPaths",
-                                deleteAllTracksStoredProcedure = @"DeleteAllTracks",
-                                getTrackFileStoredProcedure = @"GetTrackFile";
 
          [ImportingConstructor]
         public TrackService(IDataService dataService)
@@ -27,19 +26,19 @@ namespace MediaLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<IEnumerable<Track>> GetTracks() => await dataService.GetList<Track>();
+        public IEnumerable<Track> GetTracks(Expression<Func<Track, bool>> expression = null) => dataService.GetList(expression);
 
-        public async Task<Track> GetTrack(object id) => await dataService.Get<Track>(id);
+        public Track GetTrack(Expression<Func<Track, bool>> expression = null) => dataService.Get(expression);
 
-        public async Task<int> InsertTrack(Track track) => await dataService.Insert<Track,int>(track);
+        public async Task<int> InsertTrack(Track track) => await dataService.Insert(track);
 
-        public async Task<bool> DeleteTrack(int id) => await dataService.Delete<Track>(id);
+        public async Task<int> DeleteTrack(int id) => await dataService.Delete<Track>(id);
 
-        public async Task<bool> DeleteTrack(Track track) => await dataService.Delete(track);
+        public async Task<int> DeleteTrack(Track track) => await dataService.Delete(track);
 
-        public async Task DeleteAllTracks() => await dataService.Execute(deleteAllTracksStoredProcedure, commandType: CommandType.StoredProcedure);
+        public async Task DeleteAllTracks() => await dataService.DeleteAll<Track>();
 
-        public async Task<bool> UpdateTrack(Track track) => await dataService.Update(track);
+        public async Task<int> UpdateTrack(Track track) => await dataService.Update(track);
 
         public async Task<int?> AddPath(string location)
         {
@@ -49,11 +48,11 @@ namespace MediaLibraryBLL.Services
             if (!string.IsNullOrWhiteSpace(location))
             {
                 object parameters = new { location };
-                TrackPath path = new TrackPath(location);
-                IEnumerable<TrackPath> paths = await dataService.Query<TrackPath>(findPathsStoredProcedure, parameters, CommandType.StoredProcedure);
+                TrackPath path = new TrackPath(location),
+                          dbPath = dataService.Get<TrackPath>(item => item.Location == location);
 
-                if (paths.Any()) { id = paths.FirstOrDefault().Id; }
-                else { id = await dataService.Insert<TrackPath, int>(path); }
+                if (dbPath != null) { id = dbPath.Id; }
+                else { id = await dataService.Insert(path); }
             }
 
             return id;
@@ -61,31 +60,29 @@ namespace MediaLibraryBLL.Services
 
         public async Task<int?> AddTrackFile(int trackId)
         {
-            Track track = await GetTrack(trackId);
-            TrackPath path = await dataService.Get<TrackPath>(track.PathId);
+            Track track = GetTrack(item => item.Id == trackId);
+            TrackPath path = dataService.Get<TrackPath>(trackPath => trackPath.Id == track.PathId);
             TrackFile trackFile = null;
             string filePath = Path.Combine(path.Location, track.FileName);
             byte[] data = File.ReadAllBytes(filePath);
 
             trackFile = new TrackFile(data, MimeMapping.GetMimeMapping(track.FileName), trackId);
-            trackFile.Id = await dataService.Insert<TrackFile, int>(trackFile);
+            trackFile.Id = await dataService.Insert(trackFile);
 
             return trackFile.Id;
         }
 
-        public async Task<TrackFile> GetTrackFile(int id)
+        public TrackFile GetTrackFile(int id)
         {
-            object parameters = new { track_id = id };
-            IEnumerable<TrackFile> files = await dataService.Query<TrackFile>(getTrackFileStoredProcedure, parameters, CommandType.StoredProcedure);
-            TrackFile file = files.FirstOrDefault();
+            TrackFile file = dataService.Get<TrackFile>(item => item.Id == id);
 
             if (file == null)
             {
-                Track track = await dataService.Get<Track>(id);
+                Track track = dataService.Get<Track>(item => item.Id == id);
 
                 if (track != null)
                 {
-                    TrackPath path = await dataService.Get<TrackPath>(track.PathId);
+                    TrackPath path = dataService.Get<TrackPath>(trackPath => trackPath.Id == track.PathId);
                     string fileName = Path.Combine(path.Location, track.FileName);
                     byte[] data = File.ReadAllBytes(fileName);
 

@@ -1,7 +1,8 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,9 +10,9 @@ namespace MediaLibraryBLL.Services.Interfaces
 {
     public interface IPlaylistService
     {
-        Task<Playlist> GetPlaylist(object id);
+        Playlist GetPlaylist(Expression<Func<Playlist, bool>> expression = null);
 
-        Task<IEnumerable<Playlist>> GetPlaylists();
+        IEnumerable<Playlist> GetPlaylists(Expression<Func<Playlist, bool>> expression = null);
 
         Task<int> InsertPlaylist(Playlist playlist);
 
@@ -19,6 +20,6 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         Task DeleteAllPlaylists();
 
-        Task<bool> UpdatePlaylist(Playlist playlist);
+        Task<int> UpdatePlaylist(Playlist playlist);
     }
 }

@@ -1,22 +1,23 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using static MediaLibraryBLL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryBLL.Services.Interfaces
 {
     public interface ITransactionService
     {
-        Task<Transaction> GetTransaction(object id);
+        Transaction GetTransaction(Expression<Func<Transaction, bool>> expression = null);
 
-        Task<IEnumerable<Transaction>> GetTransactions(object predicate = null);
+        IEnumerable<Transaction> GetTransactions(Expression<Func<Transaction, bool>> expression = null);
 
         Task<int> InsertTransaction(Transaction transaction);
 
-        Task<bool> UpdateTransaction(Transaction transaction);
+        Task<int> UpdateTransaction(Transaction transaction);
 
         Task<Transaction> GetNewTransaction(TransactionTypes transactionType);
 
@@ -26,6 +27,6 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         Task UpdateTransactionErrored(Transaction transaction, Exception exception);
 
-        Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType);
+        Transaction GetActiveTransactionByType(TransactionTypes transactionType);
     }
 }

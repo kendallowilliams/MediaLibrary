@@ -4,11 +4,13 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using DapperExtensions;
 using Fody;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
-using static MediaLibraryBLL.Enums.TransactionEnums;
+using MediaLibraryDAL.Services.Interfaces;
+using static MediaLibraryDAL.Enums.TransactionEnums;
+using System.Linq.Expressions;
+using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryBLL.Services
 {
@@ -24,13 +26,13 @@ namespace MediaLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactions(object predicate = null) => await dataService.GetList<Transaction>(predicate);
+        public IEnumerable<Transaction> GetTransactions(Expression<Func<Transaction,bool>> expression = null) => dataService.GetList(expression);
 
-        public async Task<Transaction> GetTransaction(object id) => await dataService.Get<Transaction>(id);
+        public Transaction GetTransaction(Expression<Func<Transaction, bool>> expression = null) => dataService.Get(expression);
 
-        public async Task<int> InsertTransaction(Transaction transaction) => await dataService.Insert<Transaction,int>(transaction);
+        public async Task<int> InsertTransaction(Transaction transaction) => await dataService.Insert(transaction);
 
-        public async Task<bool> UpdateTransaction(Transaction transaction) => await dataService.Update(transaction);
+        public async Task<int> UpdateTransaction(Transaction transaction) => await dataService.Update(transaction);
 
         public async Task<Transaction> GetNewTransaction(TransactionTypes transactionType)
         {
@@ -77,14 +79,17 @@ namespace MediaLibraryBLL.Services
             }
         }
 
-        public async Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType)
+        public Transaction GetActiveTransactionByType(TransactionTypes transactionType)
         {
-            Transaction transaction = null;
-            var group = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
+            Transaction transaction = default(Transaction);
 
-            group.Predicates.Add(Predicates.Field<Transaction>(t => t.Type, Operator.Eq, transactionType));
-            group.Predicates.Add(Predicates.Field<Transaction>(t => t.Status, Operator.Eq, TransactionStatus.InProcess));
-            transaction = (await GetTransactions(group)).FirstOrDefault();
+            using (var db = new MediaLibraryContext())
+            {
+                transaction = (from x in db.Tranactions
+                              where x.Type == transactionType && x.Status == TransactionStatus.InProcess
+                              select x)
+                              .FirstOrDefault();
+            }
 
             return transaction;
         }

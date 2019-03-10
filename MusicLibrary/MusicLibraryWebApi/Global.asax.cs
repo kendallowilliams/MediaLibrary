@@ -13,7 +13,6 @@ namespace MediaLibraryWebApi
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             MefConfig.Register(GlobalConfiguration.Configuration);
-            DapperExtensionsConfig.Initialize();
         }
 
         protected void Application_End()

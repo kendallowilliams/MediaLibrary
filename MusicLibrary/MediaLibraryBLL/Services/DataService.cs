@@ -10,7 +10,7 @@ using System.ComponentModel.Composition;
 using DapperExtensions;
 using System.Threading.Tasks;
 using System.Configuration;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using System.Linq.Expressions;
 using Fody;
 

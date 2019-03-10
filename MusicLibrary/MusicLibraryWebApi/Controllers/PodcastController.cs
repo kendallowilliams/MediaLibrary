@@ -1,4 +1,4 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryWebApi.Services.Interfaces;
 using Newtonsoft.Json.Linq;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using static MediaLibraryBLL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -37,7 +37,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcasts);
-                podcasts = await podcastService.GetPodcasts();
+                podcasts = podcastService.GetPodcasts();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcast);
-                podcast = await podcastService.GetPodcast(id);
+                podcast = podcastService.GetPodcast(item => item.Id == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcastItems);
-                items = await podcastService.GetPodcastItems(id);
+                items = podcastService.GetPodcastItems(id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -134,7 +134,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.ReplacePodcast);
-                isReplaced = await podcastService.UpdatePodcast(podcast);
+                isReplaced = await podcastService.UpdatePodcast(podcast) > 0;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -154,7 +154,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.RemovePodcast);
-                isRemoved = await podcastService.DeletePodcast(id);
+                isRemoved = await podcastService.DeletePodcast(id) > 0;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

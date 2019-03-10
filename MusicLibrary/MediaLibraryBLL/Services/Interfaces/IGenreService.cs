@@ -1,7 +1,8 @@
-﻿using MediaLibraryBLL.Models;
+﻿using MediaLibraryDAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,18 +12,18 @@ namespace MediaLibraryBLL.Services.Interfaces
     {
         Task<int?> AddGenre(string genres);
 
-        Task<Genre> GetGenre(object id);
+        Genre GetGenre(Expression<Func<Genre, bool>> expression = null);
 
-        Task<IEnumerable<Genre>> GetGenres();
+        IEnumerable<Genre> GetGenres(Expression<Func<Genre, bool>> expression = null);
 
         Task<int> InsertGenre(Genre genre);
 
-        Task<bool> DeleteGenre(int id);
+        Task<int> DeleteGenre(int id);
 
-        Task<bool> DeleteGenre(Genre genre);
+        Task<int> DeleteGenre(Genre genre);
 
         Task DeleteAllGenres();
 
-        Task<bool> UpdateGenre(Genre genre);
+        Task<int> UpdateGenre(Genre genre);
     }
 }

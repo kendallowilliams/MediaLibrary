@@ -6,8 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.Services.Interfaces;
+using System.Linq.Expressions;
 
 namespace MediaLibraryBLL.Services
 {
@@ -16,8 +18,6 @@ namespace MediaLibraryBLL.Services
     public class PlaylistService : IPlaylistService
     {
         private readonly IDataService dataService;
-        private readonly string deletePlaylistStoredProcedure = "DeletePlaylist",
-                                deleteAllPlaylistsStoredProcedure = "DeleteAllPlaylists";
 
         [ImportingConstructor]
         public PlaylistService(IDataService dataService)
@@ -25,16 +25,16 @@ namespace MediaLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<IEnumerable<Playlist>> GetPlaylists() => await dataService.GetList<Playlist>();
+        public IEnumerable<Playlist> GetPlaylists(Expression<Func<Playlist, bool>> expression = null) => dataService.GetList(expression);
 
-        public async Task<Playlist> GetPlaylist(object id) => await dataService.Get<Playlist>(id);
+        public Playlist GetPlaylist(Expression<Func<Playlist, bool>> expression = null) => dataService.Get(expression);
 
-        public async Task<int> InsertPlaylist(Playlist playlist) => await dataService.Insert<Playlist,int>(playlist);
+        public async Task<int> InsertPlaylist(Playlist playlist) => await dataService.Insert(playlist);
 
-        public async Task DeletePlaylist(int id) => await dataService.Execute(deletePlaylistStoredProcedure, new { playlist_id = id} , commandType: CommandType.StoredProcedure);
+        public async Task DeletePlaylist(int id) => await dataService.Delete<Playlist>(id);
 
-        public async Task DeleteAllPlaylists() => await dataService.Execute(deleteAllPlaylistsStoredProcedure, commandType: CommandType.StoredProcedure);
+        public async Task DeleteAllPlaylists() => await dataService.DeleteAll<Playlist>();
 
-        public async Task<bool> UpdatePlaylist(Playlist playlist) => await dataService.Update(playlist);
+        public async Task<int> UpdatePlaylist(Playlist playlist) => await dataService.Update(playlist);
     }
 }

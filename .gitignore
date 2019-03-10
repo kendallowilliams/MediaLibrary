@@ -20,3 +20,5 @@
 /MusicLibrary/MediaLibraryBLL/obj
 /MusicLibrary/MediaLibraryDB/bin/Debug
 /MusicLibrary/MediaLibraryDB/obj/Debug
+/MusicLibrary/MediaLibraryDAL/obj/Debug
+/MusicLibrary/MediaLibraryDAL/bin/Debug
