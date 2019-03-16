@@ -36,7 +36,11 @@ namespace MediaLibraryBLL.Services
                       genre = new Genre(strGenres);
 
                 if (dbGenre != null) { id = dbGenre.Id; }
-                else { id = await dataService.Insert(genre); }
+                else
+                {
+                    await dataService.Insert(genre);
+                    id = genre.Id;
+                }
             }
 
             return id;

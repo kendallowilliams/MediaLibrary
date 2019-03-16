@@ -94,7 +94,7 @@ namespace MediaLibraryBLL.Services
                 pathId = await trackService.AddPath(Path.GetDirectoryName(path));
             Track track = new Track(data, pathId, genreId, albumId, artistId);
 
-            track.Id = await trackService.InsertTrack(track);
+            await trackService.InsertTrack(track);
             if (copyFile) { await trackService.AddTrackFile(track.Id); }
         }
     }

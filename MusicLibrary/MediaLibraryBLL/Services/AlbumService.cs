@@ -34,7 +34,11 @@ namespace MediaLibraryBLL.Services
                 Album dbAlbum = dataService.Get<Album>(item => item.Title == album.Title);
 
                 if (dbAlbum != null) { id = dbAlbum.Id; }
-                else { id = await dataService.Insert(album); }
+                else
+                {
+                    await dataService.Insert(album);
+                    id = album.Id;
+                }
             }
 
             return id;

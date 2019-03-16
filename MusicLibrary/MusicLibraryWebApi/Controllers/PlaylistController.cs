@@ -73,7 +73,8 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPlaylist);
-                playlistId = await playlistService.InsertPlaylist(playlist);
+                await playlistService.InsertPlaylist(playlist);
+                playlistId = playlist.Id;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

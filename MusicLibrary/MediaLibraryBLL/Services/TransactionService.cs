@@ -40,7 +40,7 @@ namespace MediaLibraryBLL.Services
 
             transaction.Status = TransactionStatus.Started;
             transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
-            transaction.Id = await InsertTransaction(transaction);
+            await InsertTransaction(transaction);
 
             return transaction;
         }

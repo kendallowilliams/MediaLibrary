@@ -52,7 +52,11 @@ namespace MediaLibraryBLL.Services
                           dbPath = dataService.Get<TrackPath>(item => item.Location == location);
 
                 if (dbPath != null) { id = dbPath.Id; }
-                else { id = await dataService.Insert(path); }
+                else
+                {
+                    await dataService.Insert(path);
+                    id = path.Id;
+                }
             }
 
             return id;
@@ -67,7 +71,7 @@ namespace MediaLibraryBLL.Services
             byte[] data = File.ReadAllBytes(filePath);
 
             trackFile = new TrackFile(data, MimeMapping.GetMimeMapping(track.FileName), trackId);
-            trackFile.Id = await dataService.Insert(trackFile);
+            await dataService.Insert(trackFile);
 
             return trackFile.Id;
         }

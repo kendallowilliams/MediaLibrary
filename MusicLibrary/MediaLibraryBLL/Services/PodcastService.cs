@@ -161,7 +161,7 @@ namespace MediaLibraryBLL.Services
                 data = await webService.DownloadData(podcastItem.Url);
                 fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
                 podcastFile = new PodcastFile(data, MimeMapping.GetMimeMapping(fileName), podcastItem.PodcastId, podcastItem.Id);
-                podcastFile.Id = await dataService.Insert(podcastFile);
+                await dataService.Insert(podcastFile);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch(Exception ex)

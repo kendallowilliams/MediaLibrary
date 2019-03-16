@@ -37,7 +37,11 @@ namespace MediaLibraryBLL.Services
                 Artist dbArtist = dataService.Get<Artist>(item => item.Name == strArtists);
 
                 if (dbArtist != null) { id = dbArtist.Id; }
-                else { id = await dataService.Insert(artist); }
+                else
+                {
+                    await dataService.Insert(artist);
+                    id = artist.Id;
+                }
             }
 
             return id;
