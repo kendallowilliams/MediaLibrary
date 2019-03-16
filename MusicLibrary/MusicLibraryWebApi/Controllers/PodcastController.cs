@@ -103,7 +103,7 @@ namespace MediaLibraryWebApi.Controllers
                 bool copyFiles = false,
                      validData = paths.Any() &&
                                  bool.TryParse(inData["copy"]?.ToString(), out copyFiles);
-                string responseMessage = $"Invalid Data: [{inData}]",
+                string responseMessage = string.Empty,
                        transactionType = Enum.GetName(typeof(TransactionTypes), TransactionTypes.AddPodcast);
 
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPodcast);
