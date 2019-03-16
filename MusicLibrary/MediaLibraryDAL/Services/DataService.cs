@@ -67,6 +67,19 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
+        public async Task<int> Insert<T>(IEnumerable<T> entities) where T : BaseModel
+        {
+            int result = default(int);
+
+            using (var db = new MediaLibraryContext())
+            {
+                db.Set<T>().AddRange(entities);
+                result = await db.SaveChangesAsync();
+            }
+
+            return result;
+        }
+
         public async Task<int> Delete<T>(object id) where T : BaseModel
         {
             int result = default(int);

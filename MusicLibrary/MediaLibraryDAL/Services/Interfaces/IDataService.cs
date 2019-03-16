@@ -18,6 +18,8 @@ namespace MediaLibraryDAL.Services.Interfaces
 
         Task<int> Insert<T>(T entity) where T : BaseModel;
 
+        Task<int> Insert<T>(IEnumerable<T> entity) where T : BaseModel;
+
         Task<int> Delete<T>(object id) where T : BaseModel;
 
         Task<int> Delete<T>(T entity) where T : BaseModel;
