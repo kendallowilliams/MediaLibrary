@@ -109,6 +109,27 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
+        public async Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
+        {
+            int result = default(int);
+
+            if (expression != null)
+            {
+                using (var db = new MediaLibraryContext())
+                {
+                    DbSet<T> set = db.Set<T>();
+                    set.RemoveRange(set.Where(expression));
+                    result = await db.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                result = await DeleteAll<T>();
+            }
+
+            return result;
+        }
+
         public async Task<int> DeleteAll<T>() where T : BaseModel
         {
             int result = default(int);

@@ -20,8 +20,6 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         Task<int> InsertPodcast(Podcast podcast);
 
-        Task<int> InsertPodcastItem(PodcastItem podcastItem);
-
         Task<int> DeletePodcast(int id);
 
         Task DeleteAllPodcasts();

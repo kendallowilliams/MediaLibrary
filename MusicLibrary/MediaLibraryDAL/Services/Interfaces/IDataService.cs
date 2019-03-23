@@ -24,6 +24,8 @@ namespace MediaLibraryDAL.Services.Interfaces
 
         Task<int> Delete<T>(T entity) where T : BaseModel;
 
+        Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel;
+
         Task<int> DeleteAll<T>() where T : BaseModel;
 
         Task<int> Update<T>(T entity) where T : BaseModel;

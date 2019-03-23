@@ -43,24 +43,13 @@ namespace MediaLibraryBLL.Services
 
         public async Task<int> InsertPodcast(Podcast podcast) => await dataService.Insert(podcast);
 
-        public async Task<int> InsertPodcastItem(PodcastItem podcastItem) => await dataService.Insert(podcastItem);
-
-        public async Task<int> InsertPodcastItems(IEnumerable<PodcastItem> podcastItems) => await dataService.Insert(podcastItems);
-
         public async Task<int> DeletePodcast(int id) => await dataService.Delete<Podcast>(id);
 
-        public async Task DeleteAllPodcasts()
-        {
-            await dataService.DeleteAll<PodcastFile>();
-            await dataService.DeleteAll<PodcastItem>();
-            await dataService.DeleteAll<Podcast>();
-        }
+        public async Task DeleteAllPodcasts() => await dataService.DeleteAll<Podcast>();
 
         public async Task<int> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
 
         public async Task<Podcast> RefreshPodcast(Podcast podcast) => await ParseRssFeed(podcast, true);
-
-        public async Task<int> UpdatePodcastItem(PodcastItem podcastItem) => await dataService.Update(podcastItem);
 
         public async Task<Podcast> ParseRssFeed(Podcast podcastData, bool isUpdate = false)
         {
@@ -110,7 +99,7 @@ namespace MediaLibraryBLL.Services
                             break;
                     }
                 }
-
+                
                 pubDate = items.Max(item => item.Published.DateTime);
 
                 if (isUpdate)
@@ -141,7 +130,8 @@ namespace MediaLibraryBLL.Services
                                                   data.Enclosure.Length, data.PublishDate, podcast.Id))
                   .Where(item => item.PublishDate >= lastUpdateDate);
 
-                await InsertPodcastItems(podcastItems);
+                podcast.PodcastItems = podcastItems.ToList();
+                await UpdatePodcast(podcast);
             }
 
             return podcast;

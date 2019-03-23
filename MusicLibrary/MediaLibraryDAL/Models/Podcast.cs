@@ -17,6 +17,7 @@ namespace MediaLibraryDAL.Models
             ImageUrl = imageUrl;
             Description = description;
             Author = author;
+            PodcastItems = new List<PodcastItem>();
         }
         
         public string Title { get; set; }
@@ -25,5 +26,6 @@ namespace MediaLibraryDAL.Models
         public string Description { get; set; }
         public string Author { get; set; }
         public DateTime LastUpdateDate { get; set; } = DateTime.MinValue;
+        public ICollection<PodcastItem> PodcastItems { get; set; }
     }
 }

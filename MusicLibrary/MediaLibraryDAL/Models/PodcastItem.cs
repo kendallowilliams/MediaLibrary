@@ -21,10 +21,11 @@ namespace MediaLibraryDAL.Models
         }
 
         public string Title { get; set; }
-        public int PodcastId { get; set; }
         public string Description { get; set; }
         public string Url { get; set; }
         public long Length { get; set; }
         public DateTime PublishDate { get; set; } = DateTime.MinValue;
+        public int PodcastId { get; set; }
+        public PodcastFile File { get; set; }
     }
 }
