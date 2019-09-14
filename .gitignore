@@ -22,3 +22,17 @@
 /MusicLibrary/MediaLibraryDB/obj/Debug
 /MusicLibrary/MediaLibraryDAL/obj/Debug
 /MusicLibrary/MediaLibraryDAL/bin/Debug
+/MediaLibrary/.vs
+/MediaLibrary/MediaLibraryBLL/bin/Debug
+/MediaLibrary/MediaLibraryDAL/bin/Debug
+/MediaLibrary/MediaLibraryDAL/obj/Debug
+/MediaLibrary/MediaLibraryBLL/obj
+/MediaLibrary/MediaLibraryDB/bin/Debug
+/MediaLibrary/MediaLibraryDB/obj/Debug
+/MediaLibrary/MediaLibraryWebApi/bin
+/MediaLibrary/MediaLibraryWebApi/obj/Debug
+/MediaLibrary/MediaLibraryWebApp/.vscode
+/MediaLibrary/MediaLibraryWebApp/e2e
+/MediaLibrary/MediaLibraryWebApp/src/assets
+/MediaLibrary/MusicLibraryDB/obj/Debug
+/MediaLibrary/packages
