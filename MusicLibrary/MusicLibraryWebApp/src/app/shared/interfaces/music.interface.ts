@@ -33,3 +33,9 @@ export interface IScrollData {
   timeout: number;
   timeoutId?: any;
 }
+
+export interface IPathData {
+  paths: string[];
+  copy: boolean;
+  recursive: boolean;
+}
