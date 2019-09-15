@@ -14,7 +14,7 @@ using Fody;
 using MediaLibraryDAL.DbContexts;
 using System.Data.Entity;
 
-namespace MediaLibraryBLL.Services
+namespace MediaLibraryDAL.Services
 {
     [ConfigureAwait(false)]
     [Export(typeof(IDataService))]
