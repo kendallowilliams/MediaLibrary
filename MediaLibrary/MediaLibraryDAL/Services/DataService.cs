@@ -12,7 +12,7 @@ using MediaLibraryDAL.Models;
 using System.Linq.Expressions;
 using Fody;
 using MediaLibraryDAL.DbContexts;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaLibraryDAL.Services
 {
@@ -166,44 +166,6 @@ namespace MediaLibraryDAL.Services
             using (var db = new MediaLibraryContext())
             {
                 result = expression != null ? await db.Set<T>().CountAsync(expression) : await db.Set<T>().CountAsync();
-            }
-
-            return result;
-        }
-
-        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters = null) where T : BaseModel
-        {
-            IEnumerable<T> result = Enumerable.Empty<T>();
-
-            using (var db = new MediaLibraryContext())
-            {
-                db.Database.CommandTimeout = timeout;
-                result = await db.Database.SqlQuery<T>(sql, parameters).ToListAsync();
-            }
-
-            return result;
-        }
-
-        public async Task<int> Execute(string sql, object parameters = null)
-        {
-            int result = default(int);
-
-            using (var db = new MediaLibraryContext())
-            {
-                db.Database.CommandTimeout = timeout;
-                result = await db.Database.ExecuteSqlCommandAsync(sql, parameters);
-            }
-
-            return result;
-        }
-
-        public async Task<T> ExecuteScalar<T>(string sql, object parameters = null)
-        {
-            T result = default(T);
-
-            using (var db = new MediaLibraryContext())
-            {
-                result = await db.Database.SqlQuery<T>(sql, parameters).SingleOrDefaultAsync();
             }
 
             return result;

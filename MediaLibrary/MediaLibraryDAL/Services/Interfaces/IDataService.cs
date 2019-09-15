@@ -29,13 +29,5 @@ namespace MediaLibraryDAL.Services.Interfaces
         Task<int> DeleteAll<T>() where T : BaseModel;
 
         Task<int> Update<T>(T entity) where T : BaseModel;
-
-        Task<IEnumerable<T>> Query<T>(string sql, object parameters) where T : BaseModel;
-
-        Task<T> ExecuteScalar<T>(string sql, object parameters);
-
-        Task<int> Execute(string sql, object parameters = null);
-
-        Task<int> Count<T>(Expression<Func<T,bool>> expression = null) where T : BaseModel;
     }
 }
