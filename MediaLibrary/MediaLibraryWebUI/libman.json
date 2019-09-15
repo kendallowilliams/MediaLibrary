@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@4.3.1",
+      "destination": "wwwroot/bootstrap/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "jquery@3.4.1",
+      "destination": "wwwroot/jquery/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "popper.js@1.15.0",
+      "destination": "wwwroot/popper.js/"
+    }
+  ]
+}

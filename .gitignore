@@ -36,3 +36,5 @@
 /MediaLibrary/MediaLibraryWebApp/src/assets
 /MediaLibrary/MusicLibraryDB/obj/Debug
 /MediaLibrary/packages
+/MediaLibrary/MediaLibraryWebUI/bin
+/MediaLibrary/MediaLibraryWebUI/obj/Debug
