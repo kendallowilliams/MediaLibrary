@@ -35,11 +35,11 @@ namespace MediaLibraryBLL.Services
 
         public async Task<Podcast> AddPodcast(string url) => await ParseRssFeed(new Podcast { Url = url });
 
-        public IEnumerable<Podcast> GetPodcasts(Expression<Func<Podcast, bool>> expression = null) => dataService.GetList(expression);
+        public async Task<IEnumerable<Podcast>> GetPodcasts(Expression<Func<Podcast, bool>> expression = null) => await dataService.GetList(expression);
 
-        public Podcast GetPodcast(Expression<Func<Podcast, bool>> expression = null) =>  dataService.Get(expression);
+        public async Task<Podcast> GetPodcast(Expression<Func<Podcast, bool>> expression = null) =>  await dataService.Get(expression);
 
-        public IEnumerable<PodcastItem> GetPodcastItems(int podcastId) => dataService.GetList<PodcastItem>(item => item.PodcastId == podcastId);
+        public async Task<IEnumerable<PodcastItem>> GetPodcastItems(int podcastId) => await dataService.GetList<PodcastItem>(item => item.PodcastId == podcastId);
 
         public async Task<int> InsertPodcast(Podcast podcast) => await dataService.Insert(podcast);
 
@@ -147,7 +147,7 @@ namespace MediaLibraryBLL.Services
                 string fileName = string.Empty;
                 PodcastItem podcastItem = null;
 
-                podcastItem = dataService.Get<PodcastItem>(item => item.Id == podcastItemId);
+                podcastItem = await dataService.Get<PodcastItem>(item => item.Id == podcastItemId);
                 data = await webService.DownloadData(podcastItem.Url);
                 fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
                 podcastFile = new PodcastFile(data, MimeMapping.GetMimeMapping(fileName), podcastItem.PodcastId, podcastItem.Id);
@@ -162,6 +162,6 @@ namespace MediaLibraryBLL.Services
             return podcastFile?.Id;
         }
 
-        public PodcastFile GetPodcastFile(int id) => dataService.Get<PodcastFile>(file => file.Id == id);
+        public async Task<PodcastFile> GetPodcastFile(int id) => await dataService.Get<PodcastFile>(file => file.Id == id);
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Web;
 using Fody;
 using MediaLibraryDAL.Models;
-using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.Services.Interfaces;
 using System.Linq.Expressions;
+using MediaLibraryBLL.Services.Interfaces;
 
 namespace MediaLibraryBLL.Services
 {
@@ -31,7 +31,7 @@ namespace MediaLibraryBLL.Services
 
             if (album != null)
             {
-                Album dbAlbum = dataService.Get<Album>(item => item.Title == album.Title);
+                Album dbAlbum = await dataService.Get<Album>(item => item.Title == album.Title);
 
                 if (dbAlbum != null) { id = dbAlbum.Id; }
                 else
@@ -44,9 +44,9 @@ namespace MediaLibraryBLL.Services
             return id;
         }
 
-        public IEnumerable<Album> GetAlbums(Expression<Func<Album, bool>> expression = null) => dataService.GetList(expression);
+        public async Task<IEnumerable<Album>> GetAlbums(Expression<Func<Album, bool>> expression = null) => await dataService.GetList(expression);
 
-        public Album GetAlbum(Expression<Func<Album, bool>> expression = null) =>  dataService.Get(expression);
+        public async Task<Album> GetAlbum(Expression<Func<Album, bool>> expression = null) =>  await dataService.Get(expression);
 
         public async Task<int> InsertAlbum(Album album) => await dataService.Insert<Album>(album);
 

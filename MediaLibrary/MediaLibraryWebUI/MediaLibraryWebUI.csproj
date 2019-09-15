@@ -262,15 +262,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MusicController.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MusicViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="libman.json" />
     <None Include="packages.config" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Music\Albums.cshtml" />
+    <Content Include="Views\Music\Artists.cshtml" />
+    <Content Include="Views\Music\Index.cshtml" />
+    <Content Include="Views\Music\Songs.cshtml" />
+    <Content Include="Views\Podcast\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -418,14 +430,22 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\popper.js\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MediaLibraryBLL\MediaLibraryBLL.csproj">
+      <Project>{337378f1-bf20-4749-bbdf-ccf9f3948847}</Project>
+      <Name>MediaLibraryBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MediaLibraryDAL\MediaLibraryDAL.csproj">
+      <Project>{15905c13-faa9-4fe5-b6a0-359eb83cd9e3}</Project>
+      <Name>MediaLibraryDAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

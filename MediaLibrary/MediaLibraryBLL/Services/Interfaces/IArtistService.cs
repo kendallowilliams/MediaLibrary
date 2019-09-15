@@ -12,9 +12,9 @@ namespace MediaLibraryBLL.Services.Interfaces
     {
         Task<int?> AddArtist(string artists);
 
-        Artist GetArtist(Expression<Func<Artist, bool>> expression = null);
+        Task<Artist> GetArtist(Expression<Func<Artist, bool>> expression = null);
 
-        IEnumerable<Artist> GetArtists(Expression<Func<Artist, bool>> expression = null);
+        Task<IEnumerable<Artist>> GetArtists(Expression<Func<Artist, bool>> expression = null);
 
         Task<int> InsertArtist(Artist artist);
 

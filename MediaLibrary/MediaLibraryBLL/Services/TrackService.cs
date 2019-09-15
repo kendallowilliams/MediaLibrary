@@ -26,9 +26,9 @@ namespace MediaLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public IEnumerable<Track> GetTracks(Expression<Func<Track, bool>> expression = null) => dataService.GetList(expression);
+        public async Task<IEnumerable<Track>> GetTracks(Expression<Func<Track, bool>> expression = null) => await dataService.GetList(expression);
 
-        public Track GetTrack(Expression<Func<Track, bool>> expression = null) => dataService.Get(expression);
+        public async Task<Track> GetTrack(Expression<Func<Track, bool>> expression = null) => await dataService.Get(expression);
 
         public async Task<int> InsertTrack(Track track) => await dataService.Insert(track);
 
@@ -49,7 +49,7 @@ namespace MediaLibraryBLL.Services
             {
                 object parameters = new { location };
                 TrackPath path = new TrackPath(location),
-                          dbPath = dataService.Get<TrackPath>(item => item.Location == location);
+                          dbPath = await dataService.Get<TrackPath>(item => item.Location == location);
 
                 if (dbPath != null) { id = dbPath.Id; }
                 else
@@ -64,8 +64,8 @@ namespace MediaLibraryBLL.Services
 
         public async Task<int?> AddTrackFile(int trackId)
         {
-            Track track = GetTrack(item => item.Id == trackId);
-            TrackPath path = dataService.Get<TrackPath>(trackPath => trackPath.Id == track.PathId);
+            Track track = await GetTrack(item => item.Id == trackId);
+            TrackPath path = await dataService.Get<TrackPath>(trackPath => trackPath.Id == track.PathId);
             TrackFile trackFile = null;
             string filePath = Path.Combine(path.Location, track.FileName);
             byte[] data = File.ReadAllBytes(filePath);
@@ -76,17 +76,17 @@ namespace MediaLibraryBLL.Services
             return trackFile.Id;
         }
 
-        public TrackFile GetTrackFile(int id)
+        public async Task<TrackFile> GetTrackFile(int id)
         {
-            TrackFile file = dataService.Get<TrackFile>(item => item.Id == id);
+            TrackFile file = await dataService.Get<TrackFile>(item => item.Id == id);
 
             if (file == null)
             {
-                Track track = dataService.Get<Track>(item => item.Id == id);
+                Track track = await dataService.Get<Track>(item => item.Id == id);
 
                 if (track != null)
                 {
-                    TrackPath path = dataService.Get<TrackPath>(trackPath => trackPath.Id == track.PathId);
+                    TrackPath path = await dataService.Get<TrackPath>(trackPath => trackPath.Id == track.PathId);
                     string fileName = Path.Combine(path.Location, track.FileName);
                     byte[] data = File.ReadAllBytes(fileName);
 
