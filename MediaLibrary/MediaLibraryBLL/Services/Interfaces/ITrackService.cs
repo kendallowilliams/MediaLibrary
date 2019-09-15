@@ -10,9 +10,9 @@ namespace MediaLibraryBLL.Services.Interfaces
 {
     public interface ITrackService
     {
-        Track GetTrack(Expression<Func<Track, bool>> expression = null);
+        Task<Track> GetTrack(Expression<Func<Track, bool>> expression = null);
 
-        IEnumerable<Track> GetTracks(Expression<Func<Track, bool>> expression = null);
+        Task<IEnumerable<Track>> GetTracks(Expression<Func<Track, bool>> expression = null);
 
         Task<int> InsertTrack(Track track);
 
@@ -28,6 +28,6 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         Task<int?> AddTrackFile(int trackId);
 
-        TrackFile GetTrackFile(int id);
+        Task<TrackFile> GetTrackFile(int id);
     }
 }

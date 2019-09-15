@@ -12,9 +12,9 @@ namespace MediaLibraryBLL.Services.Interfaces
     {
         Task<int?> AddAlbum(Album album);
 
-        Album GetAlbum(Expression<Func<Album, bool>> expression = null);
+        Task<Album> GetAlbum(Expression<Func<Album, bool>> expression = null);
 
-        IEnumerable<Album> GetAlbums(Expression<Func<Album, bool>> expression = null);
+        Task<IEnumerable<Album>> GetAlbums(Expression<Func<Album, bool>> expression = null);
 
         Task<int> InsertAlbum(Album album);
 

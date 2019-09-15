@@ -12,9 +12,9 @@ namespace MediaLibraryBLL.Services.Interfaces
     {
         Task<int?> AddGenre(string genres);
 
-        Genre GetGenre(Expression<Func<Genre, bool>> expression = null);
+        Task<Genre> GetGenre(Expression<Func<Genre, bool>> expression = null);
 
-        IEnumerable<Genre> GetGenres(Expression<Func<Genre, bool>> expression = null);
+        Task<IEnumerable<Genre>> GetGenres(Expression<Func<Genre, bool>> expression = null);
 
         Task<int> InsertGenre(Genre genre);
 

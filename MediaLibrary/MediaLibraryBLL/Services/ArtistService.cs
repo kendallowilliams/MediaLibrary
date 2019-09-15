@@ -34,7 +34,7 @@ namespace MediaLibraryBLL.Services
             {
                 object parameters = new { name = strArtists };
                 Artist artist = new Artist(strArtists);
-                Artist dbArtist = dataService.Get<Artist>(item => item.Name == strArtists);
+                Artist dbArtist = await dataService.Get<Artist>(item => item.Name == strArtists);
 
                 if (dbArtist != null) { id = dbArtist.Id; }
                 else
@@ -47,9 +47,9 @@ namespace MediaLibraryBLL.Services
             return id;
         }
 
-        public IEnumerable<Artist> GetArtists(Expression<Func<Artist, bool>> expression = null) => dataService.GetList(expression);
+        public async Task<IEnumerable<Artist>> GetArtists(Expression<Func<Artist, bool>> expression = null) => await dataService.GetList(expression);
 
-        public Artist GetArtist(Expression<Func<Artist, bool>> expression = null) => dataService.Get(expression);
+        public async Task<Artist> GetArtist(Expression<Func<Artist, bool>> expression = null) => await dataService.Get(expression);
 
         public async Task<int> InsertArtist(Artist artist) => await dataService.Insert<Artist>(artist);
 
