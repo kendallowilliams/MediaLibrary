@@ -1,16 +1,16 @@
 ﻿<ul class="nav nav-pills" id="tabMusic" role="tablist">
-    <li class="nav-item" id="tabAlbum" data-toggle="tab" href="#tabAlbums" role="tab" aria-controls="albums" aria-selected="true">
-        <a class="nav-link active" href="#">Albums</a>
+    <li class="nav-item">
+        <a class="nav-link active" id="tab-albums" data-toggle="pill" href="#tab-item-albums" role="tab" aria-controls="tab-item-albums" aria-selected="true">Albums</a>
     </li>
-    <li class="nav-item" id="tabArtist" data-toggle="tab" href="#tabArtists" role="tab" aria-controls="artists" aria-selected="false">
-        <a class="nav-link" href="#">Artists</a>
+    <li class="nav-item">
+        <a class="nav-link" id="tab-artists" data-toggle="pill" href="#tab-item-artists" role="tab" aria-controls="tab-item-artists" aria-selected="false">Artists</a>
     </li>
-    <li class="nav-item" id="tabSong" data-toggle="tab" href="#tabSongs" role="tab" aria-controls="songs" aria-selected="false">
-        <a class="nav-link" href="#">Songs</a>
+    <li class="nav-item">
+        <a class="nav-link" id="tab-songs" data-toggle="pill" href="#tab-item-songs" role="tab" aria-controls="tab-item-songs" aria-selected="false">Songs</a>
     </li>
 </ul>
 <div class="tab-content" id="tabMusicContent">
-    <div class="tab-pane fade show active" id="tabAlbums" role="tabpanel" aria-labelledby="albums-tab">...</div>
-    <div class="tab-pane fade" id="tabArtists" role="tabpanel" aria-labelledby="artists-tab">...</div>
-    <div class="tab-pane fade" id="tabSongs" role="tabpanel" aria-labelledby="songs-tab">...</div>
+    <div class="tab-pane fade show active" id="tab-item-albums" role="tabpanel" aria-labelledby="albums-tab">@{ await Html.RenderPartialAsync("Albums"); }</div>
+    <div class="tab-pane fade" id="tab-item-artists" role="tabpanel" aria-labelledby="artists-tab">@{ await Html.RenderPartialAsync("Artists"); }</div>
+    <div class="tab-pane fade" id="tab-item-songs" role="tabpanel" aria-labelledby="songs-tab">@{ await Html.RenderPartialAsync("Songs"); }</div>
 </div>
