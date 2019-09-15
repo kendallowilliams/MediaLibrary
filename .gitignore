@@ -38,3 +38,5 @@
 /MediaLibrary/packages
 /MediaLibrary/MediaLibraryWebUI/obj
 /MediaLibrary/MediaLibraryWebUI/bin/Debug/netcoreapp2.2
+/MediaLibrary/MediaLibraryDAL/obj
+/MediaLibrary/MediaLibraryDAL_OLD
