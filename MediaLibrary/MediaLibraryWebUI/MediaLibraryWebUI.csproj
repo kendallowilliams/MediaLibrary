@@ -8,12 +8,39 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Home\" />
-    <Folder Include="Views\Shared\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\bootstrap\dist\css\" />
+    <Folder Include="wwwroot\lib\bootstrap\dist\fonts\" />
+    <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
+    <Folder Include="wwwroot\lib\bootstrap\fonts\" />
+    <Folder Include="wwwroot\lib\bootstrap\grunt\" />
+    <Folder Include="wwwroot\lib\bootstrap\js\" />
+    <Folder Include="wwwroot\lib\bootstrap\less\mixins\" />
+    <Folder Include="wwwroot\lib\bootstrap\nuget\" />
+    <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />
+    <Folder Include="wwwroot\lib\jquery-validation\build\" />
+    <Folder Include="wwwroot\lib\jquery-validation\dist\" />
+    <Folder Include="wwwroot\lib\jquery-validation\src\additional\" />
+    <Folder Include="wwwroot\lib\jquery-validation\src\localization\" />
+    <Folder Include="wwwroot\lib\jquery\dist\" />
+    <Folder Include="wwwroot\lib\jquery\src\ajax\var\" />
+    <Folder Include="wwwroot\lib\jquery\src\attributes\" />
+    <Folder Include="wwwroot\lib\jquery\src\core\var\" />
+    <Folder Include="wwwroot\lib\jquery\src\css\var\" />
+    <Folder Include="wwwroot\lib\jquery\src\data\var\" />
+    <Folder Include="wwwroot\lib\jquery\src\effects\" />
+    <Folder Include="wwwroot\lib\jquery\src\event\" />
+    <Folder Include="wwwroot\lib\jquery\src\exports\" />
+    <Folder Include="wwwroot\lib\jquery\src\manipulation\var\" />
+    <Folder Include="wwwroot\lib\jquery\src\queue\" />
+    <Folder Include="wwwroot\lib\jquery\src\traversing\var\" />
+    <Folder Include="wwwroot\lib\jquery\src\var\" />
   </ItemGroup>
 
 </Project>
