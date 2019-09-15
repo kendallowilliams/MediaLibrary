@@ -3,5 +3,8 @@
   <PropertyGroup>
     <ShowAllFiles>false</ShowAllFiles>
     <WebStackScaffolding_ViewDialogWidth>600</WebStackScaffolding_ViewDialogWidth>
+    <_SelectedScaffolderID>RazorPagesLayoutScaffolder</_SelectedScaffolderID>
+    <_SelectedScaffolderCategoryPath>root/Layouts</_SelectedScaffolderCategoryPath>
+    <WebStackScaffolding_EnablerDialogWidth>600</WebStackScaffolding_EnablerDialogWidth>
   </PropertyGroup>
 </Project>
