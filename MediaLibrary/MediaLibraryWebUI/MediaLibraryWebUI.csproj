@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\css\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\fonts\" />
@@ -41,6 +40,11 @@
     <Folder Include="wwwroot\lib\jquery\src\queue\" />
     <Folder Include="wwwroot\lib\jquery\src\traversing\var\" />
     <Folder Include="wwwroot\lib\jquery\src\var\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MediaLibraryBLL\MediaLibraryBLL.csproj" />
+    <ProjectReference Include="..\MediaLibraryDAL\MediaLibraryDAL.csproj" />
   </ItemGroup>
 
 </Project>

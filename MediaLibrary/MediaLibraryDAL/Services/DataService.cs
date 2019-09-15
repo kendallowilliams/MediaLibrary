@@ -28,25 +28,25 @@ namespace MediaLibraryDAL.Services
             timeout = 120;
         }
 
-        public IEnumerable<T> GetList<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
+        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
             using (var db = new MediaLibraryContext())
             {
-                results = (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).ToList();
+                results = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).ToListAsync<T>();
             }
 
             return results;
         }
 
-        public T Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel
+        public async Task<T> Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel
         {
             T result = default(T);
 
             using (var db = new MediaLibraryContext())
             {
-                result = (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefault();
+                result = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefaultAsync();
             }
 
             return result;
