@@ -11,6 +11,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MediaLibraryDB", "MediaLibr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWebApi", "MediaLibraryWebApi\MediaLibraryWebApi.csproj", "{29E2FFD9-1085-4273-B432-C8B6854B45D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWebUI", "MediaLibraryWebUI\MediaLibraryWebUI.csproj", "{52918049-D1A3-4610-BFD2-4A3A1084D0E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{29E2FFD9-1085-4273-B432-C8B6854B45D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29E2FFD9-1085-4273-B432-C8B6854B45D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29E2FFD9-1085-4273-B432-C8B6854B45D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
