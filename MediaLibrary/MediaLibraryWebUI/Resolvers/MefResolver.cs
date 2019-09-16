@@ -8,7 +8,7 @@ using System.Web.Http.Dependencies;
 
 namespace MediaLibraryWebUI.Resolvers
 {
-    public class MefResolver : IDependencyResolver
+    public class MefResolver : IDependencyResolver, System.Web.Mvc.IDependencyResolver
     {
         private readonly CompositionContainer container;
 
