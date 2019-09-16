@@ -41,7 +41,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTracks);
-                tracks = trackService.GetTracks();
+                tracks = await trackService.GetTracks();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTrack);
-                track = trackService.GetTrack(item => item.Id == id);
+                track = await trackService.GetTrack(item => item.Id == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -142,7 +142,7 @@ namespace MediaLibraryWebApi.Controllers
                 MemoryStream stream = null;
 
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTrackFile);
-                file = trackService.GetTrackFile(id);
+                file = await trackService.GetTrackFile(id);
 
                 if (file == null) { throw new FileNotFoundException(); }
                 stream = new MemoryStream(file?.Data);

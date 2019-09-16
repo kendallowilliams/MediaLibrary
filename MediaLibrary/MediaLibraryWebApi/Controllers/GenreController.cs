@@ -36,7 +36,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetGenres);
-                genres = genreService.GetGenres();
+                genres = await genreService.GetGenres();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetGenre);
-                genre = id > -1 ? genreService.GetGenre(item => item.Id == id): unknownGenre;
+                genre = id > -1 ? await genreService.GetGenre(item => item.Id == id): unknownGenre;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

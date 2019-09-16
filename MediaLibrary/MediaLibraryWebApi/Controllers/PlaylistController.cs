@@ -33,7 +33,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPlaylists);
-                playlists = playlistService.GetPlaylists();
+                playlists = await playlistService.GetPlaylists();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPlaylist);
-                playlist = playlistService.GetPlaylist(item => item.Id == id);
+                playlist = await playlistService.GetPlaylist(item => item.Id == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

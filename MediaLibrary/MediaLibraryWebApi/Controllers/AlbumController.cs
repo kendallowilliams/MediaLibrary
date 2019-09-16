@@ -36,7 +36,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetAlbums);
-                albums = albumService.GetAlbums();
+                albums = await albumService.GetAlbums();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetAlbum);
-                album = id > -1 ? albumService.GetAlbum(item => item.Id == id): unknownAlbum;
+                album = id > -1 ? await albumService.GetAlbum(item => item.Id == id): unknownAlbum;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

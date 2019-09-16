@@ -36,7 +36,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetArtists);
-                artists = artistService.GetArtists();
+                artists = await artistService.GetArtists();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetArtist);
-                artist = id > -1 ? artistService.GetArtist(item => item.Id == id) : unknownArtist;
+                artist = id > -1 ? await artistService.GetArtist(item => item.Id == id) : unknownArtist;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
