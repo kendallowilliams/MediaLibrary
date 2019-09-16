@@ -11,5 +11,12 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class PodcastFile: BaseModel
     {
+        public PodcastFile(byte[] data, string type, int podcastId, int podcastItemId)
+        {
+            Data = data;
+            Type = type;
+            PodcastId = podcastId;
+            PodcastItemId = podcastItemId;
+        }
     }
 }

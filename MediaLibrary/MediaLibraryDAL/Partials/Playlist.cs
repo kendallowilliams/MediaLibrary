@@ -11,8 +11,11 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Playlist: BaseModel
     {
-        public Playlist()
+        public Playlist() { }
+
+        public Playlist(string name, IEnumerable<int> trackIds = null)
         {
+            Name = name;
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using TagLib;
-using MediaLibraryBLL.Models;
+using MediaLibraryDAL.Models;
 
 namespace MediaLibraryBLL.Services
 {

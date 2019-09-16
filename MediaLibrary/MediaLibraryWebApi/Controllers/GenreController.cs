@@ -1,6 +1,4 @@
-﻿using MediaLibraryDAL.Models;
-using MediaLibraryBLL.Services;
-using MediaLibraryBLL.Services.Interfaces;
+﻿using MediaLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -10,6 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
+using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryWebApi.Controllers
 {

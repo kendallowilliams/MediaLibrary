@@ -1,5 +1,4 @@
-﻿using MediaLibraryDAL.Models;
-using MediaLibraryBLL.Services.Interfaces;
+﻿using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryWebApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
+using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryWebApi.Services
 {

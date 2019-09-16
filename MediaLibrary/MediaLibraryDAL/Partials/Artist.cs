@@ -13,9 +13,15 @@ namespace MediaLibraryDAL.DbContexts
     {
         public Artist() { }
 
-        public Artist(string artists)
+        public Artist(string name)
         {
-            Name = artists;
+            Name = name;
+        }
+
+        public Artist(int id, string name)
+        {
+            Id = id;
+            Name = name;
         }
     }
 }

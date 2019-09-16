@@ -11,5 +11,13 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Podcast: BaseModel
     {
+        public Podcast(string title, string url, string imageUrl, string description, string author)
+        {
+            Title = title;
+            Url = url;
+            ImageUrl = imageUrl;
+            Description = description;
+            Author = author;
+        }
     }
 }

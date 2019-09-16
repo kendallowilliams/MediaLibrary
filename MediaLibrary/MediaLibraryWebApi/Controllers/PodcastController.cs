@@ -1,5 +1,4 @@
-﻿using MediaLibraryDAL.Models;
-using MediaLibraryBLL.Services.Interfaces;
+﻿using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryWebApi.Services.Interfaces;
 using Newtonsoft.Json.Linq;
 using System;
@@ -11,6 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
+using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryWebApi.Controllers
 {

@@ -11,8 +11,13 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class TrackFile: BaseModel
     {
-        public TrackFile()
+        public TrackFile() { }
+
+        public TrackFile(byte[] data, string type, int trackId)
         {
+            Data = data;
+            Type = type;
+            TrackId = trackId;
         }
     }
 }

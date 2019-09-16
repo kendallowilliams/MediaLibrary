@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
+using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryWebApi.Controllers
 {
