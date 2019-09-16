@@ -1,5 +1,4 @@
 ﻿using Fody;
-using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using TagLib;
+using MediaLibraryBLL.Models;
 
 namespace MediaLibraryBLL.Services
 {

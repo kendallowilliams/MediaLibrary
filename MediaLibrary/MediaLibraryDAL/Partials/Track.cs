@@ -14,5 +14,10 @@ namespace MediaLibraryDAL.DbContexts
         public Track()
         {
         }
+
+        public Track(MediaData data, int? pathId, int? genreId, int? albumId, int? artistId)
+        {
+
+        }
     }
 }

@@ -9,13 +9,7 @@ using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class Artist: BaseModel
+    public partial class PodcastFile: BaseModel
     {
-        public Artist() { }
-
-        public Artist(string artists)
-        {
-            Name = artists;
-        }
     }
 }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MediaLibraryBLL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MediaLibraryDAL.Models;
 using TagLib;
 
 namespace MediaLibraryBLL.Services.Interfaces

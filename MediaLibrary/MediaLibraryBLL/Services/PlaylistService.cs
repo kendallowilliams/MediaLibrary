@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.Services.Interfaces;
 using System.Linq.Expressions;
+using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryBLL.Services
 {

@@ -14,5 +14,10 @@ namespace MediaLibraryDAL.DbContexts
         public Album()
         {
         }
+
+        public Album(MediaData data, int? artistId, int? genreId)
+        {
+
+        }
     }
 }

@@ -10,10 +10,10 @@ using System.Xml;
 using Fody;
 using Microsoft.SyndicationFeed;
 using Microsoft.SyndicationFeed.Rss;
-using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.Services.Interfaces;
 using System.Linq.Expressions;
+using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryBLL.Services
 {
