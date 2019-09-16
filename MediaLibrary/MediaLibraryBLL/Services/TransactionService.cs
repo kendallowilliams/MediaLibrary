@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.Services.Interfaces;
 using static MediaLibraryDAL.Enums.TransactionEnums;
@@ -38,7 +37,7 @@ namespace MediaLibraryBLL.Services
         {
             Transaction transaction = new Transaction(transactionType);
 
-            transaction.Status = TransactionStatus.Started;
+            transaction.Status = (int)TransactionStatus.Started;
             transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
             await InsertTransaction(transaction);
 
@@ -49,7 +48,7 @@ namespace MediaLibraryBLL.Services
         {
             if (transaction != null)
             {
-                transaction.Status = TransactionStatus.Completed;
+                transaction.Status = (int)TransactionStatus.Completed;
                 transaction.StatusMessage = statusMessage ?? $"{transaction.Status} [{transaction.Type}]";
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
@@ -60,7 +59,7 @@ namespace MediaLibraryBLL.Services
         {
             if (transaction != null)
             {
-                transaction.Status = TransactionStatus.InProcess;
+                transaction.Status = (int)TransactionStatus.InProcess;
                 transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
                 transaction.ModifyDate = DateTime.Now;
                 await UpdateTransaction(transaction);
@@ -71,7 +70,7 @@ namespace MediaLibraryBLL.Services
         {
             if (transaction != null)
             {
-                transaction.Status = TransactionStatus.Errored;
+                transaction.Status = (int)TransactionStatus.Errored;
                 transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
                 transaction.ErrorMessage = exception.Message;
                 transaction.ModifyDate = DateTime.Now;
@@ -83,10 +82,10 @@ namespace MediaLibraryBLL.Services
         {
             Transaction transaction = default(Transaction);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
-                transaction = (from x in db.Tranactions
-                              where x.Type == transactionType && x.Status == TransactionStatus.InProcess
+                transaction = (from x in db.Transactions
+                              where x.Type == (int)transactionType && x.Status == (int)TransactionStatus.InProcess
                               select x)
                               .FirstOrDefault();
             }

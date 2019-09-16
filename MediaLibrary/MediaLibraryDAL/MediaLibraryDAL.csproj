@@ -50,6 +50,8 @@
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,28 +63,77 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbContexts\MediaLibraryContext.cs" />
+    <Compile Include="DbContexts\Album.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Artist.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\C__MigrationHistory.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Genre.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\MediaLibrary.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaLibrary.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\MediaLibrary.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\MediaLibrary.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MediaLibrary.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Playlist.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Podcast.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\PodcastFile.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\PodcastItem.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Track.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\TrackFile.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\TrackPath.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Transaction.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enums\TransactionEnums.cs" />
-    <Compile Include="Models\Album.cs" />
-    <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\BaseModel.cs" />
-    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\Interfaces\IDataModel.cs" />
-    <Compile Include="Models\MediaData.cs" />
-    <Compile Include="Models\Playlist.cs" />
-    <Compile Include="Models\Podcast.cs" />
-    <Compile Include="Models\PodcastFile.cs" />
-    <Compile Include="Models\PodcastItem.cs" />
-    <Compile Include="Models\Track.cs" />
-    <Compile Include="Models\TrackFile.cs" />
-    <Compile Include="Models\TrackPath.cs" />
-    <Compile Include="Models\Transaction.cs" />
+    <Compile Include="Partials\Artist.cs" />
+    <Compile Include="Partials\Album.cs" />
+    <Compile Include="Partials\Track.cs" />
+    <Compile Include="Partials\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\Interfaces\IDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="DbContexts\MediaLibrary.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MediaLibrary.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DbContexts\MediaLibrary.edmx.diagram">
+      <DependentUpon>MediaLibrary.edmx</DependentUpon>
+    </None>
     <None Include="FodyWeavers.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -92,7 +143,20 @@
     <Folder Include="DbConfigurations\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DbContexts\MediaLibrary.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MediaLibrary.Context.cs</LastGenOutput>
+      <DependentUpon>MediaLibrary.edmx</DependentUpon>
+    </Content>
+    <Content Include="DbContexts\MediaLibrary.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MediaLibrary.cs</LastGenOutput>
+      <DependentUpon>MediaLibrary.edmx</DependentUpon>
+    </Content>
     <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.2.9\build\Fody.targets" Condition="Exists('..\packages\Fody.3.2.9\build\Fody.targets')" />

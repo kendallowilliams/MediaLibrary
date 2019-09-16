@@ -32,7 +32,7 @@ namespace MediaLibraryBLL.Services
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 results = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).ToListAsync();
             }
@@ -44,7 +44,7 @@ namespace MediaLibraryBLL.Services
         {
             T result = default(T);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 result = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefaultAsync();
             }
@@ -56,7 +56,7 @@ namespace MediaLibraryBLL.Services
         {
             int result = default(int);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 entity.ModifyDate = DateTime.Now;
                 entity.CreateDate = DateTime.Now;
@@ -71,7 +71,7 @@ namespace MediaLibraryBLL.Services
         {
             int result = default(int);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 db.Set<T>().AddRange(entities);
                 result = await db.SaveChangesAsync();
@@ -84,7 +84,7 @@ namespace MediaLibraryBLL.Services
         {
             int result = default(int);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 DbSet<T> set = db.Set<T>();
                 T entity = await set.FindAsync(id);
@@ -100,7 +100,7 @@ namespace MediaLibraryBLL.Services
         {
             int result = default(int);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 db.Set<T>().Remove(entity);
                 result = await db.SaveChangesAsync();
@@ -115,7 +115,7 @@ namespace MediaLibraryBLL.Services
 
             if (expression != null)
             {
-                using (var db = new MediaLibraryContext())
+                using (var db = new MediaLibraryEntities())
                 {
                     DbSet<T> set = db.Set<T>();
                     set.RemoveRange(set.Where(expression));
@@ -134,7 +134,7 @@ namespace MediaLibraryBLL.Services
         {
             int result = default(int);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 DbSet<T> set = db.Set<T>();
                 set.RemoveRange(set);
@@ -148,7 +148,7 @@ namespace MediaLibraryBLL.Services
         {
             int result = default(int);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 entity.ModifyDate = DateTime.Now;
                 db.Set<T>().Add(entity);
@@ -163,7 +163,7 @@ namespace MediaLibraryBLL.Services
         {
             int result = default(int);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 result = expression != null ? await db.Set<T>().CountAsync(expression) : await db.Set<T>().CountAsync();
             }
@@ -175,7 +175,7 @@ namespace MediaLibraryBLL.Services
         {
             IEnumerable<T> result = Enumerable.Empty<T>();
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 db.Database.CommandTimeout = timeout;
                 result = await db.Database.SqlQuery<T>(sql, parameters).ToListAsync();
@@ -188,7 +188,7 @@ namespace MediaLibraryBLL.Services
         {
             int result = default(int);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 db.Database.CommandTimeout = timeout;
                 result = await db.Database.ExecuteSqlCommandAsync(sql, parameters);
@@ -201,7 +201,7 @@ namespace MediaLibraryBLL.Services
         {
             T result = default(T);
 
-            using (var db = new MediaLibraryContext())
+            using (var db = new MediaLibraryEntities())
             {
                 result = await db.Database.SqlQuery<T>(sql, parameters).SingleOrDefaultAsync();
             }

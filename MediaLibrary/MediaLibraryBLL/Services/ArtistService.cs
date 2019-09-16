@@ -7,10 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryDAL.Models;
 using MediaLibraryDAL.Services.Interfaces;
 using System.Linq.Expressions;
 using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryBLL.Services
 {

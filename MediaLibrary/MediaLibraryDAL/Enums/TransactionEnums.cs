@@ -8,7 +8,7 @@ namespace MediaLibraryDAL.Enums
 {
     public static class TransactionEnums
     {
-        public enum TransactionTypes
+        public enum TransactionTypes : int
         {
             /* Tracks: 0 - 50 */
             GetTracks = 0, GetTrack = 1, AddTrack = 2, RemoveTrack = 3, ReplaceTrack = 4, GetTrackFile = 5,
@@ -35,7 +35,7 @@ namespace MediaLibraryDAL.Enums
             None = -1
         }
 
-        public enum TransactionStatus
+        public enum TransactionStatus : int 
         {
             NotStarted,
             Started,

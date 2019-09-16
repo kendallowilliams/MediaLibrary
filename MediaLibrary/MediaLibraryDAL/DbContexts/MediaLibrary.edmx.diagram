@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8b5211e8965f47fcbe7a46b005ff599e" Name="Diagram1" >
+        <EntityTypeShape EntityType="MediaLibraryDAL.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.Album" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.Artist" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.Genre" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.Playlist" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.PodcastFile" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.PodcastItem" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.Podcast" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.TrackFile" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.TrackPath" Width="1.5" PointX="7.75" PointY="3.75" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.Track" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.Transaction" Width="1.5" PointX="9.75" PointY="0.75" />
+        <AssociationConnector Association="MediaLibraryDAL.FK_dbo_PodcastItems_dbo_PodcastFiles_File_Id" />
+        <AssociationConnector Association="MediaLibraryDAL.FK_dbo_PodcastItems_dbo_Podcasts_PodcastId" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
