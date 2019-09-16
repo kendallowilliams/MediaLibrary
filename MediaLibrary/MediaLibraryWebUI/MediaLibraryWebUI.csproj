@@ -44,6 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -105,12 +106,16 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\MefConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ControllerFactories\MefControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MusicController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resolvers\MefResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -131,6 +136,17 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Music\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MediaLibraryBLL\MediaLibraryBLL.csproj">
+      <Project>{337378f1-bf20-4749-bbdf-ccf9f3948847}</Project>
+      <Name>MediaLibraryBLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MediaLibraryDAL\MediaLibraryDAL.csproj">
+      <Project>{15905c13-faa9-4fe5-b6a0-359eb83cd9e3}</Project>
+      <Name>MediaLibraryDAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
