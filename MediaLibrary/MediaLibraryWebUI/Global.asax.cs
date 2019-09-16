@@ -1,8 +1,9 @@
-﻿using MediaLibraryWebUI.ContainerFactories;
+﻿using MediaLibraryWebApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -14,7 +15,7 @@ namespace MediaLibraryWebUI
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            
+            MefConfig.Register(GlobalConfiguration.Configuration);
         }
     }
 }

@@ -6,11 +6,11 @@ using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
-using MediaLibraryWebApi.Resolvers;
+using MediaLibraryWebUI.Resolvers;
 using System.Reflection;
 using MediaLibraryBLL.Services.Interfaces;
 
-namespace MediaLibraryWebApi
+namespace MediaLibraryWebUI
 {
     public static class MefConfig
     {
