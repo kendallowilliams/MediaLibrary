@@ -40,3 +40,6 @@
 /MediaLibrary/MediaLibraryWebUI/obj/Debug
 /MediaLibrary/MediaLibraryWebUI_OLD/bin
 /MediaLibrary/MediaLibraryWebUI_OLD/obj/Debug
+/MediaLibrary/MediaLibraryDAL/obj/Release
+/MediaLibrary/MediaLibraryWebApi/obj/Release
+/MediaLibrary/MediaLibraryWebUI/obj/Release
