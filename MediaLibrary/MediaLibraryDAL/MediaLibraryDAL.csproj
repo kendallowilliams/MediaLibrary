@@ -63,6 +63,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbContexts\Album.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Artist.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\FindAlbums_Result.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\FindArtists_Result.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\FindGenres_Result.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\FindPaths_Result.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\FindPodcastItems_Result.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\FindTracks_Result.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\FindTransactions_Result.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Genre.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\GetTrackFile_Result.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
     <Compile Include="DbContexts\MediaLibrary.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -77,6 +110,33 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaLibrary.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Path.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Playlist.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\PlaylistTrack.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Podcast.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\PodcastFile.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\PodcastItem.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Track.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\TrackFile.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\Transaction.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
     <Compile Include="Enums\TransactionEnums.cs" />
     <Compile Include="Models\BaseModel.cs" />
