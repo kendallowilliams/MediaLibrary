@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [dbo].[PlaylistTrack]
 (
-	[id] INT NOT NULL PRIMARY KEY, 
-    [playlist_id] INT NOT NULL, 
-    [track_id] INT NOT NULL, 
-    [create_date] DATETIME2 DEFAULT (getdate()) NOT NULL, 
-    [modify_date] DATETIME2 DEFAULT (getdate()) NOT NULL, 
-    CONSTRAINT [FK_playlist_track_track] FOREIGN KEY (track_id) REFERENCES track([Id]), 
-    CONSTRAINT [FK_playlist_track_playlist] FOREIGN KEY (playlist_id) REFERENCES playlist([Id])
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [PlaylistId] INT NOT NULL, 
+    [TrackId] INT NOT NULL, 
+    [CreateDate] DATETIME2 DEFAULT (getdate()) NOT NULL, 
+    [ModifyDate] DATETIME2 DEFAULT (getdate()) NOT NULL, 
+    CONSTRAINT [FK_playlist_track_track] FOREIGN KEY ([TrackId]) REFERENCES track([Id]), 
+    CONSTRAINT [FK_playlist_track_playlist] FOREIGN KEY ([PlaylistId]) REFERENCES playlist([Id])
 )

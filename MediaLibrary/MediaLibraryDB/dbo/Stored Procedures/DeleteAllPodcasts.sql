@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[DeleteAllPodcasts]
 AS
-	TRUNCATE TABLE podcast_file;
-	DELETE podcast_item;
+	TRUNCATE TABLE PodcastFile;
+	DELETE PodcastItem;
 	DELETE podcast;

@@ -9,8 +9,8 @@ AS
 	SELECT *
 	FROM track
 	WHERE title = @title OR
-		  path_id = @path_id OR
-		  artist_id = @artist_id OR
-		  album_id = @album_id OR
-		  genre_id = @genre_id OR
+		  PathId = @path_id OR
+		  ArtistId = @artist_id OR
+		  AlbumId = @album_id OR
+		  GenreId = @genre_id OR
 		  year = @year;

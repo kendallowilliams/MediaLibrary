@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[DeleteAllTracks]
 AS
-	TRUNCATE TABLE track_file;
+	TRUNCATE TABLE TrackFile;
 	DELETE track;
 	DELETE path;

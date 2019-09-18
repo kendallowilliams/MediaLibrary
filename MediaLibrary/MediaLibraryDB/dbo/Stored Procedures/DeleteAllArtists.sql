@@ -1,4 +1,4 @@
 ﻿CREATE PROCEDURE [dbo].[DeleteAllArtists]
 AS
-	UPDATE track SET artist_id = NULL;
+	UPDATE track SET ArtistId = NULL;
 	DELETE artist;

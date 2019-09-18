@@ -546,4 +546,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ModifyDate" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="e9e45ae3-f08f-4701-bd82-3c5f79d0975e" ChangeDateTime="09/18/2019 13:00:15">
+    <Property Name="ElementName" Value="[dbo].[PlaylistTrack].[id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlaylistTrack]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5150d4d9-6609-4a0d-b332-c4686cd18fd7" ChangeDateTime="09/18/2019 13:00:19">
+    <Property Name="ElementName" Value="[dbo].[PlaylistTrack].[playlist_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlaylistTrack]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PlaylistId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a29798e3-5634-41e2-a8d3-89c82e364d62" ChangeDateTime="09/18/2019 13:00:22">
+    <Property Name="ElementName" Value="[dbo].[PlaylistTrack].[track_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlaylistTrack]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TrackId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f4634e94-d998-4895-a0c8-20cd025daea3" ChangeDateTime="09/18/2019 13:00:29">
+    <Property Name="ElementName" Value="[dbo].[PlaylistTrack].[create_date]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlaylistTrack]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreateDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="190bf39f-d588-43a0-9a92-d918e16aa35c" ChangeDateTime="09/18/2019 13:00:34">
+    <Property Name="ElementName" Value="[dbo].[PlaylistTrack].[modify_date]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlaylistTrack]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ModifyDate" />
+  </Operation>
 </Operations>

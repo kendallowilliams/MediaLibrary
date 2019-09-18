@@ -8,10 +8,10 @@
 	@end_date DATETIME = NULL
 AS
 	SELECT *
-	FROM _transaction
+	FROM [Transaction]
 	WHERE status = @status OR
 		  message LIKE CONCAT('%',@message,'%') OR
-		  error_message LIKE CONCAT('%',@error_message,'%') OR
-		  status_message LIKE CONCAT('%',@status_message,'%') OR
+		  ErrorMessage LIKE CONCAT('%',@error_message,'%') OR
+		  StatusMessage LIKE CONCAT('%',@status_message,'%') OR
 		  type = @type OR
-		  create_date BETWEEN @start_date AND @end_date
+		  CreateDate BETWEEN @start_date AND @end_date

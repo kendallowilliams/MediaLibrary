@@ -6,6 +6,6 @@
 AS
 	SELECT * FROM album
 	WHERE title = @title OR 
-		  artist_id = @artist_id OR 
+		  ArtistId = @artist_id OR 
 		  year = @year OR 
-		  genre_id = @genre_id;
+		  GenreId = @genre_id;

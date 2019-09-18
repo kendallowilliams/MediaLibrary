@@ -2,5 +2,5 @@
 	@track_id int = 0
 AS
 	SELECT *
-	FROM track_file
-	WHERE track_id = @track_id;
+	FROM TrackFile
+	WHERE TrackId = @track_id;

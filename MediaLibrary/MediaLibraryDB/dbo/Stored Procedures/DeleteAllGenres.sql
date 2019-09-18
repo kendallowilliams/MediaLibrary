@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[DeleteAllGenres]
 AS
-	UPDATE track SET genre_id = NULL;
-	UPDATE album SET genre_id = NULL;
+	UPDATE track SET GenreId = NULL;
+	UPDATE album SET GenreId = NULL;
 	DELETE genre;
