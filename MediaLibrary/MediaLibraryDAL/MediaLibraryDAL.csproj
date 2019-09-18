@@ -63,18 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbContexts\Album.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\Artist.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\C__MigrationHistory.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\Genre.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
     <Compile Include="DbContexts\MediaLibrary.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -89,30 +77,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaLibrary.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\Playlist.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\Podcast.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\PodcastFile.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\PodcastItem.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\Track.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\TrackFile.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\TrackPath.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\Transaction.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
     <Compile Include="Enums\TransactionEnums.cs" />
     <Compile Include="Models\BaseModel.cs" />

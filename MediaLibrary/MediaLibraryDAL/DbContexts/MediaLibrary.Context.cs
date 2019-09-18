@@ -25,17 +25,5 @@ namespace MediaLibraryDAL.DbContexts
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<Album> Albums { get; set; }
-        public virtual DbSet<Artist> Artists { get; set; }
-        public virtual DbSet<Genre> Genres { get; set; }
-        public virtual DbSet<Playlist> Playlists { get; set; }
-        public virtual DbSet<PodcastFile> PodcastFiles { get; set; }
-        public virtual DbSet<PodcastItem> PodcastItems { get; set; }
-        public virtual DbSet<Podcast> Podcasts { get; set; }
-        public virtual DbSet<TrackFile> TrackFiles { get; set; }
-        public virtual DbSet<TrackPath> TrackPaths { get; set; }
-        public virtual DbSet<Track> Tracks { get; set; }
-        public virtual DbSet<Transaction> Transactions { get; set; }
     }
 }
