@@ -5,8 +5,8 @@
     [status_message] TEXT     NULL,
     [error_message]  TEXT     NULL,
     [type]           INT      NOT NULL,
-    [create_date]    DATETIME DEFAULT (getdate()) NOT NULL,
-    [modify_date]    DATETIME DEFAULT (getdate()) NOT NULL,
+    [create_date]    DATETIME2 DEFAULT (getdate()) NOT NULL,
+    [modify_date]    DATETIME2 DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([id] ASC)
 );
 

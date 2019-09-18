@@ -3,8 +3,8 @@
 	[track_id]	  INT			  NOT NULL,
     [type]        VARCHAR (128)   NOT NULL,
     [data]        VARBINARY (MAX) NOT NULL,
-    [create_date] DATETIME        DEFAULT (getdate()) NOT NULL,
-    [modify_date] DATETIME        DEFAULT (getdate()) NOT NULL,
+    [create_date] DATETIME2        DEFAULT (getdate()) NOT NULL,
+    [modify_date] DATETIME2        DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([id] ASC), 
     CONSTRAINT [FK_track_file_track] FOREIGN KEY (track_id) REFERENCES track(id)
 );
