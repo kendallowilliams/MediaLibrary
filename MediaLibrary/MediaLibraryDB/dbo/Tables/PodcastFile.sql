@@ -7,7 +7,7 @@
     [CreateDate] DATETIME2        DEFAULT (getdate()) NOT NULL,
     [ModifyDate] DATETIME2        DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_podcast_file_podcast_item] FOREIGN KEY ([PodcastItemId]) REFERENCES podcast_item([Id]),
-    CONSTRAINT [FK_podcast_file_podcast] FOREIGN KEY ([PodcastId]) REFERENCES podcast([Id])
+    CONSTRAINT [FK_podcast_file_podcast_item] FOREIGN KEY ([PodcastItemId]) REFERENCES PodcastItem([Id]),
+    CONSTRAINT [FK_podcast_file_podcast] FOREIGN KEY ([PodcastId]) REFERENCES Podcast([Id])
 );
 
