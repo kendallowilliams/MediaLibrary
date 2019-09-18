@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[playlist_track]
+﻿CREATE TABLE [dbo].[PlaylistTrack]
 (
 	[id] INT NOT NULL PRIMARY KEY, 
     [playlist_id] INT NOT NULL, 

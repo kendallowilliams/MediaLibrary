@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[track_file] (
+﻿CREATE TABLE [dbo].[TrackFile] (
     [Id]          INT             IDENTITY (1, 1) NOT NULL,
 	[TrackId]	  INT			  NOT NULL,
     [Type]        VARCHAR (128)   NOT NULL,

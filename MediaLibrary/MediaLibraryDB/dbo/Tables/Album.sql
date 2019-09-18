@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[album] (
+﻿CREATE TABLE [dbo].[Album] (
     [Id]          INT           IDENTITY (1, 1) NOT NULL,
     [Title]       VARCHAR (150) NOT NULL,
     [ArtistId]   INT           NULL,

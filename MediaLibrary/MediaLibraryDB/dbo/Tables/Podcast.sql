@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[podcast] (
+﻿CREATE TABLE [dbo].[Podcast] (
     [Id]               INT           IDENTITY (1, 1) NOT NULL,
     [Title]            VARCHAR (150) NOT NULL,
     [Url]              VARCHAR (MAX) NOT NULL,

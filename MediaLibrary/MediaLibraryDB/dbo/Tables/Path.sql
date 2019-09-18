@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[path] (
+﻿CREATE TABLE [dbo].[Path] (
     [Id]             INT           IDENTITY (1, 1) NOT NULL,
     [Location]       VARCHAR (256) NOT NULL,
     [LastScanDate] DATETIME      DEFAULT (getdate()) NOT NULL,
