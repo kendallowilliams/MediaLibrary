@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[artist] (
-    [id]          INT           IDENTITY (1, 1) NOT NULL,
-    [name]        VARCHAR (150) NOT NULL,
-    [create_date] DATETIME2      DEFAULT (getdate()) NOT NULL,
-    [modify_date] DATETIME2      DEFAULT (getdate()) NOT NULL,
-    PRIMARY KEY NONCLUSTERED ([id] ASC)
+    [Id]          INT           IDENTITY (1, 1) NOT NULL,
+    [Name]        VARCHAR (150) NOT NULL,
+    [CreateDate] DATETIME2      DEFAULT (getdate()) NOT NULL,
+    [ModifyDate] DATETIME2      DEFAULT (getdate()) NOT NULL,
+    PRIMARY KEY NONCLUSTERED ([Id] ASC)
 );
 

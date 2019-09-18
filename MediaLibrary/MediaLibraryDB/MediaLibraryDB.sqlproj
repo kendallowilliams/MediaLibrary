@@ -78,17 +78,20 @@
     <Build Include="dbo\Stored Procedures\FindTracks.sql" />
     <Build Include="dbo\Stored Procedures\FindTransactions.sql" />
     <Build Include="dbo\Stored Procedures\GetTrackFile.sql" />
-    <Build Include="dbo\Tables\_transaction.sql" />
-    <Build Include="dbo\Tables\album.sql" />
-    <Build Include="dbo\Tables\artist.sql" />
-    <Build Include="dbo\Tables\genre.sql" />
-    <Build Include="dbo\Tables\path.sql" />
-    <Build Include="dbo\Tables\playlist.sql" />
-    <Build Include="dbo\Tables\playlist_track.sql" />
-    <Build Include="dbo\Tables\podcast.sql" />
-    <Build Include="dbo\Tables\podcast_file.sql" />
-    <Build Include="dbo\Tables\podcast_item.sql" />
-    <Build Include="dbo\Tables\track.sql" />
-    <Build Include="dbo\Tables\track_file.sql" />
+    <Build Include="dbo\Tables\Transaction.sql" />
+    <Build Include="dbo\Tables\Album.sql" />
+    <Build Include="dbo\Tables\Artist.sql" />
+    <Build Include="dbo\Tables\Genre.sql" />
+    <Build Include="dbo\Tables\Path.sql" />
+    <Build Include="dbo\Tables\Playlist.sql" />
+    <Build Include="dbo\Tables\PlaylistTrack.sql" />
+    <Build Include="dbo\Tables\Podcast.sql" />
+    <Build Include="dbo\Tables\PodcastFile.sql" />
+    <Build Include="dbo\Tables\PodcastItem.sql" />
+    <Build Include="dbo\Tables\Track.sql" />
+    <Build Include="dbo\Tables\TrackFile.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="MediaLibraryDB.refactorlog" />
   </ItemGroup>
 </Project>
