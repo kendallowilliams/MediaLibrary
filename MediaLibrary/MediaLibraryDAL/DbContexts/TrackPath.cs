@@ -12,10 +12,10 @@ namespace MediaLibraryDAL.DbContexts
     using System;
     using System.Collections.Generic;
     
-    public partial class Path
+    public partial class TrackPath
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Path()
+        public TrackPath()
         {
             this.Tracks = new HashSet<Track>();
         }

@@ -30,7 +30,6 @@ namespace MediaLibraryDAL.DbContexts
         public virtual DbSet<Album> Albums { get; set; }
         public virtual DbSet<Artist> Artists { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
-        public virtual DbSet<Path> Paths { get; set; }
         public virtual DbSet<Playlist> Playlists { get; set; }
         public virtual DbSet<PlaylistTrack> PlaylistTracks { get; set; }
         public virtual DbSet<Podcast> Podcasts { get; set; }
@@ -39,6 +38,7 @@ namespace MediaLibraryDAL.DbContexts
         public virtual DbSet<Track> Tracks { get; set; }
         public virtual DbSet<TrackFile> TrackFiles { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TrackPath> TrackPaths { get; set; }
     
         public virtual int DeleteAllAlbums()
         {

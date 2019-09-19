@@ -11,10 +11,6 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Album: BaseModel
     {
-        public Album()
-        {
-        }
-
         public Album(int id, string title)
         {
             Id = id;

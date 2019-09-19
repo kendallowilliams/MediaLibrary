@@ -12,9 +12,7 @@ namespace MediaLibraryDAL.Models
     {
         [Key]
         public int Id { get; set; }
-        [Column("create_date")]
         public DateTime CreateDate { get; set; } = DateTime.Now;
-        [Column("modify_date")]
         public DateTime ModifyDate { get; set; } = DateTime.Now;
     }
 }

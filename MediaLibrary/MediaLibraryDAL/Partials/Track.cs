@@ -11,8 +11,6 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Track: BaseModel
     {
-        public Track() { }
-
         public Track(MediaData data, int? pathId, int? genreId, int? albumId, int? artistId)
         {
             Title = data.Title;
@@ -23,7 +21,7 @@ namespace MediaLibraryDAL.DbContexts
             ArtistId = artistId;
             Position = (int)data.Track;
             Year = (int)data.Year;
-            Duration = data.Duration;
+            Duration = (decimal)data.Duration;
             PlayCount = 0;
         }
     }
