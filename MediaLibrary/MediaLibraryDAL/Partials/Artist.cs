@@ -11,8 +11,6 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Artist: BaseModel
     {
-        public Artist() { }
-
         public Artist(string name)
         {
             Name = name;

@@ -11,8 +11,6 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Genre: BaseModel
     {
-        public Genre() { }
-
         public Genre(string name)
         {
             Name = name;
