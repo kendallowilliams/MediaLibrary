@@ -15,6 +15,6 @@
     PRIMARY KEY NONCLUSTERED ([Id] ASC),
     FOREIGN KEY ([AlbumId]) REFERENCES [dbo].[album] ([Id]),
     FOREIGN KEY ([ArtistId]) REFERENCES [dbo].[artist] ([Id]),
-    FOREIGN KEY ([PathId]) REFERENCES [dbo].[path] ([Id])
+    FOREIGN KEY ([PathId]) REFERENCES [dbo].[TrackPath] ([Id])
 );
 

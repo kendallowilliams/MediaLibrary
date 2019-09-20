@@ -111,9 +111,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MediaLibrary.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DbContexts\Path.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
     <Compile Include="DbContexts\Playlist.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
@@ -133,6 +130,9 @@
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
     <Compile Include="DbContexts\TrackFile.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DbContexts\TrackPath.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
     <Compile Include="DbContexts\Transaction.cs">

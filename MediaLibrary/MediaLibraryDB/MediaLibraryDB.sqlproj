@@ -82,7 +82,7 @@
     <Build Include="dbo\Tables\Album.sql" />
     <Build Include="dbo\Tables\Artist.sql" />
     <Build Include="dbo\Tables\Genre.sql" />
-    <Build Include="dbo\Tables\Path.sql" />
+    <Build Include="dbo\Tables\TrackPath.sql" />
     <Build Include="dbo\Tables\Playlist.sql" />
     <Build Include="dbo\Tables\PlaylistTrack.sql" />
     <Build Include="dbo\Tables\Podcast.sql" />

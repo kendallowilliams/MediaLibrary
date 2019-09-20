@@ -35,16 +35,6 @@
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
-        <EntityType Name="Path">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Location" Type="varchar" MaxLength="256" Nullable="false" />
-          <Property Name="LastScanDate" Type="datetime" Nullable="false" />
-          <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
-        </EntityType>
         <EntityType Name="Playlist">
           <Key>
             <PropertyRef Name="Id" />
@@ -133,6 +123,16 @@
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <EntityType Name="TrackPath">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="LastScanDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="Transaction">
           <Key>
             <PropertyRef Name="Id" />
@@ -206,11 +206,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__PathId__6E01572D">
-          <End Role="Path" Type="Self.Path" Multiplicity="0..1" />
+        <Association Name="FK__Track__PathId__05D8E0BE">
+          <End Role="TrackPath" Type="Self.TrackPath" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Path">
+            <Principal Role="TrackPath">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Track">
@@ -334,7 +334,6 @@
           <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Path" EntityType="Self.Path" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Playlist" EntityType="Self.Playlist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlaylistTrack" EntityType="Self.PlaylistTrack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Podcast" EntityType="Self.Podcast" Schema="dbo" store:Type="Tables" />
@@ -342,6 +341,7 @@
           <EntitySet Name="PodcastItem" EntityType="Self.PodcastItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TrackFile" EntityType="Self.TrackFile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrackPath" EntityType="Self.TrackPath" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Album__ArtistId__656C112C" Association="Self.FK__Album__ArtistId__656C112C">
             <End Role="Artist" EntitySet="Artist" />
@@ -363,8 +363,8 @@
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__PathId__6E01572D" Association="Self.FK__Track__PathId__6E01572D">
-            <End Role="Path" EntitySet="Path" />
+          <AssociationSet Name="FK__Track__PathId__05D8E0BE" Association="Self.FK__Track__PathId__05D8E0BE">
+            <End Role="TrackPath" EntitySet="TrackPath" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
           <AssociationSet Name="FK_playlist_track_playlist" Association="Self.FK_playlist_track_playlist">
@@ -396,7 +396,6 @@
           <EntitySet Name="Albums" EntityType="MediaLibraryDAL.Album" />
           <EntitySet Name="Artists" EntityType="MediaLibraryDAL.Artist" />
           <EntitySet Name="Genres" EntityType="MediaLibraryDAL.Genre" />
-          <EntitySet Name="Paths" EntityType="MediaLibraryDAL.Path" />
           <EntitySet Name="Playlists" EntityType="MediaLibraryDAL.Playlist" />
           <EntitySet Name="PlaylistTracks" EntityType="MediaLibraryDAL.PlaylistTrack" />
           <EntitySet Name="Podcasts" EntityType="MediaLibraryDAL.Podcast" />
@@ -419,10 +418,6 @@
           </AssociationSet>
           <AssociationSet Name="FK__Track__ArtistId__6D0D32F4" Association="MediaLibraryDAL.FK__Track__ArtistId__6D0D32F4">
             <End Role="Artist" EntitySet="Artists" />
-            <End Role="Track" EntitySet="Tracks" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Track__PathId__6E01572D" Association="MediaLibraryDAL.FK__Track__PathId__6E01572D">
-            <End Role="Path" EntitySet="Paths" />
             <End Role="Track" EntitySet="Tracks" />
           </AssociationSet>
           <AssociationSet Name="FK_playlist_track_playlist" Association="MediaLibraryDAL.FK_playlist_track_playlist">
@@ -453,15 +448,15 @@
           <FunctionImport Name="DeleteAllArtists" />
           <FunctionImport Name="DeleteAllGenres" />
           <FunctionImport Name="DeleteAllPlaylists">
-            <Parameter Name="playlist_id" Mode="In" Type="Int32" />
+          <Parameter Name="playlist_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteAllPodcasts" />
           <FunctionImport Name="DeleteAllTracks" />
           <FunctionImport Name="DeletePlaylist">
-            <Parameter Name="playlist_id" Mode="In" Type="Int32" />
+          <Parameter Name="playlist_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeletePodcast" ReturnType="Collection(Int32)">
-            <Parameter Name="PodcastId" Mode="In" Type="Int32" />
+          <Parameter Name="PodcastId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="FindAlbums" ReturnType="Collection(MediaLibraryDAL.FindAlbums_Result)">
             <Parameter Name="title" Mode="In" Type="String" />
@@ -470,16 +465,16 @@
             <Parameter Name="genre_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="FindArtists" ReturnType="Collection(MediaLibraryDAL.FindArtists_Result)">
-            <Parameter Name="name" Mode="In" Type="String" />
+          <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FindGenres" ReturnType="Collection(MediaLibraryDAL.FindGenres_Result)">
-            <Parameter Name="name" Mode="In" Type="String" />
+          <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FindPaths" ReturnType="Collection(MediaLibraryDAL.FindPaths_Result)">
-            <Parameter Name="location" Mode="In" Type="String" />
+          <Parameter Name="location" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FindPodcastItems" ReturnType="Collection(MediaLibraryDAL.FindPodcastItems_Result)">
-            <Parameter Name="podcast_id" Mode="In" Type="Int32" />
+          <Parameter Name="podcast_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="FindTracks" ReturnType="Collection(MediaLibraryDAL.FindTracks_Result)">
             <Parameter Name="title" Mode="In" Type="Int32" />
@@ -499,8 +494,13 @@
             <Parameter Name="end_date" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetTrackFile" ReturnType="Collection(MediaLibraryDAL.GetTrackFile_Result)">
-            <Parameter Name="track_id" Mode="In" Type="Int32" />
+          <Parameter Name="track_id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="TrackPaths" EntityType="MediaLibraryDAL.TrackPath" />
+          <AssociationSet Name="FK__Track__PathId__05D8E0BE" Association="MediaLibraryDAL.FK__Track__PathId__05D8E0BE">
+            <End Role="TrackPath" EntitySet="TrackPaths" />
+            <End Role="Track" EntitySet="Tracks" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -537,17 +537,6 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Albums" Relationship="MediaLibraryDAL.FK__Album__GenreId__66603565" FromRole="Genre" ToRole="Album" />
-        </EntityType>
-        <EntityType Name="Path">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Location" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="LastScanDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
-          <NavigationProperty Name="Tracks" Relationship="MediaLibraryDAL.FK__Track__PathId__6E01572D" FromRole="Path" ToRole="Track" />
         </EntityType>
         <EntityType Name="Playlist">
           <Key>
@@ -636,9 +625,9 @@
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Album" Relationship="MediaLibraryDAL.FK__Track__AlbumId__6C190EBB" FromRole="Track" ToRole="Album" />
           <NavigationProperty Name="Artist" Relationship="MediaLibraryDAL.FK__Track__ArtistId__6D0D32F4" FromRole="Track" ToRole="Artist" />
-          <NavigationProperty Name="Path" Relationship="MediaLibraryDAL.FK__Track__PathId__6E01572D" FromRole="Track" ToRole="Path" />
           <NavigationProperty Name="PlaylistTracks" Relationship="MediaLibraryDAL.FK_playlist_track_track" FromRole="Track" ToRole="PlaylistTrack" />
           <NavigationProperty Name="TrackFiles" Relationship="MediaLibraryDAL.FK_track_file_track" FromRole="Track" ToRole="TrackFile" />
+          <NavigationProperty Name="TrackPath" Relationship="MediaLibraryDAL.FK__Track__PathId__05D8E0BE" FromRole="Track" ToRole="TrackPath" />
         </EntityType>
         <EntityType Name="TrackFile">
           <Key>
@@ -710,18 +699,6 @@
             </Principal>
             <Dependent Role="Track">
               <PropertyRef Name="ArtistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Track__PathId__6E01572D">
-          <End Type="MediaLibraryDAL.Path" Role="Path" Multiplicity="0..1" />
-          <End Type="MediaLibraryDAL.Track" Role="Track" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Path">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Track">
-              <PropertyRef Name="PathId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -869,6 +846,29 @@
           <Property Type="DateTime" Name="CreateDate" Nullable="false" />
           <Property Type="DateTime" Name="ModifyDate" Nullable="false" />
         </ComplexType>
+        <EntityType Name="TrackPath">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="LastScanDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Tracks" Relationship="MediaLibraryDAL.FK__Track__PathId__05D8E0BE" FromRole="TrackPath" ToRole="Track" />
+        </EntityType>
+        <Association Name="FK__Track__PathId__05D8E0BE">
+          <End Type="MediaLibraryDAL.TrackPath" Role="TrackPath" Multiplicity="0..1" />
+          <End Type="MediaLibraryDAL.Track" Role="Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TrackPath">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="PathId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -906,17 +906,6 @@
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Paths">
-            <EntityTypeMapping TypeName="MediaLibraryDAL.Path">
-              <MappingFragment StoreEntitySet="Path">
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastScanDate" ColumnName="LastScanDate" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1142,6 +1131,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="TrackPaths">
+            <EntityTypeMapping TypeName="MediaLibraryDAL.TrackPath">
+              <MappingFragment StoreEntitySet="TrackPath">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastScanDate" ColumnName="LastScanDate" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

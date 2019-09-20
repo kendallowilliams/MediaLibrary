@@ -37,10 +37,10 @@ namespace MediaLibraryDAL.DbContexts
     
         public virtual Album Album { get; set; }
         public virtual Artist Artist { get; set; }
-        public virtual Path Path { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TrackFile> TrackFiles { get; set; }
+        public virtual TrackPath TrackPath { get; set; }
     }
 }

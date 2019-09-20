@@ -16,7 +16,7 @@ namespace MediaLibraryDAL.DbContexts
             Title = title;
             Url = url;
             Description = description;
-            Length = length;
+            Length = (int)length;
             PublishDate = publishDate;
             PodcastId = podcastId;
         }

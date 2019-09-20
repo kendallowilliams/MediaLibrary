@@ -11,11 +11,9 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class TrackPath: BaseModel
     {
-        public TrackPath() { }
-
         public TrackPath(string location)
         {
-            Location = location;
+            //Location = location;
         }
     }
 }
