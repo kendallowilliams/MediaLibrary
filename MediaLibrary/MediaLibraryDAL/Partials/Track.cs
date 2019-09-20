@@ -21,7 +21,7 @@ namespace MediaLibraryDAL.DbContexts
             ArtistId = artistId;
             Position = (int)data.Track;
             Year = (int)data.Year;
-            Duration = data.Duration;
+            Duration = (decimal)data.Duration;
             PlayCount = 0;
         }
     }
