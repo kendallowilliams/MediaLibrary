@@ -196,6 +196,9 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Music\Index.cshtml" />
+    <Content Include="Views\Music\Songs.cshtml" />
+    <Content Include="Views\Music\Artists.cshtml" />
+    <Content Include="Views\Music\Albums.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
