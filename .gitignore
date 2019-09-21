@@ -43,3 +43,5 @@
 /MediaLibrary/MediaLibraryDAL/obj/Release
 /MediaLibrary/MediaLibraryWebApi/obj/Release
 /MediaLibrary/MediaLibraryWebUI/obj/Release
+/MediaLibrary/MediaLibraryBLL/bin/Release
+/MediaLibrary/MediaLibraryDAL/bin/Release

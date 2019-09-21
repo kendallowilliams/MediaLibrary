@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export("Home", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class HomeController : Controller
     {
         [ImportingConstructor]

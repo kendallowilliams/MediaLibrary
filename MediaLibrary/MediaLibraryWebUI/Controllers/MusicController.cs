@@ -13,7 +13,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export("Music", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class MusicController : Controller
     {
         private readonly IDataService dataService;

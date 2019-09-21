@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MediaLibraryWebUI.ControllerFactory;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -15,8 +17,9 @@ namespace MediaLibraryWebUI
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            MefConfig.Register(GlobalConfiguration.Configuration);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ControllerBuilder.Current.SetControllerFactory(new MefControllerFactory(
+                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin")));
         }
     }
 }
