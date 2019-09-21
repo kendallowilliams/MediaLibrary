@@ -1,24 +1,27 @@
 ﻿@model MediaLibraryWebUI.Models.MusicViewModel
 
 <div id="accordion">
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Collapsible Group Item #1
-                </button>
-            </h5>
-        </div>
+    @foreach (var item in Model.Songs.Select((group, index) => new { Index = index, Group = group }))
+    {
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        @(item.Group.Key)
+                    </button>
+                </h5>
+            </div>
 
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-                <ul class="list-group">
-                    @foreach (var song in Model.Songs)
-                    {
-                        <li class="list-group-item">@(song.Title)</li>
-                    }
-                </ul>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var song in item.Group)
+                        {
+                            <li class="list-group-item">@(song.Title)</li>
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
