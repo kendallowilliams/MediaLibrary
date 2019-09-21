@@ -11,12 +11,12 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class PodcastItem: BaseModel
     {
-        public PodcastItem(string title, string description, string url, int length, DateTime publishDate, int podcastId)
+        public PodcastItem(string title, string description, string url, long length, DateTime publishDate, int podcastId)
         {
             Title = title;
             Url = url;
             Description = description;
-            Length = length;
+            Length = (int)length;
             PublishDate = publishDate;
             PodcastId = podcastId;
         }
