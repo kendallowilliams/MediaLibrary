@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaLibraryWebUI.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -18,7 +19,9 @@ namespace MediaLibraryWebUI.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            HomeViewModel model = new HomeViewModel();
+
+            return View(model);
         }
     }
 }

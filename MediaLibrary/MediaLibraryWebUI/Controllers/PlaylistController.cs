@@ -17,21 +17,21 @@ namespace MediaLibraryWebUI.Controllers
     {
         private readonly IPlaylistService playlistService;
         private readonly IDataService dataService;
+        private readonly PlaylistViewModel playlistViewModel;
 
         [ImportingConstructor]
-        public PlaylistController(IPlaylistService playlistService, IDataService dataService)
+        public PlaylistController(IPlaylistService playlistService, IDataService dataService, PlaylistViewModel playlistViewModel)
         {
             this.playlistService = playlistService;
             this.dataService = dataService;
+            this.playlistViewModel = playlistViewModel;
         }
 
         public async Task<ActionResult> Index()
         {
-            PlaylistViewModel model = new PlaylistViewModel();
+            playlistViewModel.Playlists = await dataService.GetList<Playlist>();
 
-            model.Playlists = await dataService.GetList<Playlist>();
-
-            return View(model);
+            return View(playlistViewModel);
         }
     }
 }

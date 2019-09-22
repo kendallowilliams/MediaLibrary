@@ -1,7 +1,7 @@
 ﻿@model MediaLibraryWebUI.Models.MusicViewModel
 
 <div id="accordion-artists">
-    @foreach (var item in Model.Artists.Select((group, index) => new { Index = index, Group = group }))
+    @foreach (var item in Model.ArtistGroups.Select((group, index) => new { Index = index, Group = group }))
     {
         <div class="card">
             <div class="card-header" id="heading-artists-@(item.Index)">

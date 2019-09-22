@@ -18,6 +18,9 @@ namespace MediaLibraryWebUI.Services
     {
         private Func<string, string> getLabel;
         private readonly IDataService dataService;
+        private IEnumerable<Track> songs;
+        private IEnumerable<Artist> artists;
+        private IEnumerable<Album> albums;
 
         [ImportingConstructor]
         public MusicService(IDataService dataService)
@@ -36,10 +39,14 @@ namespace MediaLibraryWebUI.Services
             };
         }
 
+        public async Task<IEnumerable<Track>> Songs() => songs == null ? songs = await dataService.GetList<Track>() : songs;
+        public async Task<IEnumerable<Artist>> Artists() => songs == null ? artists = await dataService.GetList<Artist>() : artists;
+        public async Task<IEnumerable<Album>> Albums() => songs == null ? albums = await dataService.GetList<Album>() : albums;
+
         public async Task<IEnumerable<IGrouping<string, Track>>> GetSongGroups(SongSort sort)
         {
             IEnumerable<IGrouping<string, Track>> groups = null;
-            IEnumerable<Track> songs = await dataService.GetList<Track>();
+            if (songs == null) /*then*/ songs = await dataService.GetList<Track>();
 
             switch(sort)
             {
@@ -54,7 +61,7 @@ namespace MediaLibraryWebUI.Services
         public async Task<IEnumerable<IGrouping<string, Album>>> GetAlbumGroups(AlbumSort sort)
         {
             IEnumerable<IGrouping<string, Album>> groups = null;
-            IEnumerable<Album> albums = await dataService.GetList<Album>();
+            if (albums == null) /*then*/ albums = await dataService.GetList<Album>();
 
             switch (sort)
             {
@@ -65,10 +72,11 @@ namespace MediaLibraryWebUI.Services
 
             return groups;
         }
+
         public async Task<IEnumerable<IGrouping<string, Artist>>> GetArtistGroups(ArtistSort sort)
         {
             IEnumerable<IGrouping<string, Artist>> groups = null;
-            IEnumerable<Artist> artists = await dataService.GetList<Artist>();
+            if (artists == null) /*then*/ artists = await dataService.GetList<Artist>();
 
             switch (sort)
             {

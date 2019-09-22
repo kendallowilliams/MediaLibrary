@@ -10,6 +10,9 @@ namespace MediaLibraryWebUI.Services.Interfaces
 {
     public interface IMusicService
     {
+        Task<IEnumerable<Track>> Songs();
+        Task<IEnumerable<Artist>> Artists();
+        Task<IEnumerable<Album>> Albums();
         Task<IEnumerable<IGrouping<string, Track>>> GetSongGroups(SongSort sort = default(SongSort));
         Task<IEnumerable<IGrouping<string, Album>>> GetAlbumGroups(AlbumSort sort = default(AlbumSort));
         Task<IEnumerable<IGrouping<string, Artist>>> GetArtistGroups(ArtistSort sort = default(ArtistSort));

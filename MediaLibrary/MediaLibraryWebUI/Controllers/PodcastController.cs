@@ -17,21 +17,21 @@ namespace MediaLibraryWebUI.Controllers
     {
         private readonly IPodcastService podcastService;
         private readonly IDataService dataService;
+        private readonly PodcastViewModel podcastViewModel;
 
         [ImportingConstructor]
-        public PodcastController(IPodcastService podcastService, IDataService dataService)
+        public PodcastController(IPodcastService podcastService, IDataService dataService, PodcastViewModel podcastViewModel)
         {
             this.podcastService = podcastService;
             this.dataService = dataService;
+            this.podcastViewModel = podcastViewModel;
         }
 
         public async Task<ActionResult> Index()
         {
-            PodcastViewModel model = new PodcastViewModel();
+            podcastViewModel.Podcasts = await dataService.GetList<Podcast>();
 
-            model.Podcasts = await dataService.GetList<Podcast>();
-
-            return View(model);
+            return View(podcastViewModel);
         }
     }
 }

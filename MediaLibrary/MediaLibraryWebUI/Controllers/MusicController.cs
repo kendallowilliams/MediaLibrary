@@ -21,23 +21,26 @@ namespace MediaLibraryWebUI.Controllers
     {
         private readonly IDataService dataService;
         private readonly IMusicService musicService;
+        private readonly MusicViewModel musicViewModel;
 
         [ImportingConstructor]
-        public MusicController(IDataService dataService, IMusicService musicService)
+        public MusicController(IDataService dataService, IMusicService musicService, MusicViewModel musicViewModel)
         {
             this.dataService = dataService;
             this.musicService = musicService;
+            this.musicViewModel = musicViewModel;
     }
         
         public async Task<ActionResult> Index()
         {
-            MusicViewModel model = new MusicViewModel();
+            musicViewModel.Albums = await musicService.Albums();
+            musicViewModel.Artists = await musicService.Artists();
+            musicViewModel.Songs = await musicService.Songs();
+            musicViewModel.SongGroups = await musicService.GetSongGroups();
+            musicViewModel.ArtistGroups = await musicService.GetArtistGroups();
+            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups();
 
-            model.Songs = await musicService.GetSongGroups();
-            model.Artists = await musicService.GetArtistGroups();
-            model.Albums = await musicService.GetAlbumGroups();
-
-            return View(model);
+            return View(musicViewModel);
         }
 
         public async Task<ActionResult> File(int id)
