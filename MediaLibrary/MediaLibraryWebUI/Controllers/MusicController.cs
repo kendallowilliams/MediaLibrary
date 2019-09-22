@@ -30,9 +30,9 @@ namespace MediaLibraryWebUI.Controllers
         {
             MusicViewModel model = new MusicViewModel();
 
-            model.Songs = musicService.GetSongGroups(await dataService.GetList<Track>());
-            model.Artists = musicService.GetArtistGroups(await dataService.GetList<Artist>());
-            model.Albums = musicService.GetAlbumGroups(await dataService.GetList<Album>());
+            model.Songs = await musicService.GetSongGroups();
+            model.Artists = await musicService.GetArtistGroups();
+            model.Albums = await musicService.GetAlbumGroups();
 
             return View(model);
         }

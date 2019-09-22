@@ -1,22 +1,28 @@
-﻿using MediaLibraryDAL.DbContexts;
+﻿using Fody;
+using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Services
 {
+    [ConfigureAwait(false)]
     [Export(typeof(IMusicService))]
     public class MusicService : IMusicService
     {
         private Func<string, string> getLabel;
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public MusicService()
+        public MusicService(IDataService dataService)
         {
+            this.dataService = dataService;
             getLabel = title =>
             {
                 char first = title.ToUpper().First();
@@ -30,9 +36,10 @@ namespace MediaLibraryWebUI.Services
             };
         }
 
-        public IEnumerable<IGrouping<string, Track>> GetSongGroups(IEnumerable<Track> songs, SongSort sort)
+        public async Task<IEnumerable<IGrouping<string, Track>>> GetSongGroups(SongSort sort)
         {
-            IEnumerable < IGrouping<string, Track>> groups = null;
+            IEnumerable<IGrouping<string, Track>> groups = null;
+            IEnumerable<Track> songs = await dataService.GetList<Track>();
 
             switch(sort)
             {
@@ -44,9 +51,10 @@ namespace MediaLibraryWebUI.Services
             return groups;
         }
 
-        public IEnumerable<IGrouping<string, Album>> GetAlbumGroups(IEnumerable<Album> albums, AlbumSort sort)
+        public async Task<IEnumerable<IGrouping<string, Album>>> GetAlbumGroups(AlbumSort sort)
         {
             IEnumerable<IGrouping<string, Album>> groups = null;
+            IEnumerable<Album> albums = await dataService.GetList<Album>();
 
             switch (sort)
             {
@@ -57,9 +65,10 @@ namespace MediaLibraryWebUI.Services
 
             return groups;
         }
-        public IEnumerable<IGrouping<string, Artist>> GetArtistGroups(IEnumerable<Artist> artists, ArtistSort sort)
+        public async Task<IEnumerable<IGrouping<string, Artist>>> GetArtistGroups(ArtistSort sort)
         {
             IEnumerable<IGrouping<string, Artist>> groups = null;
+            IEnumerable<Artist> artists = await dataService.GetList<Artist>();
 
             switch (sort)
             {
