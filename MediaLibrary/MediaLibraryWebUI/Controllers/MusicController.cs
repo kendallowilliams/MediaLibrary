@@ -1,11 +1,14 @@
 ﻿using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
+using MediaLibraryWebUI.ActionResults;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -39,7 +42,20 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> File(int id)
         {
-            return null;
+            TrackFile file = await dataService.Get<TrackFile>(item => item.Id == id);
+            string range = Request.Headers["Range"];
+            ActionResult result = null;
+
+            if (file != null)
+            {
+                result = new RangeFileContentResult(file?.Data, range, file.Type);
+            }
+            else
+            {
+                result = new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            return result;
         }
     }
 }
