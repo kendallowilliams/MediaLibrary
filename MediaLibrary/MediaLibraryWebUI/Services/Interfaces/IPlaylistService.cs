@@ -10,6 +10,5 @@ namespace MediaLibraryWebUI.Services.Interfaces
 {
     public interface IPlaylistService
     {
-        Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort = default(PlaylistSort));
     }
 }

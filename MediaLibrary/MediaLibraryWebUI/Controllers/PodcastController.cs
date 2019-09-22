@@ -1,4 +1,6 @@
-﻿using MediaLibraryWebUI.Models;
+﻿using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
+using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,18 +16,20 @@ namespace MediaLibraryWebUI.Controllers
     public class PodcastController : Controller
     {
         private readonly IPodcastService podcastService;
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PodcastController(IPodcastService podcastService)
+        public PodcastController(IPodcastService podcastService, IDataService dataService)
         {
             this.podcastService = podcastService;
+            this.dataService = dataService;
         }
 
         public async Task<ActionResult> Index()
         {
             PodcastViewModel model = new PodcastViewModel();
 
-            model.Podcasts = await podcastService.GetPodcastGroups();
+            model.Podcasts = await dataService.GetList<Podcast>();
 
             return View(model);
         }

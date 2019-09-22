@@ -8,13 +8,13 @@ namespace MediaLibraryWebUI.Models
 {
     public class PlaylistViewModel
     {
-        private IEnumerable<IGrouping<string, Playlist>> playlists;
+        private IEnumerable<Playlist> playlists;
 
         public PlaylistViewModel()
         {
-            playlists = Enumerable.Empty<IGrouping<string, Playlist>>();
+            playlists = Enumerable.Empty<Playlist>();
         }
 
-        public IEnumerable<IGrouping<string, Playlist>> Playlists { get => playlists; set => playlists = value; }
+        public IEnumerable<Playlist> Playlists { get => playlists; set => playlists = value; }
     }
 }

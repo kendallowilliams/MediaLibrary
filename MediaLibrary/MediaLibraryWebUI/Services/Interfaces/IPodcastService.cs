@@ -10,6 +10,5 @@ namespace MediaLibraryWebUI.Services.Interfaces
 {
     public interface IPodcastService
     {
-        Task<IEnumerable<IGrouping<string, Podcast>>> GetPodcastGroups(PodcastSort sort = default(PodcastSort));
     }
 }

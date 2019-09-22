@@ -1,7 +1,25 @@
-﻿
+﻿@model MediaLibraryWebUI.Models.PodcastViewModel
+
 @{
     ViewBag.Title = "Podcasts";
 }
 
-<h2>Podcasts</h2>
+@if (Model.Podcasts.Any())
+{
+    <div class="card">
+        <div class="card-header">
+            Podcasts
+        </div>
+        <ul class="list-group list-group-flush">
+            @foreach (var podcast in Model.Podcasts)
+            {
+                <li class="list-group-item">@(podcast.Title)</li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <div>No podcasts.</div>
+}
 

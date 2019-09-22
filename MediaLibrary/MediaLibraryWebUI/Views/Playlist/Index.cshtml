@@ -1,7 +1,24 @@
-﻿
+﻿@model MediaLibraryWebUI.Models.PlaylistViewModel
+
 @{
     ViewBag.Title = "Playlists";
 }
 
-<h2>Playlists</h2>
-
+@if (Model.Playlists.Any())
+{
+    <div class="card">
+        <div class="card-header">
+            Playlists
+        </div>
+        <ul class="list-group list-group-flush">
+            @foreach (var playlist in Model.Playlists)
+            {
+                <li class="list-group-item">@(playlist.Name)</li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <div>No playlists.</div>
+}

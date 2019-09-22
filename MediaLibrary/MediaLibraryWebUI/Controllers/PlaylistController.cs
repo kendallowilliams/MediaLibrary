@@ -1,4 +1,6 @@
-﻿using MediaLibraryWebUI.Models;
+﻿using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
+using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,18 +16,20 @@ namespace MediaLibraryWebUI.Controllers
     public class PlaylistController : Controller
     {
         private readonly IPlaylistService playlistService;
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PlaylistController(IPlaylistService playlistService)
+        public PlaylistController(IPlaylistService playlistService, IDataService dataService)
         {
             this.playlistService = playlistService;
+            this.dataService = dataService;
         }
 
         public async Task<ActionResult> Index()
         {
             PlaylistViewModel model = new PlaylistViewModel();
 
-            model.Playlists = await playlistService.GetPlaylistGroups();
+            model.Playlists = await dataService.GetList<Playlist>();
 
             return View(model);
         }
