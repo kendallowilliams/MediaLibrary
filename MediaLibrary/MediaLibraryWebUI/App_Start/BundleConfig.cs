@@ -17,7 +17,7 @@ namespace MediaLibraryWebUI
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/popperjs").Include(
-                      "~/Scripts/popper.js"));
+                      "~/Scripts/umd/popper.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
