@@ -12,7 +12,7 @@
                 </h5>
             </div>
 
-            <div id="collapse-albums-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-artists-@(item.Index)" data-parent="#accordion-artists">
+            <div id="collapse-artists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-artists-@(item.Index)" data-parent="#accordion-artists">
                 <ul class="list-group list-group-flush">
                     @foreach (var artist in item.Group)
                     {
