@@ -1,1 +1,25 @@
-﻿
+﻿@model MediaLibraryWebUI.Models.MusicViewModel
+
+<div id="accordion-artists">
+    @foreach (var item in Model.Artists.Select((group, index) => new { Index = index, Group = group }))
+    {
+        <div class="card">
+            <div class="card-header" id="heading-artists-@(item.Index)">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-artists-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-artists-@(item.Index)">
+                        @(item.Group.Key)
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapse-albums-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-artists-@(item.Index)" data-parent="#accordion-artists">
+                <ul class="list-group list-group-flush">
+                    @foreach (var artist in item.Group)
+                    {
+                        <li class="list-group-item">@(artist.Name)</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+</div>
