@@ -174,11 +174,15 @@
     <Compile Include="ControllerFactory\MefControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusicController.cs" />
+    <Compile Include="Controllers\PlaylistController.cs" />
+    <Compile Include="Controllers\PodcastController.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\MusicViewModel.cs" />
+    <Compile Include="Models\PlaylistViewModel.cs" />
+    <Compile Include="Models\PodcastViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\IMusicService.cs" />
     <Compile Include="Services\MusicService.cs" />
@@ -203,6 +207,8 @@
     <Content Include="Views\Music\Songs.cshtml" />
     <Content Include="Views\Music\Artists.cshtml" />
     <Content Include="Views\Music\Albums.cshtml" />
+    <Content Include="Views\Podcast\Index.cshtml" />
+    <Content Include="Views\Playlist\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
