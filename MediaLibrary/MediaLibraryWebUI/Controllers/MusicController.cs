@@ -36,5 +36,10 @@ namespace MediaLibraryWebUI.Controllers
 
             return View(model);
         }
+
+        public async Task<ActionResult> File(int id)
+        {
+            return null;
+        }
     }
 }
