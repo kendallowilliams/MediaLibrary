@@ -4,32 +4,96 @@
     ViewBag.Title = "Playlists";
 }
 
-@if (Model.Playlists.Any())
-{
-    <div id="accordion-playlists">
-        @foreach (var playlist in Model.Playlists)
-        {
-            <div class="card">
-                <div class="card-header" id="heading-albums-@(playlist.Id)">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-albums-@(playlist.Id)" aria-expanded="@(playlist.Id == 0 ? "true" : "false")" aria-controls="collapse-albums-@(playlist.Id)">
-                            @(playlist.Name)
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapse-albums-@(playlist.Id)" class="collapse @(playlist.Id == 0 ? "show" : "")" aria-labelledby="heading-albums-@(playlist.Id)" data-parent="#accordion-albums">
-                    <ul class="list-group list-group-flush">
-                        @foreach (var song in Enumerable.Empty<object>())
-                        {
-                        }
-                    </ul>
-                </div>
-            </div>
-        }
+<h2>Playlists</h2>
+<div>
+    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPlaylist"><i class="fa fa-plus"></i></button>
+    <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item" href="@Url.Action("Sort", "Playlist", new { sort = Enums.PlaylistSort.DateModified })">Date modified</a>
+            <a class="dropdown-item" href="@Url.Action("Sort", "Playlist", new { sort = Enums.PlaylistSort.AtoZ })">A to Z</a>
+        </div>
     </div>
+</div>
+<hr />
+
+@if (Model.PlaylistGroups.Any())
+{
+    foreach (var item in Model.PlaylistGroups.Select((group, index) => new { Index = index, Group = group }))
+    {
+        <div class="card">
+            <div class="card-header" id="heading-playlists-@(item.Index)">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-playlists-@(item.Index)">
+                        @(item.Group.Key)
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-playlists-@(item.Index)" data-parent="#accordion-playlists">
+                <ul class="list-group list-group-flush">
+                    @foreach (var playlist in item.Group)
+                    {
+                        <li class="list-group-item">
+                            <div class="media">
+                                <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(playlist.Name)">
+                                <div class="media-body">
+                                    <h5 class="mt-0">@(playlist.Name)</h5>
+                                    <span>@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</span>
+                                </div>
+                                <div>
+                                    <a class="btn btn-outline-secondary" href="@(Url.Action("Get", "Playlist", new { playlist.Id }))"><i class="fa fa-list"></i></a>
+                                    <a class="btn btn-outline-danger" href="@(Url.Action("RemoveTrack", "Playlist", new {  }))"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
 }
 else
 {
     <div>No playlists.</div>
+}
+
+<div class="modal fade" id="modalNewPlaylist" tabindex="-1" role="dialog" aria-labelledby="modalNewPlaylistTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNewPlaylistTitle">New Playlist</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formNewPlaylist" method="post" action="@Url.Action("AddPlaylist", "Playlist")" on>
+                    <div class="form-group">
+                        <label for="txtNewPlaylist">Playlist</label>
+                        <input type="text" class="form-control" id="txtNewPlaylist" name="playlistName" placeholder="Playlist name">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addNewPlaylist()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $('#modalNewPlaylist').on('show.bs.modal', function (e) {
+            $('#formNewPlaylist').trigger('reset');
+        })
+
+        function addNewPlaylist() {
+            $('#formNewPlaylist').trigger('submit');
+            $('#modalNewPlaylist').modal('hide');
+        }
+    </script>
 }

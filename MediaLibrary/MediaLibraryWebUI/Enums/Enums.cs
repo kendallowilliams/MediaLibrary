@@ -11,6 +11,6 @@ namespace MediaLibraryWebUI
         public enum ArtistSort { AtoZ = 0 }
         public enum AlbumSort { AtoZ = 0 }
         public enum PodcastSort { AtoZ = 0 }
-        public enum PlaylistSort { AtoZ = 0 }
+        public enum PlaylistSort { AtoZ = 0, DateModified }
     }
 }

@@ -10,16 +10,18 @@ namespace MediaLibraryWebUI.Models
     [Export]
     public class PlaylistViewModel
     {
-        private IEnumerable<Playlist> playlists;
+        private IEnumerable<IGrouping<string, Playlist>> playlistGroups;
         private readonly HomeViewModel homeViewModel;
+        private Playlist selectedPlaylist;
 
         [ImportingConstructor]
         public PlaylistViewModel(HomeViewModel homeViewModel)
         {
-            playlists = Enumerable.Empty<Playlist>();
+            playlistGroups = Enumerable.Empty<IGrouping<string, Playlist>>();
             this.homeViewModel = homeViewModel;
         }
-
-        public IEnumerable<Playlist> Playlists { get => playlists; set => playlists = value; }
+        
+        public Playlist SelectedPlaylist { get => selectedPlaylist; set => selectedPlaylist = value; }
+        public IEnumerable<IGrouping<string, Playlist>> PlaylistGroups { get => playlistGroups; set => playlistGroups = value; }
     }
 }

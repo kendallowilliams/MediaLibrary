@@ -229,6 +229,7 @@
     <Content Include="Views\Music\Albums.cshtml" />
     <Content Include="Views\Podcast\Index.cshtml" />
     <Content Include="Views\Playlist\Index.cshtml" />
+    <Content Include="Views\Playlist\Playlist.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

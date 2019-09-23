@@ -142,6 +142,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Interfaces\IDataModel.cs" />
     <Compile Include="Models\MediaData.cs" />
+    <Compile Include="Partials\PlaylistTrack.cs" />
     <Compile Include="Partials\PodcastFile.cs" />
     <Compile Include="Partials\PodcastItem.cs" />
     <Compile Include="Partials\Podcast.cs" />

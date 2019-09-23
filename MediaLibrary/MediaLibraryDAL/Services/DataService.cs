@@ -28,19 +28,20 @@ namespace MediaLibraryBLL.Services
             timeout = 120;
         }
 
-        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
+        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null, bool enableLazyLoading = true) where T : BaseModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Configuration.LazyLoadingEnabled = enableLazyLoading;
                 results = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).ToListAsync();
             }
 
             return results;
         }
 
-        public T Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel
+        public T Get<T>(Expression<Func<T,bool>> expression = null, bool enableLazyLoading = true) where T: BaseModel
         {
             T result = default(T);
 
@@ -52,12 +53,13 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
+        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null, bool enableLazyLoading = true) where T : BaseModel
         {
             T result = default(T);
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Configuration.LazyLoadingEnabled = enableLazyLoading;
                 result = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefaultAsync();
             }
 

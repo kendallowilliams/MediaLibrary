@@ -14,6 +14,7 @@ namespace MediaLibraryDAL.DbContexts
         public Playlist(string name, IEnumerable<int> trackIds = null)
         {
             Name = name;
+            PlaylistTracks = new HashSet<PlaylistTrack>();
         }
     }
 }
