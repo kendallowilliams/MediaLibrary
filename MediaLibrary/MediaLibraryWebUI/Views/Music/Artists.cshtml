@@ -16,7 +16,22 @@
                 <ul class="list-group list-group-flush">
                     @foreach (var artist in item.Group)
                     {
-                        <li class="list-group-item">@(artist.Name)</li>
+                        int count = Model.Songs.Count(song => song.ArtistId == artist.Id);
+                        string txtSongs = count == 1 ? $"{count} song" : $"{count} songs";
+
+                    <li class="list-group-item">
+                        <div class="media">
+                            <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(artist.Name)">
+                            <div class="media-body">
+                                <h5 class="mt-0">@(artist.Name)</h5>
+                                <span>@(Model.Albums.FirstOrDefault(album => album.ArtistId == artist.Id)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(txtSongs)</span>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="Track Buttons">
+                                <button type="button" class="btn btn-outline-secondary"><i class="fa fa-play"></i></button>
+                                <button type="button" class="btn btn-outline-secondary"><i class="fa fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </li>
                     }
                 </ul>
             </div>
