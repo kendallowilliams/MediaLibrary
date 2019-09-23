@@ -16,13 +16,13 @@ namespace MediaLibraryWebUI.Controllers
     [Export("Playlist", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaylistController : Controller
     {
-        private readonly IPlaylistService playlistService;
+        private readonly IPlaylistUIService playlistService;
         private readonly IDataService dataService;
         private readonly PlaylistViewModel playlistViewModel;
         private readonly string mainView = "";
 
         [ImportingConstructor]
-        public PlaylistController(IPlaylistService playlistService, IDataService dataService, PlaylistViewModel playlistViewModel)
+        public PlaylistController(IPlaylistUIService playlistService, IDataService dataService, PlaylistViewModel playlistViewModel)
         {
             this.playlistService = playlistService;
             this.dataService = dataService;
@@ -53,6 +53,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> RemovePlaylist(int id)
         {
+            await dataService.DeleteAll<PlaylistTrack>(track => track.PlaylistId == id);
             await dataService.Delete<Playlist>(id);
 
             return await Index();

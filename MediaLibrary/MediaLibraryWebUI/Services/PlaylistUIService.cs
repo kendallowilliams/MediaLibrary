@@ -13,14 +13,14 @@ using Fody;
 namespace MediaLibraryWebUI.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IPlaylistService))]
-    public class PlaylistService : IPlaylistService
+    [Export(typeof(IPlaylistUIService))]
+    public class PlaylistUIService : IPlaylistUIService
     {
         private Func<string, string> getLabel;
         private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PlaylistService(IDataService dataService)
+        public PlaylistUIService(IDataService dataService)
         {
             this.dataService = dataService;
             getLabel = title =>

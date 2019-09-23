@@ -7,6 +7,7 @@
 <h2>@(Model.SelectedPlaylist.Name) playlist</h2>
 <div>
     <a class="btn btn-outline-secondary" href="@(Url.Action("Index","Playlist"))"><i class="fa fa-arrow-circle-left"></i></a>
+    <a class="btn btn-outline-secondary" href=""><i class="fa fa-edit"></i></a>
     <a class="btn btn-outline-danger" href="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"><i class="fa fa-trash"></i></a>
 </div>
 

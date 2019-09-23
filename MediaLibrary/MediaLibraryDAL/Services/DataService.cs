@@ -47,6 +47,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Configuration.LazyLoadingEnabled = enableLazyLoading;
                 result = (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefault();
             }
 

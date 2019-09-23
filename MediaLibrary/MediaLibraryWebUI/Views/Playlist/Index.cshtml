@@ -8,10 +8,10 @@
 <div>
     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPlaylist"><i class="fa fa-plus"></i></button>
     <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button id="btnGroupPlaylistSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort by
         </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <div class="dropdown-menu" aria-labelledby="PlaylistSort">
             <a class="dropdown-item" href="@Url.Action("Sort", "Playlist", new { sort = Enums.PlaylistSort.DateModified })">Date modified</a>
             <a class="dropdown-item" href="@Url.Action("Sort", "Playlist", new { sort = Enums.PlaylistSort.AtoZ })">A to Z</a>
         </div>
@@ -45,7 +45,7 @@
                                 </div>
                                 <div>
                                     <a class="btn btn-outline-secondary" href="@(Url.Action("Get", "Playlist", new { playlist.Id }))"><i class="fa fa-list"></i></a>
-                                    <a class="btn btn-outline-danger" href="@(Url.Action("RemoveTrack", "Playlist", new {  }))"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn-outline-danger" href="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"><i class="fa fa-trash"></i></a>
                                 </div>
                             </div>
                         </li>

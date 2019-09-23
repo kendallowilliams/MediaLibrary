@@ -8,8 +8,8 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Services.Interfaces
 {
-    public interface IPlaylistService
+    public interface IPodcastUIService
     {
-        Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort);
+        Task<IEnumerable<IGrouping<string, Podcast>>> GetPodcastGroups(PodcastSort sort);
     }
 }

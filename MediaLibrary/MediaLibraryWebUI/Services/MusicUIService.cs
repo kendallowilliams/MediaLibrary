@@ -13,8 +13,8 @@ using static MediaLibraryWebUI.Enums;
 namespace MediaLibraryWebUI.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IMusicService))]
-    public class MusicService : IMusicService
+    [Export(typeof(IMusicUIService))]
+    public class MusicUIService : IMusicUIService
     {
         private Func<string, string> getLabel;
         private readonly IDataService dataService;
@@ -23,7 +23,7 @@ namespace MediaLibraryWebUI.Services
         private IEnumerable<Album> albums;
 
         [ImportingConstructor]
-        public MusicService(IDataService dataService)
+        public MusicUIService(IDataService dataService)
         {
             this.dataService = dataService;
             getLabel = title =>

@@ -20,11 +20,11 @@ namespace MediaLibraryWebUI.Controllers
     public class MusicController : Controller
     {
         private readonly IDataService dataService;
-        private readonly IMusicService musicService;
+        private readonly IMusicUIService musicService;
         private readonly MusicViewModel musicViewModel;
 
         [ImportingConstructor]
-        public MusicController(IDataService dataService, IMusicService musicService, MusicViewModel musicViewModel)
+        public MusicController(IDataService dataService, IMusicUIService musicService, MusicViewModel musicViewModel)
         {
             this.dataService = dataService;
             this.musicService = musicService;

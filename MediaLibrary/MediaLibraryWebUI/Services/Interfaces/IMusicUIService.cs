@@ -8,7 +8,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Services.Interfaces
 {
-    public interface IMusicService
+    public interface IMusicUIService
     {
         Task<IEnumerable<Track>> Songs();
         Task<IEnumerable<Artist>> Artists();
