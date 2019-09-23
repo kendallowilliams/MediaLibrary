@@ -37,7 +37,7 @@ namespace MediaLibraryBLL.Services
 
         public async Task<IEnumerable<Podcast>> GetPodcasts(Expression<Func<Podcast, bool>> expression = null) => await dataService.GetList(expression);
 
-        public async Task<Podcast> GetPodcast(Expression<Func<Podcast, bool>> expression = null) =>  await dataService.Get(expression);
+        public async Task<Podcast> GetPodcast(Expression<Func<Podcast, bool>> expression = null) =>  await dataService.GetAsync(expression);
 
         public async Task<IEnumerable<PodcastItem>> GetPodcastItems(int podcastId) => await dataService.GetList<PodcastItem>(item => item.PodcastId == podcastId);
 
@@ -147,7 +147,7 @@ namespace MediaLibraryBLL.Services
                 string fileName = string.Empty;
                 PodcastItem podcastItem = null;
 
-                podcastItem = await dataService.Get<PodcastItem>(item => item.Id == podcastItemId);
+                podcastItem = await dataService.GetAsync<PodcastItem>(item => item.Id == podcastItemId);
                 data = await webService.DownloadData(podcastItem.Url);
                 fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
                 podcastFile = new PodcastFile(data, MimeMapping.GetMimeMapping(fileName), podcastItem.PodcastId, podcastItem.Id);
@@ -162,6 +162,6 @@ namespace MediaLibraryBLL.Services
             return podcastFile?.Id;
         }
 
-        public async Task<PodcastFile> GetPodcastFile(int id) => await dataService.Get<PodcastFile>(file => file.Id == id);
+        public PodcastFile GetPodcastFile(int id) => dataService.Get<PodcastFile>(file => file.Id == id);
     }
 }

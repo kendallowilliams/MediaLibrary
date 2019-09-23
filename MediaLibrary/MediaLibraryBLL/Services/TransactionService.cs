@@ -27,7 +27,7 @@ namespace MediaLibraryBLL.Services
 
         public async Task<IEnumerable<Transaction>> GetTransactions(Expression<Func<Transaction,bool>> expression = null) => await dataService.GetList(expression);
 
-        public async Task<Transaction> GetTransaction(Expression<Func<Transaction, bool>> expression = null) => await dataService.Get(expression);
+        public async Task<Transaction> GetTransaction(Expression<Func<Transaction, bool>> expression = null) => await dataService.GetAsync(expression);
 
         public async Task<int> InsertTransaction(Transaction transaction) => await dataService.Insert(transaction);
 

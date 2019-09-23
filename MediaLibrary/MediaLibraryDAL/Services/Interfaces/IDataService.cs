@@ -12,7 +12,9 @@ namespace MediaLibraryDAL.Services.Interfaces
 {
     public interface IDataService
     {
-        Task<T> Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel;
+        T Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel;
+
+        Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel;
 
         Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel;
 

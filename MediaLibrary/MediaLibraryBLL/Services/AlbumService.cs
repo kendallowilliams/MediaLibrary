@@ -31,7 +31,7 @@ namespace MediaLibraryBLL.Services
 
             if (album != null)
             {
-                Album dbAlbum = await dataService.Get<Album>(item => item.Title == album.Title);
+                Album dbAlbum = await dataService.GetAsync<Album>(item => item.Title == album.Title);
 
                 if (dbAlbum != null) { id = dbAlbum.Id; }
                 else
@@ -46,7 +46,7 @@ namespace MediaLibraryBLL.Services
 
         public async Task<IEnumerable<Album>> GetAlbums(Expression<Func<Album, bool>> expression = null) => await dataService.GetList(expression);
 
-        public async Task<Album> GetAlbum(Expression<Func<Album, bool>> expression = null) =>  await dataService.Get(expression);
+        public async Task<Album> GetAlbum(Expression<Func<Album, bool>> expression = null) =>  await dataService.GetAsync(expression);
 
         public async Task<int> InsertAlbum(Album album) => await dataService.Insert<Album>(album);
 

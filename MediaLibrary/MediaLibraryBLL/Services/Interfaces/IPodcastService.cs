@@ -30,6 +30,6 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         Task<int?> AddPodcastFile(Transaction transaction, int podcastItemId);
 
-        Task<PodcastFile> GetPodcastFile(int id);
+        PodcastFile GetPodcastFile(int id);
     }
 }

@@ -40,7 +40,19 @@ namespace MediaLibraryBLL.Services
             return results;
         }
 
-        public async Task<T> Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel
+        public T Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel
+        {
+            T result = default(T);
+
+            using (var db = new MediaLibraryEntities())
+            {
+                result = (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefault();
+            }
+
+            return result;
+        }
+
+        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
         {
             T result = default(T);
 

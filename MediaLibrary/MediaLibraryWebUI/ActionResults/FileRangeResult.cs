@@ -43,8 +43,10 @@ namespace MediaLibraryWebUI.ActionResults
 
             if (hasValidRange)
             {
-                long count = (to.HasValue ? to.Value + 1 : fileData.Length) - from.Value;
+                long end = to.HasValue ? to.Value : fileData.LongLength - 1,
+                     count = end + 1 - from.Value;
 
+                response.Headers.Add("Content-Range", $"bytes {from}-{end}/{count}");
                 response.OutputStream.Write(fileData, (int)from, (int)count);
             }
             else

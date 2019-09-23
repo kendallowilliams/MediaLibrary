@@ -32,7 +32,7 @@ namespace MediaLibraryBLL.Services
             if (!string.IsNullOrWhiteSpace(strGenres))
             {
                 object parameters = new { name = strGenres };
-                Genre dbGenre = await dataService.Get<Genre>(item => item.Name == strGenres),
+                Genre dbGenre = await dataService.GetAsync<Genre>(item => item.Name == strGenres),
                       genre = new Genre(strGenres);
 
                 if (dbGenre != null) { id = dbGenre.Id; }
@@ -48,7 +48,7 @@ namespace MediaLibraryBLL.Services
 
         public async Task<IEnumerable<Genre>> GetGenres(Expression<Func<Genre, bool>> expression = null) => await dataService.GetList(expression);
 
-        public async Task<Genre> GetGenre(Expression<Func<Genre, bool>> expression = null) => await dataService.Get(expression);
+        public async Task<Genre> GetGenre(Expression<Func<Genre, bool>> expression = null) => await dataService.GetAsync(expression);
 
         public async Task<int> InsertGenre(Genre genre) => await dataService.Insert(genre);
 

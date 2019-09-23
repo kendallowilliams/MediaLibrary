@@ -45,7 +45,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> File(int id)
         {
-            TrackFile file = await dataService.Get<TrackFile>(item => item.Id == id);
+            TrackFile file = dataService.Get<TrackFile>(item => item.Id == id);
             string range = Request.Headers["Range"];
             ActionResult result = null;
 
