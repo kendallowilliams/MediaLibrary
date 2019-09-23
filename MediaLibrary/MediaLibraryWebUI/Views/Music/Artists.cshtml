@@ -26,8 +26,7 @@
                                 <h5 class="mt-0">@(artist.Name)</h5>
                                 <span>@(Model.Albums.FirstOrDefault(album => album.ArtistId == artist.Id)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(txtSongs)</span>
                             </div>
-                            <div class="btn-group" role="group" aria-label="Track Buttons">
-                                <button type="button" class="btn btn-outline-secondary"><i class="fa fa-play"></i></button>
+                            <div class="btn-group" role="group" aria-label="Artist Buttons">
                                 <button type="button" class="btn btn-outline-secondary"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
