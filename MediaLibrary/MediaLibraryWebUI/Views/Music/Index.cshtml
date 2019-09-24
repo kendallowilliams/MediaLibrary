@@ -68,7 +68,20 @@
                     id = $(e.target).attr('data-item-id');
                 $('#btnAddToPlaylist').attr('data-playlist-url', url);
                 $('#btnAddToPlaylist').attr('data-item-id', id);
-                $('#modalAddToPlaylist').show();
+            });
+        });
+        
+        $(function () {
+            $('#btnAddToPlaylist').click(function (e) {
+                var url = $(e.target).attr('data-playlist-url'),
+                    id = $(e.target).attr('data-item-id'),
+                    playlistId = $(e.target).attr('data-playlist-id');
+
+                $.post(url, { playlistId, itemId: id });
+
+                $(e.target).attr('data-playlist-url', '');
+                $(e.target).attr('data-item-id', '');
+                $('#modalAddToPlaylist').modal('hide');
             });
         });
     </script>
