@@ -6,6 +6,6 @@
     [CreateDate] DATETIME2        DEFAULT (getdate()) NOT NULL,
     [ModifyDate] DATETIME2        DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([Id] ASC), 
-    CONSTRAINT [FK_track_file_track] FOREIGN KEY ([TrackId]) REFERENCES track([Id])
+    CONSTRAINT [FK_track_file_track] FOREIGN KEY ([TrackId]) REFERENCES Track([Id])
 );
 

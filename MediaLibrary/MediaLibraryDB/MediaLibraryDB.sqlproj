@@ -62,22 +62,6 @@
     <Folder Include="dbo\Tables" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Stored Procedures\DeleteAllAlbums.sql" />
-    <Build Include="dbo\Stored Procedures\DeleteAllArtists.sql" />
-    <Build Include="dbo\Stored Procedures\DeleteAllGenres.sql" />
-    <Build Include="dbo\Stored Procedures\DeleteAllPlaylists.sql" />
-    <Build Include="dbo\Stored Procedures\DeleteAllPodcasts.sql" />
-    <Build Include="dbo\Stored Procedures\DeleteAllTracks.sql" />
-    <Build Include="dbo\Stored Procedures\DeletePlaylist.sql" />
-    <Build Include="dbo\Stored Procedures\DeletePodcast.sql" />
-    <Build Include="dbo\Stored Procedures\FindAlbums.sql" />
-    <Build Include="dbo\Stored Procedures\FindArtists.sql" />
-    <Build Include="dbo\Stored Procedures\FindGenres.sql" />
-    <Build Include="dbo\Stored Procedures\FindPaths.sql" />
-    <Build Include="dbo\Stored Procedures\FindPodcastItems.sql" />
-    <Build Include="dbo\Stored Procedures\FindTracks.sql" />
-    <Build Include="dbo\Stored Procedures\FindTransactions.sql" />
-    <Build Include="dbo\Stored Procedures\GetTrackFile.sql" />
     <Build Include="dbo\Tables\Transaction.sql" />
     <Build Include="dbo\Tables\Album.sql" />
     <Build Include="dbo\Tables\Artist.sql" />

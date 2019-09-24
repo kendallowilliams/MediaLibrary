@@ -9,6 +9,6 @@
     [CreateDate]  DATETIME2      DEFAULT (getdate()) NOT NULL,
     [ModifyDate]  DATETIME2      DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([Id] ASC),
-    FOREIGN KEY ([PodcastId]) REFERENCES [dbo].[podcast] ([Id])
+    FOREIGN KEY ([PodcastId]) REFERENCES [dbo].[Podcast] ([Id])
 );
 

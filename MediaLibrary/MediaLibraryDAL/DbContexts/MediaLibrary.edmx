@@ -48,7 +48,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PlaylistId" Type="int" Nullable="false" />
           <Property Name="TrackId" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
@@ -278,58 +278,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="DeleteAllAlbums" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="DeleteAllArtists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="DeleteAllGenres" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="DeleteAllPlaylists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="playlist_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeleteAllPodcasts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="DeleteAllTracks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="DeletePlaylist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="playlist_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="DeletePodcast" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PodcastId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="FindAlbums" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="title" Type="varchar(max)" Mode="In" />
-          <Parameter Name="artist_id" Type="int" Mode="In" />
-          <Parameter Name="year" Type="int" Mode="In" />
-          <Parameter Name="genre_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="FindArtists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="FindGenres" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="name" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="FindPaths" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="location" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="FindPodcastItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="podcast_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="FindTracks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="title" Type="int" Mode="In" />
-          <Parameter Name="path_id" Type="int" Mode="In" />
-          <Parameter Name="artist_id" Type="int" Mode="In" />
-          <Parameter Name="album_id" Type="int" Mode="In" />
-          <Parameter Name="genre_id" Type="int" Mode="In" />
-          <Parameter Name="year" Type="int" Mode="In" />
-        </Function>
-        <Function Name="FindTransactions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="status" Type="int" Mode="In" />
-          <Parameter Name="message" Type="varchar(max)" Mode="In" />
-          <Parameter Name="error_message" Type="varchar(max)" Mode="In" />
-          <Parameter Name="status_message" Type="varchar(max)" Mode="In" />
-          <Parameter Name="type" Type="int" Mode="In" />
-          <Parameter Name="start_date" Type="datetime" Mode="In" />
-          <Parameter Name="end_date" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="GetTrackFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="track_id" Type="int" Mode="In" />
-        </Function>
         <EntityContainer Name="MediaLibraryStoreContainer">
           <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
@@ -1019,118 +967,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="DeleteAllAlbums" FunctionName="MediaLibrary.Store.DeleteAllAlbums" />
-          <FunctionImportMapping FunctionImportName="DeleteAllArtists" FunctionName="MediaLibrary.Store.DeleteAllArtists" />
-          <FunctionImportMapping FunctionImportName="DeleteAllGenres" FunctionName="MediaLibrary.Store.DeleteAllGenres" />
-          <FunctionImportMapping FunctionImportName="DeleteAllPlaylists" FunctionName="MediaLibrary.Store.DeleteAllPlaylists" />
-          <FunctionImportMapping FunctionImportName="DeleteAllPodcasts" FunctionName="MediaLibrary.Store.DeleteAllPodcasts" />
-          <FunctionImportMapping FunctionImportName="DeleteAllTracks" FunctionName="MediaLibrary.Store.DeleteAllTracks" />
-          <FunctionImportMapping FunctionImportName="DeletePlaylist" FunctionName="MediaLibrary.Store.DeletePlaylist" />
-          <FunctionImportMapping FunctionImportName="DeletePodcast" FunctionName="MediaLibrary.Store.DeletePodcast" />
-          <FunctionImportMapping FunctionImportName="FindAlbums" FunctionName="MediaLibrary.Store.FindAlbums">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MediaLibraryDAL.FindAlbums_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FindArtists" FunctionName="MediaLibrary.Store.FindArtists">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MediaLibraryDAL.FindArtists_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FindGenres" FunctionName="MediaLibrary.Store.FindGenres">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MediaLibraryDAL.FindGenres_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FindPaths" FunctionName="MediaLibrary.Store.FindPaths">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MediaLibraryDAL.FindPaths_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="LastScanDate" ColumnName="LastScanDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FindPodcastItems" FunctionName="MediaLibrary.Store.FindPodcastItems">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MediaLibraryDAL.FindPodcastItems_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Length" ColumnName="Length" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="PodcastId" ColumnName="PodcastId" />
-                <ScalarProperty Name="PublishDate" ColumnName="PublishDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FindTracks" FunctionName="MediaLibrary.Store.FindTracks">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MediaLibraryDAL.FindTracks_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="PathId" ColumnName="PathId" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
-                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
-                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="FindTransactions" FunctionName="MediaLibrary.Store.FindTransactions">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MediaLibraryDAL.FindTransactions_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="StatusMessage" ColumnName="StatusMessage" />
-                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetTrackFile" FunctionName="MediaLibrary.Store.GetTrackFile">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MediaLibraryDAL.GetTrackFile_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TrackId" ColumnName="TrackId" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Data" ColumnName="Data" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="TrackPaths">
             <EntityTypeMapping TypeName="MediaLibraryDAL.TrackPath">
               <MappingFragment StoreEntitySet="TrackPath">
