@@ -23,9 +23,9 @@
                                     <h5 class="mt-0">@(song.Title)</h5>
                                     <span>@(Model.Albums.FirstOrDefault(album => album.Id == song.AlbumId)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(Model.Artists.FirstOrDefault(artist => artist.Id == song.ArtistId)?.Name)</span>
                                 </div>
-                                <div class="btn-group" role="group" aria-label="Song Buttons">
+                                <div>
                                     <button type="button" class="btn btn-outline-secondary" onclick="play(@(song.Id))"><i class="fa fa-play"></i></button>
-                                    <button type="button" class="btn btn-outline-secondary"><i class="fa fa-plus"></i></button>
+                                    <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"><i class="fa fa-plus"></i></button>
                                 </div>
                             </div>
                         </li>

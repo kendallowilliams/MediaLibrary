@@ -24,7 +24,7 @@
                                     <span>@(Model.Artists.FirstOrDefault(artist => artist.Id == album.ArtistId)?.Name ?? "Unknown Artist")</span>
                                 </div>
                                 <div class="btn-group" role="group" aria-label="Album Buttons">
-                                    <button type="button" class="btn btn-outline-secondary"><i class="fa fa-plus"></i></button>
+                                    <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))" data-item-id="@(album.Id)"><i class="fa fa-plus"></i></button>
                                 </div>
                             </div>
                         </li>

@@ -27,7 +27,7 @@
                                 <span>@(Model.Albums.FirstOrDefault(album => album.ArtistId == artist.Id)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(txtSongs)</span>
                             </div>
                             <div class="btn-group" role="group" aria-label="Artist Buttons">
-                                <button type="button" class="btn btn-outline-secondary"><i class="fa fa-plus"></i></button>
+                                <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddArtistToPlaylist", "Music"))" data-item-id="@(artist.Id)"><i class="fa fa-plus"></i></button>
                             </div>
                         </div>
                     </li>
