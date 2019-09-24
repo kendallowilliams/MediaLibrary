@@ -9,7 +9,7 @@ using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class PodcastItem: BaseModel
+    public partial class PodcastItem: IDataModel
     {
         public PodcastItem(string title, string description, string url, long length, DateTime publishDate, int podcastId)
         {

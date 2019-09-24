@@ -9,7 +9,7 @@ using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class TrackFile: BaseModel
+    public partial class TrackFile: IDataModel
     {
         public TrackFile() { }
 

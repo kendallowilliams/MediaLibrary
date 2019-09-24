@@ -13,8 +13,8 @@
     [CreateDate] DATETIME2      DEFAULT (getdate()) NOT NULL,
     [ModifyDate] DATETIME2      DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([Id] ASC),
-    FOREIGN KEY ([AlbumId]) REFERENCES [dbo].[album] ([Id]),
-    FOREIGN KEY ([ArtistId]) REFERENCES [dbo].[artist] ([Id]),
+    FOREIGN KEY ([AlbumId]) REFERENCES [dbo].[Album] ([Id]),
+    FOREIGN KEY ([ArtistId]) REFERENCES [dbo].[Artist] ([Id]),
     FOREIGN KEY ([PathId]) REFERENCES [dbo].[TrackPath] ([Id])
 );
 

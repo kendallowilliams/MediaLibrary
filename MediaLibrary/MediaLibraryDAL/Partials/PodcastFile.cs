@@ -9,7 +9,7 @@ using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class PodcastFile: BaseModel
+    public partial class PodcastFile: IDataModel
     {
         public PodcastFile(byte[] data, string type, int podcastId, int podcastItemId)
         {

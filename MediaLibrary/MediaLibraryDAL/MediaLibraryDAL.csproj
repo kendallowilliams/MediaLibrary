@@ -139,7 +139,6 @@
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
     <Compile Include="Enums\TransactionEnums.cs" />
-    <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\Interfaces\IDataModel.cs" />
     <Compile Include="Models\MediaData.cs" />
     <Compile Include="Partials\PlaylistTrack.cs" />

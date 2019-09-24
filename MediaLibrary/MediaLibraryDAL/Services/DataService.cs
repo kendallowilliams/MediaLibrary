@@ -13,6 +13,7 @@ using System.Linq.Expressions;
 using Fody;
 using MediaLibraryDAL.DbContexts;
 using System.Data.Entity;
+using MediaLibraryDAL.Models.Interfaces;
 
 namespace MediaLibraryBLL.Services
 {
@@ -28,7 +29,7 @@ namespace MediaLibraryBLL.Services
             timeout = 120;
         }
 
-        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
+        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
@@ -40,7 +41,7 @@ namespace MediaLibraryBLL.Services
             return results;
         }
 
-        public T Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel
+        public T Get<T>(Expression<Func<T,bool>> expression = null) where T: class, IDataModel
         {
             T result = default(T);
 
@@ -52,7 +53,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
+        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
         {
             T result = default(T);
 
@@ -64,7 +65,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Insert<T>(T entity) where T : BaseModel
+        public async Task<int> Insert<T>(T entity) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -79,7 +80,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Insert<T>(IEnumerable<T> entities) where T : BaseModel
+        public async Task<int> Insert<T>(IEnumerable<T> entities) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -92,7 +93,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Delete<T>(object id) where T : BaseModel
+        public async Task<int> Delete<T>(object id) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -108,7 +109,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Delete<T>(T entity) where T : BaseModel
+        public async Task<int> Delete<T>(T entity) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -121,7 +122,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
+        public async Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -142,7 +143,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> DeleteAll<T>() where T : BaseModel
+        public async Task<int> DeleteAll<T>() where T : class, IDataModel
         {
             int result = default(int);
 
@@ -156,7 +157,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Update<T>(T entity) where T : BaseModel
+        public async Task<int> Update<T>(T entity) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -171,7 +172,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Count<T>(Expression<Func<T,bool>> expression = null) where T : BaseModel
+        public async Task<int> Count<T>(Expression<Func<T,bool>> expression = null) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -183,7 +184,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters = null) where T : BaseModel
+        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters = null) where T : class, IDataModel
         {
             IEnumerable<T> result = Enumerable.Empty<T>();
 
@@ -221,7 +222,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public T Get<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : BaseModel
+        public T Get<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
         {
             T result = default(T);
 
@@ -234,7 +235,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<T> GetAsync<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : BaseModel
+        public async Task<T> GetAsync<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
         {
             T result = default(T);
 
@@ -247,7 +248,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<IEnumerable<T>> GetList<T,TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : BaseModel
+        public async Task<IEnumerable<T>> GetList<T,TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 

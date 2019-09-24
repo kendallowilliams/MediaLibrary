@@ -9,7 +9,7 @@ using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class Genre: BaseModel
+    public partial class Genre: IDataModel
     {
         public Genre(string name)
         {

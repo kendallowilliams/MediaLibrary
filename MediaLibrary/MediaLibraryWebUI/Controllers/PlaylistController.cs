@@ -19,7 +19,6 @@ namespace MediaLibraryWebUI.Controllers
         private readonly IPlaylistUIService playlistService;
         private readonly IDataService dataService;
         private readonly PlaylistViewModel playlistViewModel;
-        private readonly string mainView = "";
 
         [ImportingConstructor]
         public PlaylistController(IPlaylistUIService playlistService, IDataService dataService, PlaylistViewModel playlistViewModel)

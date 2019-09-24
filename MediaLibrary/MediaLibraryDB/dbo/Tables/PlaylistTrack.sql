@@ -6,6 +6,6 @@
     [CreateDate] DATETIME2 DEFAULT (getdate()) NOT NULL, 
     [ModifyDate] DATETIME2 DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_playlist_track_track] FOREIGN KEY ([TrackId]) REFERENCES track([Id]), 
-    CONSTRAINT [FK_playlist_track_playlist] FOREIGN KEY ([PlaylistId]) REFERENCES playlist([Id])
+    CONSTRAINT [FK_playlist_track_track] FOREIGN KEY ([TrackId]) REFERENCES Track([Id]), 
+    CONSTRAINT [FK_playlist_track_playlist] FOREIGN KEY ([PlaylistId]) REFERENCES Playlist([Id])
 )
