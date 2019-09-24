@@ -32,7 +32,8 @@
                                 <h5 class="mt-0">@(song.Track.Title)</h5>
                                 <span></span>
                             </div>
-                            <div class="btn-group" role="group" aria-label="Playlist Buttons">
+                            <div>
+                                <button class="btn btn-outline-secondary"><i class="fa fa-play"></i></button>
                                 <a class="btn btn-outline-secondary" href="@(Url.Action("RemoveTrack", "Playlist", new {  }))"><i class="fa fa-trash"></i></a>
                             </div>
                         </div>

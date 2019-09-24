@@ -28,39 +28,36 @@ namespace MediaLibraryBLL.Services
             timeout = 120;
         }
 
-        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null, bool enableLazyLoading = true) where T : BaseModel
+        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
             using (var db = new MediaLibraryEntities())
             {
-                db.Configuration.LazyLoadingEnabled = enableLazyLoading;
                 results = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).ToListAsync();
             }
 
             return results;
         }
 
-        public T Get<T>(Expression<Func<T,bool>> expression = null, bool enableLazyLoading = true) where T: BaseModel
+        public T Get<T>(Expression<Func<T,bool>> expression = null) where T: BaseModel
         {
             T result = default(T);
 
             using (var db = new MediaLibraryEntities())
             {
-                db.Configuration.LazyLoadingEnabled = enableLazyLoading;
                 result = (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefault();
             }
 
             return result;
         }
 
-        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null, bool enableLazyLoading = true) where T : BaseModel
+        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : BaseModel
         {
             T result = default(T);
 
             using (var db = new MediaLibraryEntities())
             {
-                db.Configuration.LazyLoadingEnabled = enableLazyLoading;
                 result = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefaultAsync();
             }
 
@@ -222,6 +219,45 @@ namespace MediaLibraryBLL.Services
             }
 
             return result;
+        }
+
+        public T Get<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : BaseModel
+        {
+            T result = default(T);
+
+            using (var db = new MediaLibraryEntities())
+            {
+                var query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
+                result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
+            }
+
+            return result;
+        }
+
+        public async Task<T> GetAsync<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : BaseModel
+        {
+            T result = default(T);
+
+            using (var db = new MediaLibraryEntities())
+            {
+                var query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
+                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync();
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<T>> GetList<T,TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : BaseModel
+        {
+            IEnumerable<T> results = Enumerable.Empty<T>();
+
+            using (var db = new MediaLibraryEntities())
+            {
+                var query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
+                results = await (expression != null ? query.Where(expression) : query).ToListAsync();
+            }
+
+            return results;
         }
     }
 }

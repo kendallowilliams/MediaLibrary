@@ -1,7 +1,48 @@
-﻿
+﻿@model MediaLibraryWebUI.Models.PodcastViewModel
+
 @{
     ViewBag.Title = "Podcast";
 }
 
-<h2>Podcast</h2>
+<h2>@(Model.SelectedPodcast.Title) podcast</h2>
+<div>
+    <a class="btn btn-outline-secondary" href="@(Url.Action("Index","Podcast"))"><i class="fa fa-arrow-circle-left"></i></a>
+    <a class="btn btn-outline-secondary" href="@(Url.Action("RefreshPodcast","Podcast", new { Model.SelectedPodcast.Id }))"><i class="fa fa-refresh"></i></a>
+    <a class="btn btn-outline-danger" href="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))"><i class="fa fa-trash"></i></a>
+</div>
 
+<hr />
+
+<div class="card">
+    <div class="card-header" id="heading-playlist-@(Model.SelectedPodcast.Id)">
+        <h5 class="mb-0">
+            Episodes
+        </h5>
+    </div>
+    <div class="card-body">
+        @if (Model.SelectedPodcast.PodcastItems.Any())
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var item in Model.SelectedPodcast.PodcastItems)
+                {
+                    <li class="list-group-item">
+                        <div class="media">
+                            <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
+                            <div class="media-body">
+                                <h5 class="mt-0">@(item.Title)</h5>
+                                <span>@(item.Description)</span>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="Playlist Buttons">
+                                <a class="btn btn-outline-secondary" href="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"><i class="fa fa-download"></i></a>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <span>No episodes added.</span>
+        }
+    </div>
+</div>

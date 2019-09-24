@@ -61,7 +61,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Get(int id)
         {
-            playlistViewModel.SelectedPlaylist = await dataService.GetAsync<Playlist>(item => item.Id == id, false);
+            playlistViewModel.SelectedPlaylist = await dataService.GetAsync<Playlist>(item => item.Id == id);
 
             return View("Playlist", playlistViewModel);
         }

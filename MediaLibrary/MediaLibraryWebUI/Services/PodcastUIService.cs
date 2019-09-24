@@ -39,7 +39,7 @@ namespace MediaLibraryWebUI.Services
         public async Task<IEnumerable<IGrouping<string, Podcast>>> GetPodcastGroups(PodcastSort sort)
         {
             IEnumerable<IGrouping<string, Podcast>> groups = null;
-            IEnumerable<Podcast> podcasts = await dataService.GetList<Podcast>(null, false);
+            IEnumerable<Podcast> podcasts = await dataService.GetList<Podcast, ICollection<PodcastItem>>(includeExpression: podcast => podcast.PodcastItems);
 
             switch (sort)
             {

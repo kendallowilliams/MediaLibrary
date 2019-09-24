@@ -63,7 +63,24 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Get(int id)
         {
-            podcastViewModel.SelectedPodcast = await dataService.GetAsync<Podcast>(podcast => podcast.Id == id, false);
+            podcastViewModel.SelectedPodcast = await dataService.GetAsync<Podcast, ICollection<PodcastItem>>(podcast => podcast.Id == id, podcast => podcast.PodcastItems);
+
+            return View("Podcast", podcastViewModel);
+        }
+
+        public async Task<ActionResult> DownloadPodcastItem(int id)
+        {
+            await podcastService.AddPodcastFile(null, id);
+
+            return View("Podcast", podcastViewModel);
+        }
+
+        public async Task<ActionResult> RefreshPodcast(int id)
+        {
+            Podcast podcast = await dataService.GetAsync<Podcast>(item => item.Id == id);
+
+            await podcastService.UpdatePodcast(podcast);
+            podcast = await dataService.GetAsync<Podcast>(item => item.Id == id);
 
             return View("Podcast", podcastViewModel);
         }
