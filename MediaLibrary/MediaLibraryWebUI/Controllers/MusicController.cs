@@ -61,5 +61,34 @@ namespace MediaLibraryWebUI.Controllers
 
             return result;
         }
+
+        public async Task<ActionResult> AddTrackToPlaylist(int itemId, int playlistId)
+        {
+            PlaylistTrack item = new PlaylistTrack() { PlaylistId = playlistId, TrackId = itemId };
+
+            await dataService.Insert(item);
+
+            return await Index();
+        }
+
+        public async Task<ActionResult> AddArtistToPlaylist(int itemId, int playlistId)
+        {
+            IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.ArtistId == itemId);
+            IEnumerable<PlaylistTrack> items = tracks.Select(track => new PlaylistTrack { TrackId = track.Id, PlaylistId = playlistId });
+
+            await dataService.Insert<PlaylistTrack>(items);
+
+            return await Index();
+        }
+
+        public async Task<ActionResult> AddAlbumToPlaylist(int itemId, int playlistId)
+        {
+            IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.AlbumId == itemId);
+            IEnumerable<PlaylistTrack> items = tracks.Select(track => new PlaylistTrack { TrackId = track.Id, PlaylistId = playlistId });
+
+            await dataService.Insert<PlaylistTrack>(items);
+
+            return await Index();
+        }
     }
 }
