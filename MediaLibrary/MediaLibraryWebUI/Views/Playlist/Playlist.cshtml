@@ -23,18 +23,18 @@
         @if (Model.SelectedPlaylist.PlaylistTracks.Any())
         {
             <ul class="list-group list-group-flush">
-                @foreach (var song in Model.SelectedPlaylist.PlaylistTracks)
+                @foreach (var list in Model.SelectedPlaylist.PlaylistTracks)
                 {
                     <li class="list-group-item">
                         <div class="media">
-                            <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Track.Title)">
+                            <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.Track.Title)">
                             <div class="media-body">
-                                <h5 class="mt-0">@(song.Track.Title)</h5>
+                                <h5 class="mt-0">@(list.Track.Title)</h5>
                                 <span></span>
                             </div>
                             <div>
                                 <button class="btn btn-outline-secondary"><i class="fa fa-play"></i></button>
-                                <a class="btn btn-outline-secondary" href="@(Url.Action("RemoveTrack", "Playlist", new {  }))"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-outline-secondary" href="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"><i class="fa fa-trash"></i></a>
                             </div>
                         </div>
                     </li>

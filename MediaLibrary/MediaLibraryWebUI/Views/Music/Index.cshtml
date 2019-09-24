@@ -64,8 +64,8 @@
 
         $(function () {
             $('[data-playlist="add"]').click(function (e) {
-                var url = $(e.target).attr('data-playlist-url'),
-                    id = $(e.target).attr('data-item-id');
+                var url = $(e.delegateTarget).attr('data-playlist-url'),
+                    id = $(e.delegateTarget).attr('data-item-id');
                 $('#btnAddToPlaylist').attr('data-playlist-url', url);
                 $('#btnAddToPlaylist').attr('data-item-id', id);
             });
@@ -73,14 +73,14 @@
         
         $(function () {
             $('#btnAddToPlaylist').click(function (e) {
-                var url = $(e.target).attr('data-playlist-url'),
-                    id = $(e.target).attr('data-item-id'),
-                    playlistId = $(e.target).attr('data-playlist-id');
+                var url = $(e.delegateTarget).attr('data-playlist-url'),
+                    id = $(e.delegateTarget).attr('data-item-id'),
+                    playlistId = $(e.delegateTarget).attr('data-playlist-id');
 
                 $.post(url, { playlistId, itemId: id });
 
-                $(e.target).attr('data-playlist-url', '');
-                $(e.target).attr('data-item-id', '');
+                $(e.delegateTarget).attr('data-playlist-url', '');
+                $(e.delegateTarget).attr('data-item-id', '');
                 $('#modalAddToPlaylist').modal('hide');
             });
         });

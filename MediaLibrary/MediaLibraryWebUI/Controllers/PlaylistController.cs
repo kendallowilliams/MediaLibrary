@@ -61,24 +61,19 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Get(int id)
         {
-            playlistViewModel.SelectedPlaylist = await dataService.GetAsync<Playlist>(item => item.Id == id);
+            playlistViewModel.SelectedPlaylist = await dataService.GetAsync<Playlist, IEnumerable<Track>>(item => item.Id == id, 
+                                                                                                          playlist => playlist.PlaylistTracks.Select(list => list.Track));
 
             return View("Playlist", playlistViewModel);
         }
 
-        public async Task<ActionResult> AddAlbum(int playlistId, int albumId)
+        public async Task<ActionResult> RemovePlaylistItem(int id, int playlistId)
         {
-            return null;
-        }
+            await dataService.Delete<PlaylistTrack>(id);
+            playlistViewModel.SelectedPlaylist = await dataService.GetAsync<Playlist, IEnumerable<Track>>(item => item.Id == playlistId,
+                                                                                                          playlist => playlist.PlaylistTracks.Select(list => list.Track));
 
-        public async Task<ActionResult> AddArtist(int playlistId, int artistId)
-        {
-            return null;
-        }
-
-        public async Task<ActionResult> AddSong(int playlistId, int artistId)
-        {
-            return null;
+            return View("Playlist", playlistViewModel);
         }
     }
 }

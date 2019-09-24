@@ -76,7 +76,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.ArtistId == itemId);
             IEnumerable<PlaylistTrack> items = tracks.Select(track => new PlaylistTrack { TrackId = track.Id, PlaylistId = playlistId });
 
-            await dataService.Insert<PlaylistTrack>(items);
+            await dataService.Insert(items);
 
             return await Index();
         }
@@ -86,7 +86,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.AlbumId == itemId);
             IEnumerable<PlaylistTrack> items = tracks.Select(track => new PlaylistTrack { TrackId = track.Id, PlaylistId = playlistId });
 
-            await dataService.Insert<PlaylistTrack>(items);
+            await dataService.Insert(items);
 
             return await Index();
         }

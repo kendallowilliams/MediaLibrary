@@ -30,9 +30,10 @@
                             <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
                             <div class="media-body">
                                 <h5 class="mt-0">@(item.Title)</h5>
-                                <span>@(item.Description)</span>
+                                <span>@Html.Raw(item.Description)</span>
                             </div>
-                            <div class="btn-group" role="group" aria-label="Playlist Buttons">
+                            <div>
+                                <button class="btn btn-outline-secondary"><i class="fa fa-play"></i></button>
                                 <a class="btn btn-outline-secondary" href="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"><i class="fa fa-download"></i></a>
                             </div>
                         </div>
