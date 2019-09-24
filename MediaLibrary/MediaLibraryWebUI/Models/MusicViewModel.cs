@@ -19,6 +19,7 @@ namespace MediaLibraryWebUI.Models
         private IEnumerable<Artist> artists;
         private IEnumerable<Album> albums;
         private readonly HomeViewModel homeViewModel;
+        private IEnumerable<Playlist> playlists;
 
         [ImportingConstructor]
         public MusicViewModel(HomeViewModel homeViewModel)
@@ -26,6 +27,7 @@ namespace MediaLibraryWebUI.Models
             songGroups = Enumerable.Empty<IGrouping<string, Track>>();
             artistGroups = Enumerable.Empty<IGrouping<string, Artist>>();
             albumGroups = Enumerable.Empty<IGrouping<string, Album>>();
+            playlists = Enumerable.Empty<Playlist>();
             songs = Enumerable.Empty<Track>();
             artists = Enumerable.Empty<Artist>();
             albums = Enumerable.Empty<Album>();
@@ -42,5 +44,6 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<Artist> Artists { get => artists; set => artists = value; }
         public IEnumerable<Album> Albums { get => albums; set => albums = value; }
         public HomeViewModel HomeViewModel { get => homeViewModel; }
+        public IEnumerable<Playlist> Playlists { get => playlists; set => playlists = value; }
     }
 }

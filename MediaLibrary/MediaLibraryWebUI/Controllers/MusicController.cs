@@ -39,11 +39,12 @@ namespace MediaLibraryWebUI.Controllers
             musicViewModel.SongGroups = await musicService.GetSongGroups();
             musicViewModel.ArtistGroups = await musicService.GetArtistGroups();
             musicViewModel.AlbumGroups = await musicService.GetAlbumGroups();
+            musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return View(musicViewModel);
         }
 
-        public async Task<ActionResult> File(int id)
+        public ActionResult File(int id)
         {
             TrackFile file = dataService.Get<TrackFile>(item => item.Id == id);
             string range = Request.Headers["Range"];
