@@ -132,6 +132,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\audio.png" />
+    <Content Include="Content\images\logo.png" />
     <Content Include="Content\Site.css" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -231,6 +232,8 @@
     <Content Include="Views\Playlist\Index.cshtml" />
     <Content Include="Views\Playlist\Playlist.cshtml" />
     <Content Include="Views\Podcast\Podcast.cshtml" />
+    <Content Include="Views\Music\Album.cshtml" />
+    <Content Include="Views\Music\Artist.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

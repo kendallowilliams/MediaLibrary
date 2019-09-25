@@ -90,5 +90,19 @@ namespace MediaLibraryWebUI.Controllers
 
             return await Index();
         }
+
+        public async Task<ActionResult> GetAlbum(int id)
+        {
+            musicViewModel.SelectedAlbum = await dataService.GetAsync<Album>(album => album.Id == id);
+
+            return View("Album", musicViewModel);
+        }
+
+        public async Task<ActionResult> GetArtist(int id)
+        {
+            musicViewModel.SelectedArtist = await dataService.GetAsync<Artist, IEnumerable<Album>>(artist => artist.Id == id, artist => artist.Albums);
+
+            return View("Artist", musicViewModel);
+        }
     }
 }
