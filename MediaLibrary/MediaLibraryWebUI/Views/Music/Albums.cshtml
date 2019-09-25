@@ -23,9 +23,12 @@
                                     <h5 class="mt-0">@(album.Title)</h5>
                                     <span>@(Model.Artists.FirstOrDefault(artist => artist.Id == album.ArtistId)?.Name ?? "Unknown Artist")</span>
                                 </div>
-                                <div class="btn-group" role="group" aria-label="Album Buttons">
+                                <div>
+                                    <a class="btn btn-outline-secondary" href="@(Url.Action("GetAlbum", "Music", new { album.Id }))"><i class="fa fa-list"></i></a>
                                     <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))" data-item-id="@(album.Id)"
-                                            data-toggle="modal" data-target="#modalAddToPlaylist"><i class="fa fa-plus"></i></button>
+                                            data-toggle="modal" data-target="#modalAddToPlaylist">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
                                 </div>
                             </div>
                         </li>

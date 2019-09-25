@@ -42,5 +42,11 @@
     @Scripts.Render("~/bundles/popperjs")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", false)
+
+    <script type="text/javascript">
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
 </body>
 </html>
