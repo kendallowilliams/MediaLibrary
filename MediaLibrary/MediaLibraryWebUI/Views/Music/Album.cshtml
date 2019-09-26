@@ -29,7 +29,7 @@
                                 <span></span>
                             </div>
                             <div>
-                                <button class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", song.Id)" onclick="play(this)"><i class="fa fa-play"></i></button>
+                                <button class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { song.Id })" onclick="play(this)"><i class="fa fa-play"></i></button>
                                 <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
                                         data-toggle="modal" data-target="#modalAddToPlaylist"><i class="fa fa-plus"></i></button>
                             </div>
