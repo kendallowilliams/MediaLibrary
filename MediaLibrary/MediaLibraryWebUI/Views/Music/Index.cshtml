@@ -8,6 +8,7 @@
     <audio id="@(Model.HomeViewModel.MusicPlayerId)" autoplay="autoplay" preload="auto" />
 </div>
 
+<h2>Music</h2>
 <ul class="nav nav-pills" id="musicTab" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" id="albums-tab" data-toggle="pill" href="#albums" role="tab" aria-controls="albums" aria-selected="true">Albums</a>
@@ -66,7 +67,7 @@
                 $('#btnAddToPlaylist').attr('data-item-id', id);
             });
         });
-        
+
         $(function () {
             $('#btnAddToPlaylist').click(function (e) {
                 var url = $(e.delegateTarget).attr('data-playlist-url'),
