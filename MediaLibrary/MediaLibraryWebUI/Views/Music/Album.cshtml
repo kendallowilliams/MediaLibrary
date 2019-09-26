@@ -8,5 +8,37 @@
 <div>
     <a class="btn btn-outline-secondary" href="@(Url.Action("Index","Music"))"><i class="fa fa-arrow-circle-left"></i></a>
 </div>
-
 <hr />
+<div class="card">
+    <div class="card-header" id="heading-artist-@(Model.SelectedAlbum.Id)">
+        <h5 class="mb-0">
+            Songs
+        </h5>
+    </div>
+    <div class="card-body m-0 p-0">
+        @if (Model.SelectedAlbum.Tracks.Any())
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var item in Model.SelectedAlbum.Tracks)
+                {
+                    <li class="list-group-item">
+                        <div class="media">
+                            <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
+                            <div class="media-body">
+                                <h5 class="mt-0">@(item.Title)</h5>
+                                <span></span>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-secondary" href=""><i class="fa fa-play"></i></button>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <span>No songs added.</span>
+        }
+    </div>
+</div>

@@ -99,7 +99,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> GetAlbum(int id)
         {
-            musicViewModel.SelectedAlbum = await dataService.GetAsync<Album>(album => album.Id == id);
+            musicViewModel.SelectedAlbum = await dataService.GetAsync<Album, IEnumerable<Track>>(album => album.Id == id, album => album.Tracks);
 
             return View("Album", musicViewModel);
         }
