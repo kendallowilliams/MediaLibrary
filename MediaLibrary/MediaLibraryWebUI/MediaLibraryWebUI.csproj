@@ -186,6 +186,7 @@
     <Compile Include="ActionResults\FileRangeResult.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\CompressContentAttribute.cs" />
     <Compile Include="ControllerFactory\MefControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusicController.cs" />

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static MediaLibraryWebUI.Enums;
+using MediaLibraryWebUI.Attributes;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -29,8 +30,9 @@ namespace MediaLibraryWebUI.Controllers
             this.dataService = dataService;
             this.musicService = musicService;
             this.musicViewModel = musicViewModel;
-    }
-        
+        }
+
+        [CompressContent]
         public async Task<ActionResult> Index()
         {
             musicViewModel.Albums = await musicService.Albums();
