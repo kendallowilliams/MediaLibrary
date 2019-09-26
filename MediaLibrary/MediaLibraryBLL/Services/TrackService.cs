@@ -78,7 +78,7 @@ namespace MediaLibraryBLL.Services
 
         public async Task<TrackFile> GetTrackFile(int id)
         {
-            TrackFile file = await dataService.GetAsync<TrackFile>(item => item.Id == id);
+            TrackFile file = dataService.Get<TrackFile>(item => item.Id == id);
 
             if (file == null)
             {

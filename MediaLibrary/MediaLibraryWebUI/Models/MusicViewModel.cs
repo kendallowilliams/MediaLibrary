@@ -20,6 +20,8 @@ namespace MediaLibraryWebUI.Models
         private IEnumerable<Album> albums;
         private readonly HomeViewModel homeViewModel;
         private IEnumerable<Playlist> playlists;
+        private Album selectedAlbum;
+        private Artist selectedArtist;
 
         [ImportingConstructor]
         public MusicViewModel(HomeViewModel homeViewModel)
@@ -45,5 +47,7 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<Album> Albums { get => albums; set => albums = value; }
         public HomeViewModel HomeViewModel { get => homeViewModel; }
         public IEnumerable<Playlist> Playlists { get => playlists; set => playlists = value; }
+        public Album SelectedAlbum { get => selectedAlbum; set => selectedAlbum = value; }
+        public Artist SelectedArtist { get => selectedArtist; set => selectedArtist = value; }
     }
 }

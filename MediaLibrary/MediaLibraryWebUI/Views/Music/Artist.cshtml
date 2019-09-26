@@ -1,0 +1,12 @@
+﻿@model MediaLibraryWebUI.Models.MusicViewModel
+
+@{
+    ViewBag.Title = "Artist";
+}
+
+<h2>@(Model.SelectedArtist.Name)</h2>
+<div>
+    <a class="btn btn-outline-secondary" href="@(Url.Action("Index","Music"))"><i class="fa fa-arrow-circle-left"></i></a>
+</div>
+
+<hr />

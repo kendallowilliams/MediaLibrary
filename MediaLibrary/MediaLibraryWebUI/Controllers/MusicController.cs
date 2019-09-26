@@ -1,4 +1,5 @@
-﻿using MediaLibraryDAL.DbContexts;
+﻿using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.ActionResults;
 using MediaLibraryWebUI.Models;
@@ -23,13 +24,16 @@ namespace MediaLibraryWebUI.Controllers
         private readonly IDataService dataService;
         private readonly IMusicUIService musicService;
         private readonly MusicViewModel musicViewModel;
+        private readonly ITrackService trackService;
 
         [ImportingConstructor]
-        public MusicController(IDataService dataService, IMusicUIService musicService, MusicViewModel musicViewModel)
+        public MusicController(IDataService dataService, IMusicUIService musicService, MusicViewModel musicViewModel,
+                               ITrackService trackService)
         {
             this.dataService = dataService;
             this.musicService = musicService;
             this.musicViewModel = musicViewModel;
+            this.trackService = trackService;
         }
 
         [CompressContent]
@@ -46,9 +50,9 @@ namespace MediaLibraryWebUI.Controllers
             return View(musicViewModel);
         }
 
-        public ActionResult File(int id)
+        public async Task<ActionResult> File(int id)
         {
-            TrackFile file = dataService.Get<TrackFile>(item => item.Id == id);
+            TrackFile file = await trackService.GetTrackFile(id);
             string range = Request.Headers["Range"];
             ActionResult result = null;
 
@@ -91,6 +95,20 @@ namespace MediaLibraryWebUI.Controllers
             await dataService.Insert(items);
 
             return await Index();
+        }
+
+        public async Task<ActionResult> GetAlbum(int id)
+        {
+            musicViewModel.SelectedAlbum = await dataService.GetAsync<Album>(album => album.Id == id);
+
+            return View("Album", musicViewModel);
+        }
+
+        public async Task<ActionResult> GetArtist(int id)
+        {
+            musicViewModel.SelectedArtist = await dataService.GetAsync<Artist, IEnumerable<Album>>(artist => artist.Id == id, artist => artist.Albums);
+
+            return View("Artist", musicViewModel);
         }
     }
 }
