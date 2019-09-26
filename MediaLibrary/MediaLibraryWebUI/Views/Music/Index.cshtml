@@ -4,10 +4,6 @@
     ViewBag.Title = "Music";
 }
 
-<div class="d-none">
-    <audio id="@(Model.HomeViewModel.MusicPlayerId)" autoplay="autoplay" preload="auto" />
-</div>
-
 <h2>Music</h2>
 <ul class="nav nav-pills" id="musicTab" role="tablist">
     <li class="nav-item">
@@ -54,11 +50,6 @@
 
 @section scripts {
     <script type="text/javascript">
-        function play(id) {
-            $("#@(Model.HomeViewModel.MusicPlayerId)").prop("src", "@(Url.Action("File", "Music"))/" + id);
-            $("#@(Model.HomeViewModel.MusicPlayerId)").trigger("play");
-        }
-
         $(function () {
             $('[data-playlist="add"]').click(function (e) {
                 var url = $(e.delegateTarget).attr('data-playlist-url'),

@@ -34,7 +34,7 @@
                                 <span></span>
                             </div>
                             <div>
-                                <button class="btn btn-outline-secondary"><i class="fa fa-play"></i></button>
+                                <button class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { list.Track.Id })" onclick="play(this)"><i class="fa fa-play"></i></button>
                                 <a class="btn btn-outline-secondary" href="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"><i class="fa fa-trash"></i></a>
                             </div>
                         </div>

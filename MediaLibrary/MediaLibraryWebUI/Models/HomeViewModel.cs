@@ -7,13 +7,9 @@ using System.Web;
 namespace MediaLibraryWebUI.Models
 {
     [Export]
-    public class HomeViewModel
+    public class HomeViewModel : ViewModel
     {
-        private string musicPlayerId = "media-player";
-
         [ImportingConstructor]
         public HomeViewModel() { }
-
-        public string MusicPlayerId { get => musicPlayerId; }
     }
 }

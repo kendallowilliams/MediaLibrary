@@ -11,6 +11,8 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class PodcastFile: IDataModel
     {
+        public PodcastFile() { }
+
         public PodcastFile(byte[] data, string type, int podcastId, int podcastItemId)
         {
             Data = data;

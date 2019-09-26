@@ -24,7 +24,7 @@
                                     <span>@(Model.Albums.FirstOrDefault(album => album.Id == song.AlbumId)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(Model.Artists.FirstOrDefault(artist => artist.Id == song.ArtistId)?.Name)</span>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="play(@(song.Id))"><i class="fa fa-play"></i></button>
+                                    <button type="button" class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", song.Id)" onclick="play(this)"><i class="fa fa-play"></i></button>
                                     <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
                                             data-toggle="modal" data-target="#modalAddToPlaylist"><i class="fa fa-plus"></i></button>
                                 </div>

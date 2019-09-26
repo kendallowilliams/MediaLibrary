@@ -10,7 +10,7 @@ using static MediaLibraryWebUI.Enums;
 namespace MediaLibraryWebUI.Models
 {
     [Export]
-    public class MusicViewModel
+    public class MusicViewModel : ViewModel
     {
         private IEnumerable<IGrouping<string, Track>> songGroups;
         private IEnumerable<IGrouping<string, Artist>> artistGroups;

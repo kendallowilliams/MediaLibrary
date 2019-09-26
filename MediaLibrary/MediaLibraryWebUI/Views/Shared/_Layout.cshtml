@@ -38,6 +38,10 @@
         </footer>
     </div>
 
+    <div class="d-none">
+        <audio id="@(Model?.MusicPlayerId)" autoplay="autoplay" preload="auto" />
+    </div>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/popperjs")
     @Scripts.Render("~/bundles/bootstrap")
@@ -51,6 +55,12 @@
         $(function () {
             $('[data-toggle="popover"]').popover();
         });
+
+        function play(btn) {
+            $("#@(Model?.MusicPlayerId)").prop("src", $(btn).attr("data-play-url"));
+            $("#@(Model?.MusicPlayerId)").trigger("play");
+        }
+
     </script>
 </body>
 </html>

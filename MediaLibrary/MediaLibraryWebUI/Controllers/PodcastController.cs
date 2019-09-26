@@ -1,12 +1,14 @@
 ﻿using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
+using MediaLibraryWebUI.ActionResults;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -83,6 +85,32 @@ namespace MediaLibraryWebUI.Controllers
             podcast = await dataService.GetAsync<Podcast>(item => item.Id == id);
 
             return View("Podcast", podcastViewModel);
+        }
+
+        public async Task<ActionResult> File(int id)
+        {
+            PodcastFile file = dataService.Get<PodcastFile>(item => item.PodcastItemId == id);
+            ActionResult result = null;
+
+            if (file != null)
+            {
+                result = new RangeFileContentResult(file?.Data, null, file.Type);
+            }
+            else
+            {
+                PodcastItem podcastItem = await dataService.GetAsync<PodcastItem>(item => item.Id == id);
+
+                if (podcastItem != null)
+                {
+                    result = new FilePathResult(podcastItem.Url, "audio/mp3");
+                }
+                else
+                {
+                    result = new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+            }
+
+            return result;
         }
     }
 }

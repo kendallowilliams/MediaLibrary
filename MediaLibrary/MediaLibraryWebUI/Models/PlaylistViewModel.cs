@@ -8,7 +8,7 @@ using System.Web;
 namespace MediaLibraryWebUI.Models
 {
     [Export]
-    public class PlaylistViewModel
+    public class PlaylistViewModel : ViewModel
     {
         private IEnumerable<IGrouping<string, Playlist>> playlistGroups;
         private readonly HomeViewModel homeViewModel;
@@ -23,5 +23,6 @@ namespace MediaLibraryWebUI.Models
         
         public Playlist SelectedPlaylist { get => selectedPlaylist; set => selectedPlaylist = value; }
         public IEnumerable<IGrouping<string, Playlist>> PlaylistGroups { get => playlistGroups; set => playlistGroups = value; }
+        public HomeViewModel HomeViewModel { get => homeViewModel; }
     }
 }
