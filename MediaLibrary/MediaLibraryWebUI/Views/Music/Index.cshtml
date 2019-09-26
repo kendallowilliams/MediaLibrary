@@ -59,10 +59,6 @@
         }
 
         $(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-
-        $(function () {
             $('[data-playlist="add"]').click(function (e) {
                 var url = $(e.delegateTarget).attr('data-playlist-url'),
                     id = $(e.delegateTarget).attr('data-item-id');
