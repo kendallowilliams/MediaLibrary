@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -73,6 +74,18 @@ namespace MediaLibraryWebUI.Controllers
                                                                                                           playlist => playlist.PlaylistTracks.Select(list => list.Track));
 
             return View("Playlist", playlistViewModel);
+        }
+
+        public async Task<ActionResult> GetM3UPlaylist(int id)
+        {
+            Playlist playlist = await dataService.GetAsync<Playlist, IEnumerable<Track>>(list => list.Id == id, 
+                                                                                                 list => list.PlaylistTracks.Select(item => item.Track));
+            IEnumerable<Track> tracks = playlist.PlaylistTracks.Select(list => list.Track);
+            IEnumerable<string> lines = tracks.Select(track => $"#EXTINF: {(int)track.Duration},{track.Title}{Environment.NewLine}{$"http://localhost:51124/Music/File/{track.Id}"}");
+            string data = $"#EXTM3U{Environment.NewLine}{string.Join(Environment.NewLine, lines)}";
+            byte[] content = Encoding.UTF8.GetBytes(data);
+
+            return new FileContentResult(content, "audio/mpegurl");
         }
     }
 }
