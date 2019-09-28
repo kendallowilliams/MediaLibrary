@@ -35,20 +35,6 @@ namespace MediaLibraryBLL.Services
 
         public async Task<Podcast> AddPodcast(string url) => await ParseRssFeed(new Podcast { Url = url });
 
-        public async Task<IEnumerable<Podcast>> GetPodcasts(Expression<Func<Podcast, bool>> expression = null) => await dataService.GetList(expression);
-
-        public async Task<Podcast> GetPodcast(Expression<Func<Podcast, bool>> expression = null) =>  await dataService.GetAsync(expression);
-
-        public async Task<IEnumerable<PodcastItem>> GetPodcastItems(int podcastId) => await dataService.GetList<PodcastItem>(item => item.PodcastId == podcastId);
-
-        public async Task<int> InsertPodcast(Podcast podcast) => await dataService.Insert(podcast);
-
-        public async Task<int> DeletePodcast(int id) => await dataService.Delete<Podcast>(id);
-
-        public async Task DeleteAllPodcasts() => await dataService.DeleteAll<Podcast>();
-
-        public async Task<int> UpdatePodcast(Podcast podcast) => await dataService.Update(podcast);
-
         public async Task<Podcast> RefreshPodcast(Podcast podcast) => await ParseRssFeed(podcast, true);
 
         public async Task<Podcast> ParseRssFeed(Podcast podcastData, bool isUpdate = false)
@@ -111,12 +97,12 @@ namespace MediaLibraryBLL.Services
                     podcastData.Description = description;
                     podcastData.LastUpdateDate = pubDate;
                     podcast = podcastData;
-                    await UpdatePodcast(podcast);
+                    await dataService.Update<Podcast>(podcast);
                 }
                 else
                 {
                     podcast = new Podcast(title, podcastData.Url, imageUrl, description, author) { LastUpdateDate = pubDate == DateTime.MinValue ? DateTime.Now : pubDate };
-                    await InsertPodcast(podcast);
+                    await dataService.Insert<Podcast>(podcast);
                 }
 
                 podcastItems = items.Select(item => new
@@ -131,7 +117,7 @@ namespace MediaLibraryBLL.Services
                   .Where(item => item.PublishDate >= lastUpdateDate);
 
                 podcast.PodcastItems = podcastItems.ToList();
-                await UpdatePodcast(podcast);
+                await dataService.Update(podcast);
             }
 
             return podcast;
@@ -161,7 +147,5 @@ namespace MediaLibraryBLL.Services
 
             return podcastFile?.Id;
         }
-
-        public PodcastFile GetPodcastFile(int id) => dataService.Get<PodcastFile>(file => file.Id == id);
     }
 }

@@ -57,7 +57,6 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> RemovePodcast(int id)
         {
-            await dataService.DeleteAll<PodcastItem>(item => item.PodcastId == id);
             await dataService.Delete<Podcast>(id);
 
             return await Index();
@@ -81,7 +80,7 @@ namespace MediaLibraryWebUI.Controllers
         {
             Podcast podcast = await dataService.GetAsync<Podcast>(item => item.Id == id);
 
-            await podcastService.UpdatePodcast(podcast);
+            await dataService.Update(podcast);
             podcast = await dataService.GetAsync<Podcast>(item => item.Id == id);
 
             return View("Podcast", podcastViewModel);

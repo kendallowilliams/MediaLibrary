@@ -43,19 +43,5 @@ namespace MediaLibraryBLL.Services
 
             return id;
         }
-
-        public async Task<IEnumerable<Album>> GetAlbums(Expression<Func<Album, bool>> expression = null) => await dataService.GetList(expression);
-
-        public async Task<Album> GetAlbum(Expression<Func<Album, bool>> expression = null) =>  await dataService.GetAsync(expression);
-
-        public async Task<int> InsertAlbum(Album album) => await dataService.Insert<Album>(album);
-
-        public async Task<int> DeleteAlbum(int id) => await dataService.Delete<Album>(id);
-
-        public async Task<int> DeleteAlbum(Album album) => await dataService.Delete(album);
-
-        public async Task DeleteAllAlbums() => await dataService.DeleteAll<Album>();
-
-        public async Task<int> UpdateAlbum(Album album) => await dataService.Update(album);
     }
 }

@@ -24,17 +24,5 @@ namespace MediaLibraryBLL.Services
         {
             this.dataService = dataService;
         }
-
-        public async Task<IEnumerable<Playlist>> GetPlaylists(Expression<Func<Playlist, bool>> expression = null) => await dataService.GetList(expression);
-
-        public async Task<Playlist> GetPlaylist(Expression<Func<Playlist, bool>> expression = null) => await dataService.GetAsync(expression);
-
-        public async Task<int> InsertPlaylist(Playlist playlist) => await dataService.Insert(playlist);
-
-        public async Task DeletePlaylist(int id) => await dataService.Delete<Playlist>(id);
-
-        public async Task DeleteAllPlaylists() => await dataService.DeleteAll<Playlist>();
-
-        public async Task<int> UpdatePlaylist(Playlist playlist) => await dataService.Update(playlist);
     }
 }

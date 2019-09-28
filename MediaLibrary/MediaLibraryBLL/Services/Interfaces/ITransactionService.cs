@@ -11,14 +11,6 @@ namespace MediaLibraryBLL.Services.Interfaces
 {
     public interface ITransactionService
     {
-        Task<Transaction> GetTransaction(Expression<Func<Transaction, bool>> expression = null);
-
-        Task<IEnumerable<Transaction>> GetTransactions(Expression<Func<Transaction, bool>> expression = null);
-
-        Task<int> InsertTransaction(Transaction transaction);
-
-        Task<int> UpdateTransaction(Transaction transaction);
-
         Task<Transaction> GetNewTransaction(TransactionTypes transactionType);
 
         Task UpdateTransactionCompleted(Transaction transaction, string statusMessage = null);

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -16,12 +17,14 @@ namespace MediaLibraryWebApi.Controllers
     public class PlaylistController : ApiControllerBase
     {
         private readonly IPlaylistService playlistService;
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PlaylistController(IPlaylistService playlistService, ITransactionService transactionService)
+        public PlaylistController(IPlaylistService playlistService, ITransactionService transactionService, IDataService dataService)
         {
             this.playlistService = playlistService;
             this.transactionService = transactionService;
+            this.dataService = dataService;
         }
 
         // GET: api/Playlist
@@ -33,7 +36,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPlaylists);
-                playlists = await playlistService.GetPlaylists();
+                playlists = await dataService.GetList<Playlist>();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -53,7 +56,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPlaylist);
-                playlist = await playlistService.GetPlaylist(item => item.Id == id);
+                playlist = await dataService.GetAsync<Playlist>(item => item.Id == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -73,7 +76,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPlaylist);
-                await playlistService.InsertPlaylist(playlist);
+                await dataService.Insert(playlist);
                 playlistId = playlist.Id;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
@@ -94,7 +97,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.ReplacePlaylist);
-                isReplaced = await playlistService.UpdatePlaylist(playlist) > 0;
+                isReplaced = await dataService.Update(playlist) > 0;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -113,7 +116,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.RemovePlaylist);
-                await playlistService.DeletePlaylist(id);
+                await dataService.Delete<Playlist>(id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

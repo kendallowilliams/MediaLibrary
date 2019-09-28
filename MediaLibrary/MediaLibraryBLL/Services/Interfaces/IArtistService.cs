@@ -11,19 +11,5 @@ namespace MediaLibraryBLL.Services.Interfaces
     public interface IArtistService
     {
         Task<int?> AddArtist(string artists);
-
-        Task<Artist> GetArtist(Expression<Func<Artist, bool>> expression = null);
-
-        Task<IEnumerable<Artist>> GetArtists(Expression<Func<Artist, bool>> expression = null);
-
-        Task<int> InsertArtist(Artist artist);
-
-        Task<int> DeleteArtist(int id);
-
-        Task<int> DeleteArtist(Artist artist);
-
-        Task DeleteAllArtists();
-
-        Task<int> UpdateArtist(Artist artist);
     }
 }

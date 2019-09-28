@@ -25,21 +25,13 @@ namespace MediaLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactions(Expression<Func<Transaction,bool>> expression = null) => await dataService.GetList(expression);
-
-        public async Task<Transaction> GetTransaction(Expression<Func<Transaction, bool>> expression = null) => await dataService.GetAsync(expression);
-
-        public async Task<int> InsertTransaction(Transaction transaction) => await dataService.Insert(transaction);
-
-        public async Task<int> UpdateTransaction(Transaction transaction) => await dataService.Update(transaction);
-
         public async Task<Transaction> GetNewTransaction(TransactionTypes transactionType)
         {
             Transaction transaction = new Transaction(transactionType);
 
             transaction.Status = (int)TransactionStatus.Started;
             transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
-            await InsertTransaction(transaction);
+            await dataService.Insert(transaction);
 
             return transaction;
         }
@@ -51,7 +43,7 @@ namespace MediaLibraryBLL.Services
                 transaction.Status = (int)TransactionStatus.Completed;
                 transaction.StatusMessage = statusMessage ?? $"{transaction.Status} [{transaction.Type}]";
                 transaction.ModifyDate = DateTime.Now;
-                await UpdateTransaction(transaction);
+                await dataService.Update(transaction);
             }
         }
 
@@ -62,7 +54,7 @@ namespace MediaLibraryBLL.Services
                 transaction.Status = (int)TransactionStatus.InProcess;
                 transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
                 transaction.ModifyDate = DateTime.Now;
-                await UpdateTransaction(transaction);
+                await dataService.Update(transaction);
             }
         }
 
@@ -74,7 +66,7 @@ namespace MediaLibraryBLL.Services
                 transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
                 transaction.ErrorMessage = exception.Message;
                 transaction.ModifyDate = DateTime.Now;
-                await UpdateTransaction(transaction);
+                await dataService.Update(transaction);
             }
         }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -17,12 +18,14 @@ namespace MediaLibraryWebApi.Controllers
     {
         private readonly IGenreService genreService;
         private readonly Genre unknownGenre;
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public GenreController(IGenreService genreService, ITransactionService transactionService)
+        public GenreController(IGenreService genreService, ITransactionService transactionService, IDataService dataService)
         {
             this.genreService = genreService;
             this.transactionService = transactionService;
+            this.dataService = dataService;
             this.unknownGenre = new Genre(-1, "Unknown Genre");
         }
 
@@ -35,7 +38,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetGenres);
-                genres = await genreService.GetGenres();
+                genres = await dataService.GetList<Genre>();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -55,7 +58,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetGenre);
-                genre = id > -1 ? await genreService.GetGenre(item => item.Id == id): unknownGenre;
+                genre = id > -1 ? await dataService.GetAsync<Genre>(item => item.Id == id): unknownGenre;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

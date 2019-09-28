@@ -15,6 +15,7 @@ using System.Web;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -23,9 +24,11 @@ namespace MediaLibraryWebApi.Controllers
     {
         private readonly ITrackService trackService;
         private readonly IFileService fileService;
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public TrackController(ITrackService trackService, IFileService fileService, ITransactionService transactionService)
+        public TrackController(ITrackService trackService, IFileService fileService, ITransactionService transactionService,
+                               IDataService dataService)
         {
             this.trackService = trackService;
             this.fileService = fileService;
@@ -41,7 +44,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTracks);
-                tracks = await trackService.GetTracks();
+                tracks = await dataService.GetList<Track>();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -61,7 +64,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetTrack);
-                track = await trackService.GetTrack(item => item.Id == id);
+                track = await dataService.GetAsync<Track>(item => item.Id == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -119,7 +122,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.RemoveTrack);
-                await trackService.DeleteTrack(id);
+                await dataService.Delete<Track>(id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

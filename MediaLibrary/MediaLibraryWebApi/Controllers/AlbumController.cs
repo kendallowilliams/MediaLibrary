@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -17,12 +18,14 @@ namespace MediaLibraryWebApi.Controllers
     {
         private readonly IAlbumService albumService;
         private readonly Album unknownAlbum;
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public AlbumController(IAlbumService albumService, ITransactionService transactionService)
+        public AlbumController(IAlbumService albumService, ITransactionService transactionService, IDataService dataService)
         {
             this.albumService = albumService;
             this.transactionService = transactionService;
+            this.dataService = dataService;
             unknownAlbum = new Album(-1, "Unknown Album");
         }
 
@@ -35,7 +38,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetAlbums);
-                albums = await albumService.GetAlbums();
+                albums = await dataService.GetList<Album>();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -55,7 +58,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetAlbum);
-                album = id > -1 ? await albumService.GetAlbum(item => item.Id == id): unknownAlbum;
+                album = id > -1 ? await dataService.GetAsync<Album>(item => item.Id == id) : unknownAlbum;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

@@ -14,12 +14,14 @@ using System.Web.Hosting;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
 
 namespace MediaLibraryWebApi.Controllers
 {
     [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class RootController : ApiControllerBase
     {
+        private readonly IDataService dataService;
         private readonly IFileService fileService;
         private readonly IAlbumService albumService;
         private readonly IArtistService artistService;
@@ -32,7 +34,8 @@ namespace MediaLibraryWebApi.Controllers
         [ImportingConstructor]
         public RootController(IFileService fileService, ITransactionService transactionService, IAlbumService albumService,
                               IArtistService artistService, ITrackService trackService, IPodcastService podcastService,
-                              IPlaylistService playlistService, IGenreService genreService, IControllerService controllerService)
+                              IPlaylistService playlistService, IGenreService genreService, IControllerService controllerService,
+                              IDataService dataService)
         {
             this.fileService = fileService;
             this.transactionService = transactionService;
@@ -43,6 +46,7 @@ namespace MediaLibraryWebApi.Controllers
             this.playlistService = playlistService;
             this.genreService = genreService;
             this.controllerService = controllerService;
+            this.dataService = dataService;
         }
 
         [HttpPost]
@@ -104,12 +108,12 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.ResetData);
-                await trackService.DeleteAllTracks();
-                await playlistService.DeleteAllPlaylists();
-                await albumService.DeleteAllAlbums();
-                await genreService.DeleteAllGenres();
-                await artistService.DeleteAllArtists();
-                await podcastService.DeleteAllPodcasts();
+                await dataService.DeleteAll<Track>();
+                await dataService.DeleteAll<Playlist>();
+                await dataService.DeleteAll<Album>();
+                await dataService.DeleteAll<Genre>();
+                await dataService.DeleteAll<Artist>();
+                await dataService.DeleteAll<Podcast>();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)

@@ -45,19 +45,5 @@ namespace MediaLibraryBLL.Services
 
             return id;
         }
-
-        public async Task<IEnumerable<Genre>> GetGenres(Expression<Func<Genre, bool>> expression = null) => await dataService.GetList(expression);
-
-        public async Task<Genre> GetGenre(Expression<Func<Genre, bool>> expression = null) => await dataService.GetAsync(expression);
-
-        public async Task<int> InsertGenre(Genre genre) => await dataService.Insert(genre);
-
-        public async Task<int> DeleteGenre(int id) => await dataService.Delete<Genre>(id);
-
-        public async Task<int> DeleteGenre(Genre genre) => await dataService.Delete(genre);
-
-        public async Task DeleteAllGenres() => await dataService.DeleteAll<Genre>();
-
-        public async Task<int> UpdateGenre(Genre genre) => await dataService.Update(genre);
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Models;
+using MediaLibraryDAL.Services.Interfaces;
 
 namespace MediaLibraryBLL.Services
 {
@@ -18,6 +19,7 @@ namespace MediaLibraryBLL.Services
     [Export(typeof(IFileService))]
     public class FileService : IFileService
     {
+        private readonly IDataService dataService;
         private readonly IId3Service id3Service;
         private readonly IArtistService artistService;
         private readonly IAlbumService albumService;
@@ -27,7 +29,8 @@ namespace MediaLibraryBLL.Services
 
         [ImportingConstructor]
         public FileService(IId3Service id3Service, IArtistService artistService, IAlbumService albumService,
-                           IGenreService genreService, ITrackService trackService, ITransactionService transactionService)
+                           IGenreService genreService, ITrackService trackService, ITransactionService transactionService,
+                           IDataService dataService)
         {
             this.id3Service = id3Service;
             this.artistService = artistService;
@@ -35,6 +38,7 @@ namespace MediaLibraryBLL.Services
             this.genreService = genreService;
             this.trackService = trackService;
             this.transactionService = transactionService;
+            this.dataService = dataService;
         }
 
         public IEnumerable<string> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false)
@@ -95,7 +99,7 @@ namespace MediaLibraryBLL.Services
                 pathId = await trackService.AddPath(Path.GetDirectoryName(path));
             Track track = new Track(data, pathId, genreId, albumId, artistId);
 
-            await trackService.InsertTrack(track);
+            await dataService.Insert(track);
             if (copyFile) { await trackService.AddTrackFile(track.Id); }
         }
     }

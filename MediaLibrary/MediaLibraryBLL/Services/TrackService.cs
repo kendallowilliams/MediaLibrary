@@ -26,20 +26,6 @@ namespace MediaLibraryBLL.Services
             this.dataService = dataService;
         }
 
-        public async Task<IEnumerable<Track>> GetTracks(Expression<Func<Track, bool>> expression = null) => await dataService.GetList(expression);
-
-        public async Task<Track> GetTrack(Expression<Func<Track, bool>> expression = null) => await dataService.GetAsync(expression);
-
-        public async Task<int> InsertTrack(Track track) => await dataService.Insert(track);
-
-        public async Task<int> DeleteTrack(int id) => await dataService.Delete<Track>(id);
-
-        public async Task<int> DeleteTrack(Track track) => await dataService.Delete(track);
-
-        public async Task DeleteAllTracks() => await dataService.DeleteAll<Track>();
-
-        public async Task<int> UpdateTrack(Track track) => await dataService.Update(track);
-
         public async Task<int?> AddPath(string location)
         {
 
@@ -64,7 +50,7 @@ namespace MediaLibraryBLL.Services
 
         public async Task<int?> AddTrackFile(int trackId)
         {
-            Track track = await GetTrack(item => item.Id == trackId);
+            Track track = await dataService.GetAsync<Track>(item => item.Id == trackId);
             TrackPath path = await dataService.GetAsync<TrackPath>(trackPath => trackPath.Id == track.PathId);
             TrackFile trackFile = null;
             string filePath = Path.Combine(path.Location, track.FileName);

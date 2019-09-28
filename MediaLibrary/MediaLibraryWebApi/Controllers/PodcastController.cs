@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Services.Interfaces;
 
 namespace MediaLibraryWebApi.Controllers
 {
@@ -19,13 +20,16 @@ namespace MediaLibraryWebApi.Controllers
     {
         private readonly IPodcastService podcastService;
         private readonly IControllerService controllerService;
+        private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PodcastController(IPodcastService podcastService, ITransactionService transactionService, IControllerService controllerService)
+        public PodcastController(IPodcastService podcastService, ITransactionService transactionService, IControllerService controllerService,
+                                 IDataService dataService)
         {
             this.podcastService = podcastService;
             this.transactionService = transactionService;
             this.controllerService = controllerService;
+            this.dataService = dataService;
         }
 
         // GET: api/Podcast
@@ -37,7 +41,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcasts);
-                podcasts = await podcastService.GetPodcasts();
+                podcasts = await dataService.GetList<Podcast>();
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -57,7 +61,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcast);
-                podcast = await podcastService.GetPodcast(item => item.Id == id);
+                podcast = await dataService.GetAsync<Podcast>(item => item.Id == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -78,7 +82,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcastItems);
-                items = await podcastService.GetPodcastItems(id);
+                items = await dataService.GetList<PodcastItem>(item => item.PodcastId == id);
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -134,7 +138,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.ReplacePodcast);
-                isReplaced = await podcastService.UpdatePodcast(podcast) > 0;
+                isReplaced = await dataService.Update(podcast) > 0;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
@@ -154,7 +158,7 @@ namespace MediaLibraryWebApi.Controllers
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.RemovePodcast);
-                isRemoved = await podcastService.DeletePodcast(id) > 0;
+                isRemoved = await dataService.Delete<Podcast>(id) > 0;
                 await transactionService.UpdateTransactionCompleted(transaction);
             }
             catch (Exception ex)
