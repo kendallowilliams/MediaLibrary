@@ -7,6 +7,7 @@ using MediaLibraryWebUI.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -101,7 +102,11 @@ namespace MediaLibraryWebUI.Controllers
 
                 if (podcastItem != null)
                 {
-                    result = new FilePathResult(podcastItem.Url, "audio/mp3");
+                    using (var client = new WebClient())
+                    {
+                        Stream stream = client.OpenRead(podcastItem.Url);
+                        result = new FileStreamResult(stream, "audio/mp3");
+                    }
                 }
                 else
                 {
