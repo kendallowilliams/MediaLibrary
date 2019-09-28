@@ -7,7 +7,7 @@
     [CreateDate] DATETIME2      DEFAULT (getdate()) NOT NULL,
     [ModifyDate] DATETIME2      DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([Id] ASC),
-    FOREIGN KEY ([ArtistId]) REFERENCES [dbo].[Artist] ([Id]),
-    FOREIGN KEY ([GenreId]) REFERENCES [dbo].[Genre] ([Id])
+    FOREIGN KEY ([ArtistId]) REFERENCES [dbo].[Artist] ([Id]) ON DELETE SET NULL,
+    FOREIGN KEY ([GenreId]) REFERENCES [dbo].[Genre] ([Id]) ON DELETE SET NULL
 );
 
