@@ -47,8 +47,10 @@
                                     <div>
                                         <button class="btn btn-outline-secondary" data-toggle="tooltip" title="@(podcast.Description)" data-placement="left"
                                                 data-html="true"><i class="fa fa-info-circle"></i></button>
-                                        <a class="btn btn-outline-secondary" href="@(Url.Action("Get", "Podcast", new { podcast.Id }))"><i class="fa fa-list"></i></a>
-                                        <a class="btn btn-outline-danger" href="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-outline-secondary" href="@(Url.Action("Get", "Podcast", new { podcast.Id }))"
+                                           data-toggle="tooltip" title="View podcast"><i class="fa fa-list"></i></a>
+                                        <a class="btn btn-outline-danger" href="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
+                                           data-toggle="tooltip" title="Delete podcast"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </div>
                             </li>

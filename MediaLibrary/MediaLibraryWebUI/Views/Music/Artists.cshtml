@@ -6,7 +6,8 @@
         <div class="card">
             <div class="card-header" id="heading-artists-@(item.Index)">
                 <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-artists-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-artists-@(item.Index)">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-artists-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" 
+                            aria-controls="collapse-artists-@(item.Index)">
                         @(item.Group.Key)
                     </button>
                 </h5>
@@ -27,10 +28,11 @@
                                 <span>@(Model.Albums.FirstOrDefault(album => album.ArtistId == artist.Id)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(txtSongs)</span>
                             </div>
                             <div>
-                                <a class="btn btn-outline-secondary" href="@(Url.Action("GetArtist", "Music", new { artist.Id }))"><i class="fa fa-list"></i></a>
+                                <a class="btn btn-outline-secondary" href="@(Url.Action("GetArtist", "Music", new { artist.Id }))"
+                                   data-toggle="tooltip" title="View artist"><i class="fa fa-list"></i></a>
                                 <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddArtistToPlaylist", "Music"))" data-item-id="@(artist.Id)"
                                         data-toggle="modal" data-target="#modalAddToPlaylist">
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa fa-plus" data-toggle="tooltip" title="Add to playlist"></i>
                                 </button>
                             </div>
                         </div>
