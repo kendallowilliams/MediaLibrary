@@ -8,6 +8,6 @@
     [ModifyDate] DATETIME2        DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([Id] ASC),
     CONSTRAINT [FK_podcast_file_podcast_item] FOREIGN KEY ([PodcastItemId]) REFERENCES PodcastItem([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_podcast_file_podcast] FOREIGN KEY ([PodcastId]) REFERENCES Podcast([Id]) ON DELETE CASCADE
+    CONSTRAINT [FK_podcast_file_podcast] FOREIGN KEY ([PodcastId]) REFERENCES Podcast([Id])
 );
 
