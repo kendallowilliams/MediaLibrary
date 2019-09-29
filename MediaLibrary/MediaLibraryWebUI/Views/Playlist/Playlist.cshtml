@@ -10,8 +10,10 @@
     <a class="btn btn-outline-secondary" href="" data-toggle="tooltip" title="Edit playlist"><i class="fa fa-edit"></i></a>
     <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", new { Model.SelectedPlaylist.Id})"
        data-toggle="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
-    <a class="btn btn-outline-danger" href="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
-       data-toggle="tooltip" title="Delete playlist"><i class="fa fa-trash"></i></a>
+    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
+            data-toggle="tooltip" title="Delete playlist">
+        <i class="fa fa-trash"></i>
+    </button>
 </div>
 <hr />
 <div class="card">
@@ -36,9 +38,13 @@
                             </div>
                             <div>
                                 <button class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { list.Track.Id })" onclick="play(this)"
-                                        data-toggle="tooltip" title="Play"><i class="fa fa-play"></i></button>
-                                <a class="btn btn-outline-danger" href="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
-                                   data-toggle="tooltip" title="Remove song"><i class="fa fa-trash"></i></a>
+                                        data-toggle="tooltip" title="Play">
+                                    <i class="fa fa-play"></i>
+                                </button>
+                                <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
+                                        data-toggle="tooltip" title="Remove song">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </div>
                         </div>
                     </li>
@@ -51,3 +57,5 @@
         }
     </div>
 </div>
+
+@Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")

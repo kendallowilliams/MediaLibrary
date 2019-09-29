@@ -8,7 +8,7 @@
 <div>
     <a class="btn btn-outline-secondary" href="@(Url.Action("Index","Podcast"))" data-toggle="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></a>
     <a class="btn btn-outline-secondary" href="@(Url.Action("RefreshPodcast","Podcast", new { Model.SelectedPodcast.Id }))" data-toggle="tooltip" title="Refresh podcast"><i class="fa fa-refresh"></i></a>
-    <a class="btn btn-outline-danger" href="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))" data-toggle="tooltip" title="Delete podcast"><i class="fa fa-trash"></i></a>
+    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))" data-toggle="tooltip" title="Delete podcast"><i class="fa fa-trash"></i></button>
 </div>
 
 <hr />
@@ -34,9 +34,13 @@
                             </div>
                             <div>
                                 <button class="btn btn-outline-secondary" data-toggle="tooltip" title="@(item.Description)" data-placement="left"
-                                        data-html="true"><i class="fa fa-info-circle"></i></button>
+                                        data-html="true">
+                                    <i class="fa fa-info-circle"></i>
+                                </button>
                                 <button class="btn btn-outline-secondary" data-play-url="@Url.Action("File","Podcast", new { item.Id })" onclick="play(this)"
-                                        data-toggle="tooltip" title="Play"><i class="fa fa-play"></i></button>
+                                        data-toggle="tooltip" title="Play">
+                                    <i class="fa fa-play"></i>
+                                </button>
                                 <a class="btn btn-outline-secondary" href="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
                                    data-toggle="tooltip" title="Download episode"><i class="fa fa-download"></i></a>
                             </div>
@@ -51,3 +55,5 @@
         }
     </div>
 </div>
+
+@Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")

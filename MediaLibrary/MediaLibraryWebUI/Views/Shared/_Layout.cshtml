@@ -60,7 +60,16 @@
             $("#@(Model?.MusicPlayerId)").prop("src", $(btn).attr("data-play-url"));
             $("#@(Model?.MusicPlayerId)").trigger("play");
         }
+        
+        $(function () {
+            $('[data-delete="enabled"]').click(function (e) {
+                var url = $(e.delegateTarget).attr('data-delete-action');
+                var $button = $('#btnDeleteItem');
 
+                $button.prop('href', url);
+                $('#modalDeleteItem').modal('show');
+            });
+        });
     </script>
 </body>
 </html>
