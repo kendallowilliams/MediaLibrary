@@ -14,7 +14,7 @@
 
             <div id="collapse-songs-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-songs-@(item.Index)" data-parent="#accordion-songs">
                 <ul class="list-group list-group-flush">
-                    @foreach (var song in item.Group)
+                    @foreach (var song in item.Group.OrderBy(s => s.Title))
                     {
                         <li class="list-group-item">
                             <div class="media">
