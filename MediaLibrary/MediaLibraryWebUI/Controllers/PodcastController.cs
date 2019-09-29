@@ -102,11 +102,7 @@ namespace MediaLibraryWebUI.Controllers
 
                 if (podcastItem != null)
                 {
-                    using (var client = new WebClient())
-                    {
-                        Stream stream = client.OpenRead(podcastItem.Url);
-                        result = new FileStreamResult(stream, "audio/mp3");
-                    }
+                    result = new RedirectResult(podcastItem.Url);
                 }
                 else
                 {
