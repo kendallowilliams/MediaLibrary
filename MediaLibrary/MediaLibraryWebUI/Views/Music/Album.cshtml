@@ -19,7 +19,7 @@
         @if (Model.SelectedAlbum.Tracks.Any())
         {
             <ul class="list-group list-group-flush">
-                @foreach (var song in Model.SelectedAlbum.Tracks)
+                @foreach (var song in Model.SelectedAlbum.Tracks.OrderBy(song => song.Title))
                 {
                     <li class="list-group-item">
                         <div class="media">
