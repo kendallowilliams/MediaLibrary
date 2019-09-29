@@ -239,6 +239,7 @@
     <Content Include="Views\Music\Album.cshtml" />
     <Content Include="Views\Music\Artist.cshtml" />
     <Content Include="Views\Shared\Modals\DeleteModal.cshtml" />
+    <Content Include="Views\Shared\Modals\AddToPlaylistModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

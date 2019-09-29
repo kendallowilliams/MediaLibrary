@@ -23,54 +23,7 @@
     <div class="tab-pane fade show active" id="albums" role="tabpanel" aria-labelledby="albums-tab">@Html.Partial("Albums", Model)</div>
 </div>
 
-<div class="modal fade" id="modalAddToPlaylist" role="dialog" aria-labelledby="modalAddToPlaylistTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalAddToPlaylistTitle">Select playlist</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body m-0 p-0">
-                <div class="d-none">
-                    <input id="txtPlaylistUrl" type="hidden" value="" />
-                    <input id="txtPlaylistItemId" type="hidden" value="" />
-                </div>
-                <ul class="list-group list-group-flush">
-                    @foreach (var playlist in Model.Playlists)
-                    {
-                        <li id="btnAddToPlaylist" data-playlist-id="@(playlist.Id)" class="list-group-item list-group-item-action">@(playlist.Name)</li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
 
 @section scripts {
-    <script type="text/javascript">
-        $(function () {
-            $('[data-playlist="add"]').click(function (e) {
-                var url = $(e.delegateTarget).attr('data-playlist-url'),
-                    id = $(e.delegateTarget).attr('data-item-id');
-                $('#btnAddToPlaylist').attr('data-playlist-url', url);
-                $('#btnAddToPlaylist').attr('data-item-id', id);
-            });
-        });
-
-        $(function () {
-            $('#btnAddToPlaylist').click(function (e) {
-                var url = $(e.delegateTarget).attr('data-playlist-url'),
-                    id = $(e.delegateTarget).attr('data-item-id'),
-                    playlistId = $(e.delegateTarget).attr('data-playlist-id');
-
-                $.post(url, { playlistId, itemId: id });
-
-                $(e.delegateTarget).attr('data-playlist-url', '');
-                $(e.delegateTarget).attr('data-item-id', '');
-                $('#modalAddToPlaylist').modal('hide');
-            });
-        });
-    </script>
 }
