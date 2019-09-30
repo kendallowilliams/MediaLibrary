@@ -15,7 +15,7 @@
 
             <div id="collapse-artists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-artists-@(item.Index)" data-parent="#accordion-artists">
                 <ul class="list-group list-group-flush">
-                    @foreach (var artist in item.Group.OrderBy(a => a.Name))
+                    @foreach (var artist in item.Group.OrderBy(a => a.Name).Where(artist => Model.Albums.Any(album => album.ArtistId == artist.Id)))
                     {
                         int count = Model.Songs.Count(song => song.ArtistId == artist.Id);
                         string txtSongs = count == 1 ? $"{count} song" : $"{count} songs";
