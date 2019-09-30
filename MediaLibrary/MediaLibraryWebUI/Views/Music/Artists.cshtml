@@ -17,15 +17,15 @@
                 <ul class="list-group list-group-flush">
                     @foreach (var artist in item.Group.OrderBy(a => a.Name).Where(artist => Model.Albums.Any(album => album.ArtistId == artist.Id)))
                     {
-                        int count = Model.Songs.Count(song => song.ArtistId == artist.Id);
-                        string txtSongs = count == 1 ? $"{count} song" : $"{count} songs";
+                        int count = Model.Albums.Count(album => album.ArtistId == artist.Id);
+                        string txtAlbums = count == 1 ? $"{count} album" : $"{count} albums";
 
                     <li class="list-group-item">
                         <div class="media">
                             <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(artist.Name)">
                             <div class="media-body">
                                 <h5 class="mt-0">@(artist.Name)</h5>
-                                <span>@(Model.Albums.FirstOrDefault(album => album.ArtistId == artist.Id)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(txtSongs)</span>
+                                <span>@(Model.Albums.FirstOrDefault(album => album.ArtistId == artist.Id)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(txtAlbums)</span>
                             </div>
                             <div>
                                 <a class="btn btn-outline-secondary" href="@(Url.Action("GetArtist", "Music", new { artist.Id }))"
