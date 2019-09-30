@@ -6,6 +6,7 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/fontawesome")
 </head>
 <body>
     <div class="container">
@@ -61,7 +62,7 @@
             $("#@(Model?.MusicPlayerId)").prop("src", $(btn).attr("data-play-url"));
             $("#@(Model?.MusicPlayerId)").trigger("play");
         }
-        
+
         $(function () {
             $('[data-delete="enabled"]').click(function (e) {
                 var url = $(e.delegateTarget).attr('data-delete-action');

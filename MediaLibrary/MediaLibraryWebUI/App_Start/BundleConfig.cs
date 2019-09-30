@@ -19,10 +19,13 @@ namespace MediaLibraryWebUI
             bundles.Add(new ScriptBundle("~/bundles/popperjs").Include(
                       "~/Scripts/umd/popper.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/fontawesome").Include(
+                      "~/lib/font-awesome/js/all.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/font-awesome.css"));
+                      "~/lib/font-awesome/css/all.css"));
         }
     }
 }
