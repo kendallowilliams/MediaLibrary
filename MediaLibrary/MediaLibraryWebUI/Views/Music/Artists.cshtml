@@ -25,7 +25,7 @@
                             <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(artist.Name)">
                             <div class="media-body">
                                 <h5 class="mt-0">@(artist.Name)</h5>
-                                <span>@(Model.Albums.FirstOrDefault(album => album.ArtistId == artist.Id)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(txtAlbums)</span>
+                                <span class="text-muted">@(txtAlbums)</span>
                             </div>
                             <div>
                                 <a class="btn btn-outline-secondary" href="@(Url.Action("GetArtist", "Music", new { artist.Id }))"
