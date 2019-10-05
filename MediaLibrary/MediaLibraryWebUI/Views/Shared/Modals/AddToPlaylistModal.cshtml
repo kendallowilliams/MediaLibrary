@@ -24,3 +24,28 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" defer="defer">
+        $(function () {
+            $('[data-playlist="add"]').click(function (e) {
+                var url = $(e.delegateTarget).attr('data-playlist-url'),
+                    id = $(e.delegateTarget).attr('data-item-id');
+                $('[data-playlist-item="enabled"]').attr('data-playlist-url', url);
+                $('[data-playlist-item="enabled"]').attr('data-item-id', id);
+            });
+        });
+
+        $(function () {
+            $('[data-playlist-item="enabled"]').click(function (e) {
+                var url = $(e.delegateTarget).attr('data-playlist-url'),
+                    id = $(e.delegateTarget).attr('data-item-id'),
+                    playlistId = $(e.delegateTarget).attr('data-playlist-id');
+
+                $.post(url, { playlistId, itemId: id });
+
+                $(e.delegateTarget).attr('data-playlist-url', '');
+                $(e.delegateTarget).attr('data-item-id', '');
+                $('#modalAddToPlaylist').modal('hide');
+            });
+        });
+</script>

@@ -6,6 +6,9 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/popperjs")
+    @Scripts.Render("~/bundles/bootstrap")
 </head>
 <body>
     <div class="container">
@@ -42,15 +45,12 @@
         <audio id="@(Model?.MusicPlayerId)" autoplay="autoplay" preload="auto" />
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/popperjs")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", false)
 
-    <script type="text/javascript">
+    <script type="text/javascript" defer="defer">
         $(function () {
             // causing delay when loading music view
-            //$('[data-toggle="tooltip"]').tooltip();
+            // $('[data-toggle="tooltip"]').tooltip();
         });
 
         $(function () {
@@ -69,29 +69,6 @@
 
                 $button.prop('href', url);
                 $('#modalDeleteItem').modal('show');
-            });
-        });
-
-        $(function () {
-            $('[data-playlist="add"]').click(function (e) {
-                var url = $(e.delegateTarget).attr('data-playlist-url'),
-                    id = $(e.delegateTarget).attr('data-item-id');
-                $('[data-playlist-item="enabled"]').attr('data-playlist-url', url);
-                $('[data-playlist-item="enabled"]').attr('data-item-id', id);
-            });
-        });
-
-        $(function () {
-            $('[data-playlist-item="enabled"]').click(function (e) {
-                var url = $(e.delegateTarget).attr('data-playlist-url'),
-                    id = $(e.delegateTarget).attr('data-item-id'),
-                    playlistId = $(e.delegateTarget).attr('data-playlist-id');
-
-                $.post(url, { playlistId, itemId: id });
-
-                $(e.delegateTarget).attr('data-playlist-url', '');
-                $(e.delegateTarget).attr('data-item-id', '');
-                $('#modalAddToPlaylist').modal('hide');
             });
         });
     </script>
