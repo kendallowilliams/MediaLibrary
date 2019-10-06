@@ -232,6 +232,7 @@
     <Compile Include="ControllerFactory\MefControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MusicController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\PodcastController.cs" />
     <Compile Include="Enums\Enums.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\Interfaces\IViewModel.cs" />
     <Compile Include="Models\MusicViewModel.cs" />
+    <Compile Include="Models\PlayerViewModel.cs" />
     <Compile Include="Models\PlaylistViewModel.cs" />
     <Compile Include="Models\PodcastViewModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
@@ -280,6 +282,8 @@
     <Content Include="Views\Music\Artist.cshtml" />
     <Content Include="Views\Shared\Modals\DeleteModal.cshtml" />
     <Content Include="Views\Shared\Modals\AddToPlaylistModal.cshtml" />
+    <Content Include="Views\Shared\_PlayerLayout.cshtml" />
+    <Content Include="Views\Player\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

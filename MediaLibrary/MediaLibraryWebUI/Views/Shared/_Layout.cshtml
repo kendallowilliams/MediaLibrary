@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <title>KOW Moosic @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -41,13 +41,11 @@
         </footer>
     </div>
 
-    <div class="d-none">
-        <audio id="@(Model?.MusicPlayerId)" autoplay="autoplay" preload="auto" />
-    </div>
-
     @RenderSection("scripts", false)
 
     <script type="text/javascript" defer="defer">
+        var playerPopup = null;
+
         $(function () {
             // causing delay when loading music view
             // $('[data-toggle="tooltip"]').tooltip();
@@ -58,8 +56,9 @@
         });
 
         function play(btn) {
-            $("#@(Model?.MusicPlayerId)").prop("src", $(btn).attr("data-play-url"));
-            $("#@(Model?.MusicPlayerId)").trigger("play");
+            if (!playerPopup || playerPopup.closed) {
+                playerPopup = window.open('@Url.Action("Index", "Player")', '@(Model.MusicPlayerId)');
+            }
         }
 
         $(function () {
