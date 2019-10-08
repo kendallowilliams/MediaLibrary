@@ -55,9 +55,22 @@
             $('[data-toggle="popover"]').popover();
         });
 
-        function play(btn) {
+        function play(_btn) {
+            var $playButtons = $('button[data-play-url]');
+            var $playData = $playButtons.map((index, btn) => ({
+                    index: index,
+                    url: $(btn).attr("data-play-url"),
+                    isPlaying: btn.isSameNode(_btn)
+                }));
+
             if (!playerPopup || playerPopup.closed) {
                 playerPopup = window.open('@Url.Action("Index", "Player")', '@(Model.MusicPlayerId)');
+            }
+
+            if (playerPopup && !playerPopup.closed) {
+                playerPopup.postMessage($.makeArray($playData));
+            } else {
+                alert("No popup");
             }
         }
 
@@ -70,6 +83,13 @@
                 $('#modalDeleteItem').modal('show');
             });
         });
+
+        window.addEventListener("message", receiveMessage, false);
+
+        function receiveMessage(event) {
+            if (event.origin !== "http://localhost:51124")
+                return;
+        }
     </script>
 </body>
 </html>
