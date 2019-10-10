@@ -18,7 +18,7 @@ using static MediaLibraryWebUI.Enums;
 namespace MediaLibraryWebUI.Controllers
 {
     [Export("Podcast", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public class PodcastController : Controller
+    public class PodcastController : BaseController
     {
         private readonly IPodcastUIService podcastUIService;
         private readonly IDataService dataService;
@@ -87,6 +87,7 @@ namespace MediaLibraryWebUI.Controllers
             return View("Podcast", podcastViewModel);
         }
 
+        [AllowAnonymous]
         public async Task<ActionResult> File(int id)
         {
             PodcastFile file = dataService.Get<PodcastFile>(item => item.PodcastItemId == id);

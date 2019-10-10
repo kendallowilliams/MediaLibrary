@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\TransactionEnums.cs" />
+    <Compile Include="Models\Interfaces\IListItem.cs" />
+    <Compile Include="Models\Interfaces\ListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AlbumService.cs" />
     <Compile Include="Services\ArtistService.cs" />
@@ -103,8 +105,6 @@
       <Name>MediaLibraryDAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

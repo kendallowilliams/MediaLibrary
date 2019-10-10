@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MediaLibraryBLL.Models.Interfaces
 {
-    public interface IDataModel
+    public interface IListItem<T_ID, T_Value>
     {
-        int Id { get; set; }
-        DateTime CreateDate { get; set; }
-        DateTime ModifyDate { get; set; }
+        T_ID ID { get; set; }
+        string Name { get; set; }
+        T_Value Value { get; set; }
     }
 }

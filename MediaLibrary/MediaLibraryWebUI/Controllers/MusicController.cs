@@ -19,7 +19,7 @@ using MediaLibraryWebUI.Attributes;
 namespace MediaLibraryWebUI.Controllers
 {
     [Export("Music", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public class MusicController : Controller
+    public class MusicController : BaseController
     {
         private readonly IDataService dataService;
         private readonly IMusicUIService musicService;
@@ -50,6 +50,7 @@ namespace MediaLibraryWebUI.Controllers
             return View(musicViewModel);
         }
 
+        [AllowAnonymous]
         public async Task<ActionResult> File(int id)
         {
             TrackFile file = await trackService.GetTrackFile(id);

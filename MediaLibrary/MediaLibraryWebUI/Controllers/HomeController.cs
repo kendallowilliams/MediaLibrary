@@ -9,7 +9,7 @@ using System.Web.Mvc;
 namespace MediaLibraryWebUI.Controllers
 {
     [Export("Home", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         [ImportingConstructor]
         public HomeController()
