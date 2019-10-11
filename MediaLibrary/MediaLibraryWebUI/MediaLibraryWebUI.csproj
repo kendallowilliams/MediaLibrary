@@ -236,6 +236,7 @@
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\PodcastController.cs" />
+    <Compile Include="DataContracts\ScanDirectoryRequest.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -248,6 +249,8 @@
     <Compile Include="Models\PodcastViewModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ControllerService.cs" />
+    <Compile Include="Services\Interfaces\IControllerService.cs" />
     <Compile Include="Services\Interfaces\IPlaylistUIService.cs" />
     <Compile Include="Services\Interfaces\IPodcastUIService.cs" />
     <Compile Include="Services\Interfaces\IMusicUIService.cs" />
