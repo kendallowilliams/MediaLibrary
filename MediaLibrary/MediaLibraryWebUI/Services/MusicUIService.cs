@@ -16,7 +16,7 @@ namespace MediaLibraryWebUI.Services
     [Export(typeof(IMusicUIService))]
     public class MusicUIService : IMusicUIService
     {
-        private Func<string, string> getLabel;
+        private readonly Func<string, string> getLabel;
         private readonly IDataService dataService;
         private IEnumerable<Track> songs;
         private IEnumerable<Artist> artists;
@@ -39,9 +39,9 @@ namespace MediaLibraryWebUI.Services
             };
         }
 
-        public async Task<IEnumerable<Track>> Songs() => songs == null ? songs = await dataService.GetList<Track>() : songs;
-        public async Task<IEnumerable<Artist>> Artists() => songs == null ? artists = await dataService.GetList<Artist>() : artists;
-        public async Task<IEnumerable<Album>> Albums() => songs == null ? albums = await dataService.GetList<Album>() : albums;
+        public async Task<IEnumerable<Track>> Songs() => songs ?? (songs = await dataService.GetList<Track>());
+        public async Task<IEnumerable<Artist>> Artists() => artists ?? (artists = await dataService.GetList<Artist>());
+        public async Task<IEnumerable<Album>> Albums() => albums ?? (albums = await dataService.GetList<Album>());
 
         public async Task<IEnumerable<IGrouping<string, Track>>> GetSongGroups(SongSort sort)
         {
