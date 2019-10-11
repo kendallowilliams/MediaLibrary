@@ -14,6 +14,7 @@ using System.Web.Mvc;
 using MediaLibraryWebUI.Attributes;
 using MediaLibraryWebUI.DataContracts;
 using static MediaLibraryDAL.Enums.TransactionEnums;
+using Newtonsoft.Json;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -117,20 +118,31 @@ namespace MediaLibraryWebUI.Controllers
             Transaction transaction = await transactionService.GetNewTransaction(TransactionTypes.Read),
                         existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
             HttpStatusCodeResult result = new HttpStatusCodeResult(HttpStatusCode.Accepted);
+            string message = string.Empty;
 
             try
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
                 existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
 
-                if (existingTransaction == null)
+                if (request.IsValid())
                 {
-                    await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Directory, request.Recursive, request.Copy), transaction);
+                    if (existingTransaction == null)
+                    {
+                        await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Path, request.Recursive, request.Copy), transaction);
+                    }
+                    else
+                    {
+                        message = $"{nameof(TransactionTypes.Read)} is already running. See transaction #{existingTransaction.Id}";
+                        result = new HttpStatusCodeResult(HttpStatusCode.Conflict, message);
+                        await transactionService.UpdateTransactionCompleted(transaction, message);
+                    }
                 }
                 else
                 {
-                    result = new HttpStatusCodeResult(HttpStatusCode.Conflict,
-                                                      $"{nameof(TransactionTypes.Read)} is already running. See transaction #{existingTransaction.Id}");
+                    message = $"{nameof(HttpStatusCode.BadRequest)}: {JsonConvert.SerializeObject(request)}";
+                    result = new HttpStatusCodeResult(HttpStatusCode.BadRequest, message);
+                    await transactionService.UpdateTransactionErrored(transaction, new Exception(message));
                 }
             }
             catch(Exception ex)
