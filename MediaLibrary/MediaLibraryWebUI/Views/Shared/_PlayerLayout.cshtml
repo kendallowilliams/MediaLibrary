@@ -35,7 +35,7 @@
             $player.trigger('play');
         }
 
-        window.opener.postMessage('loaded');
+        window.onload = () => window.opener.postMessage('loaded');
     </script>
 </body>
 </html>

@@ -58,7 +58,8 @@
 
         function play(_btn) {
             var $playButtons = $('button[data-play-url]');
-            var $playData = $playButtons.map((index, btn) => ({
+
+            $playData = $playButtons.map((index, btn) => ({
                     index: index,
                     url: $(btn).attr("data-play-url"),
                     isPlaying: btn.isSameNode(_btn)
@@ -87,7 +88,7 @@
             if (event.origin !== "@(Model.Domain)")
                 return;
 
-            if (event.data === 'loaded') {
+            if (event.data === "loaded") {
                 playerPopup.postMessage($.makeArray($playData));
             }
         }
