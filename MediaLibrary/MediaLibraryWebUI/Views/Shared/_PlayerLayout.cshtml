@@ -25,10 +25,14 @@
         window.addEventListener("message", receiveMessage, false);
 
         function receiveMessage(event) {
-            if (event.origin !== "http://localhost:51124")
+            var url = event.data.find(element => element.isPlaying).url;
+            var $player = $('#@(Model.MusicPlayerId)');
+
+            if (event.origin !== "@(Model.Domain)")
                 return;
 
-            alert(JSON.stringify(event.data));
+            $player.prop('src', url);
+            $player.trigger('play');
         }
     </script>
 </body>

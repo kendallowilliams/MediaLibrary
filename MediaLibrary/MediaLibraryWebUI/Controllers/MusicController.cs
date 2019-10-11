@@ -122,6 +122,7 @@ namespace MediaLibraryWebUI.Controllers
             {
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
                 existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
+
                 if (existingTransaction == null)
                 {
                     await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Directory, request.Recursive, request.Copy), transaction);

@@ -5,5 +5,13 @@
     Layout = "~/Views/Shared/_PlayerLayout.cshtml";
 }
 
-<h2>Player</h2>
+<div>
+    <audio id="@(Model.MusicPlayerId)" autoplay="autoplay" preload="auto" />
+</div>
+
+@section scripts {
+    <script type="text/javascript" defer="defer">
+
+    </script>
+}
 
