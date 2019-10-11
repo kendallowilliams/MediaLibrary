@@ -44,7 +44,8 @@
     @RenderSection("scripts", false)
 
     <script type="text/javascript" defer="defer">
-        var playerPopup = null;
+        var playerPopup = null,
+            $playData = null;
 
         $(function () {
             // causing delay when loading music view
@@ -65,12 +66,8 @@
 
             if (!playerPopup || playerPopup.closed) {
                 playerPopup = window.open('@Url.Action("Index", "Player")', '@(Model.MusicPlayerId)');
-            }
-
-            if (playerPopup && !playerPopup.closed) {
-                playerPopup.postMessage($.makeArray($playData));
             } else {
-                alert("No popup");
+                playerPopup.postMessage($.makeArray($playData));
             }
         }
 
@@ -89,6 +86,10 @@
         function receiveMessage(event) {
             if (event.origin !== "@(Model.Domain)")
                 return;
+
+            if (event.data === 'loaded') {
+                playerPopup.postMessage($.makeArray($playData));
+            }
         }
     </script>
 </body>
