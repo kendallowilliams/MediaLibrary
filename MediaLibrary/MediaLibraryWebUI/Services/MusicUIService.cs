@@ -48,7 +48,6 @@ namespace MediaLibraryWebUI.Services
             IEnumerable<IGrouping<string, Track>> groups = null;
 
             if (songs == null) /*then*/ songs = await dataService.GetList<Track>();
-            //songs = songs.OrderBy(song => song.Title);
 
             switch(sort)
             {
@@ -65,7 +64,6 @@ namespace MediaLibraryWebUI.Services
             IEnumerable<IGrouping<string, Album>> groups = null;
 
             if (albums == null) /*then*/ albums = await dataService.GetList<Album>();
-            //albums = albums.OrderBy(album => album.Title);
 
             switch (sort)
             {
@@ -82,7 +80,6 @@ namespace MediaLibraryWebUI.Services
             IEnumerable<IGrouping<string, Artist>> groups = null;
 
             if (artists == null) /*then*/ artists = await dataService.GetList<Artist>();
-            //artists = artists.OrderBy(artist => artist.Name);
 
             switch (sort)
             {
