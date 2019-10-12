@@ -46,15 +46,11 @@
     <script type="text/javascript" defer="defer">
         var playerPopup = null,
             $playData = null;
-
-        $(function () {
+        
+        /*$(function () {
             // causing delay when loading music view
-            // $('[data-toggle="tooltip"]').tooltip();
-        });
-
-        $(function () {
-            $('[data-toggle="popover"]').popover();
-        });
+            $('[data-toggle="tooltip"]').tooltip();
+        });*/
 
         function play(_btn) {
             var $playButtons = $('button[data-play-url]');
@@ -73,6 +69,7 @@
         }
 
         $(function () {
+            $('[data-toggle="popover"]').popover();
             $('[data-delete="enabled"]').click(function (e) {
                 var url = $(e.delegateTarget).attr('data-delete-action');
                 var $button = $('#btnDeleteItem');
