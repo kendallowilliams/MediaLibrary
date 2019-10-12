@@ -124,26 +124,5 @@ namespace MediaLibraryWebApi.Controllers
 
             return response;
         }
-
-        [HttpGet]
-        public async Task<IEnumerable<string>> GetDirectories(string path)
-        {
-            Transaction transaction = null;
-            IEnumerable<string> directories = Enumerable.Empty<string>();
-
-            try
-            {
-                transaction = await transactionService.GetNewTransaction(TransactionTypes.ResetData);
-                directories = fileService.EnumerateDirectories(path);
-                await transactionService.UpdateTransactionCompleted(transaction);
-            }
-            catch (Exception ex)
-            {
-                await transactionService.UpdateTransactionErrored(transaction, ex);
-                directories = null;
-            }
-
-            return directories;
-        }
     }
 }

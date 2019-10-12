@@ -115,19 +115,27 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Scan(ScanDirectoryRequest request)
         {
-            Transaction transaction = await transactionService.GetNewTransaction(TransactionTypes.Read),
-                        existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
+            Transaction transaction = null;
             HttpStatusCodeResult result = new HttpStatusCodeResult(HttpStatusCode.Accepted);
             string message = string.Empty;
 
             try
             {
+                Transaction existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
+
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
-                existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
 
                 if (request.IsValid())
                 {
-                    if (existingTransaction == null)
+                    TrackPath path = await dataService.GetAsync<TrackPath>(item => item.Location.Equals(request.Path, StringComparison.CurrentCultureIgnoreCase));
+
+                    if (path != null)
+                    {
+                        message = $"'{path.Location}' has already been added. Run {nameof(MusicController)} -> {nameof(Refresh)} instead.";
+                        result = new HttpStatusCodeResult(HttpStatusCode.Conflict, message);
+                        await transactionService.UpdateTransactionCompleted(transaction, message);
+                    }
+                    else if (existingTransaction == null)
                     {
                         await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Path, request.Recursive, request.Copy), transaction);
                     }
@@ -146,6 +154,25 @@ namespace MediaLibraryWebUI.Controllers
                 }
             }
             catch(Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+                result = new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.Message);
+            }
+
+            return result;
+        }
+
+        public async Task<ActionResult> Refresh()
+        {
+            Transaction transaction = null;
+            HttpStatusCodeResult result = new HttpStatusCodeResult(HttpStatusCode.Accepted);
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.RefreshMusic);
+                await controllerService.QueueBackgroundWorkItem(ct => fileService.CheckForMusicUpdates(transaction), transaction);
+            }
+            catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
                 result = new HttpStatusCodeResult(HttpStatusCode.InternalServerError, ex.Message);

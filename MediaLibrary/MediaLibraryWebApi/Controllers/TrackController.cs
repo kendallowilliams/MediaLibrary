@@ -93,7 +93,7 @@ namespace MediaLibraryWebApi.Controllers
                         string directory = Path.GetTempPath(),
                                path = Path.Combine(directory, files[key].FileName);
                         await Task.Run(() => files[key].SaveAs(path));
-                        await fileService.ReadMediaFile(path, true);
+                        //await fileService.ReadMediaFile(path, true);
                     }
                 }
 

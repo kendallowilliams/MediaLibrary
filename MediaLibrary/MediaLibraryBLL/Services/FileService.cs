@@ -26,6 +26,7 @@ namespace MediaLibraryBLL.Services
         private readonly IGenreService genreService;
         private readonly ITrackService trackService;
         private readonly ITransactionService transactionService;
+        private readonly IEnumerable<string> fileTypes;
 
         [ImportingConstructor]
         public FileService(IId3Service id3Service, IArtistService artistService, IAlbumService albumService,
@@ -39,6 +40,8 @@ namespace MediaLibraryBLL.Services
             this.trackService = trackService;
             this.transactionService = transactionService;
             this.dataService = dataService;
+            fileTypes = ConfigurationManager.AppSettings["FileTypes"].Split(new[] { ',' })
+                                                                     .Select(fileType => fileType.ToLower());
         }
 
         public IEnumerable<string> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false)
@@ -69,8 +72,6 @@ namespace MediaLibraryBLL.Services
 
         public async Task ReadDirectory(Transaction transaction, string path, bool recursive = true, bool copyFiles = false)
         {
-            IEnumerable<string> fileTypes = ConfigurationManager.AppSettings["FileTypes"].Split(new[] { ',' })
-                                                                                         .Select(fileType => fileType.ToLower());
             try
             {
                 IEnumerable<string> allFiles = EnumerateFiles(path, recursive: recursive);
@@ -101,6 +102,32 @@ namespace MediaLibraryBLL.Services
 
             await dataService.Insert(track);
             if (copyFile) { await trackService.AddTrackFile(track.Id); }
+        }
+
+        public async Task CheckForMusicUpdates(Transaction transaction)
+        {
+            try
+            {
+                IEnumerable<TrackPath> paths = await dataService.GetList<TrackPath>();
+
+                foreach (TrackPath path in paths)
+                {
+                    IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.PathId == path.Id);
+                    IEnumerable<string> existingFiles = tracks.Select(track => Path.Combine(path.Location, track.FileName)),
+                                        files = EnumerateFiles(path.Location).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()));
+
+                    foreach (string file in files.Except(existingFiles))
+                    {
+                        await ReadMediaFile(file);
+                    }
+                }
+
+                await transactionService.UpdateTransactionCompleted(transaction);
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
     }
 }
