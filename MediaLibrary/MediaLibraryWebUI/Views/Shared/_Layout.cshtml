@@ -70,13 +70,6 @@
 
         $(function () {
             $('[data-toggle="popover"]').popover();
-            $('[data-delete="enabled"]').click(function (e) {
-                var url = $(e.delegateTarget).attr('data-delete-action');
-                var $button = $('#btnDeleteItem');
-
-                $button.prop('href', url);
-                $('#modalDeleteItem').modal('show');
-            });
         });
 
         window.addEventListener("message", receiveMessage, false);

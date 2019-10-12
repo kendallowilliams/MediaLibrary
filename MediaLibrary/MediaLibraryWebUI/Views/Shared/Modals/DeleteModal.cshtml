@@ -17,3 +17,15 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" defer="defer">
+    $('[data-delete="enabled"]').click(function (e) {
+        var url = $(e.delegateTarget).attr('data-delete-action'),
+            $button = $('#btnDeleteItem'),
+            type = $(e.delegateTarget).attr('data-delete-type');
+
+        $('#modalDeleteItemTitle').text('Delete ' + type);
+        $button.prop('href', url);
+        $('#modalDeleteItem').modal('show');
+    });
+</script>

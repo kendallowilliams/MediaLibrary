@@ -52,7 +52,7 @@
                                         <a class="btn btn-outline-secondary" href="@(Url.Action("Get", "Podcast", new { podcast.Id }))"
                                            data-toggle="tooltip" title="View podcast"><i class="fa fa-list"></i></a>
                                         <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
-                                                data-toggle="tooltip" title="Delete podcast">
+                                                data-toggle="tooltip" title="Delete podcast" data-delete-type="podcast">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </div>

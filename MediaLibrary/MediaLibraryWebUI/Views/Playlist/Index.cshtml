@@ -48,7 +48,7 @@
                                     <a class="btn btn-outline-secondary" href="@(Url.Action("Get", "Playlist", new { playlist.Id }))"
                                        data-toggle="tooltip" title="View playlist"><i class="fa fa-list"></i></a>
                                     <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
-                                            data-toggle="tooltip" title="Delete playlist">
+                                            data-toggle="tooltip" title="Delete playlist" data-delete-type="playlist">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </div>
