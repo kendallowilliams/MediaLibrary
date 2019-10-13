@@ -82,7 +82,7 @@ namespace MediaLibraryWebUI.Controllers
             Playlist playlist = await dataService.GetAsync<Playlist, IEnumerable<Track>>(list => list.Id == id, 
                                                                                                  list => list.PlaylistTracks.Select(item => item.Track));
             IEnumerable<Track> tracks = playlist.PlaylistTracks.Select(list => list.Track);
-            IEnumerable<string> lines = tracks.Select(track => $"#EXTINF: {(int)track.Duration},{track.Title}{Environment.NewLine}{$"{playlistViewModel.Domain}/Music/File/{track.Id}"}");
+            IEnumerable<string> lines = tracks.Select(track => $"#EXTINF:{(int)track.Duration},{track.Title}{Environment.NewLine}{$"{playlistViewModel.Domain}/Music/File/{track.Id}"}");
             string data = $"#EXTM3U{Environment.NewLine}{string.Join(Environment.NewLine, lines)}";
             byte[] content = Encoding.UTF8.GetBytes(data);
 
