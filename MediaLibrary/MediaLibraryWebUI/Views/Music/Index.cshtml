@@ -7,11 +7,25 @@
 <h2>Music</h2>
 <div class="nav d-block" id="musicTab" role="tablist">
     <button class="btn btn-outline-secondary active" id="albums-tab" data-toggle="tab" href="#albums" role="tab" aria-controls="albums" aria-selected="true"
-            title="Albums"><i class="fa fa-compact-disc"></i></button>
+            title="Albums">
+        <i class="fa fa-compact-disc"></i>
+    </button>
     <button class="btn btn-outline-secondary" id="artists-tab" href="#artists" data-toggle="tab" role="tab" aria-controls="artists" aria-selected="false"
-            title="Artists"><i class="fa fa-user"></i></button>
+            title="Artists">
+        <i class="fa fa-user"></i>
+    </button>
     <button class="btn btn-outline-secondary" id="songs-tab" href="#songs" data-toggle="tab" role="tab" aria-controls="songs" aria-selected="false"
-            title="Songs"><i class="fa fa-music"></i></button>
+            title="Songs">
+        <i class="fa fa-music"></i>
+    </button>
+    <div class="btn-group" role="group">
+        <button id="btnMusicGroup" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-cog"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnMusicGroup">
+            <button class="dropdown-item" onclick="$.get('@(Url.Action("Refresh", "Music"))')"><i class="fa fa-sync"></i></button>
+        </div>
+    </div>
 </div>
 <hr />
 <div class="tab-content" id="musicContent">
