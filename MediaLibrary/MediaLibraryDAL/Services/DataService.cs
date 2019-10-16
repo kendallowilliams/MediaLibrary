@@ -260,5 +260,53 @@ namespace MediaLibraryBLL.Services
 
             return results;
         }
+
+        public T Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
+                                              Expression<Func<T, TInclude1>> includeExpression1 = null, 
+                                              Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel
+        {
+            T result = default(T);
+
+            using (var db = new MediaLibraryEntities())
+            {
+                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                query = includeExpression2 != null ? query.Include(includeExpression2) : query;
+                result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
+            }
+
+            return result;
+        }
+
+        public async Task<T> GetAsync<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
+                                                               Expression<Func<T, TInclude1>> includeExpression1 = null, 
+                                                               Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel
+        {
+            T result = default(T);
+
+            using (var db = new MediaLibraryEntities())
+            {
+                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                query = includeExpression2 != null ? query.Include(includeExpression2) : query;
+                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync();
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<T>> GetList<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
+                                                                           Expression<Func<T, TInclude1>> includeExpression1 = null, 
+                                                                           Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel
+        {
+            IEnumerable<T> results = Enumerable.Empty<T>();
+
+            using (var db = new MediaLibraryEntities())
+            {
+                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                query = includeExpression2 != null ? query.Include(includeExpression2) : query;
+                results = await (expression != null ? query.Where(expression) : query).ToListAsync();
+            }
+
+            return results;
+        }
     }
 }

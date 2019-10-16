@@ -47,12 +47,22 @@ namespace MediaLibraryWebUI.Services
         {
             IEnumerable<IGrouping<string, Track>> groups = null;
 
-            if (songs == null) /*then*/ songs = await dataService.GetList<Track>();
+            if (songs == null) /*then*/ songs = (await dataService.GetList<Track, Album, Artist>(null, song => song.Album, song => song.Artist))?.OrderBy(song => song.Title);
 
             switch(sort)
             {
+                case SongSort.Album:
+                    groups = songs.GroupBy(song => song.Album.Title);
+                    break;
+                case SongSort.Artist:
+                    groups = songs.GroupBy(song => song.Artist.Name);
+                    break;
+                case SongSort.DateAdded:
+                    groups = songs.GroupBy(song => song.CreateDate.ToString("yyyy-MM-dd"));
+                    break;
                 case SongSort.AtoZ:
-                    groups = GetSongsAtoZ(songs.OrderBy(song => song.Title));
+                default:
+                    groups = GetSongsAtoZ(songs);
                     break;
             }
 

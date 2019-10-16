@@ -12,8 +12,8 @@
             Sort by
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupPodcastSort">
-            <a class="dropdown-item" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.DateModified })">Date modified</a>
-            <a class="dropdown-item" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.AtoZ })">A to Z</a>
+            <a class="dropdown-item @(Model.SelectedPodcastSort == Enums.PodcastSort.DateModified ? "active" : string.Empty)" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.DateModified })">Date modified</a>
+            <a class="dropdown-item @(Model.SelectedPodcastSort == Enums.PodcastSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.AtoZ })">A to Z</a>
         </div>
     </div>
 </div>

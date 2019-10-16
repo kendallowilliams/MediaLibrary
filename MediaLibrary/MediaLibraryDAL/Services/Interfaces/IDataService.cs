@@ -14,15 +14,30 @@ namespace MediaLibraryDAL.Services.Interfaces
     {
         T Get<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
 
-        T Get<T, TInclude>(Expression<Func<T,bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T: class, IDataModel;
+        T Get<T, TInclude>(Expression<Func<T,bool>> expression = null, 
+                           Expression<Func<T, TInclude>> includeExpression = null) where T: class, IDataModel;
+
+        T Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
+                                       Expression<Func<T, TInclude1>> includeExpression1 = null, 
+                                       Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel;
 
         Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
 
-        Task<T> GetAsync<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel;
+        Task<T> GetAsync<T, TInclude>(Expression<Func<T, bool>> expression = null, 
+                                      Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel;
+
+        Task<T> GetAsync<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null,
+                                                  Expression<Func<T, TInclude1>> includeExpression1 = null,
+                                                  Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel;
 
         Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
 
-        Task<IEnumerable<T>> GetList<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel;
+        Task<IEnumerable<T>> GetList<T, TInclude>(Expression<Func<T, bool>> expression = null, 
+                                                  Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel;
+
+        Task<IEnumerable<T>> GetList<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null,
+                                                              Expression<Func<T, TInclude1>> includeExpression1 = null,
+                                                              Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel;
 
         Task<int> Insert<T>(T entity) where T : class, IDataModel;
 

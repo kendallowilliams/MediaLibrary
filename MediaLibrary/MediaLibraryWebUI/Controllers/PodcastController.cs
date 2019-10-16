@@ -43,6 +43,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> Sort(PodcastSort sort)
         {
             podcastViewModel.PodcastGroups = await podcastUIService.GetPodcastGroups(sort);
+            podcastViewModel.SelectedPodcastSort = sort;
 
             return View("Index", podcastViewModel);
         }
