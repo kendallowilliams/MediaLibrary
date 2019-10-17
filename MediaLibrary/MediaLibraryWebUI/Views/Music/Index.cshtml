@@ -20,7 +20,7 @@
     </button>
     <div class="float-right">
         <button class="btn btn-outline-secondary" onclick="$.get('@(Url.Action("Refresh", "Music"))')"><i class="fa fa-sync"></i></button>
-        <div class="btn-group" role="group" data-toggle="tooltip" title="">
+        <div class="btn-group" role="group" data-toggle="tooltip" title="Sort Albums">
             <button id="btnGroupAlbumSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort by
             </button>
@@ -28,7 +28,7 @@
                 <a class="dropdown-item @(Model.SelectedAlbumSort == Enums.AlbumSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.AlbumSort.AtoZ })">A to Z</a>
             </div>
         </div>
-        <div class="btn-group" role="group" data-toggle="tooltip" title="">
+        <div class="btn-group" role="group" data-toggle="tooltip" title="Sort Artists">
             <button id="btnGroupArtistSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort by
             </button>
@@ -36,7 +36,7 @@
                 <a class="dropdown-item @(Model.SelectedArtistSort == Enums.ArtistSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.ArtistSort.AtoZ })">A to Z</a>
             </div>
         </div>
-        <div class="btn-group" role="group" data-toggle="tooltip" title="">
+        <div class="btn-group" role="group" data-toggle="tooltip" title="Sort Songs">
             <button id="btnGroupSongSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort by
             </button>
