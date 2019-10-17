@@ -39,9 +39,9 @@ namespace MediaLibraryWebUI.Services
             };
         }
 
-        public async Task<IEnumerable<Track>> Songs() => songs ?? (songs = await dataService.GetList<Track>());
-        public async Task<IEnumerable<Artist>> Artists() => artists ?? (artists = await dataService.GetList<Artist>());
-        public async Task<IEnumerable<Album>> Albums() => albums ?? (albums = await dataService.GetList<Album>());
+        public async Task<IEnumerable<Track>> Songs() => songs ?? await dataService.GetList<Track>();
+        public async Task<IEnumerable<Artist>> Artists() => artists ?? await dataService.GetList<Artist>();
+        public async Task<IEnumerable<Album>> Albums() => albums ?? await dataService.GetList<Album>();
 
         public async Task<IEnumerable<IGrouping<string, Track>>> GetSongGroups(SongSort sort)
         {
@@ -55,7 +55,7 @@ namespace MediaLibraryWebUI.Services
                     groups = songs.GroupBy(song => song.Album.Title);
                     break;
                 case SongSort.Artist:
-                    groups = songs.GroupBy(song => song.Artist.Name);
+                    groups = songs.GroupBy(song => song.Artist?.Name ?? "Unknown Artist");
                     break;
                 case SongSort.DateAdded:
                     groups = songs.GroupBy(song => song.CreateDate.ToString("yyyy-MM-dd"));

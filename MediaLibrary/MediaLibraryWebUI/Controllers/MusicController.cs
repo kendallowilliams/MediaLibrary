@@ -15,6 +15,7 @@ using MediaLibraryWebUI.Attributes;
 using MediaLibraryWebUI.DataContracts;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using Newtonsoft.Json;
+using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -46,15 +47,22 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> Index()
         {
+            return await Sort(SongSort.AtoZ);
+        }
+
+        [CompressContent]
+        public async Task<ActionResult> Sort(SongSort sort)
+        {
+            musicViewModel.SongGroups = await musicService.GetSongGroups(sort);
+            musicViewModel.ArtistGroups = await musicService.GetArtistGroups();
+            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups();
             musicViewModel.Albums = await musicService.Albums();
             musicViewModel.Artists = await musicService.Artists();
             musicViewModel.Songs = await musicService.Songs();
-            musicViewModel.SongGroups = await musicService.GetSongGroups();
-            musicViewModel.ArtistGroups = await musicService.GetArtistGroups();
-            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups();
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
+            musicViewModel.SelectedSongSort = sort;
 
-            return View(musicViewModel);
+            return View("Index", musicViewModel);
         }
 
         [AllowAnonymous]
