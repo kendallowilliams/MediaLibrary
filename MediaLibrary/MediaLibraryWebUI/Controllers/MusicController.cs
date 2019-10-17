@@ -51,16 +51,16 @@ namespace MediaLibraryWebUI.Controllers
         }
 
         [CompressContent]
-        public async Task<ActionResult> Sort(SongSort sort)
+        public async Task<ActionResult> Sort(SongSort songSort = SongSort.AtoZ, AlbumSort albumSort = AlbumSort.AtoZ, ArtistSort artistSort = ArtistSort.AtoZ)
         {
-            musicViewModel.SongGroups = await musicService.GetSongGroups(sort);
-            musicViewModel.ArtistGroups = await musicService.GetArtistGroups();
-            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups();
+            musicViewModel.SongGroups = await musicService.GetSongGroups(songSort);
+            musicViewModel.ArtistGroups = await musicService.GetArtistGroups(artistSort);
+            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(albumSort);
             musicViewModel.Albums = await musicService.Albums();
             musicViewModel.Artists = await musicService.Artists();
             musicViewModel.Songs = await musicService.Songs();
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
-            musicViewModel.SelectedSongSort = sort;
+            musicViewModel.SelectedSongSort = songSort;
 
             return View("Index", musicViewModel);
         }

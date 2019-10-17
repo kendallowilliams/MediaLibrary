@@ -21,10 +21,26 @@
     <div class="float-right">
         <button class="btn btn-outline-secondary" onclick="$.get('@(Url.Action("Refresh", "Music"))')"><i class="fa fa-sync"></i></button>
         <div class="btn-group" role="group" data-toggle="tooltip" title="">
+            <button id="btnGroupAlbumSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort by
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupAlbumSort">
+                <a class="dropdown-item @(Model.SelectedAlbumSort == Enums.AlbumSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.AlbumSort.AtoZ })">A to Z</a>
+            </div>
+        </div>
+        <div class="btn-group" role="group" data-toggle="tooltip" title="">
+            <button id="btnGroupArtistSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort by
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupArtistSort">
+                <a class="dropdown-item @(Model.SelectedArtistSort == Enums.ArtistSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.ArtistSort.AtoZ })">A to Z</a>
+            </div>
+        </div>
+        <div class="btn-group" role="group" data-toggle="tooltip" title="">
             <button id="btnGroupSongSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort by
             </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupPodcastSort">
+            <div class="dropdown-menu" aria-labelledby="btnGroupSongSort">
                 <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.DateAdded ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.SongSort.DateAdded })">Date added</a>
                 <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.SongSort.AtoZ })">A to Z</a>
                 <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.Album ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.SongSort.Album })">Album</a>
