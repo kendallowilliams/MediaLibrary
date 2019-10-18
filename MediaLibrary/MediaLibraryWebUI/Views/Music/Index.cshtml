@@ -7,20 +7,20 @@
 <h2>Music</h2>
 <div class="nav d-block" id="musicTab" role="tablist">
     <button class="btn btn-outline-secondary active" id="albums-tab" data-toggle="tab" href="#albums" role="tab" aria-controls="albums" aria-selected="true"
-            title="Albums">
+            title="Albums" onclick="showSort(this)">
         <i class="fa fa-compact-disc"></i>
     </button>
     <button class="btn btn-outline-secondary" id="artists-tab" href="#artists" data-toggle="tab" role="tab" aria-controls="artists" aria-selected="false"
-            title="Artists">
+            title="Artists" onclick="showSort(this)">
         <i class="fa fa-user"></i>
     </button>
     <button class="btn btn-outline-secondary" id="songs-tab" href="#songs" data-toggle="tab" role="tab" aria-controls="songs" aria-selected="false"
-            title="Songs">
+            title="Songs" onclick="showSort(this)">
         <i class="fa fa-music"></i>
     </button>
     <div class="float-right">
         <button class="btn btn-outline-secondary" onclick="$.get('@(Url.Action("Refresh", "Music"))')"><i class="fa fa-sync"></i></button>
-        <div class="btn-group" role="group" data-toggle="tooltip" title="Sort Albums">
+        <div class="btn-group" role="group" data-toggle="tooltip" title="Sort Albums" data-sort-tab="albums-tab">
             <button id="btnGroupAlbumSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort by
             </button>
@@ -28,7 +28,7 @@
                 <a class="dropdown-item @(Model.SelectedAlbumSort == Enums.AlbumSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.AlbumSort.AtoZ })">A to Z</a>
             </div>
         </div>
-        <div class="btn-group" role="group" data-toggle="tooltip" title="Sort Artists">
+        <div class="btn-group d-none" role="group" data-toggle="tooltip" title="Sort Artists" data-sort-tab="artists-tab">
             <button id="btnGroupArtistSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort by
             </button>
@@ -36,15 +36,19 @@
                 <a class="dropdown-item @(Model.SelectedArtistSort == Enums.ArtistSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.ArtistSort.AtoZ })">A to Z</a>
             </div>
         </div>
-        <div class="btn-group" role="group" data-toggle="tooltip" title="Sort Songs">
+        <div class="btn-group d-none" role="group" data-toggle="tooltip" title="Sort Songs" data-sort-tab="songs-tab">
             <button id="btnGroupSongSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort by
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupSongSort">
-                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.DateAdded ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.SongSort.DateAdded })">Date added</a>
-                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.SongSort.AtoZ })">A to Z</a>
-                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.Album ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.SongSort.Album })">Album</a>
-                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.Artist ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.SongSort.Artist })">Artist</a>
+                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.DateAdded ? "active" : string.Empty)" 
+                   href="@Url.Action("Sort", "Music", new { songSort = Enums.SongSort.DateAdded, albumSort = Model.SelectedAlbumSort, artistSort = Model.SelectedArtistSort })">Date added</a>
+                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.AtoZ ? "active" : string.Empty)" 
+                   href="@Url.Action("Sort", "Music", new { songSort = Enums.SongSort.AtoZ, albumSort = Model.SelectedAlbumSort, artistSort = Model.SelectedArtistSort })">A to Z</a>
+                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.Album ? "active" : string.Empty)" 
+                   href="@Url.Action("Sort", "Music", new { songSort = Enums.SongSort.Album, albumSort = Model.SelectedAlbumSort, artistSort = Model.SelectedArtistSort })">Album</a>
+                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.Artist ? "active" : string.Empty)" 
+                   href="@Url.Action("Sort", "Music", new { songSort = Enums.SongSort.Artist, albumSort = Model.SelectedAlbumSort, artistSort = Model.SelectedArtistSort })">Artist</a>
             </div>
         </div>
     </div>
@@ -59,4 +63,15 @@
 @Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
 
 @section scripts {
+    <script type="text/javascript">
+        function showSort(btn) {
+            $('[data-sort-tab]').each((index, _btn) => {
+                if ($(_btn).attr('data-sort-tab') === btn.id) {
+                    $(_btn).removeClass('d-none');
+                } else {
+                    $(_btn).addClass('d-none');
+                }
+            });
+        }
+    </script>
 }

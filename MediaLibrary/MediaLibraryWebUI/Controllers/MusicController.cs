@@ -47,7 +47,7 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> Index()
         {
-            return await Sort(SongSort.AtoZ);
+            return await Sort();
         }
 
         [CompressContent]
