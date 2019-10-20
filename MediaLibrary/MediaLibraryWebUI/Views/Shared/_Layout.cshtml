@@ -42,15 +42,28 @@
     </div>
 
     @RenderSection("scripts", false)
+    @Html.Partial("~/Views/Shared/Modals/LoadingModal.cshtml")
 
-    <script type="text/javascript" defer="defer">
+    <script type="text/javascript">
         var playerPopup = null,
             $playData = null;
-        
-        /*$(function () {
-            // causing delay when loading music view
-            $('[data-toggle="tooltip"]').tooltip();
-        });*/
+
+        $('#loadingModal').modal('show');
+
+        $(document).ready(function () {
+            $('#loadingModal').modal('hide');
+        });
+
+        window.addEventListener("message", receiveMessage, false);
+
+        function receiveMessage(event) {
+            if (event.origin !== "@(Model.Domain)")
+                return;
+
+            if (event.data === "loaded") {
+                playerPopup.postMessage($.makeArray($playData));
+            }
+        }
 
         function play(_btn) {
             var $playButtons = $('button[data-play-url]');
@@ -67,21 +80,18 @@
                 playerPopup.postMessage($.makeArray($playData));
             }
         }
+    </script>
 
-        $(function () {
+    <script type="text/javascript" defer="defer">
+
+        /*$(function () {
+            // causing delay when loading music view
+            //$('[data-toggle="tooltip"]').tooltip();
+        });*/
+
+        $(function() {
             $('[data-toggle="popover"]').popover();
         });
-
-        window.addEventListener("message", receiveMessage, false);
-
-        function receiveMessage(event) {
-            if (event.origin !== "@(Model.Domain)")
-                return;
-
-            if (event.data === "loaded") {
-                playerPopup.postMessage($.makeArray($playData));
-            }
-        }
     </script>
 </body>
 </html>

@@ -288,6 +288,7 @@
     <Content Include="Views\Shared\Modals\AddToPlaylistModal.cshtml" />
     <Content Include="Views\Shared\_PlayerLayout.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
+    <Content Include="Views\Shared\Modals\LoadingModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
