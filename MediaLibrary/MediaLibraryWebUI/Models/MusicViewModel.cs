@@ -1,10 +1,14 @@
-﻿using MediaLibraryDAL.DbContexts;
+﻿using MediaLibraryBLL.Models.Interfaces;
+using MediaLibraryDAL.DbContexts;
+using MediaLibraryWebUI.Models.ModelConfigurations;
+using MediaLibraryWebUI.Repositories;
 using MediaLibraryWebUI.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Models
@@ -20,12 +24,9 @@ namespace MediaLibraryWebUI.Models
         private IEnumerable<Album> albums;
         private readonly HomeViewModel homeViewModel;
         private IEnumerable<Playlist> playlists;
-        private Album selectedAlbum;
+        private MusicConfiguration configuration;
         private Artist selectedArtist;
-        private AlbumSort selectedAlbumSort;
-        private ArtistSort selectedArtistSort;
-        private SongSort selectedSongSort;
-        private MusicTab selectedMusicTab;
+        private Album selectedAlbum;
 
         [ImportingConstructor]
         public MusicViewModel(HomeViewModel homeViewModel)
@@ -38,6 +39,7 @@ namespace MediaLibraryWebUI.Models
             artists = Enumerable.Empty<Artist>();
             albums = Enumerable.Empty<Album>();
             this.homeViewModel = homeViewModel;
+            configuration = new MusicConfiguration();
         }
 
         public IEnumerable<IGrouping<string, Track>> SongGroups { get => songGroups; set => songGroups = value; }
@@ -51,11 +53,11 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<Album> Albums { get => albums; set => albums = value; }
         public HomeViewModel HomeViewModel { get => homeViewModel; }
         public IEnumerable<Playlist> Playlists { get => playlists; set => playlists = value; }
-        public Album SelectedAlbum { get => selectedAlbum; set => selectedAlbum = value; }
+        public MusicConfiguration Configuration { get => configuration; set => configuration = value ?? new MusicConfiguration(); }
+        public IEnumerable<SelectListItem> AlbumSortItems { get => MusicRepository.GetAlbumSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() }); }
+        public IEnumerable<SelectListItem> ArtistSortItems { get => MusicRepository.GetArtistSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() }); }
+        public IEnumerable<SelectListItem> SongSortItems { get => MusicRepository.GetSongSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() }); }
         public Artist SelectedArtist { get => selectedArtist; set => selectedArtist = value; }
-        public AlbumSort SelectedAlbumSort { get => selectedAlbumSort; set => selectedAlbumSort = value; }
-        public ArtistSort SelectedArtistSort { get => selectedArtistSort; set => selectedArtistSort = value; }
-        public SongSort SelectedSongSort { get => selectedSongSort; set => selectedSongSort = value; }
-        public MusicTab SelectedMusicTab { get => selectedMusicTab; set => selectedMusicTab = value; }
+        public Album SelectedAlbum { get => selectedAlbum; set => selectedAlbum = value; }
     }
 }

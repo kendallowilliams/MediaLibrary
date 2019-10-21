@@ -20,37 +20,27 @@
     </button>
     <div class="float-right">
         <button class="btn btn-outline-secondary" onclick="$.get('@(Url.Action("Refresh", "Music"))')"><i class="fa fa-sync"></i></button>
-        <div class="btn-group" role="group" data-toggle="tooltip" title="Sort Albums" data-sort-tab="albums-tab">
-            <button id="btnGroupAlbumSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort by
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupAlbumSort">
-                <a class="dropdown-item @(Model.SelectedAlbumSort == Enums.AlbumSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.AlbumSort.AtoZ })">A to Z</a>
-            </div>
-        </div>
-        <div class="btn-group d-none" role="group" data-toggle="tooltip" title="Sort Artists" data-sort-tab="artists-tab">
-            <button id="btnGroupArtistSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort by
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupArtistSort">
-                <a class="dropdown-item @(Model.SelectedArtistSort == Enums.ArtistSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Music", new { sort = Enums.ArtistSort.AtoZ })">A to Z</a>
-            </div>
-        </div>
-        <div class="btn-group d-none" role="group" data-toggle="tooltip" title="Sort Songs" data-sort-tab="songs-tab">
-            <button id="btnGroupSongSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Sort by
-            </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupSongSort">
-                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.DateAdded ? "active" : string.Empty)" 
-                   href="@Url.Action("Sort", "Music", new { songSort = Enums.SongSort.DateAdded, albumSort = Model.SelectedAlbumSort, artistSort = Model.SelectedArtistSort })">Date added</a>
-                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.AtoZ ? "active" : string.Empty)" 
-                   href="@Url.Action("Sort", "Music", new { songSort = Enums.SongSort.AtoZ, albumSort = Model.SelectedAlbumSort, artistSort = Model.SelectedArtistSort })">A to Z</a>
-                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.Album ? "active" : string.Empty)" 
-                   href="@Url.Action("Sort", "Music", new { songSort = Enums.SongSort.Album, albumSort = Model.SelectedAlbumSort, artistSort = Model.SelectedArtistSort })">Album</a>
-                <a class="dropdown-item @(Model.SelectedSongSort == Enums.SongSort.Artist ? "active" : string.Empty)" 
-                   href="@Url.Action("Sort", "Music", new { songSort = Enums.SongSort.Artist, albumSort = Model.SelectedAlbumSort, artistSort = Model.SelectedArtistSort })">Artist</a>
-            </div>
-        </div>
+        @Html.DropDownListFor(x => x.Configuration.SelectedAlbumSort,
+                              Model.AlbumSortItems,
+                              null,
+                              new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTab.Albums ? "" : " d-none"),
+                                  style = "width: 125px",
+                                  title = "Sort by",
+                                  data_sort_tab = "albums-tab" })
+        @Html.DropDownListFor(x => x.Configuration.SelectedArtistSort,
+                              Model.ArtistSortItems,
+                              null,
+                              new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTab.Artists ? "" : " d-none"),
+                                  style = "width: 125px",
+                                  title = "Sort by",
+                                  data_sort_tab = "artists-tab" })
+        @Html.DropDownListFor(x => x.Configuration.SelectedSongSort,
+                              Model.SongSortItems,
+                              null,
+                              new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTab.Songs ? "" : " d-none"),
+                                  style = "width: 125px",
+                                  title = "Sort by",
+                                  data_sort_tab = "songs-tab" })
     </div>
 </div>
 <hr />
@@ -59,6 +49,15 @@
     <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab">@Html.Partial("Artists", Model)</div>
     <div class="tab-pane fade" id="songs" role="tabpanel" aria-labelledby="songs-tab">@Html.Partial("Songs", Model)</div>
 </div>
+
+@Html.BeginForm("UpdateConfiguration", "Music", FormMethod.Post, new { @class = "d-none" }) {
+    @Html.HiddenFor(x => Model.Configuration.SelectedAlbumSort, new { });
+    @Html.HiddenFor(x => Model.Configuration.SelectedSongSort, new { });
+    @Html.HiddenFor(x => Model.Configuration.SelectedArtistSort, new { });
+    @Html.HiddenFor(x => Model.Configuration.SelectedArtistId, new { });
+    @Html.HiddenFor(x => Model.Configuration.SelectedAlbumId, new { });
+    @Html.HiddenFor(x => Model.Configuration.SelectedMusicTab, new { });
+}
 
 @Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
 

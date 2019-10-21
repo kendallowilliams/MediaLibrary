@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Configuration]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+	[Type] VARCHAR(50) NOT NULL,
+    [JsonData] VARCHAR(MAX) NOT NULL, 
+    [CreateDate] DATETIME2 NOT NULL DEFAULT GETDATE(), 
+    [ModifyDate] DATETIME2 NOT NULL DEFAULT GETDATE()
+)

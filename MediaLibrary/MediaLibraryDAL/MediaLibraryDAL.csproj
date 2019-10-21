@@ -69,6 +69,9 @@
     <Compile Include="DbContexts\Artist.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
+    <Compile Include="DbContexts\Configuration.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
     <Compile Include="DbContexts\FindAlbums_Result.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
@@ -141,6 +144,7 @@
     <Compile Include="Enums\TransactionEnums.cs" />
     <Compile Include="Models\Interfaces\IDataModel.cs" />
     <Compile Include="Models\MediaData.cs" />
+    <Compile Include="Partials\Configuration.cs" />
     <Compile Include="Partials\PlaylistTrack.cs" />
     <Compile Include="Partials\PodcastFile.cs" />
     <Compile Include="Partials\PodcastItem.cs" />

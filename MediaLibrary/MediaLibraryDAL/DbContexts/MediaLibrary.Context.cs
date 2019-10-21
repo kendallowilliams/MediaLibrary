@@ -39,6 +39,7 @@ namespace MediaLibraryDAL.DbContexts
         public virtual DbSet<TrackFile> TrackFiles { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<TrackPath> TrackPaths { get; set; }
+        public virtual DbSet<Configuration> Configurations { get; set; }
     
         public virtual int DeleteAllAlbums()
         {

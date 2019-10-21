@@ -16,6 +16,7 @@ using MediaLibraryWebUI.DataContracts;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using Newtonsoft.Json;
 using static MediaLibraryWebUI.Enums;
+using MediaLibraryWebUI.Models.ModelConfigurations;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -47,22 +48,22 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> Index()
         {
-            return await Sort();
-        }
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
-        [CompressContent]
-        public async Task<ActionResult> Sort(SongSort songSort = SongSort.AtoZ, AlbumSort albumSort = AlbumSort.AtoZ, ArtistSort artistSort = ArtistSort.AtoZ)
-        {
-            musicViewModel.SongGroups = await musicService.GetSongGroups(songSort);
-            musicViewModel.ArtistGroups = await musicService.GetArtistGroups(artistSort);
-            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(albumSort);
+            if (configuration != null)
+            {
+                musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData);
+            }
+
+            musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.Configuration.SelectedSongSort);
+            musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.Configuration.SelectedArtistSort);
+            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.Configuration.SelectedAlbumSort);
             musicViewModel.Albums = await musicService.Albums();
             musicViewModel.Artists = await musicService.Artists();
             musicViewModel.Songs = await musicService.Songs();
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
-            musicViewModel.SelectedSongSort = songSort;
 
-            return View("Index", musicViewModel);
+            return View(musicViewModel);
         }
 
         [AllowAnonymous]
@@ -187,6 +188,25 @@ namespace MediaLibraryWebUI.Controllers
             }
 
             return result;
+        }
+
+        public async Task<ActionResult> UpdateConfiguration(MusicConfiguration musicConfiguration)
+        {
+            if (ModelState.IsValid)
+            {
+                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
+
+                if (configuration == null)
+                {
+                    configuration = new Configuration();
+                    configuration.Type = nameof(MediaPages.Music);
+                    configuration.JsonData = JsonConvert.SerializeObject(musicConfiguration);
+
+                    await dataService.Insert(configuration);
+                }
+            }
+
+            return await Index();
         }
     }
 }
