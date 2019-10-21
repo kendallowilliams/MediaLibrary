@@ -56,6 +56,6 @@ namespace MediaLibraryWebUI.Models
         public AlbumSort SelectedAlbumSort { get => selectedAlbumSort; set => selectedAlbumSort = value; }
         public ArtistSort SelectedArtistSort { get => selectedArtistSort; set => selectedArtistSort = value; }
         public SongSort SelectedSongSort { get => selectedSongSort; set => selectedSongSort = value; }
-        public MusicTab SelectMusicTab { get => selectedMusicTab; set => selectedMusicTab = value; }
+        public MusicTab SelectedMusicTab { get => selectedMusicTab; set => selectedMusicTab = value; }
     }
 }
