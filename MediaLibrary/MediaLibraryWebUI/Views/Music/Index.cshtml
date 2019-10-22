@@ -83,14 +83,13 @@
         }
 
         function sortChanged(sortType, select) {
-            $('#txt' + sortType).val($(select).val());
-            updateConfiguration();
             $('#loadingModal').modal('show');
-            window.location = '@Url.Action("Index", "Music")';
+            $('#txt' + sortType).val($(select).val());
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Music")');
         }
 
-        function updateConfiguration() {
-            $.post('@Url.Action("UpdateConfiguration", "Music")', getMusicConfigurationData());
+        function updateConfiguration(success) {
+            $.post('@Url.Action("UpdateConfiguration", "Music")', getMusicConfigurationData(), success);
         }
 
         function getMusicConfigurationData() {
@@ -100,10 +99,6 @@
                    '@(nameof(Model.Configuration.SelectedAlbumId))=' + $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val() + '&' +
                    '@(nameof(Model.Configuration.SelectedArtistId))=' + $('#txt@(nameof(Model.Configuration.SelectedArtistId))').val() + '&' +
                    '@(nameof(Model.Configuration.SelectedMusicTab))=' + $('#txt@(nameof(Model.Configuration.SelectedMusicTab))').val();
-        }
-
-        function refreshClicked() {
-            $.get('@(Url.Action("Refresh", "Music"))');
         }
     </script>
 }
