@@ -24,7 +24,7 @@
                               Model.AlbumSortItems,
                               null,
                               new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTab.Albums ? "" : " d-none"),
-                                  style = "width: 125px",
+                                  style = "width: 135px",
                                   title = "Sort by",
                                   data_sort_tab = "albums-tab",
                                   onchange = $"sortChanged('{nameof(Model.Configuration.SelectedAlbumSort)}', this)"
@@ -33,7 +33,7 @@
                               Model.ArtistSortItems,
                               null,
                               new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTab.Artists ? "" : " d-none"),
-                                  style = "width: 125px",
+                                  style = "width: 135px",
                                   title = "Sort by",
                                   data_sort_tab = "artists-tab",
                                   onchange = $"sortChanged('{nameof(Model.Configuration.SelectedArtistSort)}', this)"
@@ -42,7 +42,7 @@
                               Model.SongSortItems,
                               null,
                               new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTab.Songs ? "" : " d-none"),
-                                  style = "width: 125px",
+                                  style = "width: 135px",
                                   title = "Sort by",
                                   data_sort_tab = "songs-tab",
                                   onchange = $"sortChanged('{nameof(Model.Configuration.SelectedSongSort)}', this)"
