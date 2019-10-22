@@ -52,13 +52,13 @@ namespace MediaLibraryWebUI.Services
             switch(sort)
             {
                 case SongSort.Album:
-                    groups = songs.GroupBy(song => song.Album.Title);
+                    groups = songs.GroupBy(song => song.Album.Title).OrderBy(group => group.Key);
                     break;
                 case SongSort.Artist:
-                    groups = songs.GroupBy(song => song.Artist?.Name ?? "Unknown Artist");
+                    groups = songs.GroupBy(song => song.Artist?.Name ?? "Unknown Artist").OrderBy(group => group.Key);
                     break;
                 case SongSort.DateAdded:
-                    groups = songs.GroupBy(song => song.CreateDate.ToString("yyyy-MM-dd"));
+                    groups = songs.GroupBy(song => song.CreateDate.ToString("yyyy-MM-dd")).OrderByDescending(group => group.Key);
                     break;
                 case SongSort.AtoZ:
                 default:
