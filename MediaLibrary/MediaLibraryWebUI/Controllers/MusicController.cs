@@ -190,7 +190,7 @@ namespace MediaLibraryWebUI.Controllers
             return result;
         }
 
-        public async Task<ActionResult> UpdateConfiguration(MusicConfiguration musicConfiguration)
+        public async Task UpdateConfiguration(MusicConfiguration musicConfiguration)
         {
             if (ModelState.IsValid)
             {
@@ -204,9 +204,12 @@ namespace MediaLibraryWebUI.Controllers
 
                     await dataService.Insert(configuration);
                 }
+                else
+                {
+                    configuration.JsonData = JsonConvert.SerializeObject(musicConfiguration);
+                    await dataService.Update(configuration);
+                }
             }
-
-            return await Index();
         }
     }
 }
