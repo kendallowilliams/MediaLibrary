@@ -63,6 +63,7 @@
     @Html.Hidden(nameof(Model.Configuration.SelectedArtistId), Model.Configuration.SelectedArtistId, new { id = $"txt{nameof(Model.Configuration.SelectedArtistId)}" });
     @Html.Hidden(nameof(Model.Configuration.SelectedAlbumId), Model.Configuration.SelectedAlbumId, new { id = $"txt{nameof(Model.Configuration.SelectedAlbumId)}" });
     @Html.Hidden(nameof(Model.Configuration.SelectedMusicTab), Model.Configuration.SelectedMusicTab, new { id = $"txt{nameof(Model.Configuration.SelectedMusicTab)}" });
+    @Html.Hidden(nameof(Model.Configuration.SelectedMusicPage), Model.Configuration.SelectedMusicPage, new { id = $"txt{nameof(Model.Configuration.SelectedMusicPage)}" });
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
@@ -98,6 +99,7 @@
                    '@(nameof(Model.Configuration.SelectedSongSort))=' + $('#txt@(nameof(Model.Configuration.SelectedSongSort))').val() + '&' +
                    '@(nameof(Model.Configuration.SelectedAlbumId))=' + $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val() + '&' +
                    '@(nameof(Model.Configuration.SelectedArtistId))=' + $('#txt@(nameof(Model.Configuration.SelectedArtistId))').val() + '&' +
+                   '@(nameof(Model.Configuration.SelectedMusicPage))=' + $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val() + '&' +
                    '@(nameof(Model.Configuration.SelectedMusicTab))=' + $('#txt@(nameof(Model.Configuration.SelectedMusicTab))').val();
         }
     </script>

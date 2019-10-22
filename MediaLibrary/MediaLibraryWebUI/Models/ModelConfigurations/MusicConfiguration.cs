@@ -15,6 +15,7 @@ namespace MediaLibraryWebUI.Models.ModelConfigurations
         private ArtistSort selectedArtistSort;
         private SongSort selectedSongSort;
         private MusicTab selectedMusicTab;
+        private MusicPages selectedMusicPage;
 
         public MusicConfiguration()
         {
@@ -27,5 +28,6 @@ namespace MediaLibraryWebUI.Models.ModelConfigurations
         public ArtistSort SelectedArtistSort { get => selectedArtistSort; set => selectedArtistSort = value; }
         public SongSort SelectedSongSort { get => selectedSongSort; set => selectedSongSort = value; }
         public MusicTab SelectedMusicTab { get => selectedMusicTab; set => selectedMusicTab = value; }
+        public MusicPages SelectedMusicPage { get => selectedMusicPage; set => selectedMusicPage = value; }
     }
 }
