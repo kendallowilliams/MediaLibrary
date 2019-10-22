@@ -19,7 +19,7 @@
         <i class="fa fa-music"></i>
     </button>
     <div class="float-right">
-        <button class="btn btn-outline-secondary" onclick="$.get('@(Url.Action("Refresh", "Music"))')"><i class="fa fa-sync"></i></button>
+        <button class="btn btn-outline-secondary" onclick="refreshClicked()"><i class="fa fa-sync"></i></button>
         @Html.DropDownListFor(x => x.Configuration.SelectedAlbumSort,
                               Model.AlbumSortItems,
                               null,
@@ -100,6 +100,10 @@
                    '@(nameof(Model.Configuration.SelectedAlbumId))=' + $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val() + '&' +
                    '@(nameof(Model.Configuration.SelectedArtistId))=' + $('#txt@(nameof(Model.Configuration.SelectedArtistId))').val() + '&' +
                    '@(nameof(Model.Configuration.SelectedMusicTab))=' + $('#txt@(nameof(Model.Configuration.SelectedMusicTab))').val();
+        }
+
+        function refreshClicked() {
+            $.get('@(Url.Action("Refresh", "Music"))');
         }
     </script>
 }
