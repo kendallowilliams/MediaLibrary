@@ -1,0 +1,27 @@
+﻿@model MediaLibraryWebUI.Models.ModelConfigurations.MusicConfiguration
+
+<div class="d-none">
+    @Html.Hidden(nameof(Model.SelectedAlbumSort), Model.SelectedAlbumSort, new { id = $"txt{nameof(Model.SelectedAlbumSort)}" });
+    @Html.Hidden(nameof(Model.SelectedSongSort), Model.SelectedSongSort, new { id = $"txt{nameof(Model.SelectedSongSort)}" });
+    @Html.Hidden(nameof(Model.SelectedArtistSort), Model.SelectedArtistSort, new { id = $"txt{nameof(Model.SelectedArtistSort)}" });
+    @Html.Hidden(nameof(Model.SelectedArtistId), Model.SelectedArtistId, new { id = $"txt{nameof(Model.SelectedArtistId)}" });
+    @Html.Hidden(nameof(Model.SelectedAlbumId), Model.SelectedAlbumId, new { id = $"txt{nameof(Model.SelectedAlbumId)}" });
+    @Html.Hidden(nameof(Model.SelectedMusicTab), Model.SelectedMusicTab, new { id = $"txt{nameof(Model.SelectedMusicTab)}" });
+    @Html.Hidden(nameof(Model.SelectedMusicPage), Model.SelectedMusicPage, new { id = $"txt{nameof(Model.SelectedMusicPage)}" });
+</div>
+
+<script type="text/javascript" defer="defer">
+    function updateConfiguration(success) {
+        $.post('@Url.Action("UpdateConfiguration", "Music")', getMusicConfigurationData(), success);
+    }
+
+    function getMusicConfigurationData() {
+        return '@(nameof(Model.SelectedAlbumSort))=' + $('#txt@(nameof(Model.SelectedAlbumSort))').val() + '&' +
+                '@(nameof(Model.SelectedArtistSort))=' + $('#txt@(nameof(Model.SelectedArtistSort))').val() + '&' +
+                '@(nameof(Model.SelectedSongSort))=' + $('#txt@(nameof(Model.SelectedSongSort))').val() + '&' +
+                '@(nameof(Model.SelectedAlbumId))=' + $('#txt@(nameof(Model.SelectedAlbumId))').val() + '&' +
+                '@(nameof(Model.SelectedArtistId))=' + $('#txt@(nameof(Model.SelectedArtistId))').val() + '&' +
+                '@(nameof(Model.SelectedMusicPage))=' + $('#txt@(nameof(Model.SelectedMusicPage))').val() + '&' +
+                '@(nameof(Model.SelectedMusicTab))=' + $('#txt@(nameof(Model.SelectedMusicTab))').val();
+    }
+</script>

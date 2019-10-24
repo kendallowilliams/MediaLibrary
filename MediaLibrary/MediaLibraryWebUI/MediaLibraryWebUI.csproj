@@ -291,6 +291,7 @@
     <Content Include="Views\Shared\_PlayerLayout.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Shared\Modals\LoadingModal.cshtml" />
+    <Content Include="Views\Shared\Configurations\MusicConfiguration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

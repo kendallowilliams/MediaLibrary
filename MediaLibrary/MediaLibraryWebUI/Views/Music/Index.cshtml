@@ -6,15 +6,15 @@
 
 <h2>Music</h2>
 <div class="nav d-block" id="musicTab" role="tablist">
-    <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Albums ? "active" : "")" id="albums-tab" data-toggle="tab" href="#albums" 
+    <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Albums ? "active" : "")" id="albums-tab" data-toggle="tab" href="#albums"
             role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTab.Albums))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Albums))">
         <i class="fa fa-compact-disc"></i>
     </button>
-    <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Artists ? "active" : "")" id="artists-tab" href="#artists" data-toggle="tab" 
+    <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Artists ? "active" : "")" id="artists-tab" href="#artists" data-toggle="tab"
             role="tab" aria-controls="artists" aria-selected="false" title="@(nameof(Enums.MusicTab.Artists))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Artists))">
         <i class="fa fa-user"></i>
     </button>
-    <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Songs ? "active" : "")" id="songs-tab" href="#songs" data-toggle="tab" 
+    <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Songs ? "active" : "")" id="songs-tab" href="#songs" data-toggle="tab"
             role="tab" aria-controls="songs" aria-selected="false" title="@(nameof(Enums.MusicTab.Songs))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Songs))">
         <i class="fa fa-music"></i>
     </button>
@@ -56,20 +56,11 @@
     <div class="tab-pane fade @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Songs ? "show active" : "")" id="songs" role="tabpanel" aria-labelledby="songs-tab">@Html.Partial("Songs", Model)</div>
 </div>
 
-<div class="d-none">
-    @Html.Hidden(nameof(Model.Configuration.SelectedAlbumSort), Model.Configuration.SelectedAlbumSort, new { id = $"txt{nameof(Model.Configuration.SelectedAlbumSort)}" });
-    @Html.Hidden(nameof(Model.Configuration.SelectedSongSort), Model.Configuration.SelectedSongSort, new { id = $"txt{nameof(Model.Configuration.SelectedSongSort)}" });
-    @Html.Hidden(nameof(Model.Configuration.SelectedArtistSort), Model.Configuration.SelectedArtistSort, new { id = $"txt{nameof(Model.Configuration.SelectedArtistSort)}" });
-    @Html.Hidden(nameof(Model.Configuration.SelectedArtistId), Model.Configuration.SelectedArtistId, new { id = $"txt{nameof(Model.Configuration.SelectedArtistId)}" });
-    @Html.Hidden(nameof(Model.Configuration.SelectedAlbumId), Model.Configuration.SelectedAlbumId, new { id = $"txt{nameof(Model.Configuration.SelectedAlbumId)}" });
-    @Html.Hidden(nameof(Model.Configuration.SelectedMusicTab), Model.Configuration.SelectedMusicTab, new { id = $"txt{nameof(Model.Configuration.SelectedMusicTab)}" });
-    @Html.Hidden(nameof(Model.Configuration.SelectedMusicPage), Model.Configuration.SelectedMusicPage, new { id = $"txt{nameof(Model.Configuration.SelectedMusicPage)}" });
-</div>
-
 @Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
+@Html.Partial("~/Views/Shared/Configurations/MusicConfiguration.cshtml", Model.Configuration)
 
 @section scripts {
-    <script type="text/javascript">
+    <script type="text/javascript" defer="defer">
         function musicTabChanged(btn) {
             $('[data-sort-tab]').each((index, _btn) => {
                 if ($(_btn).attr('data-sort-tab') === btn.id) {
@@ -89,18 +80,18 @@
             updateConfiguration(() => window.location = '@Url.Action("Index", "Music")');
         }
 
-        function updateConfiguration(success) {
-            $.post('@Url.Action("UpdateConfiguration", "Music")', getMusicConfigurationData(), success);
+        function artistClicked(btn) {
+            $('#loadingModal').modal('show');
+            $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Artist))');
+            $('#txt@(nameof(Model.Configuration.SelectedArtistId))').val($(btn).attr('data-item-id'));
+            updateConfiguration(() => window.location = $(btn).attr('data-artist-url'));
         }
 
-        function getMusicConfigurationData() {
-            return '@(nameof(Model.Configuration.SelectedAlbumSort))=' + $('#txt@(nameof(Model.Configuration.SelectedAlbumSort))').val() + '&' +
-                   '@(nameof(Model.Configuration.SelectedArtistSort))=' + $('#txt@(nameof(Model.Configuration.SelectedArtistSort))').val() + '&' +
-                   '@(nameof(Model.Configuration.SelectedSongSort))=' + $('#txt@(nameof(Model.Configuration.SelectedSongSort))').val() + '&' +
-                   '@(nameof(Model.Configuration.SelectedAlbumId))=' + $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val() + '&' +
-                   '@(nameof(Model.Configuration.SelectedArtistId))=' + $('#txt@(nameof(Model.Configuration.SelectedArtistId))').val() + '&' +
-                   '@(nameof(Model.Configuration.SelectedMusicPage))=' + $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val() + '&' +
-                   '@(nameof(Model.Configuration.SelectedMusicTab))=' + $('#txt@(nameof(Model.Configuration.SelectedMusicTab))').val();
+        function albumClicked(btn) {
+            $('#loadingModal').modal('show');
+            $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Album))');
+            $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val($(btn).attr('data-item-id'));
+            updateConfiguration(() => window.location = $(btn).attr('data-album-url'));
         }
     </script>
 }

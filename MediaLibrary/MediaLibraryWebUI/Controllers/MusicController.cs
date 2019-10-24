@@ -48,6 +48,7 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> Index()
         {
+            ActionResult result = null;
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
             if (configuration != null)
@@ -55,15 +56,27 @@ namespace MediaLibraryWebUI.Controllers
                 musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData);
             }
 
-            musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.Configuration.SelectedSongSort);
-            musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.Configuration.SelectedArtistSort);
-            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.Configuration.SelectedAlbumSort);
-            musicViewModel.Albums = await musicService.Albums();
-            musicViewModel.Artists = await musicService.Artists();
-            musicViewModel.Songs = await musicService.Songs();
-            musicViewModel.Playlists = await dataService.GetList<Playlist>();
+            if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Album)
+            {
+                result = await GetAlbum(musicViewModel.Configuration.SelectedAlbumId);
+            }
+            else if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Artist)
+            {
+                result = await GetArtist(musicViewModel.Configuration.SelectedArtistId);
+            }
+            else
+            {
+                musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.Configuration.SelectedSongSort);
+                musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.Configuration.SelectedArtistSort);
+                musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.Configuration.SelectedAlbumSort);
+                musicViewModel.Albums = await musicService.Albums();
+                musicViewModel.Artists = await musicService.Artists();
+                musicViewModel.Songs = await musicService.Songs();
+                musicViewModel.Playlists = await dataService.GetList<Playlist>();
+                result = View(musicViewModel);
+            }
 
-            return View(musicViewModel);
+            return result;
         }
 
         [AllowAnonymous]
