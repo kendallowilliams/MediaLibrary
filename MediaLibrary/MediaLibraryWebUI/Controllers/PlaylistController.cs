@@ -34,7 +34,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlists));
 
             if (configuration != null)
             {
