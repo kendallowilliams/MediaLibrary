@@ -135,10 +135,7 @@ namespace MediaLibraryWebUI.Controllers
 
                 if (configuration == null)
                 {
-                    configuration = new Configuration();
-                    configuration.Type = nameof(MediaPages.Podcasts);
-                    configuration.JsonData = JsonConvert.SerializeObject(podcastConfiguration);
-
+                    configuration = new Configuration() { Type = nameof(MediaPages.Podcasts), JsonData = JsonConvert.SerializeObject(podcastConfiguration) };
                     await dataService.Insert(configuration);
                 }
                 else
