@@ -6,10 +6,12 @@
 
 <h2>@(Model.SelectedPodcast.Title) podcast</h2>
 <div>
-    <a class="btn btn-outline-secondary" href="@(Url.Action("Index","Podcast"))" data-toggle="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></a>
+    <button class="btn btn-outline-secondary" onclick="backClicked()" data-toggle="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
     <a class="btn btn-outline-secondary" href="@(Url.Action("RefreshPodcast","Podcast", new { Model.SelectedPodcast.Id }))" data-toggle="tooltip" title="Refresh podcast"><i class="fa fa-sync"></i></a>
     <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))" data-toggle="tooltip" title="Delete podcast"
-            data-delete-type="podcast"><i class="fa fa-trash"></i></button>
+            data-delete-type="podcast">
+        <i class="fa fa-trash"></i>
+    </button>
 </div>
 
 <hr />
@@ -58,3 +60,14 @@
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
+@Html.Partial("~/Views/Shared/Configurations/PodcastConfiguration.cshtml", Model.Configuration)
+
+@section scripts {
+    <script type="text/javascript" defer="defer">
+        function backClicked() {
+            $('#loadingModal').modal('show');
+            $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Index))');
+            updateConfiguration(() => window.location = '@(Url.Action("Index", "Podcast"))');
+        }
+    </script>
+}

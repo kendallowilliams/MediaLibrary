@@ -1,0 +1,19 @@
+﻿@model MediaLibraryWebUI.Models.Configurations.PodcastConfiguration
+
+<div class="d-none">
+    @Html.Hidden(nameof(Model.SelectedPodcastSort), Model.SelectedPodcastSort, new { id = $"txt{nameof(Model.SelectedPodcastSort)}" });
+    @Html.Hidden(nameof(Model.SelectedPodcastId), Model.SelectedPodcastId, new { id = $"txt{nameof(Model.SelectedPodcastId)}" });
+    @Html.Hidden(nameof(Model.SelectedPodcastPage), Model.SelectedPodcastPage, new { id = $"txt{nameof(Model.SelectedPodcastPage)}" });
+</div>
+
+<script type="text/javascript" defer="defer">
+    function updateConfiguration(success) {
+        $.post('@Url.Action("UpdateConfiguration", "Podcast")', getPodcastConfigurationData(), success);
+    }
+
+    function getPodcastConfigurationData() {
+        return '@(nameof(Model.SelectedPodcastSort))=' + $('#txt@(nameof(Model.SelectedPodcastSort))').val() + '&' +
+                '@(nameof(Model.SelectedPodcastId))=' + $('#txt@(nameof(Model.SelectedPodcastId))').val() + '&' +
+                '@(nameof(Model.SelectedPodcastPage))=' + $('#txt@(nameof(Model.SelectedPodcastPage))').val();
+    }
+</script>

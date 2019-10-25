@@ -1,4 +1,5 @@
 ﻿using MediaLibraryDAL.DbContexts;
+using MediaLibraryWebUI.Models.Configurations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -15,7 +16,7 @@ namespace MediaLibraryWebUI.Models
         private readonly HomeViewModel homeViewModel;
         private Podcast selectedPodcast;
         private IEnumerable<PodcastItem> podcastItems;
-        private PodcastSort selectedPodcastSort;
+        private PodcastConfiguration configuration;
 
         [ImportingConstructor]
         public PodcastViewModel(HomeViewModel homeViewModel)
@@ -23,13 +24,13 @@ namespace MediaLibraryWebUI.Models
             podcastGroups = Enumerable.Empty<IGrouping<string, Podcast>>();
             this.homeViewModel = homeViewModel;
             podcastItems = Enumerable.Empty<PodcastItem>();
+            configuration = new PodcastConfiguration();
         }
 
         public IEnumerable<IGrouping<string, Podcast>> PodcastGroups { get => podcastGroups; set => podcastGroups = value; }
         public Podcast SelectedPodcast { get => selectedPodcast; set => selectedPodcast = value; }
         public IEnumerable<PodcastItem> PodcastItems { get => podcastItems; set => podcastItems = value; }
-        public PodcastSort SelectedPodcastSort { get => selectedPodcastSort; set => selectedPodcastSort = value; }
-
         public HomeViewModel HomeViewModel { get => homeViewModel; }
+        public PodcastConfiguration Configuration { get => configuration; set => configuration = value ?? new PodcastConfiguration(); }
     }
 }

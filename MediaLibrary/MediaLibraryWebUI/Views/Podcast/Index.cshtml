@@ -12,8 +12,8 @@
             Sort by
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupPodcastSort">
-            <a class="dropdown-item @(Model.SelectedPodcastSort == Enums.PodcastSort.DateModified ? "active" : string.Empty)" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.DateModified })">Date modified</a>
-            <a class="dropdown-item @(Model.SelectedPodcastSort == Enums.PodcastSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.AtoZ })">A to Z</a>
+            <a class="dropdown-item @(Model.Configuration.SelectedPodcastSort == Enums.PodcastSort.DateModified ? "active" : string.Empty)" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.DateModified })">Date modified</a>
+            <a class="dropdown-item @(Model.Configuration.SelectedPodcastSort == Enums.PodcastSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.AtoZ })">A to Z</a>
         </div>
     </div>
 </div>
@@ -49,8 +49,10 @@
                                                 data-html="true">
                                             <i class="fa fa-info-circle"></i>
                                         </button>
-                                        <a class="btn btn-outline-secondary" href="@(Url.Action("Get", "Podcast", new { podcast.Id }))"
-                                           data-toggle="tooltip" title="View podcast"><i class="fa fa-list"></i></a>
+                                        <buton class="btn btn-outline-secondary" onclick="podcastClicked(this)" data-podcast-url="@(Url.Action("Get", "Podcast", new { podcast.Id }))" data-item-id="@(podcast.Id)"
+                                               data-toggle="tooltip" title="View podcast">
+                                            <i class="fa fa-list"></i>
+                                        </buton>
                                         <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
                                                 data-toggle="tooltip" title="Delete podcast" data-delete-type="podcast">
                                             <i class="fa fa-trash"></i>
@@ -80,7 +82,7 @@ else
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formNewPodcast" method="post" action="@Url.Action("AddPodcast", "Podcast")" on>
+                <form id="formNewPodcast" method="post" action="@Url.Action("AddPodcast", "Podcast")">
                     <div class="form-group">
                         <label for="txtNewPodcast">RSS feed</label>
                         <input type="text" class="form-control" id="txtNewPodcast" name="rssFeed" placeholder="RSS feed">
@@ -96,6 +98,7 @@ else
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
+@Html.Partial("~/Views/Shared/Configurations/PodcastConfiguration.cshtml", Model.Configuration)
 
 @section scripts {
     <script type="text/javascript">
@@ -106,6 +109,13 @@ else
         function addNewPodcast() {
             $('#formNewPodcast').trigger('submit');
             $('#modalNewPodcast').modal('hide');
+        }
+
+        function podcastClicked(btn) {
+            $('#loadingModal').modal('show');
+            $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Podcast))');
+            $('#txt@(nameof(Model.Configuration.SelectedPodcastId))').val($(btn).attr('data-item-id'));
+            updateConfiguration(() => window.location = $(btn).attr('data-podcast-url'));
         }
     </script>
 }

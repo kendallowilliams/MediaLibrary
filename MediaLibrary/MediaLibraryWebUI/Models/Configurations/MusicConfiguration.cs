@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using static MediaLibraryWebUI.Enums;
 
-namespace MediaLibraryWebUI.Models.ModelConfigurations
+namespace MediaLibraryWebUI.Models.Configurations
 {
     public class MusicConfiguration
     {

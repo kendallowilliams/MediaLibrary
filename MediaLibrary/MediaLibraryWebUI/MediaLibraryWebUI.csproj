@@ -243,7 +243,9 @@
     </Compile>
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\Interfaces\IViewModel.cs" />
-    <Compile Include="Models\ModelConfigurations\MusicConfiguration.cs" />
+    <Compile Include="Models\Configurations\MusicConfiguration.cs" />
+    <Compile Include="Models\Configurations\PlaylistConfiguration.cs" />
+    <Compile Include="Models\Configurations\PodcastConfiguration.cs" />
     <Compile Include="Models\MusicViewModel.cs" />
     <Compile Include="Models\PlayerViewModel.cs" />
     <Compile Include="Models\PlaylistViewModel.cs" />
@@ -292,6 +294,8 @@
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Shared\Modals\LoadingModal.cshtml" />
     <Content Include="Views\Shared\Configurations\MusicConfiguration.cshtml" />
+    <Content Include="Views\Shared\Configurations\PodcastConfiguration.cshtml" />
+    <Content Include="Views\Shared\Configurations\PlaylistConfiguration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

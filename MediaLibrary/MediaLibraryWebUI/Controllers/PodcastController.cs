@@ -3,7 +3,9 @@ using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.ActionResults;
 using MediaLibraryWebUI.Models;
+using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Services.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -37,15 +39,25 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Index()
         {
-            return await Sort(PodcastSort.AtoZ);
-        }
+            ActionResult result = null;
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcasts));
 
-        public async Task<ActionResult> Sort(PodcastSort sort)
-        {
-            podcastViewModel.PodcastGroups = await podcastUIService.GetPodcastGroups(sort);
-            podcastViewModel.SelectedPodcastSort = sort;
+            if (configuration != null)
+            {
+                podcastViewModel.Configuration = JsonConvert.DeserializeObject<PodcastConfiguration>(configuration.JsonData);
+            }
 
-            return View("Index", podcastViewModel);
+            if (podcastViewModel.Configuration.SelectedPodcastPage == PodcastPages.Podcast)
+            {
+                result = await Get(podcastViewModel.Configuration.SelectedPodcastId);
+            }
+            else
+            {
+                podcastViewModel.PodcastGroups = await podcastUIService.GetPodcastGroups(podcastViewModel.Configuration.SelectedPodcastSort);
+                result = View(podcastViewModel);
+            }
+
+            return result;
         }
 
         public async Task<ActionResult> AddPodcast(string rssFeed)
@@ -113,6 +125,28 @@ namespace MediaLibraryWebUI.Controllers
             }
 
             return result;
+        }
+
+        public async Task UpdateConfiguration(PodcastConfiguration podcastConfiguration)
+        {
+            if (ModelState.IsValid)
+            {
+                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcasts));
+
+                if (configuration == null)
+                {
+                    configuration = new Configuration();
+                    configuration.Type = nameof(MediaPages.Podcasts);
+                    configuration.JsonData = JsonConvert.SerializeObject(podcastConfiguration);
+
+                    await dataService.Insert(configuration);
+                }
+                else
+                {
+                    configuration.JsonData = JsonConvert.SerializeObject(podcastConfiguration);
+                    await dataService.Update(configuration);
+                }
+            }
         }
     }
 }

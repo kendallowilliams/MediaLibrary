@@ -1,6 +1,6 @@
 ﻿using MediaLibraryBLL.Models.Interfaces;
 using MediaLibraryDAL.DbContexts;
-using MediaLibraryWebUI.Models.ModelConfigurations;
+using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Repositories;
 using MediaLibraryWebUI.Services;
 using System;

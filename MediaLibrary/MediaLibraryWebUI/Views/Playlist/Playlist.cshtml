@@ -6,7 +6,7 @@
 
 <h2>@(Model.SelectedPlaylist.Name) playlist</h2>
 <div>
-    <a class="btn btn-outline-secondary" href="@(Url.Action("Index","Playlist"))" data-toggle="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></a>
+    <button class="btn btn-outline-secondary" onclick="backClicked()" data-toggle="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
     <a class="btn btn-outline-secondary" href="" data-toggle="tooltip" title="Edit playlist"><i class="fa fa-edit"></i></a>
     <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", new { Model.SelectedPlaylist.Id})"
        data-toggle="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
@@ -59,3 +59,14 @@
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
+@Html.Partial("~/Views/Shared/Configurations/PlaylistConfiguration.cshtml", Model.Configuration)
+
+@section scripts {
+    <script type="text/javascript" defer="defer">
+        function backClicked() {
+            $('#loadingModal').modal('show');
+            $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Index))');
+            updateConfiguration(() => window.location = '@(Url.Action("Index", "Playlist"))');
+        }
+    </script>
+}

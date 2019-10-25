@@ -1,7 +1,9 @@
 ﻿using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.Models;
+using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Services.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -31,14 +33,25 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Index()
         {
-            return await Sort(PlaylistSort.AtoZ);
-        }
+            ActionResult result = null;
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
-        public async Task<ActionResult> Sort(PlaylistSort sort)
-        {
-            playlistViewModel.PlaylistGroups = await playlistService.GetPlaylistGroups(sort);
+            if (configuration != null)
+            {
+                playlistViewModel.Configuration = JsonConvert.DeserializeObject<PlaylistConfiguration>(configuration.JsonData);
+            }
 
-            return View("Index", playlistViewModel);
+            if (playlistViewModel.Configuration.SelectedPlaylistPage == PlaylistPages.Playlist)
+            {
+                result = await Get(playlistViewModel.Configuration.SelectedPlaylistId);
+            }
+            else
+            {
+                playlistViewModel.PlaylistGroups = await playlistService.GetPlaylistGroups(playlistViewModel.Configuration.SelectedPlaylistSort);
+                result = View(playlistViewModel);
+            }
+
+            return result;
         }
 
         public async Task<ActionResult> AddPlaylist(string playlistName)
@@ -87,6 +100,28 @@ namespace MediaLibraryWebUI.Controllers
             byte[] content = Encoding.UTF8.GetBytes(data);
 
             return new FileContentResult(content, "audio/mpegurl");
+        }
+
+        public async Task UpdateConfiguration(PlaylistConfiguration playlistConfiguration)
+        {
+            if (ModelState.IsValid)
+            {
+                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlists));
+
+                if (configuration == null)
+                {
+                    configuration = new Configuration();
+                    configuration.Type = nameof(MediaPages.Playlists);
+                    configuration.JsonData = JsonConvert.SerializeObject(playlistConfiguration);
+
+                    await dataService.Insert(configuration);
+                }
+                else
+                {
+                    configuration.JsonData = JsonConvert.SerializeObject(playlistConfiguration);
+                    await dataService.Update(configuration);
+                }
+            }
         }
     }
 }
