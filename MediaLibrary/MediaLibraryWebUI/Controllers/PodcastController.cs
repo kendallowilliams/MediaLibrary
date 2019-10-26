@@ -90,13 +90,9 @@ namespace MediaLibraryWebUI.Controllers
             return View("Podcast", podcastViewModel);
         }
 
-        public async Task<ActionResult> RefreshPodcast(int id)
+        public async Task RefreshPodcast(int id)
         {
-            Podcast podcast = await dataService.GetAsync<Podcast>(item => item.Id == id);
-
-            await podcastService.RefreshPodcast(podcast);
-
-            return await Get(podcast.Id);
+            await podcastService.RefreshPodcast(await dataService.GetAsync<Podcast>(item => item.Id == id));
         }
 
         [AllowAnonymous]
