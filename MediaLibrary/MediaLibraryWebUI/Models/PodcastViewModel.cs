@@ -12,25 +12,21 @@ namespace MediaLibraryWebUI.Models
     [Export]
     public class PodcastViewModel : ViewModel
     {
-        private IEnumerable<IGrouping<string, Podcast>> podcastGroups;
-        private readonly HomeViewModel homeViewModel;
-        private Podcast selectedPodcast;
-        private IEnumerable<PodcastItem> podcastItems;
         private PodcastConfiguration configuration;
 
         [ImportingConstructor]
         public PodcastViewModel(HomeViewModel homeViewModel)
         {
-            podcastGroups = Enumerable.Empty<IGrouping<string, Podcast>>();
-            this.homeViewModel = homeViewModel;
-            podcastItems = Enumerable.Empty<PodcastItem>();
+            PodcastGroups = Enumerable.Empty<IGrouping<string, Podcast>>();
+            this.HomeViewModel = homeViewModel;
+            PodcastItems = Enumerable.Empty<PodcastItem>();
             configuration = new PodcastConfiguration();
         }
 
-        public IEnumerable<IGrouping<string, Podcast>> PodcastGroups { get => podcastGroups; set => podcastGroups = value; }
-        public Podcast SelectedPodcast { get => selectedPodcast; set => selectedPodcast = value; }
-        public IEnumerable<PodcastItem> PodcastItems { get => podcastItems; set => podcastItems = value; }
-        public HomeViewModel HomeViewModel { get => homeViewModel; }
+        public IEnumerable<IGrouping<string, Podcast>> PodcastGroups { get; set; }
+        public Podcast SelectedPodcast { get; set; }
+        public IEnumerable<PodcastItem> PodcastItems { get; set; }
+        public HomeViewModel HomeViewModel { get; }
         public PodcastConfiguration Configuration { get => configuration; set => configuration = value ?? new PodcastConfiguration(); }
     }
 }
