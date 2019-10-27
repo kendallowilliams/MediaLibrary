@@ -33,6 +33,7 @@ namespace MediaLibraryWebApi.Controllers
             this.trackService = trackService;
             this.fileService = fileService;
             this.transactionService = transactionService;
+            this.dataService = dataService;
         }
 
         // GET: api/Track
