@@ -13,6 +13,7 @@ namespace MediaLibraryWebUI.Models
         {
             Domain = WebConfigurationManager.AppSettings["MediaLibraryDomain"];
             MusicPlayerId = "music-player";
+        }
 
         public string MusicPlayerId { get; }
         public string Domain { get; }
