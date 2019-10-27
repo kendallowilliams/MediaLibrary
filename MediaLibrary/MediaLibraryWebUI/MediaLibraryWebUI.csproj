@@ -296,6 +296,8 @@
     <Content Include="Views\Shared\Configurations\MusicConfiguration.cshtml" />
     <Content Include="Views\Shared\Configurations\PodcastConfiguration.cshtml" />
     <Content Include="Views\Shared\Configurations\PlaylistConfiguration.cshtml" />
+    <Content Include="Views\Shared\Modals\AddNewSongModal.cshtml" />
+    <Content Include="Views\Shared\Modals\EditSongModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

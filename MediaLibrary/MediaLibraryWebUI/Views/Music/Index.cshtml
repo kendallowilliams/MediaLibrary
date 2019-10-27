@@ -19,6 +19,9 @@
         <i class="fa fa-music"></i>
     </button>
     <div class="float-right">
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalAddNewSong">
+            <i class="fa fa-plus" data-toggle="tooltip" title="Add new song"></i>
+        </button>
         <button class="btn btn-outline-secondary" onclick="refreshClicked()"><i class="fa fa-sync"></i></button>
         @Html.DropDownListFor(x => x.Configuration.SelectedAlbumSort,
                               Model.AlbumSortItems,
@@ -57,6 +60,8 @@
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
+@Html.Partial("~/Views/Shared/Modals/AddNewSongModal.cshtml", Model)
+@Html.Partial("~/Views/Shared/Modals/EditSongModal.cshtml")
 @Html.Partial("~/Views/Shared/Configurations/MusicConfiguration.cshtml", Model.Configuration)
 
 @section scripts {
