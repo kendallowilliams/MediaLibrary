@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryBLL", "MediaLibraryBLL\MediaLibraryBLL.csproj", "{337378F1-BF20-4749-BBDF-CCF9F3948847}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryDAL", "MediaLibraryDAL\MediaLibraryDAL.csproj", "{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MediaLibraryDB", "MediaLibraryDB\MediaLibraryDB.sqlproj", "{2DE251E5-1A58-4003-85F0-2C2F5739E436}"
@@ -13,16 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWebApi", "Media
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWebUI", "MediaLibraryWebUI\MediaLibraryWebUI.csproj", "{52918049-D1A3-4610-BFD2-4A3A1084D0E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryBLL", "MediaLibraryBLL\MediaLibraryBLL.csproj", "{E38C9EB6-EBBD-404A-9BF3-F2143A132B9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{337378F1-BF20-4749-BBDF-CCF9F3948847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{337378F1-BF20-4749-BBDF-CCF9F3948847}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{337378F1-BF20-4749-BBDF-CCF9F3948847}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{337378F1-BF20-4749-BBDF-CCF9F3948847}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,6 +37,10 @@ Global
 		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E38C9EB6-EBBD-404A-9BF3-F2143A132B9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E38C9EB6-EBBD-404A-9BF3-F2143A132B9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E38C9EB6-EBBD-404A-9BF3-F2143A132B9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E38C9EB6-EBBD-404A-9BF3-F2143A132B9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

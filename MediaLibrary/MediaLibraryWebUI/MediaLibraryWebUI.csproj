@@ -310,7 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MediaLibraryBLL\MediaLibraryBLL.csproj">
-      <Project>{337378f1-bf20-4749-bbdf-ccf9f3948847}</Project>
+      <Project>{e38c9eb6-ebbd-404a-9bf3-f2143a132b9d}</Project>
       <Name>MediaLibraryBLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\MediaLibraryDAL\MediaLibraryDAL.csproj">
