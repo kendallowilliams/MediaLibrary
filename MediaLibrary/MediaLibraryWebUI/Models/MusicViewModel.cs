@@ -16,8 +16,6 @@ namespace MediaLibraryWebUI.Models
     [Export]
     public class MusicViewModel : ViewModel
     {
-        private MusicConfiguration configuration;
-
         [ImportingConstructor]
         public MusicViewModel(HomeViewModel homeViewModel)
         {
@@ -29,7 +27,10 @@ namespace MediaLibraryWebUI.Models
             Artists = Enumerable.Empty<Artist>();
             Albums = Enumerable.Empty<Album>();
             this.HomeViewModel = homeViewModel;
-            configuration = new MusicConfiguration();
+            Configuration = new MusicConfiguration();
+            AlbumSortItems = MusicRepository.GetAlbumSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
+            ArtistSortItems = MusicRepository.GetArtistSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
+            SongSortItems = MusicRepository.GetSongSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
         }
 
         public IEnumerable<IGrouping<string, Track>> SongGroups { get; set; }
@@ -43,10 +44,10 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<Album> Albums { get; set; }
         public HomeViewModel HomeViewModel { get; }
         public IEnumerable<Playlist> Playlists { get; set; }
-        public MusicConfiguration Configuration { get => configuration; set => configuration = value ?? new MusicConfiguration(); }
-        public IEnumerable<SelectListItem> AlbumSortItems { get => MusicRepository.GetAlbumSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() }); }
-        public IEnumerable<SelectListItem> ArtistSortItems { get => MusicRepository.GetArtistSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() }); }
-        public IEnumerable<SelectListItem> SongSortItems { get => MusicRepository.GetSongSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() }); }
+        public MusicConfiguration Configuration { get; set; }
+        public IEnumerable<SelectListItem> AlbumSortItems { get; }
+        public IEnumerable<SelectListItem> ArtistSortItems { get; }
+        public IEnumerable<SelectListItem> SongSortItems { get; }
         public Artist SelectedArtist { get; set; }
         public Album SelectedAlbum { get; set; }
     }
