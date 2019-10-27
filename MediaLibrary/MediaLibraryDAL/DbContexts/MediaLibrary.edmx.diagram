@@ -29,6 +29,7 @@
         <EntityTypeShape EntityType="MediaLibraryDAL.TrackPath" Width="1.5" PointX="0.75" PointY="11.875" />
         <AssociationConnector Association="MediaLibraryDAL.FK__Track__PathId__05D8E0BE" />
         <EntityTypeShape EntityType="MediaLibraryDAL.Configuration" Width="1.5" PointX="0.75" PointY="7.75" />
+        <AssociationConnector Association="MediaLibraryDAL.FK__Track__GenreId__2739D489" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

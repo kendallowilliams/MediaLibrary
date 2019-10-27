@@ -15,6 +15,7 @@
     PRIMARY KEY NONCLUSTERED ([Id] ASC),
     FOREIGN KEY ([AlbumId]) REFERENCES [dbo].[Album] ([Id]) ON DELETE SET NULL,
     FOREIGN KEY ([ArtistId]) REFERENCES [dbo].[Artist] ([Id]) ON DELETE SET NULL,
-    FOREIGN KEY ([PathId]) REFERENCES [dbo].[TrackPath] ([Id]) ON DELETE CASCADE
+    FOREIGN KEY ([PathId]) REFERENCES [dbo].[TrackPath] ([Id]) ON DELETE CASCADE,
+	FOREIGN KEY ([GenreId]) REFERENCES [dbo].[Genre] ([Id]) ON DELETE SET NULL
 );
 

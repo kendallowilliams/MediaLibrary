@@ -218,6 +218,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Track__GenreId__2739D489">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
+          <End Role="Track" Type="Self.Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Track__PathId__70DDC3D8">
           <End Role="TrackPath" Type="Self.TrackPath" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -332,6 +344,10 @@
           </AssociationSet>
           <AssociationSet Name="FK__Track__ArtistId__6FE99F9F" Association="Self.FK__Track__ArtistId__6FE99F9F">
             <End Role="Artist" EntitySet="Artist" />
+            <End Role="Track" EntitySet="Track" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Track__GenreId__2739D489" Association="Self.FK__Track__GenreId__2739D489">
+            <End Role="Genre" EntitySet="Genre" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
           <AssociationSet Name="FK__Track__PathId__70DDC3D8" Association="Self.FK__Track__PathId__70DDC3D8">
@@ -473,6 +489,10 @@
             <End Role="Track" EntitySet="Tracks" />
           </AssociationSet>
           <EntitySet Name="Configurations" EntityType="MediaLibraryDAL.Configuration" />
+          <AssociationSet Name="FK__Track__GenreId__2739D489" Association="MediaLibraryDAL.FK__Track__GenreId__2739D489">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="Track" EntitySet="Tracks" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -509,6 +529,7 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Albums" Relationship="MediaLibraryDAL.FK__Album__GenreId__66603565" FromRole="Genre" ToRole="Album" />
+          <NavigationProperty Name="Tracks" Relationship="MediaLibraryDAL.FK__Track__GenreId__2739D489" FromRole="Genre" ToRole="Track" />
         </EntityType>
         <EntityType Name="Playlist">
           <Key>
@@ -600,6 +621,7 @@
           <NavigationProperty Name="PlaylistTracks" Relationship="MediaLibraryDAL.FK_playlist_track_track" FromRole="Track" ToRole="PlaylistTrack" />
           <NavigationProperty Name="TrackFiles" Relationship="MediaLibraryDAL.FK_track_file_track" FromRole="Track" ToRole="TrackFile" />
           <NavigationProperty Name="TrackPath" Relationship="MediaLibraryDAL.FK__Track__PathId__05D8E0BE" FromRole="Track" ToRole="TrackPath" />
+          <NavigationProperty Name="Genre" Relationship="MediaLibraryDAL.FK__Track__GenreId__2739D489" FromRole="Track" ToRole="Genre" />
         </EntityType>
         <EntityType Name="TrackFile">
           <Key>
@@ -851,6 +873,18 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
+        <Association Name="FK__Track__GenreId__2739D489">
+          <End Type="MediaLibraryDAL.Genre" Role="Genre" Multiplicity="0..1" />
+          <End Type="MediaLibraryDAL.Track" Role="Track" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Track">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

@@ -42,5 +42,6 @@ namespace MediaLibraryDAL.DbContexts
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TrackFile> TrackFiles { get; set; }
         public virtual TrackPath TrackPath { get; set; }
+        public virtual Genre Genre { get; set; }
     }
 }

@@ -11,12 +11,20 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Album: IDataModel
     {
+        public Album(string title)
+        {
+            Id = default(int);
+            Title = title;
+            ArtistId = default(int);
+            GenreId = default(int);
+        }
+
         public Album(int id, string title)
         {
             Id = id;
             Title = title;
-            ArtistId = -1;
-            GenreId = -1;
+            ArtistId = default(int);
+            GenreId = default(int);
         }
 
         public Album(MediaData data, int? artistId, int? genreId)

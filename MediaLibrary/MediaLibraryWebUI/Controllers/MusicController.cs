@@ -17,6 +17,7 @@ using static MediaLibraryDAL.Enums.TransactionEnums;
 using Newtonsoft.Json;
 using static MediaLibraryWebUI.Enums;
 using MediaLibraryWebUI.Models.Configurations;
+using MediaLibraryWebUI.Models.Data;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -218,6 +219,66 @@ namespace MediaLibraryWebUI.Controllers
                 {
                     configuration.JsonData = JsonConvert.SerializeObject(musicConfiguration);
                     await dataService.Update(configuration);
+                }
+            }
+        }
+
+        public async Task<JsonResult> GetSong(int id)
+        {
+            Track track = await dataService.GetAsync<Track, Album, Artist, Genre>(item => item.Id == id,
+                                                                                  item => item.Album,
+                                                                                  item => item.Artist,
+                                                                                  item => item.Genre);
+            Song song = new Song
+            {
+                Id = track.Id,
+                Title = track.Title,
+                Album = track?.Album.Title,
+                Artist = track?.Artist.Name,
+                Genre = track?.Genre.Name
+            };
+
+            return new JsonResult { Data = song, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public async Task UpdateSong(Song song)
+        {
+            if (ModelState.IsValid)
+            {
+                Track track = await dataService.GetAsync<Track, Album, Artist, Genre>(item => item.Id == song.Id,
+                                                                                      item => item.Album,
+                                                                                      item => item.Artist,
+                                                                                      item => item.Genre);
+                Album album = await dataService.GetAsync<Album>(item => item.Title == song.Album.Trim());
+                Artist artist = await dataService.GetAsync<Artist>(item => item.Name == song.Artist.Trim());
+                Genre genre = await dataService.GetAsync<Genre>(item => item.Name == song.Genre.Trim());
+                
+                if (track != null)
+                {
+                    if (album == null)
+                    {
+                        album = new Album(song.Album.Trim());
+                        await dataService.Insert(album);
+                    }
+
+                    if (artist == null)
+                    {
+                        artist = new Artist(song.Artist.Trim());
+                        await dataService.Insert(artist);
+                    }
+
+                    if (genre == null)
+                    {
+                        genre = new Genre(song.Genre.Trim());
+                        await dataService.Insert(genre);
+                    }
+
+                    track.Title = song.Title;
+                    track.AlbumId = album.Id;
+                    track.ArtistId = artist.Id;
+                    track.GenreId = genre.Id;
+                    await dataService.Update(track);
+                    musicService.ClearData();
                 }
             }
         }

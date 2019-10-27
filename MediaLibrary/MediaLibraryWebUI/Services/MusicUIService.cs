@@ -115,5 +115,12 @@ namespace MediaLibraryWebUI.Services
         {
             return artists.GroupBy(artist => getLabel(artist.Name)).OrderBy(group => group.Key);
         }
+
+        public void ClearData()
+        {
+            songs = null;
+            artists = null;
+            albums = null;
+        }
     }
 }
