@@ -98,5 +98,13 @@
             $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val($(btn).attr('data-item-id'));
             updateConfiguration(() => window.location = $(btn).attr('data-album-url'));
         }
+
+        function refreshClicked() {
+            var success = () => $('#loadingModal').modal('hide');
+
+            $('#loadingModal').modal('show');
+            $.post('@(Url.Action("Refresh", "Music"))', success);
+
+        }
     </script>
 }

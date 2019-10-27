@@ -192,8 +192,11 @@ namespace MediaLibraryWebUI.Controllers
 
             try
             {
+                Task workItem = null;
+
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.RefreshMusic);
-                await controllerService.QueueBackgroundWorkItem(ct => fileService.CheckForMusicUpdates(transaction), transaction);
+                workItem = fileService.CheckForMusicUpdates(transaction).ContinueWith(task => musicService.ClearData());
+                await controllerService.QueueBackgroundWorkItem(ct => workItem, transaction);
             }
             catch (Exception ex)
             {
