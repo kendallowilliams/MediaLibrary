@@ -9,14 +9,43 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body m-0 p-0">
-                <div class="d-none">
-                    <input id="inpFile" type="file" value="" />
+            <div class="modal-body">
+                <div class="custom-file">
+                    @Html.TextBox("SongFile", string.Empty, new { @class = "custom-file-input", type = "file", id = "inpNewSong", accept = ".mp3" })
+                    @Html.Label("inpNewSong", "Choose file...", new { @class = "custom-file-label" })
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" onclick="uploadFile()">Add</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript" defer="defer">
+    $('#modalAddNewSong').on('show.bs.modal', function (e) {
+        $('#inpNewSong').val('');
+    });
+
+    function uploadFile() {
+        var data = new FormData(),
+            success = () => window.location = '@Url.Action("Index", "Music")';
+
+        if ($('#inpNewSong').prop('files').length > 0) {
+            $('#modalAddNewSong').modal('hide');
+            $('#loadingModal').modal('show');
+            data.append("file", $('#inpNewSong').prop('files')[0]);
+            $.ajax({
+                url: '@Url.Action("Upload", "Music")',
+                data: data,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: success
+            });
+        } else {
+            $('#modalAddNewSong').modal('hide');
+        }
+    }
 </script>

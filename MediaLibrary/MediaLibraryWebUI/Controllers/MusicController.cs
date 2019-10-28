@@ -18,6 +18,8 @@ using Newtonsoft.Json;
 using static MediaLibraryWebUI.Enums;
 using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Models.Data;
+using System.Web;
+using System.IO;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -283,6 +285,19 @@ namespace MediaLibraryWebUI.Controllers
                     await dataService.Update(track);
                     musicService.ClearData();
                 }
+            }
+        }
+
+        public async Task Upload(HttpPostedFileBase file)
+        {
+            if (file != null)
+            {
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), "MediaLibrary"),
+                       newFile = Path.Combine(path, file.FileName);
+
+                Directory.CreateDirectory(path);
+                file.SaveAs(newFile);
+                await fileService.ReadMediaFile(newFile, true);
             }
         }
     }

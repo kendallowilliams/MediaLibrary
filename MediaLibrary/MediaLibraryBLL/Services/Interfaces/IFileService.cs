@@ -16,5 +16,7 @@ namespace MediaLibraryBLL.Services.Interfaces
         Task ReadDirectory(Transaction transaction, string path, bool recursive = true, bool copyFiles = false);
 
         Task CheckForMusicUpdates(Transaction transaction);
+
+        Task ReadMediaFile(string path, bool copyFile = false);
     }
 }
