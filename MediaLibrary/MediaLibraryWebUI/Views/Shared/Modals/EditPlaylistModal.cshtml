@@ -9,8 +9,8 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="txtEditPlaylist">Playlist</label>
-                    <input type="text" class="form-control" id="txtPlaylistName" name="playlistName" placeholder="Playlist name">
+                    <label for="txtPlaylistName">Playlist</label>
+                    <input type="text" class="form-control" id="txtPlaylistName" placeholder="Playlist name">
                     <input type="hidden" id="txtPlaylistId" />
                 </div>
             </div>
@@ -29,8 +29,11 @@
     })
 
     function editPlaylist() {
-        $('#modalNewPlaylist').modal('hide');
+        var data = { id = $('#txtPlaylistId').val(), name = $('#txtPlaylistName').val() },
+            success = () => window.location = @Url.Action("Index", "Playlist");
+
+        $('#modalEditPlaylist').modal('hide');
         $('#loadingModal').modal('show');
-        $('#formNewPlaylist').trigger('submit');
+        $.post(@Url.Action("EditPlaylist", "Playlist"), data, success);
     }
 </script>
