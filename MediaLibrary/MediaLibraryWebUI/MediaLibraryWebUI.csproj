@@ -298,6 +298,8 @@
     <Content Include="Views\Shared\Configurations\PlaylistConfiguration.cshtml" />
     <Content Include="Views\Shared\Modals\AddNewSongModal.cshtml" />
     <Content Include="Views\Shared\Modals\EditSongModal.cshtml" />
+    <Content Include="Views\Shared\Modals\AddNewPlaylistModal.cshtml" />
+    <Content Include="Views\Shared\Modals\EditPlaylistModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

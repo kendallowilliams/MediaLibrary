@@ -72,6 +72,14 @@ namespace MediaLibraryWebUI.Controllers
             return await Index();
         }
 
+        public async Task EditPlaylist(int id, string name)
+        {
+            Playlist playlist = await dataService.GetAsync<Playlist>(item => item.Id == id);
+
+            playlist.Name = name;
+            await dataService.Update(playlist);
+        }
+
         public async Task<ActionResult> Get(int id)
         {
             playlistViewModel.SelectedPlaylist = await dataService.GetAsync<Playlist, IEnumerable<Track>>(item => item.Id == id, 

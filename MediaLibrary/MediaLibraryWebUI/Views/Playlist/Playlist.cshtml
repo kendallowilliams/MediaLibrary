@@ -7,7 +7,10 @@
 <h2>@(Model.SelectedPlaylist.Name) playlist</h2>
 <div>
     <button class="btn btn-outline-secondary" onclick="backClicked()" data-toggle="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
-    <a class="btn btn-outline-secondary" href="" data-toggle="tooltip" title="Edit playlist"><i class="fa fa-edit"></i></a>
+    <button class="btn btn-outline-secondary" title="Edit playlist" data-toggle="modal" data-target="#modalEditPlaylist" data-item-id="@(Model.SelectedPlaylist.Id)"
+            data-item-name="@(Model.SelectedPlaylist.Name)">
+        <i class="fa fa-edit"></i>
+    </button>
     <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", new { Model.SelectedPlaylist.Id})"
        data-toggle="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
     <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
@@ -60,6 +63,7 @@
 
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
 @Html.Partial("~/Views/Shared/Configurations/PlaylistConfiguration.cshtml", Model.Configuration)
+@Html.Partial("~/Views/Shared/Configurations/EditPlaylistModal.cshtml")
 
 @section scripts {
     <script type="text/javascript" defer="defer">
