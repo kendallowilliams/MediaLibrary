@@ -29,11 +29,11 @@
     })
 
     function editPlaylist() {
-        var data = { id = $('#txtPlaylistId').val(), name = $('#txtPlaylistName').val() },
-            success = () => window.location = @Url.Action("Index", "Playlist");
+        var data = { id: $('#txtPlaylistId').val(), name: $('#txtPlaylistName').val() },
+            success = () => window.location = '@Url.Action("Index", "Playlist")';
 
         $('#modalEditPlaylist').modal('hide');
         $('#loadingModal').modal('show');
-        $.post(@Url.Action("EditPlaylist", "Playlist"), data, success);
+        $.post('@Url.Action("EditPlaylist", "Playlist")', data, success);
     }
 </script>
