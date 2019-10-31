@@ -309,6 +309,7 @@ namespace MediaLibraryWebUI.Controllers
                 Directory.CreateDirectory(path);
                 file.SaveAs(newFile);
                 await fileService.ReadMediaFile(newFile, true);
+                musicService.ClearData();
             }
         }
     }
