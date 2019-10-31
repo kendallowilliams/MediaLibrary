@@ -6,8 +6,8 @@
 
 <h2>Playlists</h2>
 <div>
-    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPlaylist"><i class="fa fa-plus" data-toggle="tooltip" title="Add playlist"></i></button>
-    <div class="btn-group" role="group">
+    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPlaylist" data-tooltip="tooltip" title="Add playlist"><i class="fa fa-plus"></i></button>
+    <div class="btn-group" role="group" title="Sort by" data-tooltip="tooltip">
         <button id="btnGroupPlaylistSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort by
         </button>
@@ -46,11 +46,11 @@
                                     </div>
                                     <div>
                                         <button class="btn btn-outline-secondary" onclick="playlistClicked(this)" data-playlist-url="@(Url.Action("Get", "Playlist", new { playlist.Id }))" data-item-id="@(playlist.Id)"
-                                                data-toggle="tooltip" title="View playlist">
+                                                data-tooltip="tooltip" title="View playlist">
                                             <i class="fa fa-list"></i>
                                         </button>
                                         <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
-                                                data-toggle="tooltip" title="Delete playlist" data-delete-type="playlist">
+                                                data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </div>

@@ -13,15 +13,16 @@
                 </div>
                 <div>
                     <button type="button" class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { song.Id })" onclick="play(this)"
-                            data-toggle="tooltip" title="Play">
+                            data-tooltip="tooltip" title="Play">
                         <i class="fa fa-play"></i>
                     </button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalEditSong" data-item-id="@(song.Id)">
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalEditSong" data-item-id="@(song.Id)" data-tooltip="tooltip"
+                            title="Edit">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
-                            data-toggle="modal" data-target="#modalAddToPlaylist">
-                        <i class="fa fa-plus" data-toggle="tooltip" title="Add to playlist"></i>
+                            data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist">
+                        <i class="fa fa-plus"></i>
                     </button>
                 </div>
             </div>

@@ -25,7 +25,9 @@
             url = $btn.attr('data-group-url');
 
         if (url) {
-            $($btn.attr('data-target')).load(url);
+            $($btn.attr('data-target')).load(url, function () {
+                $($btn.attr('data-target') + ' [data-tooltip="tooltip"]').tooltip();
+            });
             $btn.attr('data-group-url', '');
         }
     });

@@ -28,13 +28,13 @@
                                     <span class="text-muted">@(txtAlbums)</span>
                                 </div>
                                 <div>
-                                    <button class="btn btn-outline-secondary" data-artist-url="@(Url.Action("GetArtist", "Music", new { artist.Id }))" data-toggle="tooltip" title="View artist"
+                                    <button class="btn btn-outline-secondary" data-artist-url="@(Url.Action("GetArtist", "Music", new { artist.Id }))" data-tooltip="tooltip" title="View artist"
                                             data-item-id="@(artist.Id)" onclick="artistClicked(this)">
                                         <i class="fa fa-list"></i>
                                     </button>
                                     <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddArtistToPlaylist", "Music"))" data-item-id="@(artist.Id)"
-                                            data-toggle="modal" data-target="#modalAddToPlaylist">
-                                        <i class="fa fa-plus" data-toggle="tooltip" title="Add to playlist"></i>
+                                            data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist">
+                                        <i class="fa fa-plus"></i>
                                     </button>
                                 </div>
                             </div>

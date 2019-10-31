@@ -6,8 +6,8 @@
 
 <h2>Podcasts</h2>
 <div>
-    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPodcast"><i class="fa fa-plus" data-toggle="tooltip" title="Add podcast"></i></button>
-    <div class="btn-group" role="group" data-toggle="tooltip" title="">
+    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPodcast" data-tooltip="tooltip" title="Add podcast"><i class="fa fa-plus"></i></button>
+    <div class="btn-group" role="group" data-tooltip="tooltip" title="Sort by">
         <button id="btnGroupPodcastSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort by
         </button>
@@ -45,16 +45,16 @@
                                         <span>@(podcast.PodcastItems.Count()) episode@(podcast.PodcastItems.Count() == 1 ? string.Empty : "s")</span>
                                     </div>
                                     <div>
-                                        <button class="btn btn-outline-secondary" data-toggle="tooltip" title="@(podcast.Description)" data-placement="left"
+                                        <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="@(podcast.Description)" data-placement="left"
                                                 data-html="true">
                                             <i class="fa fa-info-circle"></i>
                                         </button>
                                         <buton class="btn btn-outline-secondary" onclick="podcastClicked(this)" data-podcast-url="@(Url.Action("Get", "Podcast", new { podcast.Id }))" data-item-id="@(podcast.Id)"
-                                               data-toggle="tooltip" title="View podcast">
+                                               data-tooltip="tooltip" title="View podcast">
                                             <i class="fa fa-list"></i>
                                         </buton>
                                         <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
-                                                data-toggle="tooltip" title="Delete podcast" data-delete-type="podcast">
+                                                data-tooltip="tooltip" title="Delete podcast" data-delete-type="podcast">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </div>

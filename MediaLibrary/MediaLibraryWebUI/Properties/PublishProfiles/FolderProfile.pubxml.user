@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\KOW\Source\Repos\MusicLibraryRefactor\MediaLibrary\MediaLibraryWebUI\bin\Release\Publish</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\KOW\Source\Repos\kendallowilliams\MediaLibrary\MediaLibrary\MediaLibraryWebUI\bin\Release\Publish</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -16,7 +16,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/ConfigureAwait.dll">
-      <publishTime>10/08/2018 19:54:02</publishTime>
+      <publishTime>06/24/2018 04:35:26</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>10/23/2017 13:15:18</publishTime>
@@ -25,28 +25,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/23/2017 13:15:20</publishTime>
     </File>
     <File Include="bin/MediaLibraryBLL.dll">
-      <publishTime>09/24/2019 23:04:00</publishTime>
+      <publishTime>10/27/2019 22:44:59</publishTime>
     </File>
     <File Include="bin/MediaLibraryBLL.dll.config">
-      <publishTime>09/15/2019 20:45:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="bin/MediaLibraryBLL.pdb">
-      <publishTime>09/24/2019 23:04:00</publishTime>
+      <publishTime>10/27/2019 22:44:59</publishTime>
     </File>
     <File Include="bin/MediaLibraryDAL.dll">
-      <publishTime>09/24/2019 23:04:00</publishTime>
+      <publishTime>10/27/2019 22:44:58</publishTime>
     </File>
     <File Include="bin/MediaLibraryDAL.dll.config">
-      <publishTime>09/15/2019 23:28:48</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="bin/MediaLibraryDAL.pdb">
-      <publishTime>09/24/2019 23:04:00</publishTime>
+      <publishTime>10/27/2019 22:44:58</publishTime>
     </File>
     <File Include="bin/MediaLibraryWebUI.dll">
-      <publishTime>09/24/2019 23:04:03</publishTime>
+      <publishTime>10/30/2019 21:46:33</publishTime>
     </File>
     <File Include="bin/MediaLibraryWebUI.pdb">
-      <publishTime>09/24/2019 23:04:03</publishTime>
+      <publishTime>10/30/2019 21:46:33</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/05/2018 16:10:50</publishTime>
@@ -238,7 +238,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/28/2018 13:04:24</publishTime>
     </File>
     <File Include="bin/System.Xml.ReaderWriter.dll">
-      <publishTime>12/11/2017 15:31:30</publishTime>
+      <publishTime>11/05/2016 04:57:36</publishTime>
     </File>
     <File Include="bin/taglib-sharp.dll">
       <publishTime>07/05/2012 13:32:12</publishTime>
@@ -247,40 +247,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/23/2014 13:57:34</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.css">
-      <publishTime>09/15/2019 21:51:58</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.css.map">
-      <publishTime>09/15/2019 21:51:58</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.min.css">
-      <publishTime>09/15/2019 21:51:58</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap-grid.min.css.map">
-      <publishTime>09/15/2019 21:51:58</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap-reboot.css">
-      <publishTime>09/15/2019 21:51:58</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap-reboot.css.map">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap-reboot.min.css">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap-reboot.min.css.map">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap.css.map">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css.map">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/font-awesome.css">
       <publishTime>09/22/2019 19:01:14</publishTime>
@@ -289,16 +289,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/22/2019 19:01:14</publishTime>
     </File>
     <File Include="Content/images/audio.png">
-      <publishTime>09/22/2019 19:01:14</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/images/logo.png">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>09/22/2019 19:01:14</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="FodyWeavers.xml">
-      <publishTime>09/22/2019 02:16:34</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="fonts/fontawesome-webfont.eot">
       <publishTime>09/22/2019 19:01:14</publishTime>
@@ -319,172 +322,352 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/22/2019 19:01:14</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>09/15/2019 21:07:58</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/all.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/all.min.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/brands.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/brands.min.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/fontawesome.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/fontawesome.min.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/regular.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/regular.min.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/solid.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/solid.min.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/svg-with-js.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/svg-with-js.min.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/v4-shims.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/css/v4-shims.min.css">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/all.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/all.min.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/brands.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/brands.min.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/conflict-detection.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/conflict-detection.min.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/fontawesome.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/fontawesome.min.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/regular.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/regular.min.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/solid.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/solid.min.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/v4-shims.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/js/v4-shims.min.js">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/sprites/brands.svg">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/sprites/regular.svg">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/sprites/solid.svg">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-brands-400.eot">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-brands-400.svg">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-brands-400.ttf">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-brands-400.woff">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-brands-400.woff2">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-regular-400.eot">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-regular-400.svg">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-regular-400.ttf">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-regular-400.woff">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-regular-400.woff2">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-solid-900.eot">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-solid-900.svg">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-solid-900.ttf">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-solid-900.woff">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="lib/font-awesome/webfonts/fa-solid-900.woff2">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="libman.json">
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/bootstrap.bundle.js">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/bootstrap.bundle.js.map">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/bootstrap.bundle.min.js">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/bootstrap.bundle.min.js.map">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js.map">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js.map">
-      <publishTime>09/15/2019 21:51:57</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.js">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.js.map">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.min.js">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.min.js.map">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/esm/popper.js">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/esm/popper.js.map">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/esm/popper.min.js">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/esm/popper.min.js.map">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.js">
-      <publishTime>09/15/2019 21:51:52</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.min.js">
-      <publishTime>09/15/2019 21:51:52</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.min.map">
-      <publishTime>09/15/2019 21:51:52</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.slim.js">
-      <publishTime>09/15/2019 21:51:52</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.slim.min.js">
-      <publishTime>09/15/2019 21:51:52</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.slim.min.map">
-      <publishTime>09/15/2019 21:51:52</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.8.3.js">
-      <publishTime>09/15/2019 21:51:55</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/popper-utils.js">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/popper-utils.js.map">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/popper-utils.min.js">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/popper-utils.min.js.map">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/popper.js">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/popper.js.map">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/popper.min.js">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/popper.min.js.map">
-      <publishTime>09/15/2019 21:52:10</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/README.md">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.js">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.js.map">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.min.js">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.min.js.map">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper.js">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper.js.map">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper.min.js">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper.min.js.map">
-      <publishTime>09/15/2019 21:52:09</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>09/23/2019 20:21:35</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Music/Album.cshtml">
-      <publishTime>09/24/2019 22:42:58</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Music/Albums.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Music/Artist.cshtml">
-      <publishTime>09/24/2019 22:43:14</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Music/Artists.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Music/Index.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Music/SongGroup.cshtml">
+      <publishTime>10/30/2019 20:43:27</publishTime>
     </File>
     <File Include="Views/Music/Songs.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/30/2019 21:41:12</publishTime>
+    </File>
+    <File Include="Views/Player/Index.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Playlist/Index.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/29/2019 20:06:37</publishTime>
     </File>
     <File Include="Views/Playlist/Playlist.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/29/2019 20:06:37</publishTime>
     </File>
     <File Include="Views/Podcast/Index.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Podcast/Podcast.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Shared/Configurations/MusicConfiguration.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Shared/Configurations/PlaylistConfiguration.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Shared/Configurations/PodcastConfiguration.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Shared/Modals/AddNewPlaylistModal.cshtml">
+      <publishTime>10/29/2019 20:06:37</publishTime>
+    </File>
+    <File Include="Views/Shared/Modals/AddNewSongModal.cshtml">
+      <publishTime>10/27/2019 22:02:24</publishTime>
+    </File>
+    <File Include="Views/Shared/Modals/AddToPlaylistModal.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Shared/Modals/DeleteModal.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Shared/Modals/EditPlaylistModal.cshtml">
+      <publishTime>10/29/2019 20:49:06</publishTime>
+    </File>
+    <File Include="Views/Shared/Modals/EditSongModal.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Shared/Modals/LoadingModal.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>09/24/2019 22:30:06</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
+    </File>
+    <File Include="Views/Shared/_PlayerLayout.cshtml">
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/web.config">
-      <publishTime>09/17/2019 20:55:52</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
-      <publishTime>09/15/2019 21:14:22</publishTime>
+      <publishTime>10/27/2019 19:46:23</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/24/2019 23:04:03</publishTime>
+      <publishTime>10/27/2019 22:45:03</publishTime>
     </File>
   </ItemGroup>
 </Project>

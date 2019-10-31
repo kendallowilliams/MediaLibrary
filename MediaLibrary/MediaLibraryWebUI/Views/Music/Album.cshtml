@@ -6,7 +6,7 @@
 
 <h2>@(Model.SelectedAlbum.Title)</h2>
 <div>
-    <button class="btn btn-outline-secondary" onclick="backClicked()" data-toggle="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
+    <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
 </div>
 <hr />
 <div class="card">
@@ -30,12 +30,12 @@
                             </div>
                             <div>
                                 <button class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { song.Id })" onclick="play(this)"
-                                        data-toggle="tooltip" title="Play">
+                                        data-tooltip="tooltip" title="Play">
                                     <i class="fa fa-play"></i>
                                 </button>
                                 <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
-                                        data-toggle="modal" data-target="#modalAddToPlaylist">
-                                    <i class="fa fa-plus" data-toggle="tooltip" title="Add to playlist"></i>
+                                        data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist">
+                                    <i class="fa fa-plus"></i>
                                 </button>
                             </div>
                         </div>

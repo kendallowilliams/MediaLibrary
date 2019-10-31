@@ -7,22 +7,25 @@
 <h2>Music</h2>
 <div class="nav d-block" id="musicTab" role="tablist">
     <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Albums ? "active" : "")" id="albums-tab" data-toggle="tab" href="#albums"
-            role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTab.Albums))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Albums))">
+            role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTab.Albums))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Albums))"
+            data-tooltip="tooltip">
         <i class="fa fa-compact-disc"></i>
     </button>
     <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Artists ? "active" : "")" id="artists-tab" href="#artists" data-toggle="tab"
-            role="tab" aria-controls="artists" aria-selected="false" title="@(nameof(Enums.MusicTab.Artists))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Artists))">
+            role="tab" aria-controls="artists" aria-selected="false" title="@(nameof(Enums.MusicTab.Artists))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Artists))"
+            data-tooltip="tooltip">
         <i class="fa fa-user"></i>
     </button>
     <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTab.Songs ? "active" : "")" id="songs-tab" href="#songs" data-toggle="tab"
-            role="tab" aria-controls="songs" aria-selected="false" title="@(nameof(Enums.MusicTab.Songs))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Songs))">
+            role="tab" aria-controls="songs" aria-selected="false" title="@(nameof(Enums.MusicTab.Songs))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTab.Songs))"
+            data-tooltip="tooltip">
         <i class="fa fa-music"></i>
     </button>
     <div class="float-right">
-        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalAddNewSong">
-            <i class="fa fa-plus" data-toggle="tooltip" title="Add new song"></i>
+        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalAddNewSong" data-tooltip="tooltip" title="Add new song">
+            <i class="fa fa-plus"></i>
         </button>
-        <button class="btn btn-outline-secondary" onclick="refreshClicked()"><i class="fa fa-sync"></i></button>
+        <button class="btn btn-outline-secondary" onclick="refreshClicked()" data-tooltip="tooltip" title="Check for new music"><i class="fa fa-sync"></i></button>
         @Html.DropDownListFor(x => x.Configuration.SelectedAlbumSort,
                               Model.AlbumSortItems,
                               null,
@@ -30,7 +33,8 @@
                                   style = "width: 135px",
                                   title = "Sort by",
                                   data_sort_tab = "albums-tab",
-                                  onchange = $"sortChanged('{nameof(Model.Configuration.SelectedAlbumSort)}', this)"
+                                  onchange = $"sortChanged('{nameof(Model.Configuration.SelectedAlbumSort)}', this)",
+                                  data_tooltip = "tooltip"
                               })
         @Html.DropDownListFor(x => x.Configuration.SelectedArtistSort,
                               Model.ArtistSortItems,
@@ -39,7 +43,8 @@
                                   style = "width: 135px",
                                   title = "Sort by",
                                   data_sort_tab = "artists-tab",
-                                  onchange = $"sortChanged('{nameof(Model.Configuration.SelectedArtistSort)}', this)"
+                                  onchange = $"sortChanged('{nameof(Model.Configuration.SelectedArtistSort)}', this)",
+                                  data_tooltip = "tooltip"
                               })
         @Html.DropDownListFor(x => x.Configuration.SelectedSongSort,
                               Model.SongSortItems,
@@ -48,7 +53,8 @@
                                   style = "width: 135px",
                                   title = "Sort by",
                                   data_sort_tab = "songs-tab",
-                                  onchange = $"sortChanged('{nameof(Model.Configuration.SelectedSongSort)}', this)"
+                                  onchange = $"sortChanged('{nameof(Model.Configuration.SelectedSongSort)}', this)",
+                                  data_tooltip = "tooltip"
                               })
     </div>
 </div>
