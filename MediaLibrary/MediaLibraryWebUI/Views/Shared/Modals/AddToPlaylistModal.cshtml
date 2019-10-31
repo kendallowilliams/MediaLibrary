@@ -17,7 +17,7 @@
                 <ul class="list-group list-group-flush">
                     @foreach (var playlist in Model.Playlists)
                     {
-                        <li data-playlist-item="enabled" data-playlist-id="@(playlist.Id)" class="list-group-item list-group-item-action">@(playlist.Name)</li>
+                        <li data-playlist-item="enabled" data-playlist-id="@(playlist.Id)" class="list-group-item list-group-item-action" data-tooltip="tooltip" title="@(playlist.Name)">@(playlist.Name)</li>
                     }
                 </ul>
             </div>
