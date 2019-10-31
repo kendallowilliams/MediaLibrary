@@ -71,7 +71,18 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> RemovePodcast(int id)
         {
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcasts));
+
             await dataService.Delete<Podcast>(id);
+
+            if (configuration != null)
+            {
+                PodcastConfiguration podcastConfiguration = JsonConvert.DeserializeObject<PodcastConfiguration>(configuration.JsonData);
+
+                podcastConfiguration.SelectedPodcastPage = PodcastPages.Index;
+                configuration.JsonData = JsonConvert.SerializeObject(podcastConfiguration);
+                await dataService.Update(configuration);
+            }
 
             return await Index();
         }

@@ -77,8 +77,18 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> RemovePlaylist(int id)
         {
-            await dataService.DeleteAll<PlaylistTrack>(track => track.PlaylistId == id);
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlists));
+            
             await dataService.Delete<Playlist>(id);
+
+            if (configuration != null)
+            {
+                PlaylistConfiguration playlistConfiguration = JsonConvert.DeserializeObject<PlaylistConfiguration>(configuration.JsonData);
+
+                playlistConfiguration.SelectedPlaylistPage = PlaylistPages.Index;
+                configuration.JsonData = JsonConvert.SerializeObject(playlistConfiguration);
+                await dataService.Update(configuration);
+            }
 
             return await Index();
         }
