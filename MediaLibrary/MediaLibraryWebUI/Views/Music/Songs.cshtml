@@ -21,7 +21,7 @@
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
                                 <div class="media-body">
                                     <h5 class="mt-0">@(song.Title)</h5>
-                                    <span>@(Model.Albums.FirstOrDefault(album => album.Id == song.AlbumId)?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(Model.Artists.FirstOrDefault(artist => artist.Id == song.ArtistId)?.Name)</span>
+                                    <span>@(song.Album?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</span>
                                 </div>
                                 <div>
                                     <button type="button" class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { song.Id })" onclick="play(this)"
