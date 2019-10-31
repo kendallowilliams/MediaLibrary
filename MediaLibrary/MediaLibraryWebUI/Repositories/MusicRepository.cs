@@ -26,6 +26,7 @@ namespace MediaLibraryWebUI.Repositories
             yield return new ListItem<object, SongSort>(null, "A to Z", SongSort.AtoZ);
             yield return new ListItem<object, SongSort>(null, nameof(SongSort.Album), SongSort.Album);
             yield return new ListItem<object, SongSort>(null, nameof(SongSort.Artist), SongSort.Artist);
+            yield return new ListItem<object, SongSort>(null, nameof(SongSort.Genre), SongSort.Genre);
         }
     }
 }

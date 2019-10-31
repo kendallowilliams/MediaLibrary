@@ -47,7 +47,10 @@ namespace MediaLibraryWebUI.Services
         {
             IEnumerable<IGrouping<string, Track>> groups = null;
 
-            if (songs == null) /*then*/ songs = (await dataService.GetList<Track, Album, Artist>(null, song => song.Album, song => song.Artist))?.OrderBy(song => song.Title);
+            if (songs == null) /*then*/ songs = (await dataService.GetList<Track, Album, Artist, Genre>(null, 
+                song => song.Album, 
+                song => song.Artist,
+                song => song.Genre))?.OrderBy(song => song.Title);
 
             switch(sort)
             {
@@ -59,6 +62,9 @@ namespace MediaLibraryWebUI.Services
                     break;
                 case SongSort.DateAdded:
                     groups = songs.GroupBy(song => song.CreateDate.ToString("yyyy-MM-dd")).OrderByDescending(group => group.Key);
+                    break;
+                case SongSort.Genre:
+                    groups = songs.GroupBy(song => song.Genre?.Name ?? "Unknown Genre").OrderBy(group => group.Key);
                     break;
                 case SongSort.AtoZ:
                 default:
