@@ -56,7 +56,7 @@ namespace MediaLibraryWebUI.Controllers
 
             if (configuration != null)
             {
-                musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData);
+                musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             }
 
             if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Album)
@@ -131,6 +131,9 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> GetAlbum(int id)
         {
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
+
+            musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             musicViewModel.SelectedAlbum = await dataService.GetAsync<Album, IEnumerable<Track>>(album => album.Id == id, album => album.Tracks);
 
             return View("Album", musicViewModel);
@@ -138,6 +141,9 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> GetArtist(int id)
         {
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
+
+            musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             musicViewModel.SelectedArtist = await dataService.GetAsync<Artist, IEnumerable<Album>>(artist => artist.Id == id, artist => artist.Albums);
 
             return View("Artist", musicViewModel);
