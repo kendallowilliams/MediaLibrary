@@ -56,12 +56,23 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> AddPlaylist(string playlistName)
         {
-            Playlist playlist = new Playlist(playlistName);
+            ActionResult result = null;
 
-            await dataService.Insert(playlist);
-            playlistViewModel.SelectedPlaylist = playlist;
+            if (!string.IsNullOrWhiteSpace(playlistName))
+            {
+                Playlist playlist = new Playlist(playlistName);
 
-            return View("Playlist", playlistViewModel);
+                await dataService.Insert(playlist);
+                playlistViewModel.SelectedPlaylist = playlist;
+
+                result = View("Playlist", playlistViewModel);
+            }
+            else
+            {
+                result = await Index();
+            }
+
+            return result;
         }
 
         public async Task<ActionResult> RemovePlaylist(int id)
