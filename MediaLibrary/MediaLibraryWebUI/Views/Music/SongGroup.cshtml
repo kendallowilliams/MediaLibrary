@@ -1,0 +1,30 @@
+﻿@using MediaLibraryDAL.DbContexts
+@model IEnumerable<Track>
+
+<ul class="list-group list-group-flush">
+    @foreach (var song in Model)
+    {
+        <li class="list-group-item">
+            <div class="media">
+                <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
+                <div class="media-body">
+                    <h5 class="mt-0">@(song.Title)</h5>
+                    <span>@(song.Album?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</span>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { song.Id })" onclick="play(this)"
+                            data-toggle="tooltip" title="Play">
+                        <i class="fa fa-play"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalEditSong" data-item-id="@(song.Id)">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
+                            data-toggle="modal" data-target="#modalAddToPlaylist">
+                        <i class="fa fa-plus" data-toggle="tooltip" title="Add to playlist"></i>
+                    </button>
+                </div>
+            </div>
+        </li>
+    }
+</ul>

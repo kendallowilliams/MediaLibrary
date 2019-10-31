@@ -6,41 +6,29 @@
         <div class="card">
             <div class="card-header" id="heading-songs-@(item.Index)">
                 <h5 class="mb-0">
-                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-songs-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-songs-@(item.Index)">
+                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-songs-@(item.Index)" aria-expanded="false" 
+                            aria-controls="collapse-songs-@(item.Index)" data-group-url="@(Url.Action("GetSongGroup", "Music", new { item.Group.Key }))">
                         @(item.Group.Key)
                     </button>
                 </h5>
             </div>
 
-            <div id="collapse-songs-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-songs-@(item.Index)" data-parent="#accordion-songs">
-                <ul class="list-group list-group-flush">
-                    @foreach (var song in item.Group)
-                    {
-                        <li class="list-group-item">
-                            <div class="media">
-                                <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
-                                <div class="media-body">
-                                    <h5 class="mt-0">@(song.Title)</h5>
-                                    <span>@(song.Album?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</span>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { song.Id })" onclick="play(this)"
-                                            data-toggle="tooltip" title="Play">
-                                        <i class="fa fa-play"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalEditSong" data-item-id="@(song.Id)">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
-                                            data-toggle="modal" data-target="#modalAddToPlaylist">
-                                        <i class="fa fa-plus" data-toggle="tooltip" title="Add to playlist"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    }
-                </ul>
+            <div id="collapse-songs-@(item.Index)" class="collapse" aria-labelledby="heading-songs-@(item.Index)" data-parent="#accordion-songs">
             </div>
         </div>
     }
 </div>
+
+<script type="text/javascript" defer="defer">
+    $('[data-group-url]').on('click', function () {
+        var $btn = $(this),
+            url = $btn.attr('data-group-url');
+
+        if (url) {
+            $($btn.attr('data-target')).load(url);
+            $btn.attr('data-group-url', '');
+        }
+    });
+
+    $('[data-group-url][data-target="#collapse-songs-0"').trigger('click');
+</script>

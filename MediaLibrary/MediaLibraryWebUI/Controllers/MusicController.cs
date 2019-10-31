@@ -82,6 +82,11 @@ namespace MediaLibraryWebUI.Controllers
             return result;
         }
 
+        public ActionResult GetSongGroup(string key)
+        {
+            return PartialView("~/Views/Music/SongGroup.cshtml", musicViewModel.SongGroups.FirstOrDefault(group => group.Key == key));
+        }
+
         [AllowAnonymous]
         public async Task<ActionResult> File(int id)
         {
