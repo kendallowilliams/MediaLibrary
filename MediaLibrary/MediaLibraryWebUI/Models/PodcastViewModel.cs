@@ -19,6 +19,7 @@ namespace MediaLibraryWebUI.Models
             this.HomeViewModel = homeViewModel;
             PodcastItems = Enumerable.Empty<PodcastItem>();
             Configuration = new PodcastConfiguration();
+            DownloadedEpisodes = Enumerable.Empty<int>();
         }
 
         public IEnumerable<IGrouping<string, Podcast>> PodcastGroups { get; set; }
@@ -26,5 +27,6 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<PodcastItem> PodcastItems { get; set; }
         public HomeViewModel HomeViewModel { get; }
         public PodcastConfiguration Configuration { get; set; }
+        public IEnumerable<int> DownloadedEpisodes { get; set; }
     }
 }

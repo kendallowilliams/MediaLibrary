@@ -129,16 +129,23 @@ namespace MediaLibraryBLL.Services
 
             try
             {
-                byte[] data = null;
                 string fileName = string.Empty;
                 PodcastItem podcastItem = null;
 
                 podcastItem = await dataService.GetAsync<PodcastItem>(item => item.Id == podcastItemId);
-                data = await webService.DownloadData(podcastItem.Url);
-                fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
-                podcastFile = new PodcastFile(data, MimeMapping.GetMimeMapping(fileName), podcastItem.PodcastId, podcastItem.Id);
-                await dataService.Insert(podcastFile);
-                await transactionService.UpdateTransactionCompleted(transaction);
+
+                if (await dataService.Count<PodcastFile>(item => item.PodcastItemId == podcastItemId) == 0)
+                {
+                    fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
+                    podcastFile = new PodcastFile(new byte[0], MimeMapping.GetMimeMapping(fileName), podcastItem.PodcastId, podcastItem.Id);
+                    await dataService.Insert(podcastFile);
+                    podcastFile.Data = await webService.DownloadData(podcastItem.Url);
+                    await dataService.Update(podcastFile);
+                }
+                else
+                {
+                    await transactionService.UpdateTransactionCompleted(transaction, "Episode already downloaded.");
+                }
             }
             catch(Exception ex)
             {

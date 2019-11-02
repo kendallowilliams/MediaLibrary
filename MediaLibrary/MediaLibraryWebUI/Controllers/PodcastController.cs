@@ -12,9 +12,11 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
@@ -26,15 +28,19 @@ namespace MediaLibraryWebUI.Controllers
         private readonly IDataService dataService;
         private readonly PodcastViewModel podcastViewModel;
         private readonly IPodcastService podcastService;
+        private readonly IControllerService controllerService;
+        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
         public PodcastController(IPodcastUIService podcastUIService, IDataService dataService, PodcastViewModel podcastViewModel,
-                                 IPodcastService podcastService)
+                                 IPodcastService podcastService, IControllerService controllerService, ITransactionService transactionService)
         {
             this.podcastUIService = podcastUIService;
             this.dataService = dataService;
             this.podcastViewModel = podcastViewModel;
             this.podcastService = podcastService;
+            this.controllerService = controllerService;
+            this.transactionService = transactionService;
         }
 
         public async Task<ActionResult> Index()
@@ -92,11 +98,19 @@ namespace MediaLibraryWebUI.Controllers
             return View("Podcast", podcastViewModel);
         }
 
-        public async Task<ActionResult> DownloadPodcastItem(int id)
+        public async Task DownloadPodcastItem(int id)
         {
-            await podcastService.AddPodcastFile(null, id);
+            Transaction transaction = new Transaction(TransactionTypes.DownloadEpisode);
 
-            return View("Podcast", podcastViewModel);
+            try
+            {
+                await dataService.Insert(transaction);
+                await controllerService.QueueBackgroundWorkItem(ct => podcastService.AddPodcastFile(transaction, id), transaction);
+            }
+            catch(Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
 
         public async Task RefreshPodcast(int id)

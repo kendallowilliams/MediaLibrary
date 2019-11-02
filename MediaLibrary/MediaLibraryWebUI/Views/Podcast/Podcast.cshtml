@@ -8,7 +8,7 @@
 <div>
     <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
     <button class="btn btn-outline-secondary" onclick="refreshClicked()" data-tooltip="tooltip" title="Refresh podcast"><i class="fa fa-sync"></i></button>
-    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))" 
+    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))"
             data-tooltip="tooltip" title="Delete podcast" data-refresh-action="@Url.Action("Index", "Podcast")" data-delete-type="podcast">
         <i class="fa fa-trash"></i>
     </button>
@@ -44,8 +44,11 @@
                                         data-tooltip="tooltip" title="Play">
                                     <i class="fa fa-play"></i>
                                 </button>
-                                <a class="btn btn-outline-secondary" href="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
-                                   data-tooltip="tooltip" title="Download episode"><i class="fa fa-download"></i></a>
+                                <button class="btn btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
+                                        data-tooltip="tooltip" title="Download episode" onclick="downloadClicked(this)" 
+                                        @(Model.DownloadedEpisodes.Contains(item.Id) ? "disabled=\"disabled\"" : string.Empty)>
+                                    <i class="fa fa-download"></i>
+                                </button>
                             </div>
                         </div>
                     </li>
@@ -76,6 +79,12 @@
             $('#loadingModal').modal('show');
             $.post('@(Url.Action("RefreshPodcast","Podcast"))', { id: @(Model.SelectedPodcast.Id) }, success);
 
+        }
+
+        function downloadClicked(btn) {
+            var $btn = $(btn);
+
+            $.get($btn.attr('data-download-action'));
         }
     </script>
 }
