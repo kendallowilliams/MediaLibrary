@@ -75,7 +75,7 @@ namespace MediaLibraryWebUI.Controllers
             return result;
         }
 
-        public async Task<ActionResult> RemovePlaylist(int id)
+        public async Task RemovePlaylist(int id)
         {
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlists));
             
@@ -89,8 +89,6 @@ namespace MediaLibraryWebUI.Controllers
                 configuration.JsonData = JsonConvert.SerializeObject(playlistConfiguration);
                 await dataService.Update(configuration);
             }
-
-            return await Index();
         }
 
         public async Task EditPlaylist(int id, string name)

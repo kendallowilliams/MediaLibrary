@@ -11,8 +11,8 @@
                 Are you sure you want to delete?
             </div>
             <div class="modal-footer">
-                <a id="btnDeleteItem" class="btn btn-outline-primary" data-tooltip="tooltip" title="Delete">Yes</a>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-tooltip="tooltip" title="Cancel">No</button>
+                <button id="btnDeleteItem" class="btn btn-outline-danger" data-tooltip="tooltip" title="Delete">Delete</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-tooltip="tooltip" title="Cancel">Cancel</button>
             </div>
         </div>
     </div>
@@ -21,11 +21,21 @@
 <script type="text/javascript" defer="defer">
     $('[data-delete="enabled"]').click(function (e) {
         var url = $(e.delegateTarget).attr('data-delete-action'),
+            refreshUrl = $(e.delegateTarget).attr('data-refresh-action'),
             $button = $('#btnDeleteItem'),
             type = $(e.delegateTarget).attr('data-delete-type');
 
         $('#modalDeleteItemTitle').text('Delete ' + type);
-        $button.prop('href', url);
+        $button.attr('data-delete-url', url);
+        $button.attr('data-refresh-url', refreshUrl);
         $('#modalDeleteItem').modal('show');
+    });
+
+    $('#btnDeleteItem').on('click', function () {
+        var $btn = $(this);
+
+        $.get($btn.attr('data-delete-url'), function () {
+            window.location = $btn.attr('data-refresh-url');
+        });
     });
 </script>

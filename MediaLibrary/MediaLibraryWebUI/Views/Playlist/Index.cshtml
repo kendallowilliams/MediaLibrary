@@ -50,7 +50,7 @@
                                             <i class="fa fa-list"></i>
                                         </button>
                                         <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
-                                                data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist">
+                                                data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-action="@Url.Action("Index", "Playlist")">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </div>

@@ -8,8 +8,8 @@
 <div>
     <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
     <button class="btn btn-outline-secondary" onclick="refreshClicked()" data-tooltip="tooltip" title="Refresh podcast"><i class="fa fa-sync"></i></button>
-    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))" data-tooltip="tooltip" title="Delete podcast"
-            data-delete-type="podcast">
+    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))" 
+            data-tooltip="tooltip" title="Delete podcast" data-refresh-action="@Url.Action("Index", "Podcast")" data-delete-type="podcast">
         <i class="fa fa-trash"></i>
     </button>
 </div>
