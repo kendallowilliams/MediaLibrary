@@ -69,7 +69,7 @@ namespace MediaLibraryWebUI.Controllers
             return View("Podcast", podcastViewModel);
         }
 
-        public async Task<ActionResult> RemovePodcast(int id)
+        public async Task RemovePodcast(int id)
         {
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcasts));
 
@@ -83,8 +83,6 @@ namespace MediaLibraryWebUI.Controllers
                 configuration.JsonData = JsonConvert.SerializeObject(podcastConfiguration);
                 await dataService.Update(configuration);
             }
-
-            return await Index();
         }
 
         public async Task<ActionResult> Get(int id)
