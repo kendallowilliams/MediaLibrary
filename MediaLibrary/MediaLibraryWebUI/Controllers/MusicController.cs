@@ -96,7 +96,7 @@ namespace MediaLibraryWebUI.Controllers
 
             if (file != null)
             {
-                result = new RangeFileContentResult(file?.Data, range, file.Type);
+                result = new RangeFileContentResult(file.Data, range, file.Type);
             }
             else
             {

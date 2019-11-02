@@ -18,18 +18,14 @@ namespace MediaLibraryWebUI.ActionResults
 
         public RangeFileContentResult(byte[] fileData, string range, string mediaType)
         {
-            RangeHeaderValue header = null;
-
             this.fileData = fileData;
             this.mediaType = mediaType;
-            try { header = RangeHeaderValue.Parse(range); } catch (Exception) { };
-            hasValidRange = header != null;
+            hasValidRange = RangeHeaderValue.TryParse(range, out RangeHeaderValue header);
 
             if (hasValidRange)
             {
                 RangeItemHeaderValue headerValue = header.Ranges.ElementAt(0);
-
-                hasValidRange = true;
+                
                 from = headerValue.From;
                 to = headerValue.To;
             }
@@ -43,7 +39,7 @@ namespace MediaLibraryWebUI.ActionResults
 
             if (hasValidRange)
             {
-                long end = to.HasValue ? to.Value : fileData.LongLength - 1,
+                long end = to.HasValue ? to.Value : fileData.Length - 1,
                      count = end + 1 - from.Value;
 
                 response.Headers.Add("Content-Range", $"bytes {from}-{end}/{count}");

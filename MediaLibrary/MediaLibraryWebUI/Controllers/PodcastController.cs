@@ -121,12 +121,12 @@ namespace MediaLibraryWebUI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> File(int id)
         {
-            PodcastFile file = dataService.Get<PodcastFile>(item => item.PodcastItemId == id);
+            PodcastFile file = await dataService.Get<PodcastFile>(item => item.PodcastItemId == id);
             ActionResult result = null;
 
             if (file != null)
             {
-                result = new RangeFileContentResult(file?.Data, null, file.Type);
+                result = new RangeFileContentResult(file.Data, Request.Headers["Range"], file.Type);
             }
             else
             {
