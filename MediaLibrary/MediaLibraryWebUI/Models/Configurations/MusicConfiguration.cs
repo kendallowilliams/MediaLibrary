@@ -1,4 +1,5 @@
 ﻿using MediaLibraryDAL.DbContexts;
+using MediaLibraryWebUI.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,11 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Models.Configurations
 {
-    public class MusicConfiguration
+    public class MusicConfiguration : IConfiguration
     {
         public MusicConfiguration()
         {
-
+            SelectPage = MediaPages.Music;
         }
 
         public int SelectedAlbumId { get; set; }
@@ -21,5 +22,6 @@ namespace MediaLibraryWebUI.Models.Configurations
         public SongSort SelectedSongSort { get; set; }
         public MusicTab SelectedMusicTab { get; set; }
         public MusicPages SelectedMusicPage { get; set; }
+        public MediaPages SelectPage { get; set; }
     }
 }

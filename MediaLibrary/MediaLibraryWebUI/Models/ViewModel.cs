@@ -7,7 +7,7 @@ using System.Web.Configuration;
 
 namespace MediaLibraryWebUI.Models
 {
-    public abstract class ViewModel : IViewModel
+    public abstract class ViewModel<TConfig> : IViewModel
     {
         public ViewModel()
         {
@@ -17,5 +17,6 @@ namespace MediaLibraryWebUI.Models
 
         public string MusicPlayerId { get; }
         public string Domain { get; }
+        public TConfig Configuration { get; set; }
     }
 }

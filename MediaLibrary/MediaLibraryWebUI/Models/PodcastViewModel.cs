@@ -10,13 +10,12 @@ using static MediaLibraryWebUI.Enums;
 namespace MediaLibraryWebUI.Models
 {
     [Export]
-    public class PodcastViewModel : ViewModel
+    public class PodcastViewModel : ViewModel<PodcastConfiguration>
     {
         [ImportingConstructor]
-        public PodcastViewModel(HomeViewModel homeViewModel)
+        public PodcastViewModel()
         {
             PodcastGroups = Enumerable.Empty<IGrouping<string, Podcast>>();
-            this.HomeViewModel = homeViewModel;
             PodcastItems = Enumerable.Empty<PodcastItem>();
             Configuration = new PodcastConfiguration();
             DownloadedEpisodes = Enumerable.Empty<int>();
@@ -25,8 +24,6 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<IGrouping<string, Podcast>> PodcastGroups { get; set; }
         public Podcast SelectedPodcast { get; set; }
         public IEnumerable<PodcastItem> PodcastItems { get; set; }
-        public HomeViewModel HomeViewModel { get; }
-        public PodcastConfiguration Configuration { get; set; }
         public IEnumerable<int> DownloadedEpisodes { get; set; }
     }
 }

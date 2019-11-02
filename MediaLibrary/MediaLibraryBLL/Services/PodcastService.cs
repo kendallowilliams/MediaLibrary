@@ -114,7 +114,7 @@ namespace MediaLibraryBLL.Services
 
                 }).Select(data => new PodcastItem(data.Title, data.Description, data.Enclosure.Uri.OriginalString,
                                                   data.Enclosure.Length, data.PublishDate, podcast.Id))
-                  .Where(item => item.PublishDate >= lastUpdateDate);
+                  .Where(item => item.PublishDate > lastUpdateDate);
 
                 podcast.PodcastItems = podcastItems.ToList();
                 await dataService.Update(podcast);

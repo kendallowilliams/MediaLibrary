@@ -47,8 +47,11 @@ namespace MediaLibraryWebUI.Services
                     groups = podcasts.GroupBy(podcast => podcast.ModifyDate.ToString("MM-dd-yyyy")).OrderBy(group => group.Key);
                     break;
                 case PodcastSort.AtoZ:
-                default:
                     groups = GetPodcastsAtoZ(podcasts.OrderBy(podcast => podcast.Title));
+                    break;
+                case PodcastSort.LastUpdateDate:
+                default:
+                    groups = podcasts.GroupBy(podcast => podcast.LastUpdateDate.ToString("MM-dd-yyyy")).OrderByDescending(group => group.Key);
                     break;
             }
 

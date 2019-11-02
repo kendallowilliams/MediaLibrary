@@ -14,10 +14,10 @@ using static MediaLibraryWebUI.Enums;
 namespace MediaLibraryWebUI.Models
 {
     [Export]
-    public class MusicViewModel : ViewModel
+    public class MusicViewModel : ViewModel<MusicConfiguration>
     {
         [ImportingConstructor]
-        public MusicViewModel(HomeViewModel homeViewModel)
+        public MusicViewModel()
         {
             SongGroups = Enumerable.Empty<IGrouping<string, Track>>();
             ArtistGroups = Enumerable.Empty<IGrouping<string, Artist>>();
@@ -26,7 +26,6 @@ namespace MediaLibraryWebUI.Models
             Songs = Enumerable.Empty<Track>();
             Artists = Enumerable.Empty<Artist>();
             Albums = Enumerable.Empty<Album>();
-            this.HomeViewModel = homeViewModel;
             Configuration = new MusicConfiguration();
             AlbumSortItems = MusicRepository.GetAlbumSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
             ArtistSortItems = MusicRepository.GetArtistSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
@@ -42,9 +41,7 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<Track> Songs { get; set; }
         public IEnumerable<Artist> Artists { get; set; }
         public IEnumerable<Album> Albums { get; set; }
-        public HomeViewModel HomeViewModel { get; }
         public IEnumerable<Playlist> Playlists { get; set; }
-        public MusicConfiguration Configuration { get; set; }
         public IEnumerable<SelectListItem> AlbumSortItems { get; }
         public IEnumerable<SelectListItem> ArtistSortItems { get; }
         public IEnumerable<SelectListItem> SongSortItems { get; }

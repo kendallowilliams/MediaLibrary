@@ -240,6 +240,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Interfaces\IConfiguration.cs" />
+    <Compile Include="Models\Configurations\HomeConfiguration.cs" />
+    <Compile Include="Models\Configurations\PlayerConfiguration.cs" />
     <Compile Include="Models\Data\Song.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\Interfaces\IViewModel.cs" />
