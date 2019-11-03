@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Linq.Expressions;
+using System.Data.SqlClient;
 
 namespace MediaLibraryDAL.Services.Interfaces
 {
@@ -67,12 +68,14 @@ namespace MediaLibraryDAL.Services.Interfaces
 
         Task<int> Update<T>(T entity) where T : class, IDataModel;
 
-        Task<IEnumerable<T>> Query<T>(string sql, object parameters) where T : class, IDataModel;
+        Task<IEnumerable<T>> Query<T>(string sql, params object[] parameters);
 
         Task<T> ExecuteScalar<T>(string sql, object parameters);
 
         Task<int> Execute(string sql, object parameters = null);
 
         Task<int> Count<T>(Expression<Func<T,bool>> expression = null) where T : class, IDataModel;
+
+        SqlParameter CreateParameter(string name, object value);
     }
 }
