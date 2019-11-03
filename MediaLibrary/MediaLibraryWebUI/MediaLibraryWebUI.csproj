@@ -256,6 +256,8 @@
     <Compile Include="Models\PodcastViewModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\PodcastRepository.cs" />
+    <Compile Include="Repositories\PlaylistRepository.cs" />
     <Compile Include="Repositories\MusicRepository.cs" />
     <Compile Include="Services\ControllerService.cs" />
     <Compile Include="Services\Interfaces\IControllerService.cs" />

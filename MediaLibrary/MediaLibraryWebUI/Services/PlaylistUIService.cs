@@ -43,7 +43,7 @@ namespace MediaLibraryWebUI.Services
 
             switch (sort)
             {
-                case PlaylistSort.DateModified:
+                case PlaylistSort.DateAdded:
                     groups = playlists.GroupBy(playlist => playlist.ModifyDate.ToString("MM-dd-yyyy")).OrderBy(group => group.Key);
                     break;
                 case PlaylistSort.AtoZ:

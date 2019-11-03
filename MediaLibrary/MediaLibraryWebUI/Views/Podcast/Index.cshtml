@@ -7,15 +7,16 @@
 <h2>Podcasts</h2>
 <div>
     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPodcast" data-tooltip="tooltip" title="Add podcast"><i class="fa fa-plus"></i></button>
-    <div class="btn-group" role="group" data-tooltip="tooltip" title="Sort by">
-        <button id="btnGroupPodcastSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sort by
-        </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupPodcastSort">
-            <a class="dropdown-item @(Model.Configuration.SelectedPodcastSort == Enums.PodcastSort.DateModified ? "active" : string.Empty)" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.DateModified })">Date modified</a>
-            <a class="dropdown-item @(Model.Configuration.SelectedPodcastSort == Enums.PodcastSort.AtoZ ? "active" : string.Empty)" href="@Url.Action("Sort", "Podcast", new { sort = Enums.PodcastSort.AtoZ })">A to Z</a>
-        </div>
-    </div>
+    @Html.DropDownListFor(x => x.Configuration.SelectedPodcastSort,
+                          Model.PodcastSortItems,
+                          null,
+                          new { @class = "custom-select border border-secondary",
+                                style = "width: 150px",
+                                title = "Sort by",
+                                data_sort_tab = "albums-tab",
+                                onchange = $"sortChanged(this)",
+                                data_tooltip = "tooltip"
+    })
 </div>
 <hr />
 
@@ -115,6 +116,12 @@ else
             $('#loadingModal').modal('show');
             $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Podcast))');
             $('#txt@(nameof(Model.Configuration.SelectedPodcastId))').val($(btn).attr('data-item-id'));
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Podcast")');
+        }
+
+        function sortChanged(select) {
+            $('#loadingModal').modal('show');
+            $('#txt@(nameof(Model.Configuration.SelectedPodcastSort))').val($(select).val());
             updateConfiguration(() => window.location = '@Url.Action("Index", "Podcast")');
         }
     </script>
