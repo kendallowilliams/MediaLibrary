@@ -49,7 +49,7 @@
                                                 data-html="true">
                                             <i class="fa fa-info-circle"></i>
                                         </button>
-                                        <buton class="btn btn-outline-secondary" onclick="podcastClicked(this)" data-podcast-url="@(Url.Action("Get", "Podcast", new { podcast.Id }))" data-item-id="@(podcast.Id)"
+                                        <buton class="btn btn-outline-secondary" onclick="podcastClicked(this)" data-item-id="@(podcast.Id)"
                                                data-tooltip="tooltip" title="View podcast">
                                             <i class="fa fa-list"></i>
                                         </buton>
@@ -115,7 +115,7 @@ else
             $('#loadingModal').modal('show');
             $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Podcast))');
             $('#txt@(nameof(Model.Configuration.SelectedPodcastId))').val($(btn).attr('data-item-id'));
-            updateConfiguration(() => window.location = $(btn).attr('data-podcast-url'));
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Podcast")');
         }
     </script>
 }

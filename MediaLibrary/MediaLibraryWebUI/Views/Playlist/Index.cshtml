@@ -45,7 +45,7 @@
                                         <span>@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</span>
                                     </div>
                                     <div>
-                                        <button class="btn btn-outline-secondary" onclick="playlistClicked(this)" data-playlist-url="@(Url.Action("Get", "Playlist", new { playlist.Id }))" data-item-id="@(playlist.Id)"
+                                        <button class="btn btn-outline-secondary" onclick="playlistClicked(this)" data-item-id="@(playlist.Id)"
                                                 data-tooltip="tooltip" title="View playlist">
                                             <i class="fa fa-list"></i>
                                         </button>
@@ -78,7 +78,7 @@ else
             $('#loadingModal').modal('show');
             $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Playlist))');
             $('#txt@(nameof(Model.Configuration.SelectedPlaylistId))').val($(btn).attr('data-item-id'));
-            updateConfiguration(() => window.location = $(btn).attr('data-playlist-url'));
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Playlist")');
         }
     </script>
 }
