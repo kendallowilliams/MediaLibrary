@@ -11,12 +11,10 @@ namespace MediaLibraryWebUI.Models
     {
         public ViewModel()
         {
-            Domain = WebConfigurationManager.AppSettings["MediaLibraryDomain"];
             MusicPlayerId = "music-player";
         }
 
         public string MusicPlayerId { get; }
-        public string Domain { get; }
         public TConfig Configuration { get; set; }
     }
 }

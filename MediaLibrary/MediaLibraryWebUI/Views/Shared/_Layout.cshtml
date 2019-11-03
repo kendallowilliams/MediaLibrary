@@ -51,7 +51,7 @@
         window.addEventListener("message", receiveMessage, false);
 
         function receiveMessage(event) {
-            if (event.origin !== "@(Model.Domain)")
+            if (event.origin !== "@(Request.Url.GetLeftPart(UriPartial.Authority))")
                 return;
 
             if (event.data === "loaded") {
