@@ -204,8 +204,8 @@
     <Content Include="lib\font-awesome\webfonts\fa-solid-900.ttf" />
     <Content Include="lib\font-awesome\webfonts\fa-solid-900.woff" />
     <Content Include="lib\font-awesome\webfonts\fa-solid-900.woff2" />
-    <None Include="Properties\PublishProfiles\DEV.pubxml" />
-    <None Include="Properties\PublishProfiles\PROD.pubxml" />
+    <None Include="Properties\PublishProfiles\KSERVER_DEV.pubxml" />
+    <None Include="Properties\PublishProfiles\KSERVER_PROD.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
