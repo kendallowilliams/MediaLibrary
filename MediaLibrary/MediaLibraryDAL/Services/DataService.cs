@@ -186,7 +186,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<IEnumerable<T>> Query<T>(string sql, object parameters = null) where T : class, IDataModel
+        public async Task<IEnumerable<T>> Query<T>(string sql, params object[] parameters)
         {
             IEnumerable<T> result = Enumerable.Empty<T>();
 
@@ -370,5 +370,7 @@ namespace MediaLibraryBLL.Services
 
             return results;
         }
+
+        public SqlParameter CreateParameter(string name, object value) => new SqlParameter(name, value);
     }
 }

@@ -93,6 +93,9 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Get(int id)
         {
+            string query = @"SELECT PodcastItemId FROM PodcastFile WHERE PodcastId = @podcastId";
+
+            podcastViewModel.DownloadedEpisodes = await dataService.Query<int>(query, dataService.CreateParameter("podcastId", id));
             podcastViewModel.SelectedPodcast = await dataService.GetAsync<Podcast, ICollection<PodcastItem>>(podcast => podcast.Id == id, podcast => podcast.PodcastItems);
 
             return View("Podcast", podcastViewModel);

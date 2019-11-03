@@ -43,7 +43,7 @@ namespace MediaLibraryWebUI.Services
 
             switch (sort)
             {
-                case PodcastSort.DateModified:
+                case PodcastSort.DateAdded:
                     groups = podcasts.GroupBy(podcast => podcast.ModifyDate.ToString("MM-dd-yyyy")).OrderBy(group => group.Key);
                     break;
                 case PodcastSort.AtoZ:

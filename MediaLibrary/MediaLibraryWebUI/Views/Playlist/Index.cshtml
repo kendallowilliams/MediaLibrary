@@ -7,15 +7,16 @@
 <h2>Playlists</h2>
 <div>
     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPlaylist" data-tooltip="tooltip" title="Add playlist"><i class="fa fa-plus"></i></button>
-    <div class="btn-group" role="group" title="Sort by" data-tooltip="tooltip">
-        <button id="btnGroupPlaylistSort" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Sort by
-        </button>
-        <div class="dropdown-menu" aria-labelledby="PlaylistSort">
-            <a class="dropdown-item" href="@Url.Action("Sort", "Playlist", new { sort = Enums.PlaylistSort.DateModified })">Date modified</a>
-            <a class="dropdown-item" href="@Url.Action("Sort", "Playlist", new { sort = Enums.PlaylistSort.AtoZ })">A to Z</a>
-        </div>
-    </div>
+    @Html.DropDownListFor(x => x.Configuration.SelectedPlaylistSort,
+                         Model.PlaylistSortItems,
+                         null,
+                         new { @class = "custom-select border border-secondary",
+                               style = "width: 135px",
+                               title = "Sort by",
+                               data_sort_tab = "albums-tab",
+                               onchange = $"sortChanged(this)",
+                               data_tooltip = "tooltip"
+    })
 </div>
 <hr />
 
@@ -45,7 +46,7 @@
                                         <span>@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</span>
                                     </div>
                                     <div>
-                                        <button class="btn btn-outline-secondary" onclick="playlistClicked(this)" data-playlist-url="@(Url.Action("Get", "Playlist", new { playlist.Id }))" data-item-id="@(playlist.Id)"
+                                        <button class="btn btn-outline-secondary" onclick="playlistClicked(this)" data-item-id="@(playlist.Id)"
                                                 data-tooltip="tooltip" title="View playlist">
                                             <i class="fa fa-list"></i>
                                         </button>
@@ -78,7 +79,13 @@ else
             $('#loadingModal').modal('show');
             $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Playlist))');
             $('#txt@(nameof(Model.Configuration.SelectedPlaylistId))').val($(btn).attr('data-item-id'));
-            updateConfiguration(() => window.location = $(btn).attr('data-playlist-url'));
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Playlist")');
+        }
+
+        function sortChanged(select) {
+            $('#loadingModal').modal('show');
+            $('#txt@(nameof(Model.Configuration.SelectedPlaylistSort))').val($(select).val());
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Playlist")');
         }
     </script>
 }
