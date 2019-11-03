@@ -14,6 +14,7 @@ namespace MediaLibraryDAL.DbContexts
         public TrackPath(string location)
         {
             Location = location;
+            LastScanDate = DateTime.Now;
         }
     }
 }
