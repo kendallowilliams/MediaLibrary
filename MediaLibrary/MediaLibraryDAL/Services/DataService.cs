@@ -90,11 +90,18 @@ namespace MediaLibraryBLL.Services
         public async Task<int> Insert<T>(IEnumerable<T> entities) where T : class, IDataModel
         {
             int result = default(int);
+            IList<T> items = entities.ToList();
 
             using (var db = new MediaLibraryEntities())
             {
+                foreach (var item in items)
+                {
+                    item.CreateDate = DateTime.Now;
+                    item.ModifyDate = DateTime.Now;
+                }
+
                 db.Database.CommandTimeout = timeout;
-                db.Set<T>().AddRange(entities);
+                db.Set<T>().AddRange(items);
                 result = await db.SaveChangesAsync();
             }
 
