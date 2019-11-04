@@ -45,5 +45,31 @@ namespace MediaLibraryBLL.Services
 
             return await tcs.Task;
         }
+
+        public async Task<bool> DownloadFile(string address, string filename)
+        {
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    Uri uri = new Uri(address);
+
+                    client.DownloadFileCompleted += (sender, args) =>
+                    {
+                        if (args.Error == null) { tcs.SetResult(true); }
+                        else { tcs.SetException(args.Error); }
+                    };
+                    client.DownloadFileAsync(uri, filename);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            }
+
+            return await tcs.Task;
+        }
     }
 }

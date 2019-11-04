@@ -10,5 +10,6 @@ namespace MediaLibraryBLL.Services.Interfaces
     public interface IWebService
     {
         Task<byte[]> DownloadData(string address);
+        Task<bool> DownloadFile(string address, string filename);
     }
 }
