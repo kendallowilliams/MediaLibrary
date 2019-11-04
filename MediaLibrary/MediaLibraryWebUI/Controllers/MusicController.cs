@@ -158,7 +158,13 @@ namespace MediaLibraryWebUI.Controllers
             try
             {
                 Transaction existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
-
+#if DEBUG
+                request = new ScanDirectoryRequest()
+                {
+                    Path = System.Configuration.ConfigurationManager.AppSettings["MediaLibraryRoot_DEV"],
+                    Recursive = true
+                };
+#endif
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
 
                 if (request.IsValid())
@@ -173,7 +179,8 @@ namespace MediaLibraryWebUI.Controllers
                     }
                     else if (existingTransaction == null)
                     {
-                        await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Path, request.Recursive, request.Copy), transaction);
+                        await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Path, request.Recursive, request.Copy).ContinueWith(task => musicService.ClearData()),
+                                                                              transaction);
                     }
                     else
                     {

@@ -35,7 +35,8 @@ namespace MediaLibraryBLL.Services
             {
                 object parameters = new { location };
                 TrackPath path = new TrackPath(location),
-                          dbPath = await dataService.GetAsync<TrackPath>(item => item.Location == location);
+                          dbPath = await dataService.GetAsync<TrackPath>(item => item.Location.Trim().Equals(location.Trim(), 
+                                                                                                             StringComparison.CurrentCultureIgnoreCase));
 
                 if (dbPath != null) { id = dbPath.Id; }
                 else

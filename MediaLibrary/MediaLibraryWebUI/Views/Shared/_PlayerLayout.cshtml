@@ -28,7 +28,7 @@
             var url = event.data.find(element => element.isPlaying).url;
             var $player = $('#@(Model.MusicPlayerId)');
 
-            if (event.origin !== "@(Model.Domain)")
+            if (event.origin !== "@(Request.Url.GetLeftPart(UriPartial.Authority))")
                 return;
 
             $player.prop('src', url);

@@ -120,6 +120,9 @@ namespace MediaLibraryBLL.Services
                     {
                         await ReadMediaFile(file);
                     }
+
+                    path.LastScanDate = DateTime.Now;
+                    await dataService.Update(path);
                 }
 
                 await transactionService.UpdateTransactionCompleted(transaction);
