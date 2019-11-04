@@ -9,6 +9,10 @@ namespace MediaLibraryBLL.Services.Interfaces
 {
     public interface IFileService
     {
+        string MusicFolder { get; }
+
+        string PodcastFolder { get; }
+
         Task Write(string path, string data);
 
         Task Write(string path, byte[] data);
