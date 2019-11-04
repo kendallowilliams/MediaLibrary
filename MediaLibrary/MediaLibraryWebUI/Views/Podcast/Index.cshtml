@@ -108,6 +108,7 @@ else
         });
 
         function addNewPodcast() {
+            $('#loadingModal').modal('show');
             $('#formNewPodcast').trigger('submit');
             $('#modalNewPodcast').modal('hide');
         }
