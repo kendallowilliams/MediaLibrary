@@ -35,6 +35,8 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
+                
                 results = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).ToListAsync();
             }
 
@@ -48,6 +50,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
                 result = (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefault();
                 tcs.SetResult(result);
             }
@@ -61,6 +64,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
                 result = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefaultAsync();
             }
 
@@ -73,6 +77,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
                 entity.ModifyDate = DateTime.Now;
                 entity.CreateDate = DateTime.Now;
                 db.Set<T>().Add(entity);
@@ -88,6 +93,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
                 db.Set<T>().AddRange(entities);
                 result = await db.SaveChangesAsync();
             }
@@ -101,9 +107,12 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                DbSet<T> set = db.Set<T>();
-                T entity = await set.FindAsync(id);
+                DbSet<T> set = null;
+                T entity = null;
 
+                db.Database.CommandTimeout = timeout;
+                set = db.Set<T>();
+                entity = await set.FindAsync(id);
                 set.Remove(entity);
                 result = await db.SaveChangesAsync();
             }
@@ -117,6 +126,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
                 db.Set<T>().Remove(entity);
                 result = await db.SaveChangesAsync();
             }
@@ -132,7 +142,10 @@ namespace MediaLibraryBLL.Services
             {
                 using (var db = new MediaLibraryEntities())
                 {
-                    DbSet<T> set = db.Set<T>();
+                    DbSet<T> set = null;
+
+                    db.Database.CommandTimeout = timeout;
+                    set = db.Set<T>();
                     set.RemoveRange(set.Where(expression));
                     result = await db.SaveChangesAsync();
                 }
@@ -151,7 +164,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                DbSet<T> set = db.Set<T>();
+                DbSet<T> set = null;
+
+                db.Database.CommandTimeout = timeout;
+                set = db.Set<T>();
                 set.RemoveRange(set);
                 result = await db.SaveChangesAsync();
             }
@@ -165,6 +181,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
                 entity.ModifyDate = DateTime.Now;
                 db.Set<T>().Add(entity);
                 db.Entry(entity).State = EntityState.Modified;
@@ -180,6 +197,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
                 result = expression != null ? await db.Set<T>().CountAsync(expression) : await db.Set<T>().CountAsync();
             }
 
@@ -218,6 +236,7 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
+                db.Database.CommandTimeout = timeout;
                 result = await db.Database.SqlQuery<T>(sql, parameters).SingleOrDefaultAsync();
             }
 
@@ -231,7 +250,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
                 result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
                 tcs.SetResult(result);
             }
@@ -245,7 +267,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
                 result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync();
             }
 
@@ -258,7 +283,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
                 results = await (expression != null ? query.Where(expression) : query).ToListAsync();
             }
 
@@ -274,7 +302,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
                 tcs.SetResult(result);
@@ -291,7 +322,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync();
             }
@@ -307,7 +341,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 results = await (expression != null ? query.Where(expression) : query).ToListAsync();
             }
@@ -325,7 +362,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 query = includeExpression3 != null ? query.Include(includeExpression3) : query;
                 result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
@@ -344,7 +384,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 query = includeExpression3 != null ? query.Include(includeExpression3) : query;
                 result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync();
@@ -362,7 +405,10 @@ namespace MediaLibraryBLL.Services
 
             using (var db = new MediaLibraryEntities())
             {
-                var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
+                IQueryable<T> query = null;
+
+                db.Database.CommandTimeout = timeout;
+                query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 query = includeExpression3 != null ? query.Include(includeExpression3) : query;
                 results = await (expression != null ? query.Where(expression) : query).ToListAsync();
