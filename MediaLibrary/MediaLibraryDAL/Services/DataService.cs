@@ -41,16 +41,18 @@ namespace MediaLibraryBLL.Services
             return results;
         }
 
-        public T Get<T>(Expression<Func<T,bool>> expression = null) where T: class, IDataModel
+        public Task<T> Get<T>(Expression<Func<T,bool>> expression = null) where T: class, IDataModel
         {
             T result = default(T);
+            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
 
             using (var db = new MediaLibraryEntities())
             {
                 result = (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefault();
+                tcs.SetResult(result);
             }
 
-            return result;
+            return tcs.Task;
         }
 
         public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
@@ -222,17 +224,19 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public T Get<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
+        public Task<T> Get<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
         {
             T result = default(T);
+            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
 
             using (var db = new MediaLibraryEntities())
             {
                 var query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
                 result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
+                tcs.SetResult(result);
             }
 
-            return result;
+            return tcs.Task;
         }
 
         public async Task<T> GetAsync<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
@@ -261,20 +265,22 @@ namespace MediaLibraryBLL.Services
             return results;
         }
 
-        public T Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
+        public Task<T> Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
                                               Expression<Func<T, TInclude1>> includeExpression1 = null, 
                                               Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel
         {
             T result = default(T);
+            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
 
             using (var db = new MediaLibraryEntities())
             {
                 var query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
+                tcs.SetResult(result);
             }
 
-            return result;
+            return tcs.Task;
         }
 
         public async Task<T> GetAsync<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
@@ -309,12 +315,13 @@ namespace MediaLibraryBLL.Services
             return results;
         }
 
-        public T Get<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
+        public Task<T> Get<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
                                                          Expression<Func<T, TInclude1>> includeExpression1 = null,
                                                          Expression<Func<T, TInclude2>> includeExpression2 = null,
                                                          Expression<Func<T, TInclude3>> includeExpression3 = null) where T : class, IDataModel
         {
             T result = default(T);
+            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
 
             using (var db = new MediaLibraryEntities())
             {
@@ -322,9 +329,10 @@ namespace MediaLibraryBLL.Services
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 query = includeExpression3 != null ? query.Include(includeExpression3) : query;
                 result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
+                tcs.SetResult(result);
             }
 
-            return result;
+            return tcs.Task;
         }
 
         public async Task<T> GetAsync<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
