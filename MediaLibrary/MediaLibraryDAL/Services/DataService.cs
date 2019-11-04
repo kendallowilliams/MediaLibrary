@@ -217,7 +217,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<int> Execute(string sql, object parameters = null)
+        public async Task<int> Execute(string sql, params object[] parameters)
         {
             int result = default(int);
 
@@ -230,7 +230,7 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
-        public async Task<T> ExecuteScalar<T>(string sql, object parameters = null)
+        public async Task<T> ExecuteScalar<T>(string sql, params object[] parameters)
         {
             T result = default(T);
 
@@ -418,5 +418,7 @@ namespace MediaLibraryBLL.Services
         }
 
         public SqlParameter CreateParameter(string name, object value) => new SqlParameter(name, value);
+
+
     }
 }

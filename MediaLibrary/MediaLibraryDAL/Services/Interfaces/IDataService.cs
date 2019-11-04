@@ -70,9 +70,9 @@ namespace MediaLibraryDAL.Services.Interfaces
 
         Task<IEnumerable<T>> Query<T>(string sql, params object[] parameters);
 
-        Task<T> ExecuteScalar<T>(string sql, object parameters);
+        Task<T> ExecuteScalar<T>(string sql, params object[] parameters);
 
-        Task<int> Execute(string sql, object parameters = null);
+        Task<int> Execute(string sql, params object[] parameters);
 
         Task<int> Count<T>(Expression<Func<T,bool>> expression = null) where T : class, IDataModel;
 
