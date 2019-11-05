@@ -140,6 +140,7 @@ namespace MediaLibraryBLL.Services
                 {
                     if (string.IsNullOrWhiteSpace(podcastItem.File))
                     {
+                        if (!Directory.Exists(fileService.PodcastFolder)) { Directory.CreateDirectory(fileService.PodcastFolder); }
                         fileName = Path.Combine(fileService.PodcastFolder, Path.GetFileName((new Uri(podcastItem.Url)).LocalPath));
                         podcastItem.File = fileName;
                         File.WriteAllBytes(fileName, await webService.DownloadData(podcastItem.Url));
