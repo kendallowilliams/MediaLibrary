@@ -190,7 +190,6 @@ namespace MediaLibraryBLL.Services
             {
                 db.Database.CommandTimeout = timeout;
                 entity.ModifyDate = DateTime.Now;
-                db.Set<T>().Add(entity);
                 db.Entry(entity).State = EntityState.Modified;
                 result = await db.SaveChangesAsync();
             }
