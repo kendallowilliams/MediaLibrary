@@ -11,6 +11,8 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class PodcastItem: IDataModel
     {
+        public PodcastItem() { }
+
         public PodcastItem(string title, string description, string url, long length, DateTime publishDate, int podcastId)
         {
             Title = title;
