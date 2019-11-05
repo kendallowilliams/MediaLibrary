@@ -33,10 +33,8 @@ namespace MediaLibraryDAL.DbContexts
         public virtual DbSet<Playlist> Playlists { get; set; }
         public virtual DbSet<PlaylistTrack> PlaylistTracks { get; set; }
         public virtual DbSet<Podcast> Podcasts { get; set; }
-        public virtual DbSet<PodcastFile> PodcastFiles { get; set; }
         public virtual DbSet<PodcastItem> PodcastItems { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
-        public virtual DbSet<TrackFile> TrackFiles { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<TrackPath> TrackPaths { get; set; }
         public virtual DbSet<Configuration> Configurations { get; set; }

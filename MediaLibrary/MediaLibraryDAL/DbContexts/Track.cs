@@ -18,7 +18,6 @@ namespace MediaLibraryDAL.DbContexts
         public Track()
         {
             this.PlaylistTracks = new HashSet<PlaylistTrack>();
-            this.TrackFiles = new HashSet<TrackFile>();
         }
     
         public int Id { get; set; }
@@ -39,8 +38,6 @@ namespace MediaLibraryDAL.DbContexts
         public virtual Artist Artist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TrackFile> TrackFiles { get; set; }
         public virtual TrackPath TrackPath { get; set; }
         public virtual Genre Genre { get; set; }
     }

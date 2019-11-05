@@ -11,10 +11,8 @@
         <EntityTypeShape EntityType="MediaLibraryDAL.Playlist" Width="1.5" PointX="5.25" PointY="8.75" />
         <EntityTypeShape EntityType="MediaLibraryDAL.PlaylistTrack" Width="1.5" PointX="7.5" PointY="3.5" />
         <EntityTypeShape EntityType="MediaLibraryDAL.Podcast" Width="1.5" PointX="9.75" PointY="1.875" />
-        <EntityTypeShape EntityType="MediaLibraryDAL.PodcastFile" Width="1.5" PointX="14.25" PointY="2.125" />
         <EntityTypeShape EntityType="MediaLibraryDAL.PodcastItem" Width="1.5" PointX="12" PointY="1.875" />
         <EntityTypeShape EntityType="MediaLibraryDAL.Track" Width="1.5" PointX="5.25" PointY="2.5" />
-        <EntityTypeShape EntityType="MediaLibraryDAL.TrackFile" Width="1.5" PointX="7.5" PointY="6.625" />
         <EntityTypeShape EntityType="MediaLibraryDAL.Transaction" Width="1.5" PointX="9.75" PointY="8.625" />
         <AssociationConnector Association="MediaLibraryDAL.FK__Album__ArtistId__656C112C" />
         <AssociationConnector Association="MediaLibraryDAL.FK__Album__GenreId__66603565" />
@@ -23,9 +21,6 @@
         <AssociationConnector Association="MediaLibraryDAL.FK_playlist_track_playlist" />
         <AssociationConnector Association="MediaLibraryDAL.FK_playlist_track_track" />
         <AssociationConnector Association="MediaLibraryDAL.FK__PodcastIt__Podca__6B24EA82" />
-        <AssociationConnector Association="MediaLibraryDAL.FK_podcast_file_podcast" />
-        <AssociationConnector Association="MediaLibraryDAL.FK_podcast_file_podcast_item" />
-        <AssociationConnector Association="MediaLibraryDAL.FK_track_file_track" />
         <EntityTypeShape EntityType="MediaLibraryDAL.TrackPath" Width="1.5" PointX="0.75" PointY="11.875" />
         <AssociationConnector Association="MediaLibraryDAL.FK__Track__PathId__05D8E0BE" />
         <EntityTypeShape EntityType="MediaLibraryDAL.Configuration" Width="1.5" PointX="0.75" PointY="7.75" />

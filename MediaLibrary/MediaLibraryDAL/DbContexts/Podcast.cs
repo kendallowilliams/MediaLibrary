@@ -18,7 +18,6 @@ namespace MediaLibraryDAL.DbContexts
         public Podcast()
         {
             this.PodcastItems = new HashSet<PodcastItem>();
-            this.PodcastFiles = new HashSet<PodcastFile>();
         }
     
         public int Id { get; set; }
@@ -33,7 +32,5 @@ namespace MediaLibraryDAL.DbContexts
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PodcastItem> PodcastItems { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PodcastFile> PodcastFiles { get; set; }
     }
 }

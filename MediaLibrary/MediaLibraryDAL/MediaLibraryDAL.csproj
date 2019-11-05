@@ -123,16 +123,10 @@
     <Compile Include="DbContexts\Podcast.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
-    <Compile Include="DbContexts\PodcastFile.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
     <Compile Include="DbContexts\PodcastItem.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
     <Compile Include="DbContexts\Track.cs">
-      <DependentUpon>MediaLibrary.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DbContexts\TrackFile.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
     <Compile Include="DbContexts\TrackPath.cs">
@@ -146,14 +140,12 @@
     <Compile Include="Models\MediaData.cs" />
     <Compile Include="Partials\Configuration.cs" />
     <Compile Include="Partials\PlaylistTrack.cs" />
-    <Compile Include="Partials\PodcastFile.cs" />
     <Compile Include="Partials\PodcastItem.cs" />
     <Compile Include="Partials\Podcast.cs" />
     <Compile Include="Partials\Playlist.cs" />
     <Compile Include="Partials\Genre.cs" />
     <Compile Include="Partials\Artist.cs" />
     <Compile Include="Partials\Album.cs" />
-    <Compile Include="Partials\TrackFile.cs" />
     <Compile Include="Partials\TrackPath.cs" />
     <Compile Include="Partials\Track.cs" />
     <Compile Include="Partials\Transaction.cs" />
