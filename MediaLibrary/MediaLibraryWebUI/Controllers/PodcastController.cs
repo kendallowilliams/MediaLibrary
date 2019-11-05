@@ -124,25 +124,36 @@ namespace MediaLibraryWebUI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> File(int id)
         {
-            PodcastFile file = await dataService.Get<PodcastFile>(item => item.PodcastItemId == id);
+            Transaction transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcastFile);
             ActionResult result = null;
 
-            if (file != null)
+            try
             {
-                result = new RangeFileContentResult(file.Data, Request.Headers["Range"], file.Type);
-            }
-            else
-            {
-                PodcastItem podcastItem = await dataService.GetAsync<PodcastItem>(item => item.Id == id);
+                PodcastItem podcastItem = await dataService.Get<PodcastItem>(item => item.Id == id);
 
                 if (podcastItem != null)
                 {
-                    result = new RedirectResult(podcastItem.Url);
+                    if (string.IsNullOrWhiteSpace(podcastItem.File))
+                    {
+                        await podcastService.AddPodcastFile(transaction, id);
+                        result = new RedirectResult(podcastItem.Url);
+                    }
+                    else
+                    {
+                        result = new FileRangeResult(podcastItem.File, Request.Headers["Range"], MimeMapping.GetMimeMapping(Path.GetFileName(podcastItem.File)));
+                        await transactionService.UpdateTransactionCompleted(transaction);
+                    }
                 }
                 else
                 {
                     result = new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                    await transactionService.UpdateTransactionCompleted(transaction, $"Podcast item: {id} not found.");
                 }
+            }
+            catch(Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+                result = new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
 
             return result;

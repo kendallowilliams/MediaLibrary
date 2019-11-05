@@ -48,40 +48,5 @@ namespace MediaLibraryBLL.Services
 
             return id;
         }
-
-        public async Task<int?> AddTrackFile(int trackId)
-        {
-            Track track = await dataService.GetAsync<Track>(item => item.Id == trackId);
-            TrackPath path = await dataService.GetAsync<TrackPath>(trackPath => trackPath.Id == track.PathId);
-            TrackFile trackFile = null;
-            string filePath = Path.Combine(path.Location, track.FileName);
-            byte[] data = File.ReadAllBytes(filePath);
-
-            trackFile = new TrackFile(data, MimeMapping.GetMimeMapping(track.FileName), trackId);
-            await dataService.Insert(trackFile);
-
-            return trackFile.Id;
-        }
-
-        public async Task<TrackFile> GetTrackFile(int id)
-        {
-            TrackFile file = await dataService.Get<TrackFile>(item => item.Id == id);
-
-            if (file == null)
-            {
-                Track track = await dataService.GetAsync<Track>(item => item.Id == id);
-
-                if (track != null)
-                {
-                    TrackPath path = await dataService.GetAsync<TrackPath>(trackPath => trackPath.Id == track.PathId);
-                    string fileName = Path.Combine(path.Location, track.FileName);
-                    byte[] data = File.ReadAllBytes(fileName);
-
-                    file = new TrackFile { Data = data, Type = MimeMapping.GetMimeMapping(track.FileName) };
-                }
-            }
-
-            return file;
-        }
     }
 }

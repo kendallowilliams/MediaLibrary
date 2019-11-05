@@ -90,13 +90,14 @@ namespace MediaLibraryWebUI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> File(int id)
         {
-            TrackFile file = await trackService.GetTrackFile(id);
-            string range = Request.Headers["Range"];
+            Track track = await dataService.GetAsync<Track, TrackPath>(item => item.Id == id, item => item.TrackPath);
             ActionResult result = null;
 
-            if (file != null)
+            if (track != null)
             {
-                result = new RangeFileContentResult(file.Data, range, file.Type);
+                result = new FileRangeResult(Path.Combine(track.TrackPath.Location, track.FileName),
+                                             Request.Headers["Range"], 
+                                             MimeMapping.GetMimeMapping(track.FileName));
             }
             else
             {
@@ -179,7 +180,7 @@ namespace MediaLibraryWebUI.Controllers
                     }
                     else if (existingTransaction == null)
                     {
-                        await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Path, request.Recursive, request.Copy).ContinueWith(task => musicService.ClearData()),
+                        await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Path, request.Recursive).ContinueWith(task => musicService.ClearData()),
                                                                               transaction);
                     }
                     else
@@ -314,7 +315,7 @@ namespace MediaLibraryWebUI.Controllers
 
                 Directory.CreateDirectory(fileService.MusicFolder);
                 file.SaveAs(newFile);
-                await fileService.ReadMediaFile(newFile, true);
+                await fileService.ReadMediaFile(newFile);
                 musicService.ClearData();
             }
         }

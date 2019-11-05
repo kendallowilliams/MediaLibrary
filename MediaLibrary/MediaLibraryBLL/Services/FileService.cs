@@ -74,7 +74,7 @@ namespace MediaLibraryBLL.Services
 
         public async Task Delete(string path) => await Task.Run(() => File.Delete(path));
 
-        public async Task ReadDirectory(Transaction transaction, string path, bool recursive = true, bool copyFiles = false)
+        public async Task ReadDirectory(Transaction transaction, string path, bool recursive = true)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace MediaLibraryBLL.Services
 
                 foreach (var group in fileGroups)
                 {
-                    foreach (string file in group) { await ReadMediaFile(file, copyFiles); }
+                    foreach (string file in group) { await ReadMediaFile(file); }
                 }
 
                 await transactionService.UpdateTransactionCompleted(transaction);
@@ -95,7 +95,7 @@ namespace MediaLibraryBLL.Services
             }
         }
 
-        public async Task ReadMediaFile(string path, bool copyFile = false)
+        public async Task ReadMediaFile(string path)
         {
             MediaData data = await id3Service.ProcessFile(path);
             int? genreId = await genreService.AddGenre(data.Genres),
@@ -105,7 +105,6 @@ namespace MediaLibraryBLL.Services
             Track track = new Track(data, pathId, genreId, albumId, artistId);
 
             await dataService.Insert(track);
-            if (copyFile) { await trackService.AddTrackFile(track.Id); }
         }
 
         public async Task CheckForMusicUpdates(Transaction transaction)

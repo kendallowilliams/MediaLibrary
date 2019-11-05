@@ -17,10 +17,10 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         Task Write(string path, byte[] data);
 
-        Task ReadDirectory(Transaction transaction, string path, bool recursive = true, bool copyFiles = false);
+        Task ReadDirectory(Transaction transaction, string path, bool recursive = true);
 
         Task CheckForMusicUpdates(Transaction transaction);
 
-        Task ReadMediaFile(string path, bool copyFile = false);
+        Task ReadMediaFile(string path);
     }
 }

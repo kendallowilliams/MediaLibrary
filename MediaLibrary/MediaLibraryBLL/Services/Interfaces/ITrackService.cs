@@ -11,9 +11,5 @@ namespace MediaLibraryBLL.Services.Interfaces
     public interface ITrackService
     {
         Task<int?> AddPath(string location);
-
-        Task<int?> AddTrackFile(int trackId);
-
-        Task<TrackFile> GetTrackFile(int id);
     }
 }

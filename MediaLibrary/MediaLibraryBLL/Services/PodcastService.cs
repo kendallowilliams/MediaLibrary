@@ -24,13 +24,16 @@ namespace MediaLibraryBLL.Services
         private readonly IDataService dataService;
         private readonly IWebService webService;
         private readonly ITransactionService transactionService;
+        private readonly IFileService fileService;
 
          [ImportingConstructor]
-        public PodcastService(IDataService dataService, IWebService webService, ITransactionService transactionService)
+        public PodcastService(IDataService dataService, IWebService webService, ITransactionService transactionService,
+                              IFileService fileService)
         {
             this.dataService = dataService;
             this.webService = webService;
             this.transactionService = transactionService;
+            this.fileService = fileService;
         }
 
         public async Task<Podcast> AddPodcast(string url) => await ParseRssFeed(new Podcast { Url = url });
@@ -123,28 +126,33 @@ namespace MediaLibraryBLL.Services
             return podcast;
         }
 
-        public async Task<int?> AddPodcastFile(Transaction transaction, int podcastItemId)
+        public async Task<string> AddPodcastFile(Transaction transaction, int podcastItemId)
         {
-            PodcastFile podcastFile = null;
+            string fileName = string.Empty;
 
             try
             {
-                string fileName = string.Empty;
                 PodcastItem podcastItem = null;
 
-                podcastItem = await dataService.GetAsync<PodcastItem>(item => item.Id == podcastItemId);
+                podcastItem = await dataService.GetAsync<PodcastItem, Podcast>(item => item.Id == podcastItemId, item => item.Podcast);
 
-                if (await dataService.Count<PodcastFile>(item => item.PodcastItemId == podcastItemId) == 0)
+                if (podcastItem != null)
                 {
-                    fileName = Path.GetFileName((new Uri(podcastItem.Url)).LocalPath);
-                    podcastFile = new PodcastFile(new byte[0], MimeMapping.GetMimeMapping(fileName), podcastItem.PodcastId, podcastItem.Id);
-                    await dataService.Insert(podcastFile);
-                    podcastFile.Data = await webService.DownloadData(podcastItem.Url);
-                    await dataService.Update(podcastFile);
+                    if (string.IsNullOrWhiteSpace(podcastItem.File))
+                    {
+                        fileName = Path.Combine(fileService.PodcastFolder, Path.GetFileName((new Uri(podcastItem.Url)).LocalPath));
+                        podcastItem.File = fileName;
+                        File.WriteAllBytes(fileName, await webService.DownloadData(podcastItem.Url));
+                        await dataService.Update(podcastItem);
+                    }
+                    else
+                    {
+                        await transactionService.UpdateTransactionCompleted(transaction, $"Podcast: {podcastItem.Podcast.Title}, Episode: {podcastItem.Title} already downloaded.");
+                    }
                 }
                 else
                 {
-                    await transactionService.UpdateTransactionCompleted(transaction, "Episode already downloaded.");
+                    await transactionService.UpdateTransactionCompleted(transaction, $"No podcast item found with id: {podcastItemId}.");
                 }
             }
             catch(Exception ex)
@@ -152,7 +160,7 @@ namespace MediaLibraryBLL.Services
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
 
-            return podcastFile?.Id;
+            return fileName;
         }
     }
 }

@@ -8,17 +8,17 @@ using System.Web.Mvc;
 
 namespace MediaLibraryWebUI.ActionResults
 {
-    public class RangeFileContentResult : ActionResult
+    public class FileRangeResult : ActionResult
     {
-        private byte[] fileData;
-        private string mediaType;
+        private string mediaType,
+                       fileName;
         private long? from,
                       to;
         private bool hasValidRange = false;
 
-        public RangeFileContentResult(byte[] fileData, string range, string mediaType)
+        public FileRangeResult(string fileName, string range, string mediaType)
         {
-            this.fileData = fileData;
+            this.fileName = fileName;
             this.mediaType = mediaType;
             hasValidRange = RangeHeaderValue.TryParse(range, out RangeHeaderValue header);
 
@@ -34,20 +34,26 @@ namespace MediaLibraryWebUI.ActionResults
         public override void ExecuteResult(ControllerContext context)
         {
             HttpResponseBase response = context.HttpContext.Response;
+
             response.ContentType = mediaType;
             response.StatusCode = hasValidRange ? 206 : 200;
 
-            if (hasValidRange)
+            using (var stream = File.OpenRead(fileName))
             {
-                long end = to.HasValue ? to.Value : fileData.Length - 1,
-                     count = end + 1 - from.Value;
+                if (hasValidRange)
+                {
+                    long end = to.HasValue ? to.Value : stream.Length - 1,
+                         count = end + 1 - from.Value;
+                    byte[] data = new byte[count];
 
-                response.Headers.Add("Content-Range", $"bytes {from}-{end}/{count}");
-                response.OutputStream.Write(fileData, (int)from, (int)count);
-            }
-            else
-            {
-                response.OutputStream.Write(fileData, 0, fileData.Length);
+                    stream.Write(data, (int)from.Value, (int)count);
+                    response.Headers.Add("Content-Range", $"bytes {from}-{end}/{count}");
+                    response.OutputStream.Write(data, 0, (int)count);
+                }
+                else
+                {
+                    File.OpenRead(this.fileName).CopyTo(response.OutputStream);
+                }
             }
         }
     }
