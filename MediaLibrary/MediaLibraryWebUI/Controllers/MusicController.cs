@@ -310,10 +310,9 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (file != null)
             {
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.InternetCache), "MediaLibrary"),
-                       newFile = Path.Combine(path, file.FileName);
+                string newFile = Path.Combine(fileService.MusicFolder, file.FileName);
 
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(fileService.MusicFolder);
                 file.SaveAs(newFile);
                 await fileService.ReadMediaFile(newFile, true);
                 musicService.ClearData();
