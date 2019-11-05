@@ -4,6 +4,7 @@
     [Description]  VARCHAR (MAX) NULL,
     [Length]       INT           NULL,
     [Url]          VARCHAR (MAX) NOT NULL,
+	[File]		VARCHAR(MAX) NULL,
     [PodcastId]   INT           NOT NULL,
     [PublishDate] DATETIME2      NOT NULL,
     [CreateDate]  DATETIME2      DEFAULT (getdate()) NOT NULL,

@@ -581,4 +581,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ModifyDate" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="5058899e-17e4-440d-b852-5901283f8601" ChangeDateTime="11/05/2019 13:34:55">
+    <Property Name="ElementName" Value="[dbo].[TrackFile].[Data]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TrackFile]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Path" />
+  </Operation>
 </Operations>

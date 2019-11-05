@@ -70,10 +70,8 @@
     <Build Include="dbo\Tables\Playlist.sql" />
     <Build Include="dbo\Tables\PlaylistTrack.sql" />
     <Build Include="dbo\Tables\Podcast.sql" />
-    <Build Include="dbo\Tables\PodcastFile.sql" />
     <Build Include="dbo\Tables\PodcastItem.sql" />
     <Build Include="dbo\Tables\Track.sql" />
-    <Build Include="dbo\Tables\TrackFile.sql" />
     <Build Include="dbo\Tables\Configuration.sql" />
   </ItemGroup>
   <ItemGroup>
