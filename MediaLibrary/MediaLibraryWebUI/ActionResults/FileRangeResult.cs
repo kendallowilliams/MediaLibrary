@@ -46,7 +46,8 @@ namespace MediaLibraryWebUI.ActionResults
                          count = end + 1 - from.Value;
                     byte[] data = new byte[count];
 
-                    stream.Write(data, (int)from.Value, (int)count);
+                    stream.Seek(from.Value, SeekOrigin.Begin);
+                    stream.Read(data, 0, (int)count);
                     response.Headers.Add("Content-Range", $"bytes {from}-{end}/{count}");
                     response.OutputStream.Write(data, 0, (int)count);
                 }

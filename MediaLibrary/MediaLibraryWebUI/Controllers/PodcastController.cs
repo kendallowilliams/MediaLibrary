@@ -93,7 +93,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Get(int id)
         {
-            podcastViewModel.DownloadedEpisodes = (await dataService.GetList<PodcastItem>(item => item.Id == id && item.File != null && item.File != "")).Select(item => item.Id);
+            podcastViewModel.DownloadedEpisodes = (await dataService.GetList<PodcastItem>(item => item.File != null && item.File != "")).Select(item => item.Id);
             podcastViewModel.SelectedPodcast = await dataService.GetAsync<Podcast, ICollection<PodcastItem>>(podcast => podcast.Id == id, podcast => podcast.PodcastItems);
 
             return View("Podcast", podcastViewModel);
@@ -133,14 +133,13 @@ namespace MediaLibraryWebUI.Controllers
                 {
                     if (string.IsNullOrWhiteSpace(podcastItem.File))
                     {
-                        await podcastService.AddPodcastFile(transaction, id);
                         result = new RedirectResult(podcastItem.Url);
                     }
                     else
                     {
                         result = new FileRangeResult(podcastItem.File, Request.Headers["Range"], MimeMapping.GetMimeMapping(Path.GetFileName(podcastItem.File)));
-                        await transactionService.UpdateTransactionCompleted(transaction);
                     }
+                    await transactionService.UpdateTransactionCompleted(transaction);
                 }
                 else
                 {
