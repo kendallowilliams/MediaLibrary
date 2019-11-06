@@ -10,7 +10,6 @@ namespace MediaLibraryWebUI.DataContracts
     {
         public string Path { get; set; }
         public bool Recursive { get; set; }
-        public bool Copy { get; set; }
 
         public bool IsValid() => !string.IsNullOrWhiteSpace(Path) && Directory.Exists(Path);
     }
