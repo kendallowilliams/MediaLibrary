@@ -37,6 +37,7 @@ namespace MediaLibraryWebUI.ActionResults
 
             response.ContentType = mediaType;
             response.StatusCode = hasValidRange ? 206 : 200;
+            response.Headers.Add("Accept-Ranges", "bytes");
 
             using (var stream = File.OpenRead(fileName))
             {
@@ -45,15 +46,13 @@ namespace MediaLibraryWebUI.ActionResults
                     long end = to.HasValue ? to.Value : stream.Length - 1,
                          count = end + 1 - from.Value;
                     byte[] data = new byte[count];
-
-                    stream.Seek(from.Value, SeekOrigin.Begin);
-                    stream.Read(data, 0, (int)count);
+                    
                     response.Headers.Add("Content-Range", $"bytes {from}-{end}/{count}");
-                    response.OutputStream.Write(data, 0, (int)count);
+                    response.WriteFile(this.fileName, from.Value, count);
                 }
                 else
                 {
-                    File.OpenRead(this.fileName).CopyTo(response.OutputStream);
+                    response.WriteFile(this.fileName);
                 }
             }
         }
