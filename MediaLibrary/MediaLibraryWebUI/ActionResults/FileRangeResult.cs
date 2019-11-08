@@ -25,7 +25,7 @@ namespace MediaLibraryWebUI.ActionResults
             if (hasValidRange)
             {
                 RangeItemHeaderValue headerValue = header.Ranges.ElementAt(0);
-                
+
                 from = headerValue.From;
                 to = headerValue.To;
             }
@@ -35,27 +35,25 @@ namespace MediaLibraryWebUI.ActionResults
         {
             HttpResponseBase response = context.HttpContext.Response;
 
+            FileInfo info = new FileInfo(this.fileName);
+            bool isPartial = hasValidRange && !(from == 0 && (to == info.Length - 1 || !to.HasValue));
+            response.StatusCode = isPartial ? 206 : 200;
+
             response.ContentType = mediaType;
             response.Headers.Add("Accept-Ranges", "bytes");
 
-            using (var stream = File.OpenRead(fileName))
+            if (isPartial)
             {
-                bool isPartial = hasValidRange && !(from == 0 && (to == stream.Length - 1 || !to.HasValue));
-                response.StatusCode = isPartial ? 206 : 200;
+                long end = to.HasValue ? to.Value : info.Length - 1,
+                     count = end + 1 - from.Value;
+                byte[] data = new byte[count];
 
-                if (isPartial)
-                {
-                    long end = to.HasValue ? to.Value : stream.Length - 1,
-                         count = end + 1 - from.Value;
-                    byte[] data = new byte[count];
-                    
-                    response.Headers.Add("Content-Range", $"bytes {from}-{end}/{stream.Length}");
-                    response.WriteFile(this.fileName, from.Value, count);
-                }
-                else
-                {
-                    response.WriteFile(this.fileName);
-                }
+                response.Headers.Add("Content-Range", $"bytes {from}-{end}/{info.Length}");
+                response.WriteFile(this.fileName, from.Value, count);
+            }
+            else
+            {
+                response.WriteFile(this.fileName);
             }
         }
     }
