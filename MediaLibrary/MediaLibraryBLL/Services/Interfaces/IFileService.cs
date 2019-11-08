@@ -22,5 +22,7 @@ namespace MediaLibraryBLL.Services.Interfaces
         Task CheckForMusicUpdates(Transaction transaction);
 
         Task ReadMediaFile(string path);
+
+        void Delete(string path);
     }
 }

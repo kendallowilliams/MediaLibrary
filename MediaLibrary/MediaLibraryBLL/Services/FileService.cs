@@ -72,7 +72,10 @@ namespace MediaLibraryBLL.Services
 
         public async Task<bool> Exists(string path) => await Task.Run(() => File.Exists(path));
 
-        public async Task Delete(string path) => await Task.Run(() => File.Delete(path));
+        public void Delete(string path)
+        {
+            if (File.Exists(path)) { File.Delete(path); }
+        }
 
         public async Task ReadDirectory(Transaction transaction, string path, bool recursive = true)
         {

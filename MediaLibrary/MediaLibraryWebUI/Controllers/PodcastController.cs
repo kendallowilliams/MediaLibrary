@@ -30,10 +30,12 @@ namespace MediaLibraryWebUI.Controllers
         private readonly IPodcastService podcastService;
         private readonly IControllerService controllerService;
         private readonly ITransactionService transactionService;
+        private readonly IFileService fileService;
 
         [ImportingConstructor]
         public PodcastController(IPodcastUIService podcastUIService, IDataService dataService, PodcastViewModel podcastViewModel,
-                                 IPodcastService podcastService, IControllerService controllerService, ITransactionService transactionService)
+                                 IPodcastService podcastService, IControllerService controllerService, ITransactionService transactionService,
+                                 IFileService fileService)
         {
             this.podcastUIService = podcastUIService;
             this.dataService = dataService;
@@ -41,6 +43,7 @@ namespace MediaLibraryWebUI.Controllers
             this.podcastService = podcastService;
             this.controllerService = controllerService;
             this.transactionService = transactionService;
+            this.fileService = fileService;
         }
 
         public async Task<ActionResult> Index()
@@ -78,8 +81,12 @@ namespace MediaLibraryWebUI.Controllers
         public async Task RemovePodcast(int id)
         {
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcasts));
+            Podcast podcast = await dataService.Get<Podcast, ICollection<PodcastItem>>(item => item.Id == id, item => item.PodcastItems);
+            IEnumerable<string> episodes = podcast.PodcastItems.Where(item => !string.IsNullOrWhiteSpace(item.File))
+                                                               .Select(item => item.File);
 
-            await dataService.Delete<Podcast>(id);
+            foreach (string file in episodes) { fileService.Delete(file); }
+            await dataService.Delete(podcast);
 
             if (configuration != null)
             {
