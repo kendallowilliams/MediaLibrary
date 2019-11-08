@@ -44,9 +44,9 @@ namespace MediaLibraryBLL.Services
                                                                      .Select(fileType => fileType.ToLower());
         }
 
-        public string MusicFolder { get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MediaLibrary", "Music"); }
+        public string MusicFolder { get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic, Environment.SpecialFolderOption.Create), "MediaLibrary", "Music"); }
 
-        public string PodcastFolder { get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MediaLibrary", "Podcast"); }
+        public string PodcastFolder { get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic, Environment.SpecialFolderOption.Create), "MediaLibrary", "Podcast"); }
 
         public IEnumerable<string> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false)
         {
