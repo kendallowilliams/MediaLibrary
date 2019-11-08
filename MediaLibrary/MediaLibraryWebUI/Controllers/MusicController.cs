@@ -279,12 +279,6 @@ namespace MediaLibraryWebUI.Controllers
                 
                 if (track != null)
                 {
-                    if (album == null)
-                    {
-                        album = new Album(song.Album.Trim());
-                        await dataService.Insert(album);
-                    }
-
                     if (artist == null)
                     {
                         artist = new Artist(song.Artist.Trim());
@@ -297,6 +291,15 @@ namespace MediaLibraryWebUI.Controllers
                         await dataService.Insert(genre);
                     }
 
+                    if (album == null)
+                    {
+                        album = new Album(song.Album.Trim()) { ArtistId = artist.Id, GenreId = genre.Id };
+                        await dataService.Insert(album);
+                    }
+
+                    track.Album = null;
+                    track.Artist = null;
+                    track.Genre = null;
                     track.Title = song.Title;
                     track.AlbumId = album.Id;
                     track.ArtistId = artist.Id;
