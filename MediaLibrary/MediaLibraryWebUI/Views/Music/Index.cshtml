@@ -95,14 +95,14 @@
             $('#loadingModal').modal('show');
             $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Artist))');
             $('#txt@(nameof(Model.Configuration.SelectedArtistId))').val($(btn).attr('data-item-id'));
-            updateConfiguration(() => window.location = $(btn).attr('data-artist-url'));
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Music")');
         }
 
         function albumClicked(btn) {
             $('#loadingModal').modal('show');
             $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Album))');
             $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val($(btn).attr('data-item-id'));
-            updateConfiguration(() => window.location = $(btn).attr('data-album-url'));
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Music")');
         }
 
         function refreshClicked() {

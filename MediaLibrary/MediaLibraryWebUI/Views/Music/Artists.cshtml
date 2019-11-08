@@ -30,8 +30,7 @@
                                     <span class="text-muted">@(txtAlbums)</span>
                                 </div>
                                 <div>
-                                    <button class="btn btn-outline-secondary" data-artist-url="@(Url.Action("GetArtist", "Music", new { artist.Id }))" data-tooltip="tooltip" title="View artist"
-                                            data-item-id="@(artist.Id)" onclick="artistClicked(this)">
+                                    <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="View artist" data-item-id="@(artist.Id)" onclick="artistClicked(this)">
                                         <i class="fa fa-list"></i>
                                     </button>
                                     <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddArtistToPlaylist", "Music"))" data-item-id="@(artist.Id)"
