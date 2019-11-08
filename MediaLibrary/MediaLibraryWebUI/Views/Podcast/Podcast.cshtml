@@ -74,7 +74,7 @@
         }
 
         function refreshClicked() {
-            var success = () => window.location = '@(Url.Action("Get", "Podcast", new { Model.SelectedPodcast.Id }))';
+            var success = () => window.location = '@(Url.Action("Index", "Podcast"))';
 
             $('#loadingModal').modal('show');
             $.post('@(Url.Action("RefreshPodcast","Podcast"))', { id: @(Model.SelectedPodcast.Id) }, success);
