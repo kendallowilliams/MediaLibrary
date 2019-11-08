@@ -269,10 +269,7 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Track track = await dataService.GetAsync<Track, Album, Artist, Genre>(item => item.Id == song.Id,
-                                                                                      item => item.Album,
-                                                                                      item => item.Artist,
-                                                                                      item => item.Genre);
+                Track track = await dataService.GetAsync<Track>(item => item.Id == song.Id);
                 Album album = await dataService.GetAsync<Album>(item => item.Title == song.Album.Trim());
                 Artist artist = await dataService.GetAsync<Artist>(item => item.Name == song.Artist.Trim());
                 Genre genre = await dataService.GetAsync<Genre>(item => item.Name == song.Genre.Trim());
@@ -296,10 +293,7 @@ namespace MediaLibraryWebUI.Controllers
                         album = new Album(song.Album.Trim()) { ArtistId = artist.Id, GenreId = genre.Id };
                         await dataService.Insert(album);
                     }
-
-                    track.Album = null;
-                    track.Artist = null;
-                    track.Genre = null;
+                    
                     track.Title = song.Title;
                     track.AlbumId = album.Id;
                     track.ArtistId = artist.Id;
