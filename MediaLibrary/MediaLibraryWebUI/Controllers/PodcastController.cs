@@ -112,8 +112,17 @@ namespace MediaLibraryWebUI.Controllers
 
             try
             {
-                await dataService.Insert(transaction);
-                await controllerService.QueueBackgroundWorkItem(ct => podcastService.AddPodcastFile(transaction, id), transaction);
+                Transaction existingTransaction = await dataService.Get<Transaction>(item => item.Type == (int)TransactionTypes.DownloadEpisode &&
+                                                                                             item.Status == (int)TransactionStatus.InProcess);
+                if (existingTransaction == null)
+                {
+                    await dataService.Insert(transaction);
+                    await controllerService.QueueBackgroundWorkItem(ct => podcastService.AddPodcastFile(transaction, id), transaction);
+                }
+                else
+                {
+                    await transactionService.UpdateTransactionCompleted(transaction, $"Podcast episode ({id}) download in progress.");
+                }
             }
             catch(Exception ex)
             {
