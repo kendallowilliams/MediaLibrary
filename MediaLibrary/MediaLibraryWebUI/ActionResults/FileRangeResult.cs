@@ -36,12 +36,14 @@ namespace MediaLibraryWebUI.ActionResults
             HttpResponseBase response = context.HttpContext.Response;
 
             response.ContentType = mediaType;
-            response.StatusCode = hasValidRange ? 206 : 200;
             response.Headers.Add("Accept-Ranges", "bytes");
 
             using (var stream = File.OpenRead(fileName))
             {
-                if (hasValidRange)
+                bool isPartial = hasValidRange && !(from == 0 && (to == stream.Length - 1 || !to.HasValue));
+                response.StatusCode = isPartial ? 206 : 200;
+
+                if (isPartial)
                 {
                     long end = to.HasValue ? to.Value : stream.Length - 1,
                          count = end + 1 - from.Value;
