@@ -29,8 +29,9 @@
                                 <span></span>
                             </div>
                             <div>
-                                <a class="btn btn-outline-secondary" href="@(Url.Action("GetAlbum", "Music", new { item.Id }))"
-                                   data-tooltip="tooltip" title="View album"><i class="fa fa-list"></i></a>
+                                <button class="btn btn-outline-secondary" data-item-id="@(item.Id)" onclick="albumClicked(this)" data-tooltip="tooltip" title="View album">
+                                    <i class="fa fa-list"></i>
+                                </button>
                                 <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))" data-item-id="@(item.Id)"
                                         data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist">
                                     <i class="fa fa-plus"></i>
@@ -57,6 +58,13 @@
             $('#loadingModal').modal('show');
             $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Index))');
             updateConfiguration(() => window.location = '@(Url.Action("Index", "Music"))');
+        }
+        
+        function albumClicked(btn) {
+            $('#loadingModal').modal('show');
+            $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Album))');
+            $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val($(btn).attr('data-item-id'));
+            updateConfiguration(() => window.location = '@Url.Action("Index", "Music")');
         }
     </script>
 }
