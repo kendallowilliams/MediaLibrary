@@ -86,7 +86,7 @@ namespace MediaLibraryWebUI.Controllers
                                                                .Select(item => item.File);
 
             foreach (string file in episodes) { fileService.Delete(file); }
-            await dataService.Delete(podcast);
+            await dataService.Delete<Podcast>(id);
 
             if (configuration != null)
             {
