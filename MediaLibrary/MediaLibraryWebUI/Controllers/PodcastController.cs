@@ -114,9 +114,10 @@ namespace MediaLibraryWebUI.Controllers
             {
                 Transaction existingTransaction = await dataService.Get<Transaction>(item => item.Type == (int)TransactionTypes.DownloadEpisode &&
                                                                                              item.Status == (int)TransactionStatus.InProcess);
+                await dataService.Insert(transaction);
+
                 if (existingTransaction == null)
                 {
-                    await dataService.Insert(transaction);
                     await controllerService.QueueBackgroundWorkItem(ct => podcastService.AddPodcastFile(transaction, id), transaction);
                 }
                 else
