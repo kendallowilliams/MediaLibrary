@@ -49,7 +49,7 @@ namespace MediaLibraryWebUI.ActionResults
                          count = end + 1 - from.Value;
                     byte[] data = new byte[count];
                     
-                    response.Headers.Add("Content-Range", $"bytes {from}-{end}/{count}");
+                    response.Headers.Add("Content-Range", $"bytes {from}-{end}/{stream.Length}");
                     response.WriteFile(this.fileName, from.Value, count);
                 }
                 else
