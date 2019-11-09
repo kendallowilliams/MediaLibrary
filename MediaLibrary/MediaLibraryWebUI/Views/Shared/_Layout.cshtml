@@ -13,20 +13,37 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="@(Url.Content("~/Content/images/logo.png"))" title="KOW Moosic" /></a>
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                <img src="@(Url.Content("~/Content/images/logo.png"))" title="KOW Moosic" />
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        @Html.ActionLink("Music", "Index", "Music", null, new { @class = "nav-link", onclick = "showLoading()" })
+                    <li class="nav-item">
+                        @Html.ActionLink("Music",
+                                         "Index",
+                                         "Music",
+                                         null,
+                                         new { @class = "nav-link" + (Model.Configuration.SelectedMediaPage == Enums.MediaPages.Music ? " active" : string.Empty),
+                                               onclick = "showLoading()" })
                     </li>
-                    <li class="nav-item active">
-                        @Html.ActionLink("Podcasts", "Index", "Podcast", null, new { @class = "nav-link", onclick = "showLoading()" })
+                    <li class="nav-item">
+                        @Html.ActionLink("Podcasts",
+                                         "Index",
+                                         "Podcast",
+                                         null,
+                                         new { @class = "nav-link" + (Model.Configuration.SelectedMediaPage == Enums.MediaPages.Podcasts ? " active" : string.Empty),
+                                               onclick = "showLoading()" })
                     </li>
-                    <li class="nav-item active">
-                        @Html.ActionLink("Playlists", "Index", "Playlist", null, new { @class = "nav-link", onclick = "showLoading()" })
+                    <li class="nav-item">
+                        @Html.ActionLink("Playlists",
+                                         "Index",
+                                         "Playlist",
+                                         null,
+                                         new { @class = "nav-link" + (Model.Configuration.SelectedMediaPage == Enums.MediaPages.Playlists ? " active" : string.Empty),
+                                               onclick = "showLoading()" })
                     </li>
                 </ul>
             </div>
@@ -77,7 +94,7 @@
     </script>
 
     <script type="text/javascript" defer="defer">
-        $(function() {
+        $(function () {
             $('[data-toggle="popover"]').popover();
             $('[data-tooltip="tooltip"]').tooltip();
         });

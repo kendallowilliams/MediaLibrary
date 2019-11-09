@@ -11,12 +11,12 @@ namespace MediaLibraryWebUI.Models.Configurations
     {
         public PlaylistConfiguration()
         {
-            SelectPage = MediaPages.Playlists;
+            SelectedMediaPage = MediaPages.Playlists;
         }
 
         public int SelectedPlaylistId { get; set; }
         public PlaylistPages SelectedPlaylistPage { get; set; }
         public PlaylistSort SelectedPlaylistSort { get; set; }
-        public MediaPages SelectPage { get; set; }
+        public MediaPages SelectedMediaPage { get; set; }
     }
 }

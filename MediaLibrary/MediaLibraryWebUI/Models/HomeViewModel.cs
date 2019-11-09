@@ -11,6 +11,9 @@ namespace MediaLibraryWebUI.Models
     public class HomeViewModel : ViewModel<HomeConfiguration>
     {
         [ImportingConstructor]
-        public HomeViewModel() { }
+        public HomeViewModel()
+        {
+            Configuration = new HomeConfiguration();
+        }
     }
 }

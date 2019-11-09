@@ -12,7 +12,7 @@ namespace MediaLibraryWebUI.Models.Configurations
     {
         public MusicConfiguration()
         {
-            SelectPage = MediaPages.Music;
+            SelectedMediaPage = MediaPages.Music;
         }
 
         public int SelectedAlbumId { get; set; }
@@ -22,6 +22,6 @@ namespace MediaLibraryWebUI.Models.Configurations
         public SongSort SelectedSongSort { get; set; }
         public MusicTab SelectedMusicTab { get; set; }
         public MusicPages SelectedMusicPage { get; set; }
-        public MediaPages SelectPage { get; set; }
+        public MediaPages SelectedMediaPage { get; set; }
     }
 }
