@@ -36,8 +36,8 @@ else
             $($btn.attr('data-target')).load(url, function () {
                 $($btn.attr('data-target') + ' [data-tooltip="tooltip"]').tooltip();
                 $('#loadingModal').modal('hide');
+                $btn.attr('data-group-url', '');
             });
-            $btn.attr('data-group-url', '');
         }
     });
 
