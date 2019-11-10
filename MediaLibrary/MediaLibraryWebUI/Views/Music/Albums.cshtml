@@ -23,7 +23,7 @@
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(album.Title)">
                                 <div class="media-body">
                                     <h5 class="mt-0">@(album.Title)</h5>
-                                    <span>@(Model.Artists.FirstOrDefault(artist => artist.Id == album.ArtistId)?.Name ?? "Unknown Artist")</span>
+                                    <span>@(album.Artist?.Name ?? "Unknown Artist")</span>
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="View album" data-item-id="@(album.Id)" onclick="albumClicked(this)">
