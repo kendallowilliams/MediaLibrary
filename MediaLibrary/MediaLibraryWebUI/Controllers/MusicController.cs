@@ -82,9 +82,12 @@ namespace MediaLibraryWebUI.Controllers
             return result;
         }
 
-        public ActionResult GetSongGroup(string key)
+        public async Task<ActionResult> GetSongGroup(string key)
         {
-            return PartialView("~/Views/Music/SongGroup.cshtml", musicViewModel.SongGroups.FirstOrDefault(group => group.Key == key));
+            IGrouping<string, Track> group = musicViewModel.SongGroups.FirstOrDefault(item => item.Key == key);
+            int playlistCount = await dataService.Count<Playlist>();
+
+            return PartialView("~/Views/Music/SongGroup.cshtml", (Group: group, PlaylistCount: playlistCount));
         }
 
         [AllowAnonymous]
