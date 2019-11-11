@@ -1,4 +1,5 @@
-﻿using MediaLibraryDAL.DbContexts;
+﻿using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Models.Configurations;
@@ -22,13 +23,16 @@ namespace MediaLibraryWebUI.Controllers
         private readonly IPlaylistUIService playlistService;
         private readonly IDataService dataService;
         private readonly PlaylistViewModel playlistViewModel;
+        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
-        public PlaylistController(IPlaylistUIService playlistService, IDataService dataService, PlaylistViewModel playlistViewModel)
+        public PlaylistController(IPlaylistUIService playlistService, IDataService dataService, PlaylistViewModel playlistViewModel,
+                                  ITransactionService transactionService)
         {
             this.playlistService = playlistService;
             this.dataService = dataService;
             this.playlistViewModel = playlistViewModel;
+            this.transactionService = transactionService;
         }
 
         public async Task<ActionResult> Index()

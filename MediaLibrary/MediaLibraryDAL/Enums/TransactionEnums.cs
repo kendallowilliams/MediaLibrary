@@ -23,7 +23,8 @@ namespace MediaLibraryDAL.Enums
             GetGenres = 151, GetGenre = 152,
 
             /* Playlists: 201 - 250 */
-            GetPlaylists = 201, GetPlaylist = 202, AddPlaylist = 203, RemovePlaylist = 204, ReplacePlaylist = 205,
+            GetPlaylists = 201, GetPlaylist = 202, AddPlaylist = 203, RemovePlaylist = 204, ReplacePlaylist = 205, AddPlaylistSong = 206, AddPlaylistArtist = 207,
+            AddPlaylistAlbum = 208,
 
             /* Podcasts: 251 - 300 */
             GetPodcasts = 251, GetPodcast = 252, AddPodcast = 253, RemovePodcast = 254, ReplacePodcast = 255, DownloadEpisode = 256, DownloadAllEpisodes = 257,

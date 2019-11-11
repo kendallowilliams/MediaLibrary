@@ -1,4 +1,5 @@
-﻿using MediaLibraryWebUI.Models;
+﻿using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryWebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -11,10 +12,14 @@ namespace MediaLibraryWebUI.Controllers
     [Export("Player", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlayerController : BaseController
     {
-        [ImportingConstructor]
-        public PlayerController() { }
+        private readonly ITransactionService transactionService;
 
-        // GET: Player
+        [ImportingConstructor]
+        public PlayerController(ITransactionService transactionService)
+        {
+            this.transactionService = transactionService;
+        }
+        
         public ActionResult Index()
         {
             PlayerViewModel model = new PlayerViewModel();

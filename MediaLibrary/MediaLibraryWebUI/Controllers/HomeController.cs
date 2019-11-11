@@ -1,4 +1,5 @@
-﻿using MediaLibraryWebUI.Models;
+﻿using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryWebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -12,11 +13,13 @@ namespace MediaLibraryWebUI.Controllers
     public class HomeController : BaseController
     {
         private readonly HomeViewModel homeViewModel;
+        private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
-        public HomeController(HomeViewModel homeViewModel)
+        public HomeController(HomeViewModel homeViewModel, ITransactionService transactionService)
         {
             this.homeViewModel = homeViewModel;
+            this.transactionService = transactionService;
         }
 
         public ActionResult Index()

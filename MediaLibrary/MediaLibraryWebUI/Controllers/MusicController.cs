@@ -113,24 +113,60 @@ namespace MediaLibraryWebUI.Controllers
         public async Task AddTrackToPlaylist(int itemId, int playlistId)
         {
             PlaylistTrack item = new PlaylistTrack() { PlaylistId = playlistId, TrackId = itemId };
+            Transaction transaction = null;
 
-            await dataService.Insert(item);
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPlaylistSong);
+                await dataService.Insert(item);
+                await transactionService.UpdateTransactionCompleted(transaction, $"Playlist: {playlistId}, Track: {itemId}");
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
 
         public async Task AddArtistToPlaylist(int itemId, int playlistId)
         {
-            IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.ArtistId == itemId);
-            IEnumerable<PlaylistTrack> items = tracks.Select(track => new PlaylistTrack { TrackId = track.Id, PlaylistId = playlistId });
+            Transaction transaction = null;
 
-            await dataService.Insert(items);
+            try
+            {
+                IEnumerable<Track> tracks = null;
+                IEnumerable<PlaylistTrack> items = null;
+
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPlaylistArtist);
+                tracks = await dataService.GetList<Track>(track => track.ArtistId == itemId);
+                items = tracks.Select(track => new PlaylistTrack { TrackId = track.Id, PlaylistId = playlistId });
+                await dataService.Insert(items);
+                await transactionService.UpdateTransactionCompleted(transaction, $"Playlist: {playlistId}, Artist: {itemId}");
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
 
         public async Task AddAlbumToPlaylist(int itemId, int playlistId)
         {
-            IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.AlbumId == itemId);
-            IEnumerable<PlaylistTrack> items = tracks.Select(track => new PlaylistTrack { TrackId = track.Id, PlaylistId = playlistId });
+            Transaction transaction = null;
 
-            await dataService.Insert(items);
+            try
+            {
+                IEnumerable<Track> tracks = null;
+                IEnumerable<PlaylistTrack> items = null;
+
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPlaylistAlbum);
+                tracks = await dataService.GetList<Track>(track => track.AlbumId == itemId);
+                items = tracks.Select(track => new PlaylistTrack { TrackId = track.Id, PlaylistId = playlistId });
+                await dataService.Insert(items);
+                await transactionService.UpdateTransactionCompleted(transaction, $"Playlist: {playlistId}, Album: {itemId}");
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
 
         public async Task<ActionResult> GetAlbum(int id)
