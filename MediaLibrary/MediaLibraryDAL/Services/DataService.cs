@@ -129,16 +129,7 @@ namespace MediaLibraryBLL.Services
 
         public async Task<int> Delete<T>(T entity) where T : class, IDataModel
         {
-            int result = default(int);
-
-            using (var db = new MediaLibraryEntities())
-            {
-                db.Database.CommandTimeout = timeout;
-                db.Set<T>().Remove(entity);
-                result = await db.SaveChangesAsync();
-            }
-
-            return result;
+            return await Delete<T>(entity?.Id);
         }
 
         public async Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
