@@ -29,7 +29,7 @@
         @if (Model.SelectedPlaylist.PlaylistTracks.Any())
         {
             <ul class="list-group list-group-flush">
-                @foreach (var list in Model.SelectedPlaylist.PlaylistTracks)
+                @foreach (var list in Model.SelectedPlaylist.PlaylistTracks.OrderBy(item => item.CreateDate))
                 {
                     <li class="list-group-item">
                         <div class="media">
