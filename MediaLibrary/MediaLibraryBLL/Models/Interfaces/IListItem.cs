@@ -11,5 +11,6 @@ namespace MediaLibraryBLL.Models.Interfaces
         T_ID ID { get; set; }
         string Name { get; set; }
         T_Value Value { get; set; }
+        bool IsSelected { get; set; }
     }
 }

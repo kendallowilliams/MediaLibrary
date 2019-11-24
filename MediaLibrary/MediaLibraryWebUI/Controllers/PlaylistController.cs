@@ -1,4 +1,5 @@
-﻿using MediaLibraryBLL.Services.Interfaces;
+﻿using MediaLibraryBLL.Models;
+using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.Models;
@@ -152,6 +153,54 @@ namespace MediaLibraryWebUI.Controllers
                 {
                     configuration.JsonData = JsonConvert.SerializeObject(playlistConfiguration);
                     await dataService.Update(configuration);
+                }
+            }
+        }
+
+        public async Task UpdateNowPlaying(string itemsJSON, MediaType mediaType)
+        {
+            var items = JsonConvert.DeserializeObject< IEnumerable<ListItem<int, int>>>(itemsJSON);
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
+            PlayerConfiguration playerConfiguration = new PlayerConfiguration();
+
+            if (configuration == null)
+            {
+                configuration = new Configuration() { Type = nameof(MediaPages.Player), JsonData = JsonConvert.SerializeObject(playerConfiguration) };
+                await dataService.Insert(configuration);
+            }
+            else
+            {
+                playerConfiguration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
+            }
+
+            playerConfiguration.CurrentItemId = items.FirstOrDefault(item => item.IsSelected).Value;
+            playerConfiguration.SelectedMediaType = mediaType;
+            configuration.JsonData = JsonConvert.SerializeObject(playerConfiguration);
+            await dataService.Update(configuration);
+
+            if (items != null)
+            {
+                Playlist playlist = await dataService.Get<Playlist>(item => item.Name == "Now Playing");
+                IEnumerable<PlaylistTrack> playlistTracks = Enumerable.Empty<PlaylistTrack>();
+                IEnumerable<PlaylistPodcastItem> playlistPodcastItems = Enumerable.Empty<PlaylistPodcastItem>();
+
+                if (playlist == null)
+                {
+                    playlist = new Playlist("Now Playing");
+                    await dataService.Insert(playlist);
+                }
+
+                if (mediaType == MediaType.Song)
+                {
+                    playlistTracks = items.Select(item => new PlaylistTrack() { PlaylistId = playlist.Id, TrackId = item.Value });
+                    await dataService.DeleteAll<PlaylistTrack>(item => item.PlaylistId == playlist.Id);
+                    await dataService.Insert(playlistTracks);
+                }
+                else if (mediaType == MediaType.Podcast)
+                {
+                    playlistPodcastItems = items.Select(item => new PlaylistPodcastItem() { PlaylistId = playlist.Id, PodcastItemId = item.Value });
+                    await dataService.DeleteAll<PlaylistPodcastItem>(item => item.PlaylistId == playlist.Id);
+                    await dataService.Insert(playlistPodcastItems);
                 }
             }
         }

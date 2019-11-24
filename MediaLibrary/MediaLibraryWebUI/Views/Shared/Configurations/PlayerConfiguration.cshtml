@@ -1,0 +1,17 @@
+﻿@model MediaLibraryWebUI.Models.Configurations.PlayerConfiguration
+
+<div class="d-none">
+    @Html.Hidden(nameof(Model.SelectedMediaType), Model.SelectedMediaType, new { id = $"txt{nameof(Model.SelectedMediaType)}" });
+    @Html.Hidden(nameof(Model.CurrentItemId), Model.CurrentItemId, new { id = $"txt{nameof(Model.CurrentItemId)}" });
+</div>
+
+<script type="text/javascript" defer="defer">
+    function updatePlayerConfiguration(success) {
+        $.post('@Url.Action("UpdateConfiguration", "Player")', getPlayerConfigurationData(), success);
+    }
+
+    function getPlayerConfigurationData() {
+        return '@(nameof(Model.SelectedMediaType))=' + $('#txt@(nameof(Model.SelectedMediaType))').val() + '&' +
+               '@(nameof(Model.CurrentItemId))=' + $('#txt@(nameof(Model.CurrentItemId))').val();
+    }
+</script>

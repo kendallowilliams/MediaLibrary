@@ -19,7 +19,6 @@ namespace MediaLibraryWebUI.Models
         {
             PodcastGroups = Enumerable.Empty<IGrouping<string, Podcast>>();
             PodcastItems = Enumerable.Empty<PodcastItem>();
-            Configuration = new PodcastConfiguration();
             DownloadedEpisodes = Enumerable.Empty<int>();
             PodcastSortItems = PodcastRepository.GetPodcastSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
         }

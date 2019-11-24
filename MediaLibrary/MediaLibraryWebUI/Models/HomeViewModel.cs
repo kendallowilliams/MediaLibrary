@@ -13,7 +13,6 @@ namespace MediaLibraryWebUI.Models
         [ImportingConstructor]
         public HomeViewModel()
         {
-            Configuration = new HomeConfiguration();
         }
     }
 }

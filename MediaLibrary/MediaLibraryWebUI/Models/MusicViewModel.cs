@@ -26,7 +26,6 @@ namespace MediaLibraryWebUI.Models
             Songs = Enumerable.Empty<Track>();
             Artists = Enumerable.Empty<Artist>();
             Albums = Enumerable.Empty<Album>();
-            Configuration = new MusicConfiguration();
             AlbumSortItems = MusicRepository.GetAlbumSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
             ArtistSortItems = MusicRepository.GetArtistSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
             SongSortItems = MusicRepository.GetSongSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });

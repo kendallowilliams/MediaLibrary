@@ -25,6 +25,9 @@
         <AssociationConnector Association="MediaLibraryDAL.FK__Track__PathId__05D8E0BE" />
         <EntityTypeShape EntityType="MediaLibraryDAL.Configuration" Width="1.5" PointX="0.75" PointY="7.75" />
         <AssociationConnector Association="MediaLibraryDAL.FK__Track__GenreId__2739D489" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.PlaylistPodcastItem" Width="1.5" PointX="14.25" PointY="5.25" />
+        <AssociationConnector Association="MediaLibraryDAL.FK_playlist_podcastitem_playlist" />
+        <AssociationConnector Association="MediaLibraryDAL.FK_playlist_podcastitem_podcastitem" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

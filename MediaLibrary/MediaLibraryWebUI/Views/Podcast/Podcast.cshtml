@@ -40,7 +40,7 @@
                                         data-html="true">
                                     <i class="fa fa-info-circle"></i>
                                 </button>
-                                <button class="btn btn-outline-secondary" data-play-url="@Url.Action("File","Podcast", new { item.Id })" onclick="play(this)"
+                                <button class="btn btn-outline-secondary" data-play-id="@(item.Id)" onclick="play(this)"  data-media-type="@(Enums.MediaType.Podcast)"
                                         data-tooltip="tooltip" title="Play">
                                     <i class="fa fa-play"></i>
                                 </button>

@@ -17,7 +17,6 @@ namespace MediaLibraryWebUI.Models
         public PlaylistViewModel()
         {
             PlaylistGroups = Enumerable.Empty<IGrouping<string, Playlist>>();
-            Configuration = new PlaylistConfiguration();
             PlaylistSortItems = PlaylistRepository.GetPlaylistSortItems().Select(item => new SelectListItem { Text = item.Name, Value = item.Value.ToString() });
         }
 

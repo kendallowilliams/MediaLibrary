@@ -62,34 +62,46 @@
     @Html.Partial("~/Views/Shared/Modals/LoadingModal.cshtml")
 
     <script type="text/javascript">
-        var playerPopup = null,
-            $playData = null;
+        var playerPopup = null;
 
         window.addEventListener("message", receiveMessage, false);
 
         function receiveMessage(event) {
             if (event.origin !== "@(Request.Url.GetLeftPart(UriPartial.Authority))")
                 return;
-
-            if (event.data === "loaded") {
-                playerPopup.postMessage($.makeArray($playData));
-            }
         }
 
-        function play(_btn) {
-            var $playButtons = $('button[data-play-url]');
+        function play(btn) {
+            var $playButtons = $('button[data-play-id]'),
+                success = () => null,
+                mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaType.Song))',
+                data = new FormData(),
+                $playData = null;
 
-            $playData = $playButtons.map((index, btn) => ({
-                    index: index,
-                    url: $(btn).attr("data-play-url"),
-                    isPlaying: btn.isSameNode(_btn)
-                }));
+            $playData = $playButtons.map((index, _btn) => ({
+                Id: index,
+                Value: parseInt($(_btn).attr("data-play-id")),
+                IsSelected: btn.isSameNode(_btn)
+            }));
+            data.append('mediaType', mediaType);
+            data.append('itemsJSON', JSON.stringify($playData.get()));
 
             if (!playerPopup || playerPopup.closed) {
-                playerPopup = window.open('@Url.Action("Index", "Player")', '@(Model.MusicPlayerId)');
+                success = () => playerPopup = window.open('@Url.Action("Index", "Player")', '@(Model.MusicPlayerId)');
+
             } else {
-                playerPopup.postMessage($.makeArray($playData));
+                success = () => playerPopup.postMessage('reload');
             }
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateNowPlaying", "Playlist")',
+                data: data,
+                contentType: false,
+                success: success,
+                processData: false,
+                traditional: true
+            });
         }
     </script>
 

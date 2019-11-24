@@ -117,6 +117,9 @@
     <Compile Include="DbContexts\Playlist.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
+    <Compile Include="DbContexts\PlaylistPodcastItem.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
     <Compile Include="DbContexts\PlaylistTrack.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
@@ -140,6 +143,7 @@
     <Compile Include="Models\MediaData.cs" />
     <Compile Include="Partials\Configuration.cs" />
     <Compile Include="Partials\PlaylistTrack.cs" />
+    <Compile Include="Partials\PlaylistPodcastItem.cs" />
     <Compile Include="Partials\PodcastItem.cs" />
     <Compile Include="Partials\Podcast.cs" />
     <Compile Include="Partials\Playlist.cs" />

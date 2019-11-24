@@ -18,6 +18,7 @@ namespace MediaLibraryDAL.DbContexts
         public Playlist()
         {
             this.PlaylistTracks = new HashSet<PlaylistTrack>();
+            this.PlaylistPodcastItems = new HashSet<PlaylistPodcastItem>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,7 @@ namespace MediaLibraryDAL.DbContexts
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlaylistPodcastItem> PlaylistPodcastItems { get; set; }
     }
 }

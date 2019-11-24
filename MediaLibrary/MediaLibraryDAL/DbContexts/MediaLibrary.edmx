@@ -54,6 +54,16 @@
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <EntityType Name="PlaylistPodcastItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlaylistId" Type="int" Nullable="false" />
+          <Property Name="PodcastItemId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="PlaylistTrack">
           <Key>
             <PropertyRef Name="Id" />
@@ -134,7 +144,7 @@
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Album__ArtistId__619B8048">
+        <Association Name="FK__Album__ArtistId__656C112C">
           <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
           <End Role="Album" Type="Self.Album" Multiplicity="*" />
           <ReferentialConstraint>
@@ -146,7 +156,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Album__GenreId__628FA481">
+        <Association Name="FK__Album__GenreId__66603565">
           <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
           <End Role="Album" Type="Self.Album" Multiplicity="*" />
           <ReferentialConstraint>
@@ -158,7 +168,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PodcastIt__Podca__656C112C">
+        <Association Name="FK__PodcastIt__Podca__6B24EA82">
           <End Role="Podcast" Type="Self.Podcast" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -172,7 +182,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__AlbumId__66603565">
+        <Association Name="FK__Track__AlbumId__6C190EBB">
           <End Role="Album" Type="Self.Album" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -184,7 +194,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__ArtistId__6754599E">
+        <Association Name="FK__Track__ArtistId__6D0D32F4">
           <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -196,7 +206,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__GenreId__693CA210">
+        <Association Name="FK__Track__GenreId__6EF57B66">
           <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -208,7 +218,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__PathId__68487DD7">
+        <Association Name="FK__Track__PathId__6E01572D">
           <End Role="TrackPath" Type="Self.TrackPath" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -219,6 +229,34 @@
             </Principal>
             <Dependent Role="Track">
               <PropertyRef Name="PathId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_playlist_podcastitem_playlist">
+          <End Role="Playlist" Type="Self.Playlist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlaylistPodcastItem" Type="Self.PlaylistPodcastItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Playlist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaylistPodcastItem">
+              <PropertyRef Name="PlaylistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_playlist_podcastitem_podcastitem">
+          <End Role="PodcastItem" Type="Self.PodcastItem" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlaylistPodcastItem" Type="Self.PlaylistPodcastItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PodcastItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaylistPodcastItem">
+              <PropertyRef Name="PodcastItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -256,39 +294,48 @@
           <EntitySet Name="Configuration" EntityType="Self.Configuration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Playlist" EntityType="Self.Playlist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlaylistPodcastItem" EntityType="Self.PlaylistPodcastItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlaylistTrack" EntityType="Self.PlaylistTrack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Podcast" EntityType="Self.Podcast" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PodcastItem" EntityType="Self.PodcastItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Track" EntityType="Self.Track" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TrackPath" EntityType="Self.TrackPath" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Album__ArtistId__619B8048" Association="Self.FK__Album__ArtistId__619B8048">
+          <AssociationSet Name="FK__Album__ArtistId__656C112C" Association="Self.FK__Album__ArtistId__656C112C">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Album" EntitySet="Album" />
           </AssociationSet>
-          <AssociationSet Name="FK__Album__GenreId__628FA481" Association="Self.FK__Album__GenreId__628FA481">
+          <AssociationSet Name="FK__Album__GenreId__66603565" Association="Self.FK__Album__GenreId__66603565">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Album" EntitySet="Album" />
           </AssociationSet>
-          <AssociationSet Name="FK__PodcastIt__Podca__656C112C" Association="Self.FK__PodcastIt__Podca__656C112C">
+          <AssociationSet Name="FK__PodcastIt__Podca__6B24EA82" Association="Self.FK__PodcastIt__Podca__6B24EA82">
             <End Role="Podcast" EntitySet="Podcast" />
             <End Role="PodcastItem" EntitySet="PodcastItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__AlbumId__66603565" Association="Self.FK__Track__AlbumId__66603565">
+          <AssociationSet Name="FK__Track__AlbumId__6C190EBB" Association="Self.FK__Track__AlbumId__6C190EBB">
             <End Role="Album" EntitySet="Album" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__ArtistId__6754599E" Association="Self.FK__Track__ArtistId__6754599E">
+          <AssociationSet Name="FK__Track__ArtistId__6D0D32F4" Association="Self.FK__Track__ArtistId__6D0D32F4">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__GenreId__693CA210" Association="Self.FK__Track__GenreId__693CA210">
+          <AssociationSet Name="FK__Track__GenreId__6EF57B66" Association="Self.FK__Track__GenreId__6EF57B66">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__PathId__68487DD7" Association="Self.FK__Track__PathId__68487DD7">
+          <AssociationSet Name="FK__Track__PathId__6E01572D" Association="Self.FK__Track__PathId__6E01572D">
             <End Role="TrackPath" EntitySet="TrackPath" />
             <End Role="Track" EntitySet="Track" />
+          </AssociationSet>
+          <AssociationSet Name="FK_playlist_podcastitem_playlist" Association="Self.FK_playlist_podcastitem_playlist">
+            <End Role="Playlist" EntitySet="Playlist" />
+            <End Role="PlaylistPodcastItem" EntitySet="PlaylistPodcastItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_playlist_podcastitem_podcastitem" Association="Self.FK_playlist_podcastitem_podcastitem">
+            <End Role="PodcastItem" EntitySet="PodcastItem" />
+            <End Role="PlaylistPodcastItem" EntitySet="PlaylistPodcastItem" />
           </AssociationSet>
           <AssociationSet Name="FK_playlist_track_playlist" Association="Self.FK_playlist_track_playlist">
             <End Role="Playlist" EntitySet="Playlist" />
@@ -403,6 +450,15 @@
             <End Role="Genre" EntitySet="Genres" />
             <End Role="Track" EntitySet="Tracks" />
           </AssociationSet>
+          <EntitySet Name="PlaylistPodcastItems" EntityType="MediaLibraryDAL.PlaylistPodcastItem" />
+          <AssociationSet Name="FK_playlist_podcastitem_playlist" Association="MediaLibraryDAL.FK_playlist_podcastitem_playlist">
+            <End Role="Playlist" EntitySet="Playlists" />
+            <End Role="PlaylistPodcastItem" EntitySet="PlaylistPodcastItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_playlist_podcastitem_podcastitem" Association="MediaLibraryDAL.FK_playlist_podcastitem_podcastitem">
+            <End Role="PodcastItem" EntitySet="PodcastItems" />
+            <End Role="PlaylistPodcastItem" EntitySet="PlaylistPodcastItems" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -450,6 +506,7 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="PlaylistTracks" Relationship="MediaLibraryDAL.FK_playlist_track_playlist" FromRole="Playlist" ToRole="PlaylistTrack" />
+          <NavigationProperty Name="PlaylistPodcastItems" Relationship="MediaLibraryDAL.FK_playlist_podcastitem_playlist" FromRole="Playlist" ToRole="PlaylistPodcastItem" />
         </EntityType>
         <EntityType Name="PlaylistTrack">
           <Key>
@@ -493,6 +550,7 @@
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Podcast" Relationship="MediaLibraryDAL.FK__PodcastIt__Podca__6B24EA82" FromRole="PodcastItem" ToRole="Podcast" />
           <Property Name="File" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PlaylistPodcastItems" Relationship="MediaLibraryDAL.FK_playlist_podcastitem_podcastitem" FromRole="PodcastItem" ToRole="PlaylistPodcastItem" />
         </EntityType>
         <EntityType Name="Track">
           <Key>
@@ -731,6 +789,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PlaylistPodcastItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlaylistId" Type="Int32" Nullable="false" />
+          <Property Name="PodcastItemId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Playlist" Relationship="MediaLibraryDAL.FK_playlist_podcastitem_playlist" FromRole="PlaylistPodcastItem" ToRole="Playlist" />
+          <NavigationProperty Name="PodcastItem" Relationship="MediaLibraryDAL.FK_playlist_podcastitem_podcastitem" FromRole="PlaylistPodcastItem" ToRole="PodcastItem" />
+        </EntityType>
+        <Association Name="FK_playlist_podcastitem_playlist">
+          <End Type="MediaLibraryDAL.Playlist" Role="Playlist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MediaLibraryDAL.PlaylistPodcastItem" Role="PlaylistPodcastItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Playlist">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaylistPodcastItem">
+              <PropertyRef Name="PlaylistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_playlist_podcastitem_podcastitem">
+          <End Type="MediaLibraryDAL.PodcastItem" Role="PodcastItem" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MediaLibraryDAL.PlaylistPodcastItem" Role="PlaylistPodcastItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PodcastItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlaylistPodcastItem">
+              <PropertyRef Name="PodcastItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -875,6 +973,17 @@
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="JsonData" ColumnName="JsonData" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlaylistPodcastItems">
+            <EntityTypeMapping TypeName="MediaLibraryDAL.PlaylistPodcastItem">
+              <MappingFragment StoreEntitySet="PlaylistPodcastItem">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="PodcastItemId" ColumnName="PodcastItemId" />
+                <ScalarProperty Name="PlaylistId" ColumnName="PlaylistId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

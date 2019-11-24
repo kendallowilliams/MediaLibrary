@@ -7,11 +7,12 @@ using System.Web.Configuration;
 
 namespace MediaLibraryWebUI.Models
 {
-    public abstract class ViewModel<TConfig> : IViewModel
+    public abstract class ViewModel<TConfig> : IViewModel where TConfig: new()
     {
         public ViewModel()
         {
             MusicPlayerId = "music-player";
+            Configuration = new TConfig();
         }
 
         public string MusicPlayerId { get; }

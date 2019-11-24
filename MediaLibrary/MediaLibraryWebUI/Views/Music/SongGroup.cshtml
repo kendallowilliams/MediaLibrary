@@ -12,7 +12,7 @@
                     <span>@(song.Album?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</span>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-outline-secondary" data-play-url="@Url.Action("File", "Music", new { song.Id })" onclick="play(this)"
+                    <button type="button" class="btn btn-outline-secondary" data-play-id="@(song.Id)" onclick="play(this)"
                             data-tooltip="tooltip" title="Play">
                         <i class="fa fa-play"></i>
                     </button>

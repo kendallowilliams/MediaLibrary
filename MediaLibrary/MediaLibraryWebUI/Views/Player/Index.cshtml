@@ -8,10 +8,40 @@
 <div>
     <audio id="@(Model.MusicPlayerId)" autoplay="autoplay" preload="auto" controls="controls" />
 </div>
+<br />
+<div class="card">
+    <div class="card-header">
+        @(Model.SelectedPlaylist.Name)
+    </div>
+    <ul class="list-group list-group-flush">
+        @if (Model.Configuration.SelectedMediaType == Enums.MediaType.Song)
+        {
+            foreach (var track in Model.SelectedPlaylist.PlaylistTracks.Select(item => item.Track))
+            {
+                <li class="list-group-item list-group-item-action" data-play-url="@Url.Action("File", "Music", new { track.Id })" onclick="play(this)">@(track.Title)</li>
+            }
+        }
+        else if (Model.Configuration.SelectedMediaType == Enums.MediaType.Podcast)
+        {
+            foreach (var item in Model.SelectedPlaylist.PlaylistPodcastItems.Select(item => item.PodcastItem))
+            {
+                <li class="list-group-item list-group-item-action" data-play-url="@Url.Action("File", "Podcast", new { item.Id })" onclick="play(this)">@(item.Title)</li>
+            }
+        }
+    </ul>
+</div>
 
 @section scripts {
     <script type="text/javascript" defer="defer">
+        var $player = $('#@(Model.MusicPlayerId)');
 
+        function play(item) {
+            var $item = $(item),
+                url = $item.attr('data-play-url');
+            
+            $player.prop('src', url);
+            $player.trigger('play');
+        }
     </script>
 }
 

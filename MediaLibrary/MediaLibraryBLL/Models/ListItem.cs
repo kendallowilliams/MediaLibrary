@@ -21,5 +21,6 @@ namespace MediaLibraryBLL.Models
         public T_ID ID { get; set; }
         public string Name { get; set; }
         public T_Value Value { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

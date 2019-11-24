@@ -15,5 +15,9 @@ namespace MediaLibraryWebUI.Models.Configurations
         }
 
         public MediaPages SelectedMediaPage { get; set; }
+
+        public MediaType SelectedMediaType { get; set; }
+        
+        public int CurrentItemId { get; set; }
     }
 }

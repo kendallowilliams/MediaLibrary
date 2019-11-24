@@ -588,4 +588,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Path" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="e487eae2-1c2a-4061-ad44-6e1bacf92db6" ChangeDateTime="11/24/2019 17:21:02">
+    <Property Name="ElementName" Value="[dbo].[PlaylistTrack].[TrackId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PlaylistTrack]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PodcastItemId" />
+  </Operation>
 </Operations>
