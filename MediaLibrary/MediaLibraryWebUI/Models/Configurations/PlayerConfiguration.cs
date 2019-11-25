@@ -18,6 +18,6 @@ namespace MediaLibraryWebUI.Models.Configurations
 
         public MediaType SelectedMediaType { get; set; }
         
-        public int CurrentItemId { get; set; }
+        public int CurrentItemIndex { get; set; }
     }
 }

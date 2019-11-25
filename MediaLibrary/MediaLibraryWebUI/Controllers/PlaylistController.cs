@@ -173,7 +173,7 @@ namespace MediaLibraryWebUI.Controllers
                 playerConfiguration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
             }
 
-            playerConfiguration.CurrentItemId = items.FirstOrDefault(item => item.IsSelected).Value;
+            playerConfiguration.CurrentItemIndex = items.FirstOrDefault((item) => item.IsSelected).Id;
             playerConfiguration.SelectedMediaType = mediaType;
             configuration.JsonData = JsonConvert.SerializeObject(playerConfiguration);
             await dataService.Update(configuration);

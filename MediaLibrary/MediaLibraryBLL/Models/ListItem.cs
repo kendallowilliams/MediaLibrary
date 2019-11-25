@@ -13,12 +13,12 @@ namespace MediaLibraryBLL.Models
 
         public ListItem(T_ID id, string name, T_Value value = default(T_Value))
         {
-            ID = id;
+            Id = id;
             Name = name;
             Value = value;
         }
 
-        public T_ID ID { get; set; }
+        public T_ID Id { get; set; }
         public string Name { get; set; }
         public T_Value Value { get; set; }
         public bool IsSelected { get; set; }

@@ -16,20 +16,24 @@
     <ul class="list-group list-group-flush">
         @if (Model.Configuration.SelectedMediaType == Enums.MediaType.Song)
         {
-            foreach (var track in Model.SelectedPlaylist.PlaylistTracks.Select(item => item.Track))
+            foreach (var item in Model.SelectedPlaylist.PlaylistTracks.Select((item, index) => new { item.Track, Index = index }))
             {
-                <li class="list-group-item list-group-item-action" data-play-url="@Url.Action("File", "Music", new { track.Id })" onclick="play(this)">@(track.Title)</li>
+                <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Music", new { item.Track.Id })" onclick="play(this)"
+                    data-play-index="@(item.Index)">@(item.Track.Title)</li>
             }
         }
         else if (Model.Configuration.SelectedMediaType == Enums.MediaType.Podcast)
         {
-            foreach (var item in Model.SelectedPlaylist.PlaylistPodcastItems.Select(item => item.PodcastItem))
+            foreach (var item in Model.SelectedPlaylist.PlaylistPodcastItems.Select((item, index) => new { item.PodcastItem, Index = index }))
             {
-                <li class="list-group-item list-group-item-action" data-play-url="@Url.Action("File", "Podcast", new { item.Id })" onclick="play(this)">@(item.Title)</li>
+                <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Podcast", new { item.PodcastItem.Id })" onclick="play(this)"
+                    data-play-index="@(item.Index)">@(item.PodcastItem.Title)</li>
             }
         }
     </ul>
 </div>
+
+@Html.Partial("~/Views/Shared/Configurations/PlayerConfiguration.cshtml", Model.Configuration)
 
 @section scripts {
     <script type="text/javascript" defer="defer">
@@ -37,8 +41,11 @@
 
         function play(item) {
             var $item = $(item),
-                url = $item.attr('data-play-url');
-            
+                url = $item.attr('data-play-url'),
+                index = $item.attr('data-play-index');
+
+            $('@($"#txt{nameof(Model.Configuration.CurrentItemIndex)}")').val(index);
+            updateConfiguration();
             $player.prop('src', url);
             $player.trigger('play');
         }

@@ -2,16 +2,16 @@
 
 <div class="d-none">
     @Html.Hidden(nameof(Model.SelectedMediaType), Model.SelectedMediaType, new { id = $"txt{nameof(Model.SelectedMediaType)}" });
-    @Html.Hidden(nameof(Model.CurrentItemId), Model.CurrentItemId, new { id = $"txt{nameof(Model.CurrentItemId)}" });
+    @Html.Hidden(nameof(Model.CurrentItemIndex), Model.CurrentItemIndex, new { id = $"txt{nameof(Model.CurrentItemIndex)}" });
 </div>
 
 <script type="text/javascript" defer="defer">
-    function updatePlayerConfiguration(success) {
-        $.post('@Url.Action("UpdateConfiguration", "Player")', getPlayerConfigurationData(), success);
+    function updateConfiguration(success) {
+        $.post('@Url.Action("UpdateConfiguration", "Player")', getConfigurationData(), success);
     }
 
-    function getPlayerConfigurationData() {
+    function getConfigurationData() {
         return '@(nameof(Model.SelectedMediaType))=' + $('#txt@(nameof(Model.SelectedMediaType))').val() + '&' +
-               '@(nameof(Model.CurrentItemId))=' + $('#txt@(nameof(Model.CurrentItemId))').val();
+               '@(nameof(Model.CurrentItemIndex))=' + $('#txt@(nameof(Model.CurrentItemIndex))').val();
     }
 </script>
