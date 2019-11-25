@@ -180,13 +180,13 @@ namespace MediaLibraryWebUI.Controllers
 
             if (items != null)
             {
-                Playlist playlist = await dataService.Get<Playlist>(item => item.Name == "Now Playing");
+                Playlist playlist = await dataService.Get<Playlist>(item => item.Name == playlistViewModel.NowPlaying);
                 IEnumerable<PlaylistTrack> playlistTracks = Enumerable.Empty<PlaylistTrack>();
                 IEnumerable<PlaylistPodcastItem> playlistPodcastItems = Enumerable.Empty<PlaylistPodcastItem>();
 
                 if (playlist == null)
                 {
-                    playlist = new Playlist("Now Playing");
+                    playlist = new Playlist(playlistViewModel.NowPlaying);
                     await dataService.Insert(playlist);
                 }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using static MediaLibraryWebUI.Enums;
 using Fody;
+using MediaLibraryWebUI.Models;
 
 namespace MediaLibraryWebUI.Services
 {
@@ -40,6 +41,8 @@ namespace MediaLibraryWebUI.Services
         {
             IEnumerable<IGrouping<string, Playlist>> groups = null;
             IEnumerable<Playlist> playlists = await dataService.GetList<Playlist, IEnumerable<Track>>(includeExpression: playlist => playlist.PlaylistTracks.Select(item => item.Track));
+
+            playlists = playlists.Where(item => !item.Name.Equals((new PlaylistViewModel()).NowPlaying));
 
             switch (sort)
             {

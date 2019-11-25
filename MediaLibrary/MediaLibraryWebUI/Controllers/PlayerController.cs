@@ -41,12 +41,12 @@ namespace MediaLibraryWebUI.Controllers
 
             if (playerViewModel.Configuration.SelectedMediaType == MediaType.Song)
             {
-                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>>(item => item.Name == "Now Playing",
+                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>>(item => item.Name == playerViewModel.NowPlaying,
                                                                                                        item => item.PlaylistTracks.Select(pt => pt.Track));
             }
             else
             {
-                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<PodcastItem>>(item => item.Name == "Now Playing",
+                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<PodcastItem>>(item => item.Name == playerViewModel.NowPlaying,
                                                                                                              item => item.PlaylistPodcastItems.Select(pt => pt.PodcastItem));
             }
 
