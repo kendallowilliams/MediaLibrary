@@ -40,15 +40,42 @@
         var $player = $('#@(Model.MusicPlayerId)');
 
         function play(item) {
-            var $item = $(item),
-                url = $item.attr('data-play-url'),
-                index = $item.attr('data-play-index');
+            if (item) {
+                var $item = $(item),
+                    url = $item.attr('data-play-url'),
+                    index = $item.attr('data-play-index');
 
-            $('@($"#txt{nameof(Model.Configuration.CurrentItemIndex)}")').val(index);
-            updateConfiguration();
-            $player.prop('src', url);
-            $player.trigger('play');
+                $('.list-group-item').removeClass('active');
+                $item.addClass('active');
+                setCurrentItemIndex(index);
+                updateConfiguration(function () {
+                    $player.prop('src', url);
+                    $player.trigger('play');
+                });
+            }
         }
+
+        function initPlayer() {
+            $player.on('ended', function (evt) {
+                playNext();
+            });
+        }
+
+        function playNext() {
+            var nextIndex = getCurrentItemIndex() + 1,
+                $item = $('[data-play-index=' + nextIndex + ']');
+
+            play($item[0]);
+        }
+
+        function playPrevious() {
+            var previousIndex = getCurrentItemIndex() - 1,
+                $item = $('[data-play-index=' + previousIndex + ']');
+
+            play($item[0]);
+        }
+
+        initPlayer();
     </script>
 }
 
