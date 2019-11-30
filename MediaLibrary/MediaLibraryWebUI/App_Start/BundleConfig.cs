@@ -22,6 +22,10 @@ namespace MediaLibraryWebUI
             bundles.Add(new ScriptBundle("~/bundles/fontawesome").Include(
                       "~/lib/font-awesome/js/all.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jplayer").Include(
+                      "~/lib/jplayer/jplayer/jquery.jplayer.min.js",
+                      "~/lib/jplayer/add-on/jplayer.playlist.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
