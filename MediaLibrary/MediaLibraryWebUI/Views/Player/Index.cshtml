@@ -18,7 +18,7 @@
         {
             foreach (var item in Model.SelectedPlaylist.PlaylistTracks.Select((item, index) => new { item.Track, Index = index }))
             {
-                <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Music", new { item.Track.Id })" onclick="play(this)"
+                <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Music", new { item.Track.Id })" ondblclick="play(this)"
                     data-play-index="@(item.Index)">@(item.Track.Title)</li>
             }
         }
@@ -26,7 +26,7 @@
         {
             foreach (var item in Model.SelectedPlaylist.PlaylistPodcastItems.Select((item, index) => new { item.PodcastItem, Index = index }))
             {
-                <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Podcast", new { item.PodcastItem.Id })" onclick="play(this)"
+                <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Podcast", new { item.PodcastItem.Id })" ondblclick="play(this)"
                     data-play-index="@(item.Index)">@(item.PodcastItem.Title)</li>
             }
         }
