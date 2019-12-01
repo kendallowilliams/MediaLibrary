@@ -39,7 +39,7 @@ namespace MediaLibraryWebUI.Controllers
                 playerViewModel.Configuration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
             }
 
-            if (playerViewModel.Configuration.SelectedMediaType == MediaType.Song)
+            if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Song)
             {
                 playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>>(item => item.Name == playerViewModel.NowPlaying,
                                                                                                        item => item.PlaylistTracks.Select(pt => pt.Track));

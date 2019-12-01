@@ -157,7 +157,7 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
-        public async Task UpdateNowPlaying(string itemsJSON, MediaType mediaType)
+        public async Task UpdateNowPlaying(string itemsJSON, MediaTypes mediaType)
         {
             var items = JsonConvert.DeserializeObject< IEnumerable<ListItem<int, int>>>(itemsJSON);
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
@@ -190,13 +190,13 @@ namespace MediaLibraryWebUI.Controllers
                     await dataService.Insert(playlist);
                 }
 
-                if (mediaType == MediaType.Song)
+                if (mediaType == MediaTypes.Song)
                 {
                     playlistTracks = items.Select(item => new PlaylistTrack() { PlaylistId = playlist.Id, TrackId = item.Value });
                     await dataService.DeleteAll<PlaylistTrack>(item => item.PlaylistId == playlist.Id);
                     await dataService.Insert(playlistTracks);
                 }
-                else if (mediaType == MediaType.Podcast)
+                else if (mediaType == MediaTypes.Podcast)
                 {
                     playlistPodcastItems = items.Select(item => new PlaylistPodcastItem() { PlaylistId = playlist.Id, PodcastItemId = item.Value });
                     await dataService.DeleteAll<PlaylistPodcastItem>(item => item.PlaylistId == playlist.Id);

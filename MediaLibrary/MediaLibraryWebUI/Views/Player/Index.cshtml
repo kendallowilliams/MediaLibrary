@@ -14,7 +14,7 @@
         @(Model.SelectedPlaylist.Name)
     </div>
     <ul class="list-group list-group-flush">
-        @if (Model.Configuration.SelectedMediaType == Enums.MediaType.Song)
+        @if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Song)
         {
             foreach (var item in Model.SelectedPlaylist.PlaylistTracks.Select((item, index) => new { item.Track, Index = index }))
             {
@@ -22,7 +22,7 @@
                     data-play-index="@(item.Index)">@(item.Track.Title)</li>
             }
         }
-        else if (Model.Configuration.SelectedMediaType == Enums.MediaType.Podcast)
+        else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Podcast)
         {
             foreach (var item in Model.SelectedPlaylist.PlaylistPodcastItems.Select((item, index) => new { item.PodcastItem, Index = index }))
             {

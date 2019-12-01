@@ -20,7 +20,7 @@ namespace MediaLibraryWebUI.Models.Configurations
         public AlbumSort SelectedAlbumSort { get; set; }
         public ArtistSort SelectedArtistSort { get; set; }
         public SongSort SelectedSongSort { get; set; }
-        public MusicTab SelectedMusicTab { get; set; }
+        public MusicTabs SelectedMusicTab { get; set; }
         public MusicPages SelectedMusicPage { get; set; }
         public MediaPages SelectedMediaPage { get; set; }
     }

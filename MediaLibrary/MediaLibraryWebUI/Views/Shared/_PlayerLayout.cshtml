@@ -26,8 +26,12 @@
         window.addEventListener("message", receiveMessage, false);
 
         function receiveMessage(event) {
-            if (event.origin !== "@(Request.Url.GetLeftPart(UriPartial.Authority))")
+            if (event.origin !== '@(Request.Url.GetLeftPart(UriPartial.Authority))')
                 return;
+
+            if (event.data === '@(nameof(Enums.PlayerMessages.Reload))') {
+
+            }
         }
 
         window.onload = () => window.opener.postMessage('loaded');

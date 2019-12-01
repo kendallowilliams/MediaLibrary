@@ -65,17 +65,26 @@
         var playerPopup = null;
 
         window.addEventListener("message", receiveMessage, false);
+        window.onbeforeunload = evt => {
+            if (playerPopup) {
+                playerPopup.close();
+            }
+        };
 
         function receiveMessage(event) {
             if (event.origin !== "@(Request.Url.GetLeftPart(UriPartial.Authority))")
                 return;
+
+            if (event.data === '@(nameof(Enums.PlayerMessages.Loaded))') {
+
+            }
         }
 
         function play(btn) {
             var $playButtons = $('button[data-play-id]'),
                 $playGroups = $('div[data-play-ids]'),
                 success = () => null,
-                mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaType.Song))',
+                mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaTypes.Song))',
                 data = new FormData(),
                 $playData = null;
 
@@ -102,7 +111,7 @@
                 success = () => playerPopup = window.open('@Url.Action("Index", "Player")', '@(Model.MusicPlayerId)');
 
             } else {
-                success = () => playerPopup.postMessage('reload');
+                success = () => playerPopup.postMessage('@(nameof(Enums.PlayerMessages.Reload))');
             }
 
             $.ajax({

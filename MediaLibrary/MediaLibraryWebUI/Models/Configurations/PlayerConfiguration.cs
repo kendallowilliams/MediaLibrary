@@ -16,7 +16,7 @@ namespace MediaLibraryWebUI.Models.Configurations
 
         public MediaPages SelectedMediaPage { get; set; }
 
-        public MediaType SelectedMediaType { get; set; }
+        public MediaTypes SelectedMediaType { get; set; }
         
         public int CurrentItemIndex { get; set; }
     }
