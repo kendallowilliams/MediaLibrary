@@ -15,7 +15,8 @@
                 </h5>
             </div>
 
-            <div id="collapse-songs-@(item.Index)" class="collapse" aria-labelledby="heading-songs-@(item.Index)" data-parent="#accordion-songs">
+            <div id="collapse-songs-@(item.Index)" class="collapse" aria-labelledby="heading-songs-@(item.Index)" data-parent="#accordion-songs"
+                 data-play-ids="@(string.Join(",", item.Group.Select(song => song.Id)))">
             </div>
         </div>
     }

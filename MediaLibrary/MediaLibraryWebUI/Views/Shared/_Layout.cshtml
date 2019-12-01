@@ -73,16 +73,28 @@
 
         function play(btn) {
             var $playButtons = $('button[data-play-id]'),
+                $playGroups = $('div[data-play-ids]'),
                 success = () => null,
                 mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaType.Song))',
                 data = new FormData(),
                 $playData = null;
 
-            $playData = $playButtons.map((index, _btn) => ({
-                Id: index,
-                Value: parseInt($(_btn).attr("data-play-id")),
-                IsSelected: btn.isSameNode(_btn)
-            }));
+            if ($playGroups) {
+                $playData = $playGroups.map((index, element) => ($(element).attr('data-play-ids').split(',')))
+                    .map((index, element) => ({
+                        Id: index,
+                        Value: parseInt(element),
+                        IsSelected: $(btn).attr('data-play-id') === element
+                    })
+                );
+            } else {
+                $playData = $playButtons.map((index, _btn) => ({
+                    Id: index,
+                    Value: parseInt($(_btn).attr('data-play-id')),
+                    IsSelected: btn.isSameNode(_btn)
+                }));
+            }
+
             data.append('mediaType', mediaType);
             data.append('itemsJSON', JSON.stringify($playData.get()));
 
