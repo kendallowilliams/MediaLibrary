@@ -171,9 +171,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DbConfigurations\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="DbContexts\MediaLibrary.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
