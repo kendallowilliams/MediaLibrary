@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Hosting;
 using MediaLibraryDAL.DbContexts;
 
-namespace MediaLibraryWebApi.Services
+namespace MediaLibraryWebUI.Services
 {
     [Export(typeof(IControllerService)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class ControllerService : IControllerService
