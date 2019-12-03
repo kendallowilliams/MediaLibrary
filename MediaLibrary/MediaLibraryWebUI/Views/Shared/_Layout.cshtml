@@ -65,7 +65,7 @@
         var playerPopup = null;
 
         window.addEventListener("message", receiveMessage, false);
-        window.onbeforeunload = evt => {
+        window.onclose = evt => {
             if (playerPopup) {
                 playerPopup.close();
             }
