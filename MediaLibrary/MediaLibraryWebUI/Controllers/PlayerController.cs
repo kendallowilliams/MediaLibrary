@@ -81,7 +81,7 @@ namespace MediaLibraryWebUI.Controllers
 
             await LoadPlayerViewModel();
 
-            return View("~/Views/Player/PlayerItems.cshtml", playerViewModel);
+            return PartialView("~/Views/Player/PlayerItems.cshtml", playerViewModel);
         }
 
         private async Task LoadPlayerViewModel()
