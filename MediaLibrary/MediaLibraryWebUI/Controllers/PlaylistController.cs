@@ -156,53 +156,5 @@ namespace MediaLibraryWebUI.Controllers
                 }
             }
         }
-
-        public async Task UpdateNowPlaying(string itemsJSON, MediaTypes mediaType)
-        {
-            var items = JsonConvert.DeserializeObject< IEnumerable<ListItem<int, int>>>(itemsJSON);
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
-            PlayerConfiguration playerConfiguration = new PlayerConfiguration();
-
-            if (configuration == null)
-            {
-                configuration = new Configuration() { Type = nameof(MediaPages.Player), JsonData = JsonConvert.SerializeObject(playerConfiguration) };
-                await dataService.Insert(configuration);
-            }
-            else
-            {
-                playerConfiguration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
-            }
-
-            playerConfiguration.CurrentItemIndex = items.FirstOrDefault((item) => item.IsSelected).Id;
-            playerConfiguration.SelectedMediaType = mediaType;
-            configuration.JsonData = JsonConvert.SerializeObject(playerConfiguration);
-            await dataService.Update(configuration);
-
-            if (items != null)
-            {
-                Playlist playlist = await dataService.Get<Playlist>(item => item.Name == playlistViewModel.NowPlaying);
-                IEnumerable<PlaylistTrack> playlistTracks = Enumerable.Empty<PlaylistTrack>();
-                IEnumerable<PlaylistPodcastItem> playlistPodcastItems = Enumerable.Empty<PlaylistPodcastItem>();
-
-                if (playlist == null)
-                {
-                    playlist = new Playlist(playlistViewModel.NowPlaying);
-                    await dataService.Insert(playlist);
-                }
-
-                if (mediaType == MediaTypes.Song)
-                {
-                    playlistTracks = items.Select(item => new PlaylistTrack() { PlaylistId = playlist.Id, TrackId = item.Value });
-                    await dataService.DeleteAll<PlaylistTrack>(item => item.PlaylistId == playlist.Id);
-                    await dataService.Insert(playlistTracks);
-                }
-                else if (mediaType == MediaTypes.Podcast)
-                {
-                    playlistPodcastItems = items.Select(item => new PlaylistPodcastItem() { PlaylistId = playlist.Id, PodcastItemId = item.Value });
-                    await dataService.DeleteAll<PlaylistPodcastItem>(item => item.PlaylistId == playlist.Id);
-                    await dataService.Insert(playlistPodcastItems);
-                }
-            }
-        }
     }
 }

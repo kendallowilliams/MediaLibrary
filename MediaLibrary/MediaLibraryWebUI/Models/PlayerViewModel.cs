@@ -15,6 +15,8 @@ namespace MediaLibraryWebUI.Models
         [ImportingConstructor]
         public PlayerViewModel() { }
 
-        public Playlist SelectedPlaylist { get; set; }
+        public IEnumerable<Track> Songs { get; set; }
+
+        public IEnumerable<PodcastItem> PodcastItems { get; set; }
     }
 }

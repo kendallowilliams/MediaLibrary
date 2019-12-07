@@ -10,9 +10,7 @@
 </div>
 <br />
 <div class="card">
-    <div class="card-header">
-        @(Model.SelectedPlaylist.Name)
-    </div>
+    <div class="card-header">Now Playing</div>
     <div id="playerItems">
         @Html.Partial("~/Views/Player/PlayerItems.cshtml", Model)
     </div>

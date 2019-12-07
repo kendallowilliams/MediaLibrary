@@ -1,4 +1,5 @@
-﻿using MediaLibraryBLL.Services.Interfaces;
+﻿using MediaLibraryBLL.Models;
+using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.Models;
@@ -7,11 +8,13 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using static MediaLibraryWebUI.Enums;
+using static System.Environment;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -21,6 +24,8 @@ namespace MediaLibraryWebUI.Controllers
         private readonly ITransactionService transactionService;
         private readonly PlayerViewModel playerViewModel;
         private readonly IDataService dataService;
+        private readonly string dataFolder,
+                                fileNamePrefix;
 
         [ImportingConstructor]
         public PlayerController(ITransactionService transactionService, PlayerViewModel playerViewModel, IDataService dataService)
@@ -28,6 +33,8 @@ namespace MediaLibraryWebUI.Controllers
             this.transactionService = transactionService;
             this.playerViewModel = playerViewModel;
             this.dataService = dataService;
+            dataFolder = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData, SpecialFolderOption.Create), nameof(MediaLibraryWebUI));
+            fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}";
         }
         
         public async Task<ActionResult> Index()
@@ -39,16 +46,7 @@ namespace MediaLibraryWebUI.Controllers
                 playerViewModel.Configuration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
             }
 
-            if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Song)
-            {
-                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>>(item => item.Name == playerViewModel.NowPlaying,
-                                                                                                       item => item.PlaylistTracks.Select(pt => pt.Track));
-            }
-            else
-            {
-                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<PodcastItem>>(item => item.Name == playerViewModel.NowPlaying,
-                                                                                                             item => item.PlaylistPodcastItems.Select(pt => pt.PodcastItem));
-            }
+            await LoadPlayerViewModel();
 
             return View(playerViewModel);
         }
@@ -81,18 +79,71 @@ namespace MediaLibraryWebUI.Controllers
                 playerViewModel.Configuration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
             }
 
+            await LoadPlayerViewModel();
+
+            return View("~/Views/Player/PlayerItems.cshtml", playerViewModel);
+        }
+
+        private async Task LoadPlayerViewModel()
+        {
+            IEnumerable<int> ids = Enumerable.Empty<int>();
+
             if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Song)
             {
-                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>>(item => item.Name == playerViewModel.NowPlaying,
-                                                                                                       item => item.PlaylistTracks.Select(pt => pt.Track));
+                string path = Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json");
+                IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
+
+                if (System.IO.File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(System.IO.File.ReadAllText(path));
+                ids = items.Select(item => item.Id);
+                playerViewModel.Songs = await dataService.GetList<Track>(item => ids.Contains(item.Id));
+            }
+            else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Podcast)
+            {
+                string path = Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json");
+                IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
+
+                if (System.IO.File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(System.IO.File.ReadAllText(path));
+                ids = items.Select(item => item.Id);
+                playerViewModel.PodcastItems = await dataService.GetList<PodcastItem>(item => ids.Contains(item.Id));
+            }
+        }
+
+        public async Task UpdateNowPlaying(string itemsJSON, MediaTypes mediaType)
+        {
+            var items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(itemsJSON);
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
+            PlayerConfiguration playerConfiguration = new PlayerConfiguration();
+
+            if (configuration == null)
+            {
+                configuration = new Configuration() { Type = nameof(MediaPages.Player), JsonData = JsonConvert.SerializeObject(playerConfiguration) };
+                await dataService.Insert(configuration);
             }
             else
             {
-                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<PodcastItem>>(item => item.Name == playerViewModel.NowPlaying,
-                                                                                                             item => item.PlaylistPodcastItems.Select(pt => pt.PodcastItem));
+                playerConfiguration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
             }
 
-            return View("~/Views/Player/PlayerItems.cshtml", playerViewModel);
+            playerConfiguration.CurrentItemIndex = items.FirstOrDefault((item) => item.IsSelected).Id;
+            playerConfiguration.SelectedMediaType = mediaType;
+            configuration.JsonData = JsonConvert.SerializeObject(playerConfiguration);
+            await dataService.Update(configuration);
+
+            if (items != null)
+            {
+                string data = JsonConvert.SerializeObject(items);
+
+                if (!Directory.Exists(dataFolder)) /*then*/ Directory.CreateDirectory(dataFolder);
+
+                if (mediaType == MediaTypes.Song)
+                {
+                    System.IO.File.WriteAllText(Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json"), data);
+                }
+                else if (mediaType == MediaTypes.Podcast)
+                {
+                    System.IO.File.WriteAllText(Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"), data);
+                }
+            }
         }
     }
 }
