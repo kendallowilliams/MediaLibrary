@@ -92,19 +92,23 @@ namespace MediaLibraryWebUI.Controllers
             {
                 string path = Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json");
                 IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
+                IEnumerable<Track> songs = Enumerable.Empty<Track>();
 
                 if (System.IO.File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(System.IO.File.ReadAllText(path));
-                ids = items.Select(item => item.Id);
-                playerViewModel.Songs = await dataService.GetList<Track>(item => ids.Contains(item.Id));
+                ids = items.Select(item => item.Value);
+                songs = await dataService.GetList<Track>(item => ids.Contains(item.Id));
+                playerViewModel.Songs = ids.Select(id => songs.FirstOrDefault(item => item.Id == id));
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Podcast)
             {
                 string path = Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json");
                 IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
+                IEnumerable<PodcastItem> podcastItems = Enumerable.Empty<PodcastItem>();
 
                 if (System.IO.File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(System.IO.File.ReadAllText(path));
-                ids = items.Select(item => item.Id);
-                playerViewModel.PodcastItems = await dataService.GetList<PodcastItem>(item => ids.Contains(item.Id));
+                ids = items.Select(item => item.Value);
+                podcastItems = await dataService.GetList<PodcastItem>(item => ids.Contains(item.Id));
+                playerViewModel.PodcastItems = ids.Select(id => podcastItems.FirstOrDefault(item => item.Id == id));
             }
         }
 
