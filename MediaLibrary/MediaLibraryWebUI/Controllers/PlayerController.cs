@@ -71,5 +71,28 @@ namespace MediaLibraryWebUI.Controllers
                 }
             }
         }
+
+        public async Task<ActionResult> GetPlayerItems()
+        {
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
+
+            if (configuration != null)
+            {
+                playerViewModel.Configuration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
+            }
+
+            if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Song)
+            {
+                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>>(item => item.Name == playerViewModel.NowPlaying,
+                                                                                                       item => item.PlaylistTracks.Select(pt => pt.Track));
+            }
+            else
+            {
+                playerViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<PodcastItem>>(item => item.Name == playerViewModel.NowPlaying,
+                                                                                                             item => item.PlaylistPodcastItems.Select(pt => pt.PodcastItem));
+            }
+
+            return View("~/Views/Player/PlayerItems.cshtml", playerViewModel);
+        }
     }
 }

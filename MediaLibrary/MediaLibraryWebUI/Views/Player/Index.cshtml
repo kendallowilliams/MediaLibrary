@@ -13,24 +13,9 @@
     <div class="card-header">
         @(Model.SelectedPlaylist.Name)
     </div>
-    <ul class="list-group list-group-flush">
-        @if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Song)
-        {
-            foreach (var item in Model.SelectedPlaylist.PlaylistTracks.Select((item, index) => new { item.Track, Index = index }))
-            {
-                <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Music", new { item.Track.Id })" ondblclick="play(this)"
-                    data-play-index="@(item.Index)">@(item.Track.Title)</li>
-            }
-        }
-        else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Podcast)
-        {
-            foreach (var item in Model.SelectedPlaylist.PlaylistPodcastItems.Select((item, index) => new { item.PodcastItem, Index = index }))
-            {
-                <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Podcast", new { item.PodcastItem.Id })" ondblclick="play(this)"
-                    data-play-index="@(item.Index)">@(item.PodcastItem.Title)</li>
-            }
-        }
-    </ul>
+    <div id="playerItems">
+        @Html.Partial("~/Views/Player/PlayerItems.cshtml", Model)
+    </div>
 </div>
 
 @Html.Partial("~/Views/Shared/Configurations/PlayerConfiguration.cshtml", Model.Configuration)
@@ -73,6 +58,12 @@
                 $item = $('[data-play-index=' + previousIndex + ']');
 
             play($item[0]);
+        }
+
+        function reload() {
+            var success = () => null;
+
+            $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
         }
 
         initPlayer();

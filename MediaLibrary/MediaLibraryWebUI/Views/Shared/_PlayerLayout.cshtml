@@ -30,7 +30,9 @@
                 return;
 
             if (event.data === '@(nameof(Enums.PlayerMessages.Reload))') {
-
+                if (reload && typeof (reload) === 'function') {
+                    reload();
+                }
             }
         }
 
