@@ -6,10 +6,10 @@
 
 <script type="text/javascript" defer="defer">
     function updateMediaLibraryConfiguration(success) {
-        $.post('@Url.Action("UpdateConfiguration", "MediaLibrary")', getConfigurationData(), success);
+        $.post('@Url.Action("UpdateConfiguration", "MediaLibrary")', getMediaLibraryConfigurationData(), success);
     }
 
-    function getConfigurationData() {
+    function getMediaLibraryConfigurationData() {
         return '@(nameof(Model.SelectedMediaPage))=' + $('#txt@(nameof(Model.SelectedMediaPage))').val();
     }
 

@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Player";
-    Layout = "~/Views/Shared/_PlayerLayout.cshtml";
 }
 
 <div>
@@ -11,9 +10,7 @@
 <br />
 <div class="card">
     <div class="card-header">Now Playing</div>
-    <div id="playerItems">
-        @Html.Partial("~/Views/Player/PlayerItems.cshtml", Model)
-    </div>
+    <div id="playerItems"></div>
 </div>
 
 @Html.Partial("~/Views/Shared/Configurations/PlayerConfiguration.cshtml", Model.Configuration)

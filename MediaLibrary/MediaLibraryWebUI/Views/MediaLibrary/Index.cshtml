@@ -4,8 +4,8 @@
     ViewBag.Title = string.Empty;
 }
 
-<div id="divView">
-</div>
+<div id="divView" class="d-none"></div>
+<div id="playerView" class="d-none"></div>
 
 @Html.Partial("~/Views/Shared/Configurations/MediaLibraryConfiguration.cshtml", Model.Configuration)
 
@@ -15,11 +15,21 @@
             var success = () => hideLoading(),
                 url = '@Url.Action("Index", "ViewName")';
 
-            showLoading();
+            $('#playerView').addClass('d-none');
+            $('#divView').addClass('d-none');
             updateSelectedMediaPage(view);
-            updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
+
+            if (view === '@(Enums.MediaPages.Player)') {
+                $('#playerView').removeClass('d-none');
+                updateMediaLibraryConfiguration(() => reload());
+            } else {
+                $('#divView').removeClass('d-none');
+                showLoading();
+                updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
+            }
         }
 
+        $('#playerView').load('@Url.Action("Index", "Player")');
         loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
     </script>
 }
