@@ -18,7 +18,7 @@
 <script type="text/javascript" defer="defer">
     var $player = $('#@(Model.MusicPlayerId)');
 
-    function play(item) {
+    function _play(item) {
         if (item) {
             var $item = $(item),
                 url = $item.attr('data-play-url'),
@@ -27,7 +27,7 @@
             $('.list-group-item').removeClass('active');
             $item.addClass('active');
             setCurrentItemIndex(index);
-            updateConfiguration(function () {
+            updatePlayerConfiguration(function () {
                 $player.prop('src', url);
                 $player.trigger('play');
             });
@@ -44,18 +44,20 @@
         var nextIndex = getCurrentItemIndex() + 1,
             $item = $('[data-play-index=' + nextIndex + ']');
 
-        play($item[0]);
+        _play($item[0]);
     }
 
     function playPrevious() {
         var previousIndex = getCurrentItemIndex() - 1,
             $item = $('[data-play-index=' + previousIndex + ']');
 
-        play($item[0]);
+        _play($item[0]);
     }
 
     function reload() {
-        var success = () => null;
+        var success = () => {
+            if ($('li.active').length > 0 && @(Model.Configuration.AutoPlay.ToString().ToLower())) /*then*/ _play($('li.active')[0]);
+        };
 
         $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
     }

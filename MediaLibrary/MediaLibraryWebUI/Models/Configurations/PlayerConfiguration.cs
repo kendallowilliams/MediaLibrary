@@ -11,10 +11,13 @@ namespace MediaLibraryWebUI.Models.Configurations
     {
         public PlayerConfiguration()
         {
+            AutoPlay = true;
         }
 
         public MediaTypes SelectedMediaType { get; set; }
         
         public int CurrentItemIndex { get; set; }
+
+        public bool AutoPlay { get; set; }
     }
 }

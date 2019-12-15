@@ -3,16 +3,18 @@
 <div class="d-none">
     @Html.Hidden(nameof(Model.SelectedMediaType), Model.SelectedMediaType, new { id = $"txt{nameof(Model.SelectedMediaType)}" });
     @Html.Hidden(nameof(Model.CurrentItemIndex), Model.CurrentItemIndex, new { id = $"txt{nameof(Model.CurrentItemIndex)}" });
+    @Html.Hidden(nameof(Model.AutoPlay), Model.AutoPlay, new { id = $"txt{nameof(Model.AutoPlay)}" });
 </div>
 
 <script type="text/javascript" defer="defer">
-    function updateConfiguration(success) {
-        $.post('@Url.Action("UpdateConfiguration", "Player")', getConfigurationData(), success);
+    function updatePlayerConfiguration(success) {
+        $.post('@Url.Action("UpdateConfiguration", "Player")', getPlayerConfigurationData(), success);
     }
 
-    function getConfigurationData() {
+    function getPlayerConfigurationData() {
         return '@(nameof(Model.SelectedMediaType))=' + $('#txt@(nameof(Model.SelectedMediaType))').val() + '&' +
-               '@(nameof(Model.CurrentItemIndex))=' + $('#txt@(nameof(Model.CurrentItemIndex))').val();
+               '@(nameof(Model.CurrentItemIndex))=' + $('#txt@(nameof(Model.CurrentItemIndex))').val() + '&' +
+               '@(nameof(Model.AutoPlay))=' + $('#txt@(nameof(Model.AutoPlay))').val();
     }
 
     function setCurrentItemIndex(index) {
