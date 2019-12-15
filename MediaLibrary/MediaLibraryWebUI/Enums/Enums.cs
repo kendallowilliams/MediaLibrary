@@ -16,7 +16,7 @@ namespace MediaLibraryWebUI
         public enum MusicPages { Index = 0, Album, Artist }
         public enum PlaylistPages { Index = 0, Playlist }
         public enum PodcastPages { Index = 0, Podcast }
-        public enum MediaPages { Home = 0, Music, Playlists, Podcasts, Player }
+        public enum MediaPages { Home = 0, Music, Playlist, Podcast, Player }
         public enum MediaTypes { Song, Podcast }
         public enum PlayerMessages { Loaded, Reload }
     }

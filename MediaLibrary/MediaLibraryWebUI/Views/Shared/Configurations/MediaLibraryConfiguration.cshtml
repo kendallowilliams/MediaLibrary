@@ -1,0 +1,19 @@
+﻿@model MediaLibraryWebUI.Models.Configurations.MediaLibraryConfiguration
+
+<div class="d-none">
+    @Html.Hidden(nameof(Model.SelectedMediaPage), Model.SelectedMediaPage, new { id = $"txt{nameof(Model.SelectedMediaPage)}" });
+</div>
+
+<script type="text/javascript" defer="defer">
+    function updateMediaLibraryConfiguration(success) {
+        $.post('@Url.Action("UpdateConfiguration", "MediaLibrary")', getConfigurationData(), success);
+    }
+
+    function getConfigurationData() {
+        return '@(nameof(Model.SelectedMediaPage))=' + $('#txt@(nameof(Model.SelectedMediaPage))').val();
+    }
+
+    function updateSelectedMediaPage(page) {
+        $('#txt@(nameof(Model.SelectedMediaPage))').val(page);
+    }
+</script>

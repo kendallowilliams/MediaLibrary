@@ -30,7 +30,7 @@
 
     function editPlaylist() {
         var data = { id: $('#txtPlaylistId').val(), name: $('#txtPlaylistName').val() },
-            success = () => window.location = '@Url.Action("Index", "Playlist")';
+            success = () => loadView('"Playlist")');
 
         $('#modalEditPlaylist').modal('hide');
         $('#loadingModal').modal('show');

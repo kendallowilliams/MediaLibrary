@@ -75,7 +75,7 @@
                    '@(nameof(Song.Artist))=' + encodeURIComponent($('#txtEdit@(nameof(Song.Artist))').val()) + '&' +
                    '@(nameof(Song.Genre))=' + encodeURIComponent($('#txtEdit@(nameof(Song.Genre))').val()),
             success = function () {
-                window.location = '@(Url.Action("Index", "Music"))';
+                loadView('@(Url.Action("Index", "Music"))');
             };
 
         $('#modalEditSong').modal('hide');

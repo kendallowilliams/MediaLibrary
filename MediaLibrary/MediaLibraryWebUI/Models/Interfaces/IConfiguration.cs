@@ -8,6 +8,5 @@ namespace MediaLibraryWebUI.Models.Interfaces
 {
     public interface IConfiguration
     {
-        MediaPages SelectedMediaPage { get; set; }
     }
 }

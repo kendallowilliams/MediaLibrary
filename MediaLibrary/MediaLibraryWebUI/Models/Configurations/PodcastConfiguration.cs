@@ -11,12 +11,10 @@ namespace MediaLibraryWebUI.Models.Configurations
     {
         public PodcastConfiguration()
         {
-            SelectedMediaPage = MediaPages.Podcasts;
         }
 
         public int SelectedPodcastId { get; set; }
         public PodcastPages SelectedPodcastPage { get; set; }
         public PodcastSort SelectedPodcastSort { get; set; }
-        public MediaPages SelectedMediaPage { get; set; }
     }
 }

@@ -73,19 +73,17 @@ else
 @Html.Partial("~/Views/Shared/Configurations/PlaylistConfiguration.cshtml", Model.Configuration)
 @Html.Partial("~/Views/Shared/Modals/AddNewPlaylistModal.cshtml")
 
-@section scripts {
-    <script type="text/javascript">
-        function playlistClicked(btn) {
-            $('#loadingModal').modal('show');
-            $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Playlist))');
-            $('#txt@(nameof(Model.Configuration.SelectedPlaylistId))').val($(btn).attr('data-item-id'));
-            updateConfiguration(() => window.location = '@Url.Action("Index", "Playlist")');
-        }
+<script type="text/javascript">
+    function playlistClicked(btn) {
+        $('#loadingModal').modal('show');
+        $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Playlist))');
+        $('#txt@(nameof(Model.Configuration.SelectedPlaylistId))').val($(btn).attr('data-item-id'));
+        updateConfiguration(() => loadView('"Playlist")'));
+    }
 
-        function sortChanged(select) {
-            $('#loadingModal').modal('show');
-            $('#txt@(nameof(Model.Configuration.SelectedPlaylistSort))').val($(select).val());
-            updateConfiguration(() => window.location = '@Url.Action("Index", "Playlist")');
-        }
-    </script>
-}
+    function sortChanged(select) {
+        $('#loadingModal').modal('show');
+        $('#txt@(nameof(Model.Configuration.SelectedPlaylistSort))').val($(select).val());
+        updateConfiguration(() => loadView('"Playlist")'));
+    }
+</script>

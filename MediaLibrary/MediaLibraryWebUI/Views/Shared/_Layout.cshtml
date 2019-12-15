@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+            <a class="navbar-brand" href="#" onclick="loadView('@(nameof(Enums.MediaPages.Home))')">
                 <img src="@(Url.Content("~/Content/images/logo.png"))" title="KOW Moosic" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,28 +22,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        @Html.ActionLink("Music",
-                                         "Index",
-                                         "Music",
-                                         null,
-                                         new { @class = "nav-link" + (Model.Configuration.SelectedMediaPage == Enums.MediaPages.Music ? " active" : string.Empty),
-                                               onclick = "showLoading()" })
+                        <a class="nav-link" href="#" onclick="loadView('@(nameof(Enums.MediaPages.Music))')">@(nameof(Enums.MediaPages.Music))</a>
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Podcasts",
-                                         "Index",
-                                         "Podcast",
-                                         null,
-                                         new { @class = "nav-link" + (Model.Configuration.SelectedMediaPage == Enums.MediaPages.Podcasts ? " active" : string.Empty),
-                                               onclick = "showLoading()" })
+                        <a class="nav-link" href="#" onclick="loadView('@(nameof(Enums.MediaPages.Podcast))')">@(nameof(Enums.MediaPages.Podcast))s</a>
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Playlists",
-                                         "Index",
-                                         "Playlist",
-                                         null,
-                                         new { @class = "nav-link" + (Model.Configuration.SelectedMediaPage == Enums.MediaPages.Playlists ? " active" : string.Empty),
-                                               onclick = "showLoading()" })
+                        <a class="nav-link" href="#" onclick="loadView('@(nameof(Enums.MediaPages.Playlist))')">@(nameof(Enums.MediaPages.Playlist))s</a>
                     </li>
                 </ul>
             </div>
@@ -61,25 +46,7 @@
     @RenderSection("scripts", false)
     @Html.Partial("~/Views/Shared/Modals/LoadingModal.cshtml")
 
-    <script type="text/javascript">
-        var playerPopup = null;
-
-        window.addEventListener("message", receiveMessage, false);
-        window.onclose = evt => {
-            if (playerPopup) {
-                playerPopup.close();
-            }
-        };
-
-        function receiveMessage(event) {
-            if (event.origin !== "@(Request.Url.GetLeftPart(UriPartial.Authority))")
-                return;
-
-            if (event.data === '@(nameof(Enums.PlayerMessages.Loaded))') {
-
-            }
-        }
-
+    <script type="text/javascript" defer="defer">
         function play(btn) {
             var $playButtons = $('button[data-play-id]'),
                 $playGroups = $('div[data-play-ids]'),
@@ -109,19 +76,6 @@
             data.append('mediaType', mediaType);
             data.append('itemsJSON', JSON.stringify($playData.get()));
 
-            if (!playerPopup || playerPopup.closed) {
-                success = () => {
-                    playerPopup = window.open('@Url.Action("Index", "Player")', '@(Model.MusicPlayerId)');
-                    hideLoading();
-                }
-
-            } else {
-                success = () => {
-                    playerPopup.postMessage('@(nameof(Enums.PlayerMessages.Reload))');
-                    hideLoading();
-                }
-            }
-
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("UpdateNowPlaying", "Player")',
@@ -132,9 +86,7 @@
                 traditional: true
             });
         }
-    </script>
 
-    <script type="text/javascript" defer="defer">
         $(function () {
             $('[data-toggle="popover"]').popover();
             $('[data-tooltip="tooltip"]').tooltip();

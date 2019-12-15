@@ -39,7 +39,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlists));
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlist));
 
             if (configuration != null)
             {
@@ -53,7 +53,7 @@ namespace MediaLibraryWebUI.Controllers
             else
             {
                 playlistViewModel.PlaylistGroups = await playlistService.GetPlaylistGroups(playlistViewModel.Configuration.SelectedPlaylistSort);
-                result = View(playlistViewModel);
+                result = PartialView(playlistViewModel);
             }
 
             return result;
@@ -70,7 +70,7 @@ namespace MediaLibraryWebUI.Controllers
                 await dataService.Insert(playlist);
                 playlistViewModel.SelectedPlaylist = playlist;
 
-                result = View("Playlist", playlistViewModel);
+                result = PartialView("Playlist", playlistViewModel);
             }
             else
             {
@@ -82,7 +82,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task RemovePlaylist(int id)
         {
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlists));
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlist));
             
             await dataService.Delete<Playlist>(id);
 
@@ -109,7 +109,7 @@ namespace MediaLibraryWebUI.Controllers
             playlistViewModel.SelectedPlaylist = await dataService.GetAsync<Playlist, IEnumerable<Track>>(item => item.Id == id, 
                                                                                                           playlist => playlist.PlaylistTracks.Select(list => list.Track));
 
-            return View("Playlist", playlistViewModel);
+            return PartialView("Playlist", playlistViewModel);
         }
 
         public async Task<ActionResult> RemovePlaylistItem(int id, int playlistId)
@@ -118,7 +118,7 @@ namespace MediaLibraryWebUI.Controllers
             playlistViewModel.SelectedPlaylist = await dataService.GetAsync<Playlist, IEnumerable<Track>>(item => item.Id == playlistId,
                                                                                                           playlist => playlist.PlaylistTracks.Select(list => list.Track));
 
-            return View("Playlist", playlistViewModel);
+            return PartialView("Playlist", playlistViewModel);
         }
 
         [AllowAnonymous]
@@ -142,11 +142,11 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlists));
+                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Playlist));
 
                 if (configuration == null)
                 {
-                    configuration = new Configuration() { Type = nameof(MediaPages.Playlists), JsonData = JsonConvert.SerializeObject(playlistConfiguration) };
+                    configuration = new Configuration() { Type = nameof(MediaPages.Playlist), JsonData = JsonConvert.SerializeObject(playlistConfiguration) };
                     await dataService.Insert(configuration);
                 }
                 else

@@ -255,6 +255,7 @@
     <Compile Include="ControllerFactory\MefControllerFactory.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MediaLibraryController.cs" />
     <Compile Include="Controllers\MusicController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
@@ -264,6 +265,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Configurations\MediaLibraryConfiguration.cs" />
+    <Compile Include="Models\MediaLibraryViewModel.cs" />
     <Compile Include="Models\Interfaces\IConfiguration.cs" />
     <Compile Include="Models\Configurations\HomeConfiguration.cs" />
     <Compile Include="Models\Configurations\PlayerConfiguration.cs" />
@@ -334,6 +337,8 @@
     <Content Include="Views\Music\SongGroup.cshtml" />
     <Content Include="Views\Shared\Configurations\PlayerConfiguration.cshtml" />
     <Content Include="Views\Player\PlayerItems.cshtml" />
+    <Content Include="Views\MediaLibrary\Index.cshtml" />
+    <Content Include="Views\Shared\Configurations\MediaLibraryConfiguration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

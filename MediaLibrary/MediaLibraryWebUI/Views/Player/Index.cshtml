@@ -18,53 +18,51 @@
 
 @Html.Partial("~/Views/Shared/Configurations/PlayerConfiguration.cshtml", Model.Configuration)
 
-@section scripts {
-    <script type="text/javascript" defer="defer">
-        var $player = $('#@(Model.MusicPlayerId)');
+<script type="text/javascript" defer="defer">
+    var $player = $('#@(Model.MusicPlayerId)');
 
-        function play(item) {
-            if (item) {
-                var $item = $(item),
-                    url = $item.attr('data-play-url'),
-                    index = $item.attr('data-play-index');
+    function play(item) {
+        if (item) {
+            var $item = $(item),
+                url = $item.attr('data-play-url'),
+                index = $item.attr('data-play-index');
 
-                $('.list-group-item').removeClass('active');
-                $item.addClass('active');
-                setCurrentItemIndex(index);
-                updateConfiguration(function () {
-                    $player.prop('src', url);
-                    $player.trigger('play');
-                });
-            }
-        }
-
-        function initPlayer() {
-            $player.on('ended', function (evt) {
-                playNext();
+            $('.list-group-item').removeClass('active');
+            $item.addClass('active');
+            setCurrentItemIndex(index);
+            updateConfiguration(function () {
+                $player.prop('src', url);
+                $player.trigger('play');
             });
         }
+    }
 
-        function playNext() {
-            var nextIndex = getCurrentItemIndex() + 1,
-                $item = $('[data-play-index=' + nextIndex + ']');
+    function initPlayer() {
+        $player.on('ended', function (evt) {
+            playNext();
+        });
+    }
 
-            play($item[0]);
-        }
+    function playNext() {
+        var nextIndex = getCurrentItemIndex() + 1,
+            $item = $('[data-play-index=' + nextIndex + ']');
 
-        function playPrevious() {
-            var previousIndex = getCurrentItemIndex() - 1,
-                $item = $('[data-play-index=' + previousIndex + ']');
+        play($item[0]);
+    }
 
-            play($item[0]);
-        }
+    function playPrevious() {
+        var previousIndex = getCurrentItemIndex() - 1,
+            $item = $('[data-play-index=' + previousIndex + ']');
 
-        function reload() {
-            var success = () => null;
+        play($item[0]);
+    }
 
-            $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
-        }
+    function reload() {
+        var success = () => null;
 
-        initPlayer();
-    </script>
-}
+        $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
+    }
+
+    initPlayer();
+</script>
 

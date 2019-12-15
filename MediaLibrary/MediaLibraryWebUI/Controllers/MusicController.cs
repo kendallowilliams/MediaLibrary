@@ -20,9 +20,11 @@ using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Models.Data;
 using System.Web;
 using System.IO;
+using Fody;
 
 namespace MediaLibraryWebUI.Controllers
 {
+    [ConfigureAwait(false)]
     [Export("Music", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class MusicController : BaseController
     {
@@ -48,7 +50,6 @@ namespace MediaLibraryWebUI.Controllers
             this.transactionService = transactionService;
         }
 
-        [CompressContent]
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;
@@ -76,7 +77,7 @@ namespace MediaLibraryWebUI.Controllers
                 musicViewModel.Artists = await musicService.Artists();
                 musicViewModel.Songs = await musicService.Songs();
                 musicViewModel.Playlists = await dataService.GetList<Playlist>();
-                result = View(musicViewModel);
+                result = PartialView(musicViewModel);
             }
 
             return result;
@@ -176,7 +177,7 @@ namespace MediaLibraryWebUI.Controllers
             musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             musicViewModel.SelectedAlbum = await dataService.GetAsync<Album, IEnumerable<Track>>(album => album.Id == id, album => album.Tracks);
 
-            return View("Album", musicViewModel);
+            return PartialView("Album", musicViewModel);
         }
 
         public async Task<ActionResult> GetArtist(int id)
@@ -186,7 +187,7 @@ namespace MediaLibraryWebUI.Controllers
             musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             musicViewModel.SelectedArtist = await dataService.GetAsync<Artist, IEnumerable<Album>>(artist => artist.Id == id, artist => artist.Albums);
 
-            return View("Artist", musicViewModel);
+            return PartialView("Artist", musicViewModel);
         }
 
         public async Task<ActionResult> Scan(ScanDirectoryRequest request)

@@ -7,10 +7,13 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Models.Configurations
 {
-    public class HomeConfiguration : IConfiguration
+    public class MediaLibraryConfiguration : IConfiguration
     {
-        public HomeConfiguration()
+        public MediaLibraryConfiguration()
         {
+            SelectedMediaPage = MediaPages.Home;
         }
+
+        public MediaPages SelectedMediaPage { get; set; }
     }
 }

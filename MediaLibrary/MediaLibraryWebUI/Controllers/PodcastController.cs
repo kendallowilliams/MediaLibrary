@@ -49,7 +49,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcasts));
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcast));
 
             if (configuration != null)
             {
@@ -63,7 +63,7 @@ namespace MediaLibraryWebUI.Controllers
             else
             {
                 podcastViewModel.PodcastGroups = await podcastUIService.GetPodcastGroups(podcastViewModel.Configuration.SelectedPodcastSort);
-                result = View(podcastViewModel);
+                result = PartialView(podcastViewModel);
             }
 
             return result;
@@ -75,12 +75,12 @@ namespace MediaLibraryWebUI.Controllers
             
             podcastViewModel.SelectedPodcast = podcast;
 
-            return View("Podcast", podcastViewModel);
+            return PartialView("Podcast", podcastViewModel);
         }
 
         public async Task RemovePodcast(int id)
         {
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcasts));
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcast));
             Podcast podcast = await dataService.Get<Podcast, ICollection<PodcastItem>>(item => item.Id == id, item => item.PodcastItems);
             IEnumerable<string> episodes = podcast.PodcastItems.Where(item => !string.IsNullOrWhiteSpace(item.File))
                                                                .Select(item => item.File);
@@ -103,7 +103,7 @@ namespace MediaLibraryWebUI.Controllers
             podcastViewModel.DownloadedEpisodes = (await dataService.GetList<PodcastItem>(item => item.File != null && item.File != "")).Select(item => item.Id);
             podcastViewModel.SelectedPodcast = await dataService.GetAsync<Podcast, ICollection<PodcastItem>>(podcast => podcast.Id == id, podcast => podcast.PodcastItems);
 
-            return View("Podcast", podcastViewModel);
+            return PartialView("Podcast", podcastViewModel);
         }
 
         public async Task DownloadPodcastItem(int id)
@@ -177,11 +177,11 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcasts));
+                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcast));
 
                 if (configuration == null)
                 {
-                    configuration = new Configuration() { Type = nameof(MediaPages.Podcasts), JsonData = JsonConvert.SerializeObject(podcastConfiguration) };
+                    configuration = new Configuration() { Type = nameof(MediaPages.Podcast), JsonData = JsonConvert.SerializeObject(podcastConfiguration) };
                     await dataService.Insert(configuration);
                 }
                 else

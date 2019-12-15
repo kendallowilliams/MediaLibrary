@@ -65,28 +65,26 @@
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
 @Html.Partial("~/Views/Shared/Configurations/PodcastConfiguration.cshtml", Model.Configuration)
 
-@section scripts {
-    <script type="text/javascript" defer="defer">
-        function backClicked() {
-            $('#loadingModal').modal('show');
-            $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Index))');
-            updateConfiguration(() => window.location = '@(Url.Action("Index", "Podcast"))');
-        }
+<script type="text/javascript" defer="defer">
+    function backClicked() {
+        $('#loadingModal').modal('show');
+        $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Index))');
+        updateConfiguration(() => loadView('@(Url.Action("Index", "Podcast"))'));
+    }
 
-        function refreshClicked() {
-            var success = () => window.location = '@(Url.Action("Index", "Podcast"))';
+    function refreshClicked() {
+        var success = () => loadView('@(Url.Action("Index", "Podcast"))');
 
-            $('#loadingModal').modal('show');
-            $.post('@(Url.Action("RefreshPodcast","Podcast"))', { id: @(Model.SelectedPodcast.Id) }, success);
+        $('#loadingModal').modal('show');
+        $.post('@(Url.Action("RefreshPodcast","Podcast"))', { id: @(Model.SelectedPodcast.Id) }, success);
 
-        }
+    }
 
-        function downloadClicked(btn) {
-            var $btn = $(btn);
+    function downloadClicked(btn) {
+        var $btn = $(btn);
 
-            $btn.tooltip('dispose');
-            $btn.prop('disabled', 'disabled');
-            $.get($btn.attr('data-download-action'));
-        }
-    </script>
-}
+        $btn.tooltip('dispose');
+        $btn.prop('disabled', 'disabled');
+        $.get($btn.attr('data-download-action'));
+    }
+</script>

@@ -101,29 +101,27 @@ else
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
 @Html.Partial("~/Views/Shared/Configurations/PodcastConfiguration.cshtml", Model.Configuration)
 
-@section scripts {
-    <script type="text/javascript">
-        $('#modalNewPodcast').on('show.bs.modal', function (e) {
-            $('#formNewPodcast').trigger('reset');
-        });
+<script type="text/javascript">
+    $('#modalNewPodcast').on('show.bs.modal', function (e) {
+        $('#formNewPodcast').trigger('reset');
+    });
 
-        function addNewPodcast() {
-            $('#loadingModal').modal('show');
-            $('#formNewPodcast').trigger('submit');
-            $('#modalNewPodcast').modal('hide');
-        }
+    function addNewPodcast() {
+        $('#loadingModal').modal('show');
+        $('#formNewPodcast').trigger('submit');
+        $('#modalNewPodcast').modal('hide');
+    }
 
-        function podcastClicked(btn) {
-            $('#loadingModal').modal('show');
-            $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Podcast))');
-            $('#txt@(nameof(Model.Configuration.SelectedPodcastId))').val($(btn).attr('data-item-id'));
-            updateConfiguration(() => window.location = '@Url.Action("Index", "Podcast")');
-        }
+    function podcastClicked(btn) {
+        $('#loadingModal').modal('show');
+        $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Podcast))');
+        $('#txt@(nameof(Model.Configuration.SelectedPodcastId))').val($(btn).attr('data-item-id'));
+        updateConfiguration(() => loadView('"Podcast")'));
+    }
 
-        function sortChanged(select) {
-            $('#loadingModal').modal('show');
-            $('#txt@(nameof(Model.Configuration.SelectedPodcastSort))').val($(select).val());
-            updateConfiguration(() => window.location = '@Url.Action("Index", "Podcast")');
-        }
-    </script>
-}
+    function sortChanged(select) {
+        $('#loadingModal').modal('show');
+        $('#txt@(nameof(Model.Configuration.SelectedPodcastSort))').val($(select).val());
+        updateConfiguration(() => loadView('"Podcast")'));
+    }
+</script>

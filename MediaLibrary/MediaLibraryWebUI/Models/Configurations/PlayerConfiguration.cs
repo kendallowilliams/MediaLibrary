@@ -11,10 +11,7 @@ namespace MediaLibraryWebUI.Models.Configurations
     {
         public PlayerConfiguration()
         {
-            SelectedMediaPage = MediaPages.Player;
         }
-
-        public MediaPages SelectedMediaPage { get; set; }
 
         public MediaTypes SelectedMediaType { get; set; }
         

@@ -30,7 +30,7 @@
 
     function uploadFile() {
         var data = new FormData(),
-            success = () => window.location = '@Url.Action("Index", "Music")';
+            success = () => loadView('"Music")');
 
         if ($('#inpNewSong').prop('files').length > 0) {
             $('#modalAddNewSong').modal('hide');

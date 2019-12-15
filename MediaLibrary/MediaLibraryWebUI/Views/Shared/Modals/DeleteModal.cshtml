@@ -35,7 +35,7 @@
         var $btn = $(this);
 
         $.get($btn.attr('data-delete-url'), function () {
-            window.location = $btn.attr('data-refresh-url');
+            loadView($btn.attr('data-refresh-url'));
         });
     });
 </script>

@@ -48,7 +48,7 @@ namespace MediaLibraryWebUI.Controllers
 
             await LoadPlayerViewModel();
 
-            return View(playerViewModel);
+            return PartialView(playerViewModel);
         }
 
         public async Task UpdateConfiguration(PlayerConfiguration playerConfiguration)

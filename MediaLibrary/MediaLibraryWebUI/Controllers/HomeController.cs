@@ -24,7 +24,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public ActionResult Index()
         {
-            return View(homeViewModel);
+            return PartialView(homeViewModel);
         }
     }
 }
