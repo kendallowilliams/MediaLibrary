@@ -30,7 +30,7 @@
 
     function editPlaylist() {
         var data = { id: $('#txtPlaylistId').val(), name: $('#txtPlaylistName').val() },
-            success = () => loadView('"Playlist")');
+            success = () => loadView('@(nameof(Enums.MediaPages.Playlist))');
 
         $('#modalEditPlaylist').modal('hide');
         $('#loadingModal').modal('show');

@@ -57,6 +57,6 @@
     function backClicked() {
         $('#loadingModal').modal('show');
         $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Index))');
-        updateConfiguration(() => loadView('@(Url.Action("Index", "Music"))'));
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 </script>

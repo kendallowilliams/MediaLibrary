@@ -21,13 +21,13 @@
 <script type="text/javascript" defer="defer">
     $('[data-delete="enabled"]').click(function (e) {
         var url = $(e.delegateTarget).attr('data-delete-action'),
-            refreshUrl = $(e.delegateTarget).attr('data-refresh-action'),
+            refreshView = $(e.delegateTarget).attr('data-refresh-view'),
             $button = $('#btnDeleteItem'),
             type = $(e.delegateTarget).attr('data-delete-type');
 
         $('#modalDeleteItemTitle').text('Delete ' + type);
         $button.attr('data-delete-url', url);
-        $button.attr('data-refresh-url', refreshUrl);
+        $button.attr('data-refresh-view', refreshView);
         $('#modalDeleteItem').modal('show');
     });
 
@@ -35,7 +35,7 @@
         var $btn = $(this);
 
         $.get($btn.attr('data-delete-url'), function () {
-            loadView($btn.attr('data-refresh-url'));
+            loadView($btn.attr('data-refresh-view'));
         });
     });
 </script>

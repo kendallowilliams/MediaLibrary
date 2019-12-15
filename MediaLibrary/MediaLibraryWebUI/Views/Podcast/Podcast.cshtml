@@ -9,7 +9,7 @@
     <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
     <button class="btn btn-outline-secondary" onclick="refreshClicked()" data-tooltip="tooltip" title="Refresh podcast"><i class="fa fa-sync"></i></button>
     <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))"
-            data-tooltip="tooltip" title="Delete podcast" data-refresh-action="@Url.Action("Index", "Podcast")" data-delete-type="podcast">
+            data-tooltip="tooltip" title="Delete podcast" data-refresh-view="@(nameof(Enums.MediaPages.Podcast))" data-delete-type="podcast">
         <i class="fa fa-trash"></i>
     </button>
 </div>
@@ -69,11 +69,11 @@
     function backClicked() {
         $('#loadingModal').modal('show');
         $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Index))');
-        updateConfiguration(() => loadView('@(Url.Action("Index", "Podcast"))'));
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }
 
     function refreshClicked() {
-        var success = () => loadView('@(Url.Action("Index", "Podcast"))');
+        var success = () => loadView('@(nameof(Enums.MediaPages.Podcast))');
 
         $('#loadingModal').modal('show');
         $.post('@(Url.Action("RefreshPodcast","Podcast"))', { id: @(Model.SelectedPodcast.Id) }, success);

@@ -51,7 +51,7 @@
                                             <i class="fa fa-list"></i>
                                         </button>
                                         <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
-                                                data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-action="@Url.Action("Index", "Playlist")">
+                                                data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </div>
@@ -78,12 +78,12 @@ else
         $('#loadingModal').modal('show');
         $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Playlist))');
         $('#txt@(nameof(Model.Configuration.SelectedPlaylistId))').val($(btn).attr('data-item-id'));
-        updateConfiguration(() => loadView('"Playlist")'));
+        updateConfiguration(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
     }
 
     function sortChanged(select) {
         $('#loadingModal').modal('show');
         $('#txt@(nameof(Model.Configuration.SelectedPlaylistSort))').val($(select).val());
-        updateConfiguration(() => loadView('"Playlist")'));
+        updateConfiguration(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
     }
 </script>

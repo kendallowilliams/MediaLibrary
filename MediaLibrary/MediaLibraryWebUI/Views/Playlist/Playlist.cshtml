@@ -14,7 +14,7 @@
     <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", new { Model.SelectedPlaylist.Id})"
        data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
     <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
-            data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-action="@Url.Action("Index", "Playlist")">
+            data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
         <i class="fa fa-trash"></i>
     </button>
 </div>
@@ -45,7 +45,7 @@
                                     <i class="fa fa-play"></i>
                                 </button>
                                 <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
-                                        data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-action="@Url.Action("Index", "Playlist")">
+                                        data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </div>
@@ -69,6 +69,6 @@
     function backClicked() {
         $('#loadingModal').modal('show');
         $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Index))');
-        updateConfiguration(() => loadView('@(Url.Action("Index", "Playlist"))'));
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Playlist))'));
     }
 </script>

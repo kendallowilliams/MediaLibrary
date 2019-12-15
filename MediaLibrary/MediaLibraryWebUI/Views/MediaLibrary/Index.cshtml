@@ -1,7 +1,7 @@
 ﻿@model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = string.Empty;
 }
 
 <div id="divView">
@@ -12,17 +12,15 @@
 @section scripts {
     <script type="text/javascript" defer="defer">
         function loadView(view) {
-            var success = () => null;
+            var success = () => hideLoading(),
+                url = '@Url.Action("Index", "ViewName")';
 
+            showLoading();
             updateSelectedMediaPage(view);
-            updateMediaLibraryConfiguration(() => $('#divView').load(view + '/Index', success));
+            updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
         }
 
-        function updateTitle(postfix) {
-            document.title = 'KOW Moosic ' + postfix;
-        }
-
-        loadView('@Url.Action("Index", Model.Configuration.SelectedMediaPage.ToString())');
+        loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
     </script>
 }
 

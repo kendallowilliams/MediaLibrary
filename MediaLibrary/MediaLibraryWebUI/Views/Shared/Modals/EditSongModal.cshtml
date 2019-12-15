@@ -75,7 +75,7 @@
                    '@(nameof(Song.Artist))=' + encodeURIComponent($('#txtEdit@(nameof(Song.Artist))').val()) + '&' +
                    '@(nameof(Song.Genre))=' + encodeURIComponent($('#txtEdit@(nameof(Song.Genre))').val()),
             success = function () {
-                loadView('@(Url.Action("Index", "Music"))');
+                loadView('@(nameof(Enums.MediaPages.Music))');
             };
 
         $('#modalEditSong').modal('hide');

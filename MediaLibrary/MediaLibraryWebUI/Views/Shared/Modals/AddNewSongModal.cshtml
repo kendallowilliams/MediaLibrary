@@ -30,7 +30,7 @@
 
     function uploadFile() {
         var data = new FormData(),
-            success = () => loadView('"Music")');
+            success = () => loadView('@(nameof(Enums.MediaPages.Music))');
 
         if ($('#inpNewSong').prop('files').length > 0) {
             $('#modalAddNewSong').modal('hide');

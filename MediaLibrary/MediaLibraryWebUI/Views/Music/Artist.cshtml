@@ -56,13 +56,13 @@
     function backClicked() {
         $('#loadingModal').modal('show');
         $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Index))');
-        updateConfiguration(() => loadView('@(Url.Action("Index", "Music"))'));
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
         
     function albumClicked(btn) {
         $('#loadingModal').modal('show');
         $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Album))');
         $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val($(btn).attr('data-item-id'));
-        updateConfiguration(() => loadView('"Music")'));
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 </script>
