@@ -24,13 +24,15 @@
                 url = $item.attr('data-play-url'),
                 index = $item.attr('data-play-index');
 
-            $('.list-group-item').removeClass('active');
+            $('li[data-play-index].list-group-item').removeClass('active');
             $item.addClass('active');
             setCurrentItemIndex(index);
             updatePlayerConfiguration(function () {
                 $player.prop('src', url);
                 $player.trigger('play');
             });
+        } else if ($('li[data-play-index].active').length === 1) {
+            _play($('li[data-play-index].active')[0]);
         }
     }
 
@@ -42,22 +44,20 @@
 
     function playNext() {
         var nextIndex = getCurrentItemIndex() + 1,
-            $item = $('[data-play-index=' + nextIndex + ']');
+            $item = $('li[data-play-index=' + nextIndex + ']');
 
         _play($item[0]);
     }
 
     function playPrevious() {
         var previousIndex = getCurrentItemIndex() - 1,
-            $item = $('[data-play-index=' + previousIndex + ']');
+            $item = $('li[data-play-index=' + previousIndex + ']');
 
         _play($item[0]);
     }
 
     function reload() {
-        var success = () => {
-            if ($('li.active').length > 0 && @(Model.Configuration.AutoPlay.ToString().ToLower())) /*then*/ _play($('li.active')[0]);
-        };
+        var success = () => null;
 
         $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
     }
