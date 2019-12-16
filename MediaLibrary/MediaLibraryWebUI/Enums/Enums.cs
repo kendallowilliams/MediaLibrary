@@ -19,5 +19,6 @@ namespace MediaLibraryWebUI
         public enum MediaPages { Home = 0, Music, Playlist, Podcast, Player }
         public enum MediaTypes { Song, Podcast }
         public enum PlayerMessages { Loaded, Reload }
+        public enum RepeatTypes { None = 0, RepeatOne, RepeatAll }
     }
 }

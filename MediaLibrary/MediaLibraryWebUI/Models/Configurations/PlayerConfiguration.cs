@@ -12,6 +12,7 @@ namespace MediaLibraryWebUI.Models.Configurations
         public PlayerConfiguration()
         {
             AutoPlay = true;
+            Repeat = RepeatTypes.None;
         }
 
         public MediaTypes SelectedMediaType { get; set; }
@@ -19,5 +20,7 @@ namespace MediaLibraryWebUI.Models.Configurations
         public int CurrentItemIndex { get; set; }
 
         public bool AutoPlay { get; set; }
+
+        public RepeatTypes Repeat { get; set; }
     }
 }
