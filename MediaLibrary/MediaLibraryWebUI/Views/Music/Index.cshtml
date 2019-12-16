@@ -87,7 +87,7 @@
     function sortChanged(sortType, select) {
         $('#loadingModal').modal('show');
         $('#txt' + sortType).val($(select).val());
-        updateConfiguration(() => loadView('"Music")'));
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 
     function artistClicked(btn) {
