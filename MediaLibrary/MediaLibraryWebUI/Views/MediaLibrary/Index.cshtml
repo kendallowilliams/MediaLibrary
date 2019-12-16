@@ -11,8 +11,11 @@
 
 @section scripts {
     <script type="text/javascript" defer="defer">
-        function loadView(view) {
-            var success = () => hideLoading(),
+        function loadView(view, callback) {
+            var success = () => {
+                hideLoading();
+                if (typeof callback === 'function') /*then*/ callback();
+            },
                 url = '@Url.Action("Index", "ViewName")';
 
             $('#playerView').addClass('d-none');
@@ -21,7 +24,7 @@
 
             if (view === '@(Enums.MediaPages.Player)') {
                 $('#playerView').removeClass('d-none');
-                updateMediaLibraryConfiguration(() => reload());
+                updateMediaLibraryConfiguration(() => reload(success));
             } else {
                 $('#divView').removeClass('d-none');
                 showLoading();

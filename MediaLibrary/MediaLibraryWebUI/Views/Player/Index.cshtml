@@ -56,8 +56,10 @@
         _play($item[0]);
     }
 
-    function reload() {
-        var success = () => null;
+    function reload(callback) {
+        var success = () => {
+            if (typeof callback === 'function') /*then*/ callback();
+        };
 
         $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
     }
