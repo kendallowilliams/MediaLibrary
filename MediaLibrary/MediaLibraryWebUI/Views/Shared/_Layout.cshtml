@@ -94,7 +94,7 @@
 
         $(function () {
             $('[data-toggle="popover"]').popover();
-            $('[data-tooltip="tooltip"]').tooltip();
+            $('[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
         });
 
         function showLoading() {

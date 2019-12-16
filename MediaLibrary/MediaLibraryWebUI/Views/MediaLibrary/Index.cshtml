@@ -15,6 +15,7 @@
             var success = () => {
                 hideLoading();
                 if (typeof callback === 'function') /*then*/ callback();
+                if (view !== '@(Enums.MediaPages.Player)') /*then*/ $('#divView *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             },
                 url = '@Url.Action("Index", "ViewName")';
 
@@ -30,6 +31,15 @@
                 showLoading();
                 updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
             }
+        }
+
+        function reload(callback) {
+            var success = () => {
+                if (typeof callback === 'function') /*then*/ callback();
+            };
+
+            $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
+            $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
         }
 
         $('#playerView').load('@Url.Action("Index", "Player")');
