@@ -8,7 +8,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Models.Configurations
 {
-    public class MusicConfiguration : IConfiguration
+    public class MusicConfiguration : BaseConfiguration
     {
         public MusicConfiguration()
         {

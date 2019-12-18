@@ -31,7 +31,7 @@
                         <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Playlist))')">@(nameof(Enums.MediaPages.Playlist))s</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">Now Playing</a>
+                        <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">@(Model.NowPlaying)</a>
                     </li>
                 </ul>
             </div>

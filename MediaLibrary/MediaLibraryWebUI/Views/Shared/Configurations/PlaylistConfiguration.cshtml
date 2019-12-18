@@ -4,6 +4,7 @@
     @Html.Hidden(nameof(Model.SelectedPlaylistSort), Model.SelectedPlaylistSort, new { id = $"txt{nameof(Model.SelectedPlaylistSort)}" });
     @Html.Hidden(nameof(Model.SelectedPlaylistId), Model.SelectedPlaylistId, new { id = $"txt{nameof(Model.SelectedPlaylistId)}" });
     @Html.Hidden(nameof(Model.SelectedPlaylistPage), Model.SelectedPlaylistPage, new { id = $"txt{nameof(Model.SelectedPlaylistPage)}" });
+    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Playlist)}{nameof(Model.ScrollTop)}" });
 </div>
 
 <script type="text/javascript" defer="defer">
@@ -14,6 +15,15 @@
     function getPlaylistConfigurationData() {
         return '@(nameof(Model.SelectedPlaylistSort))=' + $('#txt@(nameof(Model.SelectedPlaylistSort))').val() + '&' +
                 '@(nameof(Model.SelectedPlaylistId))=' + $('#txt@(nameof(Model.SelectedPlaylistId))').val() + '&' +
-                '@(nameof(Model.SelectedPlaylistPage))=' + $('#txt@(nameof(Model.SelectedPlaylistPage))').val();
+                '@(nameof(Model.SelectedPlaylistPage))=' + $('#txt@(nameof(Model.SelectedPlaylistPage))').val() + '&' +
+                '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Playlist))@(nameof(Model.ScrollTop))').val();
+    }
+
+    function get@(nameof(Enums.MediaPages.Playlist))ScrollTop() {
+        return parseInt($('#txt@(nameof(Enums.MediaPages.Playlist))@(nameof(Model.ScrollTop))').val());
+    }
+
+    function update@(nameof(Enums.MediaPages.Playlist))ScrollTop(top) {
+        $('#txt@(nameof(Enums.MediaPages.Playlist))@(nameof(Model.ScrollTop))').val(top);
     }
 </script>

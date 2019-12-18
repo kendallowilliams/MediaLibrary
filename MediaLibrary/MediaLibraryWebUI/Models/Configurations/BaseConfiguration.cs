@@ -3,14 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Models.Configurations
 {
-    public class HomeConfiguration : BaseConfiguration
+    public abstract class BaseConfiguration : IConfiguration
     {
-        public HomeConfiguration()
-        {
-        }
+        public BaseConfiguration() { }
+
+        public int ScrollTop { get; set; }
     }
 }

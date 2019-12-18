@@ -5,6 +5,7 @@
     @Html.Hidden(nameof(Model.CurrentItemIndex), Model.CurrentItemIndex, new { id = $"txt{nameof(Model.CurrentItemIndex)}" });
     @Html.Hidden(nameof(Model.AutoPlay), Model.AutoPlay, new { id = $"txt{nameof(Model.AutoPlay)}" });
     @Html.Hidden(nameof(Model.Repeat), Model.Repeat, new { id = $"txt{nameof(Model.Repeat)}" });
+    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Player)}{nameof(Model.ScrollTop)}" });
 </div>
 
 <script type="text/javascript" defer="defer">
@@ -16,7 +17,8 @@
         return '@(nameof(Model.SelectedMediaType))=' + $('#txt@(nameof(Model.SelectedMediaType))').val() + '&' +
                '@(nameof(Model.CurrentItemIndex))=' + $('#txt@(nameof(Model.CurrentItemIndex))').val() + '&' +
                '@(nameof(Model.Repeat))=' + $('#txt@(nameof(Model.Repeat))').val() + '&' +
-               '@(nameof(Model.AutoPlay))=' + $('#txt@(nameof(Model.AutoPlay))').val();
+               '@(nameof(Model.AutoPlay))=' + $('#txt@(nameof(Model.AutoPlay))').val() + '&' +
+               '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Player))@(nameof(Model.ScrollTop))').val();
     }
 
     function setCurrentItemIndex(index) {
@@ -33,5 +35,13 @@
 
     function getRepeat() {
         return $('#txt@(nameof(Model.Repeat))').val();
+    }
+
+    function get@(nameof(Enums.MediaPages.Player))ScrollTop() {
+        return parseInt($('#txt@(nameof(Enums.MediaPages.Player))@(nameof(Model.ScrollTop))').val());
+    }
+
+    function update@(nameof(Enums.MediaPages.Player))ScrollTop(top) {
+        $('#txt@(nameof(Enums.MediaPages.Player))@(nameof(Model.ScrollTop))').val(top);
     }
 </script>

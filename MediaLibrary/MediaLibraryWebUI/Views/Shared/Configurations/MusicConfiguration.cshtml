@@ -8,6 +8,7 @@
     @Html.Hidden(nameof(Model.SelectedAlbumId), Model.SelectedAlbumId, new { id = $"txt{nameof(Model.SelectedAlbumId)}" });
     @Html.Hidden(nameof(Model.SelectedMusicTab), Model.SelectedMusicTab, new { id = $"txt{nameof(Model.SelectedMusicTab)}" });
     @Html.Hidden(nameof(Model.SelectedMusicPage), Model.SelectedMusicPage, new { id = $"txt{nameof(Model.SelectedMusicPage)}" });
+    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Music)}{nameof(Model.ScrollTop)}" });
 </div>
 
 <script type="text/javascript" defer="defer">
@@ -22,6 +23,15 @@
                 '@(nameof(Model.SelectedAlbumId))=' + $('#txt@(nameof(Model.SelectedAlbumId))').val() + '&' +
                 '@(nameof(Model.SelectedArtistId))=' + $('#txt@(nameof(Model.SelectedArtistId))').val() + '&' +
                 '@(nameof(Model.SelectedMusicPage))=' + $('#txt@(nameof(Model.SelectedMusicPage))').val() + '&' +
-                '@(nameof(Model.SelectedMusicTab))=' + $('#txt@(nameof(Model.SelectedMusicTab))').val();
+                '@(nameof(Model.SelectedMusicTab))=' + $('#txt@(nameof(Model.SelectedMusicTab))').val() + '&' +
+                '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Music))@(nameof(Model.ScrollTop))').val();
+    }
+
+    function get@(nameof(Enums.MediaPages.Music))ScrollTop() {
+        return parseInt($('#txt@(nameof(Enums.MediaPages.Music))@(nameof(Model.ScrollTop))').val());
+    }
+
+    function update@(nameof(Enums.MediaPages.Music))ScrollTop(top) {
+        $('#txt@(nameof(Enums.MediaPages.Music))@(nameof(Model.ScrollTop))').val(top);
     }
 </script>

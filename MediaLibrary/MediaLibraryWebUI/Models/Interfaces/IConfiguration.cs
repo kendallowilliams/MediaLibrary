@@ -8,5 +8,6 @@ namespace MediaLibraryWebUI.Models.Interfaces
 {
     public interface IConfiguration
     {
+        int ScrollTop { get; set; }
     }
 }

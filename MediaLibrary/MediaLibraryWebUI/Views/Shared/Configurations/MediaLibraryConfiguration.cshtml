@@ -2,6 +2,7 @@
 
 <div class="d-none">
     @Html.Hidden(nameof(Model.SelectedMediaPage), Model.SelectedMediaPage, new { id = $"txt{nameof(Model.SelectedMediaPage)}" });
+    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Model.ScrollTop)}" });
 </div>
 
 <script type="text/javascript" defer="defer">
@@ -10,10 +11,19 @@
     }
 
     function getMediaLibraryConfigurationData() {
-        return '@(nameof(Model.SelectedMediaPage))=' + $('#txt@(nameof(Model.SelectedMediaPage))').val();
+        return '@(nameof(Model.SelectedMediaPage))=' + $('#txt@(nameof(Model.SelectedMediaPage))').val() + '&' +
+               '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Model.ScrollTop))').val();
     }
 
     function updateSelectedMediaPage(page) {
         $('#txt@(nameof(Model.SelectedMediaPage))').val(page);
+    }
+
+    function getScrollTop() {
+        return parseInt($('#txt@(nameof(Model.ScrollTop))').val());
+    }
+
+    function updateScrollTop(top) {
+        $('#txt@(nameof(Model.ScrollTop))').val(top);
     }
 </script>

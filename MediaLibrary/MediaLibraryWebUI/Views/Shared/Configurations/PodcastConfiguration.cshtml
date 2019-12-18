@@ -4,6 +4,7 @@
     @Html.Hidden(nameof(Model.SelectedPodcastSort), Model.SelectedPodcastSort, new { id = $"txt{nameof(Model.SelectedPodcastSort)}" });
     @Html.Hidden(nameof(Model.SelectedPodcastId), Model.SelectedPodcastId, new { id = $"txt{nameof(Model.SelectedPodcastId)}" });
     @Html.Hidden(nameof(Model.SelectedPodcastPage), Model.SelectedPodcastPage, new { id = $"txt{nameof(Model.SelectedPodcastPage)}" });
+    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Podcast)}{nameof(Model.ScrollTop)}" });
 </div>
 
 <script type="text/javascript" defer="defer">
@@ -13,7 +14,15 @@
 
     function getPodcastConfigurationData() {
         return '@(nameof(Model.SelectedPodcastSort))=' + $('#txt@(nameof(Model.SelectedPodcastSort))').val() + '&' +
-                '@(nameof(Model.SelectedPodcastId))=' + $('#txt@(nameof(Model.SelectedPodcastId))').val() + '&' +
-                '@(nameof(Model.SelectedPodcastPage))=' + $('#txt@(nameof(Model.SelectedPodcastPage))').val();
+               '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Model.ScrollTop))').val() + '&' +
+               '@(nameof(Model.SelectedPodcastPage))=' + $('#txt@(nameof(Enums.MediaPages.Podcast))@(nameof(Model.SelectedPodcastPage))').val();
+    }
+
+    function get@(nameof(Enums.MediaPages.Podcast))ScrollTop() {
+        return parseInt($('#txt@(nameof(Enums.MediaPages.Podcast))@(nameof(Model.ScrollTop))').val());
+    }
+
+    function update@(nameof(Enums.MediaPages.Podcast))ScrollTop(top) {
+        $('#txt@(nameof(Enums.MediaPages.Podcast))@(nameof(Model.ScrollTop))').val(top);
     }
 </script>

@@ -1,4 +1,5 @@
-﻿using MediaLibraryWebUI.Models.Interfaces;
+﻿using MediaLibraryWebUI.Models.Configurations;
+using MediaLibraryWebUI.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,6 @@ namespace MediaLibraryWebUI.Models
 
         public string MusicPlayerId { get; }
         public TConfig Configuration { get; set; }
-
         public string NowPlaying { get; set; }
     }
 }

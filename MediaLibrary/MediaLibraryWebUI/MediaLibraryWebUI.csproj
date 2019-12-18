@@ -265,6 +265,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Configurations\BaseConfiguration.cs" />
     <Compile Include="Models\Configurations\MediaLibraryConfiguration.cs" />
     <Compile Include="Models\MediaLibraryViewModel.cs" />
     <Compile Include="Models\Interfaces\IConfiguration.cs" />
