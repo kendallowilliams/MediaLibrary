@@ -72,8 +72,17 @@ namespace MediaLibraryWebUI.Controllers
         public async Task AddPodcast(string rssFeed)
         {
             Podcast podcast = await podcastService.AddPodcast(rssFeed);
-            
-            podcastViewModel.SelectedPodcast = podcast;
+
+            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Podcast));
+
+            if (configuration != null)
+            {
+                podcastViewModel.Configuration = JsonConvert.DeserializeObject<PodcastConfiguration>(configuration.JsonData);
+                podcastViewModel.Configuration.SelectedPodcastId = podcast.Id;
+                podcastViewModel.Configuration.SelectedPodcastPage = PodcastPages.Podcast;
+                configuration.JsonData = JsonConvert.SerializeObject(podcastViewModel.Configuration);
+                await dataService.Update(configuration);
+            }
         }
 
         public async Task RemovePodcast(int id)
