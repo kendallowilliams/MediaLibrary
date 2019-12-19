@@ -8,12 +8,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formNewPlaylist" method="post" action="@Url.Action("AddPlaylist", "Playlist")">
-                    <div class="form-group">
-                        <label for="txtNewPlaylist">Playlist</label>
-                        <input type="text" class="form-control" id="txtNewPlaylist" name="playlistName" placeholder="Playlist name">
-                    </div>
-                </form>
+                <div class="form-group">
+                    <label for="txtNewPlaylist">Playlist</label>
+                    <input type="text" class="form-control" id="txtNewPlaylist" name="playlistName" placeholder="Playlist name">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" onclick="addNewPlaylist()" data-tooltip="tooltip" title="Save playlist">Save</button>
@@ -25,12 +23,17 @@
 
 <script type="text/javascript" defer="defer">
     $('#modalNewPlaylist').on('show.bs.modal', function (e) {
-        $('#formNewPlaylist').trigger('reset');
+        $('#txtNewPlaylist').val('');
     })
 
     function addNewPlaylist() {
+        var success = () => {
+            $('#loadingModal').modal('hide');
+            loadView('@(nameof(Enums.MediaPages.Playlist))');
+        };
+
         $('#modalNewPlaylist').modal('hide');
         $('#loadingModal').modal('show');
-        $('#formNewPlaylist').trigger('submit');
+        $.post('@Url.Action("AddPlaylist", "Playlist")', { playlistName: $('#txtNewPlaylist').val() }, success);
     }
 </script>

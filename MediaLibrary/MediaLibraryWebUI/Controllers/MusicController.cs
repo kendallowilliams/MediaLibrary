@@ -170,7 +170,7 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
-        public async Task<ActionResult> GetAlbum(int id)
+        private async Task<ActionResult> GetAlbum(int id)
         {
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
@@ -180,7 +180,7 @@ namespace MediaLibraryWebUI.Controllers
             return PartialView("Album", musicViewModel);
         }
 
-        public async Task<ActionResult> GetArtist(int id)
+        private async Task<ActionResult> GetArtist(int id)
         {
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
