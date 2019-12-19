@@ -69,13 +69,11 @@ namespace MediaLibraryWebUI.Controllers
             return result;
         }
 
-        public async Task<ActionResult> AddPodcast(string rssFeed)
+        public async Task AddPodcast(string rssFeed)
         {
             Podcast podcast = await podcastService.AddPodcast(rssFeed);
             
             podcastViewModel.SelectedPodcast = podcast;
-
-            return PartialView("Podcast", podcastViewModel);
         }
 
         public async Task RemovePodcast(int id)
@@ -98,7 +96,7 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
-        public async Task<ActionResult> Get(int id)
+        private async Task<ActionResult> Get(int id)
         {
             podcastViewModel.DownloadedEpisodes = (await dataService.GetList<PodcastItem>(item => item.File != null && item.File != "")).Select(item => item.Id);
             podcastViewModel.SelectedPodcast = await dataService.GetAsync<Podcast, ICollection<PodcastItem>>(podcast => podcast.Id == id, podcast => podcast.PodcastItems);

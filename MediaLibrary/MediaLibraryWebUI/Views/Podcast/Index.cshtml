@@ -83,12 +83,10 @@ else
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formNewPodcast" method="post" action="@Url.Action("AddPodcast", "Podcast")">
-                    <div class="form-group">
-                        <label for="txtNewPodcast">RSS feed</label>
-                        <input type="text" class="form-control" id="txtNewPodcast" name="rssFeed" placeholder="RSS feed">
-                    </div>
-                </form>
+                <div class="form-group">
+                    <label for="txtNewPodcast">RSS feed</label>
+                    <input type="text" class="form-control" id="txtNewPodcast" name="rssFeed" placeholder="RSS feed">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" onclick="addNewPodcast()" data-tooltip="tooltip" title="Save podcast">Save</button>
@@ -103,13 +101,18 @@ else
 
 <script type="text/javascript">
     $('#modalNewPodcast').on('show.bs.modal', function (e) {
-        $('#formNewPodcast').trigger('reset');
+        $('#txtNewPodcast').val('');
     });
 
     function addNewPodcast() {
+        var success = () => {
+            $('#loadingModal').modal('hide');
+            loadView('@(nameof(Enums.MediaPages.Podcast))');
+        }
+
         $('#loadingModal').modal('show');
-        $('#formNewPodcast').trigger('submit');
         $('#modalNewPodcast').modal('hide');
+        $.post('@Url.Action("AddPodcast", "Podcast")', { rssFeed: $('#txtNewPodcast').val() }, success);
     }
 
     function podcastClicked(btn) {

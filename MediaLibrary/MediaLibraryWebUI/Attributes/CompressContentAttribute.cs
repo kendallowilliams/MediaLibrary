@@ -18,6 +18,8 @@ namespace MediaLibraryWebUI.Attributes
         /// <param name="filterContext"></param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            if (filterContext.IsChildAction) /*then*/ return;
+
             GZipEncodePage();
         }
 
