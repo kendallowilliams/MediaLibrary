@@ -109,9 +109,9 @@ else
             $('#loadingModal').modal('hide');
             loadView('@(nameof(Enums.MediaPages.Podcast))');
         }
-
-        $('#loadingModal').modal('show');
+        
         $('#modalNewPodcast').modal('hide');
+        $('#loadingModal').modal('show');
         $.post('@Url.Action("AddPodcast", "Podcast")', { rssFeed: $('#txtNewPodcast').val() }, success);
     }
 

@@ -13,9 +13,9 @@
     <script type="text/javascript" defer="defer">
         function loadView(view, callback) {
             var success = () => {
-                hideLoading();
                 if (typeof callback === 'function') /*then*/ callback();
                 if (view !== '@(Enums.MediaPages.Player)') /*then*/ $('#divView *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+                hideLoading();
             },
                 url = '@Url.Action("Index", "ViewName")';
 
