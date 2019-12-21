@@ -28,6 +28,7 @@
         <EntityTypeShape EntityType="MediaLibraryDAL.PlaylistPodcastItem" Width="1.5" PointX="14.25" PointY="5.25" />
         <AssociationConnector Association="MediaLibraryDAL.FK_playlist_podcastitem_playlist" />
         <AssociationConnector Association="MediaLibraryDAL.FK_playlist_podcastitem_podcastitem" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.Series" Width="1.5" PointX="3.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

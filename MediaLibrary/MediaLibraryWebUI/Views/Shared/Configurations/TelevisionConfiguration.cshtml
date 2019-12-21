@@ -1,0 +1,29 @@
+﻿@model MediaLibraryWebUI.Models.Configurations.TelevisionConfiguration
+
+<div class="d-none">
+    @Html.Hidden(nameof(Model.SelectedSeriesSort), Model.SelectedSeriesSort, new { id = $"txt{nameof(Model.SelectedSeriesSort)}" });
+    @Html.Hidden(nameof(Model.SelectedSeriesId), Model.SelectedSeriesId, new { id = $"txt{nameof(Model.SelectedSeriesId)}" });
+    @Html.Hidden(nameof(Model.SelectedTelevisionPage), Model.SelectedTelevisionPage, new { id = $"txt{nameof(Model.SelectedTelevisionPage)}" });
+    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Television)}{nameof(Model.ScrollTop)}" });
+</div>
+
+<script type="text/javascript" defer="defer">
+    function updateConfiguration(success) {
+        $.post('@Url.Action("UpdateConfiguration", "Television")', getTelevisionConfigurationData(), success);
+    }
+
+    function getTelevisionConfigurationData() {
+        return '@(nameof(Model.SelectedSeriesSort))=' + $('#txt@(nameof(Model.SelectedSeriesSort))').val() + '&' +
+                '@(nameof(Model.SelectedSeriesId))=' + $('#txt@(nameof(Model.SelectedSeriesId))').val() + '&' +
+                '@(nameof(Model.SelectedTelevisionPage))=' + $('#txt@(nameof(Model.SelectedTelevisionPage))').val() + '&' +
+                '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Television))@(nameof(Model.ScrollTop))').val();
+    }
+
+    function get@(nameof(Enums.MediaPages.Television))ScrollTop() {
+        return parseInt($('#txt@(nameof(Enums.MediaPages.Television))@(nameof(Model.ScrollTop))').val());
+    }
+
+    function update@(nameof(Enums.MediaPages.Television))ScrollTop(top) {
+        $('#txt@(nameof(Enums.MediaPages.Television))@(nameof(Model.ScrollTop))').val(top);
+    }
+</script>

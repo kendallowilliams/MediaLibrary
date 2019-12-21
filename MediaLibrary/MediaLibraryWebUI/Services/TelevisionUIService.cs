@@ -14,14 +14,14 @@ using MediaLibraryWebUI.Models;
 namespace MediaLibraryWebUI.Services
 {
     [ConfigureAwait(false)]
-    [Export(typeof(IPlaylistUIService))]
-    public class PlaylistUIService : IPlaylistUIService
+    [Export(typeof(ITelevisionUIService))]
+    public class TelevisionUIService : ITelevisionUIService
     {
         private Func<string, string> getLabel;
         private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PlaylistUIService(IDataService dataService)
+        public TelevisionUIService(IDataService dataService)
         {
             this.dataService = dataService;
             getLabel = title =>
@@ -37,28 +37,25 @@ namespace MediaLibraryWebUI.Services
             };
         }
 
-        public async Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort)
+        public async Task<IEnumerable<IGrouping<string, Series>>> GetSeriesGroups(SeriesSort sort)
         {
-            IEnumerable<IGrouping<string, Playlist>> groups = null;
-            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist, IEnumerable<Track>>(includeExpression: playlist => playlist.PlaylistTracks.Select(item => item.Track));
-           
+            IEnumerable<IGrouping<string, Series>> groups = null;
+            IEnumerable<Series> series = await dataService.GetList<Series>();
+
             switch (sort)
             {
-                case PlaylistSort.DateAdded:
-                    groups = playlists.GroupBy(playlist => playlist.ModifyDate.ToString("MM-dd-yyyy")).OrderBy(group => group.Key);
-                    break;
-                case PlaylistSort.AtoZ:
+                case SeriesSort.AtoZ:
                 default:
-                    groups = GetPlaylistsAtoZ(playlists.OrderBy(playlist => playlist.Name));
+                    groups = GetSeriessAtoZ(series.OrderBy(s => s.Title));
                     break;
             }
 
             return groups;
         }
 
-        private IEnumerable<IGrouping<string, Playlist>> GetPlaylistsAtoZ(IEnumerable<Playlist> playlists)
+        private IEnumerable<IGrouping<string, Series>> GetSeriessAtoZ(IEnumerable<Series> series)
         {
-            return playlists.GroupBy(playlist => getLabel(playlist.Name)).OrderBy(group => group.Key);
+            return series.GroupBy(s => getLabel(s.Title)).OrderBy(group => group.Key);
         }
     }
 }

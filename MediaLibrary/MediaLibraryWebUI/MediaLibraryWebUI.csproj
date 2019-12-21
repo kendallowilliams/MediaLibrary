@@ -258,6 +258,7 @@
     <Compile Include="Controllers\MediaLibraryController.cs" />
     <Compile Include="Controllers\MusicController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
+    <Compile Include="Controllers\TelevisionController.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\PodcastController.cs" />
     <Compile Include="DataContracts\ScanDirectoryRequest.cs" />
@@ -266,7 +267,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Configurations\BaseConfiguration.cs" />
+    <Compile Include="Models\Configurations\TelevisionConfiguration.cs" />
     <Compile Include="Models\Configurations\MediaLibraryConfiguration.cs" />
+    <Compile Include="Models\TelevisionViewModel.cs" />
     <Compile Include="Models\MediaLibraryViewModel.cs" />
     <Compile Include="Models\Interfaces\IConfiguration.cs" />
     <Compile Include="Models\Configurations\HomeConfiguration.cs" />
@@ -283,14 +286,17 @@
     <Compile Include="Models\PodcastViewModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\TelevisionRepository.cs" />
     <Compile Include="Repositories\PodcastRepository.cs" />
     <Compile Include="Repositories\PlaylistRepository.cs" />
     <Compile Include="Repositories\MusicRepository.cs" />
     <Compile Include="Services\ControllerService.cs" />
     <Compile Include="Services\Interfaces\IControllerService.cs" />
+    <Compile Include="Services\Interfaces\ITelevisionUIService.cs" />
     <Compile Include="Services\Interfaces\IPlaylistUIService.cs" />
     <Compile Include="Services\Interfaces\IPodcastUIService.cs" />
     <Compile Include="Services\Interfaces\IMusicUIService.cs" />
+    <Compile Include="Services\TelevisionUIService.cs" />
     <Compile Include="Services\PodcastUIService.cs" />
     <Compile Include="Services\PlaylistUIService.cs" />
     <Compile Include="Services\MusicUIService.cs" />
@@ -339,6 +345,8 @@
     <Content Include="Views\Player\PlayerItems.cshtml" />
     <Content Include="Views\MediaLibrary\Index.cshtml" />
     <Content Include="Views\Shared\Configurations\MediaLibraryConfiguration.cshtml" />
+    <Content Include="Views\Television\Index.cshtml" />
+    <Content Include="Views\Shared\Configurations\TelevisionConfiguration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
