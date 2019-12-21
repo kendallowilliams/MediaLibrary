@@ -14,8 +14,9 @@
 
     function getPodcastConfigurationData() {
         return '@(nameof(Model.SelectedPodcastSort))=' + $('#txt@(nameof(Model.SelectedPodcastSort))').val() + '&' +
-               '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Model.ScrollTop))').val() + '&' +
-               '@(nameof(Model.SelectedPodcastPage))=' + $('#txt@(nameof(Enums.MediaPages.Podcast))@(nameof(Model.SelectedPodcastPage))').val();
+               '@(nameof(Model.SelectedPodcastId))=' + $('#txt@(nameof(Model.SelectedPodcastId))').val() + '&' +
+               '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Podcast))@(nameof(Model.ScrollTop))').val() + '&' +
+               '@(nameof(Model.SelectedPodcastPage))=' + $('#txt@(nameof(Model.SelectedPodcastPage))').val();
     }
 
     function get@(nameof(Enums.MediaPages.Podcast))ScrollTop() {
