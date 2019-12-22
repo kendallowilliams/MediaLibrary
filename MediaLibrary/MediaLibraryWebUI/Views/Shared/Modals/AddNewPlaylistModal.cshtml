@@ -33,7 +33,7 @@
         };
 
         $('#modalNewPlaylist').modal('hide');
-        $('#loadingModal').modal('show');
+        showLoading();
         $.post('@Url.Action("AddPlaylist", "Playlist")', { playlistName: $('#txtNewPlaylist').val() }, success);
     }
 </script>

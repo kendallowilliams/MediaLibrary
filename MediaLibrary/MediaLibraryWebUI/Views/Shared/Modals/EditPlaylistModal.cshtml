@@ -33,7 +33,7 @@
             success = () => loadView('@(nameof(Enums.MediaPages.Playlist))');
 
         $('#modalEditPlaylist').modal('hide');
-        $('#loadingModal').modal('show');
+        showLoading();
         $.post('@Url.Action("EditPlaylist", "Playlist")', data, success);
     }
 </script>

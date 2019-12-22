@@ -75,14 +75,14 @@ else
 
 <script type="text/javascript">
     function playlistClicked(btn) {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Playlist))');
         $('#txt@(nameof(Model.Configuration.SelectedPlaylistId))').val($(btn).attr('data-item-id'));
         updateConfiguration(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
     }
 
     function sortChanged(select) {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt@(nameof(Model.Configuration.SelectedPlaylistSort))').val($(select).val());
         updateConfiguration(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
     }

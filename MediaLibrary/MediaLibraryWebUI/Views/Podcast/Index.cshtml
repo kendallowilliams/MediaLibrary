@@ -111,19 +111,19 @@ else
         }
         
         $('#modalNewPodcast').modal('hide');
-        $('#loadingModal').modal('show');
+        showLoading();
         $.post('@Url.Action("AddPodcast", "Podcast")', { rssFeed: $('#txtNewPodcast').val() }, success);
     }
 
     function podcastClicked(btn) {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Podcast))');
         $('#txt@(nameof(Model.Configuration.SelectedPodcastId))').val($(btn).attr('data-item-id'));
         updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }
 
     function sortChanged(select) {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt@(nameof(Model.Configuration.SelectedPodcastSort))').val($(select).val());
         updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }

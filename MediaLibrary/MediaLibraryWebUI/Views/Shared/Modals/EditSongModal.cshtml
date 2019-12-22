@@ -79,7 +79,7 @@
             };
 
         $('#modalEditSong').modal('hide');
-        $('#loadingModal').modal('show');
+        showLoading();
         $.post('@Url.Action("UpdateSong", "Music")', data, success);
     }
 

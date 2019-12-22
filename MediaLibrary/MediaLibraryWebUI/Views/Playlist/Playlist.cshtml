@@ -67,7 +67,7 @@
 
 <script type="text/javascript" defer="defer">
     function backClicked() {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Index))');
         updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Playlist))'));
     }

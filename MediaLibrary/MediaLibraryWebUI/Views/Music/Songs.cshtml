@@ -33,7 +33,7 @@ else
             url = $btn.attr('data-group-url');
 
         if (url) {
-            $('#loadingModal').modal('show');
+            showLoading();
             $($btn.attr('data-target')).load(url, function () {
                 $($btn.attr('data-target') + ' *[data-tooltip="tooltip"]').tooltip({ trigger: 'focus' });
                 $('#loadingModal').modal('hide');

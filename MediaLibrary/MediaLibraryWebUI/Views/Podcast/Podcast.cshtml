@@ -67,7 +67,7 @@
 
 <script type="text/javascript" defer="defer">
     function backClicked() {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Index))');
         updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }
@@ -75,7 +75,7 @@
     function refreshClicked() {
         var success = () => loadView('@(nameof(Enums.MediaPages.Podcast))');
 
-        $('#loadingModal').modal('show');
+        showLoading();
         $.post('@(Url.Action("RefreshPodcast","Podcast"))', { id: @(Model.SelectedPodcast.Id) }, success);
 
     }

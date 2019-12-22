@@ -85,20 +85,20 @@
     }
 
     function sortChanged(sortType, select) {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt' + sortType).val($(select).val());
         updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 
     function artistClicked(btn) {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Artist))');
         $('#txt@(nameof(Model.Configuration.SelectedArtistId))').val($(btn).attr('data-item-id'));
         updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 
     function albumClicked(btn) {
-        $('#loadingModal').modal('show');
+        showLoading();
         $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Album))');
         $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val($(btn).attr('data-item-id'));
         updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
@@ -107,7 +107,7 @@
     function refreshClicked() {
         var success = () => $('#loadingModal').modal('hide');
 
-        $('#loadingModal').modal('show');
+        showLoading();
         $.post('@(Url.Action("Refresh", "Music"))', success);
 
     }

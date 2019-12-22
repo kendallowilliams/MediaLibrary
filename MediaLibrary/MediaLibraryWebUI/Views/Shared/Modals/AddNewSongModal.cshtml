@@ -34,7 +34,7 @@
 
         if ($('#inpNewSong').prop('files').length > 0) {
             $('#modalAddNewSong').modal('hide');
-            $('#loadingModal').modal('show');
+            showLoading();
             data.append("file", $('#inpNewSong').prop('files')[0]);
             $.ajax({
                 url: '@Url.Action("Upload", "Music")',
