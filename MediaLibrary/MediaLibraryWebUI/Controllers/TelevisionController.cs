@@ -107,5 +107,12 @@ namespace MediaLibraryWebUI.Controllers
 
             return result;
         }
+
+        public async Task<ActionResult> GetSeason(int series, int season)
+        {
+            IEnumerable<Episode> episodes = await dataService.GetList<Episode>(item => item.SeriesId == series && item.Season == season);
+
+            return PartialView("Season", episodes);
+        }
     }
 }

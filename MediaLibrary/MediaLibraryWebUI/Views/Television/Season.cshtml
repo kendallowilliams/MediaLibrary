@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MediaLibraryDAL.DbContexts.Episode>
+
+@if (Model.Any())
+{
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model.OrderBy(episode => episode.Id))
+        {
+            <li class="list-group-item">
+                <div class="media">
+                    <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
+                    <div class="media-body">
+                        <h5 class="mt-0">@(item.Title)</h5>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-secondary" data-play-id="@(item.Id)" onclick="play(this)" data-media-type="@(Enums.MediaTypes.Television)"
+                                data-tooltip="tooltip" title="Play">
+                            <i class="fa fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <span>No episodes added.</span>
+}

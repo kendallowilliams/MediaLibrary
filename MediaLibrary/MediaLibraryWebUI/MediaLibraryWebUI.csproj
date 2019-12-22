@@ -348,6 +348,7 @@
     <Content Include="Views\Television\Index.cshtml" />
     <Content Include="Views\Shared\Configurations\TelevisionConfiguration.cshtml" />
     <Content Include="Views\Television\Series.cshtml" />
+    <Content Include="Views\Television\Season.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
