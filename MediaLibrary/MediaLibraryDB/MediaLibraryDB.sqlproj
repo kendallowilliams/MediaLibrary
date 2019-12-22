@@ -75,6 +75,8 @@
     <Build Include="dbo\Tables\Configuration.sql" />
     <Build Include="dbo\Tables\PlaylistPodcastItem.sql" />
     <Build Include="dbo\Tables\Series.sql" />
+    <Build Include="dbo\Stored Procedures\spAddDefaultSeries.sql" />
+    <Build Include="dbo\Tables\Episode.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="MediaLibraryDB.refactorlog" />
