@@ -1,0 +1,58 @@
+﻿@model MediaLibraryWebUI.Models.TelevisionViewModel
+
+@{
+    ViewBag.Title = "Series";
+}
+
+<h2>@(Model.SelectedSeries.Title)</h2>
+<div>
+    <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
+</div>
+
+<hr />
+
+<div class="card">
+    <div class="card-header" id="heading-podcast-@(Model.SelectedSeries.Id)">
+        <h5 class="mb-0">
+            Episodes
+        </h5>
+    </div>
+    <div class="card-body m-0 p-0">
+        @if (Model.SelectedSeries.Episodes.Any())
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var item in Model.SelectedSeries.Episodes.OrderBy(episode => episode.Id))
+                {
+                    <li class="list-group-item">
+                        <div class="media">
+                            <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
+                            <div class="media-body">
+                                <h5 class="mt-0">@(item.Title)</h5>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-secondary" data-play-id="@(item.Id)" onclick="play(this)" data-media-type="@(Enums.MediaTypes.Television)"
+                                        data-tooltip="tooltip" title="Play">
+                                    <i class="fa fa-play"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <span>No episodes added.</span>
+        }
+    </div>
+</div>
+
+@Html.Partial("~/Views/Shared/Configurations/TelevisionConfiguration.cshtml", Model.Configuration)
+
+<script type="text/javascript" defer="defer">
+    function backClicked() {
+        $('#loadingModal').modal('show');
+        $('#txt@(nameof(Model.Configuration.SelectedTelevisionPage))').val('@(nameof(Enums.TelevisionPages.Index))');
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Television))'));
+    }
+</script>

@@ -347,6 +347,7 @@
     <Content Include="Views\Shared\Configurations\MediaLibraryConfiguration.cshtml" />
     <Content Include="Views\Television\Index.cshtml" />
     <Content Include="Views\Shared\Configurations\TelevisionConfiguration.cshtml" />
+    <Content Include="Views\Television\Series.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

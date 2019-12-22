@@ -44,7 +44,7 @@
           <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="SeriesId" Type="int" Nullable="false" />
           <Property Name="Season" Type="int" />
-          <Property Name="PATH" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Path" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -894,7 +894,7 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="SeriesId" Type="Int32" Nullable="false" />
           <Property Name="Season" Type="Int32" />
-          <Property Name="PATH" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Path" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Series" Relationship="MediaLibraryDAL.FK__Episode__SeriesI__08B54D69" FromRole="Episode" ToRole="Series" />
@@ -1087,7 +1087,7 @@
               <MappingFragment StoreEntitySet="Episode">
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="PATH" ColumnName="PATH" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
                 <ScalarProperty Name="Season" ColumnName="Season" />
                 <ScalarProperty Name="SeriesId" ColumnName="SeriesId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />

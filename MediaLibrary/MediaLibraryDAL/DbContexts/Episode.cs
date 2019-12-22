@@ -18,7 +18,7 @@ namespace MediaLibraryDAL.DbContexts
         public string Title { get; set; }
         public int SeriesId { get; set; }
         public Nullable<int> Season { get; set; }
-        public string PATH { get; set; }
+        public string Path { get; set; }
         public System.DateTime CreateDate { get; set; }
         public System.DateTime ModifyDate { get; set; }
     

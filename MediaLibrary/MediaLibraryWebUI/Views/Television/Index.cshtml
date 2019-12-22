@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = string.Empty;
 }
-<h2>Seriess</h2>
+<h2>Series</h2>
 <div>
     @Html.DropDownListFor(x => x.Configuration.SelectedSeriesSort,
                           Model.SeriesSortItems,
@@ -41,7 +41,7 @@
                                     <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(series.Title)">
                                     <div class="media-body">
                                         <h5 class="mt-0">@(series.Title)</h5>
-                                        <span>@(series.Episodes.Count()) episode@(series.Episodes.Count() == 1 ? string.Empty : "s")</span>
+                                        <span>@(series.Episodes.GroupBy(e => e.Season).Count()) season@(series.Episodes.GroupBy(e => e.Season).Count() == 1 ? string.Empty : "s")</span>
                                     </div>
                                     <div>
                                         <buton class="btn btn-outline-secondary" onclick="seriesClicked(this)" data-item-id="@(series.Id)"
@@ -64,3 +64,18 @@ else
 }
 
 @Html.Partial("~/Views/Shared/Configurations/TelevisionConfiguration.cshtml", Model.Configuration)
+
+<script type="text/javascript" defer="defer">
+    function seriesClicked(btn) {
+        $('#loadingModal').modal('show');
+        $('#txt@(nameof(Model.Configuration.SelectedTelevisionPage))').val('@(nameof(Enums.TelevisionPages.Series))');
+        $('#txt@(nameof(Model.Configuration.SelectedSeriesId))').val($(btn).attr('data-item-id'));
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Television))'));
+    }
+
+    function sortChanged(select) {
+        $('#loadingModal').modal('show');
+        $('#txt@(nameof(Model.Configuration.SelectedSeriesSort))').val($(select).val());
+        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Television))'));
+    }
+</script>

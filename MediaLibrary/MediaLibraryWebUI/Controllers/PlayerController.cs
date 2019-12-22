@@ -110,6 +110,17 @@ namespace MediaLibraryWebUI.Controllers
                 podcastItems = await dataService.GetList<PodcastItem>(item => ids.Contains(item.Id));
                 playerViewModel.PodcastItems = ids.Select(id => podcastItems.FirstOrDefault(item => item.Id == id));
             }
+            else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Television)
+            {
+                string path = Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json");
+                IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
+                IEnumerable<Episode> episodes = Enumerable.Empty<Episode>();
+
+                if (System.IO.File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(System.IO.File.ReadAllText(path));
+                ids = items.Select(item => item.Value);
+                episodes = await dataService.GetList<Episode>(item => ids.Contains(item.Id));
+                playerViewModel.Episodes = ids.Select(id => episodes.FirstOrDefault(item => item.Id == id));
+            }
         }
 
         public async Task UpdateNowPlaying(string itemsJSON, MediaTypes mediaType)
@@ -146,6 +157,10 @@ namespace MediaLibraryWebUI.Controllers
                 else if (mediaType == MediaTypes.Podcast)
                 {
                     System.IO.File.WriteAllText(Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"), data);
+                }
+                else if (mediaType == MediaTypes.Television)
+                {
+                    System.IO.File.WriteAllText(Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json"), data);
                 }
             }
         }

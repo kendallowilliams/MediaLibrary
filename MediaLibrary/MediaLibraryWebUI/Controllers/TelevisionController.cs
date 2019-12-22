@@ -2,6 +2,7 @@
 using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
+using MediaLibraryWebUI.ActionResults;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Services.Interfaces;
@@ -9,7 +10,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -83,6 +86,26 @@ namespace MediaLibraryWebUI.Controllers
                     await dataService.Update(configuration);
                 }
             }
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> File(int id)
+        {
+            Episode episode = await dataService.GetAsync<Episode>(item => item.Id == id);
+            ActionResult result = null;
+
+            if (episode != null)
+            {
+                result = new FileRangeResult(episode.Path,
+                                             Request.Headers["Range"],
+                                             MimeMapping.GetMimeMapping(Path.GetFileName(episode.Path)));
+            }
+            else
+            {
+                result = new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            return result;
         }
     }
 }

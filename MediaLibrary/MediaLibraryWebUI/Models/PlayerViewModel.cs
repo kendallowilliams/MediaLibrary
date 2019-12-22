@@ -18,5 +18,7 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<Track> Songs { get; set; }
 
         public IEnumerable<PodcastItem> PodcastItems { get; set; }
+
+        public IEnumerable<Episode> Episodes { get; set; }
     }
 }
