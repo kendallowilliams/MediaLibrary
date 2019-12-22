@@ -106,7 +106,7 @@ else
 
     function addNewPodcast() {
         var success = () => {
-            $('#loadingModal').modal('hide');
+            hideLoading();
             loadView('@(nameof(Enums.MediaPages.Podcast))');
         }
         

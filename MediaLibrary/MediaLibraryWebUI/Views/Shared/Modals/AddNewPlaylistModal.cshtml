@@ -28,7 +28,7 @@
 
     function addNewPlaylist() {
         var success = () => {
-            $('#loadingModal').modal('hide');
+            hideLoading();
             loadView('@(nameof(Enums.MediaPages.Playlist))');
         };
 

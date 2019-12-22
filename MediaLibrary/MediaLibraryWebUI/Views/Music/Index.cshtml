@@ -105,7 +105,7 @@
     }
 
     function refreshClicked() {
-        var success = () => $('#loadingModal').modal('hide');
+        var success = () => hideLoading();
 
         showLoading();
         $.post('@(Url.Action("Refresh", "Music"))', success);
