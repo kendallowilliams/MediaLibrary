@@ -41,7 +41,17 @@
             series = @(Model.SelectedSeries.Id),
             season = $(item).attr('data-season-id');
 
-        showLoading();
-        $('#seasonView').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
+        if (item) {
+            showLoading();
+            $(item).parent('li.page-item:first').addClass('active');
+            $('#seasonView').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
+        }
     }
+
+    $('[data-season-id]').on('click', function () {
+        $('li.page-item').removeClass('active');
+        loadSeasonView(this);
+    });
+
+    $('[data-season-id="1"]').trigger('click');
 </script>
