@@ -72,6 +72,9 @@
     <Compile Include="DbContexts\Configuration.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
+    <Compile Include="DbContexts\Episode.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
     <Compile Include="DbContexts\FindAlbums_Result.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
@@ -153,6 +156,7 @@
     <Compile Include="Partials\Genre.cs" />
     <Compile Include="Partials\Artist.cs" />
     <Compile Include="Partials\Album.cs" />
+    <Compile Include="Partials\Episode.cs" />
     <Compile Include="Partials\Series.cs" />
     <Compile Include="Partials\TrackPath.cs" />
     <Compile Include="Partials\Track.cs" />

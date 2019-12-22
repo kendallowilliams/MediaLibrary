@@ -3,7 +3,64 @@
 @{
     ViewBag.Title = string.Empty;
 }
+<h2>Seriess</h2>
+<div>
+    @Html.DropDownListFor(x => x.Configuration.SelectedSeriesSort,
+                          Model.SeriesSortItems,
+                          null,
+                          new { @class = "custom-select border border-secondary",
+                                style = "width: 150px",
+                                title = "Sort by",
+                                data_sort_tab = "albums-tab",
+                                onchange = $"sortChanged(this)",
+                                data_tooltip = "tooltip"
+    })
+</div>
+<hr />
 
-<div></div>
+@if (Model.SeriesGroups.Any())
+{
+    <div id="accordion-series">
+        @foreach (var item in Model.SeriesGroups.Select((group, index) => new { Index = index, Group = group }))
+        {
+            <div class="card">
+                <div class="card-header" id="heading-series-@(item.Index)">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-series-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-series-@(item.Index)">
+                            @(item.Group.Key)
+                        </button>
+                    </h5>
+                </div>
 
-@Html.Partial("~/Views/Shared/Configurations/PlaylistConfiguration.cshtml", Model.Configuration)
+                <div id="collapse-series-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-series-@(item.Index)" data-parent="#accordion-series">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var series in item.Group)
+                        {
+                            <li class="list-group-item">
+                                <div class="media">
+                                    <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(series.Title)">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">@(series.Title)</h5>
+                                        <span>@(series.Episodes.Count()) episode@(series.Episodes.Count() == 1 ? string.Empty : "s")</span>
+                                    </div>
+                                    <div>
+                                        <buton class="btn btn-outline-secondary" onclick="seriesClicked(this)" data-item-id="@(series.Id)"
+                                               data-tooltip="tooltip" title="View series">
+                                            <i class="fa fa-list"></i>
+                                        </buton>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div>No series.</div>
+}
+
+@Html.Partial("~/Views/Shared/Configurations/TelevisionConfiguration.cshtml", Model.Configuration)

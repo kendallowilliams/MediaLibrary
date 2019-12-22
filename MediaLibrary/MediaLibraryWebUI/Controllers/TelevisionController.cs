@@ -61,7 +61,7 @@ namespace MediaLibraryWebUI.Controllers
 
         private async Task<ActionResult> Get(int id)
         {
-            televisionViewModel.SelectedSeries = await dataService.GetAsync<Series>(item => item.Id == id);
+            televisionViewModel.SelectedSeries = await dataService.GetAsync<Series, IEnumerable<Episode>>(item => item.Id == id, item => item.Episodes);
 
             return PartialView("Series", televisionViewModel);
         }

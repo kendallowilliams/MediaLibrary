@@ -40,6 +40,7 @@ namespace MediaLibraryDAL.DbContexts
         public virtual DbSet<Configuration> Configurations { get; set; }
         public virtual DbSet<PlaylistPodcastItem> PlaylistPodcastItems { get; set; }
         public virtual DbSet<Series> Series { get; set; }
+        public virtual DbSet<Episode> Episodes { get; set; }
     
         public virtual int DeleteAllAlbums()
         {

@@ -36,6 +36,18 @@
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
+        <EntityType Name="Episode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="SeriesId" Type="int" Nullable="false" />
+          <Property Name="Season" Type="int" />
+          <Property Name="PATH" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="Genre">
           <Key>
             <PropertyRef Name="Id" />
@@ -108,7 +120,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -174,6 +186,20 @@
             </Principal>
             <Dependent Role="Album">
               <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Episode__SeriesI__08B54D69">
+          <End Role="Series" Type="Self.Series" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Episode" Type="Self.Episode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Series">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Episode">
+              <PropertyRef Name="SeriesId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -301,6 +327,7 @@
           <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configuration" EntityType="Self.Configuration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Episode" EntityType="Self.Episode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Playlist" EntityType="Self.Playlist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlaylistPodcastItem" EntityType="Self.PlaylistPodcastItem" Schema="dbo" store:Type="Tables" />
@@ -318,6 +345,10 @@
           <AssociationSet Name="FK__Album__GenreId__66603565" Association="Self.FK__Album__GenreId__66603565">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Episode__SeriesI__08B54D69" Association="Self.FK__Episode__SeriesI__08B54D69">
+            <End Role="Series" EntitySet="Series" />
+            <End Role="Episode" EntitySet="Episode" />
           </AssociationSet>
           <AssociationSet Name="FK__PodcastIt__Podca__6B24EA82" Association="Self.FK__PodcastIt__Podca__6B24EA82">
             <End Role="Podcast" EntitySet="Podcast" />
@@ -470,6 +501,11 @@
             <End Role="PlaylistPodcastItem" EntitySet="PlaylistPodcastItems" />
           </AssociationSet>
           <EntitySet Name="Series" EntityType="MediaLibraryDAL.Series" />
+          <EntitySet Name="Episodes" EntityType="MediaLibraryDAL.Episode" />
+          <AssociationSet Name="FK__Episode__SeriesI__08B54D69" Association="MediaLibraryDAL.FK__Episode__SeriesI__08B54D69">
+            <End Role="Series" EntitySet="Series" />
+            <End Role="Episode" EntitySet="Episodes" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
           <Key>
@@ -845,10 +881,38 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Episodes" Relationship="MediaLibraryDAL.FK__Episode__SeriesI__08B54D69" FromRole="Series" ToRole="Episode" />
         </EntityType>
+        <EntityType Name="Episode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SeriesId" Type="Int32" Nullable="false" />
+          <Property Name="Season" Type="Int32" />
+          <Property Name="PATH" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Series" Relationship="MediaLibraryDAL.FK__Episode__SeriesI__08B54D69" FromRole="Episode" ToRole="Series" />
+        </EntityType>
+        <Association Name="FK__Episode__SeriesI__08B54D69">
+          <End Type="MediaLibraryDAL.Series" Role="Series" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MediaLibraryDAL.Episode" Role="Episode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Series">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Episode">
+              <PropertyRef Name="SeriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1013,6 +1077,19 @@
               <MappingFragment StoreEntitySet="Series">
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Episodes">
+            <EntityTypeMapping TypeName="MediaLibraryDAL.Episode">
+              <MappingFragment StoreEntitySet="Episode">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="PATH" ColumnName="PATH" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="SeriesId" ColumnName="SeriesId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

@@ -12,20 +12,16 @@ namespace MediaLibraryDAL.DbContexts
     using System;
     using System.Collections.Generic;
     
-    public partial class Series
+    public partial class Episode
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Series()
-        {
-            this.Episodes = new HashSet<Episode>();
-        }
-    
         public int Id { get; set; }
         public string Title { get; set; }
+        public int SeriesId { get; set; }
+        public Nullable<int> Season { get; set; }
+        public string PATH { get; set; }
         public System.DateTime CreateDate { get; set; }
         public System.DateTime ModifyDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Episode> Episodes { get; set; }
+        public virtual Series Series { get; set; }
     }
 }
