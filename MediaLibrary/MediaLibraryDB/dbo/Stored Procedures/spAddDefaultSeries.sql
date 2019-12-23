@@ -16,7 +16,7 @@ DECLARE @BewitchedId int,
 		@WonderWomanPath VARCHAR(256) = N'S:/online_video/WONDER_WOMAN',
 		@XenaPath VARCHAR(256) = N'S:/online_video/XENA';
 
-TRUNCATE TABLE SERIES;
+DELETE SERIES;
 
 INSERT INTO Series ([Title]) VALUES ('Bewitched');
 INSERT INTO Series ([Title]) VALUES ('Golden Girls');
