@@ -9,7 +9,7 @@
     padding-right: 15px;
 }
 
-audio {
+audio, video {
     width: 100%;
 }
 

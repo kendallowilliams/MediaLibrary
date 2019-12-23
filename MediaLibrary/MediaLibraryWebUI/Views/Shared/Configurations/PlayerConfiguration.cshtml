@@ -29,6 +29,14 @@
         return parseInt($('#txt@(nameof(Model.CurrentItemIndex))').val());
     }
 
+    function setSelectedMediaType(type) {
+        $('#txt@(nameof(Model.SelectedMediaType))').val(type);
+    }
+
+    function getSelectedMediaType() {
+        return $('#txt@(nameof(Model.SelectedMediaType))').val();
+    }
+
     function setRepeat(repeat) {
         $('#txt@(nameof(Model.Repeat))').val(repeat);
     }

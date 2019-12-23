@@ -5,7 +5,10 @@
 }
 
 <div>
-    <audio id="@(Model.MusicPlayerId)" autoplay="autoplay" preload="auto" controls="controls" />
+    <audio id="@(Model.MusicPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? "d-none" : string.Empty)" 
+           preload="auto" controls="controls" />
+    <video id="@(Model.VideoPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")" 
+           preload="auto" controls="controls" />
 </div>
 <br />
 <div class="card">
@@ -16,9 +19,15 @@
 @Html.Partial("~/Views/Shared/Configurations/PlayerConfiguration.cshtml", Model.Configuration)
 
 <script type="text/javascript" defer="defer">
-    var $player = $('#@(Model.MusicPlayerId)');
-
     function _play(item) {
+    var $audioPlayer = $('#@(Model.MusicPlayerId)'),
+        $videoPlayer = $('#@(Model.VideoPlayerId)'),
+        $player = getSelectedMediaType() === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
+
+        $audioPlayer.addClass('d-none');
+        $videoPlayer.addClass('d-none');
+        $player.removeClass('d-none');
+
         if (item) {
             var $item = $(item),
                 url = $item.attr('data-play-url'),
@@ -37,7 +46,11 @@
     }
 
     function initPlayer() {
-        $player.on('ended', function (evt) {
+        $('#@(Model.MusicPlayerId)').on('ended', function (evt) {
+            playNext();
+        });
+
+        $('#@(Model.VideoPlayerId)').on('ended', function (evt) {
             playNext();
         });
     }
@@ -45,7 +58,10 @@
     function playNext() {
         var nextIndex = getCurrentItemIndex() + 1,
             $item,
-            repeat = getRepeat();
+            repeat = getRepeat(),
+            $audioPlayer = $('#@(Model.MusicPlayerId)'),
+            $videoPlayer = $('#@(Model.VideoPlayerId)'),
+            $player = getSelectedMediaType() === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
 
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
             $player.trigger('play');

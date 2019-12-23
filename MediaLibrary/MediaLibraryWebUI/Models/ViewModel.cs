@@ -13,11 +13,13 @@ namespace MediaLibraryWebUI.Models
         public ViewModel()
         {
             MusicPlayerId = "music-player";
+            VideoPlayerId = "video-player";
             NowPlaying = "Now Playing";
             Configuration = new TConfig();
         }
 
         public string MusicPlayerId { get; }
+        public string VideoPlayerId { get; }
         public TConfig Configuration { get; set; }
         public string NowPlaying { get; set; }
     }
