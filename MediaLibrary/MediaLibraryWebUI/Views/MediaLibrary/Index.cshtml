@@ -24,12 +24,12 @@
             updateSelectedMediaPage(view);
 
             if (view === '@(Enums.MediaPages.Player)') {
-                $('#playerView').removeClass('d-none');
                 updateMediaLibraryConfiguration(() => reload(success));
+                $('#playerView').removeClass('d-none');
             } else {
-                $('#divView').removeClass('d-none');
                 showLoading();
                 updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
+                $('#divView').removeClass('d-none');
             }
         }
 

@@ -49,11 +49,11 @@ namespace MediaLibraryWebUI.ActionResults
                 byte[] data = new byte[count];
 
                 response.Headers.Add("Content-Range", $"bytes {from}-{end}/{info.Length}");
-                response.WriteFile(this.fileName, from.Value, count);
+                response.TransmitFile(this.fileName, from.Value, count);
             }
             else
             {
-                response.WriteFile(this.fileName);
+                response.TransmitFile(this.fileName);
             }
         }
     }
