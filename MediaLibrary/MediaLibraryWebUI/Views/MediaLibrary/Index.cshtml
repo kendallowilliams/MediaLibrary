@@ -19,17 +19,17 @@
             },
                 url = '@Url.Action("Index", "ViewName")';
 
-            $('#playerView').addClass('d-none');
-            $('#divView').addClass('d-none');
+            showLoading();
             updateSelectedMediaPage(view);
             $('#divView *[data-tooltip="tooltip"]').tooltip('dispose');
 
             if (view === '@(Enums.MediaPages.Player)') {
                 updateMediaLibraryConfiguration(() => reload(success));
+                $('#divView').addClass('d-none');
                 $('#playerView').removeClass('d-none');
             } else {
-                showLoading();
                 updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
+                $('#playerView').addClass('d-none');
                 $('#divView').removeClass('d-none');
             }
         }
@@ -43,7 +43,13 @@
             $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
         }
 
-        $('#playerView').load('@Url.Action("Index", "Player")', () => loadView('@(Model.Configuration.SelectedMediaPage.ToString())'));
+        $(function () {
+            showLoading();
+            $('#playerView').load('@Url.Action("Index", "Player")', () => {
+                hideLoading();
+                loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
+            });
+        });
     </script>
 }
 
