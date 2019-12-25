@@ -49,7 +49,8 @@ namespace MediaLibraryWebUI.Controllers
                 televisionViewModel.Configuration = JsonConvert.DeserializeObject<TelevisionConfiguration>(configuration.JsonData);
             }
 
-            if (televisionViewModel.Configuration.SelectedTelevisionPage == TelevisionPages.Series)
+            if (televisionViewModel.Configuration.SelectedTelevisionPage == TelevisionPages.Series &&
+                await dataService.Exists<Series>(item => item.Id == televisionViewModel.Configuration.SelectedSeriesId))
             {
                 result = await Get(televisionViewModel.Configuration.SelectedSeriesId);
             }

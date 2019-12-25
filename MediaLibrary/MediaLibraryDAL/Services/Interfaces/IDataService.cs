@@ -76,6 +76,8 @@ namespace MediaLibraryDAL.Services.Interfaces
 
         Task<int> Count<T>(Expression<Func<T,bool>> expression = null) where T : class, IDataModel;
 
+        Task<bool> Exists<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
+
         SqlParameter CreateParameter(string name, object value);
     }
 }

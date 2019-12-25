@@ -200,6 +200,19 @@ namespace MediaLibraryBLL.Services
 
             return result;
         }
+        
+        public async Task<bool> Exists<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
+        {
+            bool result = default(bool);
+
+            using (var db = new MediaLibraryEntities())
+            {
+                db.Database.CommandTimeout = timeout;
+                result = (expression != null ? await db.Set<T>().FirstOrDefaultAsync(expression) : await db.Set<T>().FirstOrDefaultAsync()) != null;
+            }
+
+            return result;
+        }
 
         public async Task<IEnumerable<T>> Query<T>(string sql, params object[] parameters)
         {
