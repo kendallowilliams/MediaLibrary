@@ -20,9 +20,9 @@
 
 <script type="text/javascript" defer="defer">
     function _play(item) {
-    var $audioPlayer = $('#@(Model.MusicPlayerId)'),
-        $videoPlayer = $('#@(Model.VideoPlayerId)'),
-        $player = getSelectedMediaType() === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
+        var $audioPlayer = $('#@(Model.MusicPlayerId)'),
+            $videoPlayer = $('#@(Model.VideoPlayerId)'),
+            $player = getSelectedMediaType() === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
 
         $audioPlayer.addClass('d-none');
         $videoPlayer.addClass('d-none');

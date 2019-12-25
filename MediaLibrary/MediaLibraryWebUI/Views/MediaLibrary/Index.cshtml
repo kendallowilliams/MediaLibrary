@@ -37,14 +37,13 @@
         function reload(callback) {
             var success = () => {
                 if (typeof callback === 'function') /*then*/ callback();
+                $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             };
 
             $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
-            $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
         }
 
-        $('#playerView').load('@Url.Action("Index", "Player")');
-        loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
+        $('#playerView').load('@Url.Action("Index", "Player")', () => loadView('@(Model.Configuration.SelectedMediaPage.ToString())'));
     </script>
 }
 
