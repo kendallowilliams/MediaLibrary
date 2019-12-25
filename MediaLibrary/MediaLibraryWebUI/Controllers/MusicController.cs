@@ -60,11 +60,13 @@ namespace MediaLibraryWebUI.Controllers
                 musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             }
 
-            if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Album)
+            if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Album &&
+                await dataService.Exists<Album>(album => album.Id == musicViewModel.Configuration.SelectedAlbumId))
             {
                 result = await GetAlbum(musicViewModel.Configuration.SelectedAlbumId);
             }
-            else if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Artist)
+            else if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Artist &&
+                     await dataService.Exists<Artist>(artist => artist.Id == musicViewModel.Configuration.SelectedArtistId))
             {
                 result = await GetArtist(musicViewModel.Configuration.SelectedArtistId);
             }

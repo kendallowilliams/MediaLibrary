@@ -46,7 +46,8 @@ namespace MediaLibraryWebUI.Controllers
                 playlistViewModel.Configuration = JsonConvert.DeserializeObject<PlaylistConfiguration>(configuration.JsonData);
             }
 
-            if (playlistViewModel.Configuration.SelectedPlaylistPage == PlaylistPages.Playlist)
+            if (playlistViewModel.Configuration.SelectedPlaylistPage == PlaylistPages.Playlist &&
+                await dataService.Exists<Playlist>(album => album.Id == playlistViewModel.Configuration.SelectedPlaylistId))
             {
                 result = await Get(playlistViewModel.Configuration.SelectedPlaylistId);
             }

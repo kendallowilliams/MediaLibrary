@@ -56,7 +56,8 @@ namespace MediaLibraryWebUI.Controllers
                 podcastViewModel.Configuration = JsonConvert.DeserializeObject<PodcastConfiguration>(configuration.JsonData);
             }
 
-            if (podcastViewModel.Configuration.SelectedPodcastPage == PodcastPages.Podcast)
+            if (podcastViewModel.Configuration.SelectedPodcastPage == PodcastPages.Podcast &&
+                await dataService.Exists<Podcast>(album => album.Id == podcastViewModel.Configuration.SelectedPodcastId))
             {
                 result = await Get(podcastViewModel.Configuration.SelectedPodcastId);
             }
