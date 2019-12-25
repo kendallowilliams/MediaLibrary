@@ -22,6 +22,7 @@
             $('#playerView').addClass('d-none');
             $('#divView').addClass('d-none');
             updateSelectedMediaPage(view);
+            $('#divView *[data-tooltip="tooltip"]').tooltip('dispose');
 
             if (view === '@(Enums.MediaPages.Player)') {
                 updateMediaLibraryConfiguration(() => reload(success));
