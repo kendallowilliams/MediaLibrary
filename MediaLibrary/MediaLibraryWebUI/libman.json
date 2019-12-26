@@ -9,6 +9,11 @@
     {
       "library": "jplayer@2.9.2",
       "destination": "lib/jplayer/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@4.4.1",
+      "destination": "lib/bootstrap/"
     }
   ]
 }
