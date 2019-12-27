@@ -11,42 +11,46 @@
     @Scripts.Render("~/bundles/bootstrap")
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Home))')">
-                <img src="@(Url.Content("~/Content/images/logo.png"))" title="KOW Moosic" />
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Music))')">@(nameof(Enums.MediaPages.Music))</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Podcast))')">@(nameof(Enums.MediaPages.Podcast))s</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Television))')">@(nameof(Enums.MediaPages.Television))</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Playlist))')">@(nameof(Enums.MediaPages.Playlist))s</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">@(Model.NowPlaying)</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <br />
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p class="text-center">&copy; @DateTime.Now.Year - Kendall O. Williams</p>
-        </footer>
+    <div class="d-flex container flex-column" style="position: relative; height: 100vmin; max-height: 100vmin">
+        <div style="flex: 0 0 auto; padding-top: 10px">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Home))')">
+                    <img src="@(Url.Content("~/Content/images/logo.png"))" title="KOW Moosic" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Music))')">@(nameof(Enums.MediaPages.Music))</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Podcast))')">@(nameof(Enums.MediaPages.Podcast))s</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Television))')">@(nameof(Enums.MediaPages.Television))</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Playlist))')">@(nameof(Enums.MediaPages.Playlist))s</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">@(Model.NowPlaying)</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="body-content" style="flex: 1 1 auto; overflow-y: auto">
+            <br />
+            @RenderBody()
+        </div>
+        <div style="flex: 0 0 auto">
+            <hr />
+            <footer>
+                <p class="text-center">&copy; @DateTime.Now.Year - Kendall O. Williams</p>
+            </footer>
+        </div>
     </div>
 
     @Html.Partial("~/Views/Shared/Modals/LoadingModal.cshtml")
