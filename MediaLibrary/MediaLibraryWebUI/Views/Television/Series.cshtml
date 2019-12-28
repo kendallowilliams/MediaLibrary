@@ -17,7 +17,7 @@
             <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="-">&laquo;</a></li>
             @foreach (var season in Model.SelectedSeries.Episodes.Select(episode => episode.Season).Distinct().OrderBy(season => season))
             {
-                <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="@(season)" onclick="loadSeasonView(this)">@(season)</a></li>
+                <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="@(season)">@(season)</a></li>
             }
             <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="+">&raquo;</a></li>
         </ul>
@@ -36,6 +36,7 @@
 
     function loadSeasonView(item) {
         var success = () => {
+                $(item).parent('li.page-item:first').addClass('active');
                 hideLoading();
             },
             series = @(Model.SelectedSeries.Id),
@@ -43,14 +44,22 @@
 
         if (item) {
             showLoading();
-            $(item).parent('li.page-item:first').addClass('active');
+            updateSelectedSeason(season);
             $('#seasonView').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
         }
     }
 
     $('[data-season-id]').on('click', function () {
-        $('li.page-item').removeClass('active');
-        loadSeasonView(this);
+        var id = $(this).attr('data-season-id');
+
+        if (id === '-' && (getSelectedSeason() - 1) > 0) {
+            $('[data-season-id="' + (getSelectedSeason() - 1) + '"]').trigger('click');
+        } else if (id === '+' && (getSelectedSeason() + 1) > 0) {
+            $('[data-season-id="' + (getSelectedSeason() + 1) + '"]').trigger('click');
+        } else if (parseInt(id) > 0) {
+            $('li.page-item').removeClass('active');
+            loadSeasonView(this);
+        }
     });
 
     $('[data-season-id="1"]').trigger('click');

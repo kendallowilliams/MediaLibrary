@@ -11,8 +11,11 @@ namespace MediaLibraryWebUI.Models.Configurations
     {
         public TelevisionConfiguration()
         {
+            SelectedSeason = 1;
         }
+
         public int SelectedSeriesId { get; set; }
+        public int SelectedSeason { get; set; }
         public TelevisionPages SelectedTelevisionPage { get; set; }
         public SeriesSort SelectedSeriesSort { get; set; }
     }

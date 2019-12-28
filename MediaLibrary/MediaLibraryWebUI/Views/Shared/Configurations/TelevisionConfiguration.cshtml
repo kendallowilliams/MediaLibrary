@@ -5,6 +5,7 @@
     @Html.Hidden(nameof(Model.SelectedSeriesId), Model.SelectedSeriesId, new { id = $"txt{nameof(Model.SelectedSeriesId)}" });
     @Html.Hidden(nameof(Model.SelectedTelevisionPage), Model.SelectedTelevisionPage, new { id = $"txt{nameof(Model.SelectedTelevisionPage)}" });
     @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Television)}{nameof(Model.ScrollTop)}" });
+    @Html.Hidden(nameof(Model.SelectedSeason), Model.SelectedSeason, new { id = $"txt{nameof(Model.SelectedSeason)}" });
 </div>
 
 <script type="text/javascript" defer="defer">
@@ -16,6 +17,7 @@
         return '@(nameof(Model.SelectedSeriesSort))=' + $('#txt@(nameof(Model.SelectedSeriesSort))').val() + '&' +
                 '@(nameof(Model.SelectedSeriesId))=' + $('#txt@(nameof(Model.SelectedSeriesId))').val() + '&' +
                 '@(nameof(Model.SelectedTelevisionPage))=' + $('#txt@(nameof(Model.SelectedTelevisionPage))').val() + '&' +
+                //'@(nameof(Model.SelectedSeason))=' + $('#txt@(nameof(Model.SelectedSeason))').val() + '&' +
                 '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Television))@(nameof(Model.ScrollTop))').val();
     }
 
@@ -25,5 +27,13 @@
 
     function update@(nameof(Enums.MediaPages.Television))ScrollTop(top) {
         $('#txt@(nameof(Enums.MediaPages.Television))@(nameof(Model.ScrollTop))').val(top);
+    }
+
+    function getSelectedSeason() {
+        return parseInt($('#txt@(nameof(Model.SelectedSeason))').val());
+    }
+
+    function updateSelectedSeason(season) {
+        $('#txt@(nameof(Model.SelectedSeason))').val(season);
     }
 </script>
