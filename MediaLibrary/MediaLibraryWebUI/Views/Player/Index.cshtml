@@ -4,16 +4,17 @@
     ViewBag.Title = "Player";
 }
 
-<div>
-    <audio id="@(Model.MusicPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? "d-none" : string.Empty)" 
-           preload="auto" controls="controls" />
-    <video id="@(Model.VideoPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")" 
-           preload="auto" controls="controls" />
-</div>
-<br />
-<div class="card">
-    <div class="card-header">Now Playing</div>
-    <div id="playerItems"></div>
+<div class="d-flex w-100">
+    <div style="flex: 0 0 50%; padding: 0px 5px 0px 5px">
+        <audio id="@(Model.MusicPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? "d-none" : string.Empty)"
+               preload="auto" controls="controls" />
+        <video id="@(Model.VideoPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")"
+               preload="auto" controls="controls" />
+    </div>
+    <div class="card" style="flex: 0 0 50%">
+        <div class="card-header">Now Playing</div>
+        <div id="playerItems"></div>
+    </div>
 </div>
 
 @Html.Partial("~/Views/Shared/Configurations/PlayerConfiguration.cshtml", Model.Configuration)
@@ -27,6 +28,8 @@
         $audioPlayer.addClass('d-none');
         $videoPlayer.addClass('d-none');
         $player.removeClass('d-none');
+        $audioPlayer.prop('src', '');
+        $videoPlayer.prop('src', '');
 
         if (item) {
             var $item = $(item),
