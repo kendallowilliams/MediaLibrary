@@ -2,6 +2,7 @@
 using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
+using MediaLibraryWebUI.Attributes;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Models.Configurations;
 using Newtonsoft.Json;
@@ -36,7 +37,8 @@ namespace MediaLibraryWebUI.Controllers
             dataFolder = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData, SpecialFolderOption.Create), nameof(MediaLibraryWebUI));
             fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}";
         }
-        
+
+        [CompressContent]
         public async Task<ActionResult> Index()
         {
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
@@ -70,6 +72,7 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
+        [CompressContent]
         public async Task<ActionResult> GetPlayerItems()
         {
             Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));

@@ -2,6 +2,7 @@
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.ActionResults;
+using MediaLibraryWebUI.Attributes;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Services.Interfaces;
@@ -46,6 +47,7 @@ namespace MediaLibraryWebUI.Controllers
             this.fileService = fileService;
         }
 
+        [CompressContent]
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;

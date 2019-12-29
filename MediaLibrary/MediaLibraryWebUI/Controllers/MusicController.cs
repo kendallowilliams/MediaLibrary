@@ -50,6 +50,7 @@ namespace MediaLibraryWebUI.Controllers
             this.transactionService = transactionService;
         }
 
+        [CompressContent]
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;
@@ -85,6 +86,7 @@ namespace MediaLibraryWebUI.Controllers
             return result;
         }
 
+        [CompressContent]
         public async Task<ActionResult> GetSongGroup(string key)
         {
             IGrouping<string, Track> group = musicViewModel.SongGroups.FirstOrDefault(item => item.Key == key);
