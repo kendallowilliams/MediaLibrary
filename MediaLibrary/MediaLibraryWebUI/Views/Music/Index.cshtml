@@ -5,7 +5,7 @@
 }
 
 <h2>Music</h2>
-<div class="nav d-block" id="musicTab" role="tablist">
+<div class="d-block" id="musicTab" role="tablist">
     <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Albums ? "active" : "")" id="albums-tab" data-toggle="tab" href="#albums"
             role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTabs.Albums))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTabs.Albums))"
             data-tooltip="tooltip">
@@ -21,7 +21,7 @@
             data-tooltip="tooltip">
         <i class="fa fa-music"></i>
     </button>
-    <div class="float-right">
+    <div class="float-right d-none d-lg-block">
         <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalAddNewSong" data-tooltip="tooltip" title="Add new song">
             <i class="fa fa-plus"></i>
         </button>
