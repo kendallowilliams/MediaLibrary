@@ -77,11 +77,15 @@
                     })
                 );
             } else {
-                $playData = $playButtons.map((index, _btn) => ({
-                    Id: index,
-                    Value: parseInt($(_btn).attr('data-play-id')),
-                    IsSelected: btn.isSameNode(_btn)
-                }));
+                if (mediaType === '@(nameof(Enums.MediaTypes.Podcast))') {
+                    $playData = $([{ Id: 0, Value: parseInt($(btn).attr('data-play-id')), IsSelected: true }]);
+                } else {
+                    $playData = $playButtons.map((index, _btn) => ({
+                        Id: index,
+                        Value: parseInt($(_btn).attr('data-play-id')),
+                        IsSelected: btn.isSameNode(_btn)
+                    }));
+                }
             }
 
             setSelectedMediaType(mediaType);
