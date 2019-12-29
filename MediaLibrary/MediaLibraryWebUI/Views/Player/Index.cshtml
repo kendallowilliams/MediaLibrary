@@ -7,9 +7,9 @@
 <div class="d-flex w-100">
     <div style="flex: 0 0 50%; padding: 0px 5px 0px 5px">
         <audio id="@(Model.MusicPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? "d-none" : string.Empty)"
-               preload="auto" controls="controls" />
+               preload="auto" controls="controls" style="position: sticky; top: 0px; position: -webkit-sticky" />
         <video id="@(Model.VideoPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")"
-               preload="auto" controls="controls" />
+               preload="auto" controls="controls" style="position: sticky; top: 0px; position: -webkit-sticky" />
     </div>
     <div class="card" style="flex: 0 0 50%">
         <div class="card-header">Now Playing</div>
