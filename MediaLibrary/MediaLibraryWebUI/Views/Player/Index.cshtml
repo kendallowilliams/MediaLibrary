@@ -13,7 +13,7 @@
     </div>
     <div class="card" style="flex: 0 0 50%">
         <div class="card-header" style="position: sticky; top: 0px">Now Playing</div>
-        <div id="playerItems" style="overflow-y: auto"></div>
+        <div id="playerItems" style="overflow-y: auto; position: relative"></div>
     </div>
 </div>
 
@@ -37,11 +37,11 @@
                 index = $item.attr('data-play-index');
 
             $('li[data-play-index].list-group-item').removeClass('active');
-            $item.addClass('active');
             setCurrentItemIndex(index);
             updatePlayerConfiguration(function () {
-                $player.prop('src', url);
-                $player.trigger('play');
+                $item.addClass('active');
+                $player.prop('src', url).trigger('play');
+                $('#playerItems').scrollTop($('#playerItems').scrollTop() - $item.position().top * -1);
             });
         } else if ($('li[data-play-index].active').length === 1) {
             _play($('li[data-play-index].active')[0]);
@@ -94,9 +94,11 @@
 
     function reload(callback) {
         var success = () => {
-            var url = $('li.active').attr('data-play-url');
+            var $item = $('li.active'),
+                url = $item.attr('data-play-url');
 
             $('audio:not(audio.d-none),video:not(video.d-none)').attr('src', url);
+            $('#playerItems').scrollTop($('#playerItems').scrollTop() - $item.position().top * -1);
             if (typeof callback === 'function') /*then*/ callback();
             $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
         };
