@@ -40,6 +40,7 @@
                 $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             };
 
+            $('#playerItems').html('');
             $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
         }
 
