@@ -11,7 +11,7 @@
             data-item-name="@(Model.SelectedPlaylist.Name)" data-tooltip="tooltip">
         <i class="fa fa-edit"></i>
     </button>
-    <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", new { Model.SelectedPlaylist.Id})"
+    <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", "Playlist", new { Model.SelectedPlaylist.Id})"
        data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
     <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
             data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">

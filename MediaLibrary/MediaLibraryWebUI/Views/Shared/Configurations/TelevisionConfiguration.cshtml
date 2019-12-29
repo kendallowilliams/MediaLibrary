@@ -36,4 +36,12 @@
     function updateSelectedSeason(season) {
         $('#txt@(nameof(Model.SelectedSeason))').val(season);
     }
+
+    function getSelectedSeriesId() {
+        return parseInt($('#txt@(nameof(Model.SelectedSeriesId))').val());
+    }
+
+    function updateSelectedSeriesId(series) {
+        $('#txt@(nameof(Model.SelectedSeriesId))').val(series);
+    }
 </script>
