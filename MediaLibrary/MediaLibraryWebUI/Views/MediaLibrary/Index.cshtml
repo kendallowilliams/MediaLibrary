@@ -34,16 +34,6 @@
             }
         }
 
-        function reload(callback) {
-            var success = () => {
-                if (typeof callback === 'function') /*then*/ callback();
-                $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
-            };
-
-            $('#playerItems').html('');
-            $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
-        }
-
         $(function () {
             showLoading();
             $('#playerView').load('@Url.Action("Index", "Player")', () => {
