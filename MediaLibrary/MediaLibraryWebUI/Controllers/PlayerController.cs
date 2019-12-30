@@ -100,7 +100,7 @@ namespace MediaLibraryWebUI.Controllers
                 if (System.IO.File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(System.IO.File.ReadAllText(path));
                 ids = items.Select(item => item.Value);
                 songs = await dataService.GetList<Track>(item => ids.Contains(item.Id));
-                playerViewModel.Songs = ids.Select(id => songs.FirstOrDefault(item => item.Id == id));
+                playerViewModel.Songs = ids.Select(id => songs.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Podcast)
             {
@@ -111,7 +111,7 @@ namespace MediaLibraryWebUI.Controllers
                 if (System.IO.File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(System.IO.File.ReadAllText(path));
                 ids = items.Select(item => item.Value);
                 podcastItems = await dataService.GetList<PodcastItem>(item => ids.Contains(item.Id));
-                playerViewModel.PodcastItems = ids.Select(id => podcastItems.FirstOrDefault(item => item.Id == id));
+                playerViewModel.PodcastItems = ids.Select(id => podcastItems.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Television)
             {
@@ -122,7 +122,7 @@ namespace MediaLibraryWebUI.Controllers
                 if (System.IO.File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(System.IO.File.ReadAllText(path));
                 ids = items.Select(item => item.Value);
                 episodes = await dataService.GetList<Episode>(item => ids.Contains(item.Id));
-                playerViewModel.Episodes = ids.Select(id => episodes.FirstOrDefault(item => item.Id == id));
+                playerViewModel.Episodes = ids.Select(id => episodes.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
             }
         }
 

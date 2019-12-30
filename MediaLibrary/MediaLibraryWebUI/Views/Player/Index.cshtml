@@ -41,7 +41,7 @@
             updatePlayerConfiguration(function () {
                 $item.addClass('active');
                 $player.prop('src', url).trigger('play');
-                $('#playerItems').scrollTop($('#playerItems').scrollTop() - $item.position().top * -1);
+                updateScrollTop();
             });
         } else if ($('li[data-play-index].active').length === 1) {
             _play($('li[data-play-index].active')[0]);
@@ -94,17 +94,24 @@
 
     function reload(callback) {
         var success = () => {
-            var $item = $('li.active'),
-                url = $item.attr('data-play-url');
+            var url = $('li.active').attr('data-play-url');
 
             $('audio:not(audio.d-none),video:not(video.d-none)').attr('src', url);
-            $('#playerItems').scrollTop($('#playerItems').scrollTop() - $item.position().top * -1);
+            updateScrollTop();
             if (typeof callback === 'function') /*then*/ callback();
             $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
         };
 
         $('#playerItems').html('');
         $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
+    }
+
+    function updateScrollTop() {
+        var $item = $('li.active');
+
+        if ($item.length > 0) {
+            $('#playerItems').scrollTop($('#playerItems').scrollTop() - $item.position().top * -1);
+        }
     }
 
     initPlayer();
