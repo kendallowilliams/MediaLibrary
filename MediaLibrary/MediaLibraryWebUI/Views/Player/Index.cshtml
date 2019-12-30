@@ -94,9 +94,6 @@
 
     function reload(callback) {
         var success = () => {
-            var url = $('li.active').attr('data-play-url');
-
-            $('audio:not(audio.d-none),video:not(video.d-none)').attr('src', url);
             updateScrollTop();
             if (typeof callback === 'function') /*then*/ callback();
             $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
@@ -114,6 +111,12 @@
         }
     }
 
+    function setInitialPlayerUrl() {
+        var url = $('li.active').attr('data-play-url');
+
+        $('audio:not(audio.d-none),video:not(video.d-none)').attr('src', url);
+    }
+     
     initPlayer();
 </script>
 

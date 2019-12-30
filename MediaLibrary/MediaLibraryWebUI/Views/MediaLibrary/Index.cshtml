@@ -39,7 +39,7 @@
             showLoading();
             $('#playerView').load('@Url.Action("Index", "Player")', () => {
                 hideLoading();
-                loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
+                loadView('@(Model.Configuration.SelectedMediaPage.ToString())', () => setInitialPlayerUrl());
             });
         });
     </script>
