@@ -1,63 +1,63 @@
 ﻿@model MediaLibraryWebUI.Models.PlaylistViewModel
 
-@{
-    ViewBag.Title = "Playlist";
-}
-
-<h2>@(Model.SelectedPlaylist.Name) playlist</h2>
-<div>
-    <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
-    <button class="btn btn-outline-secondary" title="Edit playlist" data-toggle="modal" data-target="#modalEditPlaylist" data-item-id="@(Model.SelectedPlaylist.Id)"
-            data-item-name="@(Model.SelectedPlaylist.Name)" data-tooltip="tooltip">
-        <i class="fa fa-edit"></i>
-    </button>
-    <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", "Playlist", new { Model.SelectedPlaylist.Id})"
-       data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
-    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
-            data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
-        <i class="fa fa-trash"></i>
-    </button>
-</div>
-<hr />
-<div class="card">
-    <div class="card-header" id="heading-playlist-@(Model.SelectedPlaylist.Id)">
-        <h5 class="mb-0">
-            Songs
-        </h5>
+<div class="h-100 d-flex flex-column">
+    <div style="flex: 0 0 auto">
+        <h2>@(Model.SelectedPlaylist.Name) playlist</h2>
+        <div>
+            <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
+            <button class="btn btn-outline-secondary" title="Edit playlist" data-toggle="modal" data-target="#modalEditPlaylist" data-item-id="@(Model.SelectedPlaylist.Id)"
+                    data-item-name="@(Model.SelectedPlaylist.Name)" data-tooltip="tooltip">
+                <i class="fa fa-edit"></i>
+            </button>
+            <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", "Playlist", new { Model.SelectedPlaylist.Id})"
+               data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
+            <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
+                    data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
+                <i class="fa fa-trash"></i>
+            </button>
+        </div>
+        <hr />
     </div>
-    <div class="card-body m-0 p-0">
-        @if (Model.SelectedPlaylist.PlaylistTracks.Any())
-        {
-            <ul class="list-group list-group-flush">
-                @foreach (var list in Model.SelectedPlaylist.PlaylistTracks.OrderBy(item => item.CreateDate))
-                {
-                    <li class="list-group-item">
-                        <div class="media">
-                            <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.Track.Title)">
-                            <div class="media-body">
-                                <h5 class="mt-0">@(list.Track.Title)</h5>
-                                <span></span><span class="text-muted"></span>
-                                <span></span>
+    <div class="card" style="flex: 1 1 auto; overflow-y: auto">
+        <div class="card-header" id="heading-playlist-@(Model.SelectedPlaylist.Id)">
+            <h5 class="mb-0">
+                Songs
+            </h5>
+        </div>
+        <div class="card-body m-0 p-0">
+            @if (Model.SelectedPlaylist.PlaylistTracks.Any())
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var list in Model.SelectedPlaylist.PlaylistTracks.OrderBy(item => item.CreateDate))
+                    {
+                        <li class="list-group-item">
+                            <div class="media">
+                                <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.Track.Title)">
+                                <div class="media-body">
+                                    <h5 class="mt-0">@(list.Track.Title)</h5>
+                                    <span></span><span class="text-muted"></span>
+                                    <span></span>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline-secondary" data-play-id="@(list.Track.Id)" onclick="play(this)"
+                                            data-tooltip="tooltip" title="Play">
+                                        <i class="fa fa-play"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
+                                            data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <button class="btn btn-outline-secondary" data-play-id="@(list.Track.Id)" onclick="play(this)"
-                                        data-tooltip="tooltip" title="Play">
-                                    <i class="fa fa-play"></i>
-                                </button>
-                                <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
-                                        data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <span>No songs added.</span>
-        }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>No songs added.</span>
+            }
+        </div>
     </div>
 </div>
 
