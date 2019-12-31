@@ -31,9 +31,9 @@
             hideLoading();
             loadView('@(nameof(Enums.MediaPages.Playlist))');
         };
-
-        $('#modalNewPlaylist').modal('hide');
-        showLoading();
-        $.post('@Url.Action("AddPlaylist", "Playlist")', { playlistName: $('#txtNewPlaylist').val() }, success);
+    
+        $('#modalNewPlaylist').modal('hide').on('hidden.bs.modal', function () {
+            $.post('@Url.Action("AddPlaylist", "Playlist")', { playlistName: $('#txtNewPlaylist').val() }, success);
+        });
     }
 </script>

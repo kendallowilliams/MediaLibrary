@@ -34,9 +34,10 @@
     $('#btnDeleteItem').on('click', function () {
         var $btn = $(this);
 
-        $('#modalDeleteItem').modal('hide');
-        $.get($btn.attr('data-delete-url'), function () {
-            loadView($btn.attr('data-refresh-view'));
+        $('#modalDeleteItem').modal('hide').on('hidden.bs.modal', function () {
+            $.get($btn.attr('data-delete-url'), function () {
+                loadView($btn.attr('data-refresh-view'));
+            });
         });
     });
 </script>
