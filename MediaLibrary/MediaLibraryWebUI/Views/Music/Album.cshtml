@@ -1,52 +1,52 @@
 ﻿@model MediaLibraryWebUI.Models.MusicViewModel
 
-@{
-    ViewBag.Title = "Album";
-}
-
-<h2>@(Model.SelectedAlbum.Title)</h2>
-<div>
-    <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
-</div>
-<hr />
-<div class="card">
-    <div class="card-header" id="heading-artist-@(Model.SelectedAlbum.Id)">
-        <h5 class="mb-0">
-            Songs
-        </h5>
+<div class="h-100 d-flex flex-column">
+    <div style="flex: 0 0 auto">
+        <h2>@(Model.SelectedAlbum.Title)</h2>
+        <div>
+            <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
+        </div>
+        <hr />
     </div>
-    <div class="card-body m-0 p-0">
-        @if (Model.SelectedAlbum.Tracks.Any())
-        {
-            <ul class="list-group list-group-flush">
-                @foreach (var song in Model.SelectedAlbum.Tracks.OrderBy(song => song.Title))
-                {
-                    <li class="list-group-item">
-                        <div class="media">
-                            <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
-                            <div class="media-body">
-                                <h5 class="mt-0">@(song.Title)</h5>
-                                <span></span>
+    <div class="card" style="flex: 1 1 auto; overflow-y: auto">
+        <div class="card-header" id="heading-artist-@(Model.SelectedAlbum.Id)">
+            <h5 class="mb-0">
+                Songs
+            </h5>
+        </div>
+        <div class="card-body m-0 p-0">
+            @if (Model.SelectedAlbum.Tracks.Any())
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var song in Model.SelectedAlbum.Tracks.OrderBy(song => song.Title))
+                    {
+                        <li class="list-group-item">
+                            <div class="media">
+                                <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
+                                <div class="media-body">
+                                    <h5 class="mt-0">@(song.Title)</h5>
+                                    <span></span>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline-secondary" data-play-id="@(song.Id)" onclick="play(this)"
+                                            data-tooltip="tooltip" title="Play">
+                                        <i class="fa fa-play"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
+                                            data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist" @(Model.Playlists.Any() ? string.Empty : "disabled=\"disabled\"")>
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <button class="btn btn-outline-secondary" data-play-id="@(song.Id)" onclick="play(this)"
-                                        data-tooltip="tooltip" title="Play">
-                                    <i class="fa fa-play"></i>
-                                </button>
-                                <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
-                                        data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist" @(Model.Playlists.Any() ? string.Empty : "disabled=\"disabled\"")>
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <span>No songs added.</span>
-        }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>No songs added.</span>
+            }
+        </div>
     </div>
 </div>
 
