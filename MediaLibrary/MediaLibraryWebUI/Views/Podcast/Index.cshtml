@@ -1,77 +1,77 @@
 ﻿@model MediaLibraryWebUI.Models.PodcastViewModel
 
-@{
-    ViewBag.Title = "Podcasts";
-}
-
-<h2>Podcasts</h2>
-<div>
-    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPodcast" data-tooltip="tooltip" title="Add podcast"><i class="fa fa-plus"></i></button>
-    @Html.DropDownListFor(x => x.Configuration.SelectedPodcastSort,
-                          Model.PodcastSortItems,
-                          null,
-                          new { @class = "custom-select border border-secondary",
-                                style = "width: 150px",
-                                title = "Sort by",
-                                data_sort_tab = "albums-tab",
-                                onchange = $"sortChanged(this)",
-                                data_tooltip = "tooltip"
-    })
-</div>
-<hr />
-
-@if (Model.PodcastGroups.Any())
-{
-    <div id="accordion-podcasts">
-        @foreach (var item in Model.PodcastGroups.Select((group, index) => new { Index = index, Group = group }))
-        {
-            <div class="card">
-                <div class="card-header" id="heading-podcasts-@(item.Index)">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-podcasts-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-podcasts-@(item.Index)">
-                            @(item.Group.Key)
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapse-podcasts-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-podcasts-@(item.Index)" data-parent="#accordion-podcasts">
-                    <ul class="list-group list-group-flush">
-                        @foreach (var podcast in item.Group)
-                        {
-                            <li class="list-group-item">
-                                <div class="media">
-                                    <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(podcast.Title)">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">@(podcast.Title)</h5>
-                                        <span>@(podcast.PodcastItems.Count()) episode@(podcast.PodcastItems.Count() == 1 ? string.Empty : "s")</span>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="@(podcast.Description)" data-placement="left"
-                                                data-html="true">
-                                            <i class="fa fa-info-circle"></i>
-                                        </button>
-                                        <buton class="btn btn-outline-secondary" onclick="podcastClicked(this)" data-item-id="@(podcast.Id)"
-                                               data-tooltip="tooltip" title="View podcast">
-                                            <i class="fa fa-list"></i>
-                                        </buton>
-                                        <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
-                                                data-tooltip="tooltip" title="Delete podcast" data-delete-type="podcast" data-refresh-view="@(nameof(Enums.MediaPages.Podcast))">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        }
+<div class="h-100 d-flex flex-column">
+    <div style="flex: 0 0 auto">
+        <h2>Podcasts</h2>
+        <div>
+            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPodcast" data-tooltip="tooltip" title="Add podcast"><i class="fa fa-plus"></i></button>
+            @Html.DropDownListFor(x => x.Configuration.SelectedPodcastSort,
+                                  Model.PodcastSortItems,
+                                  null,
+                                  new { @class = "custom-select border border-secondary",
+                                        style = "width: 150px",
+                                        title = "Sort by",
+                                        data_sort_tab = "albums-tab",
+                                        onchange = $"sortChanged(this)",
+                                        data_tooltip = "tooltip"
+            })
+        </div>
+        <hr />
     </div>
-}
-else
-{
-    <div>No podcasts.</div>
-}
+
+    @if (Model.PodcastGroups.Any())
+    {
+        <div id="accordion-podcasts" style="flex: 1 1 auto; overflow-y: auto">
+            @foreach (var item in Model.PodcastGroups.Select((group, index) => new { Index = index, Group = group }))
+            {
+                <div class="card">
+                    <div class="card-header" id="heading-podcasts-@(item.Index)">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-podcasts-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-podcasts-@(item.Index)">
+                                @(item.Group.Key)
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapse-podcasts-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-podcasts-@(item.Index)" data-parent="#accordion-podcasts">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var podcast in item.Group)
+                            {
+                                <li class="list-group-item">
+                                    <div class="media">
+                                        <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(podcast.Title)">
+                                        <div class="media-body">
+                                            <h5 class="mt-0">@(podcast.Title)</h5>
+                                            <span>@(podcast.PodcastItems.Count()) episode@(podcast.PodcastItems.Count() == 1 ? string.Empty : "s")</span>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="@(podcast.Description)" data-placement="left"
+                                                    data-html="true">
+                                                <i class="fa fa-info-circle"></i>
+                                            </button>
+                                            <buton class="btn btn-outline-secondary" onclick="podcastClicked(this)" data-item-id="@(podcast.Id)"
+                                                   data-tooltip="tooltip" title="View podcast">
+                                                <i class="fa fa-list"></i>
+                                            </buton>
+                                            <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
+                                                    data-tooltip="tooltip" title="Delete podcast" data-delete-type="podcast" data-refresh-view="@(nameof(Enums.MediaPages.Podcast))">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div>No podcasts.</div>
+    }
+</div>
 
 <div class="modal fade" id="modalNewPodcast" tabindex="-1" role="dialog" aria-labelledby="modalNewPodcastTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -109,7 +109,7 @@ else
             hideLoading();
             loadView('@(nameof(Enums.MediaPages.Podcast))');
         }
-        
+
         $('#modalNewPodcast').modal('hide');
         showLoading();
         $.post('@Url.Action("AddPodcast", "Podcast")', { rssFeed: $('#txtNewPodcast').val() }, success);

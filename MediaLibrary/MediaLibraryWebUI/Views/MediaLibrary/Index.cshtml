@@ -1,11 +1,7 @@
 ﻿@model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
-@{
-    ViewBag.Title = string.Empty;
-}
-
 <div id="playerView" class="d-none h-100"></div>
-<div id="divView" class="d-none"></div>
+<div id="divView" class="d-none h-100"></div>
 
 @Html.Partial("~/Views/Shared/Configurations/MediaLibraryConfiguration.cshtml", Model.Configuration)
 
