@@ -167,5 +167,30 @@ namespace MediaLibraryWebUI.Controllers
                 }
             }
         }
+
+        public async Task UpdatePlayCount(MediaTypes mediaType, int id)
+        {
+            if (mediaType == MediaTypes.Podcast)
+            {
+                PodcastItem podcastItem = await dataService.Get<PodcastItem>(item => item.Id == id);
+
+                podcastItem.PlayCount++;
+                await dataService.Update(podcastItem);
+            }
+            else if (mediaType == MediaTypes.Song)
+            {
+                Track track = await dataService.Get<Track>(item => item.Id == id);
+
+                track.PlayCount++;
+                await dataService.Update(track);
+            }
+            else if (mediaType == MediaTypes.Television)
+            {
+                Episode episode = await dataService.Get<Episode>(item => item.Id == id);
+
+                episode.PlayCount++;
+                await dataService.Update(episode);
+            }
+        }
     }
 }

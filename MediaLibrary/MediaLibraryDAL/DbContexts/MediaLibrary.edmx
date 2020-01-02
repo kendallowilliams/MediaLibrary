@@ -45,6 +45,7 @@
           <Property Name="SeriesId" Type="int" Nullable="false" />
           <Property Name="Season" Type="int" />
           <Property Name="Path" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="PlayCount" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -112,6 +113,7 @@
           <Property Name="File" Type="varchar(max)" />
           <Property Name="PodcastId" Type="int" Nullable="false" />
           <Property Name="PublishDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="PlayCount" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -189,7 +191,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Episode__SeriesI__08B54D69">
+        <Association Name="FK__Episode__SeriesI__1DB06A4F">
           <End Role="Series" Type="Self.Series" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -203,7 +205,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PodcastIt__Podca__6B24EA82">
+        <Association Name="FK__PodcastIt__Podca__1F98B2C1">
           <End Role="Podcast" Type="Self.Podcast" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -346,11 +348,11 @@
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Album" EntitySet="Album" />
           </AssociationSet>
-          <AssociationSet Name="FK__Episode__SeriesI__08B54D69" Association="Self.FK__Episode__SeriesI__08B54D69">
+          <AssociationSet Name="FK__Episode__SeriesI__1DB06A4F" Association="Self.FK__Episode__SeriesI__1DB06A4F">
             <End Role="Series" EntitySet="Series" />
             <End Role="Episode" EntitySet="Episode" />
           </AssociationSet>
-          <AssociationSet Name="FK__PodcastIt__Podca__6B24EA82" Association="Self.FK__PodcastIt__Podca__6B24EA82">
+          <AssociationSet Name="FK__PodcastIt__Podca__1F98B2C1" Association="Self.FK__PodcastIt__Podca__1F98B2C1">
             <End Role="Podcast" EntitySet="Podcast" />
             <End Role="PodcastItem" EntitySet="PodcastItem" />
           </AssociationSet>
@@ -598,6 +600,7 @@
           <NavigationProperty Name="Podcast" Relationship="MediaLibraryDAL.FK__PodcastIt__Podca__6B24EA82" FromRole="PodcastItem" ToRole="Podcast" />
           <Property Name="File" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PlaylistPodcastItems" Relationship="MediaLibraryDAL.FK_playlist_podcastitem_podcastitem" FromRole="PodcastItem" ToRole="PlaylistPodcastItem" />
+          <Property Name="PlayCount" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Track">
           <Key>
@@ -898,6 +901,7 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Series" Relationship="MediaLibraryDAL.FK__Episode__SeriesI__08B54D69" FromRole="Episode" ToRole="Series" />
+          <Property Name="PlayCount" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK__Episode__SeriesI__08B54D69">
           <End Type="MediaLibraryDAL.Series" Role="Series" Multiplicity="1">
@@ -993,6 +997,7 @@
           <EntitySetMapping Name="PodcastItems">
             <EntityTypeMapping TypeName="MediaLibraryDAL.PodcastItem">
               <MappingFragment StoreEntitySet="PodcastItem">
+                <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
                 <ScalarProperty Name="File" ColumnName="File" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1085,6 +1090,7 @@
           <EntitySetMapping Name="Episodes">
             <EntityTypeMapping TypeName="MediaLibraryDAL.Episode">
               <MappingFragment StoreEntitySet="Episode">
+                <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Path" ColumnName="Path" />

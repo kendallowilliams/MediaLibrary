@@ -21,6 +21,7 @@ namespace MediaLibraryDAL.DbContexts
         public string Path { get; set; }
         public System.DateTime CreateDate { get; set; }
         public System.DateTime ModifyDate { get; set; }
+        public int PlayCount { get; set; }
     
         public virtual Series Series { get; set; }
     }
