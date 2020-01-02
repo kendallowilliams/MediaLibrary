@@ -5,6 +5,7 @@
     [SeriesId] INT NOT NULL, 
     [Season] INT NULL, 
 	[Path] VARCHAR(256) NOT NULL,
+	[PlayCount] INT  DEFAULT (0) NOT NULL,
     [CreateDate] DATETIME2      DEFAULT (getdate()) NOT NULL,
     [ModifyDate] DATETIME2      DEFAULT (getdate()) NOT NULL,
     CONSTRAINT [PK_Episode] PRIMARY KEY ([Id]),
