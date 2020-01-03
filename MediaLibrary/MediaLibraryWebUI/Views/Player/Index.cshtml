@@ -30,16 +30,20 @@
         $player.removeClass('d-none');
         $audioPlayer.prop('src', '');
         $videoPlayer.prop('src', '');
+        $audioPlayer.attr('data-item-id', '');
+        $videoPlayer.prop('data-item-id', '');
 
         if (item) {
             var $item = $(item),
                 url = $item.attr('data-play-url'),
-                index = $item.attr('data-play-index');
+                index = $item.attr('data-play-index'),
+                id = $item.attr('data-item-id');
 
             $('li[data-play-index].list-group-item').removeClass('active');
             setCurrentItemIndex(index);
             updatePlayerConfiguration(function () {
                 $item.addClass('active');
+                $player.attr('data-item-id', id);
                 $player.prop('src', url).trigger('play');
                 updateScrollTop();
             });
@@ -49,12 +53,18 @@
     }
 
     function initPlayer() {
+        var updatePlayCount = btn => {
+            var id = $(btn).attr('data-item-id');
+
+            $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: getSelectedMediaType(), id: id }, () => playNext());
+        };
+
         $('#@(Model.MusicPlayerId)').on('ended', function (evt) {
-            playNext();
+            updatePlayCount(this);
         });
 
         $('#@(Model.VideoPlayerId)').on('ended', function (evt) {
-            playNext();
+            updatePlayCount(this);
         });
     }
 
