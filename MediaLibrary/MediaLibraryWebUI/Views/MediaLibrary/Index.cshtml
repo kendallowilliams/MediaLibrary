@@ -1,5 +1,6 @@
 ﻿@model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
+<div id="homeView" class="d-none"></div>
 <div id="playerView" class="d-none h-100"></div>
 <div id="divView" class="d-none h-100"></div>
 
@@ -15,7 +16,7 @@
             },
                 url = '@Url.Action("Index", "ViewName")';
 
-            hideNavbar();
+            collapseNavbar();
             showLoading();
             updateSelectedMediaPage(view);
             disableNavItem(view);
@@ -24,10 +25,17 @@
             if (view === '@(Enums.MediaPages.Player)') {
                 updateMediaLibraryConfiguration(() => reload(success));
                 $('#divView').addClass('d-none');
+                $('#homeView').addClass('d-none');
                 $('#playerView').removeClass('d-none');
+            } else if (view === '@(Enums.MediaPages.Home)') {
+                $('#divView').addClass('d-none');
+                $('#playerView').addClass('d-none');
+                $('#homeView').removeClass('d-none');
+                updateMediaLibraryConfiguration(() => $('#homeView').load(url.replace("ViewName", view), success));
             } else {
                 updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
                 $('#playerView').addClass('d-none');
+                $('#homeView').addClass('d-none');
                 $('#divView').removeClass('d-none');
             }
         }
