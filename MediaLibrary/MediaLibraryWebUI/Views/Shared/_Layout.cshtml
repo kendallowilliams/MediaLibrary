@@ -23,19 +23,24 @@
                 <div class="collapse navbar-collapse" id="divNavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Music))')">@(nameof(Enums.MediaPages.Music))</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Music))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Music))')">@(nameof(Enums.MediaPages.Music))</a>
+                            <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Music))">@(nameof(Enums.MediaPages.Music))</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Podcast))')">@(nameof(Enums.MediaPages.Podcast))s</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Podcast))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Podcast))')">@(nameof(Enums.MediaPages.Podcast))s</a>
+                            <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Podcast))">@(nameof(Enums.MediaPages.Podcast))s</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Television))')">@(nameof(Enums.MediaPages.Television))</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Television))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Television))')">@(nameof(Enums.MediaPages.Television))</a>
+                            <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Television))">@(nameof(Enums.MediaPages.Television))</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Playlist))')">@(nameof(Enums.MediaPages.Playlist))s</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Playlist))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Playlist))')">@(nameof(Enums.MediaPages.Playlist))s</a>
+                            <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Playlist))">@(nameof(Enums.MediaPages.Playlist))s</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">@(Model.NowPlaying)</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Player))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">@(Model.NowPlaying)</a>
+                            <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Player))">@(Model.NowPlaying)</a>
                         </li>
                     </ul>
                 </div>
@@ -118,6 +123,13 @@
 
         function hideNavbar() {
             $('#divNavbar').collapse('hide');
+        }
+
+        function disableNavItem(view) {
+            $('a.nav-link[data-media-page][href]').removeClass('d-none');
+            $('a.nav-link[data-media-page]:not([href])').addClass('d-none');
+            $('a.nav-link[data-media-page=' + view + '][href]').addClass('d-none');
+            $('a.nav-link[data-media-page=' + view + ']:not([href])').removeClass('d-none');
         }
     </script>
     @RenderSection("scripts", false)

@@ -19,6 +19,11 @@
         $('#txt@(nameof(Model.SelectedMediaPage))').val(page);
     }
 
+    function getSelectedMediaPage() {
+        return $('#txt@(nameof(Model.SelectedMediaPage))').val();
+    }
+
+
     function getScrollTop() {
         return parseInt($('#txt@(nameof(Model.ScrollTop))').val());
     }
