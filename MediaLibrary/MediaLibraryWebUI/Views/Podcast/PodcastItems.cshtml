@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MediaLibraryDAL.DbContexts.PodcastItem>
+
+@if (Model.Any())
+{
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model.OrderByDescending(item => item.PublishDate))
+        {
+            <li class="list-group-item">
+                <div class="media">
+                    <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
+                    <div class="media-body">
+                        <h5 class="mt-0">@(item.Title)</h5>
+                        <span>@(item.PublishDate)</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="@(item.Description)" data-placement="left"
+                                data-html="true">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-play-id="@(item.Id)" onclick="play(this)" data-media-type="@(Enums.MediaTypes.Podcast)"
+                                data-tooltip="tooltip" title="Play">
+                            <i class="fa fa-play"></i>
+                        </button>
+                        <button class="btn btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
+                                data-tooltip="tooltip" title="Download episode" onclick="downloadClicked(this)"
+                                @(!string.IsNullOrWhiteSpace(item.File) ? "disabled=\"disabled\"" : string.Empty)>
+                            <i class="fa fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <span>No episodes added.</span>
+}

@@ -1,5 +1,9 @@
 ﻿@model MediaLibraryWebUI.Models.PodcastViewModel
 
+@{ 
+    IEnumerable<int> years = Model.SelectedPodcast.PodcastItems.Select(item => item.PublishDate.Year).Distinct().OrderByDescending(year => year);
+}
+
 <div class="h-100 d-flex flex-column">
     <div style="flex: 0 0 auto">
         <h2>@(Model.SelectedPodcast.Title) podcast</h2>
@@ -15,47 +19,16 @@
     </div>
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-header" id="heading-podcast-@(Model.SelectedPodcast.Id)">
-            <h5 class="mb-0">
-                Episodes
-            </h5>
+            <ul class="pagination justify-content-center m-0">
+                <li class="page-item"><a class="page-link" href="javascript: void(0);" data-podcast-year="-">&laquo;</a></li>
+                @foreach (var year in years)
+                {
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);" data-podcast-year="@(year)">@(year)</a></li>
+                }
+                <li class="page-item"><a class="page-link" href="javascript: void(0);" data-podcast-year="+">&raquo;</a></li>
+            </ul>
         </div>
-        <div class="card-body m-0 p-0" style="flex: 1 1 auto; overflow-y: auto">
-            @if (Model.SelectedPodcast.PodcastItems.Any())
-            {
-                <ul class="list-group list-group-flush">
-                    @foreach (var item in Model.SelectedPodcast.PodcastItems.OrderByDescending(item => item.PublishDate))
-                    {
-                        <li class="list-group-item">
-                            <div class="media">
-                                <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
-                                <div class="media-body">
-                                    <h5 class="mt-0">@(item.Title)</h5>
-                                    <span>@(item.PublishDate)</span>
-                                </div>
-                                <div>
-                                    <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="@(item.Description)" data-placement="left"
-                                            data-html="true">
-                                        <i class="fa fa-info-circle"></i>
-                                    </button>
-                                    <button class="btn btn-outline-secondary" data-play-id="@(item.Id)" onclick="play(this)" data-media-type="@(Enums.MediaTypes.Podcast)"
-                                            data-tooltip="tooltip" title="Play">
-                                        <i class="fa fa-play"></i>
-                                    </button>
-                                    <button class="btn btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
-                                            data-tooltip="tooltip" title="Download episode" onclick="downloadClicked(this)"
-                                            @(Model.DownloadedEpisodes.Contains(item.Id) ? "disabled=\"disabled\"" : string.Empty)>
-                                        <i class="fa fa-download"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    }
-                </ul>
-            }
-            else
-            {
-                <span>No episodes added.</span>
-            }
+        <div class="card-body m-0 p-0" id="podcastView" style="flex: 1 1 auto; overflow-y: auto">
         </div>
     </div>
 </div>
@@ -85,4 +58,39 @@
         $btn.prop('disabled', 'disabled');
         $.get($btn.attr('data-download-action'));
     }
+
+    $('[data-podcast-year]').on('click', function () {
+        var year = $(this).attr('data-podcast-year'),
+            years = '@(string.Join(",", years))'.split(','),
+            currentIndex = years.indexOf(getSelectedYear());
+
+        if (year === '-' && currentIndex > 0) {
+            $('[data-podcast-year="' + years[currentIndex - 1] + '"]').trigger('click');
+        } else if (year === '+' && (currentIndex + 1) < years.length) {
+            $('[data-podcast-year="' + years[currentIndex + 1] + '"]').trigger('click');
+        } else if (parseInt(year) > 0) {
+            $('li.page-item').removeClass('active');
+            loadPodcastView(this);
+        }
+    });
+
+    function loadPodcastView(item) {
+        var success = () => {
+                $(item).parent('li.page-item:first').addClass('active');
+                hideLoading();
+            },
+            id = @(Model.SelectedPodcast.Id),
+            year = $(item).attr('data-podcast-year');
+
+        if (item) {
+            showLoading();
+            $('#podcastView').load('@Url.Action("GetPodcastItems", "Podcast")', { id: id, year: year }, success);
+        }
+    }
+
+    function getSelectedYear() {
+        return $('li.page-item.active a.page-link[data-podcast-year]').attr('data-podcast-year');
+    }
+    
+    $('[data-podcast-year="@(years.FirstOrDefault())"]').trigger('click');
 </script>

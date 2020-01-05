@@ -110,10 +110,16 @@ namespace MediaLibraryWebUI.Controllers
 
         private async Task<ActionResult> Get(int id)
         {
-            podcastViewModel.DownloadedEpisodes = (await dataService.GetList<PodcastItem>(item => item.File != null && item.File != "")).Select(item => item.Id);
             podcastViewModel.SelectedPodcast = await dataService.GetAsync<Podcast, ICollection<PodcastItem>>(podcast => podcast.Id == id, podcast => podcast.PodcastItems);
 
             return PartialView("Podcast", podcastViewModel);
+        }
+
+        public async Task<ActionResult> GetPodcastItems(int id, int year)
+        {
+            IEnumerable<PodcastItem> podcastItems = await dataService.GetList<PodcastItem>(item => item.PodcastId == id && item.PublishDate.Year == year);
+
+            return PartialView("PodcastItems", podcastItems.OrderByDescending(item => item.PublishDate));
         }
 
         public async Task DownloadPodcastItem(int id)

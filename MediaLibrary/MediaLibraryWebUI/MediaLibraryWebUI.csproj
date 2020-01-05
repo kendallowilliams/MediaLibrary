@@ -481,6 +481,7 @@
     <Content Include="Views\Shared\Configurations\TelevisionConfiguration.cshtml" />
     <Content Include="Views\Television\Series.cshtml" />
     <Content Include="Views\Television\Season.cshtml" />
+    <Content Include="Views\Podcast\PodcastItems.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
