@@ -6,7 +6,7 @@
 
 <div class="h-100 d-flex flex-column">
     <div style="flex: 0 0 auto">
-        <h2>@(Model.SelectedPodcast.Title) podcast</h2>
+        <h2>@(Model.SelectedPodcast.Title) @(!Model.SelectedPodcast.Title.ToLower().Contains("podcast") ? "podcast" : string.Empty)</h2>
         <div>
             <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
             <button class="btn btn-outline-secondary" onclick="refreshClicked()" data-tooltip="tooltip" title="Refresh podcast"><i class="fa fa-sync"></i></button>
