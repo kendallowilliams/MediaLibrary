@@ -36,6 +36,7 @@
     function loadSeasonView(item) {
         var success = () => {
                 $(item).parent('li.page-item:first').addClass('active');
+                $('#seasonView *[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
                 hideLoading();
             },
             series = @(Model.SelectedSeries.Id),
@@ -44,6 +45,7 @@
         if (item) {
             showLoading();
             updateSelectedSeason(season);
+            $('#seasonView *[data-tooltip="tooltip"]').tooltip('dispose');
             $('#seasonView').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
         }
     }
