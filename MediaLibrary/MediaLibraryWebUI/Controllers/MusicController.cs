@@ -360,5 +360,29 @@ namespace MediaLibraryWebUI.Controllers
                 musicService.ClearData();
             }
         }
+
+        public async Task<ActionResult> GetAlbums()
+        {
+            if (musicViewModel.AlbumGroups == null) /*then*/ musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.AlbumSort);
+            musicViewModel.Playlists = await dataService.GetList<Playlist>();
+
+            return PartialView("Albums", musicViewModel);
+        }
+
+        public async Task<ActionResult> GetArtists()
+        {
+            if (musicViewModel.ArtistGroups == null) /*then*/ musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.ArtistSort);
+            musicViewModel.Playlists = await dataService.GetList<Playlist>();
+
+            return PartialView("Artists", musicViewModel);
+        }
+
+        public async Task<ActionResult> GetSongs()
+        {
+            if (musicViewModel.SongGroups == null) /*then*/ musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.SongSort);
+            musicViewModel.Playlists = await dataService.GetList<Playlist>();
+
+            return PartialView("Songs", musicViewModel);
+        }
     }
 }

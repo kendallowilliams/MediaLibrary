@@ -4,21 +4,21 @@
     <div style="flex: 0 0 auto">
         <h2>Music</h2>
         <div class="nav d-block" id="musicTab" role="tablist">
-            <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Albums ? "active" : "")" id="albums-tab" data-toggle="tab" href="#albums"
-                    role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTabs.Albums))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTabs.Albums))"
-                    data-tooltip="tooltip">
+            <a class="btn btn-outline-secondary" id="albums-tab" data-toggle="tab"
+                    role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTabs.Albums))" data-music-tab="@(nameof(Enums.MusicTabs.Albums))"
+                    data-tooltip="tooltip" href="#albums">
                 <i class="fa fa-compact-disc"></i>
-            </button>
-            <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Artists ? "active" : "")" id="artists-tab" href="#artists" data-toggle="tab"
-                    role="tab" aria-controls="artists" aria-selected="false" title="@(nameof(Enums.MusicTabs.Artists))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTabs.Artists))"
-                    data-tooltip="tooltip">
+            </a>
+            <a class="btn btn-outline-secondary" id="artists-tab" data-toggle="tab"
+                    role="tab" aria-controls="artists" aria-selected="false" title="@(nameof(Enums.MusicTabs.Artists))" data-music-tab="@(nameof(Enums.MusicTabs.Artists))"
+                    data-tooltip="tooltip" href="#artists">
                 <i class="fa fa-user"></i>
-            </button>
-            <button class="btn btn-outline-secondary @(Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Songs ? "active" : "")" id="songs-tab" href="#songs" data-toggle="tab"
-                    role="tab" aria-controls="songs" aria-selected="false" title="@(nameof(Enums.MusicTabs.Songs))" onclick="musicTabChanged(this)" data-music-tab="@(nameof(Enums.MusicTabs.Songs))"
-                    data-tooltip="tooltip">
+            </a>
+            <a class="btn btn-outline-secondary" id="songs-tab" data-toggle="tab"
+                    role="tab" aria-controls="songs" aria-selected="false" title="@(nameof(Enums.MusicTabs.Songs))" data-music-tab="@(nameof(Enums.MusicTabs.Songs))"
+                    data-tooltip="tooltip" href="#songs">
                 <i class="fa fa-music"></i>
-            </button>
+            </a>
             <div class="float-right d-none d-lg-block">
                 <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalAddNewSong" data-tooltip="tooltip" title="Add new song">
                     <i class="fa fa-plus"></i>
@@ -59,9 +59,9 @@
         <hr />
     </div>
     <div class="tab-content" id="musicContent" style="flex: 1 1 auto; overflow-y: auto">
-        <div class="tab-pane fade @(Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Albums ? "show active" : "")" id="albums" role="tabpanel" aria-labelledby="albums-tab">@Html.Partial("Albums", Model)</div>
-        <div class="tab-pane fade @(Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Artists ? "show active" : "")" id="artists" role="tabpanel" aria-labelledby="artists-tab">@Html.Partial("Artists", Model)</div>
-        <div class="tab-pane fade @(Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Songs ? "show active" : "")" id="songs" role="tabpanel" aria-labelledby="songs-tab">@Html.Partial("Songs", Model)</div>
+        <div class="tab-pane fade" id="albums" role="tabpanel" aria-labelledby="albums-tab" data-load-url="@Url.Action("GetAlbums", "Music")"></div>
+        <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab" data-load-url="@Url.Action("GetArtists", "Music")"></div>
+        <div class="tab-pane fade" id="songs" role="tabpanel" aria-labelledby="songs-tab" data-load-url="@Url.Action("GetSongs", "Music")"></div>
     </div>
 </div>
 
@@ -71,19 +71,6 @@
 @Html.Partial("~/Views/Shared/Configurations/MusicConfiguration.cshtml", Model.Configuration)
 
 <script type="text/javascript" defer="defer">
-    function musicTabChanged(btn) {
-        $('[data-sort-tab]').each((index, _btn) => {
-            if ($(_btn).attr('data-sort-tab') === btn.id) {
-                $(_btn).removeClass('d-none');
-            } else {
-                $(_btn).addClass('d-none');
-            }
-        });
-
-        $('#txt@(nameof(Model.Configuration.SelectedMusicTab))').val($(btn).attr('data-music-tab'));
-        updateConfiguration();
-    }
-
     function sortChanged(sortType, select) {
         showLoading();
         $('#txt' + sortType).val($(select).val());
@@ -111,4 +98,31 @@
         $.post('@(Url.Action("Refresh", "Music"))', success);
 
     }
+
+    $('#musicTab [data-toggle="tab"]').on('show.bs.tab', function (e) {
+        var $newTab = $(e.target),
+            $oldTab = $(e.relatedTarget),
+            $newView = $($newTab.attr('href')),
+            $oldView = $($oldTab.attr('href'))
+            url = $newView.attr('data-load-url'),
+            success = () => {
+                hideLoading();
+                $newView.find('[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
+            };
+        
+        $('[data-sort-tab]').each((index, _btn) => {
+            if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
+                $(_btn).removeClass('d-none');
+            } else {
+                $(_btn).addClass('d-none');
+            }
+        });
+
+        showLoading();
+        $('#txt@(nameof(Model.Configuration.SelectedMusicTab))').val($newTab.attr('data-music-tab'));
+        $newView.find('[data-tooltip="tooltip"]').tooltip('dispose');
+        updateConfiguration(() => $newView.load(url, success));
+    });
+
+    $('[data-music-tab="@(Model.Configuration.SelectedMusicTab)"]').tab('show');
 </script>
