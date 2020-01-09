@@ -99,7 +99,7 @@
 
     }
 
-    $('#musicTab [data-toggle="tab"]').on('show.bs.tab', function (e) {
+    $('#musicTab [data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var $newTab = $(e.target),
             $oldTab = $(e.relatedTarget),
             $newView = $($newTab.attr('href')),
