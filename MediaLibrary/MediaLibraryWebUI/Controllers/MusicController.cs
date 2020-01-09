@@ -361,6 +361,7 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
+        [CompressContent]
         public async Task<ActionResult> GetAlbums()
         {
             if (musicViewModel.AlbumGroups == null) /*then*/ musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.AlbumSort);
@@ -369,6 +370,7 @@ namespace MediaLibraryWebUI.Controllers
             return PartialView("Albums", musicViewModel);
         }
 
+        [CompressContent]
         public async Task<ActionResult> GetArtists()
         {
             if (musicViewModel.ArtistGroups == null) /*then*/ musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.ArtistSort);
@@ -377,6 +379,7 @@ namespace MediaLibraryWebUI.Controllers
             return PartialView("Artists", musicViewModel);
         }
 
+        [CompressContent]
         public async Task<ActionResult> GetSongs()
         {
             if (musicViewModel.SongGroups == null) /*then*/ musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.SongSort);
