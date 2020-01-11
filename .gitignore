@@ -47,3 +47,5 @@
 /MediaLibrary/MediaLibraryDAL/bin/Release
 /MediaLibrary/MediaLibraryDB/bin/Release
 /MediaLibrary/MediaLibraryDB/obj/Release
+/MediaLibrary/MediaLibraryConsole/bin/Debug
+/MediaLibrary/MediaLibraryConsole/obj/Debug
