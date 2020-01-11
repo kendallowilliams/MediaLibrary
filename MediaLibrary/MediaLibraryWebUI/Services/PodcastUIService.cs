@@ -44,7 +44,7 @@ namespace MediaLibraryWebUI.Services
             switch (sort)
             {
                 case PodcastSort.DateAdded:
-                    groups = podcasts.GroupBy(podcast => podcast.ModifyDate.ToString("MM-dd-yyyy")).OrderBy(group => group.Key);
+                    groups = podcasts.GroupBy(podcast => podcast.CreateDate.ToString("MM-dd-yyyy")).OrderBy(group => DateTime.Parse(group.Key));
                     break;
                 case PodcastSort.AtoZ:
                     groups = GetPodcastsAtoZ(podcasts.OrderBy(podcast => podcast.Title));
