@@ -51,7 +51,7 @@ namespace MediaLibraryWebUI.Services
                     break;
                 case PodcastSort.LastUpdateDate:
                 default:
-                    groups = podcasts.GroupBy(podcast => podcast.LastUpdateDate.ToString("MM-dd-yyyy")).OrderByDescending(group => group.Key);
+                    groups = podcasts.GroupBy(podcast => podcast.LastUpdateDate.ToString("MM-dd-yyyy")).OrderByDescending(group => DateTime.Parse(group.Key));
                     break;
             }
 
