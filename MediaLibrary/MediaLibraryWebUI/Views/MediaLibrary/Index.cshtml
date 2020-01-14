@@ -11,7 +11,7 @@
         function loadView(view, callback) {
             var success = () => {
                 if (typeof callback === 'function') /*then*/ callback();
-                $('#' + view + ' *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+                $(view + ' *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
                 hideLoading();
             },
                 url = '@Url.Action("Index", "ViewName")',
