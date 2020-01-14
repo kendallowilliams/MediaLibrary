@@ -11,29 +11,30 @@
         function loadView(view, callback) {
             var success = () => {
                 if (typeof callback === 'function') /*then*/ callback();
-                if (view !== '@(Enums.MediaPages.Music)') /*then*/ $('#divView *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+                $('#' + view + ' *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
                 hideLoading();
             },
-                url = '@Url.Action("Index", "ViewName")';
+                url = '@Url.Action("Index", "ViewName")',
+                view = null;
 
             collapseNavbar();
             showLoading();
             updateSelectedMediaPage(view);
             disableNavItem(view);
-            $('#divView *[data-tooltip="tooltip"]').tooltip('dispose');
+            $('#divView, #playerView, #homeView').find('* [data - tooltip="tooltip"]').tooltip('dispose');
 
             if (view === '@(Enums.MediaPages.Player)') {
                 updateMediaLibraryConfiguration(() => reload(success));
                 $('#divView, #homeView').addClass('d-none');
-                $('#playerView').removeClass('d-none');
+                $(view = '#playerView').removeClass('d-none');
             } else if (view === '@(Enums.MediaPages.Home)') {
                 $('#divView, #playerView').addClass('d-none');
-                $('#homeView').removeClass('d-none');
+                $(view = '#homeView').removeClass('d-none');
                 updateMediaLibraryConfiguration(() => $('#homeView').load(url.replace("ViewName", view), success));
             } else {
                 updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
                 $('#playerView, #homeView').addClass('d-none');
-                $('#divView').removeClass('d-none');
+                $(view = '#divView').removeClass('d-none');
             }
         }
 
