@@ -14,6 +14,9 @@ using Fody;
 using MediaLibraryDAL.DbContexts;
 using System.Data.Entity;
 using MediaLibraryDAL.Models.Interfaces;
+using System.Threading;
+using System.Data.Common;
+using System.Reflection;
 
 namespace MediaLibraryBLL.Services
 {
@@ -29,7 +32,7 @@ namespace MediaLibraryBLL.Services
             timeout = 120;
         }
 
-        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
+        public async Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
@@ -37,41 +40,26 @@ namespace MediaLibraryBLL.Services
             {
                 db.Database.CommandTimeout = timeout;
                 
-                results = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).ToListAsync();
+                results = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).ToListAsync(token);
             }
 
             return results;
         }
 
-        public Task<T> Get<T>(Expression<Func<T,bool>> expression = null) where T: class, IDataModel
-        {
-            T result = default(T);
-            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
-
-            using (var db = new MediaLibraryEntities())
-            {
-                db.Database.CommandTimeout = timeout;
-                result = (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefault();
-                tcs.SetResult(result);
-            }
-
-            return tcs.Task;
-        }
-
-        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
+        public async Task<T> Get<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             T result = default(T);
 
             using (var db = new MediaLibraryEntities())
             {
                 db.Database.CommandTimeout = timeout;
-                result = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefaultAsync();
+                result = await (expression != null ? db.Set<T>().Where(expression) : db.Set<T>()).FirstOrDefaultAsync(token);
             }
 
             return result;
         }
 
-        public async Task<int> Insert<T>(T entity) where T : class, IDataModel
+        public async Task<int> Insert<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -81,13 +69,13 @@ namespace MediaLibraryBLL.Services
                 entity.ModifyDate = DateTime.Now;
                 entity.CreateDate = DateTime.Now;
                 db.Set<T>().Add(entity);
-                result = await db.SaveChangesAsync();
+                result = await db.SaveChangesAsync(token);
             }
 
             return result;
         }
 
-        public async Task<int> Insert<T>(IEnumerable<T> entities) where T : class, IDataModel
+        public async Task<int> Insert<T>(IEnumerable<T> entities, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             int result = default(int);
             IList<T> items = entities.ToList();
@@ -102,13 +90,13 @@ namespace MediaLibraryBLL.Services
 
                 db.Database.CommandTimeout = timeout;
                 db.Set<T>().AddRange(items);
-                result = await db.SaveChangesAsync();
+                result = await db.SaveChangesAsync(token);
             }
 
             return result;
         }
 
-        public async Task<int> Delete<T>(object id) where T : class, IDataModel
+        public async Task<int> Delete<T>(object id, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -121,18 +109,18 @@ namespace MediaLibraryBLL.Services
                 set = db.Set<T>();
                 entity = await set.FindAsync(id);
                 set.Remove(entity);
-                result = await db.SaveChangesAsync();
+                result = await db.SaveChangesAsync(token);
             }
 
             return result;
         }
 
-        public async Task<int> Delete<T>(T entity) where T : class, IDataModel
+        public async Task<int> Delete<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
-            return await Delete<T>(entity?.Id);
+            return await Delete<T>(entity?.Id, token);
         }
 
-        public async Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
+        public async Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -145,35 +133,18 @@ namespace MediaLibraryBLL.Services
                     db.Database.CommandTimeout = timeout;
                     set = db.Set<T>();
                     set.RemoveRange(set.Where(expression));
-                    result = await db.SaveChangesAsync();
+                    result = await db.SaveChangesAsync(token);
                 }
             }
             else
             {
-                result = await DeleteAll<T>();
+                result = await DeleteAll<T>(token: token);
             }
 
             return result;
         }
 
-        public async Task<int> DeleteAll<T>() where T : class, IDataModel
-        {
-            int result = default(int);
-
-            using (var db = new MediaLibraryEntities())
-            {
-                DbSet<T> set = null;
-
-                db.Database.CommandTimeout = timeout;
-                set = db.Set<T>();
-                set.RemoveRange(set);
-                result = await db.SaveChangesAsync();
-            }
-
-            return result;
-        }
-
-        public async Task<int> Update<T>(T entity) where T : class, IDataModel
+        public async Task<int> Update<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             int result = default(int);
 
@@ -182,96 +153,80 @@ namespace MediaLibraryBLL.Services
                 db.Database.CommandTimeout = timeout;
                 entity.ModifyDate = DateTime.Now;
                 db.Entry(entity).State = EntityState.Modified;
-                result = await db.SaveChangesAsync();
+                result = await db.SaveChangesAsync(token);
             }
 
             return result;
         }
 
-        public async Task<int> Count<T>(Expression<Func<T,bool>> expression = null) where T : class, IDataModel
+        public async Task<int> Count<T>(Expression<Func<T,bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             int result = default(int);
 
             using (var db = new MediaLibraryEntities())
             {
                 db.Database.CommandTimeout = timeout;
-                result = expression != null ? await db.Set<T>().CountAsync(expression) : await db.Set<T>().CountAsync();
+                result = expression != null ? await db.Set<T>().CountAsync(expression, token) : await db.Set<T>().CountAsync(token);
             }
 
             return result;
         }
         
-        public async Task<bool> Exists<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel
+        public async Task<bool> Exists<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             bool result = default(bool);
 
             using (var db = new MediaLibraryEntities())
             {
                 db.Database.CommandTimeout = timeout;
-                result = (expression != null ? await db.Set<T>().FirstOrDefaultAsync(expression) : await db.Set<T>().FirstOrDefaultAsync()) != null;
+                result = (expression != null ? await db.Set<T>().FirstOrDefaultAsync(expression, token) : await db.Set<T>().FirstOrDefaultAsync(token)) != null;
             }
 
             return result;
         }
 
-        public async Task<IEnumerable<T>> Query<T>(string sql, params object[] parameters)
+        public async Task<IEnumerable<T>> Query<T>(string sql, CancellationToken token = default(CancellationToken), params object[] parameters)
         {
             IEnumerable<T> result = Enumerable.Empty<T>();
 
             using (var db = new MediaLibraryEntities())
             {
                 db.Database.CommandTimeout = timeout;
-                result = await db.Database.SqlQuery<T>(sql, parameters).ToListAsync();
+                result = await db.Database.SqlQuery<T>(sql, parameters).ToListAsync(token);
             }
 
             return result;
         }
 
-        public async Task<int> Execute(string sql, params object[] parameters)
+        public async Task<int> Execute(string sql, CancellationToken token = default(CancellationToken), params object[] parameters)
         {
             int result = default(int);
 
             using (var db = new MediaLibraryEntities())
             {
                 db.Database.CommandTimeout = timeout;
-                result = await db.Database.ExecuteSqlCommandAsync(sql, parameters);
+                result = await db.Database.ExecuteSqlCommandAsync(sql, token, parameters);
             }
 
             return result;
         }
 
-        public async Task<T> ExecuteScalar<T>(string sql, params object[] parameters)
+        public async Task<T> ExecuteScalar<T>(string sql, CancellationToken token = default(CancellationToken), params object[] parameters)
         {
             T result = default(T);
 
             using (var db = new MediaLibraryEntities())
             {
                 db.Database.CommandTimeout = timeout;
-                result = await db.Database.SqlQuery<T>(sql, parameters).SingleOrDefaultAsync();
+                result = await db.Database.SqlQuery<T>(sql, token, parameters).SingleOrDefaultAsync(token);
             }
 
             return result;
         }
 
-        public Task<T> Get<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
-        {
-            T result = default(T);
-            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
-
-            using (var db = new MediaLibraryEntities())
-            {
-                IQueryable<T> query = null;
-
-                db.Database.CommandTimeout = timeout;
-                query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
-                result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
-                tcs.SetResult(result);
-            }
-
-            return tcs.Task;
-        }
-
-        public async Task<T> GetAsync<T, TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
+        public async Task<T> Get<T, TInclude>(Expression<Func<T, bool>> expression = null, 
+                                                   Expression<Func<T, TInclude>> includeExpression = null, 
+                                                   CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             T result = default(T);
 
@@ -281,13 +236,15 @@ namespace MediaLibraryBLL.Services
 
                 db.Database.CommandTimeout = timeout;
                 query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
-                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync();
+                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync(token);
             }
 
             return result;
         }
 
-        public async Task<IEnumerable<T>> GetList<T,TInclude>(Expression<Func<T, bool>> expression = null, Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel
+        public async Task<IEnumerable<T>> GetList<T,TInclude>(Expression<Func<T, bool>> expression = null, 
+                                                              Expression<Func<T, TInclude>> includeExpression = null, 
+                                                              CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
@@ -297,36 +254,16 @@ namespace MediaLibraryBLL.Services
 
                 db.Database.CommandTimeout = timeout;
                 query = includeExpression != null ? db.Set<T>().Include(includeExpression) : db.Set<T>();
-                results = await (expression != null ? query.Where(expression) : query).ToListAsync();
+                results = await (expression != null ? query.Where(expression) : query).ToListAsync(token);
             }
 
             return results;
         }
 
-        public Task<T> Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
-                                              Expression<Func<T, TInclude1>> includeExpression1 = null, 
-                                              Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel
-        {
-            T result = default(T);
-            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
-
-            using (var db = new MediaLibraryEntities())
-            {
-                IQueryable<T> query = null;
-
-                db.Database.CommandTimeout = timeout;
-                query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
-                query = includeExpression2 != null ? query.Include(includeExpression2) : query;
-                result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
-                tcs.SetResult(result);
-            }
-
-            return tcs.Task;
-        }
-
-        public async Task<T> GetAsync<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
+        public async Task<T> Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
                                                                Expression<Func<T, TInclude1>> includeExpression1 = null, 
-                                                               Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel
+                                                               Expression<Func<T, TInclude2>> includeExpression2 = null, 
+                                                               CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             T result = default(T);
 
@@ -337,7 +274,7 @@ namespace MediaLibraryBLL.Services
                 db.Database.CommandTimeout = timeout;
                 query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
-                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync();
+                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync(token);
             }
 
             return result;
@@ -345,7 +282,8 @@ namespace MediaLibraryBLL.Services
 
         public async Task<IEnumerable<T>> GetList<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
                                                                            Expression<Func<T, TInclude1>> includeExpression1 = null, 
-                                                                           Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel
+                                                                           Expression<Func<T, TInclude2>> includeExpression2 = null, 
+                                                                           CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
@@ -356,39 +294,17 @@ namespace MediaLibraryBLL.Services
                 db.Database.CommandTimeout = timeout;
                 query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
-                results = await (expression != null ? query.Where(expression) : query).ToListAsync();
+                results = await (expression != null ? query.Where(expression) : query).ToListAsync(token);
             }
 
             return results;
         }
 
-        public Task<T> Get<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
-                                                         Expression<Func<T, TInclude1>> includeExpression1 = null,
-                                                         Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                                         Expression<Func<T, TInclude3>> includeExpression3 = null) where T : class, IDataModel
-        {
-            T result = default(T);
-            TaskCompletionSource<T> tcs = new TaskCompletionSource<T>();
-
-            using (var db = new MediaLibraryEntities())
-            {
-                IQueryable<T> query = null;
-
-                db.Database.CommandTimeout = timeout;
-                query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
-                query = includeExpression2 != null ? query.Include(includeExpression2) : query;
-                query = includeExpression3 != null ? query.Include(includeExpression3) : query;
-                result = (expression != null ? query.Where(expression) : query).FirstOrDefault();
-                tcs.SetResult(result);
-            }
-
-            return tcs.Task;
-        }
-
-        public async Task<T> GetAsync<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
+        public async Task<T> Get<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
                                                                           Expression<Func<T, TInclude1>> includeExpression1 = null,
                                                                           Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                                                          Expression<Func<T, TInclude3>> includeExpression3 = null) where T : class, IDataModel
+                                                                          Expression<Func<T, TInclude3>> includeExpression3 = null, 
+                                                                          CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             T result = default(T);
 
@@ -400,7 +316,7 @@ namespace MediaLibraryBLL.Services
                 query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 query = includeExpression3 != null ? query.Include(includeExpression3) : query;
-                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync();
+                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync(token);
             }
 
             return result;
@@ -409,7 +325,8 @@ namespace MediaLibraryBLL.Services
         public async Task<IEnumerable<T>> GetList<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
                                                                                       Expression<Func<T, TInclude1>> includeExpression1 = null,
                                                                                       Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                                                                      Expression<Func<T, TInclude3>> includeExpression3 = null) where T : class, IDataModel
+                                                                                      Expression<Func<T, TInclude3>> includeExpression3 = null, 
+                                                                                      CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
 
@@ -421,7 +338,7 @@ namespace MediaLibraryBLL.Services
                 query = includeExpression1 != null ? db.Set<T>().Include(includeExpression1) : db.Set<T>();
                 query = includeExpression2 != null ? query.Include(includeExpression2) : query;
                 query = includeExpression3 != null ? query.Include(includeExpression3) : query;
-                results = await (expression != null ? query.Where(expression) : query).ToListAsync();
+                results = await (expression != null ? query.Where(expression) : query).ToListAsync(token);
             }
 
             return results;
@@ -429,6 +346,46 @@ namespace MediaLibraryBLL.Services
 
         public SqlParameter CreateParameter(string name, object value) => new SqlParameter(name, value);
 
+        public async Task<IEnumerable<T>> ExecuteStoredProcedure<T>(string sql, 
+                                                                    CancellationToken token = default(CancellationToken), 
+                                                                    params object[] parameters) where T : class, new()
+        {
+            List<T> entities = new List<T>();
 
+            using (var db = new MediaLibraryEntities())
+            {
+                using (DbCommand command = db.Database.Connection.CreateCommand())
+                {
+                    DbDataReader reader = null;
+                    PropertyInfo[] properties = typeof(T).GetProperties();
+                    IDictionary<int, string> columns = new Dictionary<int, string>();
+
+                    await command.Connection.OpenAsync();
+                    command.CommandTimeout = timeout;
+                    command.CommandText = sql;
+                    command.CommandType = CommandType.StoredProcedure;
+                    reader = await command.ExecuteReaderAsync(token);
+                    columns = Enumerable.Range(0, reader.FieldCount)
+                                        .Select(ordinal => new { Key = ordinal, Value = reader.GetName(ordinal) })
+                                        .ToDictionary(column => column.Key, column => column.Value);
+
+                    while (await reader.ReadAsync())
+                    {
+                        T entity = new T();
+
+                        foreach (var column in columns)
+                        {
+                            object value = await reader.IsDBNullAsync(column.Key, token) ? null : reader[column.Value];
+
+                            properties.FirstOrDefault(property => property.Name == column.Value)?.SetValue(entity, value);
+                        }
+
+                        entities.Add(entity);
+                    }
+                }
+            }
+
+            return entities;
+        }
     }
 }

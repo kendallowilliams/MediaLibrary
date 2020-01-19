@@ -34,7 +34,7 @@ namespace MediaLibraryBLL.Services
             {
                 object parameters = new { name = strArtists };
                 Artist artist = new Artist(strArtists);
-                Artist dbArtist = await dataService.GetAsync<Artist>(item => item.Name == strArtists);
+                Artist dbArtist = await dataService.Get<Artist>(item => item.Name == strArtists);
 
                 if (dbArtist != null) { id = dbArtist.Id; }
                 else

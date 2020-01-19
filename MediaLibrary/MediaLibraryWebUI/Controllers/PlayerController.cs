@@ -41,7 +41,7 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> Index()
         {
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Player));
 
             if (configuration != null)
             {
@@ -57,7 +57,7 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
+                Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Player));
 
                 if (configuration == null)
                 {
@@ -75,7 +75,7 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> GetPlayerItems()
         {
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Player));
 
             if (configuration != null)
             {
@@ -129,7 +129,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task UpdateNowPlaying(string itemsJSON, MediaTypes mediaType)
         {
             var items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(itemsJSON);
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Player));
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Player));
             PlayerConfiguration playerConfiguration = new PlayerConfiguration();
 
             if (configuration == null)

@@ -32,7 +32,7 @@ namespace MediaLibraryBLL.Services
             if (!string.IsNullOrWhiteSpace(strGenres))
             {
                 object parameters = new { name = strGenres };
-                Genre dbGenre = await dataService.GetAsync<Genre>(item => item.Name == strGenres),
+                Genre dbGenre = await dataService.Get<Genre>(item => item.Name == strGenres),
                       genre = new Genre(strGenres);
 
                 if (dbGenre != null) { id = dbGenre.Id; }

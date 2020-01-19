@@ -44,7 +44,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Television));
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Television));
 
             if (configuration != null)
             {
@@ -67,7 +67,7 @@ namespace MediaLibraryWebUI.Controllers
 
         private async Task<ActionResult> Get(int id)
         {
-            televisionViewModel.SelectedSeries = await dataService.GetAsync<Series, IEnumerable<Episode>>(item => item.Id == id, item => item.Episodes);
+            televisionViewModel.SelectedSeries = await dataService.Get<Series, IEnumerable<Episode>>(item => item.Id == id, item => item.Episodes);
 
             return PartialView("Series", televisionViewModel);
         }
@@ -76,7 +76,7 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Television));
+                Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Television));
 
                 if (configuration == null)
                 {
@@ -94,7 +94,7 @@ namespace MediaLibraryWebUI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> File(int id)
         {
-            Episode episode = await dataService.GetAsync<Episode>(item => item.Id == id);
+            Episode episode = await dataService.Get<Episode>(item => item.Id == id);
             ActionResult result = null;
 
             if (episode != null)

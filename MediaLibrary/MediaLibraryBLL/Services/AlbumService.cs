@@ -31,7 +31,7 @@ namespace MediaLibraryBLL.Services
 
             if (album != null)
             {
-                Album dbAlbum = await dataService.GetAsync<Album>(item => item.Title == album.Title);
+                Album dbAlbum = await dataService.Get<Album>(item => item.Title == album.Title);
 
                 if (dbAlbum != null) { id = dbAlbum.Id; }
                 else

@@ -54,7 +54,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
             if (configuration != null)
             {
@@ -98,7 +98,7 @@ namespace MediaLibraryWebUI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> File(int id)
         {
-            Track track = await dataService.GetAsync<Track, TrackPath>(item => item.Id == id, item => item.TrackPath);
+            Track track = await dataService.Get<Track, TrackPath>(item => item.Id == id, item => item.TrackPath);
             ActionResult result = null;
 
             if (track != null)
@@ -176,20 +176,20 @@ namespace MediaLibraryWebUI.Controllers
 
         private async Task<ActionResult> GetAlbum(int id)
         {
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
             musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
-            musicViewModel.SelectedAlbum = await dataService.GetAsync<Album, IEnumerable<Track>>(album => album.Id == id, album => album.Tracks);
+            musicViewModel.SelectedAlbum = await dataService.Get<Album, IEnumerable<Track>>(album => album.Id == id, album => album.Tracks);
 
             return PartialView("Album", musicViewModel);
         }
 
         private async Task<ActionResult> GetArtist(int id)
         {
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
             musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
-            musicViewModel.SelectedArtist = await dataService.GetAsync<Artist, IEnumerable<Album>>(artist => artist.Id == id, artist => artist.Albums);
+            musicViewModel.SelectedArtist = await dataService.Get<Artist, IEnumerable<Album>>(artist => artist.Id == id, artist => artist.Albums);
 
             return PartialView("Artist", musicViewModel);
         }
@@ -214,7 +214,7 @@ namespace MediaLibraryWebUI.Controllers
 
                 if (request.IsValid())
                 {
-                    TrackPath path = await dataService.GetAsync<TrackPath>(item => item.Location.Equals(request.Path, StringComparison.CurrentCultureIgnoreCase));
+                    TrackPath path = await dataService.Get<TrackPath>(item => item.Location.Equals(request.Path, StringComparison.CurrentCultureIgnoreCase));
 
                     if (path != null)
                     {
@@ -276,7 +276,7 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaPages.Music));
+                Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
                 if (configuration == null)
                 {
@@ -293,7 +293,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<JsonResult> GetSong(int id)
         {
-            Track track = await dataService.GetAsync<Track, Album, Artist, Genre>(item => item.Id == id,
+            Track track = await dataService.Get<Track, Album, Artist, Genre>(item => item.Id == id,
                                                                                   item => item.Album,
                                                                                   item => item.Artist,
                                                                                   item => item.Genre);
@@ -313,10 +313,10 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Track track = await dataService.GetAsync<Track>(item => item.Id == song.Id);
-                Album album = await dataService.GetAsync<Album>(item => item.Title == song.Album.Trim());
-                Artist artist = await dataService.GetAsync<Artist>(item => item.Name == song.Artist.Trim());
-                Genre genre = await dataService.GetAsync<Genre>(item => item.Name == song.Genre.Trim());
+                Track track = await dataService.Get<Track>(item => item.Id == song.Id);
+                Album album = await dataService.Get<Album>(item => item.Title == song.Album.Trim());
+                Artist artist = await dataService.Get<Artist>(item => item.Name == song.Artist.Trim());
+                Genre genre = await dataService.Get<Genre>(item => item.Name == song.Genre.Trim());
                 
                 if (track != null)
                 {

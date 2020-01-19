@@ -136,7 +136,7 @@ namespace MediaLibraryBLL.Services
             {
                 PodcastItem podcastItem = null;
 
-                podcastItem = await dataService.GetAsync<PodcastItem, Podcast>(item => item.Id == podcastItemId, item => item.Podcast);
+                podcastItem = await dataService.Get<PodcastItem, Podcast>(item => item.Id == podcastItemId, item => item.Podcast);
 
                 if (podcastItem != null)
                 {

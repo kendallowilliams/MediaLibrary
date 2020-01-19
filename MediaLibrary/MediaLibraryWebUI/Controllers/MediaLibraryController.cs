@@ -29,7 +29,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> Index()
         {
-            Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaLibraryController).Replace(nameof(Controller), string.Empty));
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaLibraryController).Replace(nameof(Controller), string.Empty));
 
             if (configuration != null)
             {
@@ -43,7 +43,7 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Configuration configuration = await dataService.GetAsync<Configuration>(item => item.Type == nameof(MediaLibraryController).Replace(nameof(Controller), string.Empty));
+                Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaLibraryController).Replace(nameof(Controller), string.Empty));
 
                 if (configuration == null)
                 {

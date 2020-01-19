@@ -8,76 +8,72 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Linq.Expressions;
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace MediaLibraryDAL.Services.Interfaces
 {
     public interface IDataService
     {
-        Task<T> Get<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
+        Task<T> Get<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<T> Get<T, TInclude>(Expression<Func<T,bool>> expression = null, 
-                                 Expression<Func<T, TInclude>> includeExpression = null) where T: class, IDataModel;
+        Task<T> Get<T, TInclude>(Expression<Func<T, bool>> expression = null, 
+                                 Expression<Func<T, TInclude>> includeExpression = null, 
+                                 CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<T> Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null, 
-                                             Expression<Func<T, TInclude1>> includeExpression1 = null, 
-                                             Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel;
+        Task<T> Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null,
+                                             Expression<Func<T, TInclude1>> includeExpression1 = null,
+                                             Expression<Func<T, TInclude2>> includeExpression2 = null,
+                                             CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
+
         Task<T> Get<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
                                                         Expression<Func<T, TInclude1>> includeExpression1 = null,
                                                         Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                                        Expression<Func<T, TInclude3>> includeExpression3 = null) where T : class, IDataModel;
+                                                        Expression<Func<T, TInclude3>> includeExpression3 = null, 
+                                                        CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<T> GetAsync<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
-
-        Task<T> GetAsync<T, TInclude>(Expression<Func<T, bool>> expression = null, 
-                                      Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel;
-
-        Task<T> GetAsync<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null,
-                                                  Expression<Func<T, TInclude1>> includeExpression1 = null,
-                                                  Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel;
-
-        Task<T> GetAsync<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
-                                                             Expression<Func<T, TInclude1>> includeExpression1 = null,
-                                                             Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                                             Expression<Func<T, TInclude3>> includeExpression3 = null) where T : class, IDataModel;
-
-        Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
+        Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
         Task<IEnumerable<T>> GetList<T, TInclude>(Expression<Func<T, bool>> expression = null, 
-                                                  Expression<Func<T, TInclude>> includeExpression = null) where T : class, IDataModel;
+                                                  Expression<Func<T, TInclude>> includeExpression = null, 
+                                                  CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
         Task<IEnumerable<T>> GetList<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null,
                                                               Expression<Func<T, TInclude1>> includeExpression1 = null,
-                                                              Expression<Func<T, TInclude2>> includeExpression2 = null) where T : class, IDataModel;
+                                                              Expression<Func<T, TInclude2>> includeExpression2 = null, 
+                                                              CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
         Task<IEnumerable<T>> GetList<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
                                                                          Expression<Func<T, TInclude1>> includeExpression1 = null,
                                                                          Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                                                         Expression<Func<T, TInclude3>> includeExpression3 = null) where T : class, IDataModel;
+                                                                         Expression<Func<T, TInclude3>> includeExpression3 = null, 
+                                                                         CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<int> Insert<T>(T entity) where T : class, IDataModel;
+        Task<int> Insert<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<int> Insert<T>(IEnumerable<T> entity) where T : class, IDataModel;
+        Task<int> Insert<T>(IEnumerable<T> entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<int> Delete<T>(object id) where T : class, IDataModel;
+        Task<int> Delete<T>(object id, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<int> Delete<T>(T entity) where T : class, IDataModel;
+        Task<int> Delete<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
+        Task<int> DeleteAll<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<int> DeleteAll<T>() where T : class, IDataModel;
+        Task<int> Update<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<int> Update<T>(T entity) where T : class, IDataModel;
+        Task<IEnumerable<T>> Query<T>(string sql, CancellationToken token = default(CancellationToken), params object[] parameters);
 
-        Task<IEnumerable<T>> Query<T>(string sql, params object[] parameters);
+        Task<T> ExecuteScalar<T>(string sql, CancellationToken token = default(CancellationToken), params object[] parameters);
 
-        Task<T> ExecuteScalar<T>(string sql, params object[] parameters);
+        Task<int> Execute(string sql, CancellationToken token = default(CancellationToken), params object[] parameters);
 
-        Task<int> Execute(string sql, params object[] parameters);
+        Task<int> Count<T>(Expression<Func<T,bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
-        Task<int> Count<T>(Expression<Func<T,bool>> expression = null) where T : class, IDataModel;
-
-        Task<bool> Exists<T>(Expression<Func<T, bool>> expression = null) where T : class, IDataModel;
+        Task<bool> Exists<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
         SqlParameter CreateParameter(string name, object value);
+
+        Task<IEnumerable<T>> ExecuteStoredProcedure<T>(string sql,
+                                                       CancellationToken token = default(CancellationToken),
+                                                       params object[] parameters) where T : class, new();
     }
 }
