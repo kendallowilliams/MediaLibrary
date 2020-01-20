@@ -364,6 +364,7 @@ namespace MediaLibraryBLL.Services
                     command.CommandTimeout = timeout;
                     command.CommandText = sql;
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(parameters);
                     reader = await command.ExecuteReaderAsync(token);
                     columns = Enumerable.Range(0, reader.FieldCount)
                                         .Select(ordinal => new { Key = ordinal, Value = reader.GetName(ordinal) })
