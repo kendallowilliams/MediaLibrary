@@ -6,3 +6,31 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function showLoading() {
+        var $modal = $('#loadingModal'),
+            processCount = parseInt($modal.attr('data-process-count'));
+
+        if (!isNaN(processCount)) {
+            $modal.attr('data-process-count', processCount++);
+        } else {
+            $modal.attr('data-process-count', 1);
+        }
+
+        $modal.modal('show');
+    }
+
+    function hideLoading() {
+        var $modal = $('#loadingModal'),
+            processCount = parseInt($modal.attr('data-process-count'));
+
+        if (!isNaN(processCount)) {
+            $modal.attr('data-process-count', processCount--);
+
+            if (processCount == 0) /*then*/ $modal.modal('hide');
+        } else {
+            $modal.attr('data-process-count', 0);
+        }
+    }
+</script>
