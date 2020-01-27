@@ -19,23 +19,40 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    $('#modalDeleteItem').on('show.bs.modal', function (e) {
-        var $btn = $(e.relatedTarget),
-            url = $btn.attr('data-delete-action'),
-            refreshView = $btn.attr('data-refresh-view'),
-            type = $btn.attr('data-delete-type'),
-            $button = $('#btnDeleteItem');
+    $(function () {
+        $('#modalDeleteItem').on('show.bs.modal', function (e) {
+            var $btn = $(e.relatedTarget),
+                url = $btn.attr('data-delete-action'),
+                refreshView = $btn.attr('data-refresh-view'),
+                type = $btn.attr('data-delete-type'),
+                $button = $('#btnDeleteItem');
 
-        $('#modalDeleteItemTitle').text('Delete ' + type);
-        $button.attr('data-delete-url', url);
-        $button.attr('data-refresh-view', refreshView);
+            $('#modalDeleteItemTitle').text('Delete ' + type);
+            $button.attr('data-delete-url', url);
+            $button.attr('data-refresh-view', refreshView);
+        });
+
+        $('#modalDeleteItem').on('hide.bs.modal', function () {
+            var $button = $('#btnDeleteItem');
+
+            $('#modalDeleteItemTitle').text('Delete');
+            $button.attr('data-delete-url', '');
+            $button.attr('data-refresh-view', '');
+        });
     });
 
     function deleteClicked(btn) {
-        var $btn = $(btn);
+        var $btn = $(btn),
+            url = $btn.attr('data-delete-url'),
+            view = $btn.attr('data-refresh-view'),
+            success = () => {
+                hideLoading();
+                loadView(view);
+            };
 
         $('#modalDeleteItem').modal('hide').on('hidden.bs.modal', function () {
-            $.get($btn.attr('data-delete-url'), () => loadView($btn.attr('data-refresh-view')));
+            showLoading();
+            $.get(url, success);
         });
     }
 </script>
