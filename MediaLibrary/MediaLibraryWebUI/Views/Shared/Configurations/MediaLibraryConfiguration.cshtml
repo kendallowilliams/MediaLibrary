@@ -1,34 +1,40 @@
-﻿@model MediaLibraryWebUI.Models.Configurations.MediaLibraryConfiguration
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryConfiguration
+
+@{ 
+    var properties = Model.GetType().GetProperties();
+    string controller = "MediaLibrary",
+           configuration = nameof(MediaLibraryConfiguration);
+}
 
 <div class="d-none">
-    @Html.Hidden(nameof(Model.SelectedMediaPage), Model.SelectedMediaPage, new { id = $"txt{nameof(Model.SelectedMediaPage)}" });
-    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Model.ScrollTop)}" });
+    @foreach (var property in properties)
+    {
+        @Html.Hidden(property.Name, property.GetValue(Model), new { id = $"txt{configuration}_{property.Name}" });
+    }
 </div>
 
 <script type="text/javascript" defer="defer">
-    function updateMediaLibraryConfiguration(success) {
-        $.post('@Url.Action("UpdateConfiguration", "MediaLibrary")', getMediaLibraryConfigurationData(), success);
+    function update@(configuration)(success) {
+        $.post('@Url.Action("UpdateConfiguration", controller)', get@(configuration)Data(), success);
+    }
+    
+    @{
+        var lines = properties.Select(property =>
+        {
+            string getter = $"var get{configuration}_{property.Name} = () => $('#txt{configuration}_{property.Name}').val();";
+            string setter = $"var update{configuration}_{property.Name} = value =>  $('#txt{configuration}_{property.Name}').val(value);";
+
+            return $"{getter}{Environment.NewLine}{setter}";
+        });
+
+        @Html.Raw(string.Join(Environment.NewLine, lines));
     }
 
-    function getMediaLibraryConfigurationData() {
-        return '@(nameof(Model.SelectedMediaPage))=' + $('#txt@(nameof(Model.SelectedMediaPage))').val() + '&' +
-               '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Model.ScrollTop))').val();
-    }
-
-    function updateSelectedMediaPage(page) {
-        $('#txt@(nameof(Model.SelectedMediaPage))').val(page);
-    }
-
-    function getSelectedMediaPage() {
-        return $('#txt@(nameof(Model.SelectedMediaPage))').val();
-    }
-
-
-    function getScrollTop() {
-        return parseInt($('#txt@(nameof(Model.ScrollTop))').val());
-    }
-
-    function updateScrollTop(top) {
-        $('#txt@(nameof(Model.ScrollTop))').val(top);
+    function get@(configuration)Data() {
+        @{ 
+            IEnumerable<string> data = properties.Select(property => $"'{property.Name}=' + $('#txt{configuration}_{property.Name}').val()");
+        }
+        return @Html.Raw(string.Join(" + '&' + ", data));
     }
 </script>

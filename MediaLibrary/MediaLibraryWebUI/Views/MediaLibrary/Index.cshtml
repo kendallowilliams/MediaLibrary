@@ -1,4 +1,5 @@
-﻿@model MediaLibraryWebUI.Models.MediaLibraryViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
 <div id="homeView" class="d-none"></div>
 <div id="playerView" class="d-none h-100"></div>
@@ -19,7 +20,7 @@
 
             collapseNavbar();
             showLoading();
-            updateSelectedMediaPage(view);
+            update@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(view);
             disableNavItem(view);
             $('#divView, #playerView, #homeView').find('*[data-tooltip="tooltip"]').tooltip('dispose');
 
@@ -30,9 +31,9 @@
             } else if (view === '@(Enums.MediaPages.Home)') {
                 $('#divView, #playerView').addClass('d-none');
                 $(container = '#homeView').removeClass('d-none');
-                updateMediaLibraryConfiguration(() => $('#homeView').load(url.replace("ViewName", view), success));
+                update@(nameof(MediaLibraryConfiguration))(() => $('#homeView').load(url.replace("ViewName", view), success));
             } else {
-                updateMediaLibraryConfiguration(() => $('#divView').load(url.replace("ViewName", view), success));
+                update@(nameof(MediaLibraryConfiguration))(() => $('#divView').load(url.replace("ViewName", view), success));
                 $('#playerView, #homeView').addClass('d-none');
                 $(container = '#divView').removeClass('d-none');
             }
