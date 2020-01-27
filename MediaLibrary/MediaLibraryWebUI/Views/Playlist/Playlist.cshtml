@@ -11,8 +11,9 @@
             </button>
             <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", "Playlist", new { Model.SelectedPlaylist.Id})"
                data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
-            <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
-                    data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
+            <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
+                    data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))" data-toggle="modal" 
+                    data-target="#modalDeleteItem">
                 <i class="fa fa-trash"></i>
             </button>
         </div>
@@ -43,8 +44,9 @@
                                             data-tooltip="tooltip" title="Play">
                                         <i class="fa fa-play"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger" data-delete="enabled" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
-                                            data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))">
+                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
+                                            data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))"
+                                            data-toggle="modal" data-target="#modalDeleteItem">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </div>

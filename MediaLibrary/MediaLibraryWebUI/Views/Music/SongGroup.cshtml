@@ -20,7 +20,7 @@
                             title="Edit">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <button type="button" class="btn btn-outline-secondary" data-playlist="add" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
+                    <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
                             data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist" @(Model.PlaylistCount == 0 ? "disabled=\"disabled\"" : string.Empty)>
                         <i class="fa fa-plus"></i>
                     </button>

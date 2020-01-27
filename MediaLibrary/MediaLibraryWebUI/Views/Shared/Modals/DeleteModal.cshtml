@@ -11,7 +11,7 @@
                 Are you sure you want to delete?
             </div>
             <div class="modal-footer">
-                <button id="btnDeleteItem" class="btn btn-outline-danger" data-tooltip="tooltip" title="Delete">Delete</button>
+                <button id="btnDeleteItem" class="btn btn-outline-danger" data-tooltip="tooltip" title="Delete" onclick="deleteClicked(this)">Delete</button>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-tooltip="tooltip" title="Cancel">Cancel</button>
             </div>
         </div>
@@ -19,25 +19,23 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    $('[data-delete="enabled"]').click(function (e) {
-        var url = $(e.delegateTarget).attr('data-delete-action'),
-            refreshView = $(e.delegateTarget).attr('data-refresh-view'),
-            $button = $('#btnDeleteItem'),
-            type = $(e.delegateTarget).attr('data-delete-type');
+    $('#modalDeleteItem').on('show.bs.modal', function (e) {
+        var $btn = $(e.relatedTarget),
+            url = $btn.attr('data-delete-action'),
+            refreshView = $btn.attr('data-refresh-view'),
+            type = $btn.attr('data-delete-type'),
+            $button = $('#btnDeleteItem');
 
         $('#modalDeleteItemTitle').text('Delete ' + type);
         $button.attr('data-delete-url', url);
         $button.attr('data-refresh-view', refreshView);
-        $('#modalDeleteItem').modal('show');
     });
 
-    $('#btnDeleteItem').on('click', function () {
-        var $btn = $(this);
+    function deleteClicked(btn) {
+        var $btn = $(btn);
 
         $('#modalDeleteItem').modal('hide').on('hidden.bs.modal', function () {
-            $.get($btn.attr('data-delete-url'), function () {
-                loadView($btn.attr('data-refresh-view'));
-            });
+            $.get($btn.attr('data-delete-url'), () => loadView($btn.attr('data-refresh-view')));
         });
-    });
+    }
 </script>
