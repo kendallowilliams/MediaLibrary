@@ -28,11 +28,16 @@
 
 <script type="text/javascript" defer="defer">
     $(function () {
-        $('[data-playlist="add"]').click(function (e) {
+        $('#modalAddToPlaylist').on('show.bs.modal', function (e) {
             var url = $(e.delegateTarget).attr('data-playlist-url'),
                 id = $(e.delegateTarget).attr('data-item-id');
             $('[data-playlist-item="enabled"]').attr('data-playlist-url', url);
             $('[data-playlist-item="enabled"]').attr('data-item-id', id);
+        });
+
+        $('#modalAddToPlaylist').on('hide.bs.modal', function (e) {
+            $('[data-playlist-item="enabled"]').attr('data-playlist-url', '');
+            $('[data-playlist-item="enabled"]').attr('data-item-id', '');
         });
     });
 
@@ -40,13 +45,8 @@
         var $btn = $(btn),
             url = $btn.attr('data-playlist-url'),
             id = $btn.attr('data-item-id'),
-            playlistId = $btn.attr('data-playlist-id'),
-            success = () => {
-                $btn.attr('data-playlist-url', '');
-                $btn.attr('data-item-id', '');
-                $('#modalAddToPlaylist').modal('hide');
-            };
+            playlistId = $btn.attr('data-playlist-id');
 
-        $.post(url, { playlistId, itemId: id }, success);
+        $.post(url, { playlistId, itemId: id }, () => $('#modalAddToPlaylist').modal('hide'));
     }
 </script>
