@@ -29,9 +29,9 @@
 <script type="text/javascript" defer="defer">
     $(function () {
         $('#modalAddToPlaylist').on('show.bs.modal', function (e) {
-            debugger;
-            var url = $(e.relatedTarget).attr('data-playlist-url'),
-                id = $(e.relatedTarget).attr('data-item-id');
+            var $btn = $(e.relatedTarget),
+                url = $btn.attr('data-playlist-url'),
+                id = $btn.attr('data-item-id');
             $('[data-playlist-item="enabled"]').attr('data-playlist-url', url);
             $('[data-playlist-item="enabled"]').attr('data-item-id', id);
         });
