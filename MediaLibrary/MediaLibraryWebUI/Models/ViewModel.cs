@@ -16,11 +16,17 @@ namespace MediaLibraryWebUI.Models
             VideoPlayerId = "video-player";
             NowPlaying = "Now Playing";
             Configuration = new TConfig();
+            HeaderNextButtonId = "btn-header-next";
+            HeaderPlayButtonId = "btn-header-play";
+            HeaderPreviousButtonId = "btn-header-previous";
         }
 
         public string MusicPlayerId { get; }
         public string VideoPlayerId { get; }
         public TConfig Configuration { get; set; }
         public string NowPlaying { get; set; }
+        public string HeaderPlayButtonId { get; }
+        public string HeaderPreviousButtonId { get; }
+        public string HeaderNextButtonId { get; }
     }
 }

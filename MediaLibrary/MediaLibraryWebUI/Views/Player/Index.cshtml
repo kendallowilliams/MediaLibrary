@@ -1,4 +1,5 @@
-﻿@model MediaLibraryWebUI.Models.PlayerViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.PlayerViewModel
 
 @{
     ViewBag.Title = "Player";
@@ -23,7 +24,8 @@
     function _play(item) {
         var $audioPlayer = $('#@(Model.MusicPlayerId)'),
             $videoPlayer = $('#@(Model.VideoPlayerId)'),
-            $player = getSelectedMediaType() === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
+            selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
+            $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
 
         $audioPlayer.addClass('d-none');
         $videoPlayer.addClass('d-none');
@@ -40,8 +42,8 @@
                 id = $item.attr('data-item-id');
 
             $('li[data-play-index].list-group-item').removeClass('active');
-            setCurrentItemIndex(index);
-            updatePlayerConfiguration(function () {
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))(index);
+            update@(nameof(PlayerConfiguration))(function () {
                 $item.addClass('active');
                 $player.attr('data-item-id', id);
                 $player.prop('src', url).trigger('play');
@@ -66,15 +68,20 @@
         $('#@(Model.VideoPlayerId)').on('ended', function (evt) {
             updatePlayCount(this);
         });
+
+        $('#@(Model.HeaderPlayButtonId)').on('click', () => _play());
+        $('#@(Model.HeaderNextButtonId)').on('click', () => playNext());
+        $('#@(Model.HeaderPreviousButtonId)').on('click', () => playPrevious());
     }
 
     function playNext() {
-        var nextIndex = getCurrentItemIndex() + 1,
+        var nextIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
             $item,
-            repeat = getRepeat(),
+            repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(),
             $audioPlayer = $('#@(Model.MusicPlayerId)'),
             $videoPlayer = $('#@(Model.VideoPlayerId)'),
-            $player = getSelectedMediaType() === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
+            selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
+            $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
 
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
             $player.trigger('play');
@@ -96,7 +103,7 @@
     }
 
     function playPrevious() {
-        var previousIndex = getCurrentItemIndex() - 1,
+        var previousIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
             $item = $('li[data-play-index="' + previousIndex + '"]');
 
         _play($item[0]);

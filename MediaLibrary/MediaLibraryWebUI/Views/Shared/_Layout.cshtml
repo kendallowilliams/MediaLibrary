@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using MediaLibraryWebUI.Models.Configurations
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,7 +23,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="divNavbar">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Music))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Music))')">@(nameof(Enums.MediaPages.Music))</a>
                             <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Music))">@(nameof(Enums.MediaPages.Music))</a>
@@ -43,6 +45,11 @@
                             <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Player))">@(Model.NowPlaying)</a>
                         </li>
                     </ul>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button id="@(Model.HeaderPreviousButtonId)" class="btn btn-outline-secondary" type="button" data-tooltip="tooltip" title="Previous"><i class="fa fa-backward"></i></button>
+                        <button id="@(Model.HeaderPlayButtonId)" class="btn btn-outline-secondary" type="button" data-tooltip="tooltip" title="Play/Pause"><i class="fa fa-play"></i></button>
+                        <button id="@(Model.HeaderNextButtonId)" class="btn btn-outline-secondary" type="button" data-tooltip="tooltip" title="Next"><i class="fa fa-forward"></i></button>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -93,7 +100,7 @@
                 }
             }
 
-            setSelectedMediaType(mediaType);
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(mediaType);
             data.append('mediaType', mediaType);
             data.append('itemsJSON', JSON.stringify($playData.get()));
 
