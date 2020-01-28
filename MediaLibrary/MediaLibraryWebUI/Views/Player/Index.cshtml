@@ -49,6 +49,7 @@
                 $player.attr('data-item-id', id);
                 $player.prop('src', url).trigger('play');
                 updateScrollTop();
+                enableDisablePreviousNext();
             });
         } else if ($('li[data-play-index].active').length === 1) {
             _play($('li[data-play-index].active')[0]);
@@ -85,6 +86,7 @@
         $('#@(Model.HeaderPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
         $('#@(Model.HeaderPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
         reload();
+        enableDisablePreviousNext();
     }
 
     function playNext() {
@@ -109,6 +111,19 @@
                 _play($item[0]);
             }
         }
+    }
+
+    function canPlayNext() {
+        return parseInt($('li.active').attr('data-play-index')) < ($('li[data-play-index]').length - 1);
+    }
+
+    function canPlayPrevious() {
+        return true;
+    }
+
+    function enableDisablePreviousNext() {
+        $('#@(Model.HeaderNextButtonId)').prop('disabled', !canPlayNext());
+        $('#@(Model.HeaderPreviousButtonId)').prop('disabled', !canPlayPrevious());
     }
 
     function playPrevious() {
