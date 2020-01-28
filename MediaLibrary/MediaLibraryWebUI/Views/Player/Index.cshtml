@@ -22,19 +22,13 @@
 
 <script type="text/javascript" defer="defer">
     function _play(item) {
-        var $audioPlayer = $('#@(Model.MusicPlayerId)'),
-            $videoPlayer = $('#@(Model.VideoPlayerId)'),
+        var $players = $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)'),
             $player = $(getPlayer());
 
-        $audioPlayer.addClass('d-none');
-        $videoPlayer.addClass('d-none');
+        $players.addClass('d-none').prop('src', '').attr('data-item-id', '');
         $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
         $player.removeClass('d-none');
         $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
-        $audioPlayer.prop('src', '');
-        $videoPlayer.prop('src', '');
-        $audioPlayer.attr('data-item-id', '');
-        $videoPlayer.prop('data-item-id', '');
 
         if (item) {
             var $item = $(item),
@@ -118,8 +112,7 @@
             });
         });
 
-        reload();
-        enableDisablePreviousNext();
+        reload(() => enableDisablePreviousNext());
     }
 
     function playNext() {
