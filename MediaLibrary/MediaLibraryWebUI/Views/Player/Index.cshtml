@@ -122,6 +122,7 @@
             updateScrollTop();
             if (typeof callback === 'function') /*then*/ callback();
             $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+            setInitialPlayerUrl();
         };
 
         $('#playerItems').html('');
