@@ -32,12 +32,14 @@
 
 <script type="text/javascript" defer="defer">
     function _play(item) {
-        var $players = $('#divAudio, #divVideo'),
+        var $players = $('#@(Model.VideoPlayerId), #@(Model.MusicPlayerId)'),
+            $playerDivs = $('#divVideo, #divAudio'),
             $player = $(getPlayer());
 
-        $players.addClass('d-none').prop('src', '').attr('data-item-id', '');
+        $players.prop('src', '').attr('data-item-id', '');
+        $playerDivs.parent().addClass('d-none');
         $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
-        $player.removeClass('d-none');
+        $player.parent().removeClass('d-none');
         $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
 
         if (item) {
