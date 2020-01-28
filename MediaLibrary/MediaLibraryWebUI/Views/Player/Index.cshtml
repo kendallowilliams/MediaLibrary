@@ -83,30 +83,39 @@
             selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
             $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
 
-        if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
-            $player.trigger('play');
-        } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
-            if (nextIndex === $('li[data-play-index]').length) {
-                $item = $('li[data-play-index="0"]');
-                _play($item[0]);
+        if (!$player.paused) {
+            if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
+                $player.trigger('play');
+            } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
+                if (nextIndex === $('li[data-play-index]').length) {
+                    $item = $('li[data-play-index="0"]');
+                    _play($item[0]);
+                } else {
+                    $item = $('li[data-play-index="' + nextIndex + '"]');
+                    _play($item[0]);
+                }
             } else {
-                $item = $('li[data-play-index="' + nextIndex + '"]');
-                _play($item[0]);
-            }
-        } else {
-            $item = $('li[data-play-index=' + nextIndex + ']');
+                $item = $('li[data-play-index=' + nextIndex + ']');
 
-            if (nextIndex !== $('li[data-play-index]').length) {
-                _play($item[0]);
+                if (nextIndex !== $('li[data-play-index]').length) {
+                    _play($item[0]);
+                }
             }
         }
     }
 
     function playPrevious() {
-        var previousIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
-            $item = $('li[data-play-index="' + previousIndex + '"]');
+        var $audioPlayer = $('#@(Model.MusicPlayerId)'),
+            $videoPlayer = $('#@(Model.VideoPlayerId)'),
+            selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
+            $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
 
-        _play($item[0]);
+        if (!$player.paused) {
+            var previousIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
+                $item = $('li[data-play-index="' + previousIndex + '"]');
+
+            _play($item[0]);
+        }
     }
 
     function reload(callback) {
