@@ -162,7 +162,9 @@
     }
 
     function playPrevious() {
-        var previousIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
+        var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
+            previousIndex = shuffle ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
+                                      parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
             $item = $('li[data-play-index="' + previousIndex + '"]');
 
         _play($item[0]);
