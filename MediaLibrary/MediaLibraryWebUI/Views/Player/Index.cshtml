@@ -16,7 +16,10 @@
                    preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Video)" />
         </div>
         <div class="card-footer" style="flex: 0 0 auto">
-            <button class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Show playlist" onclick="togglePlaylist()"><i class="fa fa-list-ul"></i></button>
+            <button id="btnTogglePlaylist" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? "active" : string.Empty)" 
+                    data-tooltip="tooltip" title="Show/hide playlist" onclick="togglePlaylist(this)">
+                <i class="fa fa-list-ul"></i>
+            </button>
         </div>
     </div>
 </div>
@@ -202,19 +205,22 @@
         return selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer[0] : $audioPlayer[0];
     }
 
-    function togglePlaylist() {
+    function togglePlaylist(btn) {
         var page = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))(),
             $player = $(getPlayer()),
-            $playerItems = $('#playerItems');
+            $playerItems = $('#playerItems'),
+            $btn = $(btn);
 
         if (page === '@(nameof(Enums.PlayerPages.Index))') {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))($player.attr('data-player-page'));
             $player.removeClass('d-none');
             $playerItems.addClass('d-none');
+            $btn.removeClass('active');
         } else {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Index))');
             $player.addClass('d-none');
             $playerItems.removeClass('d-none');
+            $btn.addClass('active');
         }
         update@(nameof(PlayerConfiguration))();
     }
