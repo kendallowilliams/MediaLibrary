@@ -111,9 +111,9 @@
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))(!shuffle);
             update@(nameof(PlayerConfiguration))(() => {
                 if (!shuffle) {
-                    $(this).addClass('active');
+                    $btn.addClass('active');
                 } else {
-                    $(this).removeClass('active');
+                    $btn.removeClass('active');
                 }
             });
         });
