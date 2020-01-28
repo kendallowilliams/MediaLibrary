@@ -24,8 +24,7 @@
     function _play(item) {
         var $audioPlayer = $('#@(Model.MusicPlayerId)'),
             $videoPlayer = $('#@(Model.VideoPlayerId)'),
-            selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
-            $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
+            $player = $(getPlayer());
 
         $audioPlayer.addClass('d-none');
         $videoPlayer.addClass('d-none');
@@ -71,17 +70,17 @@
             updatePlayCount(this);
         });
 
-        $('#@(Model.HeaderPlayButtonId)').on('click', () => _play());
         $('#@(Model.HeaderNextButtonId)').on('click', () => playNext());
         $('#@(Model.HeaderPreviousButtonId)').on('click', () => playPrevious());
         $('#@(Model.HeaderPauseButtonId)').on('click', () => {
-            var $audioPlayer = $('#@(Model.MusicPlayerId)'),
-                $videoPlayer = $('#@(Model.VideoPlayerId)');
-
-            $audioPlayer.trigger('pause');
-            $videoPlayer.trigger('pause');
+            $(getPlayer()).trigger('pause');
             $('#@(Model.HeaderPauseButtonId)').addClass('d-none');
             $('#@(Model.HeaderPlayButtonId)').removeClass('d-none');
+        });
+        $('#@(Model.HeaderPlayButtonId)').on('click', () => {
+            $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
+            $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
+            $(getPlayer()).trigger('play');
         });
     }
 
@@ -89,10 +88,7 @@
         var nextIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
             $item,
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(),
-            $audioPlayer = $('#@(Model.MusicPlayerId)'),
-            $videoPlayer = $('#@(Model.VideoPlayerId)'),
-            selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
-            $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
+            $player =  $(getPlayer());;
 
         if (!$player.prop('paused')) {
             if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
@@ -116,10 +112,7 @@
     }
 
     function playPrevious() {
-        var $audioPlayer = $('#@(Model.MusicPlayerId)'),
-            $videoPlayer = $('#@(Model.VideoPlayerId)'),
-            selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
-            $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
+        var $player = $(getPlayer());
 
         if (!$player.prop('paused')) {
             var previousIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
@@ -152,6 +145,14 @@
         var url = $('li.active').attr('data-play-url');
 
         $('audio:not(audio.d-none),video:not(video.d-none)').attr('src', url);
+    }
+
+    function getPlayer() {
+        var $audioPlayer = $('#@(Model.MusicPlayerId)'),
+            $videoPlayer = $('#@(Model.VideoPlayerId)'),
+            selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
+
+        return selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer[0] : $audioPlayer[0];
     }
      
     initPlayer();
