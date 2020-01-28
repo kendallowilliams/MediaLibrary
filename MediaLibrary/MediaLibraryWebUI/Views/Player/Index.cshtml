@@ -171,10 +171,6 @@
     }
 
     function reload(callback) {
-        reload(false, callback);
-    }
-
-    function reload(random, callback) {
         var success = () => {
             setInitialPlayerUrl();
             updateScrollTop();
@@ -183,7 +179,7 @@
         };
         
         $('#playerItems').html('');
-        $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', { random: random }, success);
+        $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
     }
 
     function updateScrollTop() {
