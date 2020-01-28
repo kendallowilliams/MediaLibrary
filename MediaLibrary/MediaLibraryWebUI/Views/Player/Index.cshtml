@@ -83,7 +83,7 @@
             selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
             $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
 
-        if (!$player.paused) {
+        if (!$player.prop('paused')) {
             if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
                 $player.trigger('play');
             } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
@@ -110,7 +110,7 @@
             selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
             $player = selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer : $audioPlayer;
 
-        if (!$player.paused) {
+        if (!$player.prop('paused')) {
             var previousIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
                 $item = $('li[data-play-index="' + previousIndex + '"]');
 
