@@ -29,7 +29,9 @@
 
         $audioPlayer.addClass('d-none');
         $videoPlayer.addClass('d-none');
+        $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
         $player.removeClass('d-none');
+        $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
         $audioPlayer.prop('src', '');
         $videoPlayer.prop('src', '');
         $audioPlayer.attr('data-item-id', '');
@@ -72,6 +74,15 @@
         $('#@(Model.HeaderPlayButtonId)').on('click', () => _play());
         $('#@(Model.HeaderNextButtonId)').on('click', () => playNext());
         $('#@(Model.HeaderPreviousButtonId)').on('click', () => playPrevious());
+        $('#@(Model.HeaderPauseButtonId)').on('click', () => {
+            var $audioPlayer = $('#@(Model.MusicPlayerId)'),
+                $videoPlayer = $('#@(Model.VideoPlayerId)');
+
+            $audioPlayer.trigger('pause');
+            $videoPlayer.trigger('pause');
+            $('#@(Model.HeaderPauseButtonId)').addClass('d-none');
+            $('#@(Model.HeaderPlayButtonId)').removeClass('d-none');
+        });
     }
 
     function playNext() {

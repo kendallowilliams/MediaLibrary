@@ -19,6 +19,7 @@ namespace MediaLibraryWebUI.Models
             HeaderNextButtonId = "btn-header-next";
             HeaderPlayButtonId = "btn-header-play";
             HeaderPreviousButtonId = "btn-header-previous";
+            HeaderPauseButtonId = "btn-header-pause";
         }
 
         public string MusicPlayerId { get; }
@@ -28,5 +29,6 @@ namespace MediaLibraryWebUI.Models
         public string HeaderPlayButtonId { get; }
         public string HeaderPreviousButtonId { get; }
         public string HeaderNextButtonId { get; }
+        public string HeaderPauseButtonId { get; }
     }
 }
