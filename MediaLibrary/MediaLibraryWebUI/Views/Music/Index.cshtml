@@ -1,22 +1,23 @@
-﻿@model MediaLibraryWebUI.Models.MusicViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.MusicViewModel
 
 <div class="h-100 d-flex flex-column">
     <div style="flex: 0 0 auto">
         <h2>Music</h2>
         <div class="nav d-block" id="musicTab" role="tablist">
             <a class="btn btn-outline-secondary" id="albums-tab" data-toggle="tab"
-                    role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTabs.Albums))" data-music-tab="@(nameof(Enums.MusicTabs.Albums))"
-                    data-tooltip="tooltip" href="#albums">
+               role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTabs.Albums))" data-music-tab="@(nameof(Enums.MusicTabs.Albums))"
+               data-tooltip="tooltip" href="#albums">
                 <i class="fa fa-compact-disc"></i>
             </a>
             <a class="btn btn-outline-secondary" id="artists-tab" data-toggle="tab"
-                    role="tab" aria-controls="artists" aria-selected="false" title="@(nameof(Enums.MusicTabs.Artists))" data-music-tab="@(nameof(Enums.MusicTabs.Artists))"
-                    data-tooltip="tooltip" href="#artists">
+               role="tab" aria-controls="artists" aria-selected="false" title="@(nameof(Enums.MusicTabs.Artists))" data-music-tab="@(nameof(Enums.MusicTabs.Artists))"
+               data-tooltip="tooltip" href="#artists">
                 <i class="fa fa-user"></i>
             </a>
             <a class="btn btn-outline-secondary" id="songs-tab" data-toggle="tab"
-                    role="tab" aria-controls="songs" aria-selected="false" title="@(nameof(Enums.MusicTabs.Songs))" data-music-tab="@(nameof(Enums.MusicTabs.Songs))"
-                    data-tooltip="tooltip" href="#songs">
+               role="tab" aria-controls="songs" aria-selected="false" title="@(nameof(Enums.MusicTabs.Songs))" data-music-tab="@(nameof(Enums.MusicTabs.Songs))"
+               data-tooltip="tooltip" href="#songs">
                 <i class="fa fa-music"></i>
             </a>
             <div class="float-right d-none d-lg-block">
@@ -73,22 +74,29 @@
 <script type="text/javascript" defer="defer">
     function sortChanged(sortType, select) {
         showLoading();
-        $('#txt' + sortType).val($(select).val());
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
+
+        if (sortType === '@(nameof(MusicConfiguration.SelectedAlbumSort))') {
+            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedAlbumSort))($(select).val());
+        } else if (sortType === '@(nameof(MusicConfiguration.SelectedArtistSort))') {
+            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedArtistSort))($(select).val());
+        } else if (sortType === '@(nameof(MusicConfiguration.SelectedSongSort))') {
+            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedSongSort))($(select).val());
+        }
+        update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 
     function artistClicked(btn) {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Artist))');
-        $('#txt@(nameof(Model.Configuration.SelectedArtistId))').val($(btn).attr('data-item-id'));
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
+        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Artist))');
+        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedArtistId))($(btn).attr('data-item-id'));
+        update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 
     function albumClicked(btn) {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Album))');
-        $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val($(btn).attr('data-item-id'));
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
+        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Album))');
+        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedAlbumId))($(btn).attr('data-item-id'));
+        update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 
     function refreshClicked() {
@@ -109,7 +117,7 @@
                 hideLoading();
                 $newView.find('[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
             };
-        
+
         $('[data-sort-tab]').each((index, _btn) => {
             if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
                 $(_btn).removeClass('d-none');
@@ -119,9 +127,9 @@
         });
 
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedMusicTab))').val($newTab.attr('data-music-tab'));
+        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicTab))($newTab.attr('data-music-tab'));
         $newView.find('[data-tooltip="tooltip"]').tooltip('dispose');
-        updateConfiguration(() => $newView.load(url, success));
+        update@(nameof(MusicConfiguration))(() => $newView.load(url, success));
     });
 
     $('[data-music-tab="@(Model.Configuration.SelectedMusicTab)"]').tab('show');

@@ -1,4 +1,5 @@
-﻿@model MediaLibraryWebUI.Models.PodcastViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.PodcastViewModel
 
 <div class="h-100 d-flex flex-column">
     <div style="flex: 0 0 auto">
@@ -118,14 +119,14 @@
 
     function podcastClicked(btn) {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Podcast))');
-        $('#txt@(nameof(Model.Configuration.SelectedPodcastId))').val($(btn).attr('data-item-id'));
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
+        set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastPage))('@(nameof(Enums.PodcastPages.Podcast))');
+        set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastId))($(btn).attr('data-item-id'));
+        update@(nameof(PodcastConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }
 
     function sortChanged(select) {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedPodcastSort))').val($(select).val());
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
+        set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastSort))($(select).val());
+        update@(nameof(PodcastConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }
 </script>

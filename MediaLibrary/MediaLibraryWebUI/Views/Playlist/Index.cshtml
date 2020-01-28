@@ -1,4 +1,5 @@
-﻿@model MediaLibraryWebUI.Models.PlaylistViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.PlaylistViewModel
 
 @{
     ViewBag.Title = "Playlists";
@@ -81,14 +82,14 @@
 <script type="text/javascript">
     function playlistClicked(btn) {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Playlist))');
-        $('#txt@(nameof(Model.Configuration.SelectedPlaylistId))').val($(btn).attr('data-item-id'));
-        updateConfiguration(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
+        set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistPage))('@(nameof(Enums.PlaylistPages.Playlist))');
+        set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistId))($(btn).attr('data-item-id'));
+        update@(nameof(PlaylistConfiguration))(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
     }
 
     function sortChanged(select) {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedPlaylistSort))').val($(select).val());
-        updateConfiguration(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
+        set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistSort))($(select).val());
+        update@(nameof(PlaylistConfiguration))(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
     }
 </script>

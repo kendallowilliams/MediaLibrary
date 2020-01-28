@@ -1,4 +1,5 @@
-﻿@model MediaLibraryWebUI.Models.TelevisionViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.TelevisionViewModel
 
 <div class="h-100 d-flex flex-column">
     <div style="flex: 0 0 auto">
@@ -29,8 +30,8 @@
 <script type="text/javascript" defer="defer">
     function backClicked() {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedTelevisionPage))').val('@(nameof(Enums.TelevisionPages.Index))');
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Television))'));
+        set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedTelevisionPage))('@(nameof(Enums.TelevisionPages.Index))');
+        update@(nameof(TelevisionConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Television))'));
     }
 
     function loadSeasonView(item) {
@@ -44,7 +45,7 @@
 
         if (item) {
             showLoading();
-            updateSelectedSeason(season);
+            set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeason))(season);
             $('#seasonView *[data-tooltip="tooltip"]').tooltip('dispose');
             $('#seasonView').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
         }

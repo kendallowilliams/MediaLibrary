@@ -1,6 +1,7 @@
-﻿@model MediaLibraryWebUI.Models.PodcastViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.PodcastViewModel
 
-@{ 
+@{
     IEnumerable<int> years = Model.SelectedPodcast.PodcastItems.Select(item => item.PublishDate.Year).Distinct().OrderByDescending(year => year);
 }
 
@@ -40,8 +41,8 @@
 <script type="text/javascript" defer="defer">
     function backClicked() {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedPodcastPage))').val('@(nameof(Enums.PodcastPages.Index))');
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
+        set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastPage))('@(nameof(Enums.PodcastPages.Index))');
+        update@(nameof(PodcastConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }
 
     function refreshClicked() {
@@ -94,6 +95,6 @@
     function getSelectedYear() {
         return $('li.page-item.active a.page-link[data-podcast-year]').attr('data-podcast-year');
     }
-    
+
     $('[data-podcast-year="@(years.FirstOrDefault())"]').trigger('click');
 </script>

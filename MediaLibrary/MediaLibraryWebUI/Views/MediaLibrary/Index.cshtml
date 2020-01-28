@@ -20,7 +20,7 @@
 
             collapseNavbar();
             showLoading();
-            update@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(view);
+            set@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(view);
             disableNavItem(view);
             $('#divView, #playerView, #homeView').find('*[data-tooltip="tooltip"]').tooltip('dispose');
 

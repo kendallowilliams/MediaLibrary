@@ -1,4 +1,5 @@
-﻿@model MediaLibraryWebUI.Models.MusicViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.MusicViewModel
 
 <div class="h-100 d-flex flex-column">
     <div style="flex: 0 0 auto">
@@ -55,14 +56,14 @@
 <script type="text/javascript" defer="defer">
     function backClicked() {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Index))');
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
+        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Index))');
+        update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 
     function albumClicked(btn) {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedMusicPage))').val('@(nameof(Enums.MusicPages.Album))');
-        $('#txt@(nameof(Model.Configuration.SelectedAlbumId))').val($(btn).attr('data-item-id'));
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Music))'));
+        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Album))');
+        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedAlbumId))($(btn).attr('data-item-id'));
+        update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 </script>

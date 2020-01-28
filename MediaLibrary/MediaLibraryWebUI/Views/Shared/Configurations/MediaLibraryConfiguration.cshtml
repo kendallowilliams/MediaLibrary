@@ -1,10 +1,19 @@
 ﻿@using MediaLibraryWebUI.Models.Configurations
 @model MediaLibraryConfiguration
 
-@{ 
+@{
     var properties = Model.GetType().GetProperties();
     string controller = "MediaLibrary",
            configuration = nameof(MediaLibraryConfiguration);
+    var lines = properties.Select(property =>
+    {
+        string getter = $"var get{configuration}_{property.Name} = () => $('#txt{configuration}_{property.Name}').val();";
+        string setter = $"var set{configuration}_{property.Name} = value =>  $('#txt{configuration}_{property.Name}').val(value);";
+
+        return $"{getter}{Environment.NewLine}{setter}";
+    });
+    IEnumerable<string> propertyData = properties.Select(property => $"'{property.Name}=' + $('#txt{configuration}_{property.Name}').val()");
+    string separator = $" + '&' + {Environment.NewLine}";
 }
 
 <div class="d-none">
@@ -18,23 +27,10 @@
     function update@(configuration)(success) {
         $.post('@Url.Action("UpdateConfiguration", controller)', get@(configuration)Data(), success);
     }
-    
-    @{
-        var lines = properties.Select(property =>
-        {
-            string getter = $"var get{configuration}_{property.Name} = () => $('#txt{configuration}_{property.Name}').val();";
-            string setter = $"var update{configuration}_{property.Name} = value =>  $('#txt{configuration}_{property.Name}').val(value);";
 
-            return $"{getter}{Environment.NewLine}{setter}";
-        });
-
-        @Html.Raw(string.Join(Environment.NewLine, lines));
-    }
+    @Html.Raw(string.Join(Environment.NewLine, lines));
 
     function get@(configuration)Data() {
-        @{ 
-            IEnumerable<string> data = properties.Select(property => $"'{property.Name}=' + $('#txt{configuration}_{property.Name}').val()");
-        }
-        return @Html.Raw(string.Join(" + '&' + ", data));
+        return @Html.Raw(string.Join(separator, propertyData));
     }
 </script>

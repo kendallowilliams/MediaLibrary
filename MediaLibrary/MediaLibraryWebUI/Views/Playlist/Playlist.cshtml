@@ -1,4 +1,5 @@
-﻿@model MediaLibraryWebUI.Models.PlaylistViewModel
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model MediaLibraryWebUI.Models.PlaylistViewModel
 
 <div class="h-100 d-flex flex-column">
     <div style="flex: 0 0 auto">
@@ -12,7 +13,7 @@
             <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", "Playlist", new { Model.SelectedPlaylist.Id})"
                data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
             <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
-                    data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))" data-toggle="modal" 
+                    data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))" data-toggle="modal"
                     data-target="#modalDeleteItem">
                 <i class="fa fa-trash"></i>
             </button>
@@ -70,7 +71,7 @@
 <script type="text/javascript" defer="defer">
     function backClicked() {
         showLoading();
-        $('#txt@(nameof(Model.Configuration.SelectedPlaylistPage))').val('@(nameof(Enums.PlaylistPages.Index))');
-        updateConfiguration(() => loadView('@(nameof(Enums.MediaPages.Playlist))'));
+        set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistPage))('@(nameof(Enums.PlaylistPages.Index))');
+        update@(nameof(PlaylistConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Playlist))'));
     }
 </script>

@@ -1,47 +1,36 @@
-﻿@model MediaLibraryWebUI.Models.Configurations.TelevisionConfiguration
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model TelevisionConfiguration
+
+@{
+    var properties = Model.GetType().GetProperties();
+    string controller = "Television",
+           configuration = nameof(TelevisionConfiguration);
+    var lines = properties.Select(property =>
+    {
+        string getter = $"var get{configuration}_{property.Name} = () => $('#txt{configuration}_{property.Name}').val();";
+        string setter = $"var set{configuration}_{property.Name} = value =>  $('#txt{configuration}_{property.Name}').val(value);";
+
+        return $"{getter}{Environment.NewLine}{setter}";
+    });
+    IEnumerable<string> propertyData = properties.Select(property => $"'{property.Name}=' + $('#txt{configuration}_{property.Name}').val()");
+    string separator = $" + '&' + {Environment.NewLine}";
+}
 
 <div class="d-none">
-    @Html.Hidden(nameof(Model.SelectedSeriesSort), Model.SelectedSeriesSort, new { id = $"txt{nameof(Model.SelectedSeriesSort)}" });
-    @Html.Hidden(nameof(Model.SelectedSeriesId), Model.SelectedSeriesId, new { id = $"txt{nameof(Model.SelectedSeriesId)}" });
-    @Html.Hidden(nameof(Model.SelectedTelevisionPage), Model.SelectedTelevisionPage, new { id = $"txt{nameof(Model.SelectedTelevisionPage)}" });
-    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Television)}{nameof(Model.ScrollTop)}" });
-    @Html.Hidden(nameof(Model.SelectedSeason), Model.SelectedSeason, new { id = $"txt{nameof(Model.SelectedSeason)}" });
+    @foreach (var property in properties)
+    {
+        @Html.Hidden(property.Name, property.GetValue(Model), new { id = $"txt{configuration}_{property.Name}" });
+    }
 </div>
 
 <script type="text/javascript" defer="defer">
-    function updateConfiguration(success) {
-        $.post('@Url.Action("UpdateConfiguration", "Television")', getTelevisionConfigurationData(), success);
+    function update@(configuration)(success) {
+        $.post('@Url.Action("UpdateConfiguration", controller)', get@(configuration)Data(), success);
     }
 
-    function getTelevisionConfigurationData() {
-        return '@(nameof(Model.SelectedSeriesSort))=' + $('#txt@(nameof(Model.SelectedSeriesSort))').val() + '&' +
-                '@(nameof(Model.SelectedSeriesId))=' + $('#txt@(nameof(Model.SelectedSeriesId))').val() + '&' +
-                '@(nameof(Model.SelectedTelevisionPage))=' + $('#txt@(nameof(Model.SelectedTelevisionPage))').val() + '&' +
-                //'@(nameof(Model.SelectedSeason))=' + $('#txt@(nameof(Model.SelectedSeason))').val() + '&' +
-                '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Television))@(nameof(Model.ScrollTop))').val();
-    }
+    @Html.Raw(string.Join(Environment.NewLine, lines));
 
-    function get@(nameof(Enums.MediaPages.Television))ScrollTop() {
-        return parseInt($('#txt@(nameof(Enums.MediaPages.Television))@(nameof(Model.ScrollTop))').val());
-    }
-
-    function update@(nameof(Enums.MediaPages.Television))ScrollTop(top) {
-        $('#txt@(nameof(Enums.MediaPages.Television))@(nameof(Model.ScrollTop))').val(top);
-    }
-
-    function getSelectedSeason() {
-        return parseInt($('#txt@(nameof(Model.SelectedSeason))').val());
-    }
-
-    function updateSelectedSeason(season) {
-        $('#txt@(nameof(Model.SelectedSeason))').val(season);
-    }
-
-    function getSelectedSeriesId() {
-        return parseInt($('#txt@(nameof(Model.SelectedSeriesId))').val());
-    }
-
-    function updateSelectedSeriesId(series) {
-        $('#txt@(nameof(Model.SelectedSeriesId))').val(series);
+    function get@(configuration)Data() {
+        return @Html.Raw(string.Join(separator, propertyData));
     }
 </script>

@@ -1,29 +1,36 @@
-﻿@model MediaLibraryWebUI.Models.Configurations.PodcastConfiguration
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model PodcastConfiguration
+
+@{
+    var properties = Model.GetType().GetProperties();
+    string controller = "Podcast",
+           configuration = nameof(PodcastConfiguration);
+    var lines = properties.Select(property =>
+    {
+        string getter = $"var get{configuration}_{property.Name} = () => $('#txt{configuration}_{property.Name}').val();";
+        string setter = $"var set{configuration}_{property.Name} = value =>  $('#txt{configuration}_{property.Name}').val(value);";
+
+        return $"{getter}{Environment.NewLine}{setter}";
+    });
+    IEnumerable<string> propertyData = properties.Select(property => $"'{property.Name}=' + $('#txt{configuration}_{property.Name}').val()");
+    string separator = $" + '&' + {Environment.NewLine}";
+}
 
 <div class="d-none">
-    @Html.Hidden(nameof(Model.SelectedPodcastSort), Model.SelectedPodcastSort, new { id = $"txt{nameof(Model.SelectedPodcastSort)}" });
-    @Html.Hidden(nameof(Model.SelectedPodcastId), Model.SelectedPodcastId, new { id = $"txt{nameof(Model.SelectedPodcastId)}" });
-    @Html.Hidden(nameof(Model.SelectedPodcastPage), Model.SelectedPodcastPage, new { id = $"txt{nameof(Model.SelectedPodcastPage)}" });
-    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Podcast)}{nameof(Model.ScrollTop)}" });
+    @foreach (var property in properties)
+    {
+        @Html.Hidden(property.Name, property.GetValue(Model), new { id = $"txt{configuration}_{property.Name}" });
+    }
 </div>
 
 <script type="text/javascript" defer="defer">
-    function updateConfiguration(success) {
-        $.post('@Url.Action("UpdateConfiguration", "Podcast")', getPodcastConfigurationData(), success);
+    function update@(configuration)(success) {
+        $.post('@Url.Action("UpdateConfiguration", controller)', get@(configuration)Data(), success);
     }
 
-    function getPodcastConfigurationData() {
-        return '@(nameof(Model.SelectedPodcastSort))=' + $('#txt@(nameof(Model.SelectedPodcastSort))').val() + '&' +
-               '@(nameof(Model.SelectedPodcastId))=' + $('#txt@(nameof(Model.SelectedPodcastId))').val() + '&' +
-               '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Podcast))@(nameof(Model.ScrollTop))').val() + '&' +
-               '@(nameof(Model.SelectedPodcastPage))=' + $('#txt@(nameof(Model.SelectedPodcastPage))').val();
-    }
+    @Html.Raw(string.Join(Environment.NewLine, lines));
 
-    function get@(nameof(Enums.MediaPages.Podcast))ScrollTop() {
-        return parseInt($('#txt@(nameof(Enums.MediaPages.Podcast))@(nameof(Model.ScrollTop))').val());
-    }
-
-    function update@(nameof(Enums.MediaPages.Podcast))ScrollTop(top) {
-        $('#txt@(nameof(Enums.MediaPages.Podcast))@(nameof(Model.ScrollTop))').val(top);
+    function get@(configuration)Data() {
+        return @Html.Raw(string.Join(separator, propertyData));
     }
 </script>

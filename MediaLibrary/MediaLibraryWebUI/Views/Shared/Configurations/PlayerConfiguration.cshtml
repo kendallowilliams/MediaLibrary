@@ -1,55 +1,36 @@
-﻿@model MediaLibraryWebUI.Models.Configurations.PlayerConfiguration
+﻿@using MediaLibraryWebUI.Models.Configurations
+@model PlayerConfiguration
+
+@{
+    var properties = Model.GetType().GetProperties();
+    string controller = "Player",
+           configuration = nameof(PlayerConfiguration);
+    var lines = properties.Select(property =>
+    {
+        string getter = $"var get{configuration}_{property.Name} = () => $('#txt{configuration}_{property.Name}').val();";
+        string setter = $"var set{configuration}_{property.Name} = value =>  $('#txt{configuration}_{property.Name}').val(value);";
+
+        return $"{getter}{Environment.NewLine}{setter}";
+    });
+    IEnumerable<string> propertyData = properties.Select(property => $"'{property.Name}=' + $('#txt{configuration}_{property.Name}').val()");
+    string separator = $" + '&' + {Environment.NewLine}";
+}
 
 <div class="d-none">
-    @Html.Hidden(nameof(Model.SelectedMediaType), Model.SelectedMediaType, new { id = $"txt{nameof(Model.SelectedMediaType)}" });
-    @Html.Hidden(nameof(Model.CurrentItemIndex), Model.CurrentItemIndex, new { id = $"txt{nameof(Model.CurrentItemIndex)}" });
-    @Html.Hidden(nameof(Model.AutoPlay), Model.AutoPlay, new { id = $"txt{nameof(Model.AutoPlay)}" });
-    @Html.Hidden(nameof(Model.Repeat), Model.Repeat, new { id = $"txt{nameof(Model.Repeat)}" });
-    @Html.Hidden(nameof(Model.ScrollTop), Model.ScrollTop, new { id = $"txt{nameof(Enums.MediaPages.Player)}{nameof(Model.ScrollTop)}" });
+    @foreach (var property in properties)
+    {
+        @Html.Hidden(property.Name, property.GetValue(Model), new { id = $"txt{configuration}_{property.Name}" });
+    }
 </div>
 
 <script type="text/javascript" defer="defer">
-    function updatePlayerConfiguration(success) {
-        $.post('@Url.Action("UpdateConfiguration", "Player")', getPlayerConfigurationData(), success);
+    function update@(configuration)(success) {
+        $.post('@Url.Action("UpdateConfiguration", controller)', get@(configuration)Data(), success);
     }
 
-    function getPlayerConfigurationData() {
-        return '@(nameof(Model.SelectedMediaType))=' + $('#txt@(nameof(Model.SelectedMediaType))').val() + '&' +
-               '@(nameof(Model.CurrentItemIndex))=' + $('#txt@(nameof(Model.CurrentItemIndex))').val() + '&' +
-               '@(nameof(Model.Repeat))=' + $('#txt@(nameof(Model.Repeat))').val() + '&' +
-               '@(nameof(Model.AutoPlay))=' + $('#txt@(nameof(Model.AutoPlay))').val() + '&' +
-               '@(nameof(Model.ScrollTop))=' + $('#txt@(nameof(Enums.MediaPages.Player))@(nameof(Model.ScrollTop))').val();
-    }
+    @Html.Raw(string.Join(Environment.NewLine, lines));
 
-    function setCurrentItemIndex(index) {
-        $('#txt@(nameof(Model.CurrentItemIndex))').val(index);
-    }
-
-    function getCurrentItemIndex() {
-        return parseInt($('#txt@(nameof(Model.CurrentItemIndex))').val());
-    }
-
-    function setSelectedMediaType(type) {
-        $('#txt@(nameof(Model.SelectedMediaType))').val(type);
-    }
-
-    function getSelectedMediaType() {
-        return $('#txt@(nameof(Model.SelectedMediaType))').val();
-    }
-
-    function setRepeat(repeat) {
-        $('#txt@(nameof(Model.Repeat))').val(repeat);
-    }
-
-    function getRepeat() {
-        return $('#txt@(nameof(Model.Repeat))').val();
-    }
-
-    function get@(nameof(Enums.MediaPages.Player))ScrollTop() {
-        return parseInt($('#txt@(nameof(Enums.MediaPages.Player))@(nameof(Model.ScrollTop))').val());
-    }
-
-    function update@(nameof(Enums.MediaPages.Player))ScrollTop(top) {
-        $('#txt@(nameof(Enums.MediaPages.Player))@(nameof(Model.ScrollTop))').val(top);
+    function get@(configuration)Data() {
+        return @Html.Raw(string.Join(separator, propertyData));
     }
 </script>
