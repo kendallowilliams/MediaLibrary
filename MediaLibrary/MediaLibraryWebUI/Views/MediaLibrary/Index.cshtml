@@ -25,7 +25,7 @@
             $('#divView, #playerView, #homeView').find('*[data-tooltip="tooltip"]').tooltip('dispose');
 
             if (view === '@(Enums.MediaPages.Player)') {
-                updateMediaLibraryConfiguration(() => reload(success));
+                updateMediaLibraryConfiguration(success);
                 $('#divView, #homeView').addClass('d-none');
                 $(container = '#playerView').removeClass('d-none');
             } else if (view === '@(Enums.MediaPages.Home)') {

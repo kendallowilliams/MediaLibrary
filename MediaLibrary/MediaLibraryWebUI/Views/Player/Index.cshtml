@@ -84,6 +84,7 @@
         $('#@(Model.HeaderPreviousButtonId)').on('click', () => playPrevious());
         $('#@(Model.HeaderPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
         $('#@(Model.HeaderPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
+        reload();
     }
 
     function playNext() {
@@ -120,11 +121,11 @@
     function reload(callback) {
         var success = () => {
             updateScrollTop();
-            if (typeof callback === 'function') /*then*/ callback();
-            $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             setInitialPlayerUrl();
+            $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+            if (typeof callback === 'function') /*then*/ callback();
         };
-
+        
         $('#playerItems').html('');
         $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
     }

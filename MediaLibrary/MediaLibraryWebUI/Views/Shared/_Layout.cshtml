@@ -72,7 +72,7 @@
             var $playButtons = $('button[data-play-id]'),
                 $playGroups = $('div[data-play-ids]'),
                 success = () => {
-                    loadView('@(nameof(Enums.MediaPages.Player))', () => _play());
+                    loadView('@(nameof(Enums.MediaPages.Player))', reload(() => _play()));
                     hideLoading();
                 },
                 mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaTypes.Song))',
