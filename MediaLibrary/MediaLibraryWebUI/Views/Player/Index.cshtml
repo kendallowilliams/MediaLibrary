@@ -62,26 +62,24 @@
             $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: getSelectedMediaType(), id: id }, () => playNext());
         };
 
-        $('#@(Model.MusicPlayerId)').on('ended', function (evt) {
+        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('ended', function (evt) {
             updatePlayCount(this);
         });
 
-        $('#@(Model.VideoPlayerId)').on('ended', function (evt) {
-            updatePlayCount(this);
+        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('play', function (evt) {
+            $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
+            $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
+        });
+
+        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('pause', function (evt) {
+            $('#@(Model.HeaderPauseButtonId)').addClass('d-none');
+            $('#@(Model.HeaderPlayButtonId)').removeClass('d-none');
         });
 
         $('#@(Model.HeaderNextButtonId)').on('click', () => playNext());
         $('#@(Model.HeaderPreviousButtonId)').on('click', () => playPrevious());
-        $('#@(Model.HeaderPauseButtonId)').on('click', () => {
-            $(getPlayer()).trigger('pause');
-            $('#@(Model.HeaderPauseButtonId)').addClass('d-none');
-            $('#@(Model.HeaderPlayButtonId)').removeClass('d-none');
-        });
-        $('#@(Model.HeaderPlayButtonId)').on('click', () => {
-            $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
-            $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
-            $(getPlayer()).trigger('play');
-        });
+        $('#@(Model.HeaderPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
+        $('#@(Model.HeaderPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
     }
 
     function playNext() {
