@@ -58,11 +58,12 @@
 
     function initPlayer() {
         var updatePlayCount = (player, callback) => {
-            var id = $(player).attr('data-item-id'),
-                success = typeof (callback) === 'function' ? callback : () => null;
+                var id = $(player).attr('data-item-id'),
+                    success = typeof (callback) === 'function' ? callback : () => null;
 
-            $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(), id: id }, success);
-        };
+                $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(), id: id }, success);
+            },
+            shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true';
 
         $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('ended', function (e) {
             updatePlayCount(this, playNext);
@@ -85,6 +86,38 @@
         $('#@(Model.HeaderPreviousButtonId)').on('click', () => playPrevious());
         $('#@(Model.HeaderPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
         $('#@(Model.HeaderPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
+
+        $('#@(Model.HeaderShuffleButtonId)').addClass(shuffle ? 'active' : '')
+
+        $('#@(Model.HeaderRepeatButtonId)').on('click', () => {
+            var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
+
+            if (repeat === '@nameof(Enums.RepeatTypes.None)') {
+                repeat = '@nameof(Enums.RepeatTypes.RepeatOne)';
+            } else if (repeat === '@nameof(Enums.RepeatTypes.RepeatOne)') {
+                repeat = '@nameof(Enums.RepeatTypes.RepeatAll)';
+            } else if (repeat === '@nameof(Enums.RepeatTypes.RepeatAll)') {
+                repeat = '@nameof(Enums.RepeatTypes.None)';
+            }
+
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(repeat);
+            update@(nameof(PlayerConfiguration))();
+        });
+
+        $('#@(Model.HeaderShuffleButtonId)').on('click', function() {
+            var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
+                $btn = $(this);
+            
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))(!shuffle);
+            update@(nameof(PlayerConfiguration))(() => {
+                if (!shuffle) {
+                    $(this).addClass('active');
+                } else {
+                    $(this).removeClass('active');
+                }
+            });
+        });
+
         reload();
         enableDisablePreviousNext();
     }
@@ -134,15 +167,19 @@
     }
 
     function reload(callback) {
+        reload(false, callback);
+    }
+
+    function reload(random, callback) {
         var success = () => {
-            updateScrollTop();
             setInitialPlayerUrl();
+            updateScrollTop();
             $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             if (typeof callback === 'function') /*then*/ callback();
         };
         
         $('#playerItems').html('');
-        $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
+        $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', { random: random }, success);
     }
 
     function updateScrollTop() {

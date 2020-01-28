@@ -22,5 +22,7 @@ namespace MediaLibraryWebUI.Models.Configurations
         public bool AutoPlay { get; set; }
 
         public RepeatTypes Repeat { get; set; }
+
+        public bool Shuffle { get; set; }
     }
 }
