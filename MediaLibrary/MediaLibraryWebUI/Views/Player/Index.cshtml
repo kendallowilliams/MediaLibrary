@@ -87,39 +87,32 @@
     function playNext() {
         var nextIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
             $item,
-            repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(),
-            $player =  $(getPlayer());;
-
-        if (!$player.prop('paused')) {
-            if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
-                $player.trigger('play');
-            } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
-                if (nextIndex === $('li[data-play-index]').length) {
-                    $item = $('li[data-play-index="0"]');
-                    _play($item[0]);
-                } else {
-                    $item = $('li[data-play-index="' + nextIndex + '"]');
-                    _play($item[0]);
-                }
+            repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
+        
+        if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
+            _play();
+        } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
+            if (nextIndex === $('li[data-play-index]').length) {
+                $item = $('li[data-play-index="0"]');
+                _play($item[0]);
             } else {
-                $item = $('li[data-play-index=' + nextIndex + ']');
+                $item = $('li[data-play-index="' + nextIndex + '"]');
+                _play($item[0]);
+            }
+        } else {
+            $item = $('li[data-play-index=' + nextIndex + ']');
 
-                if (nextIndex !== $('li[data-play-index]').length) {
-                    _play($item[0]);
-                }
+            if (nextIndex !== $('li[data-play-index]').length) {
+                _play($item[0]);
             }
         }
     }
 
     function playPrevious() {
-        var $player = $(getPlayer());
+        var previousIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
+            $item = $('li[data-play-index="' + previousIndex + '"]');
 
-        if (!$player.prop('paused')) {
-            var previousIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
-                $item = $('li[data-play-index="' + previousIndex + '"]');
-
-            _play($item[0]);
-        }
+        _play($item[0]);
     }
 
     function reload(callback) {
