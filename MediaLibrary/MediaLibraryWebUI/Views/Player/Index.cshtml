@@ -5,16 +5,19 @@
     ViewBag.Title = "Player";
 }
 
-<div class="d-flex w-100 h-100">
-    <div style="flex: 0 0 50%; padding: 0px 5px 0px 5px">
-        <audio id="@(Model.MusicPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? "d-none" : string.Empty)"
-               preload="auto" controls="controls" style="position: sticky; top: 0px; position: -webkit-sticky" />
-        <video id="@(Model.VideoPlayerId)" class="@(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")"
-               preload="auto" controls="controls" style="position: sticky; top: 0px; position: -webkit-sticky" />
-    </div>
-    <div class="card" style="flex: 0 0 50%">
-        <div class="card-header" style="position: sticky; top: 0px">Now Playing</div>
-        <div id="playerItems" style="overflow-y: auto; position: relative"></div>
+<div class="w-100 h-100">
+    <div class="card w-100 h-100" style="">
+        <div class="card-header" style="flex: 0 0 auto">Now Playing</div>
+        <div class="card-body" style="flex: 1 1 auto; overflow-y: auto">
+            <div id="playerItems" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style=""></div>
+            <audio id="@(Model.MusicPlayerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")"
+                   preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Audio)" />
+            <video id="@(Model.VideoPlayerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")"
+                   preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Video)" />
+        </div>
+        <div class="card-footer" style="flex: 0 0 auto">
+            <button class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Show playlist" onclick="togglePlaylist()"><i class="fa fa-list-ul"></i></button>
+        </div>
     </div>
 </div>
 
@@ -101,7 +104,7 @@
         $('#@(Model.HeaderShuffleButtonId)').on('click', function() {
             var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
                 $btn = $(this);
-            
+
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))(!shuffle);
             update@(nameof(PlayerConfiguration))(() => {
                 if (!shuffle) {
@@ -117,7 +120,7 @@
 
     function playNext() {
         var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
-            nextIndex = shuffle ? getRandomInteger(0, $('li[data-play-index]').length - 1) : 
+            nextIndex = shuffle ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
                                   parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
             $item = null,
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
@@ -170,7 +173,7 @@
             $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             if (typeof callback === 'function') /*then*/ callback();
         };
-        
+
         $('#playerItems').html('');
         $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
     }
@@ -198,7 +201,24 @@
 
         return selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer[0] : $audioPlayer[0];
     }
-     
+
+    function togglePlaylist() {
+        var page = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))(),
+            $player = $(getPlayer()),
+            $playerItems = $('#playerItems');
+
+        if (page === '@(nameof(Enums.PlayerPages.Index))') {
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))($player.attr('data-player-page'));
+            $player.removeClass('d-none');
+            $playerItems.addClass('d-none');
+        } else {
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Index))');
+            $player.addClass('d-none');
+            $playerItems.removeClass('d-none');
+        }
+        update@(nameof(PlayerConfiguration))();
+    }
+
     initPlayer();
 </script>
 

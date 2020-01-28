@@ -15,12 +15,12 @@ namespace MediaLibraryWebUI
         public enum PlaylistSort { AtoZ = 0, DateAdded }
         public enum MusicTabs { Albums = 0, Artists, Songs }
         public enum MusicPages { Index = 0, Album, Artist }
+        public enum PlayerPages { Index = 0, Audio, Video }
         public enum PlaylistPages { Index = 0, Playlist }
         public enum PodcastPages { Index = 0, Podcast }
         public enum TelevisionPages { Index = 0, Series }
         public enum MediaPages { Home = 0, Music, Playlist, Podcast, Player, Television }
         public enum MediaTypes { Song, Podcast, Television }
-        public enum PlayerMessages { Loaded, Reload }
         public enum RepeatTypes { None = 0, RepeatOne, RepeatAll }
     }
 }
