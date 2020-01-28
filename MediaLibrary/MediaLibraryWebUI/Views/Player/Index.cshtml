@@ -56,27 +56,28 @@
     }
 
     function initPlayer() {
-        var updatePlayCount = btn => {
-            var id = $(btn).attr('data-item-id');
+        var updatePlayCount = (player, callback) => {
+            var id = $(player).attr('data-item-id'),
+                success = typeof (callback) === 'function' ? callback : () => null;
 
-            $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: getSelectedMediaType(), id: id }, () => playNext());
+            $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(), id: id }, success);
         };
 
-        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('ended', function (evt) {
-            updatePlayCount(this);
+        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('ended', function (e) {
+            updatePlayCount(this, playNext);
         });
 
-        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('play', function (evt) {
+        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('play', function (e) {
             $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
             $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
         });
 
-        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('pause', function (evt) {
+        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('pause', function (e) {
             $('#@(Model.HeaderPauseButtonId)').addClass('d-none');
             $('#@(Model.HeaderPlayButtonId)').removeClass('d-none');
         });
 
-        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('error', function (evt) {
+        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('error', function (e) {
         });
 
         $('#@(Model.HeaderNextButtonId)').on('click', () => playNext());
@@ -136,8 +137,10 @@
     }
 
     function setInitialPlayerUrl() {
-        var url = $('li.active').attr('data-play-url');
+        var url = $('li.active').attr('data-play-url'),
+            id = $('li.active').attr('data-item-id');
 
+        $('audio:not(audio.d-none),video:not(video.d-none)').attr('data-item-id', id);
         $('audio:not(audio.d-none),video:not(video.d-none)').attr('src', url);
     }
 
