@@ -52,12 +52,13 @@
     }
 
     $('[data-season-id]').on('click', function () {
-        var id = $(this).attr('data-season-id');
+        var id = $(this).attr('data-season-id'),
+            selectedSeason = parseInt(get@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeason))());
 
-        if (id === '-' && (getSelectedSeason() - 1) > 0) {
-            $('[data-season-id="' + (getSelectedSeason() - 1) + '"]').trigger('click');
-        } else if (id === '+' && (getSelectedSeason() + 1) > 0) {
-            $('[data-season-id="' + (getSelectedSeason() + 1) + '"]').trigger('click');
+        if (id === '-' && (selectedSeason - 1) > 0) {
+            $('[data-season-id="' + (selectedSeason - 1) + '"]').trigger('click');
+        } else if (id === '+' && (selectedSeason + 1) > 0) {
+            $('[data-season-id="' + (selectedSeason + 1) + '"]').trigger('click');
         } else if (parseInt(id) > 0) {
             $('li.page-item').removeClass('active');
             loadSeasonView(this);
