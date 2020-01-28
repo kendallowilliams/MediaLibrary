@@ -76,6 +76,9 @@
             $('#@(Model.HeaderPlayButtonId)').removeClass('d-none');
         });
 
+        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('error', function (evt) {
+        });
+
         $('#@(Model.HeaderNextButtonId)').on('click', () => playNext());
         $('#@(Model.HeaderPreviousButtonId)').on('click', () => playPrevious());
         $('#@(Model.HeaderPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
