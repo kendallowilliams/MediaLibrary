@@ -123,10 +123,12 @@
     }
 
     function playNext() {
-        var nextIndex = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
-            $item,
+        var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
+            nextIndex = shuffle ? getRandomInteger(0, $('li[data-play-index]').length - 1) : 
+                                  parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
+            $item = null,
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
-        
+
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
             _play();
         } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {

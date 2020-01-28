@@ -129,6 +129,7 @@
     <Content Include="Content\images\audio.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\Site.js" />
     <Content Include="favicon.ico" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="Global.asax" />
