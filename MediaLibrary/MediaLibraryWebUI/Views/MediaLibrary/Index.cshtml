@@ -25,10 +25,12 @@
             disableNavItem(view);
             $('#@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.HomeViewId)').find('*[data-tooltip="tooltip"]').tooltip('dispose');
             $('#@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.HomeViewId)').addClass('d-none');
+            $('#@(HtmlControlsRepository.HeaderControlsContainerId)').removeClass('d-none');
 
             if (view === '@(Enums.MediaPages.Player)') {
                 updateMediaLibraryConfiguration(success);
                 $(container = '#@(HtmlControlsRepository.PlayerViewId)').removeClass('d-none');
+                $('#@(HtmlControlsRepository.HeaderControlsContainerId)').addClass('d-none');
             } else if (view === '@(Enums.MediaPages.Home)') {
                 $(container = '#@(HtmlControlsRepository.HomeViewId)').removeClass('d-none');
                 update@(nameof(MediaLibraryConfiguration))(() => $('#@(HtmlControlsRepository.HomeViewId)').load(url.replace("ViewName", view), success));

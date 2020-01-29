@@ -12,6 +12,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string MediaViewId { get => "media-view"; }
         public static string MusicPlayerId { get => "music-player"; }
         public static string VideoPlayerId { get => "video-player"; }
+        public static string HeaderControlsContainerId { get => "header-controls-container"; }
         public static string HeaderPlayButtonId { get => "btn-header-play"; }
         public static string HeaderPreviousButtonId { get => "btn-header-previous"; }
         public static string HeaderNextButtonId { get => "btn-header-next"; }
