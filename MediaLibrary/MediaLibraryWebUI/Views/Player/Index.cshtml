@@ -37,7 +37,12 @@
                     <i class="fa fa-list-ul"></i>
                 </button>
                 <button id="@(HtmlControlsRepository.PlayerShuffleButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Shuffle"><i class="fa fa-random"></i></button>
-                <button id="@(HtmlControlsRepository.PlayerRepeatButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Repeat"><i class="fa fa-sync"></i></button>
+                <button id="@(HtmlControlsRepository.PlayerRepeatButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.None))" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Repeat == Enums.RepeatTypes.None ? string.Empty : "d-none")" 
+                        data-tooltip="tooltip" title="Repeat off"><i class="fa fa-sync"></i></button>
+                <button id="@(HtmlControlsRepository.PlayerRepeatOneButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatOne))" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Repeat == Enums.RepeatTypes.RepeatOne ? string.Empty : "d-none")" 
+                        data-tooltip="tooltip" title="Repeat one"><i class="fa fa-sync"><sub>1</sub></i></button>
+                <button id="@(HtmlControlsRepository.PlayerRepeatAllButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatAll))" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Repeat == Enums.RepeatTypes.RepeatAll ? string.Empty : "d-none")" 
+                        data-tooltip="tooltip" title="Repeat all"><i class="fa fa-sync"></i></button>
             </div>
         </div>
     </div>
@@ -126,8 +131,10 @@
 
         $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').addClass(shuffle ? 'active' : '')
 
-        $('#@(HtmlControlsRepository.HeaderRepeatButtonId), #@(HtmlControlsRepository.PlayerRepeatButtonId)').on('click', () => {
+        $('button[data-repeat-type]').on('click', () => {
             var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
+
+            $('button[data-repeat-type]').addClass('d-none');
 
             if (repeat === '@nameof(Enums.RepeatTypes.None)') {
                 repeat = '@nameof(Enums.RepeatTypes.RepeatOne)';
@@ -137,6 +144,7 @@
                 repeat = '@nameof(Enums.RepeatTypes.None)';
             }
 
+            $('button[data-repeat-type="' + repeat + '"]').removeClass('d-none');
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(repeat);
             update@(nameof(PlayerConfiguration))();
         });
@@ -156,7 +164,7 @@
         });
 
         $('#@(HtmlControlsRepository.PlayerSliderId)').slider({ min: 0, max: 100 });
-
+        $('button[data-repeat-type="' + get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() + '"]').removeClass('d-none');
         reload(() => enableDisablePreviousNext());
     }
 
