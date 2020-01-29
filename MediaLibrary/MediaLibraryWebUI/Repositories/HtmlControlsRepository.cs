@@ -25,5 +25,6 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerShuffleButtonId { get => "btn-player-shuffle"; }
         public static string PlayerRepeatButtonId { get => "btn-player-repeat"; }
         public static string PlayerPlaylistToggleButtonId { get => "btn-player-playlist-toggle"; }
+        public static string PlayerSliderId { get => "player-slider"; }
     }
 }
