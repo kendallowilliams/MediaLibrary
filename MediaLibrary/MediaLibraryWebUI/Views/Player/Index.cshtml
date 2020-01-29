@@ -12,7 +12,7 @@
         <div class="card-body d-flex m-0 p-0" style="flex: 1 1 auto; overflow-y: auto">
             <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto"></div>
             <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")">
-                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class=""
+                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none"
                        preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Audio)" />
             </div>
             <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
