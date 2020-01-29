@@ -14,6 +14,10 @@
       "provider": "unpkg",
       "library": "bootstrap@4.4.1",
       "destination": "lib/bootstrap/"
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "lib/jqueryui/"
     }
   ]
 }

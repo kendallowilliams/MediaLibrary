@@ -13,6 +13,9 @@ namespace MediaLibraryWebUI
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+                        "~/lib/jqueryui/jquery-ui.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
@@ -33,7 +36,8 @@ namespace MediaLibraryWebUI
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/lib/font-awesome/css/all.css",
-                      "~/lib/bootstrap/dist/css/bootstrap.min.css"));
+                      "~/lib/bootstrap/dist/css/bootstrap.min.css",
+                      "~/lib/jqueryui/jquery-ui.min.css"));
         }
     }
 }
