@@ -59,13 +59,10 @@
 <script type="text/javascript" defer="defer">
     function _play(item) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
-            $containers = $('#@(HtmlControlsRepository.PlayerItemsContainerId), #@(HtmlControlsRepository.PlayerAudioContainerId), #@(HtmlControlsRepository.PlayerVideoContainerId)'),
             $player = $(getPlayer());
 
         $players.prop('src', '').attr('data-item-id', '');
-        $containers.addClass('d-none');
         $('#@(HtmlControlsRepository.HeaderPlayButtonId)').addClass('d-none');
-        $player.parent().removeClass('d-none');
         $('#@(HtmlControlsRepository.HeaderPauseButtonId)').removeClass('d-none');
 
         if (item) {
