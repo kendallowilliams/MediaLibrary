@@ -7,6 +7,9 @@ namespace MediaLibraryWebUI.Repositories
 {
     public class HtmlControlsRepository
     {
+        public static string HomeViewId { get => "home-view"; }
+        public static string PlayerViewId { get => "player-view"; }
+        public static string MediaViewId { get => "media-view"; }
         public static string MusicPlayerId { get => "music-player"; }
         public static string VideoPlayerId { get => "video-player"; }
         public static string HeaderPlayButtonId { get => "btn-header-play"; }

@@ -1,9 +1,10 @@
 ﻿@using MediaLibraryWebUI.Models.Configurations
+@using MediaLibraryWebUI.Repositories
 @model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
-<div id="homeView" class="d-none"></div>
-<div id="playerView" class="d-none h-100"></div>
-<div id="divView" class="d-none h-100"></div>
+<div id="@(HtmlControlsRepository.HomeViewId)" class="d-none"></div>
+<div id="@(HtmlControlsRepository.PlayerViewId)" class="d-none h-100"></div>
+<div id="@(HtmlControlsRepository.MediaViewId)" class="d-none h-100"></div>
 
 @Html.Partial("~/Views/Shared/Configurations/MediaLibraryConfiguration.cshtml", Model.Configuration)
 
@@ -22,26 +23,24 @@
             showLoading();
             set@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(view);
             disableNavItem(view);
-            $('#divView, #playerView, #homeView').find('*[data-tooltip="tooltip"]').tooltip('dispose');
+            $('#@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.HomeViewId)').find('*[data-tooltip="tooltip"]').tooltip('dispose');
+            $('#@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.HomeViewId)').addClass('d-none');
 
             if (view === '@(Enums.MediaPages.Player)') {
                 updateMediaLibraryConfiguration(success);
-                $('#divView, #homeView').addClass('d-none');
-                $(container = '#playerView').removeClass('d-none');
+                $(container = '#@(HtmlControlsRepository.PlayerViewId)').removeClass('d-none');
             } else if (view === '@(Enums.MediaPages.Home)') {
-                $('#divView, #playerView').addClass('d-none');
-                $(container = '#homeView').removeClass('d-none');
-                update@(nameof(MediaLibraryConfiguration))(() => $('#homeView').load(url.replace("ViewName", view), success));
+                $(container = '#@(HtmlControlsRepository.HomeViewId)').removeClass('d-none');
+                update@(nameof(MediaLibraryConfiguration))(() => $('#@(HtmlControlsRepository.HomeViewId)').load(url.replace("ViewName", view), success));
             } else {
-                update@(nameof(MediaLibraryConfiguration))(() => $('#divView').load(url.replace("ViewName", view), success));
-                $('#playerView, #homeView').addClass('d-none');
-                $(container = '#divView').removeClass('d-none');
+                update@(nameof(MediaLibraryConfiguration))(() => $('#@(HtmlControlsRepository.MediaViewId)').load(url.replace("ViewName", view), success));
+                $(container = '#@(HtmlControlsRepository.MediaViewId)').removeClass('d-none');
             }
         }
 
         $(function () {
             showLoading();
-            $('#playerView').load('@Url.Action("Index", "Player")', () => {
+            $('#@(HtmlControlsRepository.PlayerViewId)').load('@Url.Action("Index", "Player")', () => {
                 hideLoading();
                 loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
             });
