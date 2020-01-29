@@ -21,10 +21,16 @@
             </div>
         </div>
         <div class="card-footer" style="flex: 0 0 auto">
-            <button id="btnTogglePlaylist" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? "active" : string.Empty)"
+            <button id="@(HtmlControlsRepository.PlayerPreviousButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Previous"><i class="fa fa-backward"></i></button>
+            <button id="@(HtmlControlsRepository.PlayerPlayButtonId)" class="btn btn-outline-secondary" data-tooltip="tooltip" title="Play"><i class="fa fa-play"></i></button>
+            <button id="@(HtmlControlsRepository.PlayerPauseButtonId)" class="btn btn-outline-secondary d-none" data-tooltip="tooltip" title="Pause"><i class="fa fa-pause"></i></button>
+            <button id="@(HtmlControlsRepository.PlayerNextButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Next"><i class="fa fa-forward"></i></button>
+            <button id="@(HtmlControlsRepository.PlayerPlaylistToggleButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? "active" : string.Empty)"
                     data-tooltip="tooltip" title="Show/hide playlist" onclick="togglePlaylist(this)">
                 <i class="fa fa-list-ul"></i>
             </button>
+            <button id="@(HtmlControlsRepository.PlayerShuffleButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Shuffle"><i class="fa fa-random"></i></button>
+            <button id="@(HtmlControlsRepository.PlayerRepeatButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Repeat"><i class="fa fa-sync"></i></button>
         </div>
     </div>
 </div>
@@ -77,26 +83,26 @@
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('play', function (e) {
-            $('#@(HtmlControlsRepository.HeaderPlayButtonId)').addClass('d-none');
-            $('#@(HtmlControlsRepository.HeaderPauseButtonId)').removeClass('d-none');
+            $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').addClass('d-none');
+            $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').removeClass('d-none');
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('pause', function (e) {
-            $('#@(HtmlControlsRepository.HeaderPauseButtonId)').addClass('d-none');
-            $('#@(HtmlControlsRepository.HeaderPlayButtonId)').removeClass('d-none');
+            $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').addClass('d-none');
+            $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').removeClass('d-none');
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('error', function (e) {
         });
 
-        $('#@(HtmlControlsRepository.HeaderNextButtonId)').on('click', () => playNext());
-        $('#@(HtmlControlsRepository.HeaderPreviousButtonId)').on('click', () => playPrevious());
-        $('#@(HtmlControlsRepository.HeaderPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
-        $('#@(HtmlControlsRepository.HeaderPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
+        $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').on('click', () => playNext());
+        $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').on('click', () => playPrevious());
+        $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
+        $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
 
-        $('#@(HtmlControlsRepository.HeaderShuffleButtonId)').addClass(shuffle ? 'active' : '')
+        $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').addClass(shuffle ? 'active' : '')
 
-        $('#@(HtmlControlsRepository.HeaderRepeatButtonId)').on('click', () => {
+        $('#@(HtmlControlsRepository.HeaderRepeatButtonId), #@(HtmlControlsRepository.PlayerRepeatButtonId)').on('click', () => {
             var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
 
             if (repeat === '@nameof(Enums.RepeatTypes.None)') {
@@ -111,16 +117,16 @@
             update@(nameof(PlayerConfiguration))();
         });
 
-        $('#@(HtmlControlsRepository.HeaderShuffleButtonId)').on('click', function() {
+        $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').on('click', function() {
             var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
-                $btn = $(this);
+                $btns = $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)');
 
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))(!shuffle);
             update@(nameof(PlayerConfiguration))(() => {
                 if (!shuffle) {
-                    $btn.addClass('active');
+                    $btns.addClass('active');
                 } else {
-                    $btn.removeClass('active');
+                    $btns.removeClass('active');
                 }
             });
         });
@@ -163,8 +169,8 @@
     }
 
     function enableDisablePreviousNext() {
-        $('#@(HtmlControlsRepository.HeaderNextButtonId)').prop('disabled', !canPlayNext());
-        $('#@(HtmlControlsRepository.HeaderPreviousButtonId)').prop('disabled', !canPlayPrevious());
+        $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').prop('disabled', !canPlayNext());
+        $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').prop('disabled', !canPlayPrevious());
     }
 
     function playPrevious() {

@@ -18,5 +18,12 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerVideoContainerId { get => "video-container"; }
         public static string PlayerAudioContainerId { get => "audio-container"; }
         public static string PlayerItemsContainerId { get => "player-items-container"; }
+        public static string PlayerPlayButtonId { get => "btn-player-play"; }
+        public static string PlayerPreviousButtonId { get => "btn-player-previous"; }
+        public static string PlayerNextButtonId { get => "btn-player-next"; }
+        public static string PlayerPauseButtonId { get => "btn-player-pause"; }
+        public static string PlayerShuffleButtonId { get => "btn-player-shuffle"; }
+        public static string PlayerRepeatButtonId { get => "btn-player-repeat"; }
+        public static string PlayerPlaylistToggleButtonId { get => "btn-player-playlist-toggle"; }
     }
 }
