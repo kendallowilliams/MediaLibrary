@@ -14,6 +14,7 @@ namespace MediaLibraryWebUI.Models.Configurations
             AutoPlay = true;
             Repeat = RepeatTypes.None;
             SelectedPlayerPage = PlayerPages.Index;
+            Volume = 100;
         }
 
         public MediaTypes SelectedMediaType { get; set; }
@@ -27,5 +28,7 @@ namespace MediaLibraryWebUI.Models.Configurations
         public bool Shuffle { get; set; }
 
         public PlayerPages SelectedPlayerPage { get; set; }
+
+        public int Volume { get; set; }
     }
 }
