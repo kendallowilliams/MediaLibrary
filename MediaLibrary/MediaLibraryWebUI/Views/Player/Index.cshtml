@@ -200,7 +200,7 @@
         var url = $('li.active').attr('data-play-url'),
             id = $('li.active').attr('data-item-id');
 
-        $('audio:not(div.d-none > audio),video:not(div.d-none > video)').attr('data-item-id', id).prop('src', url);
+        $(getPlayer()).attr('data-item-id', id).prop('src', url);
     }
 
     function getPlayer() {
