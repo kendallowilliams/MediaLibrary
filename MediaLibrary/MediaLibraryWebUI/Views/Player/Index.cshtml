@@ -38,11 +38,17 @@
                 </button>
                 <button id="@(HtmlControlsRepository.PlayerShuffleButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Shuffle"><i class="fa fa-random"></i></button>
                 <button id="@(HtmlControlsRepository.PlayerRepeatButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.None))" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Repeat == Enums.RepeatTypes.None ? string.Empty : "d-none")" 
-                        data-tooltip="tooltip" title="Repeat off"><i class="fa fa-sync"></i></button>
+                        data-tooltip="tooltip" title="Repeat off">
+                    <i class="fa fa-sync"></i>
+                </button>
                 <button id="@(HtmlControlsRepository.PlayerRepeatOneButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatOne))" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Repeat == Enums.RepeatTypes.RepeatOne ? string.Empty : "d-none")" 
-                        data-tooltip="tooltip" title="Repeat one"><i class="fa fa-sync"><sub>1</sub></i></button>
+                        data-tooltip="tooltip" title="Repeat one">
+                    <i class="fa fa-xs fa-sync"><sub>1</sub></i>
+                </button>
                 <button id="@(HtmlControlsRepository.PlayerRepeatAllButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatAll))" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Repeat == Enums.RepeatTypes.RepeatAll ? string.Empty : "d-none")" 
-                        data-tooltip="tooltip" title="Repeat all"><i class="fa fa-sync"></i></button>
+                        data-tooltip="tooltip" title="Repeat all">
+                    <i class="fa fa-sync"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -149,8 +155,8 @@
             update@(nameof(PlayerConfiguration))();
         });
 
-        $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').on('click', function() {
-            var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
+        $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').on('click', function () {
+            var shuffle = isShuffleEnabled(),
                 $btns = $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)');
 
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))(!shuffle);
@@ -169,9 +175,8 @@
     }
 
     function playNext() {
-        var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
-            nextIndex = shuffle ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
-                                  parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
+        var nextIndex = isShuffleEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
+                                             parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
             $item = null,
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
 
@@ -202,15 +207,18 @@
         return true;
     }
 
+    function isShuffleEnabled() {
+        return get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true';
+    }
+
     function enableDisablePreviousNext() {
         $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').prop('disabled', !canPlayNext());
         $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').prop('disabled', !canPlayPrevious());
     }
 
     function playPrevious() {
-        var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
-            previousIndex = shuffle ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
-                                      parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
+        var previousIndex = isShuffledEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
+                                                  parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
             $item = $('li[data-play-index="' + previousIndex + '"]');
 
         _play($item[0]);

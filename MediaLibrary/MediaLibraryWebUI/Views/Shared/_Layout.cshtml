@@ -54,9 +54,15 @@
                         <button id="@(HtmlControlsRepository.HeaderPauseButtonId)" class="btn btn-outline-secondary d-none" data-tooltip="tooltip" title="Pause"><i class="fa fa-pause"></i></button>
                         <button id="@(HtmlControlsRepository.HeaderNextButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Next"><i class="fa fa-forward"></i></button>
                         <button id="@(HtmlControlsRepository.HeaderShuffleButtonId)" class="btn btn-sm btn-outline-secondary ml-4" data-tooltip="tooltip" title="Shuffle"><i class="fa fa-random"></i></button>
-                        <button id="@(HtmlControlsRepository.HeaderRepeatButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.None))" class="btn btn-sm btn-outline-secondary d-none" data-tooltip="tooltip" title="Repeat off"><i class="fa fa-sync"></i></button>
-                        <button id="@(HtmlControlsRepository.HeaderRepeatOneButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatOne))" class="btn btn-sm btn-outline-secondary active d-none" data-tooltip="tooltip" title="Repeat one"><i class="fa fa-sync">1</i></button>
-                        <button id="@(HtmlControlsRepository.HeaderRepeatAllButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatAll))" class="btn btn-sm btn-outline-secondary active d-none" data-tooltip="tooltip" title="Repeat all"><i class="fa fa-sync"></i></button>
+                        <button id="@(HtmlControlsRepository.HeaderRepeatButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.None))" class="btn btn-sm btn-outline-secondary d-none" data-tooltip="tooltip" title="Repeat off">
+                            <i class="fa fa-sync"></i>
+                        </button>
+                        <button id="@(HtmlControlsRepository.HeaderRepeatOneButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatOne))" class="btn btn-sm btn-outline-secondary active d-none" data-tooltip="tooltip" title="Repeat one">
+                            <i class="fa fa-xs fa-sync"><sub>1</sub></i>
+                        </button>
+                        <button id="@(HtmlControlsRepository.HeaderRepeatAllButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatAll))" class="btn btn-sm btn-outline-secondary active d-none" data-tooltip="tooltip" title="Repeat all">
+                            <i class="fa fa-sync"></i>
+                        </button>
                     </div>
                 </div>
             </nav>
