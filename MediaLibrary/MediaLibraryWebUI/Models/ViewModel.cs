@@ -12,27 +12,9 @@ namespace MediaLibraryWebUI.Models
     {
         public ViewModel()
         {
-            MusicPlayerId = "music-player";
-            VideoPlayerId = "video-player";
-            NowPlaying = "Now Playing";
             Configuration = new TConfig();
-            HeaderNextButtonId = "btn-header-next";
-            HeaderPlayButtonId = "btn-header-play";
-            HeaderPreviousButtonId = "btn-header-previous";
-            HeaderPauseButtonId = "btn-header-pause";
-            HeaderShuffleButtonId = "btn-header-shuffle";
-            HeaderRepeatButtonId = "btn-header-repeat";
         }
-
-        public string MusicPlayerId { get; }
-        public string VideoPlayerId { get; }
+        
         public TConfig Configuration { get; set; }
-        public string NowPlaying { get; set; }
-        public string HeaderPlayButtonId { get; }
-        public string HeaderPreviousButtonId { get; }
-        public string HeaderNextButtonId { get; }
-        public string HeaderPauseButtonId { get; }
-        public string HeaderShuffleButtonId { get; }
-        public string HeaderRepeatButtonId { get; }
     }
 }

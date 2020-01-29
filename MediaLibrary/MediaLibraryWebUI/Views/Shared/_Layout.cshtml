@@ -1,4 +1,5 @@
 ﻿@using MediaLibraryWebUI.Models.Configurations
+@using MediaLibraryWebUI.Repositories
 
 <!DOCTYPE html>
 <html>
@@ -42,17 +43,17 @@
                             <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Playlist))">@(nameof(Enums.MediaPages.Playlist))s</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Player))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">@(Model.NowPlaying)</a>
-                            <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Player))">@(Model.NowPlaying)</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Player))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">Now Playing</a>
+                            <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Player))">Now Playing</a>
                         </li>
                     </ul>
                     <div class="">
-                        <button id="@(Model.HeaderPreviousButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Previous"><i class="fa fa-backward"></i></button>
-                        <button id="@(Model.HeaderPlayButtonId)" class="btn btn-outline-secondary" data-tooltip="tooltip" title="Play"><i class="fa fa-play"></i></button>
-                        <button id="@(Model.HeaderPauseButtonId)" class="btn btn-outline-secondary d-none" data-tooltip="tooltip" title="Pause"><i class="fa fa-pause"></i></button>
-                        <button id="@(Model.HeaderNextButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Next"><i class="fa fa-forward"></i></button>
-                        <button id="@(Model.HeaderShuffleButtonId)" class="btn btn-sm btn-outline-secondary ml-4" data-tooltip="tooltip" title="Shuffle"><i class="fa fa-random"></i></button>
-                        <button id="@(Model.HeaderRepeatButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Repeat"><i class="fa fa-sync"></i></button>
+                        <button id="@(HtmlControlsRepository.HeaderPreviousButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Previous"><i class="fa fa-backward"></i></button>
+                        <button id="@(HtmlControlsRepository.HeaderPlayButtonId)" class="btn btn-outline-secondary" data-tooltip="tooltip" title="Play"><i class="fa fa-play"></i></button>
+                        <button id="@(HtmlControlsRepository.HeaderPauseButtonId)" class="btn btn-outline-secondary d-none" data-tooltip="tooltip" title="Pause"><i class="fa fa-pause"></i></button>
+                        <button id="@(HtmlControlsRepository.HeaderNextButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Next"><i class="fa fa-forward"></i></button>
+                        <button id="@(HtmlControlsRepository.HeaderShuffleButtonId)" class="btn btn-sm btn-outline-secondary ml-4" data-tooltip="tooltip" title="Shuffle"><i class="fa fa-random"></i></button>
+                        <button id="@(HtmlControlsRepository.HeaderRepeatButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Repeat"><i class="fa fa-sync"></i></button>
                     </div>
                 </div>
             </nav>

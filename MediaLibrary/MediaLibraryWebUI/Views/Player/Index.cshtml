@@ -1,4 +1,5 @@
 ﻿@using MediaLibraryWebUI.Models.Configurations
+@using MediaLibraryWebUI.Repositories
 @model MediaLibraryWebUI.Models.PlayerViewModel
 
 @{
@@ -10,17 +11,17 @@
         <div class="card-header" style="flex: 0 0 auto">Now Playing</div>
         <div class="card-body" style="flex: 1 1 auto; overflow-y: auto">
             <div id="playerItems" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto"></div>
-            <div id="divAudio" style="flex: 1 1 auto">
-                <audio id="@(Model.MusicPlayerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none") w-100"
+            <div id="divAudio" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")">
+                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="w-100"
                        preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Audio)" />
             </div>
-            <div id="divVideo" style="flex: 1 1 auto">
-                <video id="@(Model.VideoPlayerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none") w-100 h-100"
+            <div id="divVideo" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
+                <video id="@(HtmlControlsRepository.VideoPlayerId)" class="w-100"
                        preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Video)" />
             </div>
         </div>
         <div class="card-footer" style="flex: 0 0 auto">
-            <button id="btnTogglePlaylist" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? "active" : string.Empty)" 
+            <button id="btnTogglePlaylist" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? "active" : string.Empty)"
                     data-tooltip="tooltip" title="Show/hide playlist" onclick="togglePlaylist(this)">
                 <i class="fa fa-list-ul"></i>
             </button>
@@ -32,15 +33,15 @@
 
 <script type="text/javascript" defer="defer">
     function _play(item) {
-        var $players = $('#@(Model.VideoPlayerId), #@(Model.MusicPlayerId)'),
+        var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
             $playerDivs = $('#divVideo, #divAudio'),
             $player = $(getPlayer());
 
         $players.prop('src', '').attr('data-item-id', '');
         $playerDivs.parent().addClass('d-none');
-        $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
+        $('#@(HtmlControlsRepository.HeaderPlayButtonId)').addClass('d-none');
         $player.parent().removeClass('d-none');
-        $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
+        $('#@(HtmlControlsRepository.HeaderPauseButtonId)').removeClass('d-none');
 
         if (item) {
             var $item = $(item),
@@ -71,31 +72,31 @@
             },
             shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true';
 
-        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('ended', function (e) {
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('ended', function (e) {
             updatePlayCount(this, playNext);
         });
 
-        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('play', function (e) {
-            $('#@(Model.HeaderPlayButtonId)').addClass('d-none');
-            $('#@(Model.HeaderPauseButtonId)').removeClass('d-none');
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('play', function (e) {
+            $('#@(HtmlControlsRepository.HeaderPlayButtonId)').addClass('d-none');
+            $('#@(HtmlControlsRepository.HeaderPauseButtonId)').removeClass('d-none');
         });
 
-        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('pause', function (e) {
-            $('#@(Model.HeaderPauseButtonId)').addClass('d-none');
-            $('#@(Model.HeaderPlayButtonId)').removeClass('d-none');
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('pause', function (e) {
+            $('#@(HtmlControlsRepository.HeaderPauseButtonId)').addClass('d-none');
+            $('#@(HtmlControlsRepository.HeaderPlayButtonId)').removeClass('d-none');
         });
 
-        $('#@(Model.MusicPlayerId), #@(Model.VideoPlayerId)').on('error', function (e) {
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('error', function (e) {
         });
 
-        $('#@(Model.HeaderNextButtonId)').on('click', () => playNext());
-        $('#@(Model.HeaderPreviousButtonId)').on('click', () => playPrevious());
-        $('#@(Model.HeaderPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
-        $('#@(Model.HeaderPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
+        $('#@(HtmlControlsRepository.HeaderNextButtonId)').on('click', () => playNext());
+        $('#@(HtmlControlsRepository.HeaderPreviousButtonId)').on('click', () => playPrevious());
+        $('#@(HtmlControlsRepository.HeaderPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
+        $('#@(HtmlControlsRepository.HeaderPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
 
-        $('#@(Model.HeaderShuffleButtonId)').addClass(shuffle ? 'active' : '')
+        $('#@(HtmlControlsRepository.HeaderShuffleButtonId)').addClass(shuffle ? 'active' : '')
 
-        $('#@(Model.HeaderRepeatButtonId)').on('click', () => {
+        $('#@(HtmlControlsRepository.HeaderRepeatButtonId)').on('click', () => {
             var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
 
             if (repeat === '@nameof(Enums.RepeatTypes.None)') {
@@ -110,7 +111,7 @@
             update@(nameof(PlayerConfiguration))();
         });
 
-        $('#@(Model.HeaderShuffleButtonId)').on('click', function() {
+        $('#@(HtmlControlsRepository.HeaderShuffleButtonId)').on('click', function() {
             var shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true',
                 $btn = $(this);
 
@@ -162,8 +163,8 @@
     }
 
     function enableDisablePreviousNext() {
-        $('#@(Model.HeaderNextButtonId)').prop('disabled', !canPlayNext());
-        $('#@(Model.HeaderPreviousButtonId)').prop('disabled', !canPlayPrevious());
+        $('#@(HtmlControlsRepository.HeaderNextButtonId)').prop('disabled', !canPlayNext());
+        $('#@(HtmlControlsRepository.HeaderPreviousButtonId)').prop('disabled', !canPlayPrevious());
     }
 
     function playPrevious() {
@@ -199,13 +200,12 @@
         var url = $('li.active').attr('data-play-url'),
             id = $('li.active').attr('data-item-id');
 
-        $('audio:not(audio.d-none),video:not(video.d-none)').attr('data-item-id', id);
-        $('audio:not(audio.d-none),video:not(video.d-none)').attr('src', url);
+        $('audio:not(div.d-none > audio),video:not(div.d-none > video)').attr('data-item-id', id).prop('src', url);
     }
 
     function getPlayer() {
-        var $audioPlayer = $('#@(Model.MusicPlayerId)'),
-            $videoPlayer = $('#@(Model.VideoPlayerId)'),
+        var $audioPlayer = $('#@(HtmlControlsRepository.MusicPlayerId)'),
+            $videoPlayer = $('#@(HtmlControlsRepository.VideoPlayerId)'),
             selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
 
         return selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer[0] : $audioPlayer[0];

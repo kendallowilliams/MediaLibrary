@@ -8,7 +8,5 @@ namespace MediaLibraryWebUI.Models.Interfaces
 {
     public interface IViewModel
     {
-        string MusicPlayerId { get; }
-        string NowPlaying { get; }
     }
 }
