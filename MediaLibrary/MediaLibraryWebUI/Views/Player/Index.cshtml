@@ -9,13 +9,13 @@
 <div class="w-100 h-100">
     <div class="card w-100 h-100" style="">
         <div class="card-header" style="flex: 0 0 auto">Now Playing</div>
-        <div class="card-body" style="flex: 1 1 auto; overflow-y: auto">
-            <div id="playerItems" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto"></div>
-            <div id="divAudio" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")">
+        <div class="card-body" style="flex: 1 0 auto; overflow-y: auto">
+            <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 0 auto"></div>
+            <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 0 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")">
                 <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="w-100"
                        preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Audio)" />
             </div>
-            <div id="divVideo" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
+            <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 0 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
                 <video id="@(HtmlControlsRepository.VideoPlayerId)" class="w-100"
                        preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Video)" />
             </div>
@@ -34,11 +34,11 @@
 <script type="text/javascript" defer="defer">
     function _play(item) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
-            $playerDivs = $('#divVideo, #divAudio'),
+            $containers = $('#@(HtmlControlsRepository.PlayerItemsContainerId), #@(HtmlControlsRepository.PlayerAudioContainerId), #@(HtmlControlsRepository.PlayerVideoContainerId)'),
             $player = $(getPlayer());
 
         $players.prop('src', '').attr('data-item-id', '');
-        $playerDivs.parent().addClass('d-none');
+        $containers.addClass('d-none');
         $('#@(HtmlControlsRepository.HeaderPlayButtonId)').addClass('d-none');
         $player.parent().removeClass('d-none');
         $('#@(HtmlControlsRepository.HeaderPauseButtonId)').removeClass('d-none');
@@ -180,19 +180,19 @@
         var success = () => {
             setInitialPlayerUrl();
             updateScrollTop();
-            $('#playerItems *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+            $('#@(HtmlControlsRepository.PlayerItemsContainerId) *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             if (typeof callback === 'function') /*then*/ callback();
         };
 
-        $('#playerItems').html('');
-        $('#playerItems').load('@(Url.Action("GetPlayerItems", "Player"))', success);
+        $('#@(HtmlControlsRepository.PlayerItemsContainerId)').html('');
+        $('#@(HtmlControlsRepository.PlayerItemsContainerId)').load('@(Url.Action("GetPlayerItems", "Player"))', success);
     }
 
     function updateScrollTop() {
         var $item = $('li.active');
 
         if ($item.length > 0) {
-            $('#playerItems').scrollTop($('#playerItems').scrollTop() - $item.position().top * -1);
+            $('#playerItems').scrollTop($('#@(HtmlControlsRepository.PlayerItemsContainerId)').scrollTop() - $item.position().top * -1);
         }
     }
 
@@ -214,7 +214,7 @@
     function togglePlaylist(btn) {
         var page = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))(),
             $player = $(getPlayer()),
-            $playerItems = $('#playerItems'),
+            $playerItems = $('#@(HtmlControlsRepository.PlayerItemsContainerId)'),
             $btn = $(btn);
 
         if (page === '@(nameof(Enums.PlayerPages.Index))') {
