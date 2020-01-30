@@ -150,12 +150,11 @@
             value: parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))())
         });
         $('#@(HtmlControlsRepository.PlayerVolumeContainerId)').popover({
-            trigger: 'hover',
+            trigger: 'manual',
             content: $volumeSlider[0],
             placement: 'top',
             html: true
         });
-
         $volumeSlider.on('slide', (e, ui) => {
             var volume = ui.value;
 
