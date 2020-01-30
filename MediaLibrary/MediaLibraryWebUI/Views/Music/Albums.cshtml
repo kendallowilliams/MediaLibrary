@@ -23,15 +23,14 @@
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(album.Title)">
                                 <div class="media-body">
                                     <h5 class="mt-0">@(album.Title)</h5>
-                                    <span>@(album.Artist?.Name ?? "Unknown Artist")</span>
+                                    <span data-item-id="@(album.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer">@(album.Artist?.Name ?? "Unknown Artist")</span>
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="View album" data-item-id="@(album.Id)" onclick="albumClicked(this)">
                                         <i class="fa fa-list"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))" 
-                                            data-item-id="@(album.Id)" data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist"
-                                            @(Model.Playlists.Any() ? string.Empty : "disabled=\"disabled\"")>
+                                    <button type="button" class="btn btn-outline-secondary @(Model.Playlists.Any() ? string.Empty : "d-none")" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))" 
+                                            data-item-id="@(album.Id)" data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>

@@ -9,7 +9,7 @@
                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
                 <div class="media-body">
                     <h5 class="mt-0">@(song.Title)</h5>
-                    <span>@(song.Album?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</span>
+                    <span data-item-id="@(song.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(song.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(song.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</span>
                 </div>
                 <div>
                     <button type="button" class="btn btn-outline-secondary" data-play-id="@(song.Id)" onclick="play(this)"
