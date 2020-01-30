@@ -12,12 +12,10 @@
         <div class="card-body d-flex m-0 p-0" style="flex: 1 1 auto; overflow-y: auto">
             <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto"></div>
             <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")">
-                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none"
-                       preload="auto" controls="controls" style="" data-player-page="@(Enums.PlayerPages.Audio)" />
+                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" preload="auto" style="" data-player-page="@(Enums.PlayerPages.Audio)" />
             </div>
             <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 1 auto; display: flex" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
-                <video id="@(HtmlControlsRepository.VideoPlayerId)" class=""
-                       preload="auto" controls="controls" style="flex: 1 1 auto" data-player-page="@(Enums.PlayerPages.Video)" />
+                <video id="@(HtmlControlsRepository.VideoPlayerId)" preload="auto" style="flex: 1 1 auto" data-player-page="@(Enums.PlayerPages.Video)" />
             </div>
         </div>
         <div class="card-footer d-flex align-items-center" style="flex: 0 0 auto">
