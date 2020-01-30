@@ -6,9 +6,12 @@
     ViewBag.Title = "Player";
 }
 
-<div class="w-100 h-100">
-    <div class="card w-100 h-100" style="">
-        <div class="card-header" style="flex: 0 0 auto">Now Playing</div>
+<div class="d-flex w-100 h-100 flex-column">
+    <div style="flex: 0 0 auto">
+        <h2>Now Playing</h2>
+        <hr />
+    </div>
+    <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-body d-flex m-0 p-0" style="flex: 1 1 auto; overflow-y: auto">
             <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto"></div>
             <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")">
