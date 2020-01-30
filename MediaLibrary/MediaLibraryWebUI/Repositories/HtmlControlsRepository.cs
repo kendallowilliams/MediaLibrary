@@ -24,6 +24,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerVideoContainerId { get => "video-container"; }
         public static string PlayerAudioContainerId { get => "audio-container"; }
         public static string PlayerItemsContainerId { get => "player-items-container"; }
+        public static string PlayerVolumeContainerId { get => "player-volume-container"; }
         public static string PlayerPlayButtonId { get => "btn-player-play"; }
         public static string PlayerPreviousButtonId { get => "btn-player-previous"; }
         public static string PlayerNextButtonId { get => "btn-player-next"; }
@@ -34,6 +35,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerRepeatAllButtonId { get => "btn-player-repeat-all"; }
         public static string PlayerPlaylistToggleButtonId { get => "btn-player-playlist-toggle"; }
         public static string PlayerSliderId { get => "player-slider"; }
+        public static string VolumeSliderId { get => "volume-slider"; }
         public static string PlayerTimeId { get => "player-time"; }
         public static string PlayerVolumeButtonId { get => "btn-player-volume"; }
         public static string PlayerMuteButtonId { get => "btn-player-mute"; }

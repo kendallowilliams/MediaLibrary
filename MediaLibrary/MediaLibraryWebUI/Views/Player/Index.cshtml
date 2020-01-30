@@ -50,14 +50,15 @@
                         data-tooltip="tooltip" title="Repeat all">
                     <i class="fa fa-sync"></i>
                 </button>
-                <button id="@(HtmlControlsRepository.PlayerVolumeButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Volume > 0 ? string.Empty : "d-none")"
-                        data-tooltip="tooltip" title="Volume" data-volume="@(Model.Configuration.Volume)">
-                    <i class="fa fa-volume-up"></i>
-                </button>
-                <button id="@(HtmlControlsRepository.PlayerMuteButtonId)" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Volume == 0 ? string.Empty : "d-none")"
-                        data-tooltip="tooltip" title="Muted">
-                    <i class="fa fa-volume-mute"></i>
-                </button>
+                <span id="@(HtmlControlsRepository.PlayerVolumeContainerId)">
+                    <button id="@(HtmlControlsRepository.PlayerVolumeButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Volume > 0 ? string.Empty : "d-none")"
+                            data-volume="@(Model.Configuration.Volume)">
+                        <i class="fa fa-volume-up"></i>
+                    </button>
+                    <button id="@(HtmlControlsRepository.PlayerMuteButtonId)" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Volume == 0 ? string.Empty : "d-none")">
+                        <i class="fa fa-volume-mute"></i>
+                    </button>
+                </span>
                 <button id="@(HtmlControlsRepository.PlayerFullscreenButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")" 
                         data-tooltip="tooltip" title="Fullscreen">
                     <i class="fa fa-expand"></i>
@@ -111,7 +112,7 @@
 
     function initPlayers() {
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('ended', (e) => updatePlayCount(e.target, playNext));
-        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()));
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()) / 100.0);
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('durationchange', function (e) {
             $('#@(HtmlControlsRepository.PlayerSliderId)').slider('option', 'max', e.target.duration);
@@ -139,13 +140,35 @@
     }
 
     function initPlayerControls() {
+        var $volumeSlider = $('<div id="@(HtmlControlsRepository.VolumeSliderId)"></div>');
+        
+        $('#@(HtmlControlsRepository.PlayerSliderId)').slider({ min: 0, max: 100 });
+        $volumeSlider.slider({
+            min: 0,
+            max: 100,
+            orientation: 'vertical',
+            value: parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))())
+        });
+        $('#@(HtmlControlsRepository.PlayerVolumeContainerId)').popover({
+            trigger: 'hover',
+            content: $volumeSlider[0],
+            placement: 'top',
+            html: true
+        });
+
+        $volumeSlider.on('slide', (e, ui) => {
+            var volume = ui.value;
+
+            $('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume', volume);
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))(volume);
+            update@(nameof(PlayerConfiguration))(() => $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', volume / 100.0));
+        });
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slide', function (e, ui) {
             if ($(e.target).attr('data-slide-started') === 'true') {
                 $(getPlayer()).prop('currentTime', ui.value);
                 $('#@(HtmlControlsRepository.PlayerTimeId)').text(getTime(ui.value, $(e.target).slider('option', 'max')));
             }
         });
-
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestart', (e, ui) => $(e.target).attr('data-slide-started', 'true'));
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestop', (e, ui) => $(e.target).attr('data-slide-started', 'false'));
         $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').on('click', () => playNext());
@@ -153,7 +176,6 @@
         $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
         $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
         $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').addClass(isShuffleEnabled() ? 'active' : '');
-
         $('button[data-repeat-type]').on('click', () => {
             var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
 
@@ -171,7 +193,6 @@
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(repeat);
             update@(nameof(PlayerConfiguration))();
         });
-
         $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').on('click', function () {
             var shuffle = isShuffleEnabled(),
                 $btns = $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)');
@@ -185,7 +206,6 @@
                 }
             });
         });
-
         $('#@(HtmlControlsRepository.PlayerVolumeButtonId), #@(HtmlControlsRepository.PlayerMuteButtonId)').on('click', function (e) {
             var volume = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()),
                 previousVolume = parseInt($('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume'));
@@ -195,9 +215,7 @@
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))(volume === 0 ? previousVolume : 0);
             update@(nameof(PlayerConfiguration))(() => $(getPlayer()).prop('volume', volume === 0 ? previousVolume / 100.0 : 0));
         });
-
         $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').on('click', () => openFullscreen(getPlayer()));
-        $('#@(HtmlControlsRepository.PlayerSliderId)').slider({ min: 0, max: 100 });
         $('button[data-repeat-type="' + get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() + '"]').removeClass('d-none');
     }
 
