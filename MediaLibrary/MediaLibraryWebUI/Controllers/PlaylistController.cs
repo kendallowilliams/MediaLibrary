@@ -154,5 +154,17 @@ namespace MediaLibraryWebUI.Controllers
                 }
             }
         }
+
+        public async Task<ActionResult> PlaylistConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Playlist));
+
+            if (configuration != null)
+            {
+                playlistViewModel.Configuration = JsonConvert.DeserializeObject<PlaylistConfiguration>(configuration.JsonData) ?? new PlaylistConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(PlaylistConfiguration)}.cshtml", playlistViewModel.Configuration);
+        }
     }
 }

@@ -10,7 +10,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-0">@(item.Song.Title)</h5>
-                        <span>@(item.Song.Album?.Title ?? "Unknown Album")</span> - <span class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</span>
+                        <span data-item-id="@(item.Song.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(item.Song.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(item.Song.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</span>
                     </div>
                     <div>
                         <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">

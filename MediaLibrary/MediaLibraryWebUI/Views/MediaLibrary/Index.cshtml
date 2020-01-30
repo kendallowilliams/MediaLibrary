@@ -6,10 +6,44 @@
 <div id="@(HtmlControlsRepository.PlayerViewId)" class="d-none h-100"></div>
 <div id="@(HtmlControlsRepository.MediaViewId)" class="d-none h-100"></div>
 
-@Html.Partial("~/Views/Shared/Configurations/MediaLibraryConfiguration.cshtml", Model.Configuration)
+<div class="d-none">
+    <div id="@(nameof(MediaLibraryConfiguration))"></div>
+    <div id="@(nameof(MusicConfiguration))"></div>
+    <div id="@(nameof(PlayerConfiguration))"></div>
+    <div id="@(nameof(PlaylistConfiguration))"></div>
+    <div id="@(nameof(PodcastConfiguration))"></div>
+    <div id="@(nameof(TelevisionConfiguration))"></div>
+</div>
 
 @section scripts {
     <script type="text/javascript" defer="defer">
+        function initMediaLibrary() {
+            var get@(nameof(MediaLibraryConfiguration)) = callback => $('#@(nameof(MediaLibraryConfiguration))').load('@Url.Action(nameof(MediaLibraryConfiguration), "MediaLibrary")', callback),
+                get@(nameof(MusicConfiguration)) = callback => $('#@(nameof(MusicConfiguration))').load('@Url.Action(nameof(MusicConfiguration), nameof(Enums.MediaPages.Music))', callback),
+                get@(nameof(PlayerConfiguration)) = callback => $('#@(nameof(PlayerConfiguration))').load('@Url.Action(nameof(PlayerConfiguration), nameof(Enums.MediaPages.Player))', callback),
+                get@(nameof(PlaylistConfiguration)) = callback => $('#@(nameof(PlaylistConfiguration))').load('@Url.Action(nameof(PlaylistConfiguration), nameof(Enums.MediaPages.Playlist))', callback),
+                get@(nameof(PodcastConfiguration)) = callback => $('#@(nameof(PodcastConfiguration))').load('@Url.Action(nameof(PodcastConfiguration), nameof(Enums.MediaPages.Podcast))', callback),
+                get@(nameof(TelevisionConfiguration)) = callback => $('#@(nameof(TelevisionConfiguration))').load('@Url.Action(nameof(TelevisionConfiguration), nameof(Enums.MediaPages.Television))', callback);
+
+            get@(nameof(MediaLibraryConfiguration))(() =>
+                get@(nameof(MusicConfiguration))(() =>
+                    get@(nameof(PlayerConfiguration))(() =>
+                        get@(nameof(PlaylistConfiguration))(() =>
+                            get@(nameof(PodcastConfiguration))(() =>
+                                get@(nameof(TelevisionConfiguration))(() => {
+                                    showLoading();
+                                    $('#@(HtmlControlsRepository.PlayerViewId)').load('@Url.Action("Index", "Player")', () => {
+                                        hideLoading();
+                                        loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
+                                    });
+                                })
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
         function loadView(view, callback) {
             var success = () => {
                 if (typeof callback === 'function') /*then*/ callback();
@@ -40,13 +74,21 @@
             }
         }
 
-        $(function () {
+        function artistClicked(btn) {
             showLoading();
-            $('#@(HtmlControlsRepository.PlayerViewId)').load('@Url.Action("Index", "Player")', () => {
-                hideLoading();
-                loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
-            });
-        });
+            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Artist))');
+            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedArtistId))($(btn).attr('data-item-id'));
+            update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
+        }
+
+        function albumClicked(btn) {
+            showLoading();
+            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Album))');
+            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedAlbumId))($(btn).attr('data-item-id'));
+            update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
+        }
+
+        initMediaLibrary();
     </script>
 }
 

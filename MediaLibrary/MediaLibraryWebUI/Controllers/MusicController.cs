@@ -387,5 +387,17 @@ namespace MediaLibraryWebUI.Controllers
 
             return PartialView("Songs", musicViewModel);
         }
+
+        public async Task<ActionResult> MusicConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
+
+            if (configuration != null)
+            {
+                musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(MusicConfiguration)}.cshtml", musicViewModel.Configuration);
+        }
     }
 }

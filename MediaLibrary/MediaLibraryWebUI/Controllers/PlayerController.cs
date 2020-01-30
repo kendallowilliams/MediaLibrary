@@ -196,5 +196,17 @@ namespace MediaLibraryWebUI.Controllers
                 await dataService.Update(episode);
             }
         }
+
+        public async Task<ActionResult> PlayerConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Player));
+
+            if (configuration != null)
+            {
+                playerViewModel.Configuration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(PlayerConfiguration)}.cshtml", playerViewModel.Configuration);
+        }
     }
 }

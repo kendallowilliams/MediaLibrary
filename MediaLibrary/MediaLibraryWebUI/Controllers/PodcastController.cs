@@ -208,5 +208,17 @@ namespace MediaLibraryWebUI.Controllers
                 }
             }
         }
+
+        public async Task<ActionResult> PodcastConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Podcast));
+
+            if (configuration != null)
+            {
+                podcastViewModel.Configuration = JsonConvert.DeserializeObject<PodcastConfiguration>(configuration.JsonData) ?? new PodcastConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(PodcastConfiguration)}.cshtml", podcastViewModel.Configuration);
+        }
     }
 }

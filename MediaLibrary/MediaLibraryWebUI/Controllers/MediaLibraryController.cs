@@ -61,5 +61,17 @@ namespace MediaLibraryWebUI.Controllers
                 }
             }
         }
+
+        public async Task<ActionResult> MediaLibraryConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaLibraryController).Replace(nameof(Controller), string.Empty));
+
+            if (configuration != null)
+            {
+                mediaLibraryViewModel.Configuration = JsonConvert.DeserializeObject<MediaLibraryConfiguration>(configuration.JsonData) ?? new MediaLibraryConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(MediaLibraryConfiguration)}.cshtml", mediaLibraryViewModel.Configuration);
+        }
     }
 }
