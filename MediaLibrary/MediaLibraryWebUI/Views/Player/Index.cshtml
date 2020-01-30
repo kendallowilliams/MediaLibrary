@@ -102,37 +102,20 @@
         }
     }
 
-    function initPlayer() {
-        var updatePlayCount = (player, callback) => {
-                var id = $(player).attr('data-item-id'),
-                    success = typeof (callback) === 'function' ? callback : () => null;
+    function init() {
+        initPlayers();
+        initPlayerControls();
+        updateSelectedPlayerPage();
+        reload(() => enableDisablePreviousNext());
+    }
 
-                $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(), id: id }, success);
-            },
-            shuffle = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true';
-
-        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('ended', function (e) {
-            updatePlayCount(this, playNext);
-        });
+    function initPlayers() {
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('ended', (e) => updatePlayCount(e.target, playNext));
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()));
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('durationchange', function (e) {
             $('#@(HtmlControlsRepository.PlayerSliderId)').slider('option', 'max', e.target.duration);
             $('#@(HtmlControlsRepository.PlayerTimeId)').text(getTime(e.target.currentTime, e.target.duration));
-        });
-
-        $('#@(HtmlControlsRepository.PlayerSliderId)').on('slide', function (e, ui) {
-            if ($(e.target).attr('data-slide-started') === 'true') {
-                $(getPlayer()).prop('currentTime', ui.value);
-                $('#@(HtmlControlsRepository.PlayerTimeId)').text(getTime(ui.value, $(e.target).slider('option', 'max')));
-            }
-        });
-
-        $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestart', function (e, ui) {
-            $(e.target).attr('data-slide-started', 'true');
-        });
-
-        $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestop', function (e, ui) {
-            $(e.target).attr('data-slide-started', 'false');
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('timeupdate', function (e) {
@@ -152,15 +135,24 @@
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').removeClass('d-none');
         });
 
-        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('error', function (e) {
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('error', (e) => null);
+    }
+
+    function initPlayerControls() {
+        $('#@(HtmlControlsRepository.PlayerSliderId)').on('slide', function (e, ui) {
+            if ($(e.target).attr('data-slide-started') === 'true') {
+                $(getPlayer()).prop('currentTime', ui.value);
+                $('#@(HtmlControlsRepository.PlayerTimeId)').text(getTime(ui.value, $(e.target).slider('option', 'max')));
+            }
         });
 
+        $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestart', (e, ui) => $(e.target).attr('data-slide-started', 'true'));
+        $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestop', (e, ui) => $(e.target).attr('data-slide-started', 'false'));
         $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').on('click', () => playNext());
         $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').on('click', () => playPrevious());
         $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
         $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
-
-        $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').addClass(shuffle ? 'active' : '')
+        $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').addClass(isShuffleEnabled() ? 'active' : '');
 
         $('button[data-repeat-type]').on('click', () => {
             var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
@@ -205,11 +197,15 @@
         });
 
         $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').on('click', () => openFullscreen(getPlayer()));
-
         $('#@(HtmlControlsRepository.PlayerSliderId)').slider({ min: 0, max: 100 });
         $('button[data-repeat-type="' + get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() + '"]').removeClass('d-none');
-        updateSelectedPlayerPage();
-        reload(() => enableDisablePreviousNext());
+    }
+
+    function updatePlayCount(player, callback) {
+        var id = $(player).attr('data-item-id'),
+            success = typeof (callback) === 'function' ? callback : () => null;
+
+        $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(), id: id }, success);
     }
 
     function playNext() {
@@ -373,6 +369,6 @@
         }
     }
 
-    initPlayer();
+    init();
 </script>
 
