@@ -58,6 +58,9 @@
                         data-tooltip="tooltip" title="Muted">
                     <i class="fa fa-volume-mute"></i>
                 </button>
+                <button id="@(HtmlControlsRepository.PlayerFullscreenButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Fullscreen">
+                    <i class="fa fa-expand"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -68,11 +71,15 @@
 <script type="text/javascript" defer="defer">
     function _play(item) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
-            $player = $(getPlayer());
+            $player = $(getPlayer()),
+            type = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
 
         $players.prop('src', '').attr('data-item-id', '');
         $('#@(HtmlControlsRepository.HeaderPlayButtonId)').addClass('d-none');
         $('#@(HtmlControlsRepository.HeaderPauseButtonId)').removeClass('d-none');
+        if (type === '@(nameof(Enums.MediaTypes.Television))') /*then*/ $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').removeClass('d-none');
+        else $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
+        updateSelectedPlayerPage();
 
         if (item) {
             var $item = $(item),
@@ -196,8 +203,11 @@
             update@(nameof(PlayerConfiguration))(() => $(getPlayer()).prop('volume', volume === 0 ? previousVolume / 100.0 : 0));
         });
 
+        $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').on('click', () => openFullscreen(getPlayer()));
+
         $('#@(HtmlControlsRepository.PlayerSliderId)').slider({ min: 0, max: 100 });
         $('button[data-repeat-type="' + get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() + '"]').removeClass('d-none');
+        updateSelectedPlayerPage();
         reload(() => enableDisablePreviousNext());
     }
 
@@ -226,17 +236,11 @@
         }
     }
 
-    function canPlayNext() {
-        return parseInt($('li.active').attr('data-play-index')) < ($('li[data-play-index]').length - 1);
-    }
+    function canPlayNext() { return parseInt($('li.active').attr('data-play-index')) < ($('li[data-play-index]').length - 1); }
 
-    function canPlayPrevious() {
-        return true;
-    }
+    function canPlayPrevious() { return true; }
 
-    function isShuffleEnabled() {
-        return get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true';
-    }
+    function isShuffleEnabled() { return get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true'; }
 
     function enableDisablePreviousNext() {
         $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').prop('disabled', !canPlayNext());
@@ -306,6 +310,27 @@
         update@(nameof(PlayerConfiguration))();
     }
 
+    function updateSelectedPlayerPage() {
+        var selectedMediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
+            selectedPlayerPage = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
+
+        if (selectedMediaType === '@(Enums.MediaTypes.Television)' && selectedPlayerPage === '@(nameof(Enums.PlayerPages.Audio))') {
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Video))');
+        } else if (selectedMediaType !== '@(Enums.MediaTypes.Television)' && selectedPlayerPage === '@(nameof(Enums.PlayerPages.Video))') {
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Audio))');
+        }
+
+        update@(nameof(PlayerConfiguration))(() =>
+            $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)').each((index, element) => {
+                var page = $(element).attr('data-player-page'),
+                    selectedPage = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
+
+                if (page === selectedPage) /*then*/ $(element).parent().removeClass('d-none');
+                else $(element).parent().addClass('d-none');
+            })
+        );
+    }
+
     function getTime(time, duration) {
         var adjustedTime = isNaN(time) ? 0 : time,
             adjustedDuration = isNaN(duration) ? 0 : duration,
@@ -319,6 +344,32 @@
             currentTime = (currentHours > 0 ? String(currentHours).padStart(2, '0') + ':' : '') + String(currentMinutes).padStart(2, '0') + ':' + String(currentSeconds).padStart(2, '0');
 
         return currentTime + '/' + totalTime;
+    }
+
+    /* https://www.w3schools.com/howto/howto_js_fullscreen.asp */
+    function openFullscreen(obj) {
+        if (obj.requestFullscreen) {
+            obj.requestFullscreen();
+        } else if (obj.mozRequestFullScreen) { /* Firefox */
+            obj.mozRequestFullScreen();
+        } else if (obj.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            obj.webkitRequestFullscreen();
+        } else if (obj.msRequestFullscreen) { /* IE/Edge */
+            obj.msRequestFullscreen();
+        }
+    }
+
+    /* https://www.w3schools.com/howto/howto_js_fullscreen.asp */
+    function closeFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { /* Firefox */
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE/Edge */
+            document.msExitFullscreen();
+        }
     }
 
     initPlayer();
