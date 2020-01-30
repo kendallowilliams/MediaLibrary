@@ -14,7 +14,7 @@
             <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")">
                 <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" preload="auto" style="" data-player-page="@(Enums.PlayerPages.Audio)" />
             </div>
-            <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 1 auto; display: flex" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
+            <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 1 auto; display: flex; background-color: black" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
                 <video id="@(HtmlControlsRepository.VideoPlayerId)" preload="auto" style="flex: 1 1 auto" data-player-page="@(Enums.PlayerPages.Video)" />
             </div>
         </div>
