@@ -22,7 +22,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export("Television", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Television), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class TelevisionController : BaseController
     {
         private readonly ITelevisionUIService televisionService;

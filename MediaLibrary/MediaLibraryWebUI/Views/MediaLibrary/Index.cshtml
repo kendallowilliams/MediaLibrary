@@ -13,6 +13,7 @@
     <div id="@(nameof(PlaylistConfiguration))"></div>
     <div id="@(nameof(PodcastConfiguration))"></div>
     <div id="@(nameof(TelevisionConfiguration))"></div>
+    <div id="@(nameof(HomeConfiguration))"></div>
 </div>
 
 @section scripts {
@@ -23,7 +24,8 @@
                 get@(nameof(PlayerConfiguration)) = callback => $('#@(nameof(PlayerConfiguration))').load('@Url.Action(nameof(PlayerConfiguration), nameof(Enums.MediaPages.Player))', callback),
                 get@(nameof(PlaylistConfiguration)) = callback => $('#@(nameof(PlaylistConfiguration))').load('@Url.Action(nameof(PlaylistConfiguration), nameof(Enums.MediaPages.Playlist))', callback),
                 get@(nameof(PodcastConfiguration)) = callback => $('#@(nameof(PodcastConfiguration))').load('@Url.Action(nameof(PodcastConfiguration), nameof(Enums.MediaPages.Podcast))', callback),
-                get@(nameof(TelevisionConfiguration)) = callback => $('#@(nameof(TelevisionConfiguration))').load('@Url.Action(nameof(TelevisionConfiguration), nameof(Enums.MediaPages.Television))', callback);
+                get@(nameof(TelevisionConfiguration)) = callback => $('#@(nameof(TelevisionConfiguration))').load('@Url.Action(nameof(TelevisionConfiguration), nameof(Enums.MediaPages.Television))', callback),
+                get@(nameof(HomeConfiguration)) = callback => $('#@(nameof(HomeConfiguration))').load('@Url.Action(nameof(HomeConfiguration), nameof(Enums.MediaPages.Home))', callback);
 
             get@(nameof(MediaLibraryConfiguration))(() =>
                 get@(nameof(MusicConfiguration))(() =>

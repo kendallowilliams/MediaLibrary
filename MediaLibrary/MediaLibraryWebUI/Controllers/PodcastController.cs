@@ -22,7 +22,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export("Podcast", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Podcast), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PodcastController : BaseController
     {
         private readonly IPodcastUIService podcastUIService;

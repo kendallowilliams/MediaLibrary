@@ -19,7 +19,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export("Playlist", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Playlist), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaylistController : BaseController
     {
         private readonly IPlaylistUIService playlistService;

@@ -15,7 +15,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export("Home", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Home), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class HomeController : BaseController
     {
         private readonly HomeViewModel homeViewModel;

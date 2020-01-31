@@ -19,7 +19,7 @@ using static System.Environment;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export("Player", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Player), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlayerController : BaseController
     {
         private readonly ITransactionService transactionService;

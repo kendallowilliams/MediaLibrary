@@ -25,7 +25,7 @@ using Fody;
 namespace MediaLibraryWebUI.Controllers
 {
     [ConfigureAwait(false)]
-    [Export("Music", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Music), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class MusicController : BaseController
     {
         private readonly IDataService dataService;
