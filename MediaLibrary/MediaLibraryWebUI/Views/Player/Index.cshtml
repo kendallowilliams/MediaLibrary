@@ -91,7 +91,7 @@
                 url = $item.attr('data-play-url'),
                 index = $item.attr('data-play-index'),
                 id = $item.attr('data-item-id'),
-                title = $item.attr('data-title');
+                title = $item.attr('data-title') || '';
 
             $('li[data-play-index].list-group-item').removeClass('active');
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))(index);
@@ -99,7 +99,7 @@
                 $item.addClass('active');
                 $player.attr('data-item-id', id);
                 $player.prop('src', url);
-                $('#@(HtmlControlsRepository.NowPlayingTitleId)').text('- ' + title);
+                $('#@(HtmlControlsRepository.NowPlayingTitleId)').text(title.length > 0 ? '- ' + title : title);
                 updateScrollTop();
                 enableDisablePreviousNext();
                 if (triggerPlay) /*then*/ $player.trigger('play');
