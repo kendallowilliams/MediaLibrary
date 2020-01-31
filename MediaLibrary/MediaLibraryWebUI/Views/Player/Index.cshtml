@@ -260,8 +260,8 @@
     }
 
     function playPrevious() {
-        var previousIndex = isShuffledEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
-                                                  parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
+        var previousIndex = isShuffleEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
+                                                 parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
             $item = $('li[data-play-index="' + previousIndex + '"]');
 
         _play($item[0]);
