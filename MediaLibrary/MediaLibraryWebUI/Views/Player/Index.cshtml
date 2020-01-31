@@ -13,7 +13,7 @@
     </div>
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-body d-flex m-0 p-0 rounded-top" style="flex: 1 1 auto; overflow-y: auto">
-            <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto"></div>
+            <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto; overflow-y: auto"></div>
             <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto" class="bg-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none")">
                 <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" preload="auto" data-player-page="@(Enums.PlayerPages.Audio)" />
             </div>
@@ -289,6 +289,7 @@
         var $item = $('li.active');
 
         if ($item.length > 0) {
+            debugger;
             $('#@(HtmlControlsRepository.PlayerItemsContainerId)').scrollTop($('#@(HtmlControlsRepository.PlayerItemsContainerId)').scrollTop() - $item.position().top * -1);
         }
     }
