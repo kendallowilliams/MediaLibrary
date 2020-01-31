@@ -282,8 +282,7 @@
 
     function reload(callback) {
         var success = () => {
-            setInitialPlayerUrl();
-            updateScrollTop();
+            loadItem($('li.active')[0]);
             $('#@(HtmlControlsRepository.PlayerItemsContainerId) *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             if (typeof callback === 'function') /*then*/ callback();
         };
@@ -298,13 +297,6 @@
         if ($item.length > 0) {
             $('#@(HtmlControlsRepository.PlayerItemsContainerId)').scrollTop($('#@(HtmlControlsRepository.PlayerItemsContainerId)').scrollTop() - $item.position().top * -1);
         }
-    }
-
-    function setInitialPlayerUrl() {
-        var url = $('li.active').attr('data-play-url'),
-            id = $('li.active').attr('data-item-id');
-
-        $(getPlayer()).attr('data-item-id', id).prop('src', url);
     }
 
     function getPlayer() {
