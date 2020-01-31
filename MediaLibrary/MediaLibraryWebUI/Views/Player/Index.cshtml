@@ -8,7 +8,12 @@
 
 <div class="d-flex w-100 h-100 flex-column">
     <div style="flex: 0 0 auto">
-        <h2>Now Playing</h2>
+        <div class="d-flex flex-row">
+            <div style="flex: 0 0 auto"><h2>Now Playing&nbsp;</h2></div>
+            <div style="flex: 0 1 auto; overflow-x: auto">
+                <h2 id="@(HtmlControlsRepository.NowPlayingTitleId)" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap"></h2>
+            </div>
+        </div>
         <hr />
     </div>
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
@@ -59,7 +64,7 @@
                         <i class="fa fa-volume-mute"></i>
                     </button>
                 </span>
-                <button id="@(HtmlControlsRepository.PlayerFullscreenButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")" 
+                <button id="@(HtmlControlsRepository.PlayerFullscreenButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")"
                         data-tooltip="tooltip" title="Fullscreen">
                     <i class="fa fa-expand"></i>
                 </button>
@@ -85,7 +90,8 @@
             var $item = $(item),
                 url = $item.attr('data-play-url'),
                 index = $item.attr('data-play-index'),
-                id = $item.attr('data-item-id');
+                id = $item.attr('data-item-id'),
+                title = $item.attr('data-title');
 
             $('li[data-play-index].list-group-item').removeClass('active');
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))(index);
@@ -93,6 +99,7 @@
                 $item.addClass('active');
                 $player.attr('data-item-id', id);
                 $player.prop('src', url);
+                $('#@(HtmlControlsRepository.NowPlayingTitleId)').text('- ' + title);
                 updateScrollTop();
                 enableDisablePreviousNext();
                 if (triggerPlay) /*then*/ $player.trigger('play');
@@ -141,7 +148,7 @@
 
     function initPlayerControls() {
         var $volumeSlider = $('<div id="@(HtmlControlsRepository.VolumeSliderId)"></div>');
-        
+
         $('#@(HtmlControlsRepository.PlayerSliderId)').slider({ min: 0, max: 100 });
         $volumeSlider.slider({
             min: 0,
@@ -208,7 +215,7 @@
         $('#@(HtmlControlsRepository.PlayerVolumeButtonId), #@(HtmlControlsRepository.PlayerMuteButtonId)').on('click', function (e) {
             var volume = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()),
                 previousVolume = parseInt($('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume'));
-            
+
             $('#@(HtmlControlsRepository.PlayerVolumeButtonId), #@(HtmlControlsRepository.PlayerMuteButtonId)').addClass('d-none');
             $(volume === 0 ? '#@(HtmlControlsRepository.PlayerVolumeButtonId)' : '#@(HtmlControlsRepository.PlayerMuteButtonId)').removeClass('d-none');
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))(volume === 0 ? previousVolume : 0);

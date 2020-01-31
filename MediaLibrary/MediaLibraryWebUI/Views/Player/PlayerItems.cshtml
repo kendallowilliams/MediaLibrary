@@ -6,7 +6,7 @@
         foreach (var item in Model.Songs.Select((item, index) => new { Song = item, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Music", new { item.Song.Id })"
-                data-play-index="@(item.Index)" data-item-id="@(item.Song.Id)">
+                data-play-index="@(item.Index)" data-item-id="@(item.Song.Id)" data-title="@(item.Song.Title)">
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-0">@(item.Song.Title)</h5>
@@ -26,7 +26,7 @@
         foreach (var item in Model.PodcastItems.Select((item, index) => new { PodcastItem = item, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Podcast", new { item.PodcastItem.Id })"
-                data-play-index="@(item.Index)" data-item-id="@(item.PodcastItem.Id)">
+                data-play-index="@(item.Index)" data-item-id="@(item.PodcastItem.Id)" data-title="@(item.PodcastItem.Title)">
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-0">@(item.PodcastItem.Title)</h5>
@@ -46,7 +46,7 @@
         foreach (var item in Model.Episodes.Select((item, index) => new { Episode = item, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Television", new { item.Episode.Id })"
-                data-play-index="@(item.Index)" data-item-id="@(item.Episode.Id)">
+                data-play-index="@(item.Index)" data-item-id="@(item.Episode.Id)" data-title="@(item.Episode.Title)">
                 <div class="media">
                     <div class="media-body">
                         <h5 class="mt-0">@(item.Episode.Title)</h5>
