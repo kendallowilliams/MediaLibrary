@@ -69,7 +69,7 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    function loadItem(item, triggerPlay) {
+    function loadItem(item, triggerPlay = false) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
             $player = $(getPlayer()),
             type = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
@@ -126,6 +126,7 @@
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('play', function (e) {
+            $(e.target).attr('data-playing', 'true');
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').removeClass('d-none');
         });
@@ -172,7 +173,7 @@
         $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').on('click', () => loadNext());
         $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').on('click', () => loadPrevious());
         $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').on('click', () => $(getPlayer()).attr('data-playing', 'false').trigger('pause'));
-        $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => $(getPlayer()).attr('data-playing', 'true').trigger('play'));
+        $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
         $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').addClass(isShuffleEnabled() ? 'active' : '');
         $('button[data-repeat-type]').on('click', () => {
             var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
@@ -231,7 +232,7 @@
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
 
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
-            // Do nothing
+            $(getPlayer()).trigger('play');
         } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
             if (nextIndex === $('li[data-play-index]').length) {
                 $item = $('li[data-play-index="0"]');
@@ -245,6 +246,8 @@
 
             if (nextIndex !== $('li[data-play-index]').length) {
                 loadItem($item[0], isPlaying());
+            } else {
+                $(getPlayer()).attr('data-playing', 'false');
             }
         }
     }
