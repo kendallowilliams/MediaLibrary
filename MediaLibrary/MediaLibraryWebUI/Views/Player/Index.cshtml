@@ -268,7 +268,7 @@
         loadItem($item[0], isPlaying());
     }
 
-    function canPlayNext() { return parseInt($('li.active').attr('data-play-index')) < ($('li[data-play-index]').length - 1); }
+    function canPlayNext() { return isShuffleEnabled() || parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) < ($('li[data-play-index]').length - 1); }
 
     function canPlayPrevious() { return isShuffleEnabled() || parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) > 0; }
 
