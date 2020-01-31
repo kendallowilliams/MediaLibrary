@@ -74,7 +74,7 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    function loadItem(item, triggerPlay = false) {
+    function loadItem(item, triggerPlay) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
             $player = $(getPlayer()),
             type = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
@@ -113,7 +113,7 @@
         initMediaPlayers();
         initPlayerControls();
         updateSelectedPlayerPage();
-        reload(() => enableDisablePreviousNext());
+        reload(() => loadItem());
     }
 
     function initMediaPlayers() {
@@ -282,7 +282,6 @@
 
     function reload(callback) {
         var success = () => {
-            loadItem($('li.active')[0]);
             $('#@(HtmlControlsRepository.PlayerItemsContainerId) *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
             if (typeof callback === 'function') /*then*/ callback();
         };
