@@ -37,8 +37,7 @@
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.Track.Title)">
                                 <div class="media-body">
                                     <h5 class="mt-0">@(list.Track.Title)</h5>
-                                    <span></span><span class="text-muted"></span>
-                                    <span></span>
+                                    <span data-item-id="@(list.Track.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(list.Track.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(list.Track.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(list.Track.Artist?.Name ?? "Unknown Artist")</span>
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-secondary" data-play-id="@(list.Track.Id)" onclick="play(this)"

@@ -108,8 +108,10 @@ namespace MediaLibraryWebUI.Controllers
 
         private async Task<ActionResult> Get(int id)
         {
-            playlistViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>>(item => item.Id == id, 
-                                                                                                          playlist => playlist.PlaylistTracks.Select(list => list.Track));
+            playlistViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>, IEnumerable<Album>, IEnumerable<Artist>>(item => item.Id == id, 
+                                                                                                     playlist => playlist.PlaylistTracks.Select(list => list.Track),
+                                                                                                     item => item.PlaylistTracks.Select(list => list.Track.Album),
+                                                                                                     item => item.PlaylistTracks.Select(list => list.Track.Artist));
 
             return PartialView("Playlist", playlistViewModel);
         }
