@@ -112,7 +112,6 @@ namespace MediaLibraryWebUI.Controllers
                                                                                                      playlist => playlist.PlaylistTracks.Select(list => list.Track),
                                                                                                      item => item.PlaylistTracks.Select(list => list.Track.Album),
                                                                                                      item => item.PlaylistTracks.Select(list => list.Track.Artist));
-
             return PartialView("Playlist", playlistViewModel);
         }
 
