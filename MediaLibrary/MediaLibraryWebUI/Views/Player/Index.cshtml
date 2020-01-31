@@ -210,6 +210,7 @@
                 } else {
                     $btns.removeClass('active');
                 }
+                enableDisablePreviousNext();
             });
         });
         $('#@(HtmlControlsRepository.PlayerVolumeButtonId), #@(HtmlControlsRepository.PlayerMuteButtonId)').on('click', function (e) {
@@ -269,7 +270,7 @@
 
     function canPlayNext() { return parseInt($('li.active').attr('data-play-index')) < ($('li[data-play-index]').length - 1); }
 
-    function canPlayPrevious() { return true; }
+    function canPlayPrevious() { return isShuffleEnabled() || parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) > 0; }
 
     function isShuffleEnabled() { return get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true'; }
 
