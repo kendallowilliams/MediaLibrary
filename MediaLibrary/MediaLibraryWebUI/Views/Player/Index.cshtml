@@ -69,7 +69,7 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    function _play(item) {
+    function loadItem(item, triggerPlay) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
             $player = $(getPlayer()),
             type = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
@@ -92,12 +92,13 @@
             update@(nameof(PlayerConfiguration))(function () {
                 $item.addClass('active');
                 $player.attr('data-item-id', id);
-                $player.prop('src', url).trigger('play');
+                $player.prop('src', url);
                 updateScrollTop();
                 enableDisablePreviousNext();
+                if (triggerPlay) /*then*/ $player.trigger('play');
             });
         } else if ($('li[data-play-index].active').length === 1) {
-            _play($('li[data-play-index].active')[0]);
+            loadItem($('li[data-play-index].active')[0], triggerPlay);
         }
     }
 
@@ -109,7 +110,7 @@
     }
 
     function initMediaPlayers() {
-        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('ended', (e) => updatePlayCount(e.target, playNext));
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('ended', (e) => updatePlayCount(e.target, loadNext));
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()) / 100.0);
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('durationchange', function (e) {
@@ -168,10 +169,10 @@
         });
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestart', (e, ui) => $(e.target).attr('data-slide-started', 'true'));
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestop', (e, ui) => $(e.target).attr('data-slide-started', 'false'));
-        $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').on('click', () => playNext());
-        $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').on('click', () => playPrevious());
-        $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').on('click', () => $(getPlayer()).trigger('pause'));
-        $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
+        $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').on('click', () => loadNext());
+        $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').on('click', () => loadPrevious());
+        $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').on('click', () => $(getPlayer()).attr('data-playing', 'false').trigger('pause'));
+        $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => $(getPlayer()).attr('data-playing', 'true').trigger('play'));
         $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').addClass(isShuffleEnabled() ? 'active' : '');
         $('button[data-repeat-type]').on('click', () => {
             var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
@@ -223,29 +224,37 @@
         $.post('@Url.Action("UpdatePlayCount", "Player")', { mediaType: get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(), id: id }, success);
     }
 
-    function playNext() {
+    function loadNext() {
         var nextIndex = isShuffleEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
                                              parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
             $item = null,
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
 
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
-            _play();
+            // Do nothing
         } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
             if (nextIndex === $('li[data-play-index]').length) {
                 $item = $('li[data-play-index="0"]');
-                _play($item[0]);
+                loadItem($item[0], isPlaying());
             } else {
                 $item = $('li[data-play-index="' + nextIndex + '"]');
-                _play($item[0]);
+                loadItem($item[0], isPlaying());
             }
         } else {
             $item = $('li[data-play-index=' + nextIndex + ']');
 
             if (nextIndex !== $('li[data-play-index]').length) {
-                _play($item[0]);
+                loadItem($item[0], isPlaying());
             }
         }
+    }
+
+    function loadPrevious() {
+        var previousIndex = isShuffleEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
+                                                 parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
+            $item = $('li[data-play-index="' + previousIndex + '"]');
+
+        loadItem($item[0], isPlaying());
     }
 
     function canPlayNext() { return parseInt($('li.active').attr('data-play-index')) < ($('li[data-play-index]').length - 1); }
@@ -254,17 +263,11 @@
 
     function isShuffleEnabled() { return get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true'; }
 
+    function isPlaying() { return $(getPlayer()).attr('data-playing') === 'true'; }
+
     function enableDisablePreviousNext() {
         $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').prop('disabled', !canPlayNext());
         $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').prop('disabled', !canPlayPrevious());
-    }
-
-    function playPrevious() {
-        var previousIndex = isShuffleEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
-                                                 parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
-            $item = $('li[data-play-index="' + previousIndex + '"]');
-
-        _play($item[0]);
     }
 
     function reload(callback) {
