@@ -247,7 +247,7 @@
             if (nextIndex !== $('li[data-play-index]').length) {
                 loadItem($item[0], isPlaying());
             } else {
-                $(getPlayer()).attr('data-playing', 'false');
+                $('#@(HtmlControlsRepository.PlayerPauseButtonId)').trigger('click');
             }
         }
     }
