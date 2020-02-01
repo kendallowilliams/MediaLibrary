@@ -316,13 +316,13 @@
             $playerItems.addClass('d-none');
             $btn.removeClass('active');
             page = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
-            if (page === '@(nameof(Enums.PlayerPages.Video))') /*then*/ $('#@(HtmlControlsRepository.PlayerItemsContainerId)').removeClass('d-none');
+            if (page === '@(nameof(Enums.PlayerPages.Video))') /*then*/ $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').removeClass('d-none');
         } else {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Index))');
             $player.parent().addClass('d-none');
             $playerItems.removeClass('d-none');
             $btn.addClass('active');
-            $('#@(HtmlControlsRepository.PlayerItemsContainerId)').addClass('d-none');
+            $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
         }
         update@(nameof(PlayerConfiguration))();
     }
