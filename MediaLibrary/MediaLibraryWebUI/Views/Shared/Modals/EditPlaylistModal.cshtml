@@ -34,8 +34,10 @@
         var data = { id: $('#txtPlaylistId').val(), name: $('#txtPlaylistName').val() },
             success = () => loadView('@(nameof(Enums.MediaPages.Playlist))');
 
-        $('#@(HtmlControlsRepository.EdiPlaylistModalId)').modal('hide');
-        showLoading();
-        $.post('@Url.Action("EditPlaylist", "Playlist")', data, success);
+        $('#@(HtmlControlsRepository.EdiPlaylistModalId)').modal('hide').on('hidden.bs.modal', () => {
+            showLoading();
+            $('#txtPlaylistId, #txtPlaylistName').val('');
+            $.post('@Url.Action("EditPlaylist", "Playlist")', data, success);
+        });
     }
 </script>
