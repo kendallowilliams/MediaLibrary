@@ -8,9 +8,9 @@
             <li class="list-group-item">
                 <div class="media">
                     <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
-                    <div class="media-body">
-                        <h5 class="mt-0">@(item.Title)</h5>
-                        <span>@(item.PublishDate)</span>
+                    <div class="media-body d-flex flex-column" style="overflow-x: auto">
+                        <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(item.Title)</h5>
+                        <span style="flex: 0 0 auto">@(item.PublishDate)</span>
                     </div>
                     <div>
                         <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="@(item.Description)" data-placement="left"
