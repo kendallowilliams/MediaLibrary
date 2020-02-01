@@ -14,7 +14,7 @@
             <button class="btn btn-outline-secondary" onclick="refreshClicked()" data-tooltip="tooltip" title="Refresh podcast"><i class="fa fa-sync"></i></button>
             <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))"
                     data-tooltip="tooltip" title="Delete podcast" data-refresh-view="@(nameof(Enums.MediaPages.Podcast))" data-delete-type="podcast"
-                    data-target="#modalDeleteItem" data-toggle="modal">
+                    data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                 <i class="fa fa-trash"></i>
             </button>
         </div>

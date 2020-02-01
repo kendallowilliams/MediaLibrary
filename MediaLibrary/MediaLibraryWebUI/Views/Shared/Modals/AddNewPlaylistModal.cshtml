@@ -1,4 +1,6 @@
-﻿<div class="modal fade" id="modalNewPlaylist" tabindex="-1" role="dialog" aria-labelledby="modalNewPlaylistTitle" aria-hidden="true">
+﻿@using MediaLibraryWebUI.Repositories
+
+<div class="modal fade" id="@(HtmlControlsRepository.NewPlaylistModalId)" tabindex="-1" role="dialog" aria-labelledby="modalNewPlaylistTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -22,7 +24,7 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    $('#modalNewPlaylist').on('show.bs.modal', function (e) {
+    $('#@(HtmlControlsRepository.NewPlaylistModalId)').on('show.bs.modal', function (e) {
         $('#txtNewPlaylist').val('');
     })
 
@@ -31,8 +33,8 @@
             hideLoading();
             loadView('@(nameof(Enums.MediaPages.Playlist))');
         };
-    
-        $('#modalNewPlaylist').modal('hide').on('hidden.bs.modal', function () {
+
+        $('#@(HtmlControlsRepository.NewPlaylistModalId)').modal('hide').on('hidden.bs.modal', function () {
             $.post('@Url.Action("AddPlaylist", "Playlist")', { playlistName: $('#txtNewPlaylist').val() }, success);
         });
     }

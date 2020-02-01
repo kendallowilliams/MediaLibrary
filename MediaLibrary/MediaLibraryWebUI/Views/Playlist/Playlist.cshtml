@@ -1,4 +1,5 @@
 ﻿@using MediaLibraryWebUI.Models.Configurations
+@using MediaLibraryWebUI.Repositories
 @model MediaLibraryWebUI.Models.PlaylistViewModel
 
 <div class="h-100 d-flex flex-column">
@@ -6,7 +7,7 @@
         <h2>@(Model.SelectedPlaylist.Name) playlist</h2>
         <div>
             <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
-            <button class="btn btn-outline-secondary" title="Edit playlist" data-toggle="modal" data-target="#modalEditPlaylist" data-item-id="@(Model.SelectedPlaylist.Id)"
+            <button class="btn btn-outline-secondary" title="Edit playlist" data-toggle="modal" data-target="#@(HtmlControlsRepository.EdiPlaylistModalId)" data-item-id="@(Model.SelectedPlaylist.Id)"
                     data-item-name="@(Model.SelectedPlaylist.Name)" data-tooltip="tooltip">
                 <i class="fa fa-edit"></i>
             </button>
@@ -14,7 +15,7 @@
                data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
             <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist","Playlist", new { Model.SelectedPlaylist.Id }))"
                     data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))" data-toggle="modal"
-                    data-target="#modalDeleteItem">
+                    data-target="#@(HtmlControlsRepository.DeleteModalId)">
                 <i class="fa fa-trash"></i>
             </button>
         </div>
@@ -48,30 +49,30 @@
                                     </button>
                                     <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
                                             data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))"
-                                            data-toggle="modal" data-target="#modalDeleteItem">
+                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </div>
                             </div>
                         </li>
-                        }
-                    </ul>
                     }
-                    else
-                    {
-                    <span>No songs added.</span>
-                    }
-                </div>
-            </div>
+                </ul>
+            }
+            else
+            {
+                <span>No songs added.</span>
+            }
         </div>
+    </div>
+</div>
 
-        @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
-        @Html.Partial("~/Views/Shared/Modals/EditPlaylistModal.cshtml")
+@Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
+@Html.Partial("~/Views/Shared/Modals/EditPlaylistModal.cshtml")
 
-        <script type="text/javascript" defer="defer">
+<script type="text/javascript" defer="defer">
     function backClicked() {
         showLoading();
         set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistPage))('@(nameof(Enums.PlaylistPages.Index))');
         update@(nameof(PlaylistConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Playlist))'));
     }
-        </script>
+</script>

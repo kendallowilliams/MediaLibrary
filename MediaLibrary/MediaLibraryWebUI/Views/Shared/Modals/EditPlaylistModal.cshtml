@@ -1,4 +1,6 @@
-﻿<div class="modal fade" id="modalEditPlaylist" tabindex="-1" role="dialog" aria-labelledby="modalEditPlaylistTitle" aria-hidden="true">
+﻿@using MediaLibraryWebUI.Repositories
+
+<div class="modal fade" id="@(HtmlControlsRepository.EdiPlaylistModalId)" tabindex="-1" role="dialog" aria-labelledby="modalEditPlaylistTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,7 +17,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" onclick="editPlaylist()"  data-tooltip="tooltip" title="Save playlist">Save</button>
+                <button type="button" class="btn btn-outline-primary" onclick="editPlaylist()" data-tooltip="tooltip" title="Save playlist">Save</button>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-tooltip="tooltip" title="Cancel">Close</button>
             </div>
         </div>
@@ -23,7 +25,7 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    $('#modalEditPlaylist').on('show.bs.modal', function (e) {
+    $('#@(HtmlControlsRepository.EdiPlaylistModalId)').on('show.bs.modal', function (e) {
         $('#txtPlaylistId').val($(e.relatedTarget).attr('data-item-id'));
         $('#txtPlaylistName').val($(e.relatedTarget).attr('data-item-name'));
     })
@@ -32,7 +34,7 @@
         var data = { id: $('#txtPlaylistId').val(), name: $('#txtPlaylistName').val() },
             success = () => loadView('@(nameof(Enums.MediaPages.Playlist))');
 
-        $('#modalEditPlaylist').modal('hide');
+        $('#@(HtmlControlsRepository.EdiPlaylistModalId)').modal('hide');
         showLoading();
         $.post('@Url.Action("EditPlaylist", "Playlist")', data, success);
     }

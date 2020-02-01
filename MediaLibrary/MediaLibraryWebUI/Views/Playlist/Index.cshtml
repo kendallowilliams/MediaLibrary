@@ -1,4 +1,5 @@
 ﻿@using MediaLibraryWebUI.Models.Configurations
+@using MediaLibraryWebUI.Repositories
 @model MediaLibraryWebUI.Models.PlaylistViewModel
 
 @{
@@ -9,7 +10,7 @@
     <div style="flex: 0 0 auto">
         <h2>Playlists</h2>
         <div>
-            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPlaylist" data-tooltip="tooltip" title="Add playlist"><i class="fa fa-plus"></i></button>
+            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewPlaylistModalId)" data-tooltip="tooltip" title="Add playlist"><i class="fa fa-plus"></i></button>
             @Html.DropDownListFor(x => x.Configuration.SelectedPlaylistSort,
                                  Model.PlaylistSortItems,
                                  null,
@@ -56,7 +57,7 @@
                                             </button>
                                             <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
                                                     data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(Enums.MediaPages.Playlist))"
-                                                    data-target="#modalDeleteItem" data-toggle="modal">
+                                                    data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </div>

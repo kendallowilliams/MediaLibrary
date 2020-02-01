@@ -1,6 +1,7 @@
-﻿@using MediaLibraryWebUI.Models.Data
+﻿@using MediaLibraryWebUI.Repositories
+@using MediaLibraryWebUI.Models.Data
 
-<div class="modal fade" id="modalEditSong" role="dialog" aria-labelledby="modalEditSongTitle" aria-hidden="true">
+<div class="modal fade" id="@(HtmlControlsRepository.EditSongModalId)" role="dialog" aria-labelledby="modalEditSongTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -48,7 +49,7 @@
     function loadEditSongModal(id) {
         var success = function (data) {
             clearEditSongModal();
-            $('#txtEditSongTitle').text(data.@(nameof(Song.Title)) || 'Song')
+            $('#txtEditSong@(nameof(Song.Title))').text(data.@(nameof(Song.Title)) || 'Song')
             $('#txtEdit@(nameof(Song.Id))').val(data.@(nameof(Song.Id)));
             $('#txtEdit@(nameof(Song.Title))').val(data.@(nameof(Song.Title)));
             $('#txtEdit@(nameof(Song.Album))').val(data.@(nameof(Song.Album)));
@@ -60,7 +61,7 @@
     }
 
     function clearEditSongModal() {
-        $('#txtEditSongTitle').text('Song')
+        $('#txtEditSong@(nameof(Song.Title))').text('Song')
         $('#txtEdit@(nameof(Song.Id))').val();
         $('#txtEdit@(nameof(Song.Title))').val();
         $('#txtEdit@(nameof(Song.Album))').val();
@@ -78,12 +79,12 @@
                 loadView('@(nameof(Enums.MediaPages.Music))');
             };
 
-        $('#modalEditSong').modal('hide');
+        $('#@(HtmlControlsRepository.EditSongModalId)').modal('hide');
         showLoading();
         $.post('@Url.Action("UpdateSong", "Music")', data, success);
     }
 
-    $('#modalEditSong').on('show.bs.modal', function (e) {
+    $('#@(HtmlControlsRepository.EditSongModalId)').on('show.bs.modal', function (e) {
         var id = $(e.relatedTarget).attr('data-item-id');
 
         loadEditSongModal(id);

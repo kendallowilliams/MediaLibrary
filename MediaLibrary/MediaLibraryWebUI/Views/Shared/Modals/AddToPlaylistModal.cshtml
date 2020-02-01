@@ -1,6 +1,7 @@
-﻿@model MediaLibraryWebUI.Models.MusicViewModel
+﻿@using MediaLibraryWebUI.Repositories
+@model MediaLibraryWebUI.Models.MusicViewModel
 
-<div class="modal fade" id="modalAddToPlaylist" role="dialog" aria-labelledby="modalAddToPlaylistTitle" aria-hidden="true">
+<div class="modal fade" id="@(HtmlControlsRepository.AddToPlaylistModalId)" role="dialog" aria-labelledby="modalAddToPlaylistTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,7 +20,7 @@
                     {
                         <li data-playlist-item="enabled" data-playlist-id="@(playlist.Id)" class="list-group-item list-group-item-action" data-tooltip="tooltip" title="@(playlist.Name)"
                             onclick="addToPlaylist(this)">@(playlist.Name)</li>
-                    }
+                        }
                 </ul>
             </div>
         </div>
@@ -28,7 +29,7 @@
 
 <script type="text/javascript" defer="defer">
     $(function () {
-        $('#modalAddToPlaylist').on('show.bs.modal', function (e) {
+        $('#@(HtmlControlsRepository.AddToPlaylistModalId)').on('show.bs.modal', function (e) {
             var $btn = $(e.relatedTarget),
                 url = $btn.attr('data-playlist-url'),
                 id = $btn.attr('data-item-id');
@@ -36,7 +37,7 @@
             $('[data-playlist-item="enabled"]').attr('data-item-id', id);
         });
 
-        $('#modalAddToPlaylist').on('hide.bs.modal', function (e) {
+        $('#@(HtmlControlsRepository.AddToPlaylistModalId)').on('hide.bs.modal', function (e) {
             $('[data-playlist-item="enabled"]').attr('data-playlist-url', '');
             $('[data-playlist-item="enabled"]').attr('data-item-id', '');
         });
@@ -48,6 +49,6 @@
             id = $btn.attr('data-item-id'),
             playlistId = $btn.attr('data-playlist-id');
 
-        $.post(url, { playlistId, itemId: id }, () => $('#modalAddToPlaylist').modal('hide'));
+        $.post(url, { playlistId, itemId: id }, () => $('#@(HtmlControlsRepository.AddToPlaylistModalId)').modal('hide'));
     }
 </script>

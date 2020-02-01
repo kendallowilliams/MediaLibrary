@@ -1,6 +1,7 @@
-﻿@model MediaLibraryWebUI.Models.MusicViewModel
+﻿@using MediaLibraryWebUI.Repositories
+@model MediaLibraryWebUI.Models.MusicViewModel
 
-<div class="modal fade" id="modalAddNewSong" role="dialog" aria-labelledby="modalAddNewSongTitle" aria-hidden="true">
+<div class="modal fade" id="@(HtmlControlsRepository.NewSongModalId)" role="dialog" aria-labelledby="modalAddNewSongTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,7 +25,7 @@
 </div>
 
 <script type="text/javascript" defer="defer">
-    $('#modalAddNewSong').on('show.bs.modal', function (e) {
+    $('#@(HtmlControlsRepository.NewSongModalId)').on('show.bs.modal', function (e) {
         $('#inpNewSong').val('');
     });
 
@@ -33,7 +34,7 @@
             success = () => loadView('@(nameof(Enums.MediaPages.Music))');
 
         if ($('#inpNewSong').prop('files').length > 0) {
-            $('#modalAddNewSong').modal('hide');
+            $('#@(HtmlControlsRepository.NewSongModalId)').modal('hide');
             showLoading();
             data.append("file", $('#inpNewSong').prop('files')[0]);
             $.ajax({
@@ -45,7 +46,7 @@
                 success: success
             });
         } else {
-            $('#modalAddNewSong').modal('hide');
+            $('#@(HtmlControlsRepository.NewSongModalId)').modal('hide');
         }
     }
 </script>

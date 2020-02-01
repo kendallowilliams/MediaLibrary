@@ -1,4 +1,6 @@
-﻿<div class="modal" id="loadingModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+﻿@using MediaLibraryWebUI.Repositories
+
+<div class="modal" id="@(HtmlControlsRepository.LoadingModalId)" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
      data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered justify-content-center">
         <div class="spinner-border" role="status">
@@ -9,7 +11,7 @@
 
 <script type="text/javascript">
     function showLoading() {
-        var $modal = $('#loadingModal'),
+        var $modal = $('#@(HtmlControlsRepository.LoadingModalId)'),
             processCount = parseInt($modal.attr('data-process-count'));
 
         if (!isNaN(processCount)) {
@@ -22,7 +24,7 @@
     }
 
     function hideLoading() {
-        var $modal = $('#loadingModal'),
+        var $modal = $('#@(HtmlControlsRepository.LoadingModalId)'),
             processCount = parseInt($modal.attr('data-process-count'));
 
         if (!isNaN(processCount)) {

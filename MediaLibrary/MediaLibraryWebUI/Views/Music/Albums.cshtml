@@ -1,4 +1,5 @@
 ﻿@model MediaLibraryWebUI.Models.MusicViewModel
+@using MediaLibraryWebUI.Repositories
 
 @if (Model.AlbumGroups.Any())
 {
@@ -30,7 +31,7 @@
                                             <i class="fa fa-list"></i>
                                         </button>
                                         <button type="button" class="btn btn-outline-secondary @(Model.Playlists.Any() ? string.Empty : "d-none")" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))"
-                                                data-item-id="@(album.Id)" data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist">
+                                                data-item-id="@(album.Id)" data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </div>

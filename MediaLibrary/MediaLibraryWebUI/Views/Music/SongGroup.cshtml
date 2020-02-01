@@ -1,4 +1,5 @@
 ﻿@using MediaLibraryDAL.DbContexts
+@using MediaLibraryWebUI.Repositories
 @model (IGrouping<string, Track> Group, int PlaylistCount)
 
 <ul class="list-group list-group-flush">
@@ -18,12 +19,12 @@
                             data-tooltip="tooltip" title="Play">
                         <i class="fa fa-play"></i>
                     </button>
-                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalEditSong" data-item-id="@(song.Id)" data-tooltip="tooltip"
+                    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.EditSongModalId)" data-item-id="@(song.Id)" data-tooltip="tooltip"
                             title="Edit">
                         <i class="fa fa-edit"></i>
                     </button>
                     <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
-                            data-toggle="modal" data-target="#modalAddToPlaylist" data-tooltip="tooltip" title="Add to playlist" @(Model.PlaylistCount == 0 ? "disabled=\"disabled\"" : string.Empty)>
+                            data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist" @(Model.PlaylistCount == 0 ? "disabled=\"disabled\"" : string.Empty)>
                         <i class="fa fa-plus"></i>
                     </button>
                 </div>
