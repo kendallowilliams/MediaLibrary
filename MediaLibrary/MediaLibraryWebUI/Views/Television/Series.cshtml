@@ -1,4 +1,5 @@
 ﻿@using MediaLibraryWebUI.Models.Configurations
+@using MediaLibraryWebUI.Repositories
 @model MediaLibraryWebUI.Models.TelevisionViewModel
 
 <div class="h-100 d-flex flex-column">
@@ -21,7 +22,7 @@
                 <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="+">&raquo;</a></li>
             </ul>
         </div>
-        <div class="card-body m-0 p-0" id="seasonView" style="flex: 1 1 auto; overflow-y: auto"></div>
+        <div class="card-body m-0 p-0" id="@(HtmlControlsRepository.SeasonViewId)" style="flex: 1 1 auto; overflow-y: auto"></div>
     </div>
 </div>
 
@@ -35,7 +36,7 @@
     function loadSeasonView(item) {
         var success = () => {
                 $(item).parent('li.page-item:first').addClass('active');
-                $('#seasonView *[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
+                $('#@(HtmlControlsRepository.SeasonViewId) *[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
                 hideLoading();
             },
             series = @(Model.SelectedSeries.Id),
@@ -44,8 +45,8 @@
         if (item) {
             showLoading();
             set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeason))(season);
-            $('#seasonView *[data-tooltip="tooltip"]').tooltip('dispose');
-            $('#seasonView').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
+            $('#@(HtmlControlsRepository.SeasonViewId) *[data-tooltip="tooltip"]').tooltip('dispose');
+            $('#@(HtmlControlsRepository.SeasonViewId)').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
         }
     }
 

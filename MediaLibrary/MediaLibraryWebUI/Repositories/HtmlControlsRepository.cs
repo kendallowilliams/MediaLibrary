@@ -10,6 +10,8 @@ namespace MediaLibraryWebUI.Repositories
         public static string HomeViewId { get => "home-view"; }
         public static string PlayerViewId { get => "player-view"; }
         public static string MediaViewId { get => "media-view"; }
+        public static string PodcastViewId { get => "podcast-view"; }
+        public static string SeasonViewId { get => "season-view"; }
         public static string MusicPlayerId { get => "music-player"; }
         public static string VideoPlayerId { get => "video-player"; }
         public static string HeaderControlsContainerId { get => "header-controls-container"; }
