@@ -25,9 +25,9 @@
                         <li class="list-group-item">
                             <div class="media">
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(artist.Name)">
-                                <div class="media-body">
-                                    <h5 class="mt-0">@(artist.Name)</h5>
-                                    <span class="text-muted">@(txtAlbums)</span>
+                                <div class="media-body d-flex flex-column" style="overflow-x: auto">
+                                    <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(artist.Name)</h5>
+                                    <span style="cursor: pointer; flex: 0 0 auto">@(txtAlbums)</span>
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="View artist" data-item-id="@(artist.Id)" onclick="artistClicked(this)">
