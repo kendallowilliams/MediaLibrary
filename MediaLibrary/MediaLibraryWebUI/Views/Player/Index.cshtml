@@ -82,7 +82,6 @@
         $players.prop('src', '').attr('data-item-id', '');
         if (type === '@(nameof(Enums.MediaTypes.Television))') /*then*/ $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').removeClass('d-none');
         else $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
-        updateSelectedPlayerPage();
 
         if (item) {
             var $item = $(item),
@@ -96,10 +95,10 @@
             update@(nameof(PlayerConfiguration))(function () {
                 $item.addClass('active');
                 $player.attr('data-item-id', id);
-                $player.prop('src', url);
                 $('#@(HtmlControlsRepository.NowPlayingTitleId)').text(title.length > 0 ? '- ' + title : title);
                 updateScrollTop();
                 enableDisablePreviousNext();
+                $player.prop('src', url);
                 if (triggerPlay) /*then*/ $player.trigger('play');
             });
         } else if ($('li[data-play-index].active').length === 1) {
@@ -110,7 +109,6 @@
     function initPlayer() {
         initMediaPlayers();
         initPlayerControls();
-        updateSelectedPlayerPage();
         reload(() => loadItem());
     }
 
@@ -282,6 +280,7 @@
     function reload(callback) {
         var success = () => {
             $('#@(HtmlControlsRepository.PlayerItemsContainerId) *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+            updateSelectedPlayerPage();
             if (typeof callback === 'function') /*then*/ callback();
         };
 
@@ -335,15 +334,17 @@
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Audio))');
         }
 
-        update@(nameof(PlayerConfiguration))(() =>
-            $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)').each((index, element) => {
-                var page = $(element).attr('data-player-page'),
-                    selectedPage = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
+        if (selectedPlayerPage !== get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))()) {
+            update@(nameof(PlayerConfiguration))(() =>
+                $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)').each((index, element) => {
+                    var page = $(element).attr('data-player-page'),
+                        selectedPage = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
 
-                if (page === selectedPage) /*then*/ $(element).parent().removeClass('d-none');
-                else $(element).parent().addClass('d-none');
-            })
-        );
+                    if (page === selectedPage) /*then*/ $(element).parent().removeClass('d-none');
+                    else $(element).parent().addClass('d-none');
+                })
+            );
+        }
     }
 
     function getTime(time, duration) {
