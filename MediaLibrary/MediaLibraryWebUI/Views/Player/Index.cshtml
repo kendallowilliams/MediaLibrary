@@ -80,8 +80,6 @@
             type = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
 
         $players.prop('src', '').attr('data-item-id', '');
-        $('#@(HtmlControlsRepository.HeaderPlayButtonId)').addClass('d-none');
-        $('#@(HtmlControlsRepository.HeaderPauseButtonId)').removeClass('d-none');
         if (type === '@(nameof(Enums.MediaTypes.Television))') /*then*/ $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').removeClass('d-none');
         else $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
         updateSelectedPlayerPage();
