@@ -19,7 +19,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export("Playlist", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Playlist), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaylistController : BaseController
     {
         private readonly IPlaylistUIService playlistService;
@@ -108,9 +108,10 @@ namespace MediaLibraryWebUI.Controllers
 
         private async Task<ActionResult> Get(int id)
         {
-            playlistViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>>(item => item.Id == id, 
-                                                                                                          playlist => playlist.PlaylistTracks.Select(list => list.Track));
-
+            playlistViewModel.SelectedPlaylist = await dataService.Get<Playlist, IEnumerable<Track>, IEnumerable<Album>, IEnumerable<Artist>>(item => item.Id == id, 
+                                                                                                     playlist => playlist.PlaylistTracks.Select(list => list.Track),
+                                                                                                     item => item.PlaylistTracks.Select(list => list.Track.Album),
+                                                                                                     item => item.PlaylistTracks.Select(list => list.Track.Artist));
             return PartialView("Playlist", playlistViewModel);
         }
 
@@ -153,6 +154,18 @@ namespace MediaLibraryWebUI.Controllers
                     await dataService.Update(configuration);
                 }
             }
+        }
+
+        public async Task<ActionResult> PlaylistConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Playlist));
+
+            if (configuration != null)
+            {
+                playlistViewModel.Configuration = JsonConvert.DeserializeObject<PlaylistConfiguration>(configuration.JsonData) ?? new PlaylistConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(PlaylistConfiguration)}.cshtml", playlistViewModel.Configuration);
         }
     }
 }

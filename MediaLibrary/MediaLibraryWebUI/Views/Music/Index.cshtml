@@ -69,7 +69,6 @@
 @Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
 @Html.Partial("~/Views/Shared/Modals/AddNewSongModal.cshtml", Model)
 @Html.Partial("~/Views/Shared/Modals/EditSongModal.cshtml")
-@Html.Partial("~/Views/Shared/Configurations/MusicConfiguration.cshtml", Model.Configuration)
 
 <script type="text/javascript" defer="defer">
     function sortChanged(sortType, select) {
@@ -82,20 +81,6 @@
         } else if (sortType === '@(nameof(MusicConfiguration.SelectedSongSort))') {
             set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedSongSort))($(select).val());
         }
-        update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
-    }
-
-    function artistClicked(btn) {
-        showLoading();
-        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Artist))');
-        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedArtistId))($(btn).attr('data-item-id'));
-        update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
-    }
-
-    function albumClicked(btn) {
-        showLoading();
-        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Album))');
-        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedAlbumId))($(btn).attr('data-item-id'));
         update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
 

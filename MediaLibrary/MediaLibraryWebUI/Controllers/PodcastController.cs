@@ -22,7 +22,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export("Podcast", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Podcast), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PodcastController : BaseController
     {
         private readonly IPodcastUIService podcastUIService;
@@ -207,6 +207,18 @@ namespace MediaLibraryWebUI.Controllers
                     await dataService.Update(configuration);
                 }
             }
+        }
+
+        public async Task<ActionResult> PodcastConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Podcast));
+
+            if (configuration != null)
+            {
+                podcastViewModel.Configuration = JsonConvert.DeserializeObject<PodcastConfiguration>(configuration.JsonData) ?? new PodcastConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(PodcastConfiguration)}.cshtml", podcastViewModel.Configuration);
         }
     }
 }

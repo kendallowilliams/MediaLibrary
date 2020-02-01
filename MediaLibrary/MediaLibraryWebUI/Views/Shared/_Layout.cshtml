@@ -49,6 +49,7 @@
                         </li>
                     </ul>
                     <div id="@(HtmlControlsRepository.HeaderControlsContainerId)">
+                        <hr class="d-lg-none" />
                         <button id="@(HtmlControlsRepository.HeaderPreviousButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Previous"><i class="fa fa-step-backward"></i></button>
                         <button id="@(HtmlControlsRepository.HeaderPlayButtonId)" class="btn btn-outline-secondary" data-tooltip="tooltip" title="Play"><i class="fa fa-play"></i></button>
                         <button id="@(HtmlControlsRepository.HeaderPauseButtonId)" class="btn btn-outline-secondary d-none" data-tooltip="tooltip" title="Pause"><i class="fa fa-pause"></i></button>
@@ -85,7 +86,7 @@
             var $playButtons = $('button[data-play-id]'),
                 $playGroups = $('div[data-play-ids]'),
                 success = () => {
-                    loadView('@(nameof(Enums.MediaPages.Player))', reload(() => _play()));
+                    loadView('@(nameof(Enums.MediaPages.Player))', reload(() => loadItem(null, true)));
                     hideLoading();
                 },
                 mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaTypes.Song))',

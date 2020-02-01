@@ -25,7 +25,7 @@ using Fody;
 namespace MediaLibraryWebUI.Controllers
 {
     [ConfigureAwait(false)]
-    [Export("Music", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Music), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class MusicController : BaseController
     {
         private readonly IDataService dataService;
@@ -386,6 +386,18 @@ namespace MediaLibraryWebUI.Controllers
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Songs", musicViewModel);
+        }
+
+        public async Task<ActionResult> MusicConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
+
+            if (configuration != null)
+            {
+                musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(MusicConfiguration)}.cshtml", musicViewModel.Configuration);
         }
     }
 }

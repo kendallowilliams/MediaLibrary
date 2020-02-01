@@ -22,7 +22,7 @@ using static MediaLibraryWebUI.Enums;
 
 namespace MediaLibraryWebUI.Controllers
 {
-    [Export("Television", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(nameof(MediaPages.Television), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class TelevisionController : BaseController
     {
         private readonly ITelevisionUIService televisionService;
@@ -129,6 +129,18 @@ namespace MediaLibraryWebUI.Controllers
             byte[] content = Encoding.UTF8.GetBytes(data);
 
             return new FileContentResult(content, "audio/mpegurl");
+        }
+        
+        public async Task<ActionResult> TelevisionConfiguration()
+        {
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Television));
+
+            if (configuration != null)
+            {
+                televisionViewModel.Configuration = JsonConvert.DeserializeObject<TelevisionConfiguration>(configuration.JsonData) ?? new TelevisionConfiguration();
+            }
+
+            return PartialView($"~/Views/Shared/Configurations/{nameof(TelevisionConfiguration)}.cshtml", televisionViewModel.Configuration);
         }
     }
 }
