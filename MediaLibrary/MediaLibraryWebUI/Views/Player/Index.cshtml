@@ -64,7 +64,7 @@
                         <i class="fa fa-volume-mute"></i>
                     </button>
                 </span>
-                <button id="@(HtmlControlsRepository.PlayerFullscreenButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television ? string.Empty : "d-none")"
+                <button id="@(HtmlControlsRepository.PlayerFullscreenButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")"
                         data-tooltip="tooltip" title="Fullscreen">
                     <i class="fa fa-expand"></i>
                 </button>
@@ -315,11 +315,14 @@
             $player.parent().removeClass('d-none');
             $playerItems.addClass('d-none');
             $btn.removeClass('active');
+            page = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
+            if (page === '@(nameof(Enums.PlayerPages.Video))') /*then*/ $('#@(HtmlControlsRepository.PlayerItemsContainerId)').removeClass('d-none');
         } else {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Index))');
             $player.parent().addClass('d-none');
             $playerItems.removeClass('d-none');
             $btn.addClass('active');
+            $('#@(HtmlControlsRepository.PlayerItemsContainerId)').addClass('d-none');
         }
         update@(nameof(PlayerConfiguration))();
     }
