@@ -41,8 +41,8 @@
                                     <div class="media">
                                         <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(series.Title)">
                                         <div class="media-body">
-                                            <h5 class="mt-0">@(series.Title)</h5>
-                                            <span>@(series.Episodes.GroupBy(e => e.Season).Count()) season@(series.Episodes.GroupBy(e => e.Season).Count() == 1 ? string.Empty : "s")</span>
+                                            <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(series.Title)</h5>
+                                            <span style="cursor: pointer; flex: 0 0 auto">@(series.Episodes.GroupBy(e => e.Season).Count()) season@(series.Episodes.GroupBy(e => e.Season).Count() == 1 ? string.Empty : "s")</span>
                                         </div>
                                         <div>
                                             <buton class="btn btn-outline-secondary" onclick="seriesClicked(this)" data-item-id="@(series.Id)"
