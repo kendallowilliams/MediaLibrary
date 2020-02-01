@@ -45,9 +45,9 @@
                                 <li class="list-group-item">
                                     <div class="media">
                                         <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(playlist.Name)">
-                                        <div class="media-body">
-                                            <h5 class="mt-0">@(playlist.Name)</h5>
-                                            <span>@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</span>
+                                        <div class="media-body d-flex flex-column" style="overflow-x: auto">
+                                            <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(playlist.Name)</h5>
+                                            <span style="cursor: pointer; flex: 0 0 auto">@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</span>
                                         </div>
                                         <div>
                                             <button class="btn btn-outline-secondary" onclick="playlistClicked(this)" data-item-id="@(playlist.Id)"
