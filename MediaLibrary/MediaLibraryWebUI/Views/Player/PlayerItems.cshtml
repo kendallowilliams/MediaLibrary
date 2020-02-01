@@ -8,9 +8,11 @@
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Music", new { item.Song.Id })"
                 data-play-index="@(item.Index)" data-item-id="@(item.Song.Id)" data-title="@(item.Song.Title)">
                 <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-0">@(item.Song.Title)</h5>
-                        <span data-item-id="@(item.Song.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(item.Song.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(item.Song.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</span>
+                    <div class="media-body d-flex flex-column" style="overflow-x: auto">
+                        <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(item.Song.Title)</h5>
+                        <div style="flex: 0 0 auto">
+                            <span data-item-id="@(item.Song.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(item.Song.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(item.Song.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</span>
+                        </div>
                     </div>
                     <div>
                         <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">
@@ -28,14 +30,16 @@
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Podcast", new { item.PodcastItem.Id })"
                 data-play-index="@(item.Index)" data-item-id="@(item.PodcastItem.Id)" data-title="@(item.PodcastItem.Title)">
                 <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-0">@(item.PodcastItem.Title)</h5>
-                        <span>@(item.PodcastItem.Podcast?.Title ?? "Unknown Podcast")</span> - <span class="text-muted">@(item.PodcastItem?.Podcast?.Author ?? "Unknown Author")</span>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">
-                            <i class="fa fa-play"></i>
-                        </button>
+                    <div class="media-body d-flex flex-column" style="overflow-x: auto">
+                        <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(item.PodcastItem.Title)</h5>
+                        <div style="flex: 0 0 auto">
+                            <span>@(item.PodcastItem.Podcast?.Title ?? "Unknown Podcast")</span> - <span class="text-muted">@(item.PodcastItem?.Podcast?.Author ?? "Unknown Author")</span>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">
+                                <i class="fa fa-play"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </li>
@@ -48,14 +52,16 @@
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Television", new { item.Episode.Id })"
                 data-play-index="@(item.Index)" data-item-id="@(item.Episode.Id)" data-title="@(item.Episode.Title)">
                 <div class="media">
-                    <div class="media-body">
-                        <h5 class="mt-0">@(item.Episode.Title)</h5>
-                        <span>@(item.Episode.Series?.Title ?? "Unknown Series")</span> - <span class="text-muted">@(item.Episode.Season.HasValue ? $"Season {item.Episode.Season.Value}" : "Unknown Season")</span>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">
-                            <i class="fa fa-play"></i>
-                        </button>
+                    <div class="media-body d-flex flex-column" style="overflow-x: auto">
+                        <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(item.Episode.Title)</h5>
+                        <div style="flex: 0 0 auto">
+                            <span>@(item.Episode.Series?.Title ?? "Unknown Series")</span> - <span class="text-muted">@(item.Episode.Season.HasValue ? $"Season {item.Episode.Season.Value}" : "Unknown Season")</span>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">
+                                <i class="fa fa-play"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </li>

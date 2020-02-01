@@ -35,9 +35,11 @@
                         <li class="list-group-item">
                             <div class="media">
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.Track.Title)">
-                                <div class="media-body">
+                                <div class="media-body d-flex flex-column" style="overflow-x: auto">
                                     <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(list.Track.Title)</h5>
-                                    <span data-item-id="@(list.Track.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer; flex: 0 0 auto">@(list.Track.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(list.Track.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(list.Track.Artist?.Name ?? "Unknown Artist")</span>
+                                    <div style="flex: 0 0 auto">
+                                        <span data-item-id="@(list.Track.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(list.Track.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(list.Track.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(list.Track.Artist?.Name ?? "Unknown Artist")</span>
+                                    </div>
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-secondary" data-play-id="@(list.Track.Id)" onclick="play(this)"
@@ -52,24 +54,24 @@
                                 </div>
                             </div>
                         </li>
+                        }
+                    </ul>
                     }
-                </ul>
-            }
-            else
-            {
-                <span>No songs added.</span>
-            }
+                    else
+                    {
+                    <span>No songs added.</span>
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-@Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
-@Html.Partial("~/Views/Shared/Modals/EditPlaylistModal.cshtml")
+        @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
+        @Html.Partial("~/Views/Shared/Modals/EditPlaylistModal.cshtml")
 
-<script type="text/javascript" defer="defer">
+        <script type="text/javascript" defer="defer">
     function backClicked() {
         showLoading();
         set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistPage))('@(nameof(Enums.PlaylistPages.Index))');
         update@(nameof(PlaylistConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Playlist))'));
     }
-</script>
+        </script>
