@@ -76,12 +76,9 @@
 <script type="text/javascript" defer="defer">
     function loadItem(item, triggerPlay) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
-            $player = $(getPlayer()),
-            type = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
+            $player = $(getPlayer());
 
         $players.prop('src', '').attr('data-item-id', '');
-        if (type === '@(nameof(Enums.MediaTypes.Television))') /*then*/ $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').removeClass('d-none');
-        else $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
 
         if (item) {
             var $item = $(item),
@@ -309,7 +306,8 @@
             $player = $(getPlayer()),
             $playerItems = $('#@(HtmlControlsRepository.PlayerItemsContainerId)'),
             $btn = $(btn);
-
+        
+        $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
         if (page === '@(nameof(Enums.PlayerPages.Index))') {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))($player.attr('data-player-page'));
             $player.parent().removeClass('d-none');
@@ -322,7 +320,6 @@
             $player.parent().addClass('d-none');
             $playerItems.removeClass('d-none');
             $btn.addClass('active');
-            $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
         }
         update@(nameof(PlayerConfiguration))();
     }
@@ -336,17 +333,21 @@
         } else if (selectedMediaType !== '@(Enums.MediaTypes.Television)' && selectedPlayerPage === '@(nameof(Enums.PlayerPages.Video))') {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Audio))');
         }
-
+        
         if (selectedPlayerPage !== get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))()) {
+            selectedPlayerPage = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
+            $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
+
             update@(nameof(PlayerConfiguration))(() =>
                 $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)').each((index, element) => {
-                    var page = $(element).attr('data-player-page'),
-                        selectedPage = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
+                    var page = $(element).attr('data-player-page');
 
-                    if (page === selectedPage) /*then*/ $(element).parent().removeClass('d-none');
+                    if (page === selectedPlayerPage) /*then*/ $(element).parent().removeClass('d-none');
                     else $(element).parent().addClass('d-none');
                 })
             );
+
+            if (selectedPlayerPage === '@(nameof(Enums.PlayerPages.Video))') /*then*/ $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').removeClass('d-none');
         }
     }
 
