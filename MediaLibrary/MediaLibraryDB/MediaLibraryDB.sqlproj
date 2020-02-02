@@ -93,4 +93,10 @@
   <ItemGroup>
     <RefactorLog Include="MediaLibraryDB.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="series_root">
+      <DefaultValue>S:/online_video</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
 </Project>

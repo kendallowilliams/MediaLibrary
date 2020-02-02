@@ -8,13 +8,13 @@ DECLARE @BewitchedId int,
 		@StrangersWithCandyId int,
 		@WonderWomanId int,
 		@XenaId int,
-		@BewitchedPath VARCHAR(256) = N'S:/online_video/BEWITCHED',
-		@GoldenGirlsPath VARCHAR(256) = N'S:/online_video/GOLDEN_GIRLS',
-		@MamasFamilyPath VARCHAR(256) = N'S:/online_video/MAMAS_FAMILY',
-		@RoseannePath VARCHAR(256) = N'S:/online_video/ROSEANNE',
-		@StrangersWithCandyPath VARCHAR(256) = N'S:/online_video/STRANGERS_WITH_CANDY',
-		@WonderWomanPath VARCHAR(256) = N'S:/online_video/WONDER_WOMAN',
-		@XenaPath VARCHAR(256) = N'S:/online_video/XENA';
+		@BewitchedPath VARCHAR(256) = N'$(series_root)/BEWITCHED',
+		@GoldenGirlsPath VARCHAR(256) = N'$(series_root)/GOLDEN_GIRLS',
+		@MamasFamilyPath VARCHAR(256) = N'$(series_root)/MAMAS_FAMILY',
+		@RoseannePath VARCHAR(256) = N'$(series_root)/ROSEANNE',
+		@StrangersWithCandyPath VARCHAR(256) = N'$(series_root)/STRANGERS_WITH_CANDY',
+		@WonderWomanPath VARCHAR(256) = N'$(series_root)/WONDER_WOMAN',
+		@XenaPath VARCHAR(256) = N'$(series_root)/XENA';
 
 DELETE Series;
 
