@@ -46,7 +46,6 @@ namespace MediaLibraryWebUI.ActionResults
             {
                 long end = to.HasValue ? to.Value : info.Length - 1,
                      count = end + 1 - from.Value;
-                byte[] data = new byte[count];
 
                 response.Headers.Add("Content-Range", $"bytes {from}-{end}/{info.Length}");
                 response.TransmitFile(this.fileName, from.Value, count);
