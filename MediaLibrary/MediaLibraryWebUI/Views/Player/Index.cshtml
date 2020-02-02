@@ -115,13 +115,13 @@
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('durationchange', function (e) {
             $('#@(HtmlControlsRepository.PlayerSliderId)').slider('option', 'max', e.target.duration);
-            $('#@(HtmlControlsRepository.PlayerTimeId)').text(getTime(e.target.currentTime, e.target.duration));
+            $('#@(HtmlControlsRepository.PlayerTimeId)').text(getPlaybackTime(e.target.currentTime, e.target.duration));
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('timeupdate', function (e) {
             if ($('#@(HtmlControlsRepository.PlayerSliderId)').attr('data-slide-started') !== 'true') {
                 $('#@(HtmlControlsRepository.PlayerSliderId)').slider('value', Math.floor(e.target.currentTime));
-                $('#@(HtmlControlsRepository.PlayerTimeId)').text(getTime(e.target.currentTime, e.target.duration));
+                $('#@(HtmlControlsRepository.PlayerTimeId)').text(getPlaybackTime(e.target.currentTime, e.target.duration));
             }
         });
 
@@ -165,7 +165,7 @@
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slide', function (e, ui) {
             if ($(e.target).attr('data-slide-started') === 'true') {
                 $(getPlayer()).prop('currentTime', ui.value);
-                $('#@(HtmlControlsRepository.PlayerTimeId)').text(getTime(ui.value, $(e.target).slider('option', 'max')));
+                $('#@(HtmlControlsRepository.PlayerTimeId)').text(getPlaybackTime(ui.value, $(e.target).slider('option', 'max')));
             }
         });
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slidestart', (e, ui) => $(e.target).attr('data-slide-started', 'true'));
@@ -351,19 +351,18 @@
         }
     }
 
-    function getTime(time, duration) {
+    function getPlaybackTime(time, duration) {
+        return getFormattedTime(time) + '/' + getFormattedTime(duration);
+    }
+
+    function getFormattedTime(time) {
         var adjustedTime = isNaN(time) ? 0 : time,
-            adjustedDuration = isNaN(duration) ? 0 : duration,
-            totalHours = Math.floor(adjustedDuration / 3600),
-            totalMinutes = Math.floor((adjustedDuration - (totalHours * 3600)) / 60),
-            totalSeconds = Math.floor((adjustedDuration - (totalMinutes * 60 + totalHours * 3600)) % 60),
-            totalTime = (totalHours > 0 ? String(totalHours).padStart(2, '0') + ':' : '') + String(totalMinutes).padStart(2, '0') + ':' + String(totalSeconds).padStart(2, '0'),
             currentHours = Math.floor(adjustedTime / 3600),
             currentMinutes = Math.floor((adjustedTime - (currentHours * 3600)) / 60),
             currentSeconds = Math.floor((adjustedTime - (currentMinutes * 60 + currentHours * 3600)) % 60),
             currentTime = (currentHours > 0 ? String(currentHours).padStart(2, '0') + ':' : '') + String(currentMinutes).padStart(2, '0') + ':' + String(currentSeconds).padStart(2, '0');
 
-        return currentTime + '/' + totalTime;
+        return currentTime;
     }
 
     /* https://www.w3schools.com/howto/howto_js_fullscreen.asp */
