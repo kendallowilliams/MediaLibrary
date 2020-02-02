@@ -352,11 +352,13 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (file != null)
             {
-                string newFile = Path.Combine(fileService.MusicFolder, file.FileName);
+                string dtFormat = "yyyyMMddHHmmss",
+                       newFile = $"{Path.GetFileNameWithoutExtension(file.FileName)}_{DateTime.Now.ToString(dtFormat)}{Path.GetExtension(file.FileName)}",
+                       filePath = Path.Combine(fileService.MusicFolder, newFile);
 
                 Directory.CreateDirectory(fileService.MusicFolder);
-                file.SaveAs(newFile);
-                await fileService.ReadMediaFile(newFile);
+                file.SaveAs(filePath);
+                await fileService.ReadMediaFile(filePath);
                 musicService.ClearData();
             }
         }
