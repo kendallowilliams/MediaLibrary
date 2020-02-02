@@ -223,6 +223,8 @@
     <Content Include="lib\jplayer\skin\pink.flag\image\jplayer.pink.flag.jpg" />
     <Content Include="lib\jplayer\skin\pink.flag\image\jplayer.pink.flag.seeking.gif" />
     <Content Include="lib\jplayer\skin\pink.flag\image\jplayer.pink.flag.video.play.png" />
+    <Content Include="lib\jQuery.Marquee\jquery.marquee.js" />
+    <Content Include="lib\jQuery.Marquee\jquery.marquee.min.js" />
     <Content Include="lib\jqueryui\images\ui-icons_444444_256x240.png" />
     <Content Include="lib\jqueryui\images\ui-icons_555555_256x240.png" />
     <Content Include="lib\jqueryui\images\ui-icons_777620_256x240.png" />

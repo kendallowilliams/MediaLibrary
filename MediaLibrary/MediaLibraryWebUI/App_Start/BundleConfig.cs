@@ -16,6 +16,9 @@ namespace MediaLibraryWebUI
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/lib/jqueryui/jquery-ui.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/marquee").Include(
+                        "~/lib/jQuery.Marquee/jquery.marquee.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
