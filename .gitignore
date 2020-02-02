@@ -51,3 +51,6 @@
 /MediaLibrary/MediaLibraryConsole/obj/Debug
 /MediaLibrary/MediaLibraryConsole/obj/Release
 /MediaLibrary/MediaLibraryConsole/bin/Release
+/MediaLibrary/MediaLibraryConsole/obj/DEV
+/MediaLibrary/MediaLibraryDAL/obj/DEV
+/MediaLibrary/MediaLibraryWebUI/obj/DEV

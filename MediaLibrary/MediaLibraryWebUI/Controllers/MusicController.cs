@@ -206,7 +206,7 @@ namespace MediaLibraryWebUI.Controllers
 #if DEBUG
                 request = new ScanDirectoryRequest()
                 {
-                    Path = System.Configuration.ConfigurationManager.AppSettings["MediaLibraryRoot_DEV"],
+                    Path = System.Configuration.ConfigurationManager.AppSettings["MediaLibraryRoot_DEBUG"],
                     Recursive = true
                 };
 #endif
