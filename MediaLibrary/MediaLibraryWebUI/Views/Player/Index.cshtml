@@ -133,7 +133,7 @@
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').removeClass('d-none');
             initAudioVisualizer();
-            if (audioVisualizer) /*then*/ audioVisualizer.start();
+            if (audioVisualizer && get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))() != '@(Enums.MediaTypes.Television)') /*then*/ audioVisualizer.start();
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('pause', function (e) {
