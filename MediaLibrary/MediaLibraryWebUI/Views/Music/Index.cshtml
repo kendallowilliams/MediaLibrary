@@ -5,20 +5,20 @@
 <div class="d-flex flex-column" style="flex: 1 1 auto">
     <div style="flex: 0 0 auto">
         <h2>Music</h2>
-        <div class="nav d-block" id="musicTab" role="tablist">
-            <a class="btn btn-outline-secondary" id="albums-tab" data-toggle="tab"
-               role="tab" aria-controls="albums" aria-selected="true" title="@(nameof(Enums.MusicTabs.Albums))" data-music-tab="@(nameof(Enums.MusicTabs.Albums))"
-               data-tooltip="tooltip" href="#albums">
+        <div class="nav d-block" id="@(HtmlControlsRepository.MusicTabListId)" role="tablist">
+            <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.AlbumsContainerId)-tab" data-toggle="tab"
+               role="tab" aria-controls="@(HtmlControlsRepository.AlbumsContainerId)" aria-selected="true" title="@(nameof(Enums.MusicTabs.Albums))" data-music-tab="@(nameof(Enums.MusicTabs.Albums))"
+               data-tooltip="tooltip" href="#@(HtmlControlsRepository.AlbumsContainerId)">
                 <i class="fa fa-compact-disc"></i>
             </a>
-            <a class="btn btn-outline-secondary" id="artists-tab" data-toggle="tab"
-               role="tab" aria-controls="artists" aria-selected="false" title="@(nameof(Enums.MusicTabs.Artists))" data-music-tab="@(nameof(Enums.MusicTabs.Artists))"
-               data-tooltip="tooltip" href="#artists">
+            <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.ArtistsContainerId)-tab" data-toggle="tab"
+               role="tab" aria-controls="@(HtmlControlsRepository.ArtistsContainerId)" aria-selected="false" title="@(nameof(Enums.MusicTabs.Artists))" data-music-tab="@(nameof(Enums.MusicTabs.Artists))"
+               data-tooltip="tooltip" href="#@(HtmlControlsRepository.ArtistsContainerId)">
                 <i class="fa fa-user"></i>
             </a>
-            <a class="btn btn-outline-secondary" id="songs-tab" data-toggle="tab"
-               role="tab" aria-controls="songs" aria-selected="false" title="@(nameof(Enums.MusicTabs.Songs))" data-music-tab="@(nameof(Enums.MusicTabs.Songs))"
-               data-tooltip="tooltip" href="#songs">
+            <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.SongsContainerId)-tab" data-toggle="tab"
+               role="tab" aria-controls="@(HtmlControlsRepository.SongsContainerId)" aria-selected="false" title="@(nameof(Enums.MusicTabs.Songs))" data-music-tab="@(nameof(Enums.MusicTabs.Songs))"
+               data-tooltip="tooltip" href="#@(HtmlControlsRepository.SongsContainerId)">
                 <i class="fa fa-music"></i>
             </a>
             <div class="float-right d-none d-lg-block">
@@ -60,10 +60,10 @@
         </div>
         <hr />
     </div>
-    <div class="tab-content" id="musicContent" style="flex: 1 1 auto; overflow-y: auto">
-        <div class="tab-pane fade" id="albums" role="tabpanel" aria-labelledby="albums-tab" data-load-url="@Url.Action("GetAlbums", "Music")"></div>
-        <div class="tab-pane fade" id="artists" role="tabpanel" aria-labelledby="artists-tab" data-load-url="@Url.Action("GetArtists", "Music")"></div>
-        <div class="tab-pane fade" id="songs" role="tabpanel" aria-labelledby="songs-tab" data-load-url="@Url.Action("GetSongs", "Music")"></div>
+    <div class="tab-content" style="flex: 1 1 auto; overflow-y: auto">
+        <div class="tab-pane fade" id="@(HtmlControlsRepository.AlbumsContainerId)" role="tabpanel" aria-labelledby="@(HtmlControlsRepository.AlbumsContainerId)-tab" data-load-url="@Url.Action("GetAlbums", "Music")"></div>
+        <div class="tab-pane fade" id="@(HtmlControlsRepository.ArtistsContainerId)" role="tabpanel" aria-labelledby="@(HtmlControlsRepository.ArtistsContainerId)-tab" data-load-url="@Url.Action("GetArtists", "Music")"></div>
+        <div class="tab-pane fade" id="@(HtmlControlsRepository.SongsContainerId)" role="tabpanel" aria-labelledby="@(HtmlControlsRepository.SongsContainerId)-tab" data-load-url="@Url.Action("GetSongs", "Music")"></div>
     </div>
 </div>
 
@@ -93,7 +93,7 @@
 
     }
 
-    $('#musicTab [data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $('#@(HtmlControlsRepository.MusicTabListId) *[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var $newTab = $(e.target),
             $oldTab = $(e.relatedTarget),
             $newView = $($newTab.attr('href')),
@@ -104,8 +104,8 @@
                 $newView.find('[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
             };
 
-        $('[data-sort-tab]').each((index, _btn) => {
-            if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
+        $('#@(HtmlControlsRepository.MusicTabListId) *[data-sort-tab]').each((index, _btn) => {
+         if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
                 $(_btn).removeClass('d-none');
             } else {
                 $(_btn).addClass('d-none');

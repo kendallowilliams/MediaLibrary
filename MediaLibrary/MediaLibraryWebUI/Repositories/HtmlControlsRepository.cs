@@ -49,6 +49,9 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerAudioContainerId { get => "audio-container"; }
         public static string PlayerItemsContainerId { get => "player-items-container"; }
         public static string PlayerVolumeContainerId { get => "player-volume-container"; }
+        public static string SongsContainerId { get => "songs-container"; }
+        public static string ArtistsContainerId { get => "artists-container"; }
+        public static string AlbumsContainerId { get => "albums-container"; }
         #endregion Container Ids
 
         #region UI Control Ids
@@ -56,6 +59,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string VolumeSliderId { get => "volume-slider"; }
         public static string PlayerTimeId { get => "player-time"; }
         public static string AudioVisualizerId { get => "audio-visualizer"; }
+        public static string MusicTabListId { get => "music-tab-list"; }
         #endregion UI Control Ids
 
         #region UI Field Ids
