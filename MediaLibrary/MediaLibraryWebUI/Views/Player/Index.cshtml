@@ -19,9 +19,9 @@
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-body d-flex m-0 p-0 rounded-top" style="flex: 1 1 auto; overflow-y: auto">
             <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto; overflow-y: auto"></div>
-            <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto; display: flex" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none") flex-column">
+            <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none") flex-column">
                 <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" preload="metadata" data-player-page="@(Enums.PlayerPages.Audio)" />
-                <canvas id="@(HtmlControlsRepository.AudioVisualizerId)" style="flex: 1 1 auto"></canvas>
+                <canvas id="@(HtmlControlsRepository.AudioVisualizerId)"></canvas>
             </div>
             <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 1 auto; display: flex; background-color: black" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
                 <video id="@(HtmlControlsRepository.VideoPlayerId)" preload="metadata" style="flex: 1 1 auto" data-player-page="@(Enums.PlayerPages.Video)" />
@@ -75,6 +75,8 @@
 </div>
 
 <script type="text/javascript" defer="defer">
+    var audioVisualizer = null;
+
     function loadItem(item, triggerPlay) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
             $player = $(getPlayer());
@@ -130,11 +132,14 @@
             $(e.target).attr('data-playing', 'true');
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').removeClass('d-none');
+            initAudioVisualizer();
+            if (audioVisualizer) /*then*/ audioVisualizer.start();
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('pause', function (e) {
             $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').removeClass('d-none');
+            if (audioVisualizer) /*then*/ audioVisualizer.pause();
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('error', (e) => null);
@@ -218,6 +223,12 @@
         });
         $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').on('click', () => openFullscreen(getPlayer()));
         $('button[data-repeat-type="' + get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() + '"]').removeClass('d-none');
+    }
+
+    function initAudioVisualizer() {
+        if (!audioVisualizer) {
+            audioVisualizer = new AudioVisualizer($('#@(HtmlControlsRepository.AudioVisualizerId)')[0], getPlayer());
+        }
     }
 
     function updatePlayCount(player, callback) {
@@ -366,6 +377,63 @@
         return currentTime;
     }
 
+    class AudioVisualizer {
+        constructor(canvas, source) {
+            this.playerStopped = false;
+            this.mediaSource = source;
+            this.canvas = canvas;
+            this.containerHeight = () => $(this.canvas).parent().height();
+            this.containerWidth = () => $(this.canvas).parent().width();
+            this.canvasContext = this.canvas.getContext('2d');
+            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            this.analyser = this.audioContext.createAnalyser();
+            this.source = this.audioContext.createMediaElementSource(this.mediaSource);
+
+            this.analyser.fftSize = 256;
+            this.bufferLength = this.analyser.frequencyBinCount;
+            this.dataArray = new Uint8Array(this.bufferLength);
+            this.source.connect(this.analyser);
+            this.analyser.connect(this.audioContext.destination);
+        }
+
+        clear() {
+            this.canvas.height = this.containerHeight();
+            this.canvas.width = this.containerWidth();
+            this.canvasContext.clearRect(0, 0, this.containerWidth(), this.containerHeight());
+        }
+
+        draw() {
+            var numberOfBars = 50,
+                barWidth = this.canvas.width / numberOfBars,
+                barHeight = 0,
+                x = 0,
+                step = Math.floor(this.bufferLength / numberOfBars);
+
+            this.clear();
+            this.analyser.getByteFrequencyData(this.dataArray);
+            this.canvasContext.fillStyle = 'rgb(0, 0, 0)';
+            this.canvasContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+            for (var i = 0; i < numberOfBars; i++) {
+                barHeight = this.dataArray[i * step] * Math.floor(this.canvas.height / @(byte.MaxValue));
+                this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
+                this.canvasContext.fillRect(x, this.canvas.height - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+
+            if (!this.playerStopped) /*then*/ window.requestAnimationFrame(this.draw.bind(this));
+        }
+
+        start() {
+            this.playerStopped = false;
+            this.draw();
+        }
+
+        pause() {
+            this.playerStopped = true;
+            this.draw();
+        }
+    }
+
     initPlayer();
 </script>
-
