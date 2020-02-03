@@ -35,7 +35,13 @@ namespace MediaLibraryWebUI.Controllers
             this.playerViewModel = playerViewModel;
             this.dataService = dataService;
             dataFolder = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData, SpecialFolderOption.Create), nameof(MediaLibraryWebUI));
+#if DEV
+            fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}_DEV";
+#elif DEBUG
+            fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}_DEBUG";
+#else
             fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}";
+#endif
         }
 
         [CompressContent]
