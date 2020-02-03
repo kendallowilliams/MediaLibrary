@@ -2,9 +2,13 @@
 @using MediaLibraryWebUI.Repositories
 @model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
-<div id="@(HtmlControlsRepository.HomeViewId)" class="d-none"></div>
-<div id="@(HtmlControlsRepository.PlayerViewId)" class="d-none h-100"></div>
-<div id="@(HtmlControlsRepository.MediaViewId)" class="d-none h-100"></div>
+<div id="@(HtmlControlsRepository.HomeViewId)" class="@(Model.Configuration.SelectedMediaPage != Enums.MediaPages.Home ? "d-none" : string.Empty) flex-column" 
+     style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
+<div id="@(HtmlControlsRepository.PlayerViewId)" class="@(Model.Configuration.SelectedMediaPage != Enums.MediaPages.Player ? "d-none" : string.Empty) flex-column" 
+     style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
+<div id="@(HtmlControlsRepository.MediaViewId)" class="@((Model.Configuration.SelectedMediaPage == Enums.MediaPages.Home || 
+                                                          Model.Configuration.SelectedMediaPage == Enums.MediaPages.Player) ? "d-none" : string.Empty) flex-column" 
+     style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
 
 <div class="d-none">
     <div id="@(nameof(MediaLibraryConfiguration))"></div>
