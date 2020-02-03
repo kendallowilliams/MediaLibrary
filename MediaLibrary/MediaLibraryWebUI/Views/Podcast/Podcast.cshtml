@@ -6,7 +6,7 @@
     IEnumerable<int> years = Model.SelectedPodcast.PodcastItems.Select(item => item.PublishDate.Year).Distinct().OrderByDescending(year => year);
 }
 
-<div class="h-100 d-flex flex-column">
+<div class="d-flex flex-column" style="flex: 1 1 auto">
     <div style="flex: 0 0 auto">
         <h2>@(Model.SelectedPodcast.Title) @(!Model.SelectedPodcast.Title.ToLower().Contains("podcast") ? "podcast" : string.Empty)</h2>
         <div>
