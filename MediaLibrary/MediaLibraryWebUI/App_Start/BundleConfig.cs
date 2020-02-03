@@ -7,6 +7,9 @@ namespace MediaLibraryWebUI
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/polyfill").Include(
+                        "~/lib/js-polyfills/polyfill.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                         "~/Content/site.js"));
 

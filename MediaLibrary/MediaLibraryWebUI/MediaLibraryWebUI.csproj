@@ -645,6 +645,8 @@
     <Content Include="lib\jqueryui\themes\vader\jquery-ui.min.css" />
     <Content Include="lib\jqueryui\themes\vader\theme.css" />
     <Content Include="lib\jqueryui\themes\vader\theme.min.css" />
+    <Content Include="lib\js-polyfills\polyfill.js" />
+    <Content Include="lib\js-polyfills\polyfill.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />

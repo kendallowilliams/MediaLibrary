@@ -22,6 +22,10 @@
     {
       "library": "jQuery.Marquee@1.5.0",
       "destination": "lib/jQuery.Marquee/"
+    },
+    {
+      "library": "js-polyfills@0.1.42",
+      "destination": "lib/js-polyfills/"
     }
   ]
 }
