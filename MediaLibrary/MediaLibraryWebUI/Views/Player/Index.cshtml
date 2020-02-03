@@ -129,11 +129,13 @@
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('play', function (e) {
+            var mediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
+
             $(e.target).attr('data-playing', 'true');
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').removeClass('d-none');
             initAudioVisualizer();
-            if (audioVisualizer && get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))() != '@(Enums.MediaTypes.Television)') /*then*/ audioVisualizer.start();
+            if (audioVisualizer && mediaType !== '@(nameof(Enums.MediaTypes.Television))') /*then*/ audioVisualizer.start();
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('pause', function (e) {
