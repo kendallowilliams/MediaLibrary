@@ -55,6 +55,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerSliderId { get => "player-slider"; }
         public static string VolumeSliderId { get => "volume-slider"; }
         public static string PlayerTimeId { get => "player-time"; }
+        public static string AudioVisualizerId { get => "audio-visualizer"; }
         #endregion UI Control Ids
 
         #region UI Field Ids
