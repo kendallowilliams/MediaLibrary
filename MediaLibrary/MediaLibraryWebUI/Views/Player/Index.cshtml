@@ -121,7 +121,11 @@
 
     function initMediaPlayers() {
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('ended', (e) => updatePlayCount(e.target, loadNext));
-        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()) / 100.0);
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', $(function () {
+            var volume = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))());
+
+            return (volume > 0 ? volume : 100) / 100.0;
+        }));
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('durationchange', function (e) {
             $('#@(HtmlControlsRepository.PlayerSliderId)').slider('option', 'max', e.target.duration);
@@ -401,6 +405,10 @@
             this.containerHeight = () => $(this.canvas).parent().height();
             this.containerWidth = () => $(this.canvas).parent().width();
             this.canvasContext = this.canvas.getContext('2d');
+            this.init();
+        }
+
+        init() {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.analyser = this.audioContext.createAnalyser();
             this.source = this.audioContext.createMediaElementSource(this.mediaSource);
@@ -457,6 +465,10 @@
 
         pause() {
             this.playerStopped = true;
+        }
+
+        close() {
+            this.audioContext.close();
         }
     }
 
