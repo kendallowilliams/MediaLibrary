@@ -107,9 +107,16 @@
     }
 
     function initPlayer() {
+        initCanvas();
         initMediaPlayers();
         initPlayerControls();
         reload(() => loadItem());
+    }
+
+    function initCanvas() {
+        var $canvas = $('#@(HtmlControlsRepository.AudioVisualizerId)');
+
+        AudioVisualizer.prepareCanvas($canvas[0], $canvas.parent().width(), $canvas.parent().height());
     }
 
     function initMediaPlayers() {
@@ -398,28 +405,36 @@
             this.source.connect(this.analyser);
         }
 
-        clear() {
-            this.canvas.height = this.containerHeight();
-            this.canvas.width = this.containerWidth();
-            this.canvasContext.clearRect(0, 0, this.containerWidth(), this.containerHeight());
+        clear(width, height) {
+            this.canvasContext.clearRect(0, 0, width, height);
+        }
+
+        static prepareCanvas(canvas, width, height) {
+            var canvasContext = canvas.getContext('2d');
+
+            canvas.width = width;
+            canvas.height = height;
+            canvasContext.fillStyle = 'rgb(200, 200, 200)';
+            canvasContext.fillRect(0, 0, width, height);
         }
 
         draw() {
-            var numberOfBars = 128,
+            var width = this.containerWidth(),
+                height = this.containerHeight(),
+                numberOfBars = 128,
                 barWidth = this.canvas.width / numberOfBars,
                 barHeight = 0,
                 x = 0,
                 step = Math.floor(this.bufferLength / numberOfBars);
 
-            this.clear();
+            this.clear(this.canvas.width, this.canvas.height);
             this.analyser.getByteFrequencyData(this.dataArray);
-            this.canvasContext.fillStyle = 'rgb(200, 200, 200)';
-            this.canvasContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            AudioVisualizer.prepareCanvas(this.canvas, width, height);
 
             for (var i = 0; i < numberOfBars; i++) {
-                barHeight = this.dataArray[i * step] * Math.floor(this.canvas.height / @(byte.MaxValue));
+                barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
                 this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
-                this.canvasContext.fillRect(x, this.canvas.height - barHeight, barWidth - 1, barHeight);
+                this.canvasContext.fillRect(x, height - barHeight, barWidth - 1, barHeight);
                 x += barWidth;
             }
 
