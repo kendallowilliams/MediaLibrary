@@ -129,6 +129,7 @@
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('timeupdate', function (e) {
+            enableDisablePreviousNext();
             if ($('#@(HtmlControlsRepository.PlayerSliderId)').attr('data-slide-started') !== 'true') {
                 $('#@(HtmlControlsRepository.PlayerSliderId)').slider('value', Math.floor(e.target.currentTime));
                 $('#@(HtmlControlsRepository.PlayerTimeId)').text(getPlaybackTime(e.target.currentTime, e.target.duration));
@@ -277,14 +278,20 @@
     function loadPrevious() {
         var previousIndex = isShuffleEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
                                                  parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
-            $item = $('li[data-play-index="' + previousIndex + '"]');
+            $item = $('li[data-play-index="' + previousIndex + '"]'),
+            player = getPlayer();
 
-        loadItem($item[0], isPlaying());
+        if (player.currentTime > @(Model.NumberOfSecondsBeforeRestart)) /*then*/ player.currentTime = 0;
+        else loadItem($item[0], isPlaying());
     }
 
     function canPlayNext() { return isShuffleEnabled() || parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) < ($('li[data-play-index]').length - 1); }
 
-    function canPlayPrevious() { return isShuffleEnabled() || parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) > 0; }
+    function canPlayPrevious() {
+        return isShuffleEnabled() ||
+               parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) > 0 ||
+               getPlayer().currentTime > @(Model.NumberOfSecondsBeforeRestart);
+    }
 
     function isShuffleEnabled() { return get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))().toLowerCase() === 'true'; }
 

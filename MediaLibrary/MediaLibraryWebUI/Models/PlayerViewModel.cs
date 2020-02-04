@@ -20,5 +20,7 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<PodcastItem> PodcastItems { get; set; }
 
         public IEnumerable<Episode> Episodes { get; set; }
+
+        public int NumberOfSecondsBeforeRestart { get => 5; }
     }
 }
