@@ -370,7 +370,7 @@
     }
 
     function getFormattedTime(time) {
-        var adjustedTime = isNaN(time) ? 0 : time,
+        var adjustedTime = Number.isNaN(time) || !Number.isFinite(time) ? 0 : time,
             currentHours = Math.floor(adjustedTime / 3600),
             currentMinutes = Math.floor((adjustedTime - (currentHours * 3600)) / 60),
             currentSeconds = Math.floor((adjustedTime - (currentMinutes * 60 + currentHours * 3600)) % 60),
@@ -394,8 +394,8 @@
             this.analyser.fftSize = 256;
             this.bufferLength = this.analyser.frequencyBinCount;
             this.dataArray = new Uint8Array(this.bufferLength);
-            this.source.connect(this.analyser);
             this.analyser.connect(this.audioContext.destination);
+            this.source.connect(this.analyser);
         }
 
         clear() {
