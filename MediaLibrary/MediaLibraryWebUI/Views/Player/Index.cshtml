@@ -423,7 +423,9 @@
                 x += barWidth;
             }
 
-            if (!this.playerStopped) /*then*/ window.requestAnimationFrame(this.draw.bind(this));
+            if (this.playerStopped) /*then*/ this.clear();
+            else window.requestAnimationFrame(this.draw.bind(this));
+
         }
 
         start() {
@@ -433,7 +435,6 @@
 
         pause() {
             this.playerStopped = true;
-            this.clear();
         }
     }
 
