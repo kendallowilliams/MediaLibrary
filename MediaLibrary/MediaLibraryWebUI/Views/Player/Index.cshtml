@@ -434,28 +434,29 @@
         }
 
         draw() {
-            var width = this.containerWidth(),
-                height = this.containerHeight(),
-                numberOfBars = 128,
-                barWidth = this.canvas.width / numberOfBars,
-                barHeight = 0,
-                x = 0,
-                step = Math.floor(this.bufferLength / numberOfBars);
+            if (this.audioContext.state == 'running') {
+                var width = this.containerWidth(),
+                    height = this.containerHeight(),
+                    numberOfBars = 128,
+                    barWidth = this.canvas.width / numberOfBars,
+                    barHeight = 0,
+                    x = 0,
+                    step = Math.floor(this.bufferLength / numberOfBars);
 
-            this.clear(this.canvas.width, this.canvas.height);
-            this.analyser.getByteFrequencyData(this.dataArray);
-            AudioVisualizer.prepareCanvas(this.canvas, width, height);
+                this.clear(this.canvas.width, this.canvas.height);
+                this.analyser.getByteFrequencyData(this.dataArray);
+                AudioVisualizer.prepareCanvas(this.canvas, width, height);
 
-            for (var i = 0; i < numberOfBars; i++) {
-                barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
-                this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
-                this.canvasContext.fillRect(x, height - barHeight, barWidth - 1, barHeight);
-                x += barWidth;
+                for (var i = 0; i < numberOfBars; i++) {
+                    barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
+                    this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
+                    this.canvasContext.fillRect(x, height - barHeight, barWidth - 1, barHeight);
+                    x += barWidth;
+                }
+
+                if (this.playerStopped) /*then*/ this.clear();
+                else window.requestAnimationFrame(this.draw.bind(this));
             }
-
-            if (this.playerStopped) /*then*/ this.clear();
-            else window.requestAnimationFrame(this.draw.bind(this));
-
         }
 
         start() {
@@ -468,7 +469,7 @@
         }
 
         close() {
-            this.audioContext.close();
+            if (this.audioContext.state !== 'closed') /*then*/ this.audioContext.close();
         }
     }
 
