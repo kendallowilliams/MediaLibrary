@@ -78,7 +78,7 @@
     function loadPodcastView(item) {
         var success = () => {
                 $(item).parent('li.page-item:first').addClass('active');
-                $('#@(HtmlControlsRepository.PodcastViewId) *[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
+                loadTooltips($('#@(HtmlControlsRepository.PodcastViewId)')[0]);
                 hideLoading();
             },
             id = @(Model.SelectedPodcast.Id),
@@ -86,7 +86,7 @@
 
         if (item) {
             showLoading();
-            $('#@(HtmlControlsRepository.PodcastViewId) *[data-tooltip="tooltip"]').tooltip('dispose');
+            disposeTooltips($('#@(HtmlControlsRepository.PodcastViewId)')[0]);
             $('#@(HtmlControlsRepository.PodcastViewId)').load('@Url.Action("GetPodcastItems", "Podcast")', { id: id, year: year }, success);
         }
     }

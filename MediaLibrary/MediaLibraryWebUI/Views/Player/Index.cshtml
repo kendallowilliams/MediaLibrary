@@ -304,7 +304,7 @@
 
     function reload(callback) {
         var success = () => {
-            $('#@(HtmlControlsRepository.PlayerItemsContainerId) *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+            loadTooltips($('#@(HtmlControlsRepository.PlayerItemsContainerId)')[0]);
             updateSelectedPlayerPage();
             if (typeof callback === 'function') /*then*/ callback();
         };
@@ -334,7 +334,7 @@
             $player = $(getPlayer()),
             $playerItems = $('#@(HtmlControlsRepository.PlayerItemsContainerId)'),
             $btn = $(btn);
-        
+
         $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
         if (page === '@(nameof(Enums.PlayerPages.Index))') {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))($player.attr('data-player-page'));
@@ -361,7 +361,7 @@
         } else if (selectedMediaType !== '@(Enums.MediaTypes.Television)' && selectedPlayerPage === '@(nameof(Enums.PlayerPages.Video))') {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Audio))');
         }
-        
+
         if (selectedPlayerPage !== get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))()) {
             selectedPlayerPage = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
             $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');

@@ -101,7 +101,7 @@
             url = $newView.attr('data-load-url'),
             success = () => {
                 hideLoading();
-                $newView.find('[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
+                loadTooltips($newView[0]);
             };
 
         $('#@(HtmlControlsRepository.MusicTabListId) *[data-sort-tab]').each((index, _btn) => {
@@ -114,7 +114,7 @@
 
         showLoading();
         set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicTab))($newTab.attr('data-music-tab'));
-        $newView.find('[data-tooltip="tooltip"]').tooltip('dispose');
+        disposeTooltips($newView[0]);
         update@(nameof(MusicConfiguration))(() => $newView.load(url, success));
     });
 

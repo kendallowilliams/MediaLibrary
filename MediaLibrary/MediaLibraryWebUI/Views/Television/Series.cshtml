@@ -36,7 +36,7 @@
     function loadSeasonView(item) {
         var success = () => {
                 $(item).parent('li.page-item:first').addClass('active');
-                $('#@(HtmlControlsRepository.SeasonViewId) *[data-tooltip="tooltip"]').tooltip({ trigger: "hover" });
+                loadTooltips($('#@(HtmlControlsRepository.SeasonViewId)')[0]);
                 hideLoading();
             },
             series = @(Model.SelectedSeries.Id),
@@ -45,7 +45,7 @@
         if (item) {
             showLoading();
             set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeason))(season);
-            $('#@(HtmlControlsRepository.SeasonViewId) *[data-tooltip="tooltip"]').tooltip('dispose');
+            disposeTooltips($('#@(HtmlControlsRepository.SeasonViewId)')[0]);
             $('#@(HtmlControlsRepository.SeasonViewId)').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
         }
     }

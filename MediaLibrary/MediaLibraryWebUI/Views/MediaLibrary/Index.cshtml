@@ -53,7 +53,7 @@
         function loadView(view, callback) {
             var success = () => {
                 if (typeof callback === 'function') /*then*/ callback();
-                $(container + ' *[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+                loadTooltips($(container)[0]);
                 hideLoading();
             },
                 url = '@Url.Action("Index", "ViewName")',
@@ -63,7 +63,7 @@
             showLoading();
             set@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(view);
             disableNavItem(view);
-            $('#@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.HomeViewId)').find('*[data-tooltip="tooltip"]').tooltip('dispose');
+            $('#@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.HomeViewId)').each((index, element) => disposeTooltips(element));
             $('#@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.HomeViewId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderControlsContainerId)').removeClass('d-none');
 

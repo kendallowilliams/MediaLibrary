@@ -134,7 +134,7 @@
 
         $(function () {
             $('[data-toggle="popover"]').popover();
-            $('[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+            loadTooltips(document.body);
         });
 
         function collapseNavbar() {
@@ -146,6 +146,17 @@
             $('a.nav-link[data-media-page]:not([href])').addClass('d-none');
             $('a.nav-link[data-media-page=' + view + '][href]').addClass('d-none');
             $('a.nav-link[data-media-page=' + view + ']:not([href])').removeClass('d-none');
+        }
+
+        function loadTooltips(element) {
+            @if (!Request.Browser.IsMobileDevice)
+            {
+                @Html.Raw("if (element) /*then*/ $(element).find('[data-tooltip=\"tooltip\"]').tooltip({ trigger: 'hover' });")
+            }
+        }
+
+        function disposeTooltips(element) {
+            if (element) /*then*/ $(element).find('[data-tooltip="tooltip"]').tooltip('dispose');
         }
     </script>
     @RenderSection("scripts", false)
