@@ -58,7 +58,7 @@
                 </button>
                 <span id="@(HtmlControlsRepository.PlayerVolumeContainerId)">
                     <button id="@(HtmlControlsRepository.PlayerVolumeButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Volume > 0 ? string.Empty : "d-none")"
-                            data-volume="@(Model.Configuration.Volume)">
+                            data-volume="@(Model.Configuration.Volume == 0 ? 100 : Model.Configuration.Volume)">
                         <i class="fa fa-volume-up"></i>
                     </button>
                     <button id="@(HtmlControlsRepository.PlayerMuteButtonId)" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Volume == 0 ? string.Empty : "d-none")">
