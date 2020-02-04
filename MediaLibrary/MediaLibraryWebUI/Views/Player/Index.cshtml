@@ -412,6 +412,7 @@
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.analyser = this.audioContext.createAnalyser();
             this.source = this.audioContext.createMediaElementSource(this.mediaSource);
+            this.source.connect(this.audioContext.destination);
 
             this.analyser.fftSize = 256;
             this.bufferLength = this.analyser.frequencyBinCount;
