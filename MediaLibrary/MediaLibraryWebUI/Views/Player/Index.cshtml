@@ -470,7 +470,7 @@
                 }
                 for (var i = 0; i < numberOfBars; i++) {
                     barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
-                    discY = this.previousDataArray[i * step] + discHeight;
+                    discY = (this.previousDataArray[i * step] * Math.floor(height / @(byte.MaxValue))) + discHeight;
                     this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
                     this.canvasContext.fillRect(x, height - barHeight, barWidth - 1, barHeight);
                     this.canvasContext.fillStyle = 'white';
@@ -501,7 +501,7 @@
 
             for (var i = 0; i < numberOfBars; i++) {
                 barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
-                discY = this.previousDataArray[i * step] + discHeight;
+                discY = (this.previousDataArray[i * step] * Math.floor(height / @(byte.MaxValue))) + discHeight;
                 if (this.dataArray[i * step] > 0) /*then*/ this.dataArray[i * step] -= 1;
                 if (this.previousDataArray[i * step] > 0) /*then*/ this.previousDataArray[i * step] -= 1;
 
