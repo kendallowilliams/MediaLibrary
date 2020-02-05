@@ -153,7 +153,9 @@ namespace MediaLibraryWebUI.Controllers
             await podcastService.RefreshPodcast(await dataService.Get<Podcast>(item => item.Id == id));
         }
 
+#if !DEBUG && !DEV
         [AllowAnonymous]
+#endif
         public async Task<ActionResult> File(int id)
         {
             Transaction transaction = await transactionService.GetNewTransaction(TransactionTypes.GetPodcastFile);

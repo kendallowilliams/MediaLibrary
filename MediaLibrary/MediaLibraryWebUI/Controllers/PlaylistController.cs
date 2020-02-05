@@ -120,7 +120,9 @@ namespace MediaLibraryWebUI.Controllers
             await dataService.Delete<PlaylistTrack>(id);
         }
 
+#if !DEBUG && !DEV
         [AllowAnonymous]
+#endif
         public async Task<ActionResult> GetM3UPlaylist(int id, bool random = false)
         {
             Random rand = new Random(DateTime.Now.Millisecond);
