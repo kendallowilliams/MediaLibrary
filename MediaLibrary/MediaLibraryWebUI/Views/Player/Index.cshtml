@@ -465,7 +465,7 @@
                     x += barWidth;
                 }
 
-                if (this.playerStopped) /*then*/ this.clear();
+                if (this.playerStopped) /*then*/ this.clear(this.containerWidth(), this.containerHeight());
                 else window.requestAnimationFrame(this.draw.bind(this));
             }
         }
