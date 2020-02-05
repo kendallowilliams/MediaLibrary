@@ -32,7 +32,7 @@
                                       new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Albums ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
-                                          data_sort_tab = "albums-tab",
+                                          data_sort_tab = $"{HtmlControlsRepository.AlbumsContainerId}-tab",
                                           onchange = $"sortChanged('{nameof(Model.Configuration.SelectedAlbumSort)}', this)",
                                           data_tooltip = "tooltip"
                                       })
@@ -42,7 +42,7 @@
                                       new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Artists ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
-                                          data_sort_tab = "artists-tab",
+                                          data_sort_tab = $"{HtmlControlsRepository.ArtistsContainerId}-tab",
                                           onchange = $"sortChanged('{nameof(Model.Configuration.SelectedArtistSort)}', this)",
                                           data_tooltip = "tooltip"
                                       })
@@ -52,7 +52,7 @@
                                       new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Songs ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
-                                          data_sort_tab = "songs-tab",
+                                          data_sort_tab = $"{HtmlControlsRepository.SongsContainerId}-tab",
                                           onchange = $"sortChanged('{nameof(Model.Configuration.SelectedSongSort)}', this)",
                                           data_tooltip = "tooltip"
                                       })
