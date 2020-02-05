@@ -19,7 +19,7 @@
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-body d-flex m-0 p-0 rounded-top" style="flex: 1 1 auto; overflow-y: auto">
             <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto; overflow-y: auto"></div>
-            <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto; display: flex" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none") flex-column">
+            <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto; display: flex; overflow-x: auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none") flex-column">
                 <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" @(Model.Configuration.Muted ? "muted=\"muted\"" : string.Empty) preload="metadata" data-player-page="@(Enums.PlayerPages.Audio)" />
                 <canvas id="@(HtmlControlsRepository.AudioVisualizerId)"></canvas>
             </div>
@@ -482,6 +482,8 @@
                     this.reset();
                 }
                 else window.requestAnimationFrame(this.draw.bind(this));
+            } else {
+                this.draw();
             }
         }
 
