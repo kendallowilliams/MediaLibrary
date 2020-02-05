@@ -139,6 +139,7 @@
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('play', function (e) {
             var mediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
 
+            if (getPlayer().duration === Infinity) /*then*/ getPlayer().src = getPlayer().src;
             $(e.target).attr('data-playing', 'true');
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').removeClass('d-none');
@@ -476,6 +477,7 @@
 
         pause() {
             this.playerStopped = true;
+            AudioVisualizer.prepareCanvas(this.canvas, this.containerWidth(), this.containerHeight());
         }
 
         close() {
