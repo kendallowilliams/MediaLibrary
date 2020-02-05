@@ -20,11 +20,11 @@
         <div class="card-body d-flex m-0 p-0 rounded-top" style="flex: 1 1 auto; overflow-y: auto">
             <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto; overflow-y: auto"></div>
             <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto; display: flex" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none") flex-column">
-                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" preload="metadata" data-player-page="@(Enums.PlayerPages.Audio)" />
+                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" @(Model.Configuration.Muted ? "muted=\"muted\"" : string.Empty) preload="metadata" data-player-page="@(Enums.PlayerPages.Audio)" />
                 <canvas id="@(HtmlControlsRepository.AudioVisualizerId)"></canvas>
             </div>
             <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 1 auto; display: flex; background-color: black" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
-                <video id="@(HtmlControlsRepository.VideoPlayerId)" preload="metadata" style="flex: 1 1 auto" data-player-page="@(Enums.PlayerPages.Video)" />
+                <video id="@(HtmlControlsRepository.VideoPlayerId)" @(Model.Configuration.Muted ? "muted=\"muted\"" : string.Empty) preload="metadata" style="flex: 1 1 auto" data-player-page="@(Enums.PlayerPages.Video)" />
             </div>
         </div>
         <div class="card-footer d-flex align-items-center" style="flex: 0 0 auto">
@@ -57,11 +57,11 @@
                     <i class="fa fa-sync"></i>
                 </button>
                 <span id="@(HtmlControlsRepository.PlayerVolumeContainerId)">
-                    <button id="@(HtmlControlsRepository.PlayerVolumeButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Volume > 0 ? string.Empty : "d-none")"
-                            data-volume="@(Model.Configuration.Volume == 0 ? 100 : Model.Configuration.Volume)">
+                    <button id="@(HtmlControlsRepository.PlayerVolumeButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Muted ? "d-none" : string.Empty)"
+                            data-volume="@(Model.Configuration.Volume)">
                         <i class="fa fa-volume-up"></i>
                     </button>
-                    <button id="@(HtmlControlsRepository.PlayerMuteButtonId)" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Volume == 0 ? string.Empty : "d-none")">
+                    <button id="@(HtmlControlsRepository.PlayerMuteButtonId)" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Muted ? string.Empty : "d-none")">
                         <i class="fa fa-volume-mute"></i>
                     </button>
                 </span>
@@ -121,11 +121,7 @@
 
     function initMediaPlayers() {
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('ended', (e) => updatePlayCount(e.target, loadNext));
-        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', (function () {
-            var volume = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))());
-
-            return (volume > 0 ? volume : 100) / 100.0;
-        })());
+        $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()) / 100.0);
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('durationchange', function (e) {
             $('#@(HtmlControlsRepository.PlayerSliderId)').slider('option', 'max', e.target.duration);
@@ -180,6 +176,7 @@
 
             $('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume', volume);
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))(volume);
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Muted))(volume > 0);
             update@(nameof(PlayerConfiguration))(() => $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', volume / 100.0));
         });
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slide', function (e, ui) {
@@ -227,13 +224,21 @@
             });
         });
         $('#@(HtmlControlsRepository.PlayerVolumeButtonId), #@(HtmlControlsRepository.PlayerMuteButtonId)').on('click', function (e) {
-            var volume = parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))()),
-                previousVolume = parseInt($('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume'));
+            var previousVolume = parseInt($('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume')),
+                $btn = $(e.currentTarget),
+                muted = false;
 
             $('#@(HtmlControlsRepository.PlayerVolumeButtonId), #@(HtmlControlsRepository.PlayerMuteButtonId)').addClass('d-none');
-            $(volume === 0 ? '#@(HtmlControlsRepository.PlayerVolumeButtonId)' : '#@(HtmlControlsRepository.PlayerMuteButtonId)').removeClass('d-none');
-            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))(volume === 0 ? previousVolume : 0);
-            update@(nameof(PlayerConfiguration))(() => $(getPlayer()).prop('volume', volume === 0 ? previousVolume / 100.0 : 0));
+
+            if ($btn.attr('id') === '@(HtmlControlsRepository.PlayerVolumeButtonId)') {
+                $('#@(HtmlControlsRepository.PlayerMuteButtonId)').removeClass('d-none');
+                muted = true;
+            } else if ($btn.attr('id') === '@(HtmlControlsRepository.PlayerMuteButtonId)') {
+                $('#@(HtmlControlsRepository.PlayerVolumeButtonId)').removeClass('d-none');
+            }
+            
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Muted))(muted);
+            update@(nameof(PlayerConfiguration))(() => $(getPlayers()).each((index, element) => element.muted = muted));
         });
         $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').on('click', () => openFullscreen(getPlayer()));
         $('button[data-repeat-type="' + get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() + '"]').removeClass('d-none');
@@ -333,6 +338,10 @@
         return selectedMediaType === '@(Enums.MediaTypes.Television)' ? $videoPlayer[0] : $audioPlayer[0];
     }
 
+    function getPlayers() {
+        return $('audio, video').toArray();
+    }
+
     function togglePlaylist(btn) {
         var page = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))(),
             $player = $(getPlayer()),
@@ -412,13 +421,13 @@
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             this.analyser = this.audioContext.createAnalyser();
             this.source = this.audioContext.createMediaElementSource(this.mediaSource);
-            this.source.connect(this.audioContext.destination);
 
             this.analyser.fftSize = 256;
             this.bufferLength = this.analyser.frequencyBinCount;
             this.dataArray = new Uint8Array(this.bufferLength);
-            this.analyser.connect(this.audioContext.destination);
+            this.source.connect(this.audioContext.destination);
             this.source.connect(this.analyser);
+            this.analyser.connect(this.audioContext.destination);
         }
 
         clear(width, height) {

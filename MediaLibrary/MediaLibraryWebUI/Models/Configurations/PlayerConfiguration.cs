@@ -30,5 +30,7 @@ namespace MediaLibraryWebUI.Models.Configurations
         public PlayerPages SelectedPlayerPage { get; set; }
 
         public int Volume { get; set; }
+
+        public bool Muted { get; set; }
     }
 }
