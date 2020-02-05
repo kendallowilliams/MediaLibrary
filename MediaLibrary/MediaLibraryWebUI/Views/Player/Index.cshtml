@@ -357,6 +357,7 @@
             $btn.removeClass('active');
             page = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))();
             if (page === '@(nameof(Enums.PlayerPages.Video))') /*then*/ $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').removeClass('d-none');
+            else if (page === '@(nameof(Enums.PlayerPages.Audio))') /*then*/ initCanvas();
         } else {
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedPlayerPage))('@(nameof(Enums.PlayerPages.Index))');
             $player.parent().addClass('d-none');
