@@ -427,6 +427,7 @@
             this.analyser.fftSize = 256;
             this.bufferLength = this.analyser.frequencyBinCount;
             this.dataArray = new Uint8Array(this.bufferLength);
+            this.previousDataArray = new Uint8Array(this.bufferLength);
             this.source.connect(this.audioContext.destination);
             this.source.connect(this.analyser);
             this.analyser.connect(this.audioContext.destination);
@@ -452,17 +453,28 @@
                     numberOfBars = 128,
                     barWidth = this.canvas.width / numberOfBars,
                     barHeight = 0,
+                    discY = 0,
+                    discHeight = 5,
                     x = 0,
                     step = Math.floor(this.bufferLength / numberOfBars);
 
                 this.clear(this.canvas.width, this.canvas.height);
                 this.analyser.getByteFrequencyData(this.dataArray);
                 AudioVisualizer.prepareCanvas(this.canvas, width, height);
-
+                for (var i = 0; i < this.previousDataArray.length; i++) {
+                    if (this.dataArray[i] > this.previousDataArray[i]) {
+                        this.previousDataArray[i] = this.dataArray[i];
+                    } else if (this.previousDataArray[i] > 0) {
+                        this.previousDataArray[i] -= 1;
+                    }
+                }
                 for (var i = 0; i < numberOfBars; i++) {
                     barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
+                    discY = this.previousDataArray[i * step] + discHeight;
                     this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
                     this.canvasContext.fillRect(x, height - barHeight, barWidth - 1, barHeight);
+                    this.canvasContext.fillStyle = 'white';
+                    this.canvasContext.fillRect(x, height - discY - 1, barWidth - 1, discHeight);
                     x += barWidth;
                 }
 
@@ -479,6 +491,8 @@
                     numberOfBars = 128,
                     barWidth = this.canvas.width / numberOfBars,
                     barHeight = 0,
+                    discY = 0,
+                    discHeight = 5,
                     x = 0,
                     step = Math.floor(this.bufferLength / numberOfBars);
 
@@ -487,16 +501,24 @@
 
             for (var i = 0; i < numberOfBars; i++) {
                 barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
+                discY = this.previousDataArray[i * step] + discHeight;
                 if (this.dataArray[i * step] > 0) /*then*/ this.dataArray[i * step] -= 1;
+                if (this.previousDataArray[i * step] > 0) /*then*/ this.previousDataArray[i * step] -= 1;
 
                 if (barHeight > 0) {
                     this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
                     this.canvasContext.fillRect(x, height - barHeight, barWidth - 1, barHeight);
                 }
+
+                if (discY >= discHeight) {
+                    this.canvasContext.fillStyle = 'white';
+                    this.canvasContext.fillRect(x, height - discY - 1, barWidth - 1, discHeight);
+                }
                 x += barWidth;
             }
 
-            if (this.dataArray.find((value, index) => value > 0)) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
+            if (this.dataArray.find((value, index) => value > 0) ||
+                this.previousDataArray.find((value, index) => value > 0)) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
         }
 
         start() {
