@@ -68,7 +68,7 @@
             $('#@(HtmlControlsRepository.HeaderControlsContainerId)').removeClass('d-none');
 
             if (view === '@(Enums.MediaPages.Player)') {
-                updateMediaLibraryConfiguration(success);
+                update@(nameof(MediaLibraryConfiguration))(success);
                 $(container = '#@(HtmlControlsRepository.PlayerViewId)').removeClass('d-none');
                 $('#@(HtmlControlsRepository.HeaderControlsContainerId)').addClass('d-none');
             } else if (view === '@(Enums.MediaPages.Home)') {
