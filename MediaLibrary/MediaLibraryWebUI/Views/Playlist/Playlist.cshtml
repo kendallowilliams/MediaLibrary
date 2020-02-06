@@ -4,7 +4,11 @@
 
 <div class="d-flex flex-column" style="flex: 1 1 auto; overflow-y: auto">
     <div style="flex: 0 0 auto">
-        <h2>@(Model.SelectedPlaylist.Name) playlist</h2>
+        <div class="d-flex flex-row">
+            <div style="flex: 0 1 auto; overflow-x: auto">
+                <h2 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">@(Model.SelectedPlaylist.Name) playlist</h2>
+            </div>
+        </div>
         <div>
             <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
             <button class="btn btn-outline-secondary" title="Edit playlist" data-toggle="modal" data-target="#@(HtmlControlsRepository.EdiPlaylistModalId)" data-item-id="@(Model.SelectedPlaylist.Id)"

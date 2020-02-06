@@ -4,7 +4,11 @@
 
 <div class="d-flex flex-column" style="flex: 1 1 auto; overflow-y: auto">
     <div style="flex: 0 0 auto">
-        <h2>@(Model.SelectedSeries.Title)</h2>
+        <div class="d-flex flex-row">
+            <div style="flex: 0 1 auto; overflow-x: auto">
+                <h2 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">@(Model.SelectedSeries.Title)</h2>
+            </div>
+        </div>
         <div>
             <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
             <button class="btn btn-outline-secondary" onclick="getSeasonPlaylist()" data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></button>
