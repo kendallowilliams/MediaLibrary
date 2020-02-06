@@ -204,7 +204,7 @@ namespace MediaLibraryWebUI.Controllers
 
             try
             {
-                Transaction existingTransaction = transactionService.GetActiveTransactionByType(TransactionTypes.Read);
+                Transaction existingTransaction = await transactionService.GetActiveTransactionByType(TransactionTypes.Read);
 #if DEBUG
                 request = new ScanDirectoryRequest()
                 {

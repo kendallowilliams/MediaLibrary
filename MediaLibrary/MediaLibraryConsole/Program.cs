@@ -37,7 +37,7 @@ namespace MediaLibraryConsole
         {
             IProcessorService processorService = _container.GetExportedValue<IProcessorService>();
 
-            await Task.WhenAll(processorService.RefreshMusic(), processorService.RefreshPodcasts());
+            await Task.WhenAll(processorService.RefreshMusic(), processorService.RefreshPodcasts(), processorService.PerformCleanup());
         }
     }
 }

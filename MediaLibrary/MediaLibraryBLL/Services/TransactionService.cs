@@ -10,6 +10,7 @@ using MediaLibraryDAL.Services.Interfaces;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using System.Linq.Expressions;
 using MediaLibraryDAL.DbContexts;
+using System.Configuration;
 
 namespace MediaLibraryBLL.Services
 {
@@ -70,19 +71,13 @@ namespace MediaLibraryBLL.Services
             }
         }
 
-        public Transaction GetActiveTransactionByType(TransactionTypes transactionType)
+        public async Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType) =>
+            await dataService.Get<Transaction>(t => t.Type == (int)transactionType && t.Status == (int)TransactionStatus.InProcess);
+
+        public async Task CleanUpTransactions()
         {
-            Transaction transaction = default(Transaction);
-
-            using (var db = new MediaLibraryEntities())
-            {
-                transaction = (from x in db.Transactions
-                              where x.Type == (int)transactionType && x.Status == (int)TransactionStatus.InProcess
-                              select x)
-                              .FirstOrDefault();
-            }
-
-            return transaction;
+            int.TryParse(ConfigurationManager.AppSettings["TransactionExpirationAge"], out int transactionExpirationDays);
+            await dataService.DeleteAll<Transaction>(transaction => transaction.CreateDate < DateTime.Now.Date.AddDays(-transactionExpirationDays));
         }
     }
 }

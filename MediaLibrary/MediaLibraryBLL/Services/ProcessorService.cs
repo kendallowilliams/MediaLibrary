@@ -66,5 +66,10 @@ namespace MediaLibraryBLL.Services
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
         }
+
+        public async Task PerformCleanup()
+        {
+            await transactionService.CleanUpTransactions();
+        }
     }
 }
