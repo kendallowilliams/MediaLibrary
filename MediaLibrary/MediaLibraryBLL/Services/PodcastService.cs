@@ -145,8 +145,11 @@ namespace MediaLibraryBLL.Services
 
                     if (string.IsNullOrWhiteSpace(podcastItem.File))
                     {
-                        if (!Directory.Exists(fileService.PodcastFolder)) { Directory.CreateDirectory(fileService.PodcastFolder); }
-                        fileName = Path.Combine(fileService.PodcastFolder, Path.GetFileName((new Uri(podcastItem.Url)).LocalPath));
+                        string path = Path.Combine(fileService.PodcastFolder, podcastItem.Title.);
+
+                        foreach (char c in Path.GetInvalidPathChars()) { path.Replace(c.ToString(), string.Empty); }
+                        if (!Directory.Exists(path)) { Directory.CreateDirectory(path); }
+                        fileName = Path.Combine(path, Path.GetFileName((new Uri(podcastItem.Url)).LocalPath));
                         podcastItem.File = fileName;
                         File.WriteAllBytes(fileName, await webService.DownloadData(podcastItem.Url));
                         await dataService.Update(podcastItem);
