@@ -130,7 +130,8 @@ namespace MediaLibraryWebUI.Controllers
             try
             {
                 Transaction existingTransaction = await dataService.Get<Transaction>(item => item.Type == (int)TransactionTypes.DownloadEpisode &&
-                                                                                             item.Status == (int)TransactionStatus.InProcess);
+                                                                                             item.Status == (int)TransactionStatus.InProcess &&
+                                                                                             item.Message == id.ToString());
                 await dataService.Insert(transaction);
 
                 if (existingTransaction == null)

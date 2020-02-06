@@ -140,6 +140,9 @@ namespace MediaLibraryBLL.Services
 
                 if (podcastItem != null)
                 {
+                    transaction.Message = podcastItem.Id.ToString();
+                    await dataService.Update(transaction);
+
                     if (string.IsNullOrWhiteSpace(podcastItem.File))
                     {
                         if (!Directory.Exists(fileService.PodcastFolder)) { Directory.CreateDirectory(fileService.PodcastFolder); }
