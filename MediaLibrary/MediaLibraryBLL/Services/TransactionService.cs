@@ -77,7 +77,8 @@ namespace MediaLibraryBLL.Services
         public async Task CleanUpTransactions()
         {
             int.TryParse(ConfigurationManager.AppSettings["TransactionExpirationAge"], out int transactionExpirationDays);
-            await dataService.DeleteAll<Transaction>(transaction => transaction.CreateDate < DateTime.Now.Date.AddDays(-transactionExpirationDays));
+            DateTime expirationDate = DateTime.Now.Date.AddDays(-transactionExpirationDays);
+            await dataService.DeleteAll<Transaction>(transaction => transaction.CreateDate < expirationDate);
         }
     }
 }
