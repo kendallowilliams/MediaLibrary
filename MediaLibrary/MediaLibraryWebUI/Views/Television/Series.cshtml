@@ -61,9 +61,10 @@
             numItemsAfter = minSeasonCount - numItemsBefore - 1,
             first = season - numItemsBefore,
             last = season + numItemsAfter,
-            numSeasons = $('[data-season-id]:not([data-season-id="+"]):not([data-season-id="-"]').length;
+            cssSelector = '[data-season-id]:not([data-season-id="+"]):not([data-season-id="-"]',
+            numSeasons = $('').length;
 
-        $('[data-season-id]:not([data-season-id="+"]):not([data-season-id="-"])').addClass('d-none d-lg-block');
+        $(cssSelector).addClass('d-none d-lg-block');
         
         if (first < 1) {
             first = 1;
