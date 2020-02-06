@@ -40,6 +40,7 @@
     function loadSeasonView(item) {
         var success = () => {
                 $(item).parent('li.page-item:first').addClass('active');
+                updateMobileSeasons(parseInt(season));
                 loadTooltips($('#@(HtmlControlsRepository.SeasonViewId)')[0]);
                 hideLoading();
             },
@@ -51,6 +52,29 @@
             set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeason))(season);
             disposeTooltips($('#@(HtmlControlsRepository.SeasonViewId)')[0]);
             $('#@(HtmlControlsRepository.SeasonViewId)').load('@Url.Action("GetSeason", "Television")', { series: series, season: season }, success);
+        }
+    }
+
+    function updateMobileSeasons(season) {
+        var minSeasonCount = @(Model.MinimumNumberOfSeasons),
+            numItemsBefore = Math.floor(minSeasonCount / 2),
+            numItemsAfter = minSeasonCount - numItemsBefore - 1,
+            first = season - numItemsBefore,
+            last = season + numItemsAfter,
+            numSeasons = $('[data-season-id]:not([data-season-id="+"]):not([data-season-id="-"]').length;
+
+        $('[data-season-id]:not([data-season-id="+"]):not([data-season-id="-"])').addClass('d-none d-lg-block');
+        
+        if (first < 1) {
+            first = 1;
+            last = minSeasonCount;
+        } else if (last > numSeasons) {
+            first = first - (last - numSeasons);
+            last = season + (numSeasons - season);
+        }
+
+        for (var i = first; i <= last; i++) {
+            $('[data-season-id="' + i + '"]').removeClass('d-none d-lg-block');
         }
     }
 

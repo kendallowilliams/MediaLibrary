@@ -23,5 +23,6 @@ namespace MediaLibraryWebUI.Models
         public Series SelectedSeries { get; set; }
         public IEnumerable<IGrouping<string, Series>> SeriesGroups { get; set; }
         public IEnumerable<SelectListItem> SeriesSortItems { get; }
+        public int MinimumNumberOfSeasons { get => 5; }
     }
 }
