@@ -62,7 +62,7 @@
             first = season - numItemsBefore,
             last = season + numItemsAfter,
             cssSelector = '[data-season-id]:not([data-season-id="+"]):not([data-season-id="-"]',
-            numSeasons = $('').length;
+            numSeasons = $(cssSelector).length;
 
         $(cssSelector).addClass('d-none d-lg-block');
         
