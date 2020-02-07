@@ -94,7 +94,10 @@
     });
 
     function getSeasonPlaylist() {
-        window.location = '@Url.Action("GetM3UPlaylist", "Television")?seriesId=' + getSelectedSeriesId() + '&season=' + getSelectedSeason();
+        var season = get@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeason))(),
+            series = get@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeriesId))();
+
+        window.location = '@Url.Action("GetM3UPlaylist", "Television")?seriesId=' + series + '&season=' + season;
     }
 
     $('[data-season-id="1"]').trigger('click');
