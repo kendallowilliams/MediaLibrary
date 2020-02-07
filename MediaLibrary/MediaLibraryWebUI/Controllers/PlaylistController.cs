@@ -131,8 +131,8 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<PlaylistTrack> playlistTracks = random ? playlist.PlaylistTracks.OrderBy(item => rand.Next()) :
                                                                  playlist.PlaylistTracks.OrderBy(item => item.CreateDate);
             IEnumerable <Track> tracks = playlistTracks.Select(list => list.Track);
-            string domain = Request.Url.GetLeftPart(UriPartial.Authority);
-            IEnumerable<string> lines = tracks.Select(track => $"#EXTINF:{(int)track.Duration},{track.Title}{Environment.NewLine}{$"{domain}/Music/File/{track.Id}"}");
+            string path = $"{Request.Url.GetLeftPart(UriPartial.Authority)}{Request.ApplicationPath}";
+            IEnumerable<string> lines = tracks.Select(track => $"#EXTINF:{(int)track.Duration},{track.Title}{Environment.NewLine}{$"{path}/Music/File/{track.Id}"}");
             string data = $"#EXTM3U{Environment.NewLine}{string.Join(Environment.NewLine, lines)}";
             byte[] content = Encoding.UTF8.GetBytes(data);
 

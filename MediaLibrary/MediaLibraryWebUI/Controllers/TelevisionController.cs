@@ -126,8 +126,8 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> GetM3UPlaylist(int seriesId, int season)
         {
             IEnumerable<Episode> episodes = await dataService.GetList<Episode>(episode => episode.SeriesId == seriesId && episode.Season == season);
-            string domain = Request.Url.GetLeftPart(UriPartial.Authority);
-            IEnumerable<string> lines = episodes.Select(episode => $"#EXTINF:0,{episode.Title}{Environment.NewLine}{$"{domain}/Television/File/{episode.Id}"}");
+            string path = $"{Request.Url.GetLeftPart(UriPartial.Authority)}{Request.ApplicationPath}";
+            IEnumerable<string> lines = episodes.Select(episode => $"#EXTINF:0,{episode.Title}{Environment.NewLine}{$"{path}/Television/File/{episode.Id}"}");
 
             string data = $"#EXTM3U{Environment.NewLine}{string.Join(Environment.NewLine, lines)}";
             byte[] content = Encoding.UTF8.GetBytes(data);
