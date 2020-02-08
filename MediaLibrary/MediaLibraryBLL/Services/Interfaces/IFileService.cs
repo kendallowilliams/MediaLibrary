@@ -13,6 +13,8 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         string PodcastFolder { get; }
 
+        string RootFolder { get; }
+
         Task Write(string path, string data);
 
         Task Write(string path, byte[] data);

@@ -25,16 +25,17 @@ namespace MediaLibraryWebUI.Controllers
         private readonly ITransactionService transactionService;
         private readonly PlayerViewModel playerViewModel;
         private readonly IDataService dataService;
-        private readonly string dataFolder,
-                                fileNamePrefix;
+        private readonly IFileService fileService;
+        private readonly string fileNamePrefix;
 
         [ImportingConstructor]
-        public PlayerController(ITransactionService transactionService, PlayerViewModel playerViewModel, IDataService dataService)
+        public PlayerController(ITransactionService transactionService, PlayerViewModel playerViewModel, IDataService dataService,
+                                IFileService fileService)
         {
             this.transactionService = transactionService;
             this.playerViewModel = playerViewModel;
             this.dataService = dataService;
-            dataFolder = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData, SpecialFolderOption.Create), nameof(MediaLibraryWebUI));
+            this.fileService = fileService;
 #if DEV
             fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}_DEV";
 #elif DEBUG
@@ -99,7 +100,7 @@ namespace MediaLibraryWebUI.Controllers
 
             if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Song)
             {
-                string path = Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json");
+                string path = Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json");
                 IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
                 IEnumerable<Track> songs = Enumerable.Empty<Track>();
 
@@ -112,7 +113,7 @@ namespace MediaLibraryWebUI.Controllers
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Podcast)
             {
-                string path = Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json");
+                string path = Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json");
                 IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
                 IEnumerable<PodcastItem> podcastItems = Enumerable.Empty<PodcastItem>();
 
@@ -124,7 +125,7 @@ namespace MediaLibraryWebUI.Controllers
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Television)
             {
-                string path = Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json");
+                string path = Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json");
                 IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
                 IEnumerable<Episode> episodes = Enumerable.Empty<Episode>();
 
@@ -161,19 +162,19 @@ namespace MediaLibraryWebUI.Controllers
             {
                 string data = JsonConvert.SerializeObject(items);
 
-                if (!Directory.Exists(dataFolder)) /*then*/ Directory.CreateDirectory(dataFolder);
+                if (!Directory.Exists(fileService.RootFolder)) /*then*/ Directory.CreateDirectory(fileService.RootFolder);
 
                 if (mediaType == MediaTypes.Song)
                 {
-                    System.IO.File.WriteAllText(Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json"), data);
+                    System.IO.File.WriteAllText(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json"), data);
                 }
                 else if (mediaType == MediaTypes.Podcast)
                 {
-                    System.IO.File.WriteAllText(Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"), data);
+                    System.IO.File.WriteAllText(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"), data);
                 }
                 else if (mediaType == MediaTypes.Television)
                 {
-                    System.IO.File.WriteAllText(Path.Combine(dataFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json"), data);
+                    System.IO.File.WriteAllText(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json"), data);
                 }
             }
         }
