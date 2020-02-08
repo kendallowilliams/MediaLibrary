@@ -54,6 +54,7 @@
             var success = () => {
                 if (typeof callback === 'function') /*then*/ callback();
                 loadTooltips($(container)[0]);
+                $(container).removeClass('d-none')
                 hideLoading();
             },
                 url = '@Url.Action("Index", "ViewName")',
@@ -68,15 +69,15 @@
             $('#@(HtmlControlsRepository.HeaderControlsContainerId)').removeClass('d-none');
 
             if (view === '@(Enums.MediaPages.Player)') {
+                container = '#@(HtmlControlsRepository.PlayerViewId)';
                 update@(nameof(MediaLibraryConfiguration))(success);
-                $(container = '#@(HtmlControlsRepository.PlayerViewId)').removeClass('d-none');
                 $('#@(HtmlControlsRepository.HeaderControlsContainerId)').addClass('d-none');
             } else if (view === '@(Enums.MediaPages.Home)') {
-                $(container = '#@(HtmlControlsRepository.HomeViewId)').removeClass('d-none');
+                container = '#@(HtmlControlsRepository.HomeViewId)';
                 update@(nameof(MediaLibraryConfiguration))(() => $('#@(HtmlControlsRepository.HomeViewId)').load(url.replace("ViewName", view), success));
             } else {
+                container = '#@(HtmlControlsRepository.MediaViewId)';
                 update@(nameof(MediaLibraryConfiguration))(() => $('#@(HtmlControlsRepository.MediaViewId)').load(url.replace("ViewName", view), success));
-                $(container = '#@(HtmlControlsRepository.MediaViewId)').removeClass('d-none');
             }
         }
 
