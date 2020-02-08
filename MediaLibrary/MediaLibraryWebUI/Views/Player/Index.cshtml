@@ -183,7 +183,12 @@
             $(volume == 0 ? '#@(HtmlControlsRepository.PlayerMuteButtonId)' : '#@(HtmlControlsRepository.PlayerVolumeButtonId)').removeClass('d-none');
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))(volume);
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Muted))(volume == 0);
-            update@(nameof(PlayerConfiguration))(() => $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', volume / 100.0));
+            $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', volume / 100.0).prop('muted', volume == 0)
+        });
+        $volumeSlider.on('slidechange', (e, ui) => {
+            var volume = ui.value;
+
+            update@(nameof(PlayerConfiguration))();
         });
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slide', function (e, ui) {
             if ($(e.target).attr('data-slide-started') === 'true') {
