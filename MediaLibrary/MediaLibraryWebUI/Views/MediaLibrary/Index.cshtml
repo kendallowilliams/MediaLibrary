@@ -54,7 +54,8 @@
             var success = () => {
                 if (typeof callback === 'function') /*then*/ callback();
                 loadTooltips($(container)[0]);
-                $(container).removeClass('d-none')
+                $(container).removeClass('d-none');
+                (getViewLoaded(view))();
                 hideLoading();
             },
                 url = '@Url.Action("Index", "ViewName")',
@@ -78,6 +79,13 @@
             } else {
                 container = '#@(HtmlControlsRepository.MediaViewId)';
                 update@(nameof(MediaLibraryConfiguration))(() => $('#@(HtmlControlsRepository.MediaViewId)').load(url.replace("ViewName", view), success));
+            }
+        }
+
+        function getViewLoaded(view) {
+            @foreach(string page in Enum.GetNames(typeof(Enums.MediaPages)))
+            {
+                @Html.Raw($"if (view === '{page}') /*then*/ return handle{page}Loaded;{Environment.NewLine}")
             }
         }
 

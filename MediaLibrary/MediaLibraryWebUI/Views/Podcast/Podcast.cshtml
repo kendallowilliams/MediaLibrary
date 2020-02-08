@@ -101,5 +101,8 @@
         return $('li.page-item.active a.page-link[data-podcast-year]').attr('data-podcast-year');
     }
 
+    function handle@(Enums.MediaPages.Podcast)Loaded() {
+    }
+
     $('[data-podcast-year="@(years.FirstOrDefault())"]').trigger('click');
 </script>

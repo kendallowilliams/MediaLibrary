@@ -201,7 +201,9 @@
         $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').on('click', () => loadNext());
         $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').on('click', () => loadPrevious());
         $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').on('click', () => $(getPlayer()).attr('data-playing', 'false').trigger('pause'));
-        $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => $(getPlayer()).trigger('play'));
+        $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').on('click', () => {
+            if (getPlayer().currentSrc) /*then*/ $(getPlayer()).trigger('play');
+        });
         $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').addClass(isShuffleEnabled() ? 'active' : '');
         $('button[data-repeat-type]').on('click', () => {
             var repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
@@ -322,6 +324,11 @@
     function enableDisablePreviousNext() {
         $('#@(HtmlControlsRepository.HeaderNextButtonId), #@(HtmlControlsRepository.PlayerNextButtonId)').prop('disabled', !canPlayNext());
         $('#@(HtmlControlsRepository.HeaderPreviousButtonId), #@(HtmlControlsRepository.PlayerPreviousButtonId)').prop('disabled', !canPlayPrevious());
+    }
+
+    function handle@(Enums.MediaPages.Player)Loaded() {
+        initCanvas();
+        enableDisablePreviousNext();
     }
 
     function reload(callback) {

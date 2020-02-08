@@ -78,4 +78,7 @@
         set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeriesSort))($(select).val());
         update@(nameof(TelevisionConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Television))'));
     }
+
+    function handle@(Enums.MediaPages.Television)Loaded() {
+    }
 </script>

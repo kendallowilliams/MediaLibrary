@@ -59,4 +59,7 @@
         set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Index))');
         update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
     }
+
+    function handle@(Enums.MediaPages.Music)Loaded() {
+    }
 </script>

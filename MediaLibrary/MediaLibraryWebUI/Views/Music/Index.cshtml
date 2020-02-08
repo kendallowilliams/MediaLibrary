@@ -118,5 +118,8 @@
         update@(nameof(MusicConfiguration))(() => $newView.load(url, success));
     });
 
+    function handle@(Enums.MediaPages.Music)Loaded() {
+    }
+
     $('[data-music-tab="@(Model.Configuration.SelectedMusicTab)"]').tab('show');
 </script>

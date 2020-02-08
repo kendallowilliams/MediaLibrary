@@ -129,4 +129,7 @@
         set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastSort))($(select).val());
         update@(nameof(PodcastConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }
+
+    function handle@(Enums.MediaPages.Podcast)Loaded() {
+    }
 </script>

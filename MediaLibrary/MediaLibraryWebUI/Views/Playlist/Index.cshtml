@@ -92,4 +92,7 @@
         set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistSort))($(select).val());
         update@(nameof(PlaylistConfiguration))(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
     }
+    
+    function handle@(Enums.MediaPages.Playlist)Loaded() {
+    }
 </script>
