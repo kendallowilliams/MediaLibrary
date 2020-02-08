@@ -1,9 +1,9 @@
 ﻿@model MediaLibraryWebUI.Models.PlayerViewModel
 
-<ul class="list-group list-group-flush">
-    @if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Song)
-    {
-        foreach (var item in Model.Songs.Select((item, index) => new { Song = item, Index = index }))
+@if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Song && Model.Songs.Any())
+{
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model.Songs.Select((song, index) => new { Song = song, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Music", new { item.Song.Id })"
                 data-play-index="@(item.Index)" data-item-id="@(item.Song.Id)" data-title="@(item.Song.Title)">
@@ -22,10 +22,12 @@
                 </div>
             </li>
         }
-    }
-    else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Podcast)
-    {
-        foreach (var item in Model.PodcastItems.Select((item, index) => new { PodcastItem = item, Index = index }))
+    </ul>
+}
+else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Podcast && Model.PodcastItems.Any())
+{
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model.PodcastItems.Select((podcastItem, index) => new { PodcastItem = podcastItem, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Podcast", new { item.PodcastItem.Id })"
                 data-play-index="@(item.Index)" data-item-id="@(item.PodcastItem.Id)" data-title="@(item.PodcastItem.Title)">
@@ -44,10 +46,12 @@
                 </div>
             </li>
         }
-    }
-    else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television)
-    {
-        foreach (var item in Model.Episodes.Select((item, index) => new { Episode = item, Index = index }))
+    </ul>
+}
+else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television && Model.Episodes.Any())
+{
+    <ul class="list-group list-group-flush">
+        @foreach (var item in Model.Episodes.Select((episode, index) => new { Episode = episode, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Television", new { item.Episode.Id })"
                 data-play-index="@(item.Index)" data-item-id="@(item.Episode.Id)" data-title="@(item.Episode.Title)">
@@ -66,8 +70,12 @@
                 </div>
             </li>
         }
-    }
-</ul>
+    </ul>
+}
+else
+{
+    <div>No now playing items.</div>
+}
 
 <script type="text/javascript" defer="defer">
     function playClicked(btn) {
