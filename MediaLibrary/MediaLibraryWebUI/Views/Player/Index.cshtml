@@ -166,7 +166,8 @@
             min: 0,
             max: 100,
             orientation: 'vertical',
-            value: parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))())
+            value: get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Muted))().toLowerCase() === 'true' ?
+                   0 : parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))())
         });
         $('#@(HtmlControlsRepository.PlayerVolumeContainerId)').popover({
             trigger: 'hover',
