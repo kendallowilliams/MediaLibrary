@@ -159,7 +159,7 @@
     }
 
     function initPlayerControls() {
-        var $volumeSlider = $('<div id="@(HtmlControlsRepository.VolumeSliderId)"></div>');
+        var $volumeSlider = $('<div id="@(HtmlControlsRepository.VolumeSliderId)"></div>').addClass('m-1');
 
         $('#@(HtmlControlsRepository.PlayerSliderId)').slider({ min: 0, max: 100 });
         $volumeSlider.slider({
