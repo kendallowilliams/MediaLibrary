@@ -312,7 +312,6 @@
     function canPlayNext() { return isShuffleEnabled() || parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) < ($('li[data-play-index]').length - 1); }
 
     function canPlayPrevious() {
-        debugger;
         return getPlayer().currentSrc &&
               (isShuffleEnabled() ||
                parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) > 0 ||
