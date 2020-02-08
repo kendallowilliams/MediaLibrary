@@ -178,7 +178,8 @@
         $volumeSlider.on('slide', (e, ui) => {
             var volume = ui.value;
 
-            $('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume', volume);
+            $('#@(HtmlControlsRepository.PlayerVolumeButtonId), #@(HtmlControlsRepository.PlayerMuteButtonId)').attr('data-volume', volume).addClass('d-none');
+            $(volume == 0 ? '#@(HtmlControlsRepository.PlayerMuteButtonId)' : '#@(HtmlControlsRepository.PlayerVolumeButtonId)').removeClass('d-none');
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))(volume);
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Muted))(volume == 0);
             update@(nameof(PlayerConfiguration))(() => $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', volume / 100.0));
@@ -236,9 +237,11 @@
 
             if ($btn.attr('id') === '@(HtmlControlsRepository.PlayerVolumeButtonId)') {
                 $('#@(HtmlControlsRepository.PlayerMuteButtonId)').removeClass('d-none');
+                $volumeSlider.slider('value', 0);
                 muted = true;
             } else if ($btn.attr('id') === '@(HtmlControlsRepository.PlayerMuteButtonId)') {
                 $('#@(HtmlControlsRepository.PlayerVolumeButtonId)').removeClass('d-none');
+                $volumeSlider.slider('value', previousVolume);
             }
 
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Muted))(muted);
