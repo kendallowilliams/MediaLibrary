@@ -180,7 +180,7 @@
 
             $('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume', volume);
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Volume))(volume);
-            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Muted))(volume > 0);
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Muted))(volume == 0);
             update@(nameof(PlayerConfiguration))(() => $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', volume / 100.0));
         });
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slide', function (e, ui) {
