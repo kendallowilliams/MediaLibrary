@@ -264,7 +264,7 @@
 
     function initAudioVisualizer() {
         if (!audioVisualizer) {
-            audioVisualizer = new AudioVisualizer($('#@(HtmlControlsRepository.AudioVisualizerId)')[0], getPlayer());
+            audioVisualizer = new AudioVisualizer($('#@(HtmlControlsRepository.AudioVisualizerId)')[0], $('#@(HtmlControlsRepository.MusicPlayerId)')[0]);
         }
     }
 
