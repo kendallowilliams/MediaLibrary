@@ -219,7 +219,7 @@
 
             $('button[data-repeat-type="' + repeat + '"]').removeClass('d-none');
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(repeat);
-            update@(nameof(PlayerConfiguration))();
+            update@(nameof(PlayerConfiguration))(() => enableDisablePreviousNext());
         });
         $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').on('click', function () {
             var shuffle = isShuffleEnabled(),
