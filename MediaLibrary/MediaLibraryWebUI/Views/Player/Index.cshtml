@@ -343,14 +343,14 @@
     }
 
     function handle@(Enums.MediaPages.Player)Loaded() {
-        var $items = $('li[data-play-index]');
-
         initCanvas();
         enableDisablePreviousNext();
         setUnPlayedShuffleIds(isShuffleEnabled());
     }
 
     function setUnPlayedShuffleIds(shuffle) {
+        var $items = $('li[data-play-index]');
+
         unPlayedShuffleIds = shuffle && $items.length > 0 ? $items.map((index, element) => $(element).attr('data-play-index')) : [];
     }
 
