@@ -7,10 +7,6 @@
       "destination": "lib/font-awesome/"
     },
     {
-      "library": "jplayer@2.9.2",
-      "destination": "lib/jplayer/"
-    },
-    {
       "provider": "unpkg",
       "library": "bootstrap@4.4.1",
       "destination": "lib/bootstrap/"
@@ -26,6 +22,18 @@
     {
       "library": "js-polyfills@0.1.42",
       "destination": "lib/js-polyfills/"
+    },
+    {
+      "library": "jquery@3.4.1",
+      "destination": "lib/jquery/"
+    },
+    {
+      "library": "popper.js@1.16.1",
+      "destination": "lib/popper.js/"
+    },
+    {
+      "library": "modernizr@2.8.3",
+      "destination": "lib/modernizr/"
     }
   ]
 }

@@ -14,7 +14,7 @@ namespace MediaLibraryWebUI
                         "~/Content/site.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/lib/jquery/jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/lib/jqueryui/jquery-ui.min.js"));
@@ -23,25 +23,21 @@ namespace MediaLibraryWebUI
                         "~/lib/jQuery.Marquee/jquery.marquee.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                        "~/lib/modernizr/modernizr.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/lib/bootstrap/dist/js/bootstrap.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/popperjs").Include(
-                      "~/Scripts/umd/popper.js"));
+                      "~/lib/popper.js/umd/popper.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/fontawesome").Include(
-                      "~/lib/font-awesome/js/all.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jplayer").Include(
-                      "~/lib/jplayer/jplayer/jquery.jplayer.min.js",
-                      "~/lib/jplayer/add-on/jplayer.playlist.min.js"));
+                      "~/lib/font-awesome/js/all.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/lib/bootstrap/dist/bootstrap.min.css",
                       "~/Content/site.css",
-                      "~/lib/font-awesome/css/all.css",
+                      "~/lib/font-awesome/css/all.min.css",
                       "~/lib/bootstrap/dist/css/bootstrap.min.css",
                       "~/lib/jqueryui/jquery-ui.min.css"));
         }
