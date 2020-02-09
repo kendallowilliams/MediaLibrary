@@ -44,7 +44,7 @@
                     <i class="fa fa-list-ul"></i>
                 </button>
                 <span class="d-none d-lg-inline-block">
-                    <button id="@(HtmlControlsRepository.PlayerShuffleButtonId)" class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="Shuffle"><i class="fa fa-random"></i></button>
+                    <button id="@(HtmlControlsRepository.PlayerShuffleButtonId)" class="btn btn-sm btn-outline-secondary"><i class="fa fa-random"></i></button>
                     <button id="@(HtmlControlsRepository.PlayerRepeatButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.None))" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Repeat == Enums.RepeatTypes.None ? string.Empty : "d-none")">
                         <i class="fa fa-sync"></i>
                     </button>
