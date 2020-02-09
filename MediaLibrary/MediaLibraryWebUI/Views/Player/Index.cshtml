@@ -78,7 +78,7 @@
 
 <script type="text/javascript" defer="defer">
     var audioVisualizer = null,
-        playedShuffleIds = [];
+        unPlayedShuffleIds = [];
         
     function loadItem(item, triggerPlay) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
@@ -102,7 +102,7 @@
                 updateScrollTop();
                 enableDisablePreviousNext();
                 $player.prop('src', url);
-                if (isShuffleEnabled()) /*then*/ playedShuffleIds.push(id);
+                if (isShuffleEnabled() && $.inArray(id, unPlayedShuffleIds) >= 0) /*then*/ unPlayedShuffleIds.slice(unPlayedShuffleIds.indexOf(id), 1);
                 if (triggerPlay) /*then*/ $player.trigger('play');
             });
         } else if ($('li[data-play-index].active').length === 1) {
@@ -227,8 +227,8 @@
         $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)').on('click', function () {
             var shuffle = isShuffleEnabled(),
                 $btns = $('#@(HtmlControlsRepository.HeaderShuffleButtonId), #@(HtmlControlsRepository.PlayerShuffleButtonId)');
-
-            playedShuffleIds = [];
+            
+            setUnPlayedShuffleIds(!shuffle);
             set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Shuffle))(!shuffle);
             update@(nameof(PlayerConfiguration))(() => {
                 if (!shuffle) {
@@ -276,15 +276,21 @@
     }
 
     function loadNext() {
-        var nextIndex = isShuffleEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
-                                             parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
+        var shuffle = isShuffleEnabled(),
+            nextIndex = shuffle ? unPlayedShuffleIds[getRandomInteger(0, unPlayedShuffleIds.length - 1)] :
+                                  parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
             $item = null,
-            repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
+            repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(),
+            shuffleEmpty = shuffle && unPlayedShuffleIds.length == 0;
 
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
             $(getPlayer()).trigger('play');
         } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
-            if (nextIndex === $('li[data-play-index]').length) {
+            if (shuffleEmpty) {
+                setUnPlayedShuffleIds(shuffle);
+                loadNext();
+            }
+            else if (nextIndex === $('li[data-play-index]').length) {
                 $item = $('li[data-play-index="0"]');
                 loadItem($item[0], isPlaying());
             } else {
@@ -294,7 +300,7 @@
         } else {
             $item = $('li[data-play-index=' + nextIndex + ']');
 
-            if (nextIndex !== $('li[data-play-index]').length) {
+            if (!shuffleEmpty && (!shuffle && nextIndex < $('li[data-play-index]').length)) {
                 loadItem($item[0], isPlaying());
             } else {
                 $('#@(HtmlControlsRepository.PlayerPauseButtonId)').trigger('click');
@@ -303,12 +309,18 @@
     }
 
     function loadPrevious() {
-        var previousIndex = isShuffleEnabled() ? getRandomInteger(0, $('li[data-play-index]').length - 1) :
-                                                 parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
+        var shuffle = isShuffleEnabled(),
+            previousIndex = shuffle ? unPlayedShuffleIds[getRandomInteger(0, unPlayedShuffleIds.length - 1)] :
+                parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
             $item = $('li[data-play-index="' + previousIndex + '"]'),
-            player = getPlayer();
+            player = getPlayer(),
+            shuffleEmpty = shuffle && unPlayedShuffleIds.length == 0;
 
         if (player.currentTime > @(Model.NumberOfSecondsBeforeRestart)) /*then*/ player.currentTime = 0;
+        else if (shuffleEmpty) {
+            setUnPlayedShuffleIds(shuffle);
+            loadPrevious();
+        }
         else loadItem($item[0], isPlaying());
     }
 
@@ -331,8 +343,15 @@
     }
 
     function handle@(Enums.MediaPages.Player)Loaded() {
+        var $items = $('li[data-play-index]');
+
         initCanvas();
         enableDisablePreviousNext();
+        setUnPlayedShuffleIds(isShuffleEnabled());
+    }
+
+    function setUnPlayedShuffleIds(shuffle) {
+        unPlayedShuffleIds = shuffle && $items.length > 0 ? $items.map((index, element) => $(element).attr('data-play-index')) : [];
     }
 
     function reload(callback) {
@@ -347,7 +366,7 @@
     }
 
     function updateScrollTop() {
-        var $item = $('li.active');
+        var $item = $('li[data-play-index].active');
 
         if ($item.length > 0) {
             $('#@(HtmlControlsRepository.PlayerItemsContainerId)').scrollTop($('#@(HtmlControlsRepository.PlayerItemsContainerId)').scrollTop() - $item.position().top * -1);
