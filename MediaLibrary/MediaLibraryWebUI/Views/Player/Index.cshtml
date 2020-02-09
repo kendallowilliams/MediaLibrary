@@ -305,6 +305,7 @@
                 loadItem($item[0], isPlaying());
             } else {
                 $('#@(HtmlControlsRepository.PlayerPauseButtonId)').trigger('click');
+                enableDisablePreviousNext();
             }
         }
     }
