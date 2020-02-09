@@ -12,6 +12,7 @@ namespace MediaLibraryWebUI
         public enum AlbumSort { AtoZ = 0 }
         public enum SeriesSort { AtoZ = 0 }
         public enum PodcastSort { LastUpdateDate = 0, AtoZ, DateAdded }
+        public enum PodcastFilter { All = 0, Downloaded, Unplayed }
         public enum PlaylistSort { AtoZ = 0, DateAdded }
         public enum MusicTabs { Albums = 0, Artists, Songs }
         public enum MusicPages { Index = 0, Album, Artist }

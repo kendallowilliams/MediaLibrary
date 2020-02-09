@@ -10,11 +10,10 @@
             @Html.DropDownListFor(x => x.Configuration.SelectedPodcastSort,
                                   Model.PodcastSortItems,
                                   null,
-                                  new { @class = "custom-select border border-secondary",
+                                  new { @class = "custom-select border border-secondary float-right",
                                         style = "width: 150px",
                                         title = "Sort by",
-                                        data_sort_tab = "albums-tab",
-                                        onchange = $"sortChanged(this)",
+                                        onchange = "sortChanged(this)",
                                         data_tooltip = "tooltip"
             })
         </div>

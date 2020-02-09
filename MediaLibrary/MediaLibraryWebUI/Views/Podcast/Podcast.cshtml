@@ -23,6 +23,15 @@
                     data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                 <i class="fa fa-trash"></i>
             </button>
+            @Html.DropDownListFor(x => x.Configuration.SelectedPodcastFilter,
+                         Model.PodcastFilterItems,
+                         null,
+                         new { @class = "custom-select border border-secondary float-right",
+                               style = "width: 150px",
+                               title = "Filter by",
+                               onchange = "filterChanged(this)",
+                               data_tooltip = "tooltip"
+            })
         </div>
         <hr />
     </div>
@@ -88,12 +97,13 @@
                 hideLoading();
             },
             id = @(Model.SelectedPodcast.Id),
-            year = $(item).attr('data-podcast-year');
+            year = $(item).attr('data-podcast-year'),
+            filter = get@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastFilter))();
 
         if (item) {
             showLoading();
             disposeTooltips($('#@(HtmlControlsRepository.PodcastViewId)')[0]);
-            $('#@(HtmlControlsRepository.PodcastViewId)').load('@Url.Action("GetPodcastItems", "Podcast")', { id: id, year: year }, success);
+            $('#@(HtmlControlsRepository.PodcastViewId)').load('@Url.Action("GetPodcastItems", "Podcast")', { id: id, year: year, filter: filter }, success);
         }
     }
 
@@ -102,6 +112,12 @@
     }
 
     function handle@(Enums.MediaPages.Podcast)Loaded() {
+    }
+
+    function filterChanged(select) {
+        showLoading();
+        set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastFilter))($(select).val());
+        update@(nameof(PodcastConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
     }
 
     $('[data-podcast-year="@(years.FirstOrDefault())"]').trigger('click');

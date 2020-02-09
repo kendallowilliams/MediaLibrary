@@ -16,5 +16,11 @@ namespace MediaLibraryWebUI.Repositories
             yield return new ListItem<object, PodcastSort>(null, "A to Z", PodcastSort.AtoZ);
             yield return new ListItem<object, PodcastSort>(null, "Date updated", PodcastSort.LastUpdateDate);
         }
+        public static IEnumerable<IListItem<object, PodcastFilter>> GetPodcastFilterItems()
+        {
+            yield return new ListItem<object, PodcastFilter>(null, "All episodes", PodcastFilter.All);
+            yield return new ListItem<object, PodcastFilter>(null, nameof(PodcastFilter.Downloaded), PodcastFilter.Downloaded);
+            yield return new ListItem<object, PodcastFilter>(null, nameof(PodcastFilter.Unplayed), PodcastFilter.Unplayed);
+        }
     }
 }

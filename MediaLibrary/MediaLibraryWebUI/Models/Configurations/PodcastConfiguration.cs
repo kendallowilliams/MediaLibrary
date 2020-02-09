@@ -16,5 +16,6 @@ namespace MediaLibraryWebUI.Models.Configurations
         public int SelectedPodcastId { get; set; }
         public PodcastPages SelectedPodcastPage { get; set; }
         public PodcastSort SelectedPodcastSort { get; set; }
+        public PodcastFilter SelectedPodcastFilter { get; set; }
     }
 }

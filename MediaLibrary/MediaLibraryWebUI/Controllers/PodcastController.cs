@@ -59,9 +59,9 @@ namespace MediaLibraryWebUI.Controllers
             }
 
             if (podcastViewModel.Configuration.SelectedPodcastPage == PodcastPages.Podcast &&
-                await dataService.Exists<Podcast>(album => album.Id == podcastViewModel.Configuration.SelectedPodcastId))
+                await dataService.Exists<Podcast>(podcast => podcast.Id == podcastViewModel.Configuration.SelectedPodcastId))
             {
-                result = await Get(podcastViewModel.Configuration.SelectedPodcastId);
+                result = await Get(podcastViewModel.Configuration.SelectedPodcastId, podcastViewModel.Configuration.SelectedPodcastFilter);
             }
             else
             {
@@ -109,16 +109,26 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
-        private async Task<ActionResult> Get(int id)
-        {
+        private async Task<ActionResult> Get(int id, PodcastFilter filter = default(PodcastFilter))
+        {   // retrieve podcast items in order to get list of all years for view
+            Func<PodcastItem, bool> expression = null;
+
+            if (filter == PodcastFilter.Downloaded) /*then*/ expression = item => !string.IsNullOrWhiteSpace(item.File);
+            else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => item.PlayCount == 0;
             podcastViewModel.SelectedPodcast = await dataService.Get<Podcast, ICollection<PodcastItem>>(podcast => podcast.Id == id, podcast => podcast.PodcastItems);
+            if (expression != null) /*then*/ podcastViewModel.SelectedPodcast.PodcastItems = podcastViewModel.SelectedPodcast.PodcastItems.Where(expression).ToList();
 
             return PartialView("Podcast", podcastViewModel);
         }
 
-        public async Task<ActionResult> GetPodcastItems(int id, int year)
+        public async Task<ActionResult> GetPodcastItems(int id, int year, PodcastFilter filter = default(PodcastFilter))
         {
+            Func<PodcastItem, bool> expression = null;
             IEnumerable<PodcastItem> podcastItems = await dataService.GetList<PodcastItem>(item => item.PodcastId == id && item.PublishDate.Year == year);
+
+            if (filter == PodcastFilter.Downloaded) /*then*/ expression = item => !string.IsNullOrWhiteSpace(item.File);
+            else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => item.PlayCount == 0;
+            if (expression != null) /*then*/ podcastItems = podcastItems.Where(expression);
 
             return PartialView("PodcastItems", podcastItems.OrderByDescending(item => item.PublishDate));
         }
