@@ -285,7 +285,7 @@
             shuffleEmpty = shuffle && unPlayedShuffleIds.length == 0;
         
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
-            $(getPlayer()).trigger('play');
+            $(getPlayer()).prop('currentTime', 0);
         } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
             if (shuffleEmpty) {
                 setUnPlayedShuffleIds(shuffle);
