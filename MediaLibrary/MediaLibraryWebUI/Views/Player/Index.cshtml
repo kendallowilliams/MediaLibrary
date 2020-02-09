@@ -82,7 +82,8 @@
         
     function loadItem(item, triggerPlay) {
         var $players = $('#@(HtmlControlsRepository.VideoPlayerId), #@(HtmlControlsRepository.MusicPlayerId)'),
-            $player = $(getPlayer());
+            $player = $(getPlayer()),
+            shuffle = isShuffleEnabled();
 
         $players.prop('src', '').attr('data-item-id', '');
 
@@ -99,10 +100,10 @@
                 $item.addClass('active');
                 $player.attr('data-item-id', id);
                 $('#@(HtmlControlsRepository.NowPlayingTitleId)').text(title.length > 0 ? ': ' + title : title);
+                if (shuffle && $.inArray(index, unPlayedShuffleIds) >= 0) /*then*/ unPlayedShuffleIds.splice(unPlayedShuffleIds.indexOf(index), 1);
                 updateScrollTop();
                 enableDisablePreviousNext();
                 $player.prop('src', url);
-                if (isShuffleEnabled() && $.inArray(id, unPlayedShuffleIds) >= 0) /*then*/ unPlayedShuffleIds.slice(unPlayedShuffleIds.indexOf(id), 1);
                 if (triggerPlay) /*then*/ $player.trigger('play');
             });
         } else if ($('li[data-play-index].active').length === 1) {
@@ -282,7 +283,7 @@
             $item = null,
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(),
             shuffleEmpty = shuffle && unPlayedShuffleIds.length == 0;
-
+        
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
             $(getPlayer()).trigger('play');
         } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
@@ -300,7 +301,7 @@
         } else {
             $item = $('li[data-play-index=' + nextIndex + ']');
 
-            if (!shuffleEmpty && (!shuffle && nextIndex < $('li[data-play-index]').length)) {
+            if (!shuffleEmpty || (!shuffle && nextIndex < $('li[data-play-index]').length)) {
                 loadItem($item[0], isPlaying());
             } else {
                 $('#@(HtmlControlsRepository.PlayerPauseButtonId)').trigger('click');
@@ -324,7 +325,11 @@
         else loadItem($item[0], isPlaying());
     }
 
-    function canPlayNext() { return isShuffleEnabled() || parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) < ($('li[data-play-index]').length - 1); }
+    function canPlayNext() {
+        return (isShuffleEnabled() && unPlayedShuffleIds.length > 0) ||
+               get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() === '@(nameof(Enums.RepeatTypes.RepeatAll))' ||
+               parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) < ($('li[data-play-index]').length - 1);
+    }
 
     function canPlayPrevious() {
         return getPlayer().currentSrc &&
@@ -351,7 +356,7 @@
     function setUnPlayedShuffleIds(shuffle) {
         var $items = $('li[data-play-index]');
 
-        unPlayedShuffleIds = shuffle && $items.length > 0 ? $items.map((index, element) => $(element).attr('data-play-index')) : [];
+        unPlayedShuffleIds = shuffle && $items.length > 0 ? $.makeArray($items.map((index, element) => $(element).attr('data-play-index'))) : [];
     }
 
     function reload(callback) {
