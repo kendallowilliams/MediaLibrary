@@ -50,7 +50,8 @@ namespace MediaLibraryWebUI.Services
             if (songs == null) /*then*/ songs = (await dataService.GetList<Track, Album, Artist, Genre>(null, 
                 song => song.Album, 
                 song => song.Artist,
-                song => song.Genre))?.OrderBy(song => song.Title);
+                song => song.Genre))?.OrderBy(song => song.Position)
+                                     .ThenBy(song => song.Title);
 
             switch(sort)
             {
