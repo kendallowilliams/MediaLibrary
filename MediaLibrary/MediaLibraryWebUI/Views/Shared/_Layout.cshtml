@@ -93,11 +93,16 @@
                 },
                 mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaTypes.Song))',
                 data = new FormData(),
-                $playData = null;
+                $playData = null,
+                view = get@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(),
+                musicTab = get@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicTab))();
 
             showLoading();
 
-            if ($playGroups.length > 0) {
+            if ((view === '@(Enums.MediaPages.Music)' && musicTab === '@(Enums.MusicTabs.Songs)') || mediaType === '@(nameof(Enums.MediaTypes.Podcast))') {
+                $playData = $([{ Id: 0, Value: parseInt($(btn).attr('data-play-id')), IsSelected: true }]);
+            }
+            else if ($playGroups.length > 0) {
                 $playData = $playGroups.map((index, element) => ($(element).attr('data-play-ids').split(',')))
                     .map((index, element) => ({
                         Id: index,
@@ -106,29 +111,26 @@
                     })
                 );
             } else {
-                if (mediaType === '@(nameof(Enums.MediaTypes.Podcast))') {
-                    $playData = $([{ Id: 0, Value: parseInt($(btn).attr('data-play-id')), IsSelected: true }]);
-                } else {
-                    $playData = $playButtons.map((index, _btn) => ({
-                        Id: index,
-                        Value: parseInt($(_btn).attr('data-play-id')),
-                        IsSelected: btn.isSameNode(_btn)
-                    }));
-                }
+                $playData = $playButtons.map((index, _btn) => ({
+                    Id: index,
+                    Value: parseInt($(_btn).attr('data-play-id')),
+                    IsSelected: btn.isSameNode(_btn)
+                }));
             }
 
-            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(mediaType);
             data.append('mediaType', mediaType);
             data.append('itemsJSON', JSON.stringify($playData.get()));
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("UpdateNowPlaying", "Player")',
-                data: data,
-                contentType: false,
-                success: success,
-                processData: false,
-                traditional: true
+            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(mediaType);
+            update@(nameof(PlayerConfiguration))(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("UpdateNowPlaying", "Player")',
+                    data: data,
+                    contentType: false,
+                    success: success,
+                    processData: false,
+                    traditional: true
+                });
             });
         }
 
