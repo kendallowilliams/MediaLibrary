@@ -182,6 +182,7 @@ namespace MediaLibraryWebUI.Controllers
 
             musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             musicViewModel.SelectedAlbum = await dataService.Get<Album, IEnumerable<Track>>(album => album.Id == id, album => album.Tracks);
+            musicViewModel.SelectedAlbum.Tracks = musicViewModel.SelectedAlbum.Tracks?.OrderBy(song => song.Position).ThenBy(song => song.Title).ToList();
 
             return PartialView("Album", musicViewModel);
         }
