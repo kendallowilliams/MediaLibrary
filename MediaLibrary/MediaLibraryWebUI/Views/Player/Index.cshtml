@@ -567,8 +567,10 @@
         }
 
         start() {
-            this.playerStopped = false;
-            this.draw();
+            if (this.audioContext) {
+                this.playerStopped = false;
+                this.draw();
+            }
         }
 
         pause() {
