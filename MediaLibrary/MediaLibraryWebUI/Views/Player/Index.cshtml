@@ -577,6 +577,7 @@
 
         close() {
             if (this.audioContext.state !== 'closed') /*then*/ this.audioContext.close();
+            this.audioContext = null;
         }
     }
 
