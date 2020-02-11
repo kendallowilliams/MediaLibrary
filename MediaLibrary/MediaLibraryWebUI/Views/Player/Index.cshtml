@@ -580,8 +580,8 @@
         close() {
             this.pause();
             if (this.audioContext.state !== 'closed') /*then*/ this.audioContext.close()
-            this.analyser = null;
-            this.source = null;
+            this.analyser = {};
+            this.source = {};
             this.audioContext = null;
         }
     }
