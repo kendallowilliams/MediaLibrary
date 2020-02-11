@@ -505,7 +505,7 @@
                 step = Math.floor(this.bufferLength / numberOfBars);
 
             this.clear(this.canvas.width, this.canvas.height);
-            this.analyser.getByteFrequencyData(this.dataArray);
+            if (this.analyser) /*then*/ this.analyser.getByteFrequencyData(this.dataArray));
             AudioVisualizer.prepareCanvas(this.canvas, width, height);
             for (var i = 0; i < this.previousDataArray.length && !this.playerStopped; i++) {
                 if (this.dataArray[i] > this.previousDataArray[i]) {
