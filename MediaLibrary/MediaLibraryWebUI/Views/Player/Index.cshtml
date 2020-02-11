@@ -278,12 +278,12 @@
                                   parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) + 1,
             $item = null,
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))(),
-            shuffleEmpty = shuffle && unPlayedShuffleIds.length == 0;
+            shuffleEmpty = unPlayedShuffleIds.length == 0;
         
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))') {
             $(getPlayer()).prop('currentTime', 0);
         } else if (repeat === '@(nameof(Enums.RepeatTypes.RepeatAll))') {
-            if (shuffleEmpty) {
+            if (shuffle && shuffleEmpty) {
                 setUnPlayedShuffleIds(shuffle);
                 loadNext();
             }
@@ -297,7 +297,7 @@
         } else {
             $item = $('li[data-play-index=' + nextIndex + ']');
 
-            if (!shuffleEmpty || (!shuffle && nextIndex < $('li[data-play-index]').length)) {
+            if ((shuffle && !shuffleEmpty) || (!shuffle && nextIndex < $('li[data-play-index]').length)) {
                 loadItem($item[0], isPlaying());
             } else {
                 $('#@(HtmlControlsRepository.PlayerPauseButtonId)').trigger('click');
@@ -312,13 +312,13 @@
                                       parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) - 1,
             $item = $('li[data-play-index="' + previousIndex + '"]'),
             player = getPlayer(),
-            shuffleEmpty = shuffle && unPlayedShuffleIds.length == 0,
+            shuffleEmpty = unPlayedShuffleIds.length == 0,
             repeat = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))();
 
         if (repeat === '@(nameof(Enums.RepeatTypes.RepeatOne))' || player.currentTime > @(Model.NumberOfSecondsBeforeRestart)) {
             player.currentTime = 0;
         }
-        else if (shuffleEmpty) {
+        else if (shuffle && shuffleEmpty) {
             setUnPlayedShuffleIds(shuffle);
             loadPrevious();
         }
