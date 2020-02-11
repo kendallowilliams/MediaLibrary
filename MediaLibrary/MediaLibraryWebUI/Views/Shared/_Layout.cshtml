@@ -95,11 +95,13 @@
                 data = new FormData(),
                 $playData = null,
                 view = get@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(),
+                musicView = get@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))(),
                 musicTab = get@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicTab))();
 
             showLoading();
 
-            if ((view === '@(Enums.MediaPages.Music)' && musicTab === '@(Enums.MusicTabs.Songs)') || mediaType === '@(nameof(Enums.MediaTypes.Podcast))') {
+            if ((view === '@(Enums.MediaPages.Music)' && musicTab === '@(Enums.MusicTabs.Songs)' && musicView === '@(Enums.MusicPages.Index)') ||
+                 mediaType === '@(nameof(Enums.MediaTypes.Podcast))') {
                 $playData = $([{ Id: 0, Value: parseInt($(btn).attr('data-play-id')), IsSelected: true }]);
             }
             else if ($playGroups.length > 0) {
