@@ -507,14 +507,14 @@
             this.clear(this.canvas.width, this.canvas.height);
             this.analyser.getByteFrequencyData(this.dataArray);
             AudioVisualizer.prepareCanvas(this.canvas, width, height);
-            for (var i = 0; i < this.previousDataArray.length; i++) {
+            for (var i = 0; i < this.previousDataArray.length && !this.playerStopped; i++) {
                 if (this.dataArray[i] > this.previousDataArray[i]) {
                     this.previousDataArray[i] = this.dataArray[i];
                 } else if (this.previousDataArray[i] > 0) {
                     this.previousDataArray[i] -= 1;
                 }
             }
-            for (var i = 0; i < numberOfBars; i++) {
+            for (var i = 0; i < numberOfBars && !this.playerStopped; i++) {
                 barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
                 discY = (this.previousDataArray[i * step] * Math.floor(height / @(byte.MaxValue))) + discHeight;
                 this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
@@ -577,7 +577,7 @@
 
         close() {
             this.pause();
-            if (this.audioContext.state !== 'closed') /*then*/ this.audioContext.close();
+            if (this.audioContext.state !== 'closed') /*then*/ this.audioContext.close()
             this.analyser = null;
             this.source = null;
             this.audioContext = null;
