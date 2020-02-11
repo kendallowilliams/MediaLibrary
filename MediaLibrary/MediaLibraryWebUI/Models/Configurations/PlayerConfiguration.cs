@@ -32,5 +32,7 @@ namespace MediaLibraryWebUI.Models.Configurations
         public int Volume { get; set; }
 
         public bool Muted { get; set; }
+
+        public bool AudioVisualizerEnabled { get; set; }
     }
 }

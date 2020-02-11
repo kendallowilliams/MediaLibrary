@@ -138,20 +138,21 @@
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('play', function (e) {
-            var mediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))();
+            var mediaType = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(),
+                audioVisualizerEnabled = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.AudioVisualizerEnabled))().toLowerCase() === 'true';
 
             if (getPlayer().duration === Infinity) /*then*/ getPlayer().src = getPlayer().src;
             $(e.target).attr('data-playing', 'true');
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').removeClass('d-none');
             initAudioVisualizer();
-            if (audioVisualizer && mediaType !== '@(nameof(Enums.MediaTypes.Television))') /*then*/ audioVisualizer.start();
+            if (audioVisualizer && mediaType !== '@(nameof(Enums.MediaTypes.Television))' && audioVisualizerEnabled) /*then*/ audioVisualizer.start();
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('pause', function (e) {
             $('#@(HtmlControlsRepository.HeaderPauseButtonId), #@(HtmlControlsRepository.PlayerPauseButtonId)').addClass('d-none');
             $('#@(HtmlControlsRepository.HeaderPlayButtonId), #@(HtmlControlsRepository.PlayerPlayButtonId)').removeClass('d-none');
-            if (audioVisualizer) /*then*/ audioVisualizer.pause();
+            if (audioVisualizer && audioVisualizerEnabled) /*then*/ audioVisualizer.pause();
         });
 
         $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').on('error', (e) => null);
@@ -185,8 +186,6 @@
             $('#@(HtmlControlsRepository.MusicPlayerId), #@(HtmlControlsRepository.VideoPlayerId)').prop('volume', volume / 100.0).prop('muted', volume == 0)
         });
         $volumeSlider.on('slidechange', (e, ui) => {
-            var volume = ui.value;
-
             update@(nameof(PlayerConfiguration))();
         });
         $('#@(HtmlControlsRepository.PlayerSliderId)').on('slide', function (e, ui) {
@@ -260,7 +259,9 @@
     }
 
     function initAudioVisualizer() {
-        if (!audioVisualizer) {
+        var audioVisualizerEnabled = get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.AudioVisualizerEnabled))().toLowerCase() === 'true';
+
+        if (!audioVisualizer && audioVisualizerEnabled) {
             audioVisualizer = new AudioVisualizer($('#@(HtmlControlsRepository.AudioVisualizerId)')[0], $('#@(HtmlControlsRepository.MusicPlayerId)')[0]);
         }
     }
