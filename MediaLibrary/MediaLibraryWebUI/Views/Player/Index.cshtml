@@ -576,7 +576,10 @@
         }
 
         close() {
+            this.pause();
             if (this.audioContext.state !== 'closed') /*then*/ this.audioContext.close();
+            this.analyser = null;
+            this.source = null;
             this.audioContext = null;
         }
     }
