@@ -6,7 +6,7 @@
     <div style="flex: 0 0 auto">
         <div class="d-flex flex-row">
             <div style="flex: 0 1 auto; overflow-x: auto">
-                <h2 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">@(Model.SelectedPlaylist.Name) playlist</h2>
+                <h2 class="text-truncate">@(Model.SelectedPlaylist.Name) playlist</h2>
             </div>
         </div>
         <div>
@@ -41,7 +41,7 @@
                             <div class="media">
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.Track.Title)">
                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                                    <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(list.Track.Title)</h5>
+                                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(list.Track.Title)</h5>
                                     <div style="flex: 0 0 auto">
                                         <span data-item-id="@(list.Track.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(list.Track.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(list.Track.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(list.Track.Artist?.Name ?? "Unknown Artist")</span>
                                     </div>

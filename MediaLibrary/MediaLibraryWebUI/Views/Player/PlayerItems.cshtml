@@ -9,7 +9,7 @@
                 data-play-index="@(item.Index)" data-item-id="@(item.Song.Id)" data-title="@(item.Song.Title)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                        <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(item.Song.Title)</h5>
+                        <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.Song.Title)</h5>
                         <div style="flex: 0 0 auto">
                             <span data-item-id="@(item.Song.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(item.Song.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(item.Song.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</span>
                         </div>
@@ -33,7 +33,7 @@ else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Podcast && Mo
                 data-play-index="@(item.Index)" data-item-id="@(item.PodcastItem.Id)" data-title="@(item.PodcastItem.Title)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                        <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(item.PodcastItem.Title)</h5>
+                        <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.PodcastItem.Title)</h5>
                         <div style="flex: 0 0 auto">
                             <span>@(item.PodcastItem.Podcast?.Title ?? "Unknown Podcast")</span> - <span class="text-muted">@(item.PodcastItem?.Podcast?.Author ?? "Unknown Author")</span>
                         </div>
@@ -57,7 +57,7 @@ else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television &&
                 data-play-index="@(item.Index)" data-item-id="@(item.Episode.Id)" data-title="@(item.Episode.Title)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                        <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(item.Episode.Title)</h5>
+                        <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.Episode.Title)</h5>
                         <div style="flex: 0 0 auto">
                             <span>@(item.Episode.Series?.Title ?? "Unknown Series")</span> - <span class="text-muted">@(item.Episode.Season.HasValue ? $"Season {item.Episode.Season.Value}" : "Unknown Season")</span>
                         </div>

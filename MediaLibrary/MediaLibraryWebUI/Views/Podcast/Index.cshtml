@@ -42,7 +42,7 @@
                                     <div class="media">
                                         <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(podcast.Title)">
                                         <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                                            <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(podcast.Title)</h5>
+                                            <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(podcast.Title)</h5>
                                             <span style="flex: 0 0 auto">@(podcast.PodcastItems.Count()) episode@(podcast.PodcastItems.Count() == 1 ? string.Empty : "s")</span>
                                         </div>
                                         <div>

@@ -9,7 +9,7 @@
             <div class="media">
                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                    <h5 class="mt-0" style="flex: 0 0 auto; text-overflow: ellipsis; white-space: nowrap; overflow: hidden">@(song.Title)</h5>
+                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(song.Title)</h5>
                     <div style="flex: 0 0 auto">
                         <span data-item-id="@(song.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(song.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(song.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</span>
                     </div>
