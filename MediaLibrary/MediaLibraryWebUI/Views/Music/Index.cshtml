@@ -86,7 +86,7 @@
     }
 
     function refreshClicked() {
-        var success = () => hideLoading();
+        var success = window.location = '@(Url.Action("Index", "MediaLibrary"))';
 
         showLoading();
         $.post('@(Url.Action("Refresh", "Music"))', success);

@@ -12,6 +12,7 @@ using System.Web;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Models;
 using MediaLibraryDAL.Services.Interfaces;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 
 namespace MediaLibraryBLL.Services
 {
@@ -122,11 +123,32 @@ namespace MediaLibraryBLL.Services
                 {
                     IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.PathId == path.Id);
                     IEnumerable<string> existingFiles = tracks.Select(track => Path.Combine(path.Location, track.FileName)),
-                                        files = EnumerateFiles(path.Location).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()));
+                                        files = EnumerateFiles(path.Location).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower())),
+                                        deletedFiles = existingFiles.Where(file => !File.Exists(file));
 
                     foreach (string file in files.Except(existingFiles))
                     {
                         await ReadMediaFile(file);
+                    }
+
+                    foreach (string file in deletedFiles)
+                    {
+                        Transaction deleteTransaction = null;
+
+                        try
+                        {
+                            Track song = tracks.FirstOrDefault(track => track.FileName == Path.GetFileName(file));
+
+                            deleteTransaction = await transactionService.GetNewTransaction(TransactionTypes.RemoveTrack);
+                            deleteTransaction.Message = $"Attempting to remove song [ID: {song?.Id}]...";
+                            await dataService.Update(deleteTransaction);
+                            await dataService.Delete(song);
+                            await transactionService.UpdateTransactionCompleted(deleteTransaction, $"Song [ID: {song?.Id}] removed.");
+                        }
+                        catch(Exception ex)
+                        {
+                            await transactionService.UpdateTransactionErrored(deleteTransaction, ex);
+                        }
                     }
 
                     path.LastScanDate = DateTime.Now;
