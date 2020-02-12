@@ -185,22 +185,31 @@ namespace MediaLibraryWebUI.Controllers
             {
                 PodcastItem podcastItem = await dataService.Get<PodcastItem>(item => item.Id == id);
 
-                podcastItem.PlayCount++;
-                await dataService.Update(podcastItem);
+                if (podcastItem != null)
+                {
+                    podcastItem.PlayCount++;
+                    await dataService.Update(podcastItem);
+                }
             }
             else if (mediaType == MediaTypes.Song)
             {
                 Track track = await dataService.Get<Track>(item => item.Id == id);
 
-                track.PlayCount++;
-                await dataService.Update(track);
+                if (track != null)
+                {
+                    track.PlayCount++;
+                    await dataService.Update(track);
+                }
             }
             else if (mediaType == MediaTypes.Television)
             {
                 Episode episode = await dataService.Get<Episode>(item => item.Id == id);
 
-                episode.PlayCount++;
-                await dataService.Update(episode);
+                if (episode != null)
+                {
+                    episode.PlayCount++;
+                    await dataService.Update(episode);
+                }
             }
         }
 
