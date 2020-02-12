@@ -20,6 +20,7 @@ using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Models.Data;
 using System.Web;
 using System.IO;
+using IO_File = System.IO.File;
 using Fody;
 
 namespace MediaLibraryWebUI.Controllers
@@ -103,7 +104,7 @@ namespace MediaLibraryWebUI.Controllers
             Track track = await dataService.Get<Track, TrackPath>(item => item.Id == id, item => item.TrackPath);
             ActionResult result = null;
 
-            if (track != null)
+            if (track != null && IO_File.Exists(Path.Combine(track.TrackPath.Location, track.FileName)))
             {
                 result = new FileRangeResult(Path.Combine(track.TrackPath.Location, track.FileName),
                                              Request.Headers["Range"], 
