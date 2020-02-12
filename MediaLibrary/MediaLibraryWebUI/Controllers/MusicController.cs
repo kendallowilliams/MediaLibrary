@@ -62,6 +62,8 @@ namespace MediaLibraryWebUI.Controllers
                 musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             }
 
+            await dataService.GetList<Playlist>().ContinueWith(task => musicViewModel.Playlists = task.Result);
+
             if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Album &&
                 await dataService.Exists<Album>(album => album.Id == musicViewModel.Configuration.SelectedAlbumId))
             {
@@ -74,13 +76,14 @@ namespace MediaLibraryWebUI.Controllers
             }
             else
             {
-                musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.Configuration.SelectedSongSort);
-                musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.Configuration.SelectedArtistSort);
-                musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.Configuration.SelectedAlbumSort);
-                musicViewModel.Albums = await musicService.Albums();
-                musicViewModel.Artists = await musicService.Artists();
-                musicViewModel.Songs = await musicService.Songs();
-                musicViewModel.Playlists = await dataService.GetList<Playlist>();
+                Task songGroupTask = musicService.GetSongGroups(musicViewModel.Configuration.SelectedSongSort).ContinueWith(task => musicViewModel.SongGroups = task.Result),
+                     albumGroupTask = musicService.GetAlbumGroups(musicViewModel.Configuration.SelectedAlbumSort).ContinueWith(task => musicViewModel.AlbumGroups = task.Result),
+                     artistGroupTask = musicService.GetArtistGroups(musicViewModel.Configuration.SelectedArtistSort).ContinueWith(task => musicViewModel.ArtistGroups = task.Result),
+                     songsTask = musicService.Songs().ContinueWith(task => musicViewModel.Songs = task.Result),
+                     albumsTask = musicService.Albums().ContinueWith(task => musicViewModel.Albums = task.Result),
+                     artistsTask = musicService.Artists().ContinueWith(task => musicViewModel.Artists = task.Result);
+                
+                await Task.WhenAll(songGroupTask, albumGroupTask, artistGroupTask, songsTask, albumsTask, artistsTask);
                 result = PartialView(musicViewModel);
             }
 
