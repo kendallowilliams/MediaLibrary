@@ -86,7 +86,10 @@
     }
 
     function refreshClicked() {
-        var success = () => hideLoading();
+        var success = () => {
+            hideLoading();
+            loadView('@(Enums.MediaPages.Music)');
+        }
 
         showLoading();
         $.post('@(Url.Action("Refresh", "Music"))', success);
