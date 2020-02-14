@@ -33,10 +33,13 @@
                                     <button class="btn btn-outline-secondary" data-item-id="@(item.Id)" onclick="albumClicked(this)" data-tooltip="tooltip" title="View album">
                                         <i class="fa fa-list"></i>
                                     </button>
+                                    @if (Model.Playlists.Any())
+                                    {
                                     <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))" data-item-id="@(item.Id)"
-                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist" @(Model.Playlists.Any() ? string.Empty : "disabled=\"disabled\"")>
+                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist">
                                         <i class="fa fa-plus"></i>
                                     </button>
+                                    }
                                 </div>
                             </div>
                         </li>

@@ -30,10 +30,13 @@
                                         <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="View album" data-item-id="@(album.Id)" onclick="albumClicked(this)">
                                             <i class="fa fa-list"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary @(Model.Playlists.Any() ? string.Empty : "d-none")" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))"
+                                        @if (Model.Playlists.Any())
+                                        {
+                                        <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))"
                                                 data-item-id="@(album.Id)" data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist">
                                             <i class="fa fa-plus"></i>
                                         </button>
+                                        }
                                     </div>
                                 </div>
                             </li>
