@@ -118,6 +118,8 @@ namespace MediaLibraryBLL.Services
             try
             {
                 IEnumerable<TrackPath> paths = await dataService.GetList<TrackPath>();
+                IEnumerable<Album> albumsToDelete = Enumerable.Empty<Album>();
+                IEnumerable<Artist> artistsToDelete = Enumerable.Empty<Artist>();
 
                 foreach (TrackPath path in paths)
                 {
@@ -151,6 +153,10 @@ namespace MediaLibraryBLL.Services
                         }
                     }
 
+                    albumsToDelete = await dataService.GetList<Album, IEnumerable<Track>>(album => album.Tracks.Count() == 0, album => album.Tracks);
+                    artistsToDelete = await dataService.GetList<Artist, IEnumerable<Track>>(artist => artist.Tracks.Count() == 0, artist => artist.Tracks);
+                    foreach (Album album in albumsToDelete) { await dataService.Delete<Album>(album.Id); }
+                    foreach (Artist artist in artistsToDelete) { await dataService.Delete<Artist>(artist.Id); }
                     path.LastScanDate = DateTime.Now;
                     await dataService.Update(path);
                 }
