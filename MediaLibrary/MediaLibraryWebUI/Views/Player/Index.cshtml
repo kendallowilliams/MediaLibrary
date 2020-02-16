@@ -328,7 +328,7 @@
 
     function canPlayNext() {
         return (isShuffleEnabled() && unPlayedShuffleIds.length > 0) ||
-                get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() === '@(nameof(Enums.RepeatTypes.RepeatAll))' ||
+                get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.Repeat))() !== '@(nameof(Enums.RepeatTypes.None))' ||
                 parseInt(get@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.CurrentItemIndex))()) < ($('li[data-play-index]').length - 1);
     }
 
