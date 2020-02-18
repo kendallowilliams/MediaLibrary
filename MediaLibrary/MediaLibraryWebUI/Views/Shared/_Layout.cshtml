@@ -88,7 +88,8 @@
             var $playButtons = $('button[data-play-id]'),
                 $playGroups = $('div[data-play-ids]'),
                 success = () => {
-                    loadView('@(nameof(Enums.MediaPages.Player))', reload(() => loadItem(null, true)));
+                    // loadView('@(nameof(Enums.MediaPages.Player))', reload(() => loadItem(null, true)));
+                    reload(() => loadItem(null, true));
                     hideLoading();
                 },
                 mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaTypes.Song))',
