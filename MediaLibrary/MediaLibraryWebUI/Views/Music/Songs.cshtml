@@ -26,21 +26,3 @@ else
 {
     <div>No songs.</div>
 }
-
-<script type="text/javascript" defer="defer">
-    $('[data-group-url]').on('click', function () {
-        var $btn = $(this),
-            url = $btn.attr('data-group-url');
-
-        if (url) {
-            showLoading();
-            $($btn.attr('data-target')).load(url, function () {
-                loadTooltips($($btn.attr('data-target'))[0]);
-                hideLoading();
-                $btn.attr('data-group-url', '');
-            });
-        }
-    });
-
-    $('[data-group-url][data-target="#collapse-songs-0"]').trigger('click');
-</script>

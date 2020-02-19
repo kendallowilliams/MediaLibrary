@@ -63,21 +63,3 @@
         <div>No series.</div>
     }
 </div>
-
-<script type="text/javascript" defer="defer">
-    function seriesClicked(btn) {
-        showLoading();
-        set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedTelevisionPage))('@(nameof(Enums.TelevisionPages.Series))');
-        set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeriesId))($(btn).attr('data-item-id'));
-        update@(nameof(TelevisionConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Television))'));
-    }
-
-    function sortChanged(select) {
-        showLoading();
-        set@(nameof(TelevisionConfiguration))_@(nameof(TelevisionConfiguration.SelectedSeriesSort))($(select).val());
-        update@(nameof(TelevisionConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Television))'));
-    }
-
-    function handle@(Enums.MediaPages.Television)Loaded() {
-    }
-</script>

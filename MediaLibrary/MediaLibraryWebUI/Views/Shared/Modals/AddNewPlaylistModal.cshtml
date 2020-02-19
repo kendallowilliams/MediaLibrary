@@ -22,20 +22,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript" defer="defer">
-    $('#@(HtmlControlsRepository.NewPlaylistModalId)').on('show.bs.modal', function (e) {
-        $('#txtNewPlaylist').val('');
-    })
-
-    function addNewPlaylist() {
-        var success = () => {
-            hideLoading();
-            loadView('@(nameof(Enums.MediaPages.Playlist))');
-        };
-
-        $('#@(HtmlControlsRepository.NewPlaylistModalId)').modal('hide').on('hidden.bs.modal', function () {
-            $.post('@Url.Action("AddPlaylist", "Playlist")', { playlistName: $('#txtNewPlaylist').val() }, success);
-        });
-    }
-</script>

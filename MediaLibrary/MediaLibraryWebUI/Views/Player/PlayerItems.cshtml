@@ -76,12 +76,3 @@ else
 {
     <div>No now playing items.</div>
 }
-
-<script type="text/javascript" defer="defer">
-    function playClicked(btn) {
-        var index = parseInt($(btn).attr('data-item-index')),
-            item = $('li[data-play-index="' + index + '"]')[0];
-
-        loadItem(item, true);
-    }
-</script>

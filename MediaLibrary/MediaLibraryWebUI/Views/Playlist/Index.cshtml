@@ -79,21 +79,3 @@
 
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
 @Html.Partial("~/Views/Shared/Modals/AddNewPlaylistModal.cshtml")
-
-<script type="text/javascript">
-    function playlistClicked(btn) {
-        showLoading();
-        set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistPage))('@(nameof(Enums.PlaylistPages.Playlist))');
-        set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistId))($(btn).attr('data-item-id'));
-        update@(nameof(PlaylistConfiguration))(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
-    }
-
-    function sortChanged(select) {
-        showLoading();
-        set@(nameof(PlaylistConfiguration))_@(nameof(PlaylistConfiguration.SelectedPlaylistSort))($(select).val());
-        update@(nameof(PlaylistConfiguration))(() => loadView('@(nameof(Enums.PlaylistPages.Playlist))'));
-    }
-    
-    function handle@(Enums.MediaPages.Playlist)Loaded() {
-    }
-</script>

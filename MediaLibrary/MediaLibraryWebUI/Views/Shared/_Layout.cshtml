@@ -9,13 +9,24 @@
     <title>KOW Moosic @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/polyfill")
-    @Scripts.Render("~/bundles/js")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/marquee")
     @Scripts.Render("~/bundles/popperjs")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/requirejs")
+    @Scripts.Render("~/bundles/js")
+    <script type="text/javascript" defer="defer">
+        requirejs.config({
+            baseUrl: 'lib/app',
+            paths: {
+                jquery: '../jquery/jquery.min'
+            }
+        });
+
+        requirejs(['app'], function (app) { });
+    </script>
 </head>
 <body>
     <div class="d-flex container flex-column" style="height: 100vh">
@@ -83,86 +94,6 @@
 
     @Html.Partial("~/Views/Shared/Modals/LoadingModal.cshtml")
 
-    <script type="text/javascript" defer="defer">
-        function play(btn) {
-            var $playButtons = $('button[data-play-id]'),
-                $playGroups = $('div[data-play-ids]'),
-                success = () => {
-                    loadView('@(nameof(Enums.MediaPages.Player))', reload(() => loadItem(null, true)));
-                    hideLoading();
-                },
-                mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaTypes.Song))',
-                data = new FormData(),
-                $playData = null,
-                view = get@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(),
-                musicView = get@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))(),
-                musicTab = get@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicTab))();
-
-            showLoading();
-
-            if ((view === '@(Enums.MediaPages.Music)' && musicTab === '@(Enums.MusicTabs.Songs)' && musicView === '@(Enums.MusicPages.Index)') ||
-                 mediaType === '@(nameof(Enums.MediaTypes.Podcast))') {
-                $playData = $([{ Id: 0, Value: parseInt($(btn).attr('data-play-id')), IsSelected: true }]);
-            }
-            else if ($playGroups.length > 0) {
-                $playData = $playGroups.map((index, element) => ($(element).attr('data-play-ids').split(',')))
-                    .map((index, element) => ({
-                        Id: index,
-                        Value: parseInt(element),
-                        IsSelected: $(btn).attr('data-play-id') === element
-                    })
-                );
-            } else {
-                $playData = $playButtons.map((index, _btn) => ({
-                    Id: index,
-                    Value: parseInt($(_btn).attr('data-play-id')),
-                    IsSelected: btn.isSameNode(_btn)
-                }));
-            }
-
-            data.append('mediaType', mediaType);
-            data.append('itemsJSON', JSON.stringify($playData.get()));
-            set@(nameof(PlayerConfiguration))_@(nameof(PlayerConfiguration.SelectedMediaType))(mediaType);
-            update@(nameof(PlayerConfiguration))(function () {
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("UpdateNowPlaying", "Player")',
-                    data: data,
-                    contentType: false,
-                    success: success,
-                    processData: false,
-                    traditional: true
-                });
-            });
-        }
-
-        $(function () {
-            $('[data-toggle="popover"]').popover();
-            loadTooltips(document.body);
-        });
-
-        function collapseNavbar() {
-            $('#divNavbar').collapse('hide');
-        }
-
-        function disableNavItem(view) {
-            $('a.nav-link[data-media-page][href]').removeClass('d-none');
-            $('a.nav-link[data-media-page]:not([href])').addClass('d-none');
-            $('a.nav-link[data-media-page=' + view + '][href]').addClass('d-none');
-            $('a.nav-link[data-media-page=' + view + ']:not([href])').removeClass('d-none');
-        }
-
-        function loadTooltips(element) {
-            @if (!Request.Browser.IsMobileDevice)
-            {
-                @Html.Raw("if (element) /*then*/ $(element).find('[data-tooltip=\"tooltip\"]').tooltip({ trigger: 'hover' });")
-            }
-        }
-
-        function disposeTooltips(element) {
-            if (element) /*then*/ $(element).find('[data-tooltip="tooltip"]').tooltip('dispose');
-        }
-    </script>
     @RenderSection("scripts", false)
 </body>
 </html>

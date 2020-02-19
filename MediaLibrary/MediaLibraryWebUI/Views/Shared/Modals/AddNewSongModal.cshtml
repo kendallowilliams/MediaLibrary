@@ -23,30 +23,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript" defer="defer">
-    $('#@(HtmlControlsRepository.NewSongModalId)').on('show.bs.modal', function (e) {
-        $('#inpNewSong').val('');
-    });
-
-    function uploadFile() {
-        var data = new FormData(),
-            success = () => loadView('@(nameof(Enums.MediaPages.Music))');
-
-        if ($('#inpNewSong').prop('files').length > 0) {
-            $('#@(HtmlControlsRepository.NewSongModalId)').modal('hide');
-            showLoading();
-            data.append("file", $('#inpNewSong').prop('files')[0]);
-            $.ajax({
-                url: '@Url.Action("Upload", "Music")',
-                data: data,
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                success: success
-            });
-        } else {
-            $('#@(HtmlControlsRepository.NewSongModalId)').modal('hide');
-        }
-    }
-</script>

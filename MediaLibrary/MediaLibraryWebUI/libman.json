@@ -34,6 +34,10 @@
     {
       "library": "modernizr@2.8.3",
       "destination": "lib/modernizr/"
+    },
+    {
+      "library": "require.js@2.3.6",
+      "destination": "lib/require.js/"
     }
   ]
 }

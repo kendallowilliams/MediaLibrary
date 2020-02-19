@@ -778,9 +778,12 @@
     <Content Include="lib\popper.js\umd\popper-utils.min.js.map" />
     <Content Include="lib\popper.js\umd\popper.js.map" />
     <Content Include="lib\popper.js\umd\popper.min.js.map" />
+    <Content Include="lib\require.js\require.js" />
+    <Content Include="lib\require.js\require.min.js" />
     <Content Include="package.json" />
     <Content Include="package-lock.json" />
     <Content Include="lib\app\tsconfig.json" />
+    <Content Include="lib\require.js\require.min.js.map" />
     <None Include="Properties\PublishProfiles\KSERVER_DEV.pubxml" />
     <None Include="Properties\PublishProfiles\KSERVER_PROD.pubxml" />
     <Content Include="lib\popper.js\esm\popper-utils.js" />
@@ -893,6 +896,7 @@
     <Content Include="Views\Television\Series.cshtml" />
     <Content Include="Views\Television\Season.cshtml" />
     <Content Include="Views\Podcast\PodcastItems.cshtml" />
+    <Content Include="Views\Shared\Configurations\HomeConfiguration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -924,18 +928,19 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="lib\app\app.ts" />
-    <TypeScriptCompile Include="lib\app\assets\configurations.ts" />
-    <TypeScriptCompile Include="lib\app\assets\enums.ts" />
-    <TypeScriptCompile Include="lib\app\assets\html-controls.ts" />
-    <TypeScriptCompile Include="lib\app\assets\interfaces\class-interface.ts" />
-    <TypeScriptCompile Include="lib\app\configurations\base-configuration.ts" />
-    <TypeScriptCompile Include="lib\app\configurations\home-configuration.ts" />
-    <TypeScriptCompile Include="lib\app\configurations\media-library-configuration.ts" />
-    <TypeScriptCompile Include="lib\app\configurations\music-configuration.ts" />
-    <TypeScriptCompile Include="lib\app\configurations\player-configuration.ts" />
-    <TypeScriptCompile Include="lib\app\configurations\playlist-configuration.ts" />
-    <TypeScriptCompile Include="lib\app\configurations\podcast-configuration.ts" />
-    <TypeScriptCompile Include="lib\app\configurations\television-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\loading-modal.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\configurations.ts" />
+    <TypeScriptCompile Include="lib\app\assets\enums\enums.ts" />
+    <TypeScriptCompile Include="lib\app\assets\controls\html-controls.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\base-class.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\base-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\home-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\media-library-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\music-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\player-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\playlist-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\podcast-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\models\configurations\television-configuration.ts" />
     <TypeScriptCompile Include="lib\app\media-library\media-library.ts" />
     <TypeScriptCompile Include="lib\app\media-library\music\album.ts" />
     <TypeScriptCompile Include="lib\app\media-library\music\artist.ts" />

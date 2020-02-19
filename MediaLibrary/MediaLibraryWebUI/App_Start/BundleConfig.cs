@@ -34,6 +34,9 @@ namespace MediaLibraryWebUI
             bundles.Add(new ScriptBundle("~/bundles/fontawesome").Include(
                       "~/lib/font-awesome/js/all.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/requirejs").Include(
+                      "~/lib/require.js/require.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/lib/bootstrap/dist/bootstrap.min.css",
                       "~/Content/site.css",

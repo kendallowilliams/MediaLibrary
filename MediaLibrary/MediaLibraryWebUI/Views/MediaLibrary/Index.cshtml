@@ -3,107 +3,25 @@
 @model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
 <div id="@(HtmlControlsRepository.HomeViewId)" class="@(Model.Configuration.SelectedMediaPage != Enums.MediaPages.Home ? "d-none" : string.Empty) flex-column" 
-     style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
+     style="flex: 1 1 auto; overflow-y: auto; display: flex" data-action-url="@Url.Action("Index", "Home")"></></div>
 <div id="@(HtmlControlsRepository.PlayerViewId)" class="@(Model.Configuration.SelectedMediaPage != Enums.MediaPages.Player ? "d-none" : string.Empty) flex-column" 
-     style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
+     style="flex: 1 1 auto; overflow-y: auto; display: flex" data-action-url="@Url.Action("Index", "Player")"></></div>
 <div id="@(HtmlControlsRepository.MediaViewId)" class="@((Model.Configuration.SelectedMediaPage == Enums.MediaPages.Home || 
                                                           Model.Configuration.SelectedMediaPage == Enums.MediaPages.Player) ? "d-none" : string.Empty) flex-column" 
      style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
 
 <div class="d-none">
-    <div id="@(nameof(MediaLibraryConfiguration))"></div>
-    <div id="@(nameof(MusicConfiguration))"></div>
-    <div id="@(nameof(PlayerConfiguration))"></div>
-    <div id="@(nameof(PlaylistConfiguration))"></div>
-    <div id="@(nameof(PodcastConfiguration))"></div>
-    <div id="@(nameof(TelevisionConfiguration))"></div>
-    <div id="@(nameof(HomeConfiguration))"></div>
+    <div id="@(HtmlControlsRepository.MediaLibraryConfigurationContainerId)" data-action-url="@Url.Action(nameof(MediaLibraryConfiguration), "MediaLibrary")"></div>
+    <div id="@(HtmlControlsRepository.MusicConfigurationContainerId)" data-action-url="@Url.Action(nameof(MusicConfiguration), nameof(Enums.MediaPages.Music))"></div>
+    <div id="@(HtmlControlsRepository.PlayerConfigurationContainerId)" data-action-url="@Url.Action(nameof(PlayerConfiguration), nameof(Enums.MediaPages.Player))"></div>
+    <div id="@(HtmlControlsRepository.PlaylistConfigurationContainerId)" data-action-url="@Url.Action(nameof(PlaylistConfiguration), nameof(Enums.MediaPages.Playlist))"></div>
+    <div id="@(HtmlControlsRepository.HomeConfigurationContainerId)" data-action-url="@Url.Action(nameof(HomeConfiguration), nameof(Enums.MediaPages.Home))"></div>
+    <div id="@(HtmlControlsRepository.PodcastConfigurationContainerId)" data-action-url="@Url.Action(nameof(PodcastConfiguration), nameof(Enums.MediaPages.Podcast))"></div>
+    <div id="@(HtmlControlsRepository.TelevisionConfigurationContainerId)" data-action-url="@Url.Action(nameof(TelevisionConfiguration), nameof(Enums.MediaPages.Television))"></div>
 </div>
 
 @section scripts {
     <script type="text/javascript" defer="defer">
-        function initMediaLibrary() {
-            var get@(nameof(MediaLibraryConfiguration)) = callback => $('#@(nameof(MediaLibraryConfiguration))').load('@Url.Action(nameof(MediaLibraryConfiguration), "MediaLibrary")', callback),
-                get@(nameof(MusicConfiguration)) = callback => $('#@(nameof(MusicConfiguration))').load('@Url.Action(nameof(MusicConfiguration), nameof(Enums.MediaPages.Music))', callback),
-                get@(nameof(PlayerConfiguration)) = callback => $('#@(nameof(PlayerConfiguration))').load('@Url.Action(nameof(PlayerConfiguration), nameof(Enums.MediaPages.Player))', callback),
-                get@(nameof(PlaylistConfiguration)) = callback => $('#@(nameof(PlaylistConfiguration))').load('@Url.Action(nameof(PlaylistConfiguration), nameof(Enums.MediaPages.Playlist))', callback),
-                get@(nameof(PodcastConfiguration)) = callback => $('#@(nameof(PodcastConfiguration))').load('@Url.Action(nameof(PodcastConfiguration), nameof(Enums.MediaPages.Podcast))', callback),
-                get@(nameof(TelevisionConfiguration)) = callback => $('#@(nameof(TelevisionConfiguration))').load('@Url.Action(nameof(TelevisionConfiguration), nameof(Enums.MediaPages.Television))', callback),
-                get@(nameof(HomeConfiguration)) = callback => $('#@(nameof(HomeConfiguration))').load('@Url.Action(nameof(HomeConfiguration), nameof(Enums.MediaPages.Home))', callback);
-
-            get@(nameof(MediaLibraryConfiguration))(() =>
-                get@(nameof(MusicConfiguration))(() =>
-                    get@(nameof(PlayerConfiguration))(() =>
-                        get@(nameof(PlaylistConfiguration))(() =>
-                            get@(nameof(PodcastConfiguration))(() =>
-                                get@(nameof(TelevisionConfiguration))(() => {
-                                    showLoading();
-                                    $('#@(HtmlControlsRepository.PlayerViewId)').load('@Url.Action("Index", "Player")', () => {
-                                        hideLoading();
-                                        loadView('@(Model.Configuration.SelectedMediaPage.ToString())');
-                                    });
-                                })
-                            )
-                        )
-                    )
-                )
-            );
-        }
-
-        function loadView(view, callback) {
-            var success = () => {
-                if (typeof callback === 'function') /*then*/ callback();
-                loadTooltips($(container)[0]);
-                $(container).removeClass('d-none');
-                (getViewLoaded(view))();
-                hideLoading();
-            },
-                url = '@Url.Action("Index", "ViewName")',
-                container = null;
-
-            collapseNavbar();
-            showLoading();
-            set@(nameof(MediaLibraryConfiguration))_@(nameof(MediaLibraryConfiguration.SelectedMediaPage))(view);
-            disableNavItem(view);
-            $('#@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.HomeViewId)').each((index, element) => disposeTooltips(element));
-            $('#@(HtmlControlsRepository.PlayerViewId), #@(HtmlControlsRepository.MediaViewId), #@(HtmlControlsRepository.HomeViewId)').addClass('d-none');
-            $('#@(HtmlControlsRepository.HeaderControlsContainerId)').removeClass('d-none');
-
-            if (view === '@(Enums.MediaPages.Player)') {
-                container = '#@(HtmlControlsRepository.PlayerViewId)';
-                update@(nameof(MediaLibraryConfiguration))(success);
-                $('#@(HtmlControlsRepository.HeaderControlsContainerId)').addClass('d-none');
-            } else if (view === '@(Enums.MediaPages.Home)') {
-                container = '#@(HtmlControlsRepository.HomeViewId)';
-                update@(nameof(MediaLibraryConfiguration))(() => $('#@(HtmlControlsRepository.HomeViewId)').load(url.replace("ViewName", view), success));
-            } else {
-                container = '#@(HtmlControlsRepository.MediaViewId)';
-                update@(nameof(MediaLibraryConfiguration))(() => $('#@(HtmlControlsRepository.MediaViewId)').load(url.replace("ViewName", view), success));
-            }
-        }
-
-        function getViewLoaded(view) {
-            @foreach(string page in Enum.GetNames(typeof(Enums.MediaPages)))
-            {
-                @Html.Raw($"if (view === '{page}') /*then*/ return handle{page}Loaded;{Environment.NewLine}")
-            }
-        }
-
-        function artistClicked(btn) {
-            showLoading();
-            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Artist))');
-            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedArtistId))($(btn).attr('data-item-id'));
-            update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
-        }
-
-        function albumClicked(btn) {
-            showLoading();
-            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Album))');
-            set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedAlbumId))($(btn).attr('data-item-id'));
-            update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
-        }
-
-        initMediaLibrary();
     </script>
 }
 

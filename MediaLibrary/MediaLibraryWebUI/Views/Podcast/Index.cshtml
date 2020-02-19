@@ -99,36 +99,3 @@
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
-
-<script type="text/javascript">
-    $('#modalNewPodcast').on('show.bs.modal', function (e) {
-        $('#txtNewPodcast').val('');
-    });
-
-    function addNewPodcast() {
-        var success = () => {
-            hideLoading();
-            loadView('@(nameof(Enums.MediaPages.Podcast))');
-        }
-
-        $('#modalNewPodcast').modal('hide');
-        showLoading();
-        $.post('@Url.Action("AddPodcast", "Podcast")', { rssFeed: $('#txtNewPodcast').val() }, success);
-    }
-
-    function podcastClicked(btn) {
-        showLoading();
-        set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastPage))('@(nameof(Enums.PodcastPages.Podcast))');
-        set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastId))($(btn).attr('data-item-id'));
-        update@(nameof(PodcastConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
-    }
-
-    function sortChanged(select) {
-        showLoading();
-        set@(nameof(PodcastConfiguration))_@(nameof(PodcastConfiguration.SelectedPodcastSort))($(select).val());
-        update@(nameof(PodcastConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Podcast))'));
-    }
-
-    function handle@(Enums.MediaPages.Podcast)Loaded() {
-    }
-</script>

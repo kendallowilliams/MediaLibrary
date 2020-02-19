@@ -56,14 +56,3 @@
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
-
-<script type="text/javascript" defer="defer">
-    function backClicked() {
-        showLoading();
-        set@(nameof(MusicConfiguration))_@(nameof(MusicConfiguration.SelectedMusicPage))('@(nameof(Enums.MusicPages.Index))');
-        update@(nameof(MusicConfiguration))(() => loadView('@(nameof(Enums.MediaPages.Music))'));
-    }
-
-    function handle@(Enums.MediaPages.Music)Loaded() {
-    }
-</script>
