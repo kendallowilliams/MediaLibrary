@@ -123,6 +123,7 @@ export default class MediaLibrary extends BaseClass {
             }
             
             this.showMainView(mediaPage);
+            LoadingModal.hideLoading();
         });
     }
 
