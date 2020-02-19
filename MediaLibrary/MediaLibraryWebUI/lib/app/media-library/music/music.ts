@@ -9,12 +9,12 @@ export default class Music extends BaseClass implements IView {
     }
 
     loadView(): void {
-        switch (this.musicConfiguration.properties.selectedMusicPage) {
+        switch (this.musicConfiguration.properties.SelectedMusicPage) {
             case MusicPages.Album:
-                this.loadAlbum(this.musicConfiguration.properties.selectedAlbumId);
+                this.loadAlbum(this.musicConfiguration.properties.SelectedAlbumId);
                 break;
             case MusicPages.Artist:
-                this.loadArtist(this.musicConfiguration.properties.selectedArtistId);
+                this.loadArtist(this.musicConfiguration.properties.SelectedArtistId);
                 break;
             case MusicPages.Index:
             default:

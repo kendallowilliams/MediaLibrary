@@ -64,7 +64,7 @@ export default class MediaLibrary extends BaseClass {
                 this.playlist = new Playlist(this.playlistConfiguration);
                 this.podcast = new Podcast(this.podcastConfiguration);
                 this.television = new Television(this.televisionConfiguration);
-                this.loadView(this.mediaLibraryConfiguration.properties.selectedMediaPage);
+                this.loadView(this.mediaLibraryConfiguration.properties.SelectedMediaPage);
             });
         };
 
@@ -96,7 +96,7 @@ export default class MediaLibrary extends BaseClass {
 
     loadView(mediaPage: MediaPages): void {
         LoadingModal.showLoading();
-        this.mediaLibraryConfiguration.properties.selectedMediaPage = mediaPage;
+        this.mediaLibraryConfiguration.properties.SelectedMediaPage = mediaPage;
         this.mediaLibraryConfiguration.updateConfiguration(() => {
             this.prepareViews();
 
