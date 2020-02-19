@@ -11,7 +11,6 @@
         VideoPlayer: document.getElementById('video-player')
     },
     Buttons: {
-        HeaderControlsContainer: document.getElementById('header-controls-container'),
         HeaderPlayButton: document.getElementById('btn-header-play'),
         HeaderPreviousButton: document.getElementById('btn-header-previous'),
         HeaderNextButton: document.getElementById('btn-header-next'),
@@ -34,6 +33,7 @@
         PlayerFullscreenButton: document.getElementById('btn-player-fullscreen')
     },
     Containers: {
+        HeaderControlsContainer: document.getElementById('header-controls-container'),
         PlayerVideoContainer: document.getElementById('video-container'),
         PlayerAudioContainer: document.getElementById('audio-container'),
         PlayerItemsContainer: document.getElementById('player-items-container'),

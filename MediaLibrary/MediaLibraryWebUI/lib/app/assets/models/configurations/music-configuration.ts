@@ -2,7 +2,7 @@
 import IMusicConfiguration from '../../interfaces/music-configuration-interface';
 
 export default class MusicConfiguration extends BaseConfiguration {
-    constructor(private properties: IMusicConfiguration) {
+    constructor(public readonly properties: IMusicConfiguration) {
         super('Music');
     }
 

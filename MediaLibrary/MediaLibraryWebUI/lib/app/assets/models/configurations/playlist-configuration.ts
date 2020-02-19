@@ -2,7 +2,7 @@
 import IPlaylistConfiguration from '../../interfaces/playlist-configuration-interface';
 
 export default class PlaylistConfiguration extends BaseConfiguration {
-    constructor(private properties: IPlaylistConfiguration) {
+    constructor(public readonly properties: IPlaylistConfiguration) {
         super('Playlist');
     }
 

@@ -2,7 +2,7 @@
 import IHomeConfiguration from '../../interfaces/home-configuration-interface';
 
 export default class HomeConfiguration extends BaseConfiguration {
-    constructor(private properties: IHomeConfiguration) {
+    constructor(public readonly properties: IHomeConfiguration) {
         super('Home');
     }
 

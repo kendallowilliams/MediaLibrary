@@ -2,7 +2,7 @@
 import ITelevisionConfiguration from '../../interfaces/television-configuration-interface';
 
 export default class TelevisionConfiguration extends BaseConfiguration {
-    constructor(private properties: ITelevisionConfiguration) {
+    constructor(public readonly properties: ITelevisionConfiguration) {
         super('Television');
     }
 

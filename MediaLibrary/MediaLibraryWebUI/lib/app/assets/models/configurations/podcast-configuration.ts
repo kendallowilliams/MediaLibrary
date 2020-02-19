@@ -2,7 +2,7 @@
 import IPodcastConfiguration from '../../interfaces/podcast-configuration-interface';
 
 export default class PodcastConfiguration extends BaseConfiguration {
-    constructor(private properties: IPodcastConfiguration) {
+    constructor(public readonly properties: IPodcastConfiguration) {
         super('Podcast');
     }
 

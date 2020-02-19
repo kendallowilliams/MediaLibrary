@@ -2,7 +2,7 @@
 import IMediaLibraryConfiguration from '../../interfaces/media-library-configuration-interface';
 
 export default class MediaLibraryConfiguration extends BaseConfiguration {
-    constructor(private properties: IMediaLibraryConfiguration) {
+    constructor(public readonly properties: IMediaLibraryConfiguration) {
         super('MediaLibrary');
     }
 

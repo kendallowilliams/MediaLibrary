@@ -2,7 +2,7 @@
 import IPlayerConfiguration from '../../interfaces/player-configuration-interface';
 
 export default class PlayerConfiguration extends BaseConfiguration {
-    constructor(private properties: IPlayerConfiguration) {
+    constructor(public readonly properties: IPlayerConfiguration) {
         super('Player');
     }
 
