@@ -924,6 +924,26 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="lib\app\app.ts" />
+    <TypeScriptCompile Include="lib\app\assets\configurations.ts" />
+    <TypeScriptCompile Include="lib\app\assets\enums.ts" />
+    <TypeScriptCompile Include="lib\app\assets\html-controls.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\class-interface.ts" />
+    <TypeScriptCompile Include="lib\app\configurations\base-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\configurations\home-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\configurations\media-library-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\configurations\music-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\configurations\player-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\configurations\playlist-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\configurations\podcast-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\configurations\television-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\media-library.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\music\album.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\music\artist.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\music\music.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\player\player.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\playlist\playlist.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\podcast\podcast.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\television\television.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
