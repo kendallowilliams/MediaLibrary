@@ -32,7 +32,7 @@
     <div class="d-flex container flex-column" style="height: 100vh">
         <div class="header-content" style="flex: 0 0 auto; padding-top: 10px">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Home))')">
+                <a class="navbar-brand" href="javascript: void(0)" data-media-page="@(nameof(Enums.MediaPages.Home))")">
                     <img src="@(Url.Content("~/Content/images/logo.png"))" title="KOW Moosic" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#divNavbar" aria-controls="divNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,23 +41,23 @@
                 <div class="collapse navbar-collapse" id="divNavbar">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Music))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Music))')">@(nameof(Enums.MediaPages.Music))</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Music))" href="javascript: void(0)">@(nameof(Enums.MediaPages.Music))</a>
                             <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Music))">@(nameof(Enums.MediaPages.Music))</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Podcast))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Podcast))')">@(nameof(Enums.MediaPages.Podcast))s</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Podcast))" href="javascript: void(0)">@(nameof(Enums.MediaPages.Podcast))s</a>
                             <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Podcast))">@(nameof(Enums.MediaPages.Podcast))s</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Television))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Television))')">@(nameof(Enums.MediaPages.Television))</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Television))" href="javascript: void(0)">@(nameof(Enums.MediaPages.Television))</a>
                             <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Television))">@(nameof(Enums.MediaPages.Television))</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Playlist))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Playlist))')">@(nameof(Enums.MediaPages.Playlist))s</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Playlist))" href="javascript: void(0)">@(nameof(Enums.MediaPages.Playlist))s</a>
                             <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Playlist))">@(nameof(Enums.MediaPages.Playlist))s</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Player))" href="javascript: void(0)" onclick="loadView('@(nameof(Enums.MediaPages.Player))')">Now Playing</a>
+                            <a class="nav-link" data-media-page="@(nameof(Enums.MediaPages.Player))" href="javascript: void(0)">Now Playing</a>
                             <a class="nav-link d-none disabled font-italic font-weight-bold text-dark" data-media-page="@(nameof(Enums.MediaPages.Player))">Now Playing</a>
                         </li>
                     </ul>

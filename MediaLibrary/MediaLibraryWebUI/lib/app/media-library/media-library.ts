@@ -48,10 +48,19 @@ export default class MediaLibrary extends BaseClass {
             HtmlControls.Views.PlayerView
         ];
 
+        this.initialize();
         this.load();
     }
 
-    load(): void {
+    private initialize(): void {
+        this.initializeControls();
+    }
+
+    private initializeControls(): void {
+        $('[data-media-page]').on('click', e => this.loadView($(e.target).attr('data-media-page') as MediaPages));
+    }
+
+    private load(): void {
         const success: () => void = () => {
             LoadingModal.showLoading();
             this.loadPlayer(() => {

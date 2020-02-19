@@ -56,12 +56,12 @@ export const enum TelevisionPages {
     Series,
 }
 export const enum MediaPages {
-    Home = 0,
-    Music,
-    Playlist,
-    Podcast,
-    Player,
-    Television,
+    Home = 'Home',
+    Music = 'Music',
+    Playlist = 'Playlist',
+    Podcast = 'Podcast',
+    Player = 'Player',
+    Television = 'Television',
 }
 export const enum MediaTypes {
     Song,
