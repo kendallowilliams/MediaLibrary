@@ -5,7 +5,7 @@ import Television from './television/television';
 import Podcast from './podcast/podcast';
 import HtmlControls from '../assets/controls/html-controls';
 import Configurations from '../assets/models/configurations/configurations';
-import IBaseClass from '../assets/models/base-class';
+import BaseClass from '../assets/models/base-class';
 import LoadingModal from '../assets/modals/loading-modal';
 import { MediaPages } from '../assets/enums/enums';
 import HomeConfiguration from '../assets/models/configurations/home-configuration';
@@ -16,7 +16,7 @@ import PodcastConfiguration from '../assets/models/configurations/podcast-config
 import TelevisionConfiguration from '../assets/models/configurations/television-configuration';
 import MusicConfiguration from '../assets/models/configurations/music-configuration';
 
-export default class MediaLibrary extends IBaseClass {
+export default class MediaLibrary extends BaseClass {
     private music: Music;
     private player: Player;
     private playlist: Playlist;
@@ -42,18 +42,18 @@ export default class MediaLibrary extends IBaseClass {
     }
 
     load(): void {
-        const success = () => {
+        const success: () => void = () => {
             LoadingModal.showLoading();
             $(HtmlControls.Views.PlayerView).load($(HtmlControls.Views.PlayerView).attr('data-action-url'), () => {
                 LoadingModal.hideLoading();
-                //this.loadView(this.mediaLibraryConfiguration.selectedMediaPage);
+                this.loadView(this.mediaLibraryConfiguration.selectedMediaPage);
             });
         };
-        
+
         this.loadConfigurations(success);
     }
 
-    loadConfigurations(callback: () => void = () => { }): void {
+    loadConfigurations(callback: () => void = () => null): void {
         $.get('/Home/HomeConfiguration', data => this.homeConfiguration = Configurations.Home(data))
             .then(() => $.get('/Music/MusicConfiguration', data => this.musicConfiguration = Configurations.Music(data))
                 .then(() => $.get('/MediaLibrary/MediaLibraryConfiguration', data => this.mediaLibraryConfiguration = Configurations.MediaLibrary(data))
