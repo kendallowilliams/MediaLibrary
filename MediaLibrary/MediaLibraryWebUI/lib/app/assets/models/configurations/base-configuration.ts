@@ -1,6 +1,6 @@
 ﻿import BaseClass from "../base-class";
 
-export default class BaseConfiguration extends BaseClass {
+export default abstract class BaseConfiguration extends BaseClass {
     constructor(private controller: string) {
         super();
     }

@@ -50,7 +50,7 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private initializeControls(): void {
-        $('[data-media-page]').on('click', e => this.loadView.call(this, $(e.target).attr('data-media-page') as MediaPages));
+        $('[data-media-page]').on('click', e => this.loadView.call(this, this.getMediaPagesEnum($(e.target).attr('data-media-page'))));
     }
 
     private load(): void {
@@ -121,7 +121,7 @@ export default class MediaLibrary extends BaseClass {
                     this.home.loadView();
                     break;
             }
-
+            
             this.showMainView(mediaPage);
         });
     }
@@ -143,6 +143,34 @@ export default class MediaLibrary extends BaseClass {
                 break;
 
         }
+    }
+
+    getMediaPagesEnum(page: string): MediaPages {
+        let mediaPage: MediaPages;
+
+        switch (page) {
+            case 'Music':
+                mediaPage = MediaPages.Music;
+                break;
+            case 'Playlist':
+                mediaPage = MediaPages.Playlist;
+                break;
+            case 'Player':
+                mediaPage = MediaPages.Player;
+                break;
+            case 'Podcast':
+                mediaPage = MediaPages.Podcast;
+                break;
+            case 'Television':
+                mediaPage = MediaPages.Television;
+                break;
+            case 'Home':
+            default:
+                mediaPage = MediaPages.Home;
+                break;
+        }
+
+        return mediaPage;
     }
 }
 

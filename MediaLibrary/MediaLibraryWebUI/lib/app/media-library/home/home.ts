@@ -8,6 +8,5 @@ export default class Home extends BaseClass implements IView {
     }
 
     loadView(): void {
-        throw new Error("Method not implemented.");
     }
 }
