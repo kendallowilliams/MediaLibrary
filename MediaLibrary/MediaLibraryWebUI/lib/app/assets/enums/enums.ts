@@ -3,57 +3,57 @@
     Album,
     Artist,
     DateAdded,
-    Genre,
+    Genre
 }
 export const enum ArtistSort {
-    AtoZ = 0,
+    AtoZ = 0
 }
 export const enum AlbumSort {
-    AtoZ = 0,
+    AtoZ = 0
 }
 export const enum SeriesSort {
-    AtoZ = 0,
+    AtoZ = 0
 }
 export const enum PodcastSort {
     LastUpdateDate = 0,
     AtoZ,
-    DateAdded,
+    DateAdded
 }
 export const enum PodcastFilter {
     All = 0,
     Downloaded,
-    Unplayed,
+    Unplayed
 }
 export const enum PlaylistSort {
     AtoZ = 0,
-    DateAdded,
+    DateAdded
 }
 export const enum MusicTabs {
     Albums = 0,
     Artists,
-    Songs,
+    Songs
 }
 export const enum MusicPages {
     Index = 0,
     Album,
-    Artist,
+    Artist
 }
 export const enum PlayerPages {
     Index = 0,
     Audio,
-    Video,
+    Video
 }
 export const enum PlaylistPages {
     Index = 0,
-    Playlist,
+    Playlist
 }
 export const enum PodcastPages {
     Index = 0,
-    Podcast,
+    Podcast
 }
 export const enum TelevisionPages {
     Index = 0,
-    Series,
+    Series
 }
 export const enum MediaPages {
     Home = 0,
@@ -66,10 +66,10 @@ export const enum MediaPages {
 export const enum MediaTypes {
     Song,
     Podcast,
-    Television,
+    Television
 }
 export const enum RepeatTypes {
     None = 0,
     RepeatOne,
-    RepeatAll,
+    RepeatAll
 }
