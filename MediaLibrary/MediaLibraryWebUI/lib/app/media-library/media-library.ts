@@ -99,6 +99,8 @@ export default class MediaLibrary extends BaseClass {
         this.mediaLibraryConfiguration.properties.SelectedMediaPage = mediaPage;
         this.mediaLibraryConfiguration.updateConfiguration(() => {
             this.prepareViews();
+            LoadingModal.hideLoading();
+            this.showMainView(mediaPage);
 
             switch (mediaPage) {
                 case MediaPages.Music:
@@ -121,9 +123,6 @@ export default class MediaLibrary extends BaseClass {
                     this.home.loadView();
                     break;
             }
-            
-            this.showMainView(mediaPage);
-            LoadingModal.hideLoading();
         });
     }
 

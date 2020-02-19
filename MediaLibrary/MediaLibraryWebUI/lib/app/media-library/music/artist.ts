@@ -1,12 +1,21 @@
 ﻿import BaseClass from "../../assets/models/base-class";
-import IView from "../../assets/interfaces/view-interface";
+import MusicConfiguration from "../../assets/models/configurations/music-configuration";
+import { MusicPages } from "../../assets/enums/enums";
 
-export default class Artist extends BaseClass implements IView {
-    constructor() {
+export default class Artist extends BaseClass {
+    constructor(private musicConfiguration: MusicConfiguration) {
         super();
     }
 
-    loadView(): void {
+    loadArtist(id: number, callback: () => void = () => null): void {
+        this.musicConfiguration.properties.SelectedArtistId = id;
+        this.musicConfiguration.properties.SelectedMusicPage = MusicPages.Artist;
+        this.musicConfiguration.updateConfiguration(callback);
+    }
 
+    goBack(callback: () => void = () => null): void {
+        this.musicConfiguration.properties.SelectedArtistId = 0;
+        this.musicConfiguration.properties.SelectedMusicPage = MusicPages.Index;
+        this.musicConfiguration.updateConfiguration(callback);
     }
 }
