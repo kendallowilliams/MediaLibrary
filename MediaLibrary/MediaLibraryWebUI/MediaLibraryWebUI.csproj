@@ -921,6 +921,15 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="lib\app\app.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\configuration-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\media-library-configuration-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\television-configuration-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\home-configuration-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\player-configuration-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\podcast-configuration-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\playlist-configuration-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\music-configuration-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\interfaces\view-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\loading-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\models\configurations\configurations.ts" />
     <TypeScriptCompile Include="lib\app\assets\enums\enums.ts" />
@@ -934,6 +943,7 @@
     <TypeScriptCompile Include="lib\app\assets\models\configurations\playlist-configuration.ts" />
     <TypeScriptCompile Include="lib\app\assets\models\configurations\podcast-configuration.ts" />
     <TypeScriptCompile Include="lib\app\assets\models\configurations\television-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\home\home.ts" />
     <TypeScriptCompile Include="lib\app\media-library\media-library.ts" />
     <TypeScriptCompile Include="lib\app\media-library\music\album.ts" />
     <TypeScriptCompile Include="lib\app\media-library\music\artist.ts" />

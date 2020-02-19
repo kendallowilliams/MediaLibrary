@@ -1,16 +1,12 @@
-﻿import BaseConfiguration from './base-configuration'
-import * as Enums from '../../enums/enums'
+﻿import BaseConfiguration from './base-configuration';
+import IMusicConfiguration from '../../interfaces/music-configuration-interface';
 
 export default class MusicConfiguration extends BaseConfiguration {
-    private selectedAlbumId: number;
-    private selectedArtistId: number;
-    private selectedAlbumSort: Enums.AlbumSort;
-    private selectedArtistSort: Enums.ArtistSort;
-    private selectedSongSort: Enums.SongSort;
-    private selectedMusicTab: Enums.MusicTabs;
-    private selectedMusicPage: Enums.MusicPages;
+    constructor(private properties: IMusicConfiguration) {
+        super('Music');
+    }
 
-    constructor(json: any) {
-        super();
+    updateConfiguration(callback: () => void = () => null): void {
+        super.update<IMusicConfiguration>(this.properties, callback);
     }
 }

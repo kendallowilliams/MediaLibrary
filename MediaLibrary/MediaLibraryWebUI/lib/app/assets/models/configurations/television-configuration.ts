@@ -1,13 +1,12 @@
-﻿import BaseConfiguration from './base-configuration'
-import * as Enums from '../../enums/enums'
+﻿import BaseConfiguration from './base-configuration';
+import ITelevisionConfiguration from '../../interfaces/television-configuration-interface';
 
 export default class TelevisionConfiguration extends BaseConfiguration {
-    private selectedSeriesId: number;
-    private selectedSeason: number;
-    private selectedTelevisionPage: Enums.TelevisionPages;
-    private selectedSeriesSort: Enums.SeriesSort;
+    constructor(private properties: ITelevisionConfiguration) {
+        super('Television');
+    }
 
-    constructor(json: any) {
-        super();
+    updateConfiguration(callback: () => void = () => null): void {
+        super.update<ITelevisionConfiguration>(this.properties, callback);
     }
 }

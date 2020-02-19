@@ -1,18 +1,12 @@
-﻿import BaseConfiguration from './base-configuration'
-import * as Enums from '../../enums/enums'
+﻿import BaseConfiguration from './base-configuration';
+import IMediaLibraryConfiguration from '../../interfaces/media-library-configuration-interface';
 
 export default class MediaLibraryConfiguration extends BaseConfiguration {
-    private _selectedMediaPage: Enums.MediaPages;
-
-    get selectedMediaPage(): Enums.MediaPages {
-        return this._selectedMediaPage;
+    constructor(private properties: IMediaLibraryConfiguration) {
+        super('MediaLibrary');
     }
 
-    set selectedMediaPage(value) {
-        this._selectedMediaPage = value;
-    }
-
-    constructor(json: any) {
-        super();
+    updateConfiguration(callback: () => void = () => null): void {
+        super.update<IMediaLibraryConfiguration>(this.properties, callback);
     }
 }

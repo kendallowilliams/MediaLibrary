@@ -15,8 +15,10 @@ import PlaylistConfiguration from '../assets/models/configurations/playlist-conf
 import PodcastConfiguration from '../assets/models/configurations/podcast-configuration';
 import TelevisionConfiguration from '../assets/models/configurations/television-configuration';
 import MusicConfiguration from '../assets/models/configurations/music-configuration';
+import Home from './home/home';
 
 export default class MediaLibrary extends BaseClass {
+    private home: Home;
     private music: Music;
     private player: Player;
     private playlist: Playlist;
@@ -32,11 +34,12 @@ export default class MediaLibrary extends BaseClass {
 
     constructor() {
         super();
-        this.music = new Music();
-        this.player = new Player();
-        this.playlist = new Playlist();
-        this.podcast = new Podcast();
-        this.television = new Television();
+        this.home = new Home(this.homeConfiguration);
+        this.music = new Music(this.musicConfiguration);
+        this.player = new Player(this.playerConfiguration);
+        this.playlist = new Playlist(this.playlistConfiguration);
+        this.podcast = new Podcast(this.podcastConfiguration);
+        this.television = new Television(this.televisionConfiguration);
 
         this.load();
     }
@@ -44,7 +47,7 @@ export default class MediaLibrary extends BaseClass {
     load(): void {
         const success: () => void = () => {
             LoadingModal.showLoading();
-            $(HtmlControls.Views.PlayerView).load($(HtmlControls.Views.PlayerView).attr('data-action-url'), () => {
+            this.loadPlayer(() => {
                 LoadingModal.hideLoading();
                 this.loadView(this.mediaLibraryConfiguration.selectedMediaPage);
             });
@@ -70,8 +73,32 @@ export default class MediaLibrary extends BaseClass {
         );
     }
 
-    loadView(mediaPage: MediaPages): void {
+    loadPlayer(callback: () => void = () => null) {
+        $(HtmlControls.Views.PlayerView).load($(HtmlControls.Views.PlayerView).attr('data-action-url'), callback);
+    }
 
+    loadView(mediaPage: MediaPages): void {
+        switch (mediaPage) {
+            case MediaPages.Music:
+                this.music.loadView();
+                break;
+            case MediaPages.Player:
+                this.player.loadView();
+                break;
+            case MediaPages.Playlist:
+                this.playlist.loadView();
+                break;
+            case MediaPages.Podcast:
+                this.podcast.loadView();
+                break;
+            case MediaPages.Television:
+                this.television.loadView();
+                break;
+            case MediaPages.Home:
+            default:
+                this.home.loadView();
+                break;
+        }
     }
 }
 

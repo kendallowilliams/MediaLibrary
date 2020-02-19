@@ -1,13 +1,12 @@
-﻿import BaseConfiguration from './base-configuration'
-import * as Enums from '../../enums/enums'
+﻿import BaseConfiguration from './base-configuration';
+import IPodcastConfiguration from '../../interfaces/podcast-configuration-interface';
 
 export default class PodcastConfiguration extends BaseConfiguration {
-    private selectedPodcastId: number;
-    private selectedPodcastPage: Enums.PodcastPages;
-    private selectedPodcastSort: Enums.PodcastSort;
-    private selectedPodcastFilter: Enums.PodcastFilter;
+    constructor(private properties: IPodcastConfiguration) {
+        super('Podcast');
+    }
 
-    constructor(json: any) {
-        super();
+    updateConfiguration(callback: () => void = () => null): void {
+        super.update<IPodcastConfiguration>(this.properties, callback);
     }
 }

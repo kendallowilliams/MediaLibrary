@@ -1,12 +1,12 @@
-﻿import BaseConfiguration from './base-configuration'
-import * as Enums from '../../enums/enums'
+﻿import BaseConfiguration from './base-configuration';
+import IPlaylistConfiguration from '../../interfaces/playlist-configuration-interface';
 
 export default class PlaylistConfiguration extends BaseConfiguration {
-    private selectedPlaylistId: number;
-    private selectedPlaylistPage: Enums.PlaylistPages;
-    private selectedPlaylistSort: Enums.PlaylistSort;
+    constructor(private properties: IPlaylistConfiguration) {
+        super('Playlist');
+    }
 
-    constructor(json: any) {
-        super();
+    updateConfiguration(callback: () => void = () => null): void {
+        super.update<IPlaylistConfiguration>(this.properties, callback);
     }
 }

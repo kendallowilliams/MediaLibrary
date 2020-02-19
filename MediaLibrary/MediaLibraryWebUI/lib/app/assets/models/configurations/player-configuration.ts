@@ -1,18 +1,12 @@
-﻿import BaseConfiguration from './base-configuration'
-import * as Enums from '../../enums/enums'
+﻿import BaseConfiguration from './base-configuration';
+import IPlayerConfiguration from '../../interfaces/player-configuration-interface';
 
 export default class PlayerConfiguration extends BaseConfiguration {
-    private selectedMediaType: Enums.MediaTypes;
-    private currentItemIndex: number;
-    private autoPlay: boolean;
-    private repeat: Enums.RepeatTypes;
-    private shuffle: boolean;
-    private selectedPlayerPage: Enums.PlayerPages;
-    private volume: number;
-    private muted: boolean;
-    private audioVisualizerEnabled: boolean;
+    constructor(private properties: IPlayerConfiguration) {
+        super('Player');
+    }
 
-    constructor(json: any) {
-        super();
+    updateConfiguration(callback: () => void = () => null): void {
+        super.update<IPlayerConfiguration>(this.properties, callback);
     }
 }

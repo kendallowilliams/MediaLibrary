@@ -1,8 +1,12 @@
-﻿import BaseConfiguration from './base-configuration'
+﻿import BaseConfiguration from './base-configuration';
+import IHomeConfiguration from '../../interfaces/home-configuration-interface';
 
 export default class HomeConfiguration extends BaseConfiguration {
+    constructor(private properties: IHomeConfiguration) {
+        super('Home');
+    }
 
-    constructor(json: any) {
-        super();
+    updateConfiguration(callback: () => void = () => null): void {
+        super.update<IHomeConfiguration>(this.properties, callback);
     }
 }
