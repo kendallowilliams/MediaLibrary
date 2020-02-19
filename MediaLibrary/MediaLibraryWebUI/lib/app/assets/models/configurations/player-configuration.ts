@@ -12,7 +12,7 @@ export default class PlayerConfiguration extends BaseConfiguration {
     private muted: boolean;
     private audioVisualizerEnabled: boolean;
 
-    constructor() {
+    constructor(json: any) {
         super();
     }
 }

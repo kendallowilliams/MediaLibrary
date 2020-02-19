@@ -40,14 +40,7 @@
         PlayerVolumeContainer: document.getElementById('player-volume-container'),
         SongsContainer: document.getElementById('songs-container'),
         ArtistsContainer: document.getElementById('artists-container'),
-        AlbumsContainer: document.getElementById('albums-container'),
-        MusicConfigurationContainer: document.getElementById('music-configuration-container'),
-        MediaLibraryConfigurationContainer: document.getElementById('media-library-configuration-container'),
-        PodcastConfigurationContainer: document.getElementById('podcast-configuration-container'),
-        PlaylistConfigurationContainer: document.getElementById('playlist-configuration-container'),
-        PlayerConfigurationContainer: document.getElementById('player-configuration-container'),
-        TelevisionConfigurationContainer: document.getElementById('television-configuration-container'),
-        HomeConfigurationContainer: document.getElementById('home-configuration-container')
+        AlbumsContainer: document.getElementById('albums-container')
     },
     UIControls: {
         PlayerSlider: document.getElementById('player-slider'),

@@ -223,7 +223,7 @@ namespace MediaLibraryWebUI.Controllers
                 playerViewModel.Configuration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
             }
 
-            return PartialView($"~/Views/Shared/Configurations/{nameof(PlayerConfiguration)}.cshtml", playerViewModel.Configuration);
+            return Json(playerViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
     }
 }

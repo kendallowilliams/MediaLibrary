@@ -879,24 +879,17 @@
     <Content Include="Views\Shared\Modals\AddToPlaylistModal.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Shared\Modals\LoadingModal.cshtml" />
-    <Content Include="Views\Shared\Configurations\MusicConfiguration.cshtml" />
-    <Content Include="Views\Shared\Configurations\PodcastConfiguration.cshtml" />
-    <Content Include="Views\Shared\Configurations\PlaylistConfiguration.cshtml" />
     <Content Include="Views\Shared\Modals\AddNewSongModal.cshtml" />
     <Content Include="Views\Shared\Modals\EditSongModal.cshtml" />
     <Content Include="Views\Shared\Modals\AddNewPlaylistModal.cshtml" />
     <Content Include="Views\Shared\Modals\EditPlaylistModal.cshtml" />
     <Content Include="Views\Music\SongGroup.cshtml" />
-    <Content Include="Views\Shared\Configurations\PlayerConfiguration.cshtml" />
     <Content Include="Views\Player\PlayerItems.cshtml" />
     <Content Include="Views\MediaLibrary\Index.cshtml" />
-    <Content Include="Views\Shared\Configurations\MediaLibraryConfiguration.cshtml" />
     <Content Include="Views\Television\Index.cshtml" />
-    <Content Include="Views\Shared\Configurations\TelevisionConfiguration.cshtml" />
     <Content Include="Views\Television\Series.cshtml" />
     <Content Include="Views\Television\Season.cshtml" />
     <Content Include="Views\Podcast\PodcastItems.cshtml" />
-    <Content Include="Views\Shared\Configurations\HomeConfiguration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

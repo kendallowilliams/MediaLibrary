@@ -71,7 +71,7 @@ namespace MediaLibraryWebUI.Controllers
                 mediaLibraryViewModel.Configuration = JsonConvert.DeserializeObject<MediaLibraryConfiguration>(configuration.JsonData) ?? new MediaLibraryConfiguration();
             }
 
-            return PartialView($"~/Views/Shared/Configurations/{nameof(MediaLibraryConfiguration)}.cshtml", mediaLibraryViewModel.Configuration);
+            return Json(mediaLibraryViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
     }
 }

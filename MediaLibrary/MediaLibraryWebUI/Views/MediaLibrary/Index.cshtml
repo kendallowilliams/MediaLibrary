@@ -10,18 +10,6 @@
                                                           Model.Configuration.SelectedMediaPage == Enums.MediaPages.Player) ? "d-none" : string.Empty) flex-column" 
      style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
 
-<div class="d-none">
-    <div id="@(HtmlControlsRepository.MediaLibraryConfigurationContainerId)" data-action-url="@Url.Action(nameof(MediaLibraryConfiguration), "MediaLibrary")"></div>
-    <div id="@(HtmlControlsRepository.MusicConfigurationContainerId)" data-action-url="@Url.Action(nameof(MusicConfiguration), nameof(Enums.MediaPages.Music))"></div>
-    <div id="@(HtmlControlsRepository.PlayerConfigurationContainerId)" data-action-url="@Url.Action(nameof(PlayerConfiguration), nameof(Enums.MediaPages.Player))"></div>
-    <div id="@(HtmlControlsRepository.PlaylistConfigurationContainerId)" data-action-url="@Url.Action(nameof(PlaylistConfiguration), nameof(Enums.MediaPages.Playlist))"></div>
-    <div id="@(HtmlControlsRepository.HomeConfigurationContainerId)" data-action-url="@Url.Action(nameof(HomeConfiguration), nameof(Enums.MediaPages.Home))"></div>
-    <div id="@(HtmlControlsRepository.PodcastConfigurationContainerId)" data-action-url="@Url.Action(nameof(PodcastConfiguration), nameof(Enums.MediaPages.Podcast))"></div>
-    <div id="@(HtmlControlsRepository.TelevisionConfigurationContainerId)" data-action-url="@Url.Action(nameof(TelevisionConfiguration), nameof(Enums.MediaPages.Television))"></div>
-</div>
-
 @section scripts {
-    <script type="text/javascript" defer="defer">
-    </script>
 }
 

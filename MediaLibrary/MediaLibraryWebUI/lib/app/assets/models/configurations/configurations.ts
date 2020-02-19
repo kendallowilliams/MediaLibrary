@@ -6,4 +6,12 @@ import PlaylistConfig from './playlist-configuration';
 import PodcastConfig from './podcast-configuration';
 import TelevisionConfig from './television-configuration';
 
-export default { HomeConfig, MediaLibraryConfig, MusicConfig, PlayerConfig, PlaylistConfig, PodcastConfig, TelevisionConfig };
+export default {
+    Home: json => new HomeConfig(json),
+    MediaLibrary: json => new MediaLibraryConfig(json),
+    Music: json => new MusicConfig(json),
+    Player: json => new PlayerConfig(json),
+    Playlist: json => new PlaylistConfig(json),
+    Podcast: json => new PodcastConfig(json),
+    Television: json => new TelevisionConfig(json)
+};

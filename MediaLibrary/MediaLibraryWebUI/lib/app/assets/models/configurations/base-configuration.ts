@@ -1,5 +1,17 @@
-﻿export default class BaseConfiguration {
-    private scrollTop: number;
+﻿import BaseClass from "../base-class";
 
-    constructor() {}
+export default class BaseConfiguration extends BaseClass {
+    private _scrollTop: number;
+    
+    get scrollTop(): number {
+        return this._scrollTop;
+    }
+
+    set scrollTop(value: number) {
+        this._scrollTop = value;
+    }
+
+    constructor() {
+        super();
+    }
 }

@@ -167,7 +167,7 @@ namespace MediaLibraryWebUI.Controllers
                 playlistViewModel.Configuration = JsonConvert.DeserializeObject<PlaylistConfiguration>(configuration.JsonData) ?? new PlaylistConfiguration();
             }
 
-            return PartialView($"~/Views/Shared/Configurations/{nameof(PlaylistConfiguration)}.cshtml", playlistViewModel.Configuration);
+            return Json(playlistViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
     }
 }

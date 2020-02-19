@@ -44,7 +44,7 @@ namespace MediaLibraryWebUI.Controllers
                 homeViewModel.Configuration = JsonConvert.DeserializeObject<HomeConfiguration>(configuration.JsonData) ?? new HomeConfiguration();
             }
 
-            return PartialView($"~/Views/Shared/Configurations/{nameof(HomeConfiguration)}.cshtml", homeViewModel.Configuration);
+            return Json(homeViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
     }
 }

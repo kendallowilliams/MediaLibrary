@@ -7,7 +7,7 @@ export default class TelevisionConfiguration extends BaseConfiguration {
     private selectedTelevisionPage: Enums.TelevisionPages;
     private selectedSeriesSort: Enums.SeriesSort;
 
-    constructor() {
+    constructor(json: any) {
         super();
     }
 }

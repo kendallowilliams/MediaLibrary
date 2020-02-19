@@ -406,7 +406,7 @@ namespace MediaLibraryWebUI.Controllers
                 musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
             }
 
-            return PartialView($"~/Views/Shared/Configurations/{nameof(MusicConfiguration)}.cshtml", musicViewModel.Configuration);
+            return Json(musicViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -144,7 +144,7 @@ namespace MediaLibraryWebUI.Controllers
                 televisionViewModel.Configuration = JsonConvert.DeserializeObject<TelevisionConfiguration>(configuration.JsonData) ?? new TelevisionConfiguration();
             }
 
-            return PartialView($"~/Views/Shared/Configurations/{nameof(TelevisionConfiguration)}.cshtml", televisionViewModel.Configuration);
+            return Json(televisionViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
     }
 }

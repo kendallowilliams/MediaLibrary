@@ -231,7 +231,7 @@ namespace MediaLibraryWebUI.Controllers
                 podcastViewModel.Configuration = JsonConvert.DeserializeObject<PodcastConfiguration>(configuration.JsonData) ?? new PodcastConfiguration();
             }
 
-            return PartialView($"~/Views/Shared/Configurations/{nameof(PodcastConfiguration)}.cshtml", podcastViewModel.Configuration);
+            return Json(podcastViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
     }
 }

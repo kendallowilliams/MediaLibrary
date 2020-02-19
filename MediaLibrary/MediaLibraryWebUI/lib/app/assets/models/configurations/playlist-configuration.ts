@@ -6,7 +6,7 @@ export default class PlaylistConfiguration extends BaseConfiguration {
     private selectedPlaylistPage: Enums.PlaylistPages;
     private selectedPlaylistSort: Enums.PlaylistSort;
 
-    constructor() {
+    constructor(json: any) {
         super();
     }
 }

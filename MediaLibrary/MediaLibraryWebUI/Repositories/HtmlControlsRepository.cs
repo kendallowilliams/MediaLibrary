@@ -52,13 +52,6 @@ namespace MediaLibraryWebUI.Repositories
         public static string SongsContainerId { get => "songs-container"; }
         public static string ArtistsContainerId { get => "artists-container"; }
         public static string AlbumsContainerId { get => "albums-container"; }
-        public static string MusicConfigurationContainerId { get => "music-configuration-container"; }
-        public static string MediaLibraryConfigurationContainerId { get => "media-library-configuration-container"; }
-        public static string PodcastConfigurationContainerId { get => "podcast-configuration-container"; }
-        public static string PlaylistConfigurationContainerId { get => "playlist-configuration-container"; }
-        public static string PlayerConfigurationContainerId { get => "player-configuration-container"; }
-        public static string TelevisionConfigurationContainerId { get => "television-configuration-container"; }
-        public static string HomeConfigurationContainerId { get => "home-configuration-container"; }
         #endregion Container Ids
 
         #region UI Control Ids

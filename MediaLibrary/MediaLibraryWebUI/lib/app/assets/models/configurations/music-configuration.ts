@@ -10,7 +10,7 @@ export default class MusicConfiguration extends BaseConfiguration {
     private selectedMusicTab: Enums.MusicTabs;
     private selectedMusicPage: Enums.MusicPages;
 
-    constructor() {
+    constructor(json: any) {
         super();
     }
 }

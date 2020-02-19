@@ -2,7 +2,7 @@
 
 export default class HomeConfiguration extends BaseConfiguration {
 
-    constructor() {
+    constructor(json: any) {
         super();
     }
 }

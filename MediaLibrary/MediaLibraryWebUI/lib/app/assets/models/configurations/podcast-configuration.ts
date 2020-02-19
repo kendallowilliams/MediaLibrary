@@ -7,7 +7,7 @@ export default class PodcastConfiguration extends BaseConfiguration {
     private selectedPodcastSort: Enums.PodcastSort;
     private selectedPodcastFilter: Enums.PodcastFilter;
 
-    constructor() {
+    constructor(json: any) {
         super();
     }
 }
