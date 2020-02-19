@@ -71,7 +71,7 @@ export default class MediaLibrary extends BaseClass {
         this.loadConfigurations(success);
     }
 
-    loadConfigurations(callback: () => void = () => null): void {
+    private loadConfigurations(callback: () => void = () => null): void {
         $.get('/Home/HomeConfiguration', data => this.homeConfiguration = Configurations.Home(data))
             .then(() => $.get('/Music/MusicConfiguration', data => this.musicConfiguration = Configurations.Music(data))
                 .then(() => $.get('/MediaLibrary/MediaLibraryConfiguration', data => this.mediaLibraryConfiguration = Configurations.MediaLibrary(data))
@@ -88,13 +88,13 @@ export default class MediaLibrary extends BaseClass {
         );
     }
 
-    loadStaticViews(callback: () => void = () => null) {
+    private loadStaticViews(callback: () => void = () => null) {
         $(HtmlControls.Views.PlayerView).load($(HtmlControls.Views.PlayerView).attr('data-action-url'), function () {
             $(HtmlControls.Views.HomeView).load($(HtmlControls.Views.HomeView).attr('data-action-url'), callback);
         });
     }
 
-    loadView(mediaPage: MediaPages): void {
+    private loadView(mediaPage: MediaPages): void {
         LoadingModal.showLoading();
         this.mediaLibraryConfiguration.properties.SelectedMediaPage = mediaPage;
         this.mediaLibraryConfiguration.updateConfiguration(() => {
@@ -126,11 +126,11 @@ export default class MediaLibrary extends BaseClass {
         });
     }
 
-    prepareViews(): void {
+    private prepareViews(): void {
         $(this.mainViews.concat(HtmlControls.Containers.HeaderControlsContainer)).addClass('d-none');
     }
 
-    showMainView(mediaPage: MediaPages): void {
+    private showMainView(mediaPage: MediaPages): void {
         switch (mediaPage) {
             case MediaPages.Home:
                 $(HtmlControls.Views.HomeView).removeClass('d-none');
@@ -145,7 +145,7 @@ export default class MediaLibrary extends BaseClass {
         }
     }
 
-    getMediaPagesEnum(page: string): MediaPages {
+    private getMediaPagesEnum(page: string): MediaPages {
         let mediaPage: MediaPages;
 
         switch (page) {

@@ -39,7 +39,7 @@ export default class Music extends BaseClass implements IView {
         this.musicConfiguration.updateConfiguration(() => this.loadView.call(this));
     }
 
-    getAlbumSortEnum(sort: string): AlbumSort {
+    private getAlbumSortEnum(sort: string): AlbumSort {
         let albumSort: AlbumSort;
 
         switch (sort) {
@@ -52,7 +52,7 @@ export default class Music extends BaseClass implements IView {
         return albumSort;
     }
 
-    getArtistSortEnum(sort: string): ArtistSort {
+    private getArtistSortEnum(sort: string): ArtistSort {
         let artistSort: ArtistSort;
 
         switch (sort) {
@@ -65,7 +65,7 @@ export default class Music extends BaseClass implements IView {
         return artistSort;
     }
 
-    getSongSortEnum(sort: string): SongSort {
+    private getSongSortEnum(sort: string): SongSort {
         let songSort: SongSort;
 
         switch (sort) {
