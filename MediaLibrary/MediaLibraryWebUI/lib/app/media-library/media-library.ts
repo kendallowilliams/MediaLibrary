@@ -32,24 +32,17 @@ export default class MediaLibrary extends BaseClass {
     private televisionConfiguration: TelevisionConfiguration;
     private musicConfiguration: MusicConfiguration;
     private mainViews: HTMLElement[];
-    private self: any;
 
     constructor() {
         super();
-        this.home = new Home(this.homeConfiguration);
-        this.music = new Music(this.musicConfiguration);
-        this.player = new Player(this.playerConfiguration);
-        this.playlist = new Playlist(this.playlistConfiguration);
-        this.podcast = new Podcast(this.podcastConfiguration);
-        this.television = new Television(this.televisionConfiguration);
+        this.initialize();
+        this.load();
+
         this.mainViews = [
             HtmlControls.Views.HomeView,
             HtmlControls.Views.MediaView,
             HtmlControls.Views.PlayerView
         ];
-
-        this.initialize();
-        this.load();
     }
 
     private initialize(): void {
@@ -57,14 +50,20 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private initializeControls(): void {
-        $('[data-media-page]').on('click', e => this.loadView($(e.target).attr('data-media-page') as MediaPages));
+        $('[data-media-page]').on('click', e => this.loadView.call(this, $(e.target).attr('data-media-page') as MediaPages));
     }
 
     private load(): void {
         const success: () => void = () => {
             LoadingModal.showLoading();
-            this.loadPlayer(() => {
+            this.loadStaticViews(() => {
                 LoadingModal.hideLoading();
+                this.home = new Home(this.homeConfiguration);
+                this.music = new Music(this.musicConfiguration);
+                this.player = new Player(this.playerConfiguration);
+                this.playlist = new Playlist(this.playlistConfiguration);
+                this.podcast = new Podcast(this.podcastConfiguration);
+                this.television = new Television(this.televisionConfiguration);
                 this.loadView(this.mediaLibraryConfiguration.properties.selectedMediaPage);
             });
         };
@@ -80,7 +79,7 @@ export default class MediaLibrary extends BaseClass {
                         .then(() => $.get('/Podcast/PodcastConfiguration', data => this.podcastConfiguration = Configurations.Podcast(data))
                             .then(() => $.get('/Player/PlayerConfiguration', data => this.playerConfiguration = Configurations.Player(data))
                                 .then(() => $.get('/Playlist/PlaylistConfiguration', data => this.playlistConfiguration = Configurations.Playlist(data))
-                                    .then(() => callback)
+                                    .then(callback)
                             )
                         )
                     )
@@ -89,9 +88,10 @@ export default class MediaLibrary extends BaseClass {
         );
     }
 
-    loadPlayer(callback: () => void = () => null) {
-        $(HtmlControls.Views.PlayerView).load($(HtmlControls.Views.PlayerView).attr('data-action-url'), callback);
-        $(HtmlControls.Views.HomeView).load($(HtmlControls.Views.HomeView).attr('data-action-url'), callback);
+    loadStaticViews(callback: () => void = () => null) {
+        $(HtmlControls.Views.PlayerView).load($(HtmlControls.Views.PlayerView).attr('data-action-url'), function () {
+            $(HtmlControls.Views.HomeView).load($(HtmlControls.Views.HomeView).attr('data-action-url'), callback);
+        });
     }
 
     loadView(mediaPage: MediaPages): void {
