@@ -134,6 +134,7 @@
     <Content Include="favicon.ico" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="Global.asax" />
+    <None Include="gulpfile.js" />
     <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="lib\bootstrap\dist\css\bootstrap-grid.min.css" />
     <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.css" />
@@ -777,6 +778,9 @@
     <Content Include="lib\popper.js\umd\popper-utils.min.js.map" />
     <Content Include="lib\popper.js\umd\popper.js.map" />
     <Content Include="lib\popper.js\umd\popper.min.js.map" />
+    <Content Include="package.json" />
+    <Content Include="package-lock.json" />
+    <Content Include="lib\app\tsconfig.json" />
     <None Include="Properties\PublishProfiles\KSERVER_DEV.pubxml" />
     <None Include="Properties\PublishProfiles\KSERVER_PROD.pubxml" />
     <Content Include="lib\popper.js\esm\popper-utils.js" />
@@ -917,6 +921,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="lib\app\app.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -58,3 +58,5 @@
 /MediaLibrary/MediaLibraryDB/bin/DEV
 /MediaLibrary/MediaLibraryDB/obj/DEV
 /MediaLibrary/MediaLibraryBLL/bin/DEV
+/MediaLibrary/MediaLibraryWebUI/node_modules
+/MediaLibrary/MediaLibraryWebUI/lib/app/**/*.js
