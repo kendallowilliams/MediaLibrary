@@ -2,8 +2,8 @@
 import IConfiguration from "./configuration-interface";
 
 export default interface ITelevisionConfiguration extends IConfiguration {
-    selectedSeriesId: number;
-    selectedSeason: number;
-    selectedTelevisionPage: TelevisionPages;
-    selectedSeriesSort: SeriesSort;
+    SelectedSeriesId: number;
+    SelectedSeason: number;
+    SelectedTelevisionPage: TelevisionPages;
+    SelectedSeriesSort: SeriesSort;
 }

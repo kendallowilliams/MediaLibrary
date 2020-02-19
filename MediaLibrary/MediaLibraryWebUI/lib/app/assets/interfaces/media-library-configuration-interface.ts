@@ -2,5 +2,5 @@
 import IConfiguration from "./configuration-interface";
 
 export default interface IMediaLibraryConfiguration extends IConfiguration {
-    selectedMediaPage: MediaPages;
+    SelectedMediaPage: MediaPages;
 }

@@ -2,7 +2,7 @@
 import IConfiguration from "./configuration-interface";
 
 export default interface IPlaylistConfiguration extends IConfiguration {
-    selectedPlaylistId: number;
-    selectedPlaylistPage: PlaylistPages;
-    selectedPlaylistSort: PlaylistSort;
+    SelectedPlaylistId: number;
+    SelectedPlaylistPage: PlaylistPages;
+    SelectedPlaylistSort: PlaylistSort;
 }

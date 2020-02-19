@@ -2,13 +2,13 @@
 import IConfiguration from "./configuration-interface";
 
 export default interface IPlayerConfiguration extends IConfiguration {
-    selectedMediaType: MediaTypes;
-    currentItemIndex: number;
-    autoPlay: boolean;
-    repeat: RepeatTypes;
-    shuffle: boolean;
-    selectedPlayerPage: PlayerPages;
-    volume: number;
-    muted: boolean;
-    audioVisualizerEnabled: boolean;
+    SelectedMediaType: MediaTypes;
+    CurrentItemIndex: number;
+    AutoPlay: boolean;
+    Repeat: RepeatTypes;
+    Shuffle: boolean;
+    SelectedPlayerPage: PlayerPages;
+    Volume: number;
+    Muted: boolean;
+    AudioVisualizerEnabled: boolean;
 }

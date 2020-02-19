@@ -2,11 +2,11 @@
 import IConfiguration from "./configuration-interface";
 
 export default interface IMusicConfiguration extends IConfiguration {
-    selectedAlbumId: number;
-    selectedArtistId: number;
-    selectedAlbumSort: AlbumSort;
-    selectedArtistSort: ArtistSort;
-    selectedSongSort: SongSort;
-    selectedMusicTab: MusicTabs;
-    selectedMusicPage: MusicPages;
+    SelectedAlbumId: number;
+    SelectedArtistId: number;
+    SelectedAlbumSort: AlbumSort;
+    SelectedArtistSort: ArtistSort;
+    SelectedSongSort: SongSort;
+    SelectedMusicTab: MusicTabs;
+    SelectedMusicPage: MusicPages;
 }

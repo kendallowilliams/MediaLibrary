@@ -2,8 +2,8 @@
 import IConfiguration from "./configuration-interface";
 
 export default interface IPodcastConfiguration extends IConfiguration {
-    selectedPodcastId: number;
-    selectedPodcastPage: PodcastPages;
-    selectedPodcastSort: PodcastSort;
-    selectedPodcastFilter: PodcastFilter;
+    SelectedPodcastId: number;
+    SelectedPodcastPage: PodcastPages;
+    SelectedPodcastSort: PodcastSort;
+    SelectedPodcastFilter: PodcastFilter;
 }
