@@ -1,13 +1,4 @@
-﻿/*
- * https://www.w3schools.com/js/js_random.asp
- * @param {number} min
- * @param {number} max
- */
-function getRandomInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-/* https://www.w3schools.com/howto/howto_js_fullscreen.asp */
+﻿/* https://www.w3schools.com/howto/howto_js_fullscreen.asp */
 function openFullscreen(obj) {
     if (obj.requestFullscreen) {
         obj.requestFullscreen();

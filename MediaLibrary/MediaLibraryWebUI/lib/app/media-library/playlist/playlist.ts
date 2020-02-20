@@ -9,7 +9,7 @@ export default class Playlist extends BaseClass implements IView {
 
     constructor(private playlistConfiguration: PlaylistConfiguration) {
         super();
-        this.mediaView = HtmlControls.Views.MediaView;
+        this.mediaView = HtmlControls.Views().MediaView;
     }
 
     loadView(): void {

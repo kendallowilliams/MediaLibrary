@@ -9,7 +9,7 @@ export default class Podcast extends BaseClass implements IView {
 
     constructor(private podcastConfiguration: PodcastConfiguration) {
         super();
-        this.mediaView = HtmlControls.Views.MediaView;
+        this.mediaView = HtmlControls.Views().MediaView;
     }
 
     loadView(): void {

@@ -14,7 +14,7 @@ export default class Music extends BaseClass implements IView {
 
     constructor(private musicConfiguration: MusicConfiguration) {
         super();
-        this.mediaView = HtmlControls.Views.MediaView;
+        this.mediaView = HtmlControls.Views().MediaView;
         this.artist = new Artist(musicConfiguration);
         this.album = new Album(musicConfiguration);
     }

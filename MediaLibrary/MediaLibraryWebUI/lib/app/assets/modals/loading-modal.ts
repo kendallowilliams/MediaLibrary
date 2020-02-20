@@ -2,7 +2,7 @@
 
 export default {
     showLoading: function (): void {
-        var $modal = $(HtmlControls.Modals.LoadingModal),
+        var $modal = $(HtmlControls.Modals().LoadingModal),
             processCount = parseInt($modal.attr('data-process-count'));
 
         if (!isNaN(processCount)) {
@@ -11,16 +11,16 @@ export default {
             $modal.attr('data-process-count', 1);
         }
 
-        $(new String('[data-target="#').concat($(HtmlControls.Modals.LoadingModal).attr('id')).concat('"]')).trigger('click');
+        $modal.modal('show');
     },
     hideLoading: function (): void {
-        var $modal = $(HtmlControls.Modals.LoadingModal),
+        var $modal = $(HtmlControls.Modals().LoadingModal),
             processCount = parseInt($modal.attr('data-process-count'));
 
         if (!isNaN(processCount)) {
             $modal.attr('data-process-count', processCount--);
 
-            if (processCount == 0) /*then*/ $(HtmlControls.Modals.LoadingModal).find('[data-dismiss="modal"]').trigger('click');
+            if (processCount == 0) /*then*/ $modal.modal('hide');
         } else {
             $modal.attr('data-process-count', 0);
         }

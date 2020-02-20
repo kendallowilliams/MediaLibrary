@@ -9,7 +9,7 @@ export default class Television extends BaseClass implements IView {
 
     constructor(private televisionConfiguration: TelevisionConfiguration) {
         super();
-        this.mediaView = HtmlControls.Views.MediaView;
+        this.mediaView = HtmlControls.Views().MediaView;
     }
 
     loadView(): void {

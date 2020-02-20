@@ -1,16 +1,16 @@
 ﻿export default {
-    Views: {
+    Views: () => ({
         HomeView: document.getElementById('home-view'),
         PlayerView: document.getElementById('player-view'),
         MediaView: document.getElementById('media-view'),
         PodcastView: document.getElementById('podcast-view'),
         SeasonView: document.getElementById('season-view'),
-    },
-    Players: {
+    }),
+    Players: () => ({
         MusicPlayer: document.getElementById('music-player'),
         VideoPlayer: document.getElementById('video-player')
-    },
-    Buttons: {
+    }),
+    Buttons: () => ({
         HeaderPlayButton: document.getElementById('btn-header-play'),
         HeaderPreviousButton: document.getElementById('btn-header-previous'),
         HeaderNextButton: document.getElementById('btn-header-next'),
@@ -31,8 +31,8 @@
         PlayerVolumeButton: document.getElementById('btn-player-volume'),
         PlayerMuteButton: document.getElementById('btn-player-mute'),
         PlayerFullscreenButton: document.getElementById('btn-player-fullscreen')
-    },
-    Containers: {
+    }),
+    Containers: () => ({
         HeaderControlsContainer: document.getElementById('header-controls-container'),
         PlayerVideoContainer: document.getElementById('video-container'),
         PlayerAudioContainer: document.getElementById('audio-container'),
@@ -41,18 +41,18 @@
         SongsContainer: document.getElementById('songs-container'),
         ArtistsContainer: document.getElementById('artists-container'),
         AlbumsContainer: document.getElementById('albums-container')
-    },
-    UIControls: {
+    }),
+    UIControls: () => ({
         PlayerSlider: document.getElementById('player-slider'),
         VolumeSlider: document.getElementById('volume-slider'),
         PlayerTime: document.getElementById('player-time'),
         AudioVisualizer: document.getElementById('audio-visualizer'),
         MusicTabList: document.getElementById('music-tab-list')
-    },
-    UIFields: {
-        NowPlayingTitle: document.getElementById('player-title')
-    },
-    Modals: {
+    }),
+    UIFields: () => ({
+            NowPlayingTitle: document.getElementById('player-title')
+    }),
+    Modals: () => ({
         NewPlaylistModal: document.getElementById('new-playlist-modal'),
         NewSongModal: document.getElementById('new-song-modal'),
         AddToPlaylistModal: document.getElementById('add-to-playlist-modal'),
@@ -60,5 +60,5 @@
         EdiPlaylistModal: document.getElementById('edit-playlist-modal'),
         EditSongModal: document.getElementById('edit-song-modal'),
         LoadingModal: document.getElementById('loading-modal')
-    }
+    })
 }

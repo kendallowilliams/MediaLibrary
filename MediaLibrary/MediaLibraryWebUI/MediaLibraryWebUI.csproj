@@ -943,6 +943,8 @@
     <TypeScriptCompile Include="lib\app\assets\models\configurations\playlist-configuration.ts" />
     <TypeScriptCompile Include="lib\app\assets\models\configurations\podcast-configuration.ts" />
     <TypeScriptCompile Include="lib\app\assets\models\configurations\television-configuration.ts" />
+    <TypeScriptCompile Include="lib\app\assets\utilities\math.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\audio-visualizer\audio-visualizer.ts" />
     <TypeScriptCompile Include="lib\app\media-library\home\home.ts" />
     <TypeScriptCompile Include="lib\app\media-library\media-library.ts" />
     <TypeScriptCompile Include="lib\app\media-library\music\album.ts" />

@@ -31,18 +31,13 @@ export default class MediaLibrary extends BaseClass {
     private podcastConfiguration: PodcastConfiguration;
     private televisionConfiguration: TelevisionConfiguration;
     private musicConfiguration: MusicConfiguration;
-    private mainViews: HTMLElement[];
+    private mainViews: { HomeView: HTMLElement, MediaView: HTMLElement, PlayerView: HTMLElement };
 
     constructor() {
         super();
         this.initialize();
         this.load();
-
-        this.mainViews = [
-            HtmlControls.Views.HomeView,
-            HtmlControls.Views.MediaView,
-            HtmlControls.Views.PlayerView
-        ];
+        this.mainViews = HtmlControls.Views();
     }
 
     private initialize(): void {
@@ -89,8 +84,8 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private loadStaticViews(callback: () => void = () => null) {
-        $(HtmlControls.Views.PlayerView).load($(HtmlControls.Views.PlayerView).attr('data-action-url'), function () {
-            $(HtmlControls.Views.HomeView).load($(HtmlControls.Views.HomeView).attr('data-action-url'), callback);
+        $(this.mainViews.PlayerView).load($(this.mainViews.PlayerView).attr('data-action-url'), () => {
+            $(this.mainViews.HomeView).load($(this.mainViews.HomeView).attr('data-action-url'), callback);
         });
     }
 
@@ -127,19 +122,21 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private prepareViews(): void {
-        $(this.mainViews.concat(HtmlControls.Containers.HeaderControlsContainer)).addClass('d-none');
+        const headerContainer = HtmlControls.Containers().HeaderControlsContainer;
+
+        $([this.mainViews.HomeView, this.mainViews.MediaView, this.mainViews.PlayerView, headerContainer]).addClass('d-none');
     }
 
     private showMainView(mediaPage: MediaPages): void {
         switch (mediaPage) {
             case MediaPages.Home:
-                $(HtmlControls.Views.HomeView).removeClass('d-none');
+                $(this.mainViews.HomeView).removeClass('d-none');
                 break;
             case MediaPages.Player:
-                $(HtmlControls.Views.PlayerView).removeClass('d-none');
+                $(this.mainViews.PlayerView).removeClass('d-none');
                 break;
             default:
-                $(HtmlControls.Views.MediaView).removeClass('d-none');
+                $(this.mainViews.MediaView).removeClass('d-none');
                 break;
 
         }
