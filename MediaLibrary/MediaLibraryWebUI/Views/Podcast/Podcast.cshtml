@@ -16,7 +16,7 @@
             </div>
         </div>
         <div>
-            <button class="btn btn-outline-secondary" onclick="backClicked()" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
+            <button class="btn btn-outline-secondary" data-back-button="podcast" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
             <button class="btn btn-outline-secondary" onclick="refreshClicked()" data-tooltip="tooltip" title="Refresh podcast"><i class="fa fa-sync"></i></button>
             <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePodcast","Podcast", new { Model.SelectedPodcast.Id }))"
                     data-tooltip="tooltip" title="Delete podcast" data-refresh-view="@(nameof(Enums.MediaPages.Podcast))" data-delete-type="podcast"

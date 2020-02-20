@@ -7,6 +7,10 @@ export default class Artist extends BaseClass {
         super();
     }
 
+    initializeControls(): void {
+        $('[data-back-button="artist"]').on('click', () => this.goBack());
+    }
+
     loadArtist(id: number, callback: () => void = () => null): void {
         this.musicConfiguration.properties.SelectedArtistId = id;
         this.musicConfiguration.properties.SelectedMusicPage = MusicPages.Artist;

@@ -7,6 +7,10 @@ export default class Album extends BaseClass {
         super();
     }
 
+    initializeControls(): void {
+        $('[data-back-button="album"]').on('click', () => this.goBack());
+    }
+
     loadAlbum(id: number, callback: () => void = () => null): void {
         this.musicConfiguration.properties.SelectedAlbumId = id;
         this.musicConfiguration.properties.SelectedMusicPage = MusicPages.Album;
