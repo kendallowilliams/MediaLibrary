@@ -7,8 +7,8 @@
         SeasonView: document.getElementById('season-view'),
     }),
     Players: () => ({
-        MusicPlayer: document.getElementById('music-player'),
-        VideoPlayer: document.getElementById('video-player')
+        MusicPlayer: document.getElementById('music-player') as HTMLMediaElement,
+        VideoPlayer: document.getElementById('video-player') as HTMLMediaElement
     }),
     Buttons: () => ({
         HeaderPlayButton: document.getElementById('btn-header-play'),
@@ -50,7 +50,7 @@
         MusicTabList: document.getElementById('music-tab-list')
     }),
     UIFields: () => ({
-            NowPlayingTitle: document.getElementById('player-title')
+        NowPlayingTitle: document.getElementById('player-title')
     }),
     Modals: () => ({
         NewPlaylistModal: document.getElementById('new-playlist-modal'),
