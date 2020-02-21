@@ -137,7 +137,7 @@ export default class Player extends BaseClass implements IView {
                 repeat = RepeatTypes.None;
             }
 
-            $('button[data-repeat-type="' + repeat + '"]').removeClass('d-none');
+            $('button[data-repeat-type="' + this.getRepeatTypesEnumString(repeat) + '"]').removeClass('d-none');
             this.playerConfiguration.properties.Repeat = repeat;
             this.playerConfiguration.updateConfiguration(() => this.enableDisablePreviousNext());
         });
