@@ -7,7 +7,7 @@ import Artist from "./artist";
 import Album from "./album";
 import LoadingModal from "../../assets/modals/loading-modal";
 import IMusicConfiguration from "../../assets/interfaces/music-configuration-interface";
-import * as element from '../../assets/utilities/element';
+import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap';
 
 export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -46,7 +46,7 @@ export default class Music extends BaseClass implements IView {
                 url = $newView.attr('data-load-url'),
                 success = () => {
                     LoadingModal.hideLoading();
-                    element.loadTooltips($newView[0]);
+                    loadTooltips($newView[0]);
                 };
             $(HtmlControls.UIControls().MusicTabList).find('* [data-sort-tab]').each((index, _btn) => {
                 if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
@@ -57,26 +57,29 @@ export default class Music extends BaseClass implements IView {
             });
             LoadingModal.showLoading();
             this.musicConfiguration.properties.SelectedMusicTab = this.getMusicTabEnum($newTab.attr('data-music-tab'));
-            element.disposeTooltips($newView[0]);
+            disposeTooltips($newView[0]);
             this.musicConfiguration.updateConfiguration(() => $newView.load(url, success));
+        });
+
+        $(this.mediaView).find('*[data-sort-type]').on('change', e => {
+            const select = e.target,
+                sortType: string = $(e.target).attr('data-sort-type');
+
+            if (sortType === 'SelectedAlbumSort') {
+                this.musicConfiguration.properties.SelectedAlbumSort = this.getAlbumSortEnum($(select).val() as string);
+            } else if (sortType === 'SelectedArtistSort') {
+                this.musicConfiguration.properties.SelectedArtistSort = this.getArtistSortEnum($(select).val() as string);
+            } else if (sortType === 'SelectedSongSort') {
+                this.musicConfiguration.properties.SelectedSongSort = this.getSongSortEnum($(select).val() as string);
+            }
+
+            this.musicConfiguration.updateConfiguration(() => this.loadView());
         });
     }
 
     refresh(): void {
         LoadingModal.showLoading();
         $.post('/Music/Refresh', () => this.loadView(() => LoadingModal.hideLoading()));
-    }
-
-    sortChanged(sortType: string, select: HTMLSelectElement): void {
-        if (sortType === 'SelectedAlbumSort') {
-            this.musicConfiguration.properties.SelectedAlbumSort = this.getAlbumSortEnum($(select).val() as string);
-        } else if (sortType === 'SelectedArtistSort') {
-            this.musicConfiguration.properties.SelectedArtistSort = this.getArtistSortEnum($(select).val() as string);
-        } else if (sortType === 'SelectedSongSort') {
-            this.musicConfiguration.properties.SelectedSongSort = this.getSongSortEnum($(select).val() as string);
-        }
-
-        this.musicConfiguration.updateConfiguration(() => this.loadView.call(this));
     }
 
     private getAlbumSortEnum(sort: string): AlbumSort {
