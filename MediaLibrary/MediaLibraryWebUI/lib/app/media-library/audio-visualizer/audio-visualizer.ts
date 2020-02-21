@@ -17,7 +17,7 @@ export default class AudioVisualizer extends BaseClass {
     private getWidth: () => number;
     private playerStopped: boolean;
 
-    constructor(private playerConfiguration: PlayerConfiguration, audioElement: HTMLAudioElement) {
+    constructor(private playerConfiguration: PlayerConfiguration, audioElement: HTMLAudioElement, enabled: boolean = false) {
         super();
         this.audioElement = audioElement as HTMLAudioElement;
         this.canvas = HtmlControls.UIControls().AudioVisualizer;
@@ -25,7 +25,7 @@ export default class AudioVisualizer extends BaseClass {
         this.getWidth = () => $(this.canvas).parent().width();
         this.canvasContext = this.canvas.getContext('2d');
         this.fftSize = 256;
-        if (this.playerConfiguration.properties.AudioVisualizerEnabled) /*then*/ this.init();
+        if (enabled) /*then*/ this.init();
     }
 
     init(): void {

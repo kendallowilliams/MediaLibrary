@@ -17,7 +17,7 @@ export default class Player extends BaseClass implements IView {
         super();
         this.players = HtmlControls.Players();
         this.unPlayedShuffleIds = [];
-        this.audioVisualizer = new AudioVisualizer(playerConfiguration, this.players.MusicPlayer);
+        this.audioVisualizer = new AudioVisualizer(playerConfiguration, this.players.MusicPlayer, playerConfiguration.properties.AudioVisualizerEnabled);
         this.initPlayer();
     }
 
