@@ -1,5 +1,5 @@
 ﻿/* https://www.w3schools.com/howto/howto_js_fullscreen.asp */
-export function openFullscreen(element: HTMLMediaElement) {
+export function openFullscreen(element: HTMLMediaElement): void {
     if (element.requestFullscreen) {
         element.requestFullscreen();
     } //else if (element.mozRequestFullScreen) { /* Firefox */
@@ -12,7 +12,7 @@ export function openFullscreen(element: HTMLMediaElement) {
 }
 
 /* https://www.w3schools.com/howto/howto_js_fullscreen.asp */
-export function closeFullscreen() {
+export function closeFullscreen(): void {
     if (document.exitFullscreen) {
         document.exitFullscreen();
     } //else if (document.mozCancelFullScreen) { /* Firefox */

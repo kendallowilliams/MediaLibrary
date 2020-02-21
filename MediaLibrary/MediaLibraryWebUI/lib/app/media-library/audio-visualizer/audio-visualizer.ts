@@ -75,8 +75,8 @@ export default class AudioVisualizer extends BaseClass {
             }
         }
         for (var i = 0; i < numberOfBars && !this.playerStopped; i++) {
-            barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
-            discY = (this.previousDataArray[i * step] * Math.floor(height / @(byte.MaxValue))) + discHeight;
+            barHeight = this.dataArray[i * step] * Math.floor(height / numberOfBars);
+            discY = (this.previousDataArray[i * step] * Math.floor(height / numberOfBars)) + discHeight;
             this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
             this.canvasContext.fillRect(x, height - barHeight, barWidth - 1, barHeight);
             this.canvasContext.fillStyle = 'white';
@@ -105,8 +105,8 @@ export default class AudioVisualizer extends BaseClass {
         this.prepareCanvas();
 
         for (var i = 0; i < numberOfBars; i++) {
-            barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
-            discY = (this.previousDataArray[i * step] * Math.floor(height / @(byte.MaxValue))) + discHeight;
+            barHeight = this.dataArray[i * step] * Math.floor(height / numberOfBars);
+            discY = (this.previousDataArray[i * step] * Math.floor(height / numberOfBars)) + discHeight;
             if (this.dataArray[i * step] > 0) /*then*/ this.dataArray[i * step] -= 1;
             if (this.previousDataArray[i * step] > 0) /*then*/ this.previousDataArray[i * step] -= 1;
 

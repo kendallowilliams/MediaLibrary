@@ -6,6 +6,7 @@ import { MediaTypes, RepeatTypes, PlayerPages } from "../../assets/enums/enums";
 import { getRandomInteger } from "../../assets/utilities/math";
 import AudioVisualizer from "../audio-visualizer/audio-visualizer";
 import { openFullscreen } from "../../assets/utilities/element";
+import { loadTooltips } from "../../assets/utilities/bootstrap";
 
 export default class Player extends BaseClass implements IView {
     private players: { VideoPlayer: HTMLMediaElement, MusicPlayer: HTMLMediaElement };
@@ -342,7 +343,7 @@ export default class Player extends BaseClass implements IView {
     private setUnPlayedShuffleIds(shuffle: boolean): void {
         const $items = $('li[data-play-index]');
 
-        this.unPlayedShuffleIds = shuffle && $items.length > 0 ? $.makeArray($items.map((index, element) => $(element).attr('data-play-index'))) : [];
+        this.unPlayedShuffleIds = shuffle && $items.length > 0 ? $.makeArray($items.map((index, element) => parseInt($(element).attr('data-play-index')))) : [];
     }
 
     private enableDisablePreviousNext(): void {
@@ -362,7 +363,7 @@ export default class Player extends BaseClass implements IView {
 
     private reload(callback: () => void = () => null): void {
         const success = () => {
-            loadTooltips($('#@(HtmlControlsRepository.PlayerItemsContainerId)')[0]);
+            loadTooltips(HtmlControls.Containers().PlayerItemsContainer);
             this.updateSelectedPlayerPage();
             if (typeof callback === 'function') /*then*/ callback();
         };

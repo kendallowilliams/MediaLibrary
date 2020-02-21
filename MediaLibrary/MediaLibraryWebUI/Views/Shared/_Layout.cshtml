@@ -10,18 +10,16 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/polyfill")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/marquee")
-    @Scripts.Render("~/bundles/popperjs")
-    @Scripts.Render("~/bundles/bootstrap")
+
     @Scripts.Render("~/bundles/requirejs")
     @Scripts.Render("~/bundles/js")
     <script type="text/javascript" defer="defer">
         requirejs.config({
             baseUrl: 'lib/app',
             paths: {
-                jquery: '../jquery/jquery.min'
+                jquery: '../jquery/jquery.min',
+                'popper.js': '../popper.js/popper.min',
+                bootstrap: '../bootstrap/dist/js/bootstrap.min'
             }
         });
 
