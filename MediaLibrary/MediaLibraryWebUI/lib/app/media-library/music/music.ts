@@ -25,9 +25,8 @@ export default class Music extends BaseClass implements IView {
         const success: () => void = () => {
             this.initializeControls();
             $('[data-music-tab="' + this.getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
-            $('[data-group-url][data-target="#collapse-songs-0"]').trigger('click');
             callback();
-        };
+        }; 
 
         $(this.mediaView).load('/Music/Index', success);
     }
@@ -49,6 +48,20 @@ export default class Music extends BaseClass implements IView {
                 success = () => {
                     LoadingModal.hideLoading();
                     loadTooltips($newView[0]);
+
+                    $('[data-group-url]').on('click', function () {
+                        const $btn = $(this),
+                            url = $btn.attr('data-group-url');
+                        if (url) {
+                            LoadingModal.showLoading();
+                            $($btn.attr('data-target')).load(url, function () {
+                                loadTooltips($($btn.attr('data-target'))[0]);
+                                LoadingModal.hideLoading();
+                                $btn.attr('data-group-url', '');
+                            });
+                        }
+                    });
+                    $('[data-group-url][data-target="#collapse-songs-0"]').trigger('click');
                 };
             $(HtmlControls.UIControls().MusicTabList).find('*[data-sort-tab]').each((index, _btn) => {
                 if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
@@ -76,19 +89,6 @@ export default class Music extends BaseClass implements IView {
             }
 
             this.musicConfiguration.updateConfiguration(() => this.loadView());
-        });
-
-        $('[data-group-url]').on('click', function () {
-            const $btn = $(this),
-                url = $btn.attr('data-group-url');
-            if (url) {
-                LoadingModal.showLoading();
-                $($btn.attr('data-target')).load(url, function () {
-                    loadTooltips($($btn.attr('data-target'))[0]);
-                    LoadingModal.hideLoading();
-                    $btn.attr('data-group-url', '');
-                });
-            }
         });
     }
 
