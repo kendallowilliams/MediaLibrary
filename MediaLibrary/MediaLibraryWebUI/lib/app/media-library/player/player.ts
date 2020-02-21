@@ -202,10 +202,6 @@ export default class Player extends BaseClass implements IView {
         });
     }
 
-    private initAudioVisualizer(): void {
-
-    }
-
     private loadItem(item: HTMLElement = null, triggerPlay: boolean = false): void {
         const $player = $(this.getPlayer()),
             shuffleEnabled = this.playerConfiguration.properties.Shuffle,

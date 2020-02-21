@@ -39,8 +39,7 @@
                 <div id="@(HtmlControlsRepository.PlayerTimeId)" class="text-muted" style="flex: 0 0 auto">00:00/00:00</div>
             </div>
             <div style="flex: 0 0 auto">
-                <button id="@(HtmlControlsRepository.PlayerPlaylistToggleButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? "active" : string.Empty)"
-                        onclick="togglePlaylist(this)">
+                <button id="@(HtmlControlsRepository.PlayerPlaylistToggleButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? "active" : string.Empty)">
                     <i class="fa fa-list-ul"></i>
                 </button>
                 <span class="d-none d-lg-inline-block">
