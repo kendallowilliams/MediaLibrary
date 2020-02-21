@@ -92,6 +92,7 @@ export default class MediaLibrary extends BaseClass {
     private loadView(mediaPage: MediaPages): void {
         LoadingModal.showLoading();
         this.mediaLibraryConfiguration.properties.SelectedMediaPage = mediaPage;
+        this.disableNavItem(this.getMediaPagesEnumString(mediaPage));
         this.mediaLibraryConfiguration.updateConfiguration(() => {
             this.prepareViews();
             this.showMainView(mediaPage);
@@ -141,6 +142,13 @@ export default class MediaLibrary extends BaseClass {
         }
     }
 
+    private disableNavItem(view: string): void {
+        $('a.nav-link[data-media-page][href]').removeClass('d-none');
+        $('a.nav-link[data-media-page]:not([href])').addClass('d-none');
+        $('a.nav-link[data-media-page="' + view + '"][href]').addClass('d-none');
+        $('a.nav-link[data-media-page="' + view + '"]:not([href])').removeClass('d-none');
+    }
+
     private getMediaPagesEnum(page: string): MediaPages {
         let mediaPage: MediaPages;
 
@@ -163,6 +171,34 @@ export default class MediaLibrary extends BaseClass {
             case 'Home':
             default:
                 mediaPage = MediaPages.Home;
+                break;
+        }
+
+        return mediaPage;
+    }
+
+    private getMediaPagesEnumString(page: MediaPages): string {
+        let mediaPage: string;
+
+        switch (page) {
+            case MediaPages.Music:
+                mediaPage = 'Music';
+                break;
+            case MediaPages.Playlist:
+                mediaPage = 'Playlist';
+                break;
+            case MediaPages.Player:
+                mediaPage = 'Player';
+                break;
+            case MediaPages.Podcast:
+                mediaPage = 'Podcast';
+                break;
+            case MediaPages.Television:
+                mediaPage = 'Television';
+                break;
+            case MediaPages.Home:
+            default:
+                mediaPage = 'Home';
                 break;
         }
 
