@@ -21,14 +21,21 @@ export default class Music extends BaseClass implements IView {
     }
 
     loadView(callback: () => void = () => null): void {
-        const properties: IMusicConfiguration = this.musicConfiguration.properties,
-            playSingle: boolean = properties.SelectedMusicTab === MusicTabs.Songs && properties.SelectedMusicPage === MusicPages.Index,
-            success: () => void = () => {
-            $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement, playSingle));
+        const success: () => void = () => {
+            this.initializeControls();
             callback();
-        }
+        };
 
         $(this.mediaView).load('/Music/Index', success);
+    }
+
+    private initializeControls(): void {
+        const properties: IMusicConfiguration = this.musicConfiguration.properties,
+            playSingle: boolean = properties.SelectedMusicTab === MusicTabs.Songs && properties.SelectedMusicPage === MusicPages.Index;
+
+        $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement, playSingle));
+        $('[data-back-button="artist"]').on('click', () => this.artist.goBack(() => this.loadView.call(this)));
+        $('[data-back-button="album"]').on('click', () => this.album.goBack(() => this.loadView.call(this)));
     }
 
     refresh(): void {

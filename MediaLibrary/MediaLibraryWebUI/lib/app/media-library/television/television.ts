@@ -3,22 +3,28 @@ import IView from "../../assets/interfaces/view-interface";
 import TelevisionConfiguration from "../../assets/models/configurations/television-configuration";
 import HtmlControls from '../../assets/controls/html-controls';
 import { TelevisionPages } from "../../assets/enums/enums";
+import ITelevisionConfiguration from "../../assets/interfaces/television-configuration-interface";
 
 export default class Television extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
 
-    constructor(private televisionConfiguration: TelevisionConfiguration) {
+    constructor(private televisionConfiguration: TelevisionConfiguration, private playFunc: (btn: HTMLButtonElement) => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
     }
 
-    loadView(): void {
-        $(this.mediaView).load('/Television/Index', () => {
-            this.initializeControls();
-        });
+    loadView(callback: () => void = () => null): void {
+        const properties: ITelevisionConfiguration = this.televisionConfiguration.properties,
+            success: () => void = () => {
+                this.initializeControls();
+                callback();
+            };
+
+        $(this.mediaView).load('/Television/Index', success);
     }
 
     initializeControls(): void {
+        $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement));
         $('[data-back-button="television"]').on('click', () => this.goBack(() => this.loadView.call(this)));
     }
 

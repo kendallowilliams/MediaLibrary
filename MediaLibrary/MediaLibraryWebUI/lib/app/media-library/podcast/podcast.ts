@@ -3,22 +3,28 @@ import IView from "../../assets/interfaces/view-interface";
 import PodcastConfiguration from "../../assets/models/configurations/podcast-configuration";
 import HtmlControls from '../../assets/controls/html-controls';
 import { PodcastPages } from "../../assets/enums/enums";
+import IPodcastConfiguration from "../../assets/interfaces/podcast-configuration-interface";
 
 export default class Podcast extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
 
-    constructor(private podcastConfiguration: PodcastConfiguration) {
+    constructor(private podcastConfiguration: PodcastConfiguration, private playFunc: (btn: HTMLButtonElement) => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
     }
 
-    loadView(): void {
-        $(this.mediaView).load('/Podcast/Index', () => {
-            this.initializeControls();
-        });
+    loadView(callback: () => void = () => null): void {
+        const properties: IPodcastConfiguration = this.podcastConfiguration.properties,
+            success: () => void = () => {
+                this.initializeControls();
+                callback();
+            };
+
+        $(this.mediaView).load('/Podcast/Index', success);
     }
 
     initializeControls(): void {
+        $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement));
         $('[data-back-button="podcast"]').on('click', () => this.goBack(() => this.loadView.call(this)));
     }
 
