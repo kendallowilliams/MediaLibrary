@@ -77,7 +77,7 @@ export default class Player extends BaseClass implements IView {
     }
 
     private initPlayerControls(): void {
-        const $volumeSlider = $('<div id="@(HtmlControlsRepository.VolumeSliderId)"></div>').addClass('m-1'),
+        const $volumeSlider = $('<div id="volume-slider"></div>').addClass('m-1'),
             buttons = HtmlControls.Buttons(),
             containers = HtmlControls.Containers(),
             controls = HtmlControls.UIControls();
@@ -156,7 +156,7 @@ export default class Player extends BaseClass implements IView {
             });
         });
         $([ buttons.PlayerMuteButton, buttons.PlayerVolumeButton ]).on('click', e => {
-            let previousVolume = parseInt($('#@(HtmlControlsRepository.PlayerVolumeButtonId)').attr('data-volume')),
+            let previousVolume = parseInt($(buttons.PlayerVolumeButton).attr('data-volume')),
                 $btn = $(e.currentTarget),
                 muted = false;
 
@@ -264,7 +264,7 @@ export default class Player extends BaseClass implements IView {
             if ((shuffle && !shuffleEmpty) || (!shuffle && nextIndex < $('li[data-play-index]').length)) {
                 this.loadItem($item[0], this.isPlaying());
             } else {
-                $('#@(HtmlControlsRepository.PlayerPauseButtonId)').trigger('click');
+                $(HtmlControls.Buttons().PlayerPauseButton).trigger('click');
                 this.enableDisablePreviousNext();
             }
         }
@@ -366,13 +366,15 @@ export default class Player extends BaseClass implements IView {
             loadTooltips(HtmlControls.Containers().PlayerItemsContainer);
             this.updateSelectedPlayerPage();
             if (typeof callback === 'function') /*then*/ callback();
-        };
+        },
+            containers = HtmlControls.Containers();
 
-        $('#@(HtmlControlsRepository.PlayerItemsContainerId)').html('');
-        $('#@(HtmlControlsRepository.PlayerItemsContainerId)').load('@(Url.Action("GetPlayerItems", "Player"))', success);
+        $(containers.PlayerItemsContainer).html('');
+        $(containers.PlayerItemsContainer).load('/Player/GetPlayerItems', success);
     }
 
     private updateSelectedPlayerPage(): void {
+        const buttons = HtmlControls.Buttons();
         let selectedMediaType = this.playerConfiguration.properties.SelectedMediaType,
             selectedPlayerPage = this.playerConfiguration.properties.SelectedPlayerPage;
 
@@ -384,7 +386,7 @@ export default class Player extends BaseClass implements IView {
 
         if (selectedPlayerPage !== this.playerConfiguration.properties.SelectedPlayerPage) {
             selectedPlayerPage = this.playerConfiguration.properties.SelectedPlayerPage;
-            $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').addClass('d-none');
+            $(buttons.PlayerFullscreenButton).addClass('d-none');
 
             this.playerConfiguration.updateConfiguration(() =>
                 $(this.getPlayers()).each((index, element) => {
@@ -395,7 +397,7 @@ export default class Player extends BaseClass implements IView {
                 })
             );
 
-            if (selectedPlayerPage === PlayerPages.Video) /*then*/ $('#@(HtmlControlsRepository.PlayerFullscreenButtonId)').removeClass('d-none');
+            if (selectedPlayerPage === PlayerPages.Video) /*then*/ $(buttons.PlayerFullscreenButton).removeClass('d-none');
         }
     }
 

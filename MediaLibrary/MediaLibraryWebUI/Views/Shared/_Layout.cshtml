@@ -18,9 +18,10 @@
             baseUrl: 'lib/app',
             paths: {
                 jquery: '../jquery/jquery.min',
-                'popper.js': '../popper.js/popper.min',
-                bootstrap: '../bootstrap/dist/js/bootstrap.min'
-            }
+                bootstrap: '../bootstrap/dist/js/bootstrap.bundle.min',
+                'jquery-ui': '../jqueryui/jquery-ui.min'
+            },
+            deps: [ 'bootstrap', 'jquery-ui' ]
         });
 
         requirejs(['app'], function (app) { });
