@@ -90,9 +90,12 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private loadView(mediaPage: MediaPages): void {
+        const container: HTMLElement = HtmlControls.Containers().HeaderControlsContainer;
+
         LoadingModal.showLoading();
         this.mediaLibraryConfiguration.properties.SelectedMediaPage = mediaPage;
         this.disableNavItem(this.getMediaPagesEnumString(mediaPage));
+        $(container).removeClass('d-none');
         this.mediaLibraryConfiguration.updateConfiguration(() => {
             this.prepareViews();
             this.showMainView(mediaPage);
@@ -102,6 +105,7 @@ export default class MediaLibrary extends BaseClass {
                     this.music.loadView(() => LoadingModal.hideLoading());
                     break;
                 case MediaPages.Player:
+                    $(container).addClass('d-none');
                     this.player.loadView(() => LoadingModal.hideLoading());
                     break;
                 case MediaPages.Playlist:
@@ -122,9 +126,7 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private prepareViews(): void {
-        const headerContainer = HtmlControls.Containers().HeaderControlsContainer;
-
-        $([this.mainViews.HomeView, this.mainViews.MediaView, this.mainViews.PlayerView, headerContainer]).addClass('d-none');
+        $([this.mainViews.HomeView, this.mainViews.MediaView, this.mainViews.PlayerView]).addClass('d-none');
     }
 
     private showMainView(mediaPage: MediaPages): void {
