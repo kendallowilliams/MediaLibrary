@@ -7,6 +7,7 @@ import Artist from "./artist";
 import Album from "./album";
 import LoadingModal from "../../assets/modals/loading-modal";
 import IMusicConfiguration from "../../assets/interfaces/music-configuration-interface";
+import * as element from '../../assets/utilities/element';
 
 export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -36,10 +37,34 @@ export default class Music extends BaseClass implements IView {
         $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement, playSingle));
         $('[data-back-button="artist"]').on('click', () => this.artist.goBack(() => this.loadView.call(this)));
         $('[data-back-button="album"]').on('click', () => this.album.goBack(() => this.loadView.call(this)));
+
+        $(HtmlControls.UIControls().MusicTabList).find('* [data - toggle="tab"]').on('shown.bs.tab', e => {
+            const $newTab = $(e.target),
+                $oldTab = $(e.relatedTarget),
+                $newView = $($newTab.attr('href')),
+                $oldView = $($oldTab.attr('href')),
+                url = $newView.attr('data-load-url'),
+                success = () => {
+                    LoadingModal.hideLoading();
+                    element.loadTooltips($newView[0]);
+                };
+            $(HtmlControls.UIControls().MusicTabList).find('* [data-sort-tab]').each((index, _btn) => {
+                if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
+                    $(_btn).removeClass('d-none');
+                } else {
+                    $(_btn).addClass('d-none');
+                }
+            });
+            LoadingModal.showLoading();
+            this.musicConfiguration.properties.SelectedMusicTab = this.getMusicTabEnum($newTab.attr('data-music-tab'));
+            element.disposeTooltips($newView[0]);
+            this.musicConfiguration.updateConfiguration(() => $newView.load(url, success));
+        });
     }
 
     refresh(): void {
-        $.post('/Music/Refresh', () => this.loadView.call(this));
+        LoadingModal.showLoading();
+        $.post('/Music/Refresh', () => this.loadView(() => LoadingModal.hideLoading()));
     }
 
     sortChanged(sortType: string, select: HTMLSelectElement): void {
@@ -78,6 +103,25 @@ export default class Music extends BaseClass implements IView {
         }
 
         return artistSort;
+    }
+
+    private getMusicTabEnum(tab: string): MusicTabs {
+        let musicTab: MusicTabs;
+
+        switch (tab) {
+            case 'Artists':
+                musicTab = MusicTabs.Artists;
+                break;
+            case 'Albums':
+                musicTab = MusicTabs.Albums;
+                break;
+            case 'Songs':
+            default:
+                musicTab = MusicTabs.Songs;
+                break;
+        }
+
+        return musicTab;
     }
 
     private getSongSortEnum(sort: string): SongSort {
