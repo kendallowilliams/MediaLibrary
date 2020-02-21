@@ -57,8 +57,8 @@ export default class MediaLibrary extends BaseClass {
                 this.player = new Player(this.playerConfiguration);
                 this.music = new Music(this.musicConfiguration, this.player.play);
                 this.playlist = new Playlist(this.playlistConfiguration);
-                this.podcast = new Podcast(this.podcastConfiguration);
-                this.television = new Television(this.televisionConfiguration);
+                this.podcast = new Podcast(this.podcastConfiguration, this.player.play);
+                this.television = new Television(this.televisionConfiguration, this.player.play);
                 this.loadView(this.mediaLibraryConfiguration.properties.SelectedMediaPage);
             });
         };
