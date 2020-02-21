@@ -47,8 +47,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button class="btn btn-outline-secondary" data-play-id="@(list.Track.Id)" onclick="play(this)"
-                                            data-tooltip="tooltip" title="Play">
+                                    <button class="btn btn-outline-secondary" data-play-id="@(list.Track.Id)" data-tooltip="tooltip" title="Play">
                                         <i class="fa fa-play"></i>
                                     </button>
                                     <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
