@@ -7,6 +7,7 @@ export default class Home extends BaseClass implements IView {
         super();
     }
 
-    loadView(): void {
+    loadView(callback: () => void = () => null): void {
+        callback();
     }
 }

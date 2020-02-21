@@ -12,10 +12,13 @@ export default class Playlist extends BaseClass implements IView {
         this.mediaView = HtmlControls.Views().MediaView;
     }
 
-    loadView(): void {
-        $(this.mediaView).load('/Playlist/Index', () => {
+    loadView(callback: () => void = () => null): void {
+        const success: () => void = () => {
             this.initializeControls();
-        });
+            callback();
+        };
+
+        $(this.mediaView).load('/Playlist/Index', success);
     }
 
     initializeControls(): void {

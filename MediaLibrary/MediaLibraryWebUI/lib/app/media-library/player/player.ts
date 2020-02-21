@@ -22,8 +22,9 @@ export default class Player extends BaseClass implements IView {
         this.initPlayer();
     }
 
-    loadView(): void {
+    loadView(callback: () => void = () => null): void {
         this.audioVisualizer.prepareCanvas();
+        callback();
     }
 
     private initPlayer(): void {

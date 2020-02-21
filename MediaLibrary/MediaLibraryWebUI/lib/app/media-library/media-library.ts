@@ -94,28 +94,27 @@ export default class MediaLibrary extends BaseClass {
         this.mediaLibraryConfiguration.properties.SelectedMediaPage = mediaPage;
         this.mediaLibraryConfiguration.updateConfiguration(() => {
             this.prepareViews();
-            LoadingModal.hideLoading();
             this.showMainView(mediaPage);
 
             switch (mediaPage) {
                 case MediaPages.Music:
-                    this.music.loadView();
+                    this.music.loadView(() => LoadingModal.hideLoading());
                     break;
                 case MediaPages.Player:
-                    this.player.loadView();
+                    this.player.loadView(() => LoadingModal.hideLoading());
                     break;
                 case MediaPages.Playlist:
-                    this.playlist.loadView();
+                    this.playlist.loadView(() => LoadingModal.hideLoading());
                     break;
                 case MediaPages.Podcast:
-                    this.podcast.loadView();
+                    this.podcast.loadView(() => LoadingModal.hideLoading());
                     break;
                 case MediaPages.Television:
-                    this.television.loadView();
+                    this.television.loadView(() => LoadingModal.hideLoading());
                     break;
                 case MediaPages.Home:
                 default:
-                    this.home.loadView();
+                    this.home.loadView(() => LoadingModal.hideLoading());
                     break;
             }
         });
