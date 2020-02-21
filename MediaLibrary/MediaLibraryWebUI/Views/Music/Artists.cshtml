@@ -31,7 +31,7 @@
                                         <span style="cursor: pointer; flex: 0 0 auto">@(txtAlbums)</span>
                                     </div>
                                     <div>
-                                        <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="View artist" data-item-id="@(artist.Id)" onclick="artistClicked(this)">
+                                        <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="View artist" data-artist-id="@(artist.Id)">
                                             <i class="fa fa-list"></i>
                                         </button>
                                         @if (Model.Playlists.Any())

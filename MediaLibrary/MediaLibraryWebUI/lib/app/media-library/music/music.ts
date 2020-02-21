@@ -38,6 +38,8 @@ export default class Music extends BaseClass implements IView {
         $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement, playSingle));
         $('[data-back-button="artist"]').on('click', () => this.artist.goBack(() => this.loadView.call(this)));
         $('[data-back-button="album"]').on('click', () => this.album.goBack(() => this.loadView.call(this)));
+        $('[data-album-id]').on('click', _e => this.album.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), () => this.loadView()));
+        $('[data-artist-id]').on('click', _e => this.artist.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), () => this.loadView()));
 
         $(HtmlControls.UIControls().MusicTabList).find('*[data-toggle="tab"]').on('shown.bs.tab', e => {
             const $newTab = $(e.target),
@@ -61,6 +63,8 @@ export default class Music extends BaseClass implements IView {
                             });
                         }
                     });
+                    $('[data-album-id]').on('click', _e => this.album.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), () => this.loadView()));
+                    $('[data-artist-id]').on('click', _e => this.artist.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), () => this.loadView()));
                     $('[data-group-url][data-target="#collapse-songs-0"]').trigger('click');
                 };
             $(HtmlControls.UIControls().MusicTabList).find('*[data-sort-tab]').each((index, _btn) => {
