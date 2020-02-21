@@ -65,7 +65,6 @@ export default class Player extends BaseClass implements IView {
             $(e.target).attr('data-playing', 'true');
             $([buttons.PlayerPlayButton, buttons.HeaderPlayButton]).addClass('d-none');
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).removeClass('d-none');
-            this.initAudioVisualizer();
             if (this.audioVisualizer && mediaType !== MediaTypes.Television && audioVisualizerEnabled) /*then*/ this.audioVisualizer.start();
         });
 

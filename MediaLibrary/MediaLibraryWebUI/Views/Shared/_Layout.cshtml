@@ -18,10 +18,10 @@
             baseUrl: 'lib/app',
             paths: {
                 jquery: '../jquery/jquery.min',
-                bootstrap: '../bootstrap/dist/js/bootstrap.bundle.min',
-                'jquery-ui': '../jqueryui/jquery-ui.min'
+                'jquery-ui': '../jqueryui/jquery-ui.min',
+                bootstrap: '../bootstrap/dist/js/bootstrap.bundle.min'
             },
-            deps: [ 'bootstrap', 'jquery-ui' ]
+            deps: [ 'jquery-ui', 'bootstrap' ]
         });
 
         requirejs(['app'], function (app) { });

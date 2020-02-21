@@ -24,6 +24,8 @@ export default class Music extends BaseClass implements IView {
     loadView(callback: () => void = () => null): void {
         const success: () => void = () => {
             this.initializeControls();
+            $('[data-music-tab="' + this.getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
+            $('[data-group-url][data-target="#collapse-songs-0"]').trigger('click');
             callback();
         };
 
@@ -38,7 +40,7 @@ export default class Music extends BaseClass implements IView {
         $('[data-back-button="artist"]').on('click', () => this.artist.goBack(() => this.loadView.call(this)));
         $('[data-back-button="album"]').on('click', () => this.album.goBack(() => this.loadView.call(this)));
 
-        $(HtmlControls.UIControls().MusicTabList).find('* [data - toggle="tab"]').on('shown.bs.tab', e => {
+        $(HtmlControls.UIControls().MusicTabList).find('*[data-toggle="tab"]').on('shown.bs.tab', e => {
             const $newTab = $(e.target),
                 $oldTab = $(e.relatedTarget),
                 $newView = $($newTab.attr('href')),
@@ -48,7 +50,7 @@ export default class Music extends BaseClass implements IView {
                     LoadingModal.hideLoading();
                     loadTooltips($newView[0]);
                 };
-            $(HtmlControls.UIControls().MusicTabList).find('* [data-sort-tab]').each((index, _btn) => {
+            $(HtmlControls.UIControls().MusicTabList).find('*[data-sort-tab]').each((index, _btn) => {
                 if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
                     $(_btn).removeClass('d-none');
                 } else {
@@ -74,6 +76,19 @@ export default class Music extends BaseClass implements IView {
             }
 
             this.musicConfiguration.updateConfiguration(() => this.loadView());
+        });
+
+        $('[data-group-url]').on('click', function () {
+            const $btn = $(this),
+                url = $btn.attr('data-group-url');
+            if (url) {
+                LoadingModal.showLoading();
+                $($btn.attr('data-target')).load(url, function () {
+                    loadTooltips($($btn.attr('data-target'))[0]);
+                    LoadingModal.hideLoading();
+                    $btn.attr('data-group-url', '');
+                });
+            }
         });
     }
 
@@ -121,6 +136,25 @@ export default class Music extends BaseClass implements IView {
             case 'Songs':
             default:
                 musicTab = MusicTabs.Songs;
+                break;
+        }
+
+        return musicTab;
+    }
+
+    private getMusicTabEnumString(tab: MusicTabs): string {
+        let musicTab: string;
+
+        switch (tab) {
+            case MusicTabs.Artists:
+                musicTab = 'Artists';
+                break;
+            case MusicTabs.Albums:
+                musicTab = 'Albums';
+                break;
+            case MusicTabs.Songs:
+            default:
+                musicTab = 'Songs';
                 break;
         }
 
