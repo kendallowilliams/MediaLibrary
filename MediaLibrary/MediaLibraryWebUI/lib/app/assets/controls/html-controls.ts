@@ -46,7 +46,7 @@
         PlayerSlider: document.getElementById('player-slider'),
         VolumeSlider: document.getElementById('volume-slider'),
         PlayerTime: document.getElementById('player-time'),
-        AudioVisualizer: document.getElementById('audio-visualizer'),
+        AudioVisualizer: document.getElementById('audio-visualizer') as HTMLCanvasElement,
         MusicTabList: document.getElementById('music-tab-list')
     }),
     UIFields: () => ({

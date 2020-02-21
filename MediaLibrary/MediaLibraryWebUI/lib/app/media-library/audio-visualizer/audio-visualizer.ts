@@ -13,47 +13,49 @@ export default class AudioVisualizer extends BaseClass {
     private previousDataArray: Uint8Array;
     private audioSourceNode: MediaElementAudioSourceNode;
     private fftSize: number;
+    private getHeight: () => number;
+    private getWidth: () => number;
+    private playerStopped: boolean;
 
     constructor(private playerConfiguration: PlayerConfiguration, audioElement: HTMLAudioElement) {
         super();
         this.audioElement = audioElement as HTMLAudioElement;
-        this.canvas = HtmlControls;
-        this.containerHeight = () => $(this.canvas).parent().height();
-        this.containerWidth = () => $(this.canvas).parent().width();
+        this.canvas = HtmlControls.UIControls().AudioVisualizer;
+        this.getHeight = () => $(this.canvas).parent().height();
+        this.getWidth = () => $(this.canvas).parent().width();
         this.canvasContext = this.canvas.getContext('2d');
-        this.init();
+        this.fftSize = 256;
+        if (this.playerConfiguration.properties.AudioVisualizerEnabled) /*then*/ this.init();
     }
 
-    init() {
-        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    init(): void {
+        this.audioContext = new AudioContext();
         this.analyser = this.audioContext.createAnalyser();
-        this.source = this.audioContext.createMediaElementSource(this.mediaSource);
-
-        this.analyser.fftSize = 256;
+        this.audioSourceNode = this.audioContext.createMediaElementSource(this.audioElement);
+        this.analyser.fftSize = this.fftSize;
         this.bufferLength = this.analyser.frequencyBinCount;
         this.dataArray = new Uint8Array(this.bufferLength);
         this.previousDataArray = new Uint8Array(this.bufferLength);
-        this.source.connect(this.audioContext.destination);
-        this.source.connect(this.analyser);
+        this.audioSourceNode.connect(this.audioContext.destination);
+        this.audioSourceNode.connect(this.analyser);
         this.analyser.connect(this.audioContext.destination);
+        this.prepareCanvas();
     }
 
-    clear(width, height) {
+    clear(width, height): void {
         this.canvasContext.clearRect(0, 0, width, height);
     }
 
-    static prepareCanvas(canvas, width, height) {
-        var canvasContext = canvas.getContext('2d');
-
-        canvas.width = width;
-        canvas.height = height;
-        canvasContext.fillStyle = 'rgb(200, 200, 200)';
-        canvasContext.fillRect(0, 0, width, height);
+    prepareCanvas(): void {
+        this.canvas.width = this.getWidth();
+        this.canvas.height = this.getHeight();
+        this.canvasContext.fillStyle = 'rgb(200, 200, 200)';
+        this.canvasContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    draw() {
-        var width = this.containerWidth(),
-            height = this.containerHeight(),
+    draw(): void {
+        let width = this.getWidth(),
+            height = this.getHeight(),
             numberOfBars = 128,
             barWidth = this.canvas.width / numberOfBars,
             barHeight = 0,
@@ -64,7 +66,7 @@ export default class AudioVisualizer extends BaseClass {
 
         this.clear(this.canvas.width, this.canvas.height);
         if (this.analyser) /*then*/ this.analyser.getByteFrequencyData(this.dataArray);
-        AudioVisualizer.prepareCanvas(this.canvas, width, height);
+        this.prepareCanvas();
         for (var i = 0; i < this.previousDataArray.length && !this.playerStopped; i++) {
             if (this.dataArray[i] > this.previousDataArray[i]) {
                 this.previousDataArray[i] = this.dataArray[i];
@@ -88,9 +90,9 @@ export default class AudioVisualizer extends BaseClass {
         else window.requestAnimationFrame(this.draw.bind(this));
     }
 
-    reset() {
-        var width = this.containerWidth(),
-            height = this.containerHeight(),
+    reset(): void {
+        let width = this.getWidth(),
+            height = this.getHeight(),
             numberOfBars = 128,
             barWidth = this.canvas.width / numberOfBars,
             barHeight = 0,
@@ -100,7 +102,7 @@ export default class AudioVisualizer extends BaseClass {
             step = Math.floor(this.bufferLength / numberOfBars);
 
         this.clear(this.canvas.width, this.canvas.height);
-        AudioVisualizer.prepareCanvas(this.canvas, width, height);
+        this.prepareCanvas();
 
         for (var i = 0; i < numberOfBars; i++) {
             barHeight = this.dataArray[i * step] * Math.floor(height / @(byte.MaxValue));
@@ -124,22 +126,20 @@ export default class AudioVisualizer extends BaseClass {
             this.previousDataArray.find((value, index) => value > 0)) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
     }
 
-    start() {
+    start(): void {
         if (this.audioContext) {
             this.playerStopped = false;
             this.draw();
         }
     }
 
-    pause() {
+    pause(): void {
         this.playerStopped = true;
     }
 
-    close() {
+    close(): void {
         this.pause();
         if (this.audioContext.state !== 'closed') /*then*/ this.audioContext.close()
-        this.analyser = this.source = this.audioContext = null;
+        this.analyser = this.audioSourceNode = this.audioContext = null;
     }
-}
-
 }
