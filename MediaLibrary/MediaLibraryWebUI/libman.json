@@ -12,10 +12,6 @@
       "destination": "lib/bootstrap/"
     },
     {
-      "library": "jqueryui@1.12.1",
-      "destination": "lib/jqueryui/"
-    },
-    {
       "library": "jQuery.Marquee@1.5.0",
       "destination": "lib/jQuery.Marquee/"
     },
