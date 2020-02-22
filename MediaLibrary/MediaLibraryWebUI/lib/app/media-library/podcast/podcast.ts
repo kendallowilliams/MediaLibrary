@@ -22,8 +22,8 @@ export default class Podcast extends BaseClass implements IView {
         const properties: IPodcastConfiguration = this.podcastConfiguration.properties,
             success: () => void = () => {
                 this.addNewPodcastModal = new AddNewPodcastModal(this.loadView.bind(this));
-                this.initializeControls();
                 this.deleteModal = new DeleteModal(this.loadView.bind(this));
+                this.initializeControls();
                 callback();
             };
 

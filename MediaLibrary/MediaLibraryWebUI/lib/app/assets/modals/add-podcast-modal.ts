@@ -1,5 +1,5 @@
 ﻿import HtmlControls from "../controls/html-controls";
-import LoadingModal from './loading-modal'
+import LoadingModal from './loading-modal';
 
 export default class AddNewPodcastModal {
     private modal: HTMLElement;
@@ -14,15 +14,12 @@ export default class AddNewPodcastModal {
             $('#txtNewPodcast').val('');
         });
 
-        $('[data-podcast-action="save"]').on('click', e => {
-            var success = () => {
-                LoadingModal.hideLoading();
-                this.loadFunc(() => LoadingModal.hideLoading());
-            }
-
-            $(this.modal).modal('hide').on('hide.bs.modal', () => {
-                LoadingModal.showLoading();
-                $.post('/Podcast/AddPodcast', { rssFeed: $('#txtNewPodcast').val() }, success);
+        $(this.modal).find('*[data-podcast-action="save"]').on('click', e => {
+            LoadingModal.showLoading();
+            $(this.modal).modal('hide').on('hidden.bs.modal', () => {
+                $.post('/Podcast/AddPodcast', { rssFeed: $('#txtNewPodcast').val() }, () => {
+                    this.loadFunc(() => LoadingModal.hideLoading());
+                });
             });
         });
     }
