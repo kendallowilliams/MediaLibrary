@@ -10,38 +10,29 @@ export default class DeleteModal {
     }
 
     private initializeControls(): void {
-        $(this.modal).on('show.bs.modal', function (e) {
+        $(this.modal).on('show.bs.modal', e => {
             var $btn = $(e.relatedTarget),
                 url = $btn.attr('data-delete-action'),
-                refreshView = $btn.attr('data-refresh-view'),
                 type = $btn.attr('data-delete-type'),
-                $button = $('#btnDeleteItem');
+                $button = $(this.modal).find('[data-item-action="delete"]');
 
             $('#modalDeleteItemTitle').text('Delete ' + type);
             $button.attr('data-delete-url', url);
-            $button.attr('data-refresh-view', refreshView);
         });
 
-        $(this.modal).on('hide.bs.modal', function () {
-            var $button = $('#btnDeleteItem');
+        $(this.modal).on('hide.bs.modal', e => {
+            var $button = $(this.modal).find('[data-item-action="delete"]');
 
             $('#modalDeleteItemTitle').text('Delete');
             $button.attr('data-delete-url', '');
-            $button.attr('data-refresh-view', '');
         });
 
         $(this.modal).find('[data-item-action="delete"]').on('click', e => {
-            const $btn = $(e.target),
-                url = $btn.attr('data-delete-url'),
-                view = $btn.attr('data-refresh-view'),
-                success = () => {
-                    this.loadFunc(() => LoadingModal.hideLoading());
-                };
-
+            const $btn = $(e.currentTarget),
+                url = $btn.attr('data-delete-url');
+            
             LoadingModal.showLoading();
-            $(this.modal).modal('hide').on('hidden.bs.modal', function () {
-                $.get(url, success);
-            });
+            $(this.modal).modal('hide').on('hidden.bs.modal', () => $.get(url, () => this.loadFunc(() => LoadingModal.hideLoading())));
         });
     }
 }
