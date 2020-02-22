@@ -10,6 +10,7 @@ import IMusicConfiguration from "../../assets/interfaces/music-configuration-int
 import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap-helper';
 import EditSongModal from "../../assets/modals/edit-song-modal";
 import AddToPlaylistModal from "../../assets/modals/add-to-playlist-modal";
+import AddNewSongModal from "../../assets/modals/add-song-modal";
 
 export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -17,6 +18,7 @@ export default class Music extends BaseClass implements IView {
     private album: Album;
     private editSongModal: EditSongModal;
     private addToPlaylistModal: AddToPlaylistModal;
+    private addNewSongModal: AddNewSongModal;
 
     constructor(private musicConfiguration: MusicConfiguration, private playFunc: (btn: HTMLButtonElement, single: boolean) => void) {
         super();
@@ -29,6 +31,7 @@ export default class Music extends BaseClass implements IView {
         const success: () => void = () => {
             this.editSongModal = new EditSongModal(this.loadView.bind(this));
             this.addToPlaylistModal = new AddToPlaylistModal();
+            this.addNewSongModal = new AddNewSongModal(this.loadView.bind(this));
             this.initializeControls();
             $('[data-music-tab="' + this.getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
             callback();

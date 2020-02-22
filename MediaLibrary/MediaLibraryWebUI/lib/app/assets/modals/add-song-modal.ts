@@ -23,7 +23,7 @@ export default class AddNewSongModal {
                 LoadingModal.showLoading();
                 data.append("file", $('#inpNewSong').prop('files')[0]);
                 $.ajax({
-                    url: '@Url.Action("Upload", "Music")',
+                    url: '/Music/Upload',
                     data: data,
                     processData: false,
                     contentType: false,
