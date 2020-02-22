@@ -6,7 +6,7 @@
     <div style="flex: 0 0 auto">
         <h2>Podcasts</h2>
         <div>
-            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalNewPodcast" data-tooltip="tooltip" title="Add podcast"><i class="fa fa-plus"></i></button>
+            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewPodcastModalId)" data-tooltip="tooltip" title="Add podcast"><i class="fa fa-plus"></i></button>
             @Html.DropDownListFor(x => x.Configuration.SelectedPodcastSort,
                                   Model.PodcastSortItems,
                                   null,
@@ -74,27 +74,5 @@
     }
 </div>
 
-<div class="modal fade" id="modalNewPodcast" tabindex="-1" role="dialog" aria-labelledby="modalNewPodcastTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalNewPodcastTitle">New Podcast</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="txtNewPodcast">RSS feed</label>
-                    <input type="text" class="form-control" id="txtNewPodcast" name="rssFeed" placeholder="RSS feed">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" data-podcast-action="add" data-tooltip="tooltip" title="Save podcast">Save</button>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-tooltip="tooltip" title="Cancel">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 @Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
+@Html.Partial("~/Views/Shared/Modals/AddNewPodcastModal.cshtml")

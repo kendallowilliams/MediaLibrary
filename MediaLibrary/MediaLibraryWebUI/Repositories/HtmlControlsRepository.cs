@@ -69,6 +69,7 @@ namespace MediaLibraryWebUI.Repositories
         #region Modal Ids
         public static string NewPlaylistModalId { get => "new-playlist-modal"; }
         public static string NewSongModalId { get => "new-song-modal"; }
+        public static string NewPodcastModalId { get => "new-podcast-modal"; }
         public static string AddToPlaylistModalId { get => "add-to-playlist-modal"; }
         public static string DeleteModalId { get => "delete-modal"; }
         public static string EdiPlaylistModalId { get => "edit-playlist-modal"; }

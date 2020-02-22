@@ -55,6 +55,7 @@
     Modals: () => ({
         NewPlaylistModal: document.getElementById('new-playlist-modal'),
         NewSongModal: document.getElementById('new-song-modal'),
+        NewPodcastModal: document.getElementById('new-podcast-modal'),
         AddToPlaylistModal: document.getElementById('add-to-playlist-modal'),
         DeleteModal: document.getElementById('delete-modal'),
         EdiPlaylistModal: document.getElementById('edit-playlist-modal'),

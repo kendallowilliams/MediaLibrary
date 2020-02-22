@@ -4,9 +4,11 @@ import PodcastConfiguration from "../../assets/models/configurations/podcast-con
 import HtmlControls from '../../assets/controls/html-controls';
 import { PodcastPages } from "../../assets/enums/enums";
 import IPodcastConfiguration from "../../assets/interfaces/podcast-configuration-interface";
+import AddNewPodcastModal from "../../assets/modals/add-podcast-modal";
 
 export default class Podcast extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
+    private addNewPodcastModal: AddNewPodcastModal;
 
     constructor(private podcastConfiguration: PodcastConfiguration, private playFunc: (btn: HTMLButtonElement) => void) {
         super();
@@ -16,6 +18,7 @@ export default class Podcast extends BaseClass implements IView {
     loadView(callback: () => void = () => null): void {
         const properties: IPodcastConfiguration = this.podcastConfiguration.properties,
             success: () => void = () => {
+                this.addNewPodcastModal = new AddNewPodcastModal(this.loadView.bind(this));
                 this.initializeControls();
                 callback();
             };

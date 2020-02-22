@@ -454,6 +454,7 @@
     <Content Include="Views\Television\Series.cshtml" />
     <Content Include="Views\Television\Season.cshtml" />
     <Content Include="Views\Podcast\PodcastItems.cshtml" />
+    <Content Include="Views\Shared\Modals\AddNewPodcastModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -493,6 +494,7 @@
     <TypeScriptCompile Include="lib\app\assets\interfaces\music-configuration-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\interfaces\view-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\add-playlist-modal.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\add-podcast-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\add-song-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\add-to-playlist-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\delete-modal.ts" />
