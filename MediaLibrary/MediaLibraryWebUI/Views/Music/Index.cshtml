@@ -25,7 +25,7 @@
                 <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewSongModalId)" data-tooltip="tooltip" title="Add new song">
                     <i class="fa fa-plus"></i>
                 </button>
-                <button class="btn btn-outline-secondary" onclick="refreshClicked()" data-tooltip="tooltip" title="Check for new music"><i class="fa fa-sync"></i></button>
+                <button class="btn btn-outline-secondary" data-music-action="refresh" data-tooltip="tooltip" title="Check for new music"><i class="fa fa-sync"></i></button>
                 @Html.DropDownListFor(x => x.Configuration.SelectedAlbumSort,
                                       Model.AlbumSortItems,
                                       null,

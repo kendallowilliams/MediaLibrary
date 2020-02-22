@@ -104,11 +104,11 @@ export default class Music extends BaseClass implements IView {
 
             this.musicConfiguration.updateConfiguration(() => this.loadView());
         });
-    }
 
-    refresh(): void {
-        LoadingModal.showLoading();
-        $.post('/Music/Refresh', () => this.loadView(() => LoadingModal.hideLoading()));
+        $('[data-music-action="refresh"]').on('click', e => {
+            LoadingModal.showLoading();
+            $.post('/Music/Refresh', () => this.loadView(() => LoadingModal.hideLoading()));
+        });
     }
 
     private getAlbumSortEnum(sort: string): AlbumSort {
