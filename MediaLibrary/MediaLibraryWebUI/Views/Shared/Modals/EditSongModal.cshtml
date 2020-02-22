@@ -38,7 +38,7 @@
                 @Html.Hidden(nameof(Song.Id), string.Empty, new { id = $"txtEdit{nameof(Song.Id)}" })
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" onclick="updateSong()" data-tooltip="tooltip" title="Save song">Save</button>
+                <button type="button" class="btn btn-outline-primary" data-song-action="save" data-tooltip="tooltip" title="Save song">Save</button>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-tooltip="tooltip" title="Cancel">Cancel</button>
             </div>
         </div>

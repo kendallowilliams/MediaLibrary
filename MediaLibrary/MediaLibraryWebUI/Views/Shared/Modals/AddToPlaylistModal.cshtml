@@ -19,7 +19,7 @@
                     @foreach (var playlist in Model.Playlists)
                     {
                         <li data-playlist-item="enabled" data-playlist-id="@(playlist.Id)" class="list-group-item list-group-item-action" data-tooltip="tooltip" title="@(playlist.Name)"
-                            onclick="addToPlaylist(this)">@(playlist.Name)</li>
+                            data-playlist-action="add">@(playlist.Name)</li>
                         }
                 </ul>
             </div>

@@ -50,8 +50,7 @@
                                                     data-html="true">
                                                 <i class="fa fa-info-circle"></i>
                                             </button>
-                                            <buton class="btn btn-outline-secondary" onclick="podcastClicked(this)" data-item-id="@(podcast.Id)"
-                                                   data-tooltip="tooltip" title="View podcast">
+                                            <buton class="btn btn-outline-secondary" data-item-id="@(podcast.Id)" data-tooltip="tooltip" title="View podcast">
                                                 <i class="fa fa-list"></i>
                                             </buton>
                                             <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
@@ -91,7 +90,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" onclick="addNewPodcast()" data-tooltip="tooltip" title="Save podcast">Save</button>
+                <button type="button" class="btn btn-outline-primary" data-podcast-action="add" data-tooltip="tooltip" title="Save podcast">Save</button>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-tooltip="tooltip" title="Cancel">Cancel</button>
             </div>
         </div>

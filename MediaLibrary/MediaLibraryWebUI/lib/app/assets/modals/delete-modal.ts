@@ -9,7 +9,7 @@ export default class DeleteModal {
         this.initializeControls();
     }
 
-    initializeControls(): void {
+    private initializeControls(): void {
         $(this.modal).on('show.bs.modal', function (e) {
             var $btn = $(e.relatedTarget),
                 url = $btn.attr('data-delete-action'),

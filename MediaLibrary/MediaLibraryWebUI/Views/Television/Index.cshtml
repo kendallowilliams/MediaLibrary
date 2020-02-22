@@ -44,8 +44,7 @@
                                             <span style="cursor: pointer; flex: 0 0 auto">@(series.Episodes.GroupBy(e => e.Season).Count()) season@(series.Episodes.GroupBy(e => e.Season).Count() == 1 ? string.Empty : "s")</span>
                                         </div>
                                         <div>
-                                            <buton class="btn btn-outline-secondary" onclick="seriesClicked(this)" data-item-id="@(series.Id)"
-                                                   data-tooltip="tooltip" title="View series">
+                                            <buton class="btn btn-outline-secondary" data-item-id="@(series.Id)" data-tooltip="tooltip" title="View series">
                                                 <i class="fa fa-list"></i>
                                             </buton>
                                         </div>

@@ -43,7 +43,7 @@
                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
                                     <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(list.Track.Title)</h5>
                                     <div style="flex: 0 0 auto">
-                                        <span data-item-id="@(list.Track.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(list.Track.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(list.Track.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(list.Track.Artist?.Name ?? "Unknown Artist")</span>
+                                        <span data-album-id="@(list.Track.Album?.Id)" style="cursor: pointer">@(list.Track.Album?.Title ?? "Unknown Album")</span> - <span data-artist-id="@(list.Track.Artist?.Id)" style="cursor: pointer" class="text-muted">@(list.Track.Artist?.Name ?? "Unknown Artist")</span>
                                     </div>
                                 </div>
                                 <div>

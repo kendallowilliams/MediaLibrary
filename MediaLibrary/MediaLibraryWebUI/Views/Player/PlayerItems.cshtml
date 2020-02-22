@@ -11,11 +11,11 @@
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
                         <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.Song.Title)</h5>
                         <div style="flex: 0 0 auto">
-                            <span data-item-id="@(item.Song.Album?.Id)" onclick="albumClicked(this)" style="cursor: pointer">@(item.Song.Album?.Title ?? "Unknown Album")</span> - <span data-item-id="@(item.Song.Artist?.Id)" onclick="artistClicked(this)" style="cursor: pointer" class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</span>
+                            <span data-album-id="@(item.Song.Album?.Id)" style="cursor: pointer">@(item.Song.Album?.Title ?? "Unknown Album")</span> - <span data-artist-id="@(item.Song.Artist?.Id)" style="cursor: pointer" class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</span>
                         </div>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">
+                        <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" data-tooltip="tooltip" title="Play">
                             <i class="fa fa-play"></i>
                         </button>
                     </div>
@@ -39,7 +39,7 @@ else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Podcast && Mo
                         </div>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">
+                        <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" data-tooltip="tooltip" title="Play">
                             <i class="fa fa-play"></i>
                         </button>
                     </div>
@@ -63,7 +63,7 @@ else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television &&
                         </div>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" onclick="playClicked(this)" data-tooltip="tooltip" title="Play">
+                        <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" data-tooltip="tooltip" title="Play">
                             <i class="fa fa-play"></i>
                         </button>
                     </div>

@@ -22,7 +22,7 @@
                             <i class="fa fa-play"></i>
                         </button>
                         <button class="btn btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
-                                data-tooltip="tooltip" title="Download episode" onclick="downloadClicked(this)"
+                                data-tooltip="tooltip" title="Download episode" data-podcast-action="download"
                                 @(!string.IsNullOrWhiteSpace(item.File) ? "disabled=\"disabled\"" : string.Empty)>
                             <i class="fa fa-download"></i>
                         </button>

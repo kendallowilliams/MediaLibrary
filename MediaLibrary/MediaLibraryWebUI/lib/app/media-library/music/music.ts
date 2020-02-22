@@ -8,17 +8,23 @@ import Album from "./album";
 import LoadingModal from "../../assets/modals/loading-modal";
 import IMusicConfiguration from "../../assets/interfaces/music-configuration-interface";
 import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap';
+import EditSongModal from "../../assets/modals/edit-song-modal";
+import AddToPlaylistModal from "../../assets/modals/add-to-playlist-modal";
 
 export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private artist: Artist;
     private album: Album;
+    private editSongModal: EditSongModal;
+    private addToPlaylistModal: AddToPlaylistModal;
 
     constructor(private musicConfiguration: MusicConfiguration, private playFunc: (btn: HTMLButtonElement, single: boolean) => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
         this.artist = new Artist(musicConfiguration);
         this.album = new Album(musicConfiguration);
+        this.editSongModal = new EditSongModal(this.loadView);
+        this.addToPlaylistModal = new AddToPlaylistModal();
     }
 
     loadView(callback: () => void = () => null): void {
