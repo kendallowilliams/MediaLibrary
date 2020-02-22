@@ -223,8 +223,6 @@
     <Content Include="lib\jquery\jquery.min.js" />
     <Content Include="lib\jquery\jquery.slim.js" />
     <Content Include="lib\jquery\jquery.slim.min.js" />
-    <Content Include="lib\js-polyfills\polyfill.js" />
-    <Content Include="lib\js-polyfills\polyfill.min.js" />
     <Content Include="libman.json" />
     <Content Include="lib\font-awesome\webfonts\fa-brands-400.eot" />
     <Content Include="lib\font-awesome\webfonts\fa-brands-400.ttf" />
@@ -355,20 +353,6 @@
     <Content Include="lib\bootstrap\scss\_variables.scss" />
     <Content Include="lib\jquery\jquery.min.map" />
     <Content Include="lib\jquery\jquery.slim.min.map" />
-    <Content Include="lib\modernizr\modernizr.js" />
-    <Content Include="lib\modernizr\modernizr.min.js" />
-    <Content Include="lib\popper.js\esm\popper-utils.js.map" />
-    <Content Include="lib\popper.js\esm\popper-utils.min.js.map" />
-    <Content Include="lib\popper.js\esm\popper.js.map" />
-    <Content Include="lib\popper.js\esm\popper.min.js.map" />
-    <Content Include="lib\popper.js\popper-utils.js.map" />
-    <Content Include="lib\popper.js\popper-utils.min.js.map" />
-    <Content Include="lib\popper.js\popper.js.map" />
-    <Content Include="lib\popper.js\popper.min.js.map" />
-    <Content Include="lib\popper.js\umd\popper-utils.js.map" />
-    <Content Include="lib\popper.js\umd\popper-utils.min.js.map" />
-    <Content Include="lib\popper.js\umd\popper.js.map" />
-    <Content Include="lib\popper.js\umd\popper.min.js.map" />
     <Content Include="lib\require.js\require.js" />
     <Content Include="lib\require.js\require.min.js" />
     <Content Include="package.json" />
@@ -378,18 +362,6 @@
     <Content Include="lib\jquery-ui-1.12.1.custom\package.json" />
     <None Include="Properties\PublishProfiles\KSERVER_DEV.pubxml" />
     <None Include="Properties\PublishProfiles\KSERVER_PROD.pubxml" />
-    <Content Include="lib\popper.js\esm\popper-utils.js" />
-    <Content Include="lib\popper.js\esm\popper-utils.min.js" />
-    <Content Include="lib\popper.js\esm\popper.js" />
-    <Content Include="lib\popper.js\esm\popper.min.js" />
-    <Content Include="lib\popper.js\popper-utils.js" />
-    <Content Include="lib\popper.js\popper-utils.min.js" />
-    <Content Include="lib\popper.js\popper.js" />
-    <Content Include="lib\popper.js\popper.min.js" />
-    <Content Include="lib\popper.js\umd\popper-utils.js" />
-    <Content Include="lib\popper.js\umd\popper-utils.min.js" />
-    <Content Include="lib\popper.js\umd\popper.js" />
-    <Content Include="lib\popper.js\umd\popper.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -495,9 +467,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="lib\jplayer\skin\blue.monday\" />
-    <Folder Include="lib\jplayer\skin\pink.flag\" />
-    <Folder Include="lib\jqueryui\themes\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MediaLibraryBLL\MediaLibraryBLL.csproj">

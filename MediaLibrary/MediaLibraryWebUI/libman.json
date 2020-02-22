@@ -16,20 +16,8 @@
       "destination": "lib/jQuery.Marquee/"
     },
     {
-      "library": "js-polyfills@0.1.42",
-      "destination": "lib/js-polyfills/"
-    },
-    {
       "library": "jquery@3.4.1",
       "destination": "lib/jquery/"
-    },
-    {
-      "library": "popper.js@1.16.1",
-      "destination": "lib/popper.js/"
-    },
-    {
-      "library": "modernizr@2.8.3",
-      "destination": "lib/modernizr/"
     },
     {
       "library": "require.js@2.3.6",
