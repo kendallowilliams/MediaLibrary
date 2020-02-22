@@ -34,6 +34,7 @@ export default class Music extends BaseClass implements IView {
             callback();
         }; 
 
+        disposeTooltips(this.mediaView);
         $(this.mediaView).load('/Music/Index', success);
     }
 
@@ -63,7 +64,8 @@ export default class Music extends BaseClass implements IView {
                             url = $btn.attr('data-group-url');
                         if (url) {
                             LoadingModal.showLoading();
-                            $($btn.attr('data-target')).load(url, function () {
+                            disposeTooltips($($btn.attr('data-target'))[0]);
+                            $($btn.attr('data-target')).load(url, () => {
                                 loadTooltips($($btn.attr('data-target'))[0]);
                                 LoadingModal.hideLoading();
                                 $btn.attr('data-group-url', '');
