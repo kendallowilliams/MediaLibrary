@@ -3,5 +3,5 @@
 }
 
 export function disposeTooltips(element: HTMLElement): void {
-    if (element) /*then*/ $(element).find('*[data-tooltip="tooltip"]').tooltip("destroy");
+    if (element) /*then*/ $(element).find('*[data-tooltip="tooltip"]').tooltip('destroy');
 }
