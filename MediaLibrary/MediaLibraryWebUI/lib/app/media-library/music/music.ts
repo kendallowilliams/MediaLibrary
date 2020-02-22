@@ -41,7 +41,7 @@ export default class Music extends BaseClass implements IView {
         const properties: IMusicConfiguration = this.musicConfiguration.properties,
             playSingle: boolean = properties.SelectedMusicTab === MusicTabs.Songs && properties.SelectedMusicPage === MusicPages.Index;
 
-        $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement, playSingle));
+        $('[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement, playSingle));
         $('[data-back-button="artist"]').on('click', () => this.artist.goBack(() => this.loadView.call(this)));
         $('[data-back-button="album"]').on('click', () => this.album.goBack(() => this.loadView.call(this)));
         $('[data-album-id]').on('click', _e => this.album.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), () => this.loadView()));

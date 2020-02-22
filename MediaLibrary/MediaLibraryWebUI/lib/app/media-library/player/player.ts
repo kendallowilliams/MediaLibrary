@@ -101,7 +101,7 @@ export default class Player extends BaseClass implements IView {
             var volume = ui.value;
 
             $([buttons.PlayerVolumeButton, buttons.PlayerMuteButton]).attr('data-volume', volume).addClass('d-none');
-            $(volume == 0 ? buttons.PlayerMuteButton : buttons.PlayerVolumeButton).removeClass('d-none');
+            $(volume === 0 ? buttons.PlayerMuteButton : buttons.PlayerVolumeButton).removeClass('d-none');
             this.playerConfiguration.properties.Volume = volume;
             this.playerConfiguration.properties.Muted = volume == 0;
             $(this.getPlayers()).prop('volume', volume / 100.0).prop('muted', volume == 0)
@@ -405,7 +405,7 @@ export default class Player extends BaseClass implements IView {
                 this.reload(() => this.loadItem(null, true));
                 LoadingModal.hideLoading();
             },
-            mediaType = $(btn).attr('data-media-type') || '@(nameof(Enums.MediaTypes.Song))',
+            mediaType = $(btn).attr('data-media-type') || this.getMediaTypesEnumString(MediaTypes.Song),
             data = new FormData(),
             $playData = null;
 
@@ -498,6 +498,25 @@ export default class Player extends BaseClass implements IView {
             case 'Song':
             default:
                 mediaType = MediaTypes.Song;
+                break;
+        }
+
+        return mediaType;
+    }
+
+    private getMediaTypesEnumString(type: MediaTypes): string {
+        let mediaType: string;
+
+        switch (type) {
+            case MediaTypes.Television:
+                mediaType = 'Television';
+                break;
+            case MediaTypes.Podcast:
+                mediaType = 'Podcast';
+                break;
+            case MediaTypes.Song:
+            default:
+                mediaType = 'Song';
                 break;
         }
 
