@@ -1,5 +1,7 @@
 ﻿import HtmlControls from '../controls/html-controls';
 import LoadingModal from '../modals/loading-modal';
+import htmlControls from '../controls/html-controls';
+import { ModalEventHandler, ModalEvent } from 'bootstrap';
 
 export default class EditSongModal {
     private modal: HTMLElement;
@@ -11,27 +13,43 @@ export default class EditSongModal {
 
     private initializeControls(): void {
         $(this.modal).on('show.bs.modal', e => {
-            $('#inpNewSong').val('');
+            const id = $(e.relatedTarget).attr('data-item-id'),
+                success = data => {
+                    this.clearEditSongModal();
+                    $('#txtEditSongTitle').text(data.Title || 'Song')
+                    $('#txtEditId').val(data.Id);
+                    $('#txtEditTitle').val(data.Title);
+                    $('#txtEditAlbum').val(data.Album);
+                    $('#txtEditArtist').val(data.Artist);
+                    $('#txtEditGenre').val(data.Genre);
+                };
+
+            $.get('/Music/GetSong/' + id, success);
         });
 
         $('[data-song-action="save"]').on('click', e => {
-            var data = new FormData(),
-                success = () => this.loadFunc(() => LoadingModal.hideLoading());
+            const data = 'Id=' + $('#txtEditId').val() + '&' +
+                'Title=' + encodeURIComponent($('#txtEditTitle').val() as string) + '&' +
+                'Album=' + encodeURIComponent($('#txtEditAlbum').val() as string) + '&' +
+                'Artist=' + encodeURIComponent($('#txtEditArtist').val() as string) + '&' +
+                'Genre=' + encodeURIComponent($('#txtEditGenre').val() as string),
+                success = () => {
+                    this.loadFunc(() => LoadingModal.hideLoading());
+                };
 
-            $(this.modal).modal('hide');
-
-            if ($('#inpNewSong').prop('files').length > 0) {
+            $(this.modal).modal('hide').on('hidden.bs.modal', () => {
                 LoadingModal.showLoading();
-                data.append("file", $('#inpNewSong').prop('files')[0]);
-                $.ajax({
-                    url: '/Music/Upload',
-                    data: data,
-                    processData: false,
-                    contentType: false,
-                    type: 'POST',
-                    success: success
-                });
-            }
+                $.post('/Music/UpdateSong', data, success);
+            });
         });
+    }
+
+    private clearEditSongModal(): void {
+        $('#txtEditSongTitle').text('Song')
+        $('#txtEditId').val();
+        $('#txtEditTitle').val();
+        $('#txtEditAlbum').val();
+        $('#txtEditArtist').val();
+        $('#txtEditGenre').val();
     }
 }

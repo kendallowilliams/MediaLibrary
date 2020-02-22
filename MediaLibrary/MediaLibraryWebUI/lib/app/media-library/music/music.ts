@@ -23,12 +23,12 @@ export default class Music extends BaseClass implements IView {
         this.mediaView = HtmlControls.Views().MediaView;
         this.artist = new Artist(musicConfiguration);
         this.album = new Album(musicConfiguration);
-        this.editSongModal = new EditSongModal(this.loadView);
-        this.addToPlaylistModal = new AddToPlaylistModal();
     }
 
     loadView(callback: () => void = () => null): void {
         const success: () => void = () => {
+            this.editSongModal = new EditSongModal(this.loadView.bind(this));
+            this.addToPlaylistModal = new AddToPlaylistModal();
             this.initializeControls();
             $('[data-music-tab="' + this.getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
             callback();
@@ -59,14 +59,15 @@ export default class Music extends BaseClass implements IView {
                     LoadingModal.hideLoading();
                     loadTooltips($newView[0]);
 
-                    $('[data-group-url]').on('click', function () {
-                        const $btn = $(this),
+                    $('[data-group-url]').on('click', _e => {
+                        const $btn = $(_e.currentTarget),
                             url = $btn.attr('data-group-url');
                         if (url) {
                             LoadingModal.showLoading();
                             disposeTooltips($($btn.attr('data-target'))[0]);
                             $($btn.attr('data-target')).load(url, () => {
                                 loadTooltips($($btn.attr('data-target'))[0]);
+                                $($btn.attr('data-target')).find('*[data-play-id]').on('click', __e => this.playFunc(__e.currentTarget as HTMLButtonElement, true));
                                 LoadingModal.hideLoading();
                                 $btn.attr('data-group-url', '');
                             });
