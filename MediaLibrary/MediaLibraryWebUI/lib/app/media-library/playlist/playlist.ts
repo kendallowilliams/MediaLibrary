@@ -3,13 +3,19 @@ import IView from "../../assets/interfaces/view-interface";
 import PlaylistConfiguration from "../../assets/models/configurations/playlist-configuration";
 import HtmlControls from '../../assets/controls/html-controls';
 import { PlaylistPages } from "../../assets/enums/enums";
+import AddNewPlaylistModal from "../../assets/modals/add-playlist-modal";
+import DeleteModal from "../../assets/modals/delete-modal";
 
 export default class Playlist extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
+    private addPlaylistModal: AddNewPlaylistModal;
+    private deleteModal: DeleteModal;
 
     constructor(private playlistConfiguration: PlaylistConfiguration) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
+        this.addPlaylistModal = new AddNewPlaylistModal(this.loadView);
+        this.deleteModal = new DeleteModal(this.loadView);
     }
 
     loadView(callback: () => void = () => null): void {

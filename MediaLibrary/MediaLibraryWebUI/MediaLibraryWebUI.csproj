@@ -930,6 +930,12 @@
     <TypeScriptCompile Include="lib\app\assets\interfaces\playlist-configuration-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\interfaces\music-configuration-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\interfaces\view-interface.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\add-playlist-modal.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\add-song-modal.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\add-to-playlist-modal.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\delete-modal.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\edit-playlist-modal.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\edit-song-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\loading-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\models\configurations\configurations.ts" />
     <TypeScriptCompile Include="lib\app\assets\enums\enums.ts" />
