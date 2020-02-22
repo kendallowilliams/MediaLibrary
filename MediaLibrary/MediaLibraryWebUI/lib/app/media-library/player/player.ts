@@ -83,7 +83,7 @@ export default class Player extends BaseClass implements IView {
             containers = HtmlControls.Containers(),
             controls = HtmlControls.UIControls();
 
-        $(HtmlControls.UIControls().PlayerSlider).slider({ min: 0, max: 100 });
+        $(controls.PlayerSlider).slider({ min: 0, max: 100 });
         $volumeSlider.slider({
             min: 0,
             max: 100,
@@ -109,14 +109,14 @@ export default class Player extends BaseClass implements IView {
         $volumeSlider.on('slidechange', (e, ui) => {
             this.playerConfiguration.updateConfiguration();
         });
-        $volumeSlider.on('slide', (e, ui) => {
+        $(controls.PlayerSlider).on('slide', (e, ui) => {
             if ($(e.target).attr('data-slide-started') === 'true') {
                 $(this.getPlayer()).prop('currentTime', ui.value);
                 $(controls.PlayerTime).text(this.getPlaybackTime(ui.value, $(e.target).slider('option', 'max')));
             }
         });
-        $volumeSlider.on('slidestart', (e, ui) => $(e.target).attr('data-slide-started', 'true'));
-        $volumeSlider.on('slidestop', (e, ui) => $(e.target).attr('data-slide-started', 'false'));
+        $(controls.PlayerSlider).on('slidestart', (e, ui) => $(e.target).attr('data-slide-started', 'true'));
+        $(controls.PlayerSlider).on('slidestop', (e, ui) => $(e.target).attr('data-slide-started', 'false'));
         $([buttons.HeaderNextButton, buttons.PlayerNextButton]).on('click', () => this.loadNext());
         $([buttons.HeaderPreviousButton, buttons.PlayerPreviousButton]).on('click', () => this.loadPrevious());
         $([buttons.HeaderPauseButton, buttons.PlayerPauseButton]).on('click', () => $(this.getPlayer()).attr('data-playing', 'false').trigger('pause'));
