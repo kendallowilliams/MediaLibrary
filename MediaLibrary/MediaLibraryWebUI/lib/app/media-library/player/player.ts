@@ -6,7 +6,7 @@ import { MediaTypes, RepeatTypes, PlayerPages } from "../../assets/enums/enums";
 import { getRandomInteger } from "../../assets/utilities/math";
 import AudioVisualizer from "../audio-visualizer/audio-visualizer";
 import { openFullscreen } from "../../assets/utilities/element";
-import { loadTooltips } from "../../assets/utilities/bootstrap";
+import { loadTooltips } from "../../assets/utilities/bootstrap-helper";
 import LoadingModal from '../../assets/modals/loading-modal';
 
 export default class Player extends BaseClass implements IView {

@@ -7,7 +7,7 @@ import Artist from "./artist";
 import Album from "./album";
 import LoadingModal from "../../assets/modals/loading-modal";
 import IMusicConfiguration from "../../assets/interfaces/music-configuration-interface";
-import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap';
+import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap-helper';
 import EditSongModal from "../../assets/modals/edit-song-modal";
 import AddToPlaylistModal from "../../assets/modals/add-to-playlist-modal";
 
@@ -46,6 +46,7 @@ export default class Music extends BaseClass implements IView {
         $('[data-back-button="album"]').on('click', () => this.album.goBack(() => this.loadView.call(this)));
         $('[data-album-id]').on('click', _e => this.album.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), () => this.loadView()));
         $('[data-artist-id]').on('click', _e => this.artist.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), () => this.loadView()));
+        loadTooltips(this.mediaView);
 
         $(HtmlControls.UIControls().MusicTabList).find('*[data-toggle="tab"]').on('shown.bs.tab', e => {
             const $newTab = $(e.target),
