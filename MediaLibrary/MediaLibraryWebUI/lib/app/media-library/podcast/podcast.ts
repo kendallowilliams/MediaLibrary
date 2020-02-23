@@ -92,6 +92,14 @@ export default class Podcast extends BaseClass implements IView {
             $(item).parent('li.page-item:first').addClass('active');
             loadTooltips(this.podcastView);
             $(this.mediaView).find('*[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement, true));
+            $(this.mediaView).find('*[data-podcast-action="download"]').on('click', e => {
+                const $btn = $(e.currentTarget);
+
+                LoadingModal.showLoading();
+                $btn.tooltip('dispose');
+                $btn.prop('disabled', 'disabled');
+                $.get($btn.attr('data-download-action'), () => LoadingModal.hideLoading());
+            });
             LoadingModal.hideLoading();
         },
             id = this.podcastConfiguration.properties.SelectedPodcastId,
