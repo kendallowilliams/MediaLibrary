@@ -77,6 +77,11 @@ export default class Podcast extends BaseClass implements IView {
             this.podcastConfiguration.properties.SelectedPodcastFilter = this.getPodcastFilterEnum($(e.currentTarget).val() as string);
             this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
+
+        $(this.mediaView).find('*[data-podcast-action="refresh"]').on('click', e => {
+            LoadingModal.showLoading();
+            $.post('/Podcast/RefreshPodcast', { id: this.podcastConfiguration.properties.SelectedPodcastId }, () => this.loadView(() => LoadingModal.hideLoading()));
+        });
     }
 
     private getSelectedYear(): string {
