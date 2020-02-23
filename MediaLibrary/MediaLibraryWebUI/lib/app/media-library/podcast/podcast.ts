@@ -48,14 +48,8 @@ export default class Podcast extends BaseClass implements IView {
             this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
 
-        $(this.mediaView).find('*[data-podcast-id]').on('click', e => {
-            LoadingModal.showLoading();
-            this.podcastConfiguration.properties.SelectedPodcastPage = PodcastPages.Podcast;
-            this.podcastConfiguration.properties.SelectedPodcastId = parseInt($(e.currentTarget).attr('data-podcast-id'));
-            this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
-        });
-
-
+        $(this.mediaView).find('*[data-podcast-id]').on('click', e => this.loadPodcast(parseInt($(e.currentTarget).attr('data-podcast-id'))));
+        
         $(this.mediaView).find('*[data-podcast-year]').on('click', e => {
             var year = $(e.currentTarget).attr('data-podcast-year'),
                 years = $(this.podcastView).attr('data-podcast-years').split(','),
@@ -81,6 +75,13 @@ export default class Podcast extends BaseClass implements IView {
             LoadingModal.showLoading();
             $.post('Podcast/RefreshPodcast', { id: this.podcastConfiguration.properties.SelectedPodcastId }, () => this.loadView(() => LoadingModal.hideLoading()));
         });
+    }
+
+    loadPodcast(id: number) {
+        LoadingModal.showLoading();
+        this.podcastConfiguration.properties.SelectedPodcastPage = PodcastPages.Podcast;
+        this.podcastConfiguration.properties.SelectedPodcastId = id;
+        this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
     }
 
     private getSelectedYear(): string {
