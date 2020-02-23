@@ -1,5 +1,4 @@
 ﻿import BaseClass from "../base-class";
-import { getUrl } from "../../utilities/http";
 
 export default abstract class BaseConfiguration extends BaseClass {
     constructor(private controller: string) {
