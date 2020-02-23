@@ -11,7 +11,7 @@
         </div>
         <div>
             <button class="btn btn-outline-secondary" data-back-button="television" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
-            <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></button>
+            <button class="btn btn-outline-secondary" data-series-action="playlist" data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></button>
         </div>
         <hr />
     </div>
@@ -19,9 +19,9 @@
         <div class="card-header" id="heading-series-@(Model.SelectedSeries.Id)" style="flex: 0 0 auto">
             <ul class="pagination justify-content-center m-0">
                 <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="-">&laquo;</a></li>
-                @foreach (var season in Model.SelectedSeries.Episodes.Select(episode => episode.Season).Distinct().OrderBy(season => season))
+                @foreach (var item in Model.SelectedSeries.Episodes.Select(episode => episode.Season).Distinct().Select((season, index) => new { Index = index, Season = season }).OrderBy(item => item.Season))
                 {
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="@(season)">@(season)</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);" data-item-index="@(item.Index)" data-season-id="@(item.Season)">@(item.Season)</a></li>
                 }
                 <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="+">&raquo;</a></li>
             </ul>
