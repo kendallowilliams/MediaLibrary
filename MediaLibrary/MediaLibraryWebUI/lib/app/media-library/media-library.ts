@@ -67,13 +67,13 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private loadConfigurations(callback: () => void = () => null): void {
-        $.get('Home/HomeConfiguration', data => this.homeConfiguration = Configurations.Home(data))
-            .then(() => $.get('Music/MusicConfiguration', data => this.musicConfiguration = Configurations.Music(data))
-                .then(() => $.get('MediaLibrary/MediaLibraryConfiguration', data => this.mediaLibraryConfiguration = Configurations.MediaLibrary(data))
-                    .then(() => $.get('Television/TelevisionConfiguration', data => this.televisionConfiguration = Configurations.Television(data))
-                        .then(() => $.get('Podcast/PodcastConfiguration', data => this.podcastConfiguration = Configurations.Podcast(data))
-                            .then(() => $.get('Player/PlayerConfiguration', data => this.playerConfiguration = Configurations.Player(data))
-                                .then(() => $.get('Playlist/PlaylistConfiguration', data => this.playlistConfiguration = Configurations.Playlist(data))
+        $.get('/Home/HomeConfiguration', data => this.homeConfiguration = Configurations.Home(data))
+            .then(() => $.get('/Music/MusicConfiguration', data => this.musicConfiguration = Configurations.Music(data))
+                .then(() => $.get('/MediaLibrary/MediaLibraryConfiguration', data => this.mediaLibraryConfiguration = Configurations.MediaLibrary(data))
+                    .then(() => $.get('/Television/TelevisionConfiguration', data => this.televisionConfiguration = Configurations.Television(data))
+                        .then(() => $.get('/Podcast/PodcastConfiguration', data => this.podcastConfiguration = Configurations.Podcast(data))
+                            .then(() => $.get('/Player/PlayerConfiguration', data => this.playerConfiguration = Configurations.Player(data))
+                                .then(() => $.get('/Playlist/PlaylistConfiguration', data => this.playlistConfiguration = Configurations.Playlist(data))
                                     .then(callback)
                             )
                         )

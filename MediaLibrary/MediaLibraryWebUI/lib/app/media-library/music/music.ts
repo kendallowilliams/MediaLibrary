@@ -38,7 +38,7 @@ export default class Music extends BaseClass implements IView {
         }; 
 
         disposeTooltips(this.mediaView);
-        $(this.mediaView).load('Music/Index', success);
+        $(this.mediaView).load('/Music/Index', success);
     }
 
     private initializeControls(): void {
@@ -110,7 +110,7 @@ export default class Music extends BaseClass implements IView {
 
         $('[data-music-action="refresh"]').on('click', e => {
             LoadingModal.showLoading();
-            $.post('Music/Refresh', () => this.loadView(() => LoadingModal.hideLoading()));
+            $.post('/Music/Refresh', () => this.loadView(() => LoadingModal.hideLoading()));
         });
     }
 

@@ -6,7 +6,7 @@ export default abstract class BaseConfiguration extends BaseClass {
     }
 
     protected update<T>(data: T, callback: () => void = () => null): void {
-        let url = this.controller.concat('/UpdateConfiguration');
+        let url = new String('/').concat(this.controller).concat('/UpdateConfiguration');
 
         $.post(url, data, callback);
     }

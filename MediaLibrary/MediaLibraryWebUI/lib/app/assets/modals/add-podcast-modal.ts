@@ -17,7 +17,7 @@ export default class AddNewPodcastModal {
         $(this.modal).find('*[data-podcast-action="save"]').on('click', e => {
             LoadingModal.showLoading();
             $(this.modal).modal('hide').on('hidden.bs.modal', () => {
-                $.post('Podcast/AddPodcast', { rssFeed: $('#txtNewPodcast').val() }, () => {
+                $.post('/Podcast/AddPodcast', { rssFeed: $('#txtNewPodcast').val() }, () => {
                     this.loadFunc(() => LoadingModal.hideLoading());
                 });
             });

@@ -24,7 +24,7 @@ export default class EditSongModal {
                     $('#txtEditGenre').val(data.Genre);
                 };
 
-            $.get('Music/GetSong/' + id, success);
+            $.get('/Music/GetSong/' + id, success);
         });
 
         $('[data-song-action="save"]').on('click', e => {
@@ -39,7 +39,7 @@ export default class EditSongModal {
 
             $(this.modal).modal('hide').on('hidden.bs.modal', () => {
                 LoadingModal.showLoading();
-                $.post('Music/UpdateSong', data, success);
+                $.post('/Music/UpdateSong', data, success);
             });
         });
     }
