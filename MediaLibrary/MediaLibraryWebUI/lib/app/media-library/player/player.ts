@@ -367,7 +367,7 @@ export default class Player extends BaseClass implements IView {
             containers = HtmlControls.Containers();
 
         $(containers.PlayerItemsContainer).html('');
-        $(containers.PlayerItemsContainer).load('/Player/GetPlayerItems', success);
+        $(containers.PlayerItemsContainer).load('Player/GetPlayerItems', success);
     }
 
     private updateSelectedPlayerPage(): void {
