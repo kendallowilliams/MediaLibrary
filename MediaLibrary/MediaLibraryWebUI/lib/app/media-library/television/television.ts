@@ -29,7 +29,6 @@ export default class Television extends BaseClass implements IView {
     }
 
     initializeControls(): void {
-        $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement));
         $('[data-back-button="television"]').on('click', () => this.goBack(() => this.loadView.call(this)));
 
         $(this.mediaView).find('*[data-series-action="sort"]').on('click', e => {
@@ -58,6 +57,7 @@ export default class Television extends BaseClass implements IView {
                     $(item).parent('li.page-item:first').addClass('active');
                     this.updateMobileSeasons(parseInt(id));
                     loadTooltips(this.seasonView);
+                    $(this.seasonView).find('*[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement));
                     LoadingModal.hideLoading();
                 },
                 series = this.televisionConfiguration.properties.SelectedSeriesId,
