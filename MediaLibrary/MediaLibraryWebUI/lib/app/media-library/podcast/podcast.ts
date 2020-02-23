@@ -31,7 +31,7 @@ export default class Podcast extends BaseClass implements IView {
                 callback();
             };
 
-        $(this.mediaView).load('/Podcast/Index', success);
+        $(this.mediaView).load('Podcast/Index', success);
     }
 
     initializeControls(): void {
@@ -109,7 +109,7 @@ export default class Podcast extends BaseClass implements IView {
         if (item) {
             LoadingModal.showLoading();
             disposeTooltips(this.podcastView);
-            $(this.podcastView).load('/Podcast/GetPodcastItems', { id: id, year: year, filter: filter }, success);
+            $(this.podcastView).load('Podcast/GetPodcastItems', { id: id, year: year, filter: filter }, success);
         }
     }
 
