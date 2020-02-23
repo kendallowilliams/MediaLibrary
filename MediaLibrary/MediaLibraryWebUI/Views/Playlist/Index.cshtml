@@ -18,7 +18,7 @@
                                      new { @class = "custom-select border border-secondary",
                                            style = "width: 135px",
                                            title = "Sort by",
-                                           onchange = "sortChanged(this)",
+                                           data_playlist_action = "sort",
                                            data_tooltip = "tooltip"
                 })
             </div>
@@ -52,7 +52,7 @@
                                             <span style="cursor: pointer; flex: 0 0 auto">@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</span>
                                         </div>
                                         <div>
-                                            <button class="btn btn-outline-secondary" data-item-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
+                                            <button class="btn btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
                                                 <i class="fa fa-list"></i>
                                             </button>
                                             <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"

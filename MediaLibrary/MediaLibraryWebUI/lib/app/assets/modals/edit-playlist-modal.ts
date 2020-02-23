@@ -16,13 +16,12 @@ export default class EditPlaylistModal {
         });
 
         $('[data-playlist-action="edit"]').on('click', e => {
-            var data = { id: $('#txtPlaylistId').val(), name: $('#txtPlaylistName').val() },
-                success = () => this.loadFunc(() => LoadingModal.hideLoading());
+            var data = { id: $('#txtPlaylistId').val(), name: $('#txtPlaylistName').val() };
 
             $(this.modal).modal('hide').on('hidden.bs.modal', () => {
                 LoadingModal.showLoading();
                 $('#txtPlaylistId, #txtPlaylistName').val('');
-                $.post('/Playlist/EditPlaylist', data, success);
+                $.post('/Playlist/EditPlaylist', data, () => this.loadFunc(() => LoadingModal.hideLoading()));
             });
         });
     }

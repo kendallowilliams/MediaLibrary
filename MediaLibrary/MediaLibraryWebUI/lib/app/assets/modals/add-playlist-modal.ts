@@ -14,14 +14,10 @@ export default class AddNewPlaylistModal {
             $('#txtNewPlaylist').val('');
         });
 
-        $(this.modal).find('[data-playlist-action="save"]').on('click', e => {
-            var success = () => {
-                this.loadFunc(() => LoadingModal.hideLoading());
-            };
-
+        $(this.modal).find('*[data-playlist-action="save"]').on('click', e => {
             LoadingModal.showLoading();
-            $(this.modal).modal('hide').on('hidden.bs.modal', function () {
-                $.post('/Playlist/AddPlaylist', { playlistName: $('#txtNewPlaylist').val() }, success);
+            $(this.modal).modal('hide').on('hidden.bs.modal', () => {
+                $.post('/Playlist/AddPlaylist', { playlistName: $('#txtNewPlaylist').val() }, () => this.loadFunc(() => LoadingModal.hideLoading()));
             });
         });
     }
