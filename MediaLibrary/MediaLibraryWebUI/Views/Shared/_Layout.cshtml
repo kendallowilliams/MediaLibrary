@@ -5,7 +5,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="@(Url.Content("~"))" />
     <title>KOW Moosic @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/requirejs")
@@ -78,5 +79,18 @@
 
     @RenderSection("scripts", false)
     @Scripts.Render("~/bundles/js")
+    <script type="text/javascript" defer="defer">
+        requirejs.config({
+            baseUrl: '@(Request.ApplicationPath)lib/app',
+            paths: {
+                jquery: '../jquery/jquery.min',
+                'jquery-ui': '../jquery-ui-1.12.1.custom/jquery-ui.min',
+                bootstrap: '../bootstrap/dist/js/bootstrap.bundle.min'
+            },
+            deps: ['jquery', 'jquery-ui', 'bootstrap']
+        });
+
+        requirejs(['app'], function (app) { });
+    </script>
 </body>
 </html>
