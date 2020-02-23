@@ -48,7 +48,7 @@ export default class Television extends BaseClass implements IView {
             const season = this.televisionConfiguration.properties.SelectedSeason,
                 series = this.televisionConfiguration.properties.SelectedSeriesId;
 
-            window.location.href = '/Television/GetM3UPlaylist?seriesId=' + series + '&season=' + season;
+            window.location.href = 'Television/GetM3UPlaylist?seriesId=' + series + '&season=' + season;
         });
 
         $(this.mediaView).find('*[data-season-id]').on('click', e => {
