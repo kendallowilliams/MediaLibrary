@@ -81,7 +81,7 @@
     @Scripts.Render("~/bundles/js")
     <script type="text/javascript" defer="defer">
         requirejs.config({
-            baseUrl: '@(Request.ApplicationPath)lib/app',
+            baseUrl: '@(Url.Content("~/lib/app"))',
             paths: {
                 jquery: '../jquery/jquery.min',
                 'jquery-ui': '../jquery-ui-1.12.1.custom/jquery-ui.min',
