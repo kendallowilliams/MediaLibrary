@@ -435,7 +435,7 @@ export default class Player extends BaseClass implements IView {
         this.playerConfiguration.updateConfiguration(function () {
             $.ajax({
                 type: 'POST',
-                url: '/Player/UpdateNowPlaying',
+                url: 'Player/UpdateNowPlaying',
                 data: data,
                 contentType: false,
                 success: success,
