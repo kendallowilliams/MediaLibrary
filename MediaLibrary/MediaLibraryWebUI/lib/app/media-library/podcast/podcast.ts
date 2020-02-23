@@ -27,7 +27,7 @@ export default class Podcast extends BaseClass implements IView {
                 this.addNewPodcastModal = new AddNewPodcastModal(this.loadView.bind(this));
                 this.deleteModal = new DeleteModal(this.loadView.bind(this));
                 this.initializeControls();
-                $('[data-podcast-year][data-item-index="0"]').trigger('click');
+                $('[data-podcast-year][data-item-index="1"]').trigger('click');
                 callback();
             };
 
@@ -90,6 +90,7 @@ export default class Podcast extends BaseClass implements IView {
     private loadPodcastView(item): void {
         var success = () => {
             $(item).parent('li.page-item:first').addClass('active');
+            this.updateMobileYears(parseInt($(item).attr('data-item-index')));
             loadTooltips(this.podcastView);
             $(this.mediaView).find('*[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement, true));
             $(this.mediaView).find('*[data-podcast-action="download"]').on('click', e => {
@@ -110,6 +111,30 @@ export default class Podcast extends BaseClass implements IView {
             LoadingModal.showLoading();
             disposeTooltips(this.podcastView);
             $(this.podcastView).load('Podcast/GetPodcastItems', { id: id, year: year, filter: filter }, success);
+        }
+    }
+
+    private updateMobileYears(position: number): void {
+        let minYearCount = 5,
+            numItemsBefore = Math.floor(minYearCount / 2),
+            numItemsAfter = minYearCount - numItemsBefore - 1,
+            first = position - numItemsBefore,
+            last = position + numItemsAfter,
+            cssSelector = '[data-podcast-year]:not([data-podcast-year="+"]):not([data-podcast-year="-"]',
+            numYears = $(cssSelector).length;
+
+        $(cssSelector).addClass('d-none d-lg-block');
+
+        if (first < 1) {
+            first = 1;
+            last = minYearCount;
+        } else if (last > numYears) {
+            first = first - (last - numYears);
+            last = position + (numYears - position);
+        }
+
+        for (var i = first; i <= last; i++) {
+            $(this.mediaView).find('*[data-podcast-year][data-item-index="' + i + '"]').removeClass('d-none d-lg-block');
         }
     }
 

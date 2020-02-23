@@ -41,7 +41,7 @@
                 <li class="page-item"><a class="page-link" href="javascript: void(0);" data-podcast-year="-">&laquo;</a></li>
                 @foreach (var item in years.Select((year, index) => new { Index = index, Year = year }))
                 {
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);" data-item-index="@(item.Index)" data-podcast-year="@(item.Year)">@(item.Year)</a></li>
+                    <li class="page-item"><a class="page-link" href="javascript: void(0);" data-item-index="@(item.Index + 1)" data-podcast-year="@(item.Year)">@(item.Year)</a></li>
                 }
                 <li class="page-item"><a class="page-link" href="javascript: void(0);" data-podcast-year="+">&raquo;</a></li>
             </ul>
