@@ -2,14 +2,16 @@
 import IView from "../../assets/interfaces/view-interface";
 import PodcastConfiguration from "../../assets/models/configurations/podcast-configuration";
 import HtmlControls from '../../assets/controls/html-controls';
-import { PodcastPages, PodcastSort } from "../../assets/enums/enums";
+import { PodcastPages, PodcastSort, PodcastFilter } from "../../assets/enums/enums";
 import IPodcastConfiguration from "../../assets/interfaces/podcast-configuration-interface";
 import AddNewPodcastModal from "../../assets/modals/add-podcast-modal";
 import LoadingModal from "../../assets/modals/loading-modal";
 import DeleteModal from "../../assets/modals/delete-modal";
+import { disposeTooltips, loadTooltips } from "../../assets/utilities/bootstrap-helper";
 
 export default class Podcast extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
+    private podcastView: HTMLElement;
     private addNewPodcastModal: AddNewPodcastModal;
     private deleteModal: DeleteModal;
 
@@ -21,9 +23,11 @@ export default class Podcast extends BaseClass implements IView {
     loadView(callback: () => void = () => null): void {
         const properties: IPodcastConfiguration = this.podcastConfiguration.properties,
             success: () => void = () => {
+                this.podcastView = HtmlControls.Views().PodcastView;
                 this.addNewPodcastModal = new AddNewPodcastModal(this.loadView.bind(this));
                 this.deleteModal = new DeleteModal(this.loadView.bind(this));
                 this.initializeControls();
+                $('[data-podcast-year][data-item-index="0"]').trigger('click');
                 callback();
             };
 
@@ -51,6 +55,49 @@ export default class Podcast extends BaseClass implements IView {
             this.podcastConfiguration.properties.SelectedPodcastId = parseInt($(e.currentTarget).attr('data-podcast-id'));
             this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
+
+
+        $(this.mediaView).find('*[data-podcast-year]').on('click', e => {
+            var year = $(e.currentTarget).attr('data-podcast-year'),
+                years = $(this.podcastView).attr('data-podcast-years').split(','),
+                currentIndex = years.indexOf(this.getSelectedYear());
+
+            if (year === '-' && currentIndex > 0) {
+                $('[data-podcast-year="' + years[currentIndex - 1] + '"]').trigger('click');
+            } else if (year === '+' && (currentIndex + 1) < years.length) {
+                $('[data-podcast-year="' + years[currentIndex + 1] + '"]').trigger('click');
+            } else if (parseInt(year) > 0) {
+                $('li.page-item').removeClass('active');
+                this.loadPodcastView(e.currentTarget);
+            }
+        });
+
+        $(this.mediaView).find('*[data-podcast-action="filter"]').on('change', e => {
+            LoadingModal.showLoading();
+            this.podcastConfiguration.properties.SelectedPodcastFilter = this.getPodcastFilterEnum($(e.currentTarget).val() as string);
+            this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
+        });
+    }
+
+    private getSelectedYear(): string {
+        return $('li.page-item.active a.page-link[data-podcast-year]').attr('data-podcast-year');
+    }
+
+    private loadPodcastView(item): void {
+        var success = () => {
+            $(item).parent('li.page-item:first').addClass('active');
+            loadTooltips(this.podcastView);
+            LoadingModal.hideLoading();
+        },
+            id = this.podcastConfiguration.properties.SelectedPodcastId,
+            year = $(item).attr('data-podcast-year'),
+            filter = this.podcastConfiguration.properties.SelectedPodcastFilter;
+
+        if (item) {
+            LoadingModal.showLoading();
+            disposeTooltips(this.podcastView);
+            $(this.podcastView).load('/Podcast/GetPodcastItems', { id: id, year: year, filter: filter }, success);
+        }
     }
 
     private getPodcastSortEnum(sort: string): PodcastSort {
@@ -70,5 +117,24 @@ export default class Podcast extends BaseClass implements IView {
         }
 
         return podcastSort;
+    }
+
+    private getPodcastFilterEnum(filter: string): PodcastFilter {
+        let podcastFilter: PodcastFilter;
+
+        switch (filter) {
+            case 'Downloaded':
+                podcastFilter = PodcastFilter.Downloaded;
+                break;
+            case 'Unplayed':
+                podcastFilter = PodcastFilter.Unplayed;
+                break;
+            case 'All':
+            default:
+                podcastFilter = PodcastFilter.All;
+                break;
+        }
+
+        return podcastFilter;
     }
 }
