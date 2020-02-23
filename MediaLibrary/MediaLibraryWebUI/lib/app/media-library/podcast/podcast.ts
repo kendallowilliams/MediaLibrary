@@ -79,7 +79,7 @@ export default class Podcast extends BaseClass implements IView {
 
         $(this.mediaView).find('*[data-podcast-action="refresh"]').on('click', e => {
             LoadingModal.showLoading();
-            $.post('/Podcast/RefreshPodcast', { id: this.podcastConfiguration.properties.SelectedPodcastId }, () => this.loadView(() => LoadingModal.hideLoading()));
+            $.post('Podcast/RefreshPodcast', { id: this.podcastConfiguration.properties.SelectedPodcastId }, () => this.loadView(() => LoadingModal.hideLoading()));
         });
     }
 

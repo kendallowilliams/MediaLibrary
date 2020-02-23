@@ -17,7 +17,7 @@ export default class AddNewPlaylistModal {
         $(this.modal).find('*[data-playlist-action="save"]').on('click', e => {
             LoadingModal.showLoading();
             $(this.modal).modal('hide').on('hidden.bs.modal', () => {
-                $.post('/Playlist/AddPlaylist', { playlistName: $('#txtNewPlaylist').val() }, () => this.loadFunc(() => LoadingModal.hideLoading()));
+                $.post('Playlist/AddPlaylist', { playlistName: $('#txtNewPlaylist').val() }, () => this.loadFunc(() => LoadingModal.hideLoading()));
             });
         });
     }

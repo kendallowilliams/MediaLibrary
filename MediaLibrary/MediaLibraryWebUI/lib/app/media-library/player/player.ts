@@ -355,7 +355,7 @@ export default class Player extends BaseClass implements IView {
     private updatePlayCount(player: HTMLMediaElement, callback: () => void = () => null) {
         const id = $(player).attr('data-item-id');
 
-        $.post('/Player/UpdatePlayCount', { mediaType: this.playerConfiguration.properties.SelectedMediaType, id: id }, callback);
+        $.post('Player/UpdatePlayCount', { mediaType: this.playerConfiguration.properties.SelectedMediaType, id: id }, callback);
     }
 
     private reload(callback: () => void = () => null): void {
