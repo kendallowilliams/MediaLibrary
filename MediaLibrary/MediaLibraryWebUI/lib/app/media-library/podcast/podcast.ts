@@ -15,7 +15,7 @@ export default class Podcast extends BaseClass implements IView {
     private addNewPodcastModal: AddNewPodcastModal;
     private deleteModal: DeleteModal;
 
-    constructor(private podcastConfiguration: PodcastConfiguration, private playFunc: (btn: HTMLButtonElement) => void) {
+    constructor(private podcastConfiguration: PodcastConfiguration, private playFunc: (btn: HTMLButtonElement, single: boolean) => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
     }
@@ -35,7 +35,6 @@ export default class Podcast extends BaseClass implements IView {
     }
 
     initializeControls(): void {
-        $('[data-play-id]').on('click', e => this.playFunc(e.target as HTMLButtonElement));
         $('[data-back-button="podcast"]').on('click', () => {
             LoadingModal.showLoading();
             this.podcastConfiguration.properties.SelectedPodcastId = 0;
@@ -92,6 +91,7 @@ export default class Podcast extends BaseClass implements IView {
         var success = () => {
             $(item).parent('li.page-item:first').addClass('active');
             loadTooltips(this.podcastView);
+            $(this.mediaView).find('*[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement, true));
             LoadingModal.hideLoading();
         },
             id = this.podcastConfiguration.properties.SelectedPodcastId,
