@@ -355,7 +355,7 @@ export default class Player extends BaseClass implements IView {
     private updatePlayCount(player: HTMLMediaElement, callback: () => void = () => null) {
         const id = $(player).attr('data-item-id');
 
-        $.post('/Player/UpdatePlayCount', { mediaType: this.playerConfiguration.properties.SelectedMediaType, id: id }, callback);
+        $.post('Player/UpdatePlayCount', { mediaType: this.playerConfiguration.properties.SelectedMediaType, id: id }, callback);
     }
 
     private reload(callback: () => void = () => null): void {
@@ -367,7 +367,7 @@ export default class Player extends BaseClass implements IView {
             containers = HtmlControls.Containers();
 
         $(containers.PlayerItemsContainer).html('');
-        $(containers.PlayerItemsContainer).load('/Player/GetPlayerItems', success);
+        $(containers.PlayerItemsContainer).load('Player/GetPlayerItems', success);
     }
 
     private updateSelectedPlayerPage(): void {
@@ -435,7 +435,7 @@ export default class Player extends BaseClass implements IView {
         this.playerConfiguration.updateConfiguration(function () {
             $.ajax({
                 type: 'POST',
-                url: '/Player/UpdateNowPlaying',
+                url: 'Player/UpdateNowPlaying',
                 data: data,
                 contentType: false,
                 success: success,

@@ -31,7 +31,7 @@ export default class Podcast extends BaseClass implements IView {
                 callback();
             };
 
-        $(this.mediaView).load('/Podcast/Index', success);
+        $(this.mediaView).load('Podcast/Index', success);
     }
 
     initializeControls(): void {
@@ -79,7 +79,7 @@ export default class Podcast extends BaseClass implements IView {
 
         $(this.mediaView).find('*[data-podcast-action="refresh"]').on('click', e => {
             LoadingModal.showLoading();
-            $.post('/Podcast/RefreshPodcast', { id: this.podcastConfiguration.properties.SelectedPodcastId }, () => this.loadView(() => LoadingModal.hideLoading()));
+            $.post('Podcast/RefreshPodcast', { id: this.podcastConfiguration.properties.SelectedPodcastId }, () => this.loadView(() => LoadingModal.hideLoading()));
         });
     }
 
@@ -109,7 +109,7 @@ export default class Podcast extends BaseClass implements IView {
         if (item) {
             LoadingModal.showLoading();
             disposeTooltips(this.podcastView);
-            $(this.podcastView).load('/Podcast/GetPodcastItems', { id: id, year: year, filter: filter }, success);
+            $(this.podcastView).load('Podcast/GetPodcastItems', { id: id, year: year, filter: filter }, success);
         }
     }
 

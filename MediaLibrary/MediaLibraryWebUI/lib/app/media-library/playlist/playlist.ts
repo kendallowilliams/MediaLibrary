@@ -28,7 +28,7 @@ export default class Playlist extends BaseClass implements IView {
             callback();
         };
 
-        $(this.mediaView).load('/Playlist/Index', success);
+        $(this.mediaView).load('Playlist/Index', success);
     }
 
     private initializeControls(): void {

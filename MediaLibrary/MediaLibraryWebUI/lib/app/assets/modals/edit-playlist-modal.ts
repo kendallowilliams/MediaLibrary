@@ -21,7 +21,7 @@ export default class EditPlaylistModal {
             $(this.modal).modal('hide').on('hidden.bs.modal', () => {
                 LoadingModal.showLoading();
                 $('#txtPlaylistId, #txtPlaylistName').val('');
-                $.post('/Playlist/EditPlaylist', data, () => this.loadFunc(() => LoadingModal.hideLoading()));
+                $.post('Playlist/EditPlaylist', data, () => this.loadFunc(() => LoadingModal.hideLoading()));
             });
         });
     }
