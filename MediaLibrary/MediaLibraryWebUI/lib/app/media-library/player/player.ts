@@ -190,7 +190,7 @@ export default class Player extends BaseClass implements IView {
             let page = this.playerConfiguration.properties.SelectedPlayerPage,
                 $player = $(this.getPlayer()),
                 $playerItems = $(containers.PlayerItemsContainer),
-                $btn = $(e.target);
+                $btn = $(e.currentTarget);
 
             $(buttons.PlayerFullscreenButton).addClass('d-none');
             if (page === PlayerPages.Index) {
