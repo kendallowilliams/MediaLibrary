@@ -41,6 +41,14 @@ export default class Music extends BaseClass implements IView {
         $(this.mediaView).load('Music/Index', success);
     }
 
+    loadArtist(id: number, callback: () => void): void {
+        this.artist.loadArtist.call(this.artist, id, callback);
+    }
+
+    loadAlbum(id: number, callback: () => void): void {
+        this.album.loadAlbum.call(this.album, id, callback);
+    }
+
     private initializeControls(): void {
         const properties: IMusicConfiguration = this.musicConfiguration.properties,
             playSingle: boolean = properties.SelectedMusicTab === MusicTabs.Songs && properties.SelectedMusicPage === MusicPages.Index;

@@ -77,11 +77,10 @@ export default class Podcast extends BaseClass implements IView {
         });
     }
 
-    loadPodcast(id: number) {
-        LoadingModal.showLoading();
+    loadPodcast(id: number, callback: () => void = () => null) {
         this.podcastConfiguration.properties.SelectedPodcastPage = PodcastPages.Podcast;
         this.podcastConfiguration.properties.SelectedPodcastId = id;
-        this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
+        this.podcastConfiguration.updateConfiguration(callback);
     }
 
     private getSelectedYear(): string {

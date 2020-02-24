@@ -59,6 +59,11 @@ export default class MediaLibrary extends BaseClass {
                 this.playlist = new Playlist(this.playlistConfiguration, this.player.play.bind(this.player));
                 this.podcast = new Podcast(this.podcastConfiguration, this.player.play.bind(this.player));
                 this.television = new Television(this.televisionConfiguration, this.player.play.bind(this.player));
+                this.player.setLoadFunctions({
+                    loadArtist: (id) => this.music.loadArtist(id, () => this.loadView(MediaPages.Music)),
+                    loadAlbum: (id) => this.music.loadAlbum(id, () => this.loadView(MediaPages.Music)),
+                    loadPodcast: (id) => this.podcast.loadPodcast(id, () => this.loadView(MediaPages.Podcast))
+                });
                 this.loadView(this.mediaLibraryConfiguration.properties.SelectedMediaPage);
             });
         };

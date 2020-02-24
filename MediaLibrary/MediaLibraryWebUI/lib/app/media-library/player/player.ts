@@ -8,15 +8,19 @@ import AudioVisualizer from "../audio-visualizer/audio-visualizer";
 import { openFullscreen } from "../../assets/utilities/element";
 import { loadTooltips } from "../../assets/utilities/bootstrap-helper";
 import LoadingModal from '../../assets/modals/loading-modal';
+import IPlayerLoadFunctions from "../../assets/interfaces/player-load-functions-interface";
 
 export default class Player extends BaseClass implements IView {
     private players: { VideoPlayer: HTMLMediaElement, MusicPlayer: HTMLMediaElement };
     private unPlayedShuffleIds: number[];
     private audioVisualizer: AudioVisualizer;
+    private playerView: HTMLElement;
+    private loadFunctions: IPlayerLoadFunctions;
 
     constructor(private playerConfiguration: PlayerConfiguration) {
         super();
         this.players = HtmlControls.Players();
+        this.playerView = HtmlControls.Views().PlayerView;
         this.unPlayedShuffleIds = [];
         this.audioVisualizer = new AudioVisualizer(playerConfiguration, this.players.MusicPlayer, playerConfiguration.properties.AudioVisualizerEnabled);
         this.initPlayer();
@@ -25,6 +29,11 @@ export default class Player extends BaseClass implements IView {
     loadView(callback: () => void = () => null): void {
         this.audioVisualizer.prepareCanvas();
         callback();
+    }
+
+    setLoadFunctions(functions: IPlayerLoadFunctions): void {
+        this.loadFunctions = functions;
+        this.applyLoadFunctions();
     }
 
     private initPlayer(): void {
@@ -361,6 +370,7 @@ export default class Player extends BaseClass implements IView {
     private reload(callback: () => void = () => null): void {
         const success = () => {
             loadTooltips(HtmlControls.Containers().PlayerItemsContainer);
+            this.applyLoadFunctions();
             this.updateSelectedPlayerPage();
             if (typeof callback === 'function') /*then*/ callback();
         },
@@ -368,6 +378,11 @@ export default class Player extends BaseClass implements IView {
 
         $(containers.PlayerItemsContainer).html('');
         $(containers.PlayerItemsContainer).load('Player/GetPlayerItems', success);
+    }
+
+    private applyLoadFunctions(): void {
+        $(this.playerView).find('*[data-artist-id]').on('click', e => this.loadFunctions.loadArtist(parseInt($(e.currentTarget).attr('data-artist-id'))));
+        $(this.playerView).find('*[data-album-id]').on('click', e => this.loadFunctions.loadAlbum(parseInt($(e.currentTarget).attr('data-album-id'))));
     }
 
     private updateSelectedPlayerPage(): void {
