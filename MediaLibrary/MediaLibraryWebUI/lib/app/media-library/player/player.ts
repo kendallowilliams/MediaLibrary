@@ -57,7 +57,7 @@ export default class Player extends BaseClass implements IView {
         });
 
         $(this.getPlayers()).on('timeupdate', e => {
-            const player: HTMLMediaElement = e.target as HTMLMediaElement;
+            const player: HTMLMediaElement = e.currentTarget as HTMLMediaElement;
 
             this.enableDisablePreviousNext();
             if ($(controls.PlayerSlider).attr('data-slide-started') !== 'true') {
