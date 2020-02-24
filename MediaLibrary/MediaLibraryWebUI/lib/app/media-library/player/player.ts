@@ -46,7 +46,10 @@ export default class Player extends BaseClass implements IView {
         const buttons = HtmlControls.Buttons(),
             controls = HtmlControls.UIControls();
 
-        $(this.getPlayers()).on('ended', e => this.updatePlayCount(e.currentTarget as HTMLMediaElement, this.loadNext));
+        $(this.getPlayers()).on('ended', e => {
+            this.updatePlayCount(e.currentTarget as HTMLMediaElement, () => this.loadNext());
+            if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0; 
+        });
         $(this.getPlayers()).prop('volume', this.playerConfiguration.properties.Volume / 100.0);
 
         $(this.getPlayers()).on('durationchange', e => {
