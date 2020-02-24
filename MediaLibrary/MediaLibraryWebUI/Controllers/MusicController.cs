@@ -308,9 +308,9 @@ namespace MediaLibraryWebUI.Controllers
             {
                 Id = track.Id,
                 Title = track.Title,
-                Album = track?.Album.Title,
-                Artist = track?.Artist.Name,
-                Genre = track?.Genre.Name
+                Album = track.Album?.Title,
+                Artist = track.Artist?.Name,
+                Genre = track.Genre?.Name
             };
 
             return new JsonResult { Data = song, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

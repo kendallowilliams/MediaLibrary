@@ -98,6 +98,7 @@ export default class MediaLibrary extends BaseClass {
         const container: HTMLElement = HtmlControls.Containers().HeaderControlsContainer;
 
         LoadingModal.showLoading();
+        $('#divNavbar').collapse('hide');
         this.mediaLibraryConfiguration.properties.SelectedMediaPage = mediaPage;
         this.disableNavItem(this.getMediaPagesEnumString(mediaPage));
         $(container).removeClass('d-none');
