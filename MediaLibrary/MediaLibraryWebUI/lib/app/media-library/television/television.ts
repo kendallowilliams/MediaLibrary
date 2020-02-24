@@ -25,10 +25,12 @@ export default class Television extends BaseClass implements IView {
                 callback();
             };
 
+        disposeTooltips(this.mediaView);
         $(this.mediaView).load('Television/Index', success);
     }
 
     initializeControls(): void {
+        loadTooltips(this.mediaView);
         $('[data-back-button="television"]').on('click', () => this.goBack(() => this.loadView.call(this)));
 
         $(this.mediaView).find('*[data-series-action="sort"]').on('click', e => {

@@ -7,6 +7,7 @@ import AddNewPlaylistModal from "../../assets/modals/add-playlist-modal";
 import DeleteModal from "../../assets/modals/delete-modal";
 import LoadingModal from "../../assets/modals/loading-modal";
 import EditPlaylistModal from "../../assets/modals/edit-playlist-modal";
+import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
 
 export default class Playlist extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -28,10 +29,12 @@ export default class Playlist extends BaseClass implements IView {
             callback();
         };
 
+        disposeTooltips(this.mediaView);
         $(this.mediaView).load('Playlist/Index', success);
     }
 
     private initializeControls(): void {
+        loadTooltips(this.mediaView);
         $(this.mediaView).find('*[data-back-button="playlist"]').on('click', () => this.goBack(() => this.loadView.call(this)));
         $(this.mediaView).find('*[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement));
 

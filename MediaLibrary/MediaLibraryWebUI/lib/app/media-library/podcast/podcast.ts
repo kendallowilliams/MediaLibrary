@@ -31,10 +31,12 @@ export default class Podcast extends BaseClass implements IView {
                 callback();
             };
 
+        disposeTooltips(this.mediaView);
         $(this.mediaView).load('Podcast/Index', success);
     }
 
     initializeControls(): void {
+        loadTooltips(this.mediaView);
         $('[data-back-button="podcast"]').on('click', () => {
             LoadingModal.showLoading();
             this.podcastConfiguration.properties.SelectedPodcastId = 0;
