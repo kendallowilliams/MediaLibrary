@@ -9,7 +9,7 @@
                 <h2 class="text-truncate">@(Model.SelectedPlaylist.Name) playlist</h2>
             </div>
         </div>
-        <div>
+        <div class="p-1">
             <button class="btn btn-outline-secondary" data-back-button="playlist" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
             <button class="btn btn-outline-secondary" title="Edit playlist" data-toggle="modal" data-target="#@(HtmlControlsRepository.EdiPlaylistModalId)" data-item-id="@(Model.SelectedPlaylist.Id)"
                     data-item-name="@(Model.SelectedPlaylist.Name)" data-tooltip="tooltip">

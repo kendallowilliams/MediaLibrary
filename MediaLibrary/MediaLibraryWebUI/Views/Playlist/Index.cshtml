@@ -9,7 +9,7 @@
 <div class="d-flex flex-column" style="flex: 1 1 auto; overflow-y: auto">
     <div style="flex: 0 0 auto">
         <h2>Playlists</h2>
-        <div>
+        <div class="p-1">
             <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewPlaylistModalId)" data-tooltip="tooltip" title="Add playlist"><i class="fa fa-plus"></i></button>
             <div class="float-right">
                 @Html.DropDownListFor(x => x.Configuration.SelectedPlaylistSort,
