@@ -46,11 +46,11 @@ export default class Player extends BaseClass implements IView {
         const buttons = HtmlControls.Buttons(),
             controls = HtmlControls.UIControls();
 
-        $(this.getPlayers()).on('ended', e => this.updatePlayCount(e.target as HTMLMediaElement, this.loadNext));
+        $(this.getPlayers()).on('ended', e => this.updatePlayCount(e.currentTarget as HTMLMediaElement, this.loadNext));
         $(this.getPlayers()).prop('volume', this.playerConfiguration.properties.Volume / 100.0);
 
         $(this.getPlayers()).on('durationchange', e => {
-            const player: HTMLMediaElement = e.target as HTMLMediaElement;
+            const player: HTMLMediaElement = e.currentTarget as HTMLMediaElement;
 
             $(controls.PlayerSlider).slider('option', 'max', player.duration);
             $(controls.PlayerTime).text(this.getPlaybackTime(player.currentTime, player.duration));
@@ -71,7 +71,7 @@ export default class Player extends BaseClass implements IView {
                 audioVisualizerEnabled = this.playerConfiguration.properties.AudioVisualizerEnabled;
 
             if (this.getPlayer().duration === Infinity) /*then*/ this.getPlayer().src = this.getPlayer().src;
-            $(e.target).attr('data-playing', 'true');
+            $(e.currentTarget).attr('data-playing', 'true');
             $([buttons.PlayerPlayButton, buttons.HeaderPlayButton]).addClass('d-none');
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).removeClass('d-none');
             if (this.audioVisualizer && mediaType !== MediaTypes.Television && audioVisualizerEnabled) /*then*/ this.audioVisualizer.start();
@@ -119,13 +119,13 @@ export default class Player extends BaseClass implements IView {
             this.playerConfiguration.updateConfiguration();
         });
         $(controls.PlayerSlider).on('slide', (e, ui) => {
-            if ($(e.target).attr('data-slide-started') === 'true') {
+            if ($(e.currentTarget).attr('data-slide-started') === 'true') {
                 $(this.getPlayer()).prop('currentTime', ui.value);
-                $(controls.PlayerTime).text(this.getPlaybackTime(ui.value, $(e.target).slider('option', 'max')));
+                $(controls.PlayerTime).text(this.getPlaybackTime(ui.value, $(e.currentTarget).slider('option', 'max')));
             }
         });
-        $(controls.PlayerSlider).on('slidestart', (e, ui) => $(e.target).attr('data-slide-started', 'true'));
-        $(controls.PlayerSlider).on('slidestop', (e, ui) => $(e.target).attr('data-slide-started', 'false'));
+        $(controls.PlayerSlider).on('slidestart', (e, ui) => $(e.currentTarget).attr('data-slide-started', 'true'));
+        $(controls.PlayerSlider).on('slidestop', (e, ui) => $(e.currentTarget).attr('data-slide-started', 'false'));
         $([buttons.HeaderNextButton, buttons.PlayerNextButton]).on('click', () => this.loadNext());
         $([buttons.HeaderPreviousButton, buttons.PlayerPreviousButton]).on('click', () => this.loadPrevious());
         $([buttons.HeaderPauseButton, buttons.PlayerPauseButton]).on('click', () => $(this.getPlayer()).attr('data-playing', 'false').trigger('pause'));

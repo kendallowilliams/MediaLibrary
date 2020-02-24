@@ -40,7 +40,7 @@ export default class Playlist extends BaseClass implements IView {
 
         $(this.mediaView).find('*[data-playlist-action="sort"]').on('change', e => {
             LoadingModal.showLoading();
-            this.playlistConfiguration.properties.SelectedPlaylistSort = this.getPlaylistSortEnum($(e.target).val() as string);
+            this.playlistConfiguration.properties.SelectedPlaylistSort = this.getPlaylistSortEnum($(e.currentTarget).val() as string);
             this.playlistConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
 

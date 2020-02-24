@@ -102,8 +102,8 @@ export default class Music extends BaseClass implements IView {
         });
 
         $(this.mediaView).find('*[data-sort-type]').on('change', e => {
-            const select = e.target,
-                sortType: string = $(e.target).attr('data-sort-type');
+            const select = e.currentTarget,
+                sortType: string = $(select).attr('data-sort-type');
 
             if (sortType === 'SelectedAlbumSort') {
                 this.musicConfiguration.properties.SelectedAlbumSort = this.getAlbumSortEnum($(select).val() as string);

@@ -45,7 +45,7 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private initializeControls(): void {
-        $('[data-media-page]').on('click', e => this.loadView.call(this, this.getMediaPagesEnum($(e.target).attr('data-media-page'))));
+        $('[data-media-page]').on('click', e => this.loadView.call(this, this.getMediaPagesEnum($(e.currentTarget).attr('data-media-page'))));
     }
 
     private load(): void {

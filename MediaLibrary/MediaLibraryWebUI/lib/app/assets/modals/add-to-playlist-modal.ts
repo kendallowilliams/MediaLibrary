@@ -24,7 +24,7 @@ export default class AddToPlaylistModal {
         });
 
         $('[data-playlist-action="add"]').on('click', e => {
-            var $btn = $(e.target),
+            var $btn = $(e.currentTarget),
                 url = $btn.attr('data-playlist-url'),
                 id = $btn.attr('data-item-id'),
                 playlistId = $btn.attr('data-playlist-id');
