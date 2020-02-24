@@ -118,12 +118,14 @@ export default class Podcast extends BaseClass implements IView {
 
     private updateMobileYears(position: number): void {
         let minYearCount = 5,
-            numItemsBefore = Math.floor(minYearCount / 2),
+            maxYearCount = 10,
+            numItemsBefore = Math.ceil(minYearCount / 2) - 1,
             numItemsAfter = minYearCount - numItemsBefore - 1,
             first = position - numItemsBefore,
             last = position + numItemsAfter,
             cssSelector = '[data-podcast-year]:not([data-podcast-year="+"]):not([data-podcast-year="-"]',
-            numYears = $(cssSelector).length;
+            numYears = $(cssSelector).length,
+            delta = numYears - maxYearCount;
 
         $(cssSelector).addClass('d-none d-lg-block');
 
@@ -132,10 +134,29 @@ export default class Podcast extends BaseClass implements IView {
             last = minYearCount;
         } else if (last > numYears) {
             first = first - (last - numYears);
-            last = position + (numYears - position);
+            last = numYears;
         }
 
-        for (var i = first; i <= last; i++) {
+        if (delta > 0) {
+            let maxFirst: number = position - (Math.ceil(maxYearCount / 2) - 1),
+                maxLast: number = position + Math.ceil(maxYearCount / 2);
+
+            if (maxFirst < 1) {
+                maxFirst = 1;
+                maxLast = maxYearCount;
+            } else if (maxLast > numYears) {
+                maxFirst = maxFirst - (maxLast - numYears);
+                maxLast = numYears;
+            }
+
+            for (let i = 1; i <= numYears; i++) {
+                if (i < maxFirst || i > maxLast) {
+                    $(this.mediaView).find('*[data-podcast-year][data-item-index="' + i + '"]').removeClass('d-lg-block');
+                }
+            }
+        }
+
+        for (let i = first; i <= last; i++) {
             $(this.mediaView).find('*[data-podcast-year][data-item-index="' + i + '"]').removeClass('d-none d-lg-block');
         }
     }

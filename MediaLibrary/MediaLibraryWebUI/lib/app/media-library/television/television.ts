@@ -82,7 +82,7 @@ export default class Television extends BaseClass implements IView {
 
     private updateMobileSeasons(season: number): void {
         let minSeasonCount = 5,
-            numItemsBefore = Math.floor(minSeasonCount / 2),
+            numItemsBefore = Math.ceil(minSeasonCount / 2) - 1,
             numItemsAfter = minSeasonCount - numItemsBefore - 1,
             first = season - numItemsBefore,
             last = season + numItemsAfter,
@@ -96,7 +96,7 @@ export default class Television extends BaseClass implements IView {
             last = minSeasonCount;
         } else if (last > numSeasons) {
             first = first - (last - numSeasons);
-            last = season + (numSeasons - season);
+            last = numSeasons;
         }
 
         for (var i = first; i <= last; i++) {
