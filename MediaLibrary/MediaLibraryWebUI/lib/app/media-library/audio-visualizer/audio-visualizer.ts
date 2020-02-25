@@ -27,7 +27,9 @@ export default class AudioVisualizer extends BaseClass {
         this.getWidth = () => $(this.canvas).parent().width();
         this.canvasContext = this.canvas.getContext('2d');
         this.fftSize = 256;
-
+        this.playerStopped = true;
+        this.initialized = false;
+        this.enabled = false;
     }
 
     init(): void {
@@ -42,6 +44,7 @@ export default class AudioVisualizer extends BaseClass {
         this.audioSourceNode.connect(this.analyser);
         this.prepareCanvas();
         this.initialized = true;
+        this.enabled = this.playerConfiguration.properties.AudioVisualizerEnabled;
     }
 
     isInitialized(): boolean {
@@ -70,8 +73,7 @@ export default class AudioVisualizer extends BaseClass {
             x = 0,
             step = Math.floor(this.bufferLength / numberOfBars),
             canContinue = !this.playerStopped && this.playerConfiguration.properties.AudioVisualizerEnabled;
-
-        this.enabled = true;
+        
         this.clear(this.canvas.width, this.canvas.height);
         if (this.analyser) /*then*/ this.analyser.getByteFrequencyData(this.dataArray);
         this.prepareCanvas();
@@ -109,8 +111,7 @@ export default class AudioVisualizer extends BaseClass {
             x = 0,
             step = Math.floor(this.bufferLength / numberOfBars),
             canContinue = !this.playerStopped && this.playerConfiguration.properties.AudioVisualizerEnabled;;
-
-        this.enabled = false;
+        
         this.clear(this.canvas.width, this.canvas.height);
         this.prepareCanvas();
 
@@ -139,7 +140,7 @@ export default class AudioVisualizer extends BaseClass {
 
     start(): void {
         this.playerStopped = false;
-        if (!this.enabled) /*then*/ this.draw();
+        if (this.enabled) /*then*/ this.draw();
     }
 
     pause(): void {
@@ -148,9 +149,12 @@ export default class AudioVisualizer extends BaseClass {
 
     enable(): void {
         this.audioSourceNode.connect(this.analyser);
+        this.enabled = true;
+        if (!this.playerStopped) /*then*/ this.draw();
     }
 
     disable(): void {
         this.audioSourceNode.disconnect(this.analyser);
+        this.enabled = false;
     }
 }
