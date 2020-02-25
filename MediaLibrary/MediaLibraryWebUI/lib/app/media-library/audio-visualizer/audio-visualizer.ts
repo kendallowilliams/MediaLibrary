@@ -106,7 +106,8 @@ export default class AudioVisualizer extends BaseClass {
             discY = 0,
             discHeight = 5,
             x = 0,
-            step = Math.floor(this.bufferLength / numberOfBars);
+            step = Math.floor(this.bufferLength / numberOfBars),
+            canContinue = !this.playerStopped && this.playerConfiguration.properties.AudioVisualizerEnabled;;
 
         this.clear(this.canvas.width, this.canvas.height);
         this.prepareCanvas();
@@ -130,7 +131,11 @@ export default class AudioVisualizer extends BaseClass {
         }
 
         if (this.dataArray.find((value, index) => value > 0) ||
-            this.previousDataArray.find((value, index) => value > 0)) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
+            this.previousDataArray.find((value, index) => value > 0) &&
+            !canContinue) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
+
+        this.dataArray = new Uint8Array(this.bufferLength);
+        this.previousDataArray = new Uint8Array(this.bufferLength);
     }
 
     start(): void {
