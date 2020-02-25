@@ -6,7 +6,7 @@ import { MediaTypes, RepeatTypes, PlayerPages } from "../../assets/enums/enums";
 import { getRandomInteger } from "../../assets/utilities/math";
 import AudioVisualizer from "../audio-visualizer/audio-visualizer";
 import { openFullscreen } from "../../assets/utilities/element";
-import { loadTooltips } from "../../assets/utilities/bootstrap-helper";
+import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
 import LoadingModal from '../../assets/modals/loading-modal';
 import IPlayerLoadFunctions from "../../assets/interfaces/player-load-functions-interface";
 import ClearNowPlayingModal from "../../assets/modals/clear-now-playing-modal";
@@ -43,6 +43,7 @@ export default class Player extends BaseClass implements IView {
     private initPlayer(): void {
         this.initMediaPlayers();
         this.initPlayerControls();
+        loadTooltips(this.playerView);
         this.reload(() => this.loadItem());
     }
 
@@ -398,13 +399,14 @@ export default class Player extends BaseClass implements IView {
 
     private reload(callback: () => void = () => null): void {
         const success = () => {
-            loadTooltips(HtmlControls.Containers().PlayerItemsContainer);
+            loadTooltips(containers.PlayerItemsContainer);
             this.applyLoadFunctions();
             this.updateSelectedPlayerPage();
             if (typeof callback === 'function') /*then*/ callback();
         },
             containers = HtmlControls.Containers();
 
+        disposeTooltips(containers.PlayerItemsContainer);
         $(containers.PlayerItemsContainer).html('');
         $(containers.PlayerItemsContainer).load('Player/GetPlayerItems', success);
     }
