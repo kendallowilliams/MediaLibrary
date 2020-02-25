@@ -133,9 +133,6 @@ export default class AudioVisualizer extends BaseClass {
         if (this.dataArray.find((value, index) => value > 0) ||
             this.previousDataArray.find((value, index) => value > 0) &&
             !canContinue) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
-
-        this.dataArray = new Uint8Array(this.bufferLength);
-        this.previousDataArray = new Uint8Array(this.bufferLength);
     }
 
     start(): void {
