@@ -77,6 +77,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string EdiPlaylistModalId { get => "edit-playlist-modal"; }
         public static string EditSongModalId { get => "edit-song-modal"; }
         public static string LoadingModalId { get => "loading-modal"; }
+        public static string ClearNowPlayingModalId { get => "clear-now-playing-modal"; }
         #endregion Modal Ids
     }
 }

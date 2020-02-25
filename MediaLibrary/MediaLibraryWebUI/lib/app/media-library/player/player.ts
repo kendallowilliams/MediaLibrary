@@ -9,6 +9,7 @@ import { openFullscreen } from "../../assets/utilities/element";
 import { loadTooltips } from "../../assets/utilities/bootstrap-helper";
 import LoadingModal from '../../assets/modals/loading-modal';
 import IPlayerLoadFunctions from "../../assets/interfaces/player-load-functions-interface";
+import ClearNowPlayingModal from "../../assets/modals/clear-now-playing-modal";
 
 export default class Player extends BaseClass implements IView {
     private players: { VideoPlayer: HTMLMediaElement, MusicPlayer: HTMLMediaElement };
@@ -16,6 +17,7 @@ export default class Player extends BaseClass implements IView {
     private audioVisualizer: AudioVisualizer;
     private playerView: HTMLElement;
     private loadFunctions: IPlayerLoadFunctions;
+    private clearNowPlayingModal: ClearNowPlayingModal;
 
     constructor(private playerConfiguration: PlayerConfiguration) {
         super();
@@ -23,6 +25,7 @@ export default class Player extends BaseClass implements IView {
         this.playerView = HtmlControls.Views().PlayerView;
         this.unPlayedShuffleIds = [];
         this.audioVisualizer = new AudioVisualizer(this.playerConfiguration, this.players.MusicPlayer);
+        this.clearNowPlayingModal = new ClearNowPlayingModal(() => this.reload(() => this.loadItem()));
         this.initPlayer();
     }
 

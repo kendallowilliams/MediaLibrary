@@ -62,6 +62,7 @@
         DeleteModal: document.getElementById('delete-modal'),
         EdiPlaylistModal: document.getElementById('edit-playlist-modal'),
         EditSongModal: document.getElementById('edit-song-modal'),
-        LoadingModal: document.getElementById('loading-modal')
+        LoadingModal: document.getElementById('loading-modal'),
+        ClearNowPlayingModal: document.getElementById('clear-now-playing-modal')
     })
 }
