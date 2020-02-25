@@ -17,7 +17,7 @@ export default class AudioVisualizer extends BaseClass {
     private getWidth: () => number;
     private playerStopped: boolean;
     private initialized: boolean;
-    private disabled: boolean;
+    private enabled: boolean;
 
     constructor(private playerConfiguration: PlayerConfiguration, audioElement: HTMLAudioElement) {
         super();
@@ -71,6 +71,7 @@ export default class AudioVisualizer extends BaseClass {
             step = Math.floor(this.bufferLength / numberOfBars),
             canContinue = !this.playerStopped && this.playerConfiguration.properties.AudioVisualizerEnabled;
 
+        this.enabled = true;
         this.clear(this.canvas.width, this.canvas.height);
         if (this.analyser) /*then*/ this.analyser.getByteFrequencyData(this.dataArray);
         this.prepareCanvas();
@@ -109,6 +110,7 @@ export default class AudioVisualizer extends BaseClass {
             step = Math.floor(this.bufferLength / numberOfBars),
             canContinue = !this.playerStopped && this.playerConfiguration.properties.AudioVisualizerEnabled;;
 
+        this.enabled = false;
         this.clear(this.canvas.width, this.canvas.height);
         this.prepareCanvas();
 
@@ -136,10 +138,8 @@ export default class AudioVisualizer extends BaseClass {
     }
 
     start(): void {
-        if (this.audioContext) {
-            this.playerStopped = false;
-            this.draw();
-        }
+        this.playerStopped = false;
+        if (!this.enabled) /*then*/ this.draw();
     }
 
     pause(): void {
