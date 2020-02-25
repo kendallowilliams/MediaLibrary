@@ -72,7 +72,7 @@ export default class AudioVisualizer extends BaseClass {
             discHeight = 5,
             x = 0,
             step = Math.floor(this.bufferLength / numberOfBars),
-            canContinue = !this.playerStopped && this.playerConfiguration.properties.AudioVisualizerEnabled;
+            canContinue = !this.playerStopped && this.enabled;
         
         this.clear(this.canvas.width, this.canvas.height);
         if (this.analyser) /*then*/ this.analyser.getByteFrequencyData(this.dataArray);
@@ -110,7 +110,7 @@ export default class AudioVisualizer extends BaseClass {
             discHeight = 5,
             x = 0,
             step = Math.floor(this.bufferLength / numberOfBars),
-            canContinue = !this.playerStopped && this.playerConfiguration.properties.AudioVisualizerEnabled;;
+            canContinue = !this.playerStopped && this.enabled;
         
         this.clear(this.canvas.width, this.canvas.height);
         this.prepareCanvas();
@@ -139,12 +139,15 @@ export default class AudioVisualizer extends BaseClass {
     }
 
     start(): void {
-        this.playerStopped = false;
-        if (this.enabled) /*then*/ this.draw();
+        if (!this.playerStopped && this.enabled) /*then*/ this.draw();
     }
 
     pause(): void {
         this.playerStopped = true;
+    }
+
+    play(): void {
+        this.playerStopped = false;
     }
 
     enable(): void {

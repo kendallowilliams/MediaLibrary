@@ -84,6 +84,7 @@ export default class Player extends BaseClass implements IView {
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).removeClass('d-none');
             if (mediaType !== MediaTypes.Television && audioVisualizerEnabled) {
                 if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
+                this.audioVisualizer.play();
                 this.audioVisualizer.start();
             }
         });
@@ -236,6 +237,11 @@ export default class Player extends BaseClass implements IView {
                 this.playerConfiguration.updateConfiguration(() => {
                     $(button).addClass('active');
                     this.audioVisualizer.enable();
+
+                    if (this.isPlaying()) {
+                        this.audioVisualizer.play();
+                        this.audioVisualizer.start();
+                    }
                 });
             }
         });
