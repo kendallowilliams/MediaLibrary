@@ -42,6 +42,8 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerVolumeButtonId { get => "btn-player-volume"; }
         public static string PlayerMuteButtonId { get => "btn-player-mute"; }
         public static string PlayerFullscreenButtonId { get => "btn-player-fullscreen"; }
+        public static string PlayerClearButtonId { get => "btn-player-clear"; }
+        public static string PlayerAudioVisualizerButtonId { get => "btn-audio-visualizer"; }
         #endregion Button Ids
 
         #region Container Ids

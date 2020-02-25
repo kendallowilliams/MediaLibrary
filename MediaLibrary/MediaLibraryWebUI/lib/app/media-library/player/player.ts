@@ -22,7 +22,7 @@ export default class Player extends BaseClass implements IView {
         this.players = HtmlControls.Players();
         this.playerView = HtmlControls.Views().PlayerView;
         this.unPlayedShuffleIds = [];
-        this.audioVisualizer = new AudioVisualizer(playerConfiguration, this.players.MusicPlayer, playerConfiguration.properties.AudioVisualizerEnabled);
+        this.audioVisualizer = new AudioVisualizer(this.playerConfiguration, this.players.MusicPlayer);
         this.initPlayer();
     }
 
@@ -78,7 +78,10 @@ export default class Player extends BaseClass implements IView {
             $(e.currentTarget).attr('data-playing', 'true');
             $([buttons.PlayerPlayButton, buttons.HeaderPlayButton]).addClass('d-none');
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).removeClass('d-none');
-            if (this.audioVisualizer && mediaType !== MediaTypes.Television && audioVisualizerEnabled) /*then*/ this.audioVisualizer.start();
+            if (mediaType !== MediaTypes.Television && audioVisualizerEnabled) {
+                if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
+                this.audioVisualizer.start();
+            }
         });
 
         $(this.getPlayers()).on('pause', e => {
@@ -212,6 +215,27 @@ export default class Player extends BaseClass implements IView {
                 $btn.addClass('active');
             }
             this.playerConfiguration.updateConfiguration();
+        });
+        $(buttons.PlayerAudioVisualizerButton).on('click', e => {
+            const button: HTMLElement = e.currentTarget;
+
+            if ($(button).hasClass('active')) {
+                this.playerConfiguration.properties.AudioVisualizerEnabled = false;
+                this.playerConfiguration.updateConfiguration(() => {
+                    $(button).removeClass('active');
+                    this.audioVisualizer.disable();
+                });
+            } else {
+                this.playerConfiguration.properties.AudioVisualizerEnabled = true;
+                this.playerConfiguration.updateConfiguration(() => {
+                    $(button).addClass('active');
+                    if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
+                    this.audioVisualizer.enable();
+                });
+            }
+        });
+        $(buttons.PlayerClearButton).on('click', () => {
+            $.post('Player/ClearNowPlaying', { mediaType: this.playerConfiguration.properties.SelectedMediaType }, () => this.reload())
         });
     }
 

@@ -10,8 +10,13 @@
     <div style="flex: 0 0 auto">
         <div class="d-flex flex-row">
             <div style="flex: 0 0 auto"><h2>Now Playing</h2></div>
-            <div style="flex: 0 1 auto; overflow-x: auto">
+            <div style="flex: 1 1 auto; overflow-x: auto">
                 <h2 id="@(HtmlControlsRepository.NowPlayingTitleId)" class="text-truncate"></h2>
+            </div>
+            <div class="p-1" style="flex: 0 0 auto">
+                <button id="@(HtmlControlsRepository.PlayerAudioVisualizerButtonId)" class="btn btn-outline-secondary @(Model.Configuration.AudioVisualizerEnabled ? "active" : string.Empty)" 
+                        data-tooltip="tooltip" title="Toggle audio visualizer"><i class="fa fa-eye" /></button>
+                <button id="@(HtmlControlsRepository.PlayerClearButtonId)" class="btn btn-outline-danger"><i class="fa fa-trash" data-tooltip="Clear now playing" /></button>
             </div>
         </div>
         <hr />

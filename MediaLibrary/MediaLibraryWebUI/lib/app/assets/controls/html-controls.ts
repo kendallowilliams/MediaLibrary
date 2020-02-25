@@ -30,7 +30,9 @@
         PlayerPlaylistToggleButton: document.getElementById('btn-player-playlist-toggle'),
         PlayerVolumeButton: document.getElementById('btn-player-volume'),
         PlayerMuteButton: document.getElementById('btn-player-mute'),
-        PlayerFullscreenButton: document.getElementById('btn-player-fullscreen')
+        PlayerFullscreenButton: document.getElementById('btn-player-fullscreen'),
+        PlayerClearButton: document.getElementById('btn-player-clear'),
+        PlayerAudioVisualizerButton: document.getElementById('btn-audio-visualizer')
     }),
     Containers: () => ({
         HeaderControlsContainer: document.getElementById('header-controls-container'),

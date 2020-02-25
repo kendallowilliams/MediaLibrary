@@ -180,6 +180,22 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
+        public void ClearNowPlaying(MediaTypes mediaType)
+        {
+            if (mediaType == MediaTypes.Song)
+            {
+                IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json"));
+            }
+            else if (mediaType == MediaTypes.Podcast)
+            {
+                IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"));
+            }
+            else if (mediaType == MediaTypes.Television)
+            {
+                IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json"));
+            }
+        }
+
         public async Task UpdatePlayCount(MediaTypes mediaType, int id)
         {
             if (mediaType == MediaTypes.Podcast)
