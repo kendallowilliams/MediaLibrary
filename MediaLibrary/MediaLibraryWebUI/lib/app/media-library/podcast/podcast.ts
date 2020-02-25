@@ -27,9 +27,9 @@ export default class Podcast extends BaseClass implements IView {
                 $('[data-podcast-year][data-item-index="1"]').trigger('click');
                 callback();
             };
-
+        
         disposeTooltips(this.mediaView);
-        $(this.mediaView).load('Podcast/Index', success);
+        this.podcastConfiguration.refresh(() => $(this.mediaView).load('Podcast/Index', success));
     }
 
     initializeControls(): void {
