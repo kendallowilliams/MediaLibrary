@@ -53,7 +53,7 @@ export default class Player extends BaseClass implements IView {
 
         $(this.getPlayers()).on('ended', e => {
             this.updatePlayCount(e.currentTarget as HTMLMediaElement, () => this.loadNext());
-            if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0; 
+            if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0;
         });
         $(this.getPlayers()).prop('volume', this.playerConfiguration.properties.Volume / 100.0);
 
@@ -402,6 +402,13 @@ export default class Player extends BaseClass implements IView {
             loadTooltips(containers.PlayerItemsContainer);
             this.applyLoadFunctions();
             this.updateSelectedPlayerPage();
+            $(containers.PlayerItemsContainer).find('[data-item-index]').on('click', e => {
+                const index = parseInt($(e.currentTarget).attr('data-item-index')),
+                    item = $(containers.PlayerItemsContainer).find('li[data-play-index="' + index + '"]')[0];
+
+                this.loadItem(item, true);
+            });
+
             if (typeof callback === 'function') /*then*/ callback();
         },
             containers = HtmlControls.Containers();
