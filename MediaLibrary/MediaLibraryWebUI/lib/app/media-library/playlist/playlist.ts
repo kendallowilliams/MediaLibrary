@@ -4,7 +4,6 @@ import PlaylistConfiguration from "../../assets/models/configurations/playlist-c
 import HtmlControls from '../../assets/controls/html-controls';
 import { PlaylistPages, PlaylistSort } from "../../assets/enums/enums";
 import AddNewPlaylistModal from "../../assets/modals/add-playlist-modal";
-import DeleteModal from "../../assets/modals/delete-modal";
 import LoadingModal from "../../assets/modals/loading-modal";
 import EditPlaylistModal from "../../assets/modals/edit-playlist-modal";
 import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
@@ -12,7 +11,6 @@ import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-
 export default class Playlist extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private addPlaylistModal: AddNewPlaylistModal;
-    private deleteModal: DeleteModal;
     private editPlaylistModal: EditPlaylistModal;
 
     constructor(private playlistConfiguration: PlaylistConfiguration, private playFunc: (btn: HTMLButtonElement) => void) {
@@ -23,7 +21,6 @@ export default class Playlist extends BaseClass implements IView {
     loadView(callback: () => void = () => null): void {
         const success: () => void = () => {
             this.addPlaylistModal = new AddNewPlaylistModal(this.loadView.bind(this));
-            this.deleteModal = new DeleteModal(this.loadView.bind(this));
             this.editPlaylistModal = new EditPlaylistModal(this.loadView.bind(this));
             this.initializeControls();
             callback();

@@ -6,14 +6,12 @@ import { PodcastPages, PodcastSort, PodcastFilter } from "../../assets/enums/enu
 import IPodcastConfiguration from "../../assets/interfaces/podcast-configuration-interface";
 import AddNewPodcastModal from "../../assets/modals/add-podcast-modal";
 import LoadingModal from "../../assets/modals/loading-modal";
-import DeleteModal from "../../assets/modals/delete-modal";
 import { disposeTooltips, loadTooltips } from "../../assets/utilities/bootstrap-helper";
 
 export default class Podcast extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private podcastView: HTMLElement;
     private addNewPodcastModal: AddNewPodcastModal;
-    private deleteModal: DeleteModal;
 
     constructor(private podcastConfiguration: PodcastConfiguration, private playFunc: (btn: HTMLButtonElement, single: boolean) => void) {
         super();
@@ -25,7 +23,6 @@ export default class Podcast extends BaseClass implements IView {
             success: () => void = () => {
                 this.podcastView = HtmlControls.Views().PodcastView;
                 this.addNewPodcastModal = new AddNewPodcastModal(this.loadView.bind(this));
-                this.deleteModal = new DeleteModal(this.loadView.bind(this));
                 this.initializeControls();
                 $('[data-podcast-year][data-item-index="1"]').trigger('click');
                 callback();

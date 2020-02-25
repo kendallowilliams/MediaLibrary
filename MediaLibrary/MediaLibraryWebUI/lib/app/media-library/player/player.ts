@@ -219,6 +219,8 @@ export default class Player extends BaseClass implements IView {
         $(buttons.PlayerAudioVisualizerButton).on('click', e => {
             const button: HTMLElement = e.currentTarget;
 
+            if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
+
             if ($(button).hasClass('active')) {
                 this.playerConfiguration.properties.AudioVisualizerEnabled = false;
                 this.playerConfiguration.updateConfiguration(() => {
@@ -229,13 +231,9 @@ export default class Player extends BaseClass implements IView {
                 this.playerConfiguration.properties.AudioVisualizerEnabled = true;
                 this.playerConfiguration.updateConfiguration(() => {
                     $(button).addClass('active');
-                    if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
                     this.audioVisualizer.enable();
                 });
             }
-        });
-        $(buttons.PlayerClearButton).on('click', () => {
-            $.post('Player/ClearNowPlaying', { mediaType: this.playerConfiguration.properties.SelectedMediaType }, () => this.reload())
         });
     }
 

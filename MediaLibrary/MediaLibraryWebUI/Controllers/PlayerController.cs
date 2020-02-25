@@ -180,19 +180,27 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
-        public void ClearNowPlaying(MediaTypes mediaType)
+        public async Task ClearNowPlaying()
         {
-            if (mediaType == MediaTypes.Song)
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Player));
+            PlayerConfiguration playerConfiguration = null;
+
+            if (configuration != null)
             {
-                IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json"));
-            }
-            else if (mediaType == MediaTypes.Podcast)
-            {
-                IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"));
-            }
-            else if (mediaType == MediaTypes.Television)
-            {
-                IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json"));
+                playerConfiguration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
+
+                if (playerConfiguration.SelectedMediaType == MediaTypes.Song)
+                {
+                    IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json"));
+                }
+                else if (playerConfiguration.SelectedMediaType == MediaTypes.Podcast)
+                {
+                    IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"));
+                }
+                else if (playerConfiguration.SelectedMediaType == MediaTypes.Television)
+                {
+                    IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json"));
+                }
             }
         }
 
