@@ -55,6 +55,9 @@ export default class Player extends BaseClass implements IView {
             this.updatePlayCount(e.currentTarget as HTMLMediaElement, () => this.loadNext());
             if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0;
         });
+        $(this.getPlayers()).on('loadstart', e => {
+            this.audioVisualizer.pause();
+        });
         $(this.getPlayers()).prop('volume', this.playerConfiguration.properties.Volume / 100.0);
 
         $(this.getPlayers()).on('durationchange', e => {
@@ -75,14 +78,13 @@ export default class Player extends BaseClass implements IView {
         });
 
         $(this.getPlayers()).on('play', e => {
-            const mediaType = this.playerConfiguration.properties.SelectedMediaType,
-                audioVisualizerEnabled = this.playerConfiguration.properties.AudioVisualizerEnabled;
+            const mediaType = this.playerConfiguration.properties.SelectedMediaType;
 
             if (this.getPlayer().duration === Infinity) /*then*/ this.getPlayer().src = this.getPlayer().src;
             $(e.currentTarget).attr('data-playing', 'true');
             $([buttons.PlayerPlayButton, buttons.HeaderPlayButton]).addClass('d-none');
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).removeClass('d-none');
-            if (mediaType !== MediaTypes.Television && audioVisualizerEnabled) {
+            if (mediaType !== MediaTypes.Television) {
                 if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
                 this.audioVisualizer.play();
                 this.audioVisualizer.start();
@@ -92,7 +94,7 @@ export default class Player extends BaseClass implements IView {
         $(this.getPlayers()).on('pause', e => {
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).addClass('d-none');
             $([buttons.PlayerPlayButton, buttons.HeaderPlayButton]).removeClass('d-none');
-            if (this.audioVisualizer && this.playerConfiguration.properties.AudioVisualizerEnabled) /*then*/ this.audioVisualizer.pause();
+            this.audioVisualizer.pause();
         });
 
         $(this.getPlayers()).on('error', e => null);
