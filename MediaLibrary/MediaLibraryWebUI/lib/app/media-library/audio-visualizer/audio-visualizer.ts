@@ -18,6 +18,7 @@ export default class AudioVisualizer extends BaseClass {
     private playerStopped: boolean;
     private initialized: boolean;
     private enabled: boolean;
+    private drawId: number;
 
     constructor(private playerConfiguration: PlayerConfiguration, audioElement: HTMLAudioElement) {
         super();
@@ -62,7 +63,7 @@ export default class AudioVisualizer extends BaseClass {
         this.canvasContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    draw(): void {
+    draw(id: number): void {
         let width = this.getWidth(),
             height = this.getHeight(),
             numberOfBars = 128,
@@ -72,7 +73,7 @@ export default class AudioVisualizer extends BaseClass {
             discHeight = 5,
             x = 0,
             step = Math.floor(this.bufferLength / numberOfBars),
-            canContinue = !this.playerStopped && this.enabled;
+            canContinue = !this.playerStopped && this.enabled && this.drawId === id;
         
         this.clear(this.canvas.width, this.canvas.height);
         if (this.analyser) /*then*/ this.analyser.getByteFrequencyData(this.dataArray);
@@ -94,8 +95,8 @@ export default class AudioVisualizer extends BaseClass {
             x += barWidth;
         }
 
-        if (!canContinue) /*then*/ this.reset();
-        else window.requestAnimationFrame(this.draw.bind(this));
+        if (!canContinue) /*then*/ this.reset.call(this);
+        else window.requestAnimationFrame(this.draw.bind(this, id));
     }
 
     reset(): void {
@@ -137,7 +138,10 @@ export default class AudioVisualizer extends BaseClass {
     }
 
     start(): void {
-        if (!this.playerStopped && this.enabled) /*then*/ this.draw();
+        const id: number = Date.now();
+
+        this.drawId = id;
+        if (!this.playerStopped && this.enabled) /*then*/ this.draw(id);
     }
 
     pause(): void {
@@ -151,7 +155,6 @@ export default class AudioVisualizer extends BaseClass {
     enable(): void {
         this.audioSourceNode.connect(this.analyser);
         this.enabled = true;
-        if (!this.playerStopped) /*then*/ this.draw();
     }
 
     disable(): void {
