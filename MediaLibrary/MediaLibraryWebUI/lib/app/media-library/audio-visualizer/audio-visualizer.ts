@@ -94,9 +94,7 @@ export default class AudioVisualizer extends BaseClass {
             x += barWidth;
         }
 
-        if (!canContinue) {
-            this.reset();
-        }
+        if (!canContinue) /*then*/ this.reset();
         else window.requestAnimationFrame(this.draw.bind(this));
     }
 
@@ -110,7 +108,7 @@ export default class AudioVisualizer extends BaseClass {
             discHeight = 5,
             x = 0,
             step = Math.floor(this.bufferLength / numberOfBars),
-            canContinue = !this.playerStopped && this.enabled;
+            canContinue = this.playerStopped || !this.enabled;
         
         this.clear(this.canvas.width, this.canvas.height);
         this.prepareCanvas();
@@ -133,9 +131,9 @@ export default class AudioVisualizer extends BaseClass {
             x += barWidth;
         }
 
-        if (this.dataArray.find((value, index) => value > 0) ||
-            this.previousDataArray.find((value, index) => value > 0) &&
-            !canContinue) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
+        if ((this.dataArray.find((value, index) => value > 0) ||
+            this.previousDataArray.find((value, index) => value > 0)) &&
+            canContinue) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
     }
 
     start(): void {
