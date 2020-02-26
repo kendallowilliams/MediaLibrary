@@ -54,8 +54,6 @@ export default class Player extends BaseClass implements IView {
         $(this.getPlayers()).on('ended', e => {
             this.updatePlayCount(e.currentTarget as HTMLMediaElement, () => this.loadNext());
             if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0;
-        });
-        $(this.getPlayers()).on('loadstart', e => {
             this.audioVisualizer.pause();
         });
         $(this.getPlayers()).prop('volume', this.playerConfiguration.properties.Volume / 100.0);
@@ -272,6 +270,7 @@ export default class Player extends BaseClass implements IView {
                 if (shuffleEnabled && $.inArray(index, this.unPlayedShuffleIds) >= 0) /*then*/ this.unPlayedShuffleIds.splice(this.unPlayedShuffleIds.indexOf(index), 1);
                 this.updateScrollTop();
                 $player.prop('src', url);
+                this.audioVisualizer.pause();
                 if (triggerPlay) /*then*/ $player.trigger('play');
                 this.enableDisablePreviousNext();
             });
