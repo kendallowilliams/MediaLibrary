@@ -154,12 +154,16 @@ export default class AudioVisualizer extends BaseClass {
     }
 
     enable(): void {
-        this.audioSourceNode.connect(this.analyser);
-        this.enabled = true;
+        if (this.initialized) {
+            this.audioSourceNode.connect(this.analyser);
+            this.enabled = true;
+        }
     }
 
     disable(): void {
-        this.audioSourceNode.disconnect(this.analyser);
-        this.enabled = false;
+        if (this.isInitialized) {
+            this.audioSourceNode.disconnect(this.analyser);
+            this.enabled = false;
+        }
     }
 }
