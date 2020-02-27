@@ -45,7 +45,7 @@ export default class AudioVisualizer extends BaseClass {
         this.audioSourceNode.connect(this.analyser);
         this.prepareCanvas();
         this.initialized = true;
-        this.enabled = this.playerConfiguration.properties.AudioVisualizerEnabled;
+        if (this.playerConfiguration.properties.AudioVisualizerEnabled) /*then*/ this.enable();
     }
 
     isInitialized(): boolean {
