@@ -42,11 +42,15 @@ export default class Music extends BaseClass implements IView {
     }
 
     loadArtist(id: number, callback: () => void): void {
-        this.artist.loadArtist.call(this.artist, id, callback);
+        if (Number.isInteger(id)) {
+            this.artist.loadArtist.call(this.artist, id, callback);
+        }
     }
 
     loadAlbum(id: number, callback: () => void): void {
-        this.album.loadAlbum.call(this.album, id, callback);
+        if (Number.isInteger(id)) {
+            this.album.loadAlbum.call(this.album, id, callback);
+        }
     }
 
     private initializeControls(): void {
