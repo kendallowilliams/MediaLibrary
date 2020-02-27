@@ -42,7 +42,6 @@ export default class AudioVisualizer extends BaseClass {
         this.dataArray = new Uint8Array(this.bufferLength);
         this.previousDataArray = new Uint8Array(this.bufferLength);
         this.audioSourceNode.connect(this.audioContext.destination);
-        this.audioSourceNode.connect(this.analyser);
         this.prepareCanvas();
         this.initialized = true;
         if (this.playerConfiguration.properties.AudioVisualizerEnabled) /*then*/ this.enable();
