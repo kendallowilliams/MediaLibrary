@@ -34,17 +34,19 @@ export default class AudioVisualizer extends BaseClass {
     }
 
     init(): void {
-        this.audioContext = new AudioContext();
-        this.analyser = this.audioContext.createAnalyser();
-        this.audioSourceNode = this.audioContext.createMediaElementSource(this.audioElement);
-        this.analyser.fftSize = this.fftSize;
-        this.bufferLength = this.analyser.frequencyBinCount;
-        this.dataArray = new Uint8Array(this.bufferLength);
-        this.previousDataArray = new Uint8Array(this.bufferLength);
-        this.audioSourceNode.connect(this.audioContext.destination);
-        this.prepareCanvas();
-        this.initialized = true;
-        if (this.playerConfiguration.properties.AudioVisualizerEnabled) /*then*/ this.enable();
+        if (this.playerConfiguration.properties.AudioVisualizerEnabled) {
+            this.audioContext = new AudioContext();
+            this.analyser = this.audioContext.createAnalyser();
+            this.audioSourceNode = this.audioContext.createMediaElementSource(this.audioElement);
+            this.analyser.fftSize = this.fftSize;
+            this.bufferLength = this.analyser.frequencyBinCount;
+            this.dataArray = new Uint8Array(this.bufferLength);
+            this.previousDataArray = new Uint8Array(this.bufferLength);
+            this.audioSourceNode.connect(this.audioContext.destination);
+            this.prepareCanvas();
+            this.initialized = true;
+            this.enable();
+        }
     }
 
     isInitialized(): boolean {
