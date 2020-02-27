@@ -6,9 +6,10 @@ import { MediaTypes, RepeatTypes, PlayerPages } from "../../assets/enums/enums";
 import { getRandomInteger } from "../../assets/utilities/math";
 import AudioVisualizer from "../audio-visualizer/audio-visualizer";
 import { openFullscreen } from "../../assets/utilities/element";
-import { loadTooltips } from "../../assets/utilities/bootstrap-helper";
+import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
 import LoadingModal from '../../assets/modals/loading-modal';
 import IPlayerLoadFunctions from "../../assets/interfaces/player-load-functions-interface";
+import ClearNowPlayingModal from "../../assets/modals/clear-now-playing-modal";
 
 export default class Player extends BaseClass implements IView {
     private players: { VideoPlayer: HTMLMediaElement, MusicPlayer: HTMLMediaElement };
@@ -16,13 +17,15 @@ export default class Player extends BaseClass implements IView {
     private audioVisualizer: AudioVisualizer;
     private playerView: HTMLElement;
     private loadFunctions: IPlayerLoadFunctions;
+    private clearNowPlayingModal: ClearNowPlayingModal;
 
     constructor(private playerConfiguration: PlayerConfiguration) {
         super();
         this.players = HtmlControls.Players();
         this.playerView = HtmlControls.Views().PlayerView;
         this.unPlayedShuffleIds = [];
-        this.audioVisualizer = new AudioVisualizer(playerConfiguration, this.players.MusicPlayer, playerConfiguration.properties.AudioVisualizerEnabled);
+        this.audioVisualizer = new AudioVisualizer(this.playerConfiguration, this.players.MusicPlayer);
+        this.clearNowPlayingModal = new ClearNowPlayingModal(() => this.reload(() => this.loadItem()));
         this.initPlayer();
     }
 
@@ -40,6 +43,7 @@ export default class Player extends BaseClass implements IView {
     private initPlayer(): void {
         this.initMediaPlayers();
         this.initPlayerControls();
+        loadTooltips(this.playerView);
         this.reload(() => this.loadItem());
     }
 
@@ -49,7 +53,8 @@ export default class Player extends BaseClass implements IView {
 
         $(this.getPlayers()).on('ended', e => {
             this.updatePlayCount(e.currentTarget as HTMLMediaElement, () => this.loadNext());
-            if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0; 
+            if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0;
+            this.audioVisualizer.pause();
         });
         $(this.getPlayers()).prop('volume', this.playerConfiguration.properties.Volume / 100.0);
 
@@ -71,20 +76,23 @@ export default class Player extends BaseClass implements IView {
         });
 
         $(this.getPlayers()).on('play', e => {
-            const mediaType = this.playerConfiguration.properties.SelectedMediaType,
-                audioVisualizerEnabled = this.playerConfiguration.properties.AudioVisualizerEnabled;
+            const mediaType = this.playerConfiguration.properties.SelectedMediaType;
 
             if (this.getPlayer().duration === Infinity) /*then*/ this.getPlayer().src = this.getPlayer().src;
             $(e.currentTarget).attr('data-playing', 'true');
             $([buttons.PlayerPlayButton, buttons.HeaderPlayButton]).addClass('d-none');
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).removeClass('d-none');
-            if (this.audioVisualizer && mediaType !== MediaTypes.Television && audioVisualizerEnabled) /*then*/ this.audioVisualizer.start();
+            if (mediaType !== MediaTypes.Television) {
+                if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
+                this.audioVisualizer.play();
+                this.audioVisualizer.start();
+            }
         });
 
         $(this.getPlayers()).on('pause', e => {
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).addClass('d-none');
             $([buttons.PlayerPlayButton, buttons.HeaderPlayButton]).removeClass('d-none');
-            if (this.audioVisualizer && this.playerConfiguration.properties.AudioVisualizerEnabled) /*then*/ this.audioVisualizer.pause();
+            this.audioVisualizer.pause();
         });
 
         $(this.getPlayers()).on('error', e => null);
@@ -213,6 +221,30 @@ export default class Player extends BaseClass implements IView {
             }
             this.playerConfiguration.updateConfiguration();
         });
+        $(buttons.PlayerAudioVisualizerButton).on('click', e => {
+            const button: HTMLElement = e.currentTarget;
+
+            if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
+
+            if ($(button).hasClass('active')) {
+                this.playerConfiguration.properties.AudioVisualizerEnabled = false;
+                this.playerConfiguration.updateConfiguration(() => {
+                    $(button).removeClass('active');
+                    this.audioVisualizer.disable();
+                });
+            } else {
+                this.playerConfiguration.properties.AudioVisualizerEnabled = true;
+                this.playerConfiguration.updateConfiguration(() => {
+                    $(button).addClass('active');
+                    this.audioVisualizer.enable();
+
+                    if (this.isPlaying()) {
+                        this.audioVisualizer.play();
+                        this.audioVisualizer.start();
+                    }
+                });
+            }
+        });
     }
 
     private loadItem(item: HTMLElement = null, triggerPlay: boolean = false): void {
@@ -238,6 +270,7 @@ export default class Player extends BaseClass implements IView {
                 if (shuffleEnabled && $.inArray(index, this.unPlayedShuffleIds) >= 0) /*then*/ this.unPlayedShuffleIds.splice(this.unPlayedShuffleIds.indexOf(index), 1);
                 this.updateScrollTop();
                 $player.prop('src', url);
+                this.audioVisualizer.pause();
                 if (triggerPlay) /*then*/ $player.trigger('play');
                 this.enableDisablePreviousNext();
             });
@@ -373,13 +406,21 @@ export default class Player extends BaseClass implements IView {
 
     private reload(callback: () => void = () => null): void {
         const success = () => {
-            loadTooltips(HtmlControls.Containers().PlayerItemsContainer);
+            loadTooltips(containers.PlayerItemsContainer);
             this.applyLoadFunctions();
             this.updateSelectedPlayerPage();
+            $(containers.PlayerItemsContainer).find('[data-item-index]').on('click', e => {
+                const index = parseInt($(e.currentTarget).attr('data-item-index')),
+                    item = $(containers.PlayerItemsContainer).find('li[data-play-index="' + index + '"]')[0];
+
+                this.loadItem(item, true);
+            });
+
             if (typeof callback === 'function') /*then*/ callback();
         },
             containers = HtmlControls.Containers();
 
+        disposeTooltips(containers.PlayerItemsContainer);
         $(containers.PlayerItemsContainer).html('');
         $(containers.PlayerItemsContainer).load('Player/GetPlayerItems', success);
     }

@@ -42,6 +42,8 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerVolumeButtonId { get => "btn-player-volume"; }
         public static string PlayerMuteButtonId { get => "btn-player-mute"; }
         public static string PlayerFullscreenButtonId { get => "btn-player-fullscreen"; }
+        public static string PlayerClearButtonId { get => "btn-player-clear"; }
+        public static string PlayerAudioVisualizerButtonId { get => "btn-audio-visualizer"; }
         #endregion Button Ids
 
         #region Container Ids
@@ -75,6 +77,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string EdiPlaylistModalId { get => "edit-playlist-modal"; }
         public static string EditSongModalId { get => "edit-song-modal"; }
         public static string LoadingModalId { get => "loading-modal"; }
+        public static string ClearNowPlayingModalId { get => "clear-now-playing-modal"; }
         #endregion Modal Ids
     }
 }

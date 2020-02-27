@@ -30,7 +30,9 @@
         PlayerPlaylistToggleButton: document.getElementById('btn-player-playlist-toggle'),
         PlayerVolumeButton: document.getElementById('btn-player-volume'),
         PlayerMuteButton: document.getElementById('btn-player-mute'),
-        PlayerFullscreenButton: document.getElementById('btn-player-fullscreen')
+        PlayerFullscreenButton: document.getElementById('btn-player-fullscreen'),
+        PlayerClearButton: document.getElementById('btn-player-clear'),
+        PlayerAudioVisualizerButton: document.getElementById('btn-audio-visualizer')
     }),
     Containers: () => ({
         HeaderControlsContainer: document.getElementById('header-controls-container'),
@@ -60,6 +62,7 @@
         DeleteModal: document.getElementById('delete-modal'),
         EdiPlaylistModal: document.getElementById('edit-playlist-modal'),
         EditSongModal: document.getElementById('edit-song-modal'),
-        LoadingModal: document.getElementById('loading-modal')
+        LoadingModal: document.getElementById('loading-modal'),
+        ClearNowPlayingModal: document.getElementById('clear-now-playing-modal')
     })
 }

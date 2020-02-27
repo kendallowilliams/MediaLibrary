@@ -2,13 +2,15 @@
 @using MediaLibraryWebUI.Repositories
 @model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
-<div id="@(HtmlControlsRepository.HomeViewId)" class="@(Model.Configuration.SelectedMediaPage != Enums.MediaPages.Home ? "d-none" : string.Empty) flex-column" 
+<div id="@(HtmlControlsRepository.HomeViewId)" class="@(Model.Configuration.SelectedMediaPage != Enums.MediaPages.Home ? "d-none" : string.Empty) flex-column"
      style="flex: 1 1 auto; overflow-y: auto; display: flex" data-action-url="@Url.Action("Index", "Home")"></></div>
-<div id="@(HtmlControlsRepository.PlayerViewId)" class="@(Model.Configuration.SelectedMediaPage != Enums.MediaPages.Player ? "d-none" : string.Empty) flex-column" 
+<div id="@(HtmlControlsRepository.PlayerViewId)" class="@(Model.Configuration.SelectedMediaPage != Enums.MediaPages.Player ? "d-none" : string.Empty) flex-column"
      style="flex: 1 1 auto; overflow-y: auto; display: flex" data-action-url="@Url.Action("Index", "Player")"></></div>
-<div id="@(HtmlControlsRepository.MediaViewId)" class="@((Model.Configuration.SelectedMediaPage == Enums.MediaPages.Home || 
-                                                          Model.Configuration.SelectedMediaPage == Enums.MediaPages.Player) ? "d-none" : string.Empty) flex-column" 
+<div id="@(HtmlControlsRepository.MediaViewId)" class="@((Model.Configuration.SelectedMediaPage == Enums.MediaPages.Home ||
+                                                          Model.Configuration.SelectedMediaPage == Enums.MediaPages.Player) ? "d-none" : string.Empty) flex-column"
      style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
+
+@Html.Partial("~/Views/Shared/Modals/DeleteModal.cshtml")
 
 @section scripts {
 }

@@ -16,8 +16,11 @@ export default class AudioVisualizer extends BaseClass {
     private getHeight: () => number;
     private getWidth: () => number;
     private playerStopped: boolean;
+    private initialized: boolean;
+    private enabled: boolean;
+    private drawId: number;
 
-    constructor(private playerConfiguration: PlayerConfiguration, audioElement: HTMLAudioElement, enabled: boolean = false) {
+    constructor(private playerConfiguration: PlayerConfiguration, audioElement: HTMLAudioElement) {
         super();
         this.audioElement = audioElement as HTMLAudioElement;
         this.canvas = HtmlControls.UIControls().AudioVisualizer;
@@ -25,21 +28,29 @@ export default class AudioVisualizer extends BaseClass {
         this.getWidth = () => $(this.canvas).parent().width();
         this.canvasContext = this.canvas.getContext('2d');
         this.fftSize = 256;
-        if (enabled) /*then*/ this.init();
+        this.playerStopped = true;
+        this.initialized = false;
+        this.enabled = false;
     }
 
     init(): void {
-        this.audioContext = new AudioContext();
-        this.analyser = this.audioContext.createAnalyser();
-        this.audioSourceNode = this.audioContext.createMediaElementSource(this.audioElement);
-        this.analyser.fftSize = this.fftSize;
-        this.bufferLength = this.analyser.frequencyBinCount;
-        this.dataArray = new Uint8Array(this.bufferLength);
-        this.previousDataArray = new Uint8Array(this.bufferLength);
-        this.audioSourceNode.connect(this.audioContext.destination);
-        this.audioSourceNode.connect(this.analyser);
-        this.analyser.connect(this.audioContext.destination);
-        this.prepareCanvas();
+        if (this.playerConfiguration.properties.AudioVisualizerEnabled) {
+            this.audioContext = new AudioContext();
+            this.analyser = this.audioContext.createAnalyser();
+            this.audioSourceNode = this.audioContext.createMediaElementSource(this.audioElement);
+            this.analyser.fftSize = this.fftSize;
+            this.bufferLength = this.analyser.frequencyBinCount;
+            this.dataArray = new Uint8Array(this.bufferLength);
+            this.previousDataArray = new Uint8Array(this.bufferLength);
+            this.audioSourceNode.connect(this.audioContext.destination);
+            this.prepareCanvas();
+            this.initialized = true;
+            this.enable();
+        }
+    }
+
+    isInitialized(): boolean {
+        return this.initialized;
     }
 
     clear(width, height): void {
@@ -53,7 +64,7 @@ export default class AudioVisualizer extends BaseClass {
         this.canvasContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    draw(): void {
+    draw(id: number): void {
         let width = this.getWidth(),
             height = this.getHeight(),
             numberOfBars = 128,
@@ -62,21 +73,22 @@ export default class AudioVisualizer extends BaseClass {
             discY = 0,
             discHeight = 5,
             x = 0,
-            step = Math.floor(this.bufferLength / numberOfBars);
-
+            step = Math.floor(this.bufferLength / numberOfBars),
+            canContinue = !this.playerStopped && this.enabled && this.drawId === id;
+        
         this.clear(this.canvas.width, this.canvas.height);
         if (this.analyser) /*then*/ this.analyser.getByteFrequencyData(this.dataArray);
         this.prepareCanvas();
-        for (var i = 0; i < this.previousDataArray.length && !this.playerStopped; i++) {
+        for (var i = 0; i < this.previousDataArray.length && canContinue; i++) {
             if (this.dataArray[i] > this.previousDataArray[i]) {
                 this.previousDataArray[i] = this.dataArray[i];
             } else if (this.previousDataArray[i] > 0) {
                 this.previousDataArray[i] -= 1;
             }
         }
-        for (var i = 0; i < numberOfBars && !this.playerStopped; i++) {
-            barHeight = this.dataArray[i * step] * Math.floor(height / numberOfBars);
-            discY = (this.previousDataArray[i * step] * Math.floor(height / numberOfBars)) + discHeight;
+        for (var i = 0; i < numberOfBars && canContinue; i++) {
+            barHeight = this.dataArray[i * step] * Math.floor(height / 255);
+            discY = (this.previousDataArray[i * step] * Math.floor(height / 255)) + discHeight;
             this.canvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
             this.canvasContext.fillRect(x, height - barHeight, barWidth - 1, barHeight);
             this.canvasContext.fillStyle = 'white';
@@ -84,10 +96,8 @@ export default class AudioVisualizer extends BaseClass {
             x += barWidth;
         }
 
-        if (this.playerStopped) {
-            this.reset();
-        }
-        else window.requestAnimationFrame(this.draw.bind(this));
+        if (!canContinue) /*then*/ this.reset.call(this);
+        else window.requestAnimationFrame(this.draw.bind(this, id));
     }
 
     reset(): void {
@@ -99,14 +109,15 @@ export default class AudioVisualizer extends BaseClass {
             discY = 0,
             discHeight = 5,
             x = 0,
-            step = Math.floor(this.bufferLength / numberOfBars);
-
+            step = Math.floor(this.bufferLength / numberOfBars),
+            canContinue = this.playerStopped || !this.enabled;
+        
         this.clear(this.canvas.width, this.canvas.height);
         this.prepareCanvas();
 
         for (var i = 0; i < numberOfBars; i++) {
-            barHeight = this.dataArray[i * step] * Math.floor(height / numberOfBars);
-            discY = (this.previousDataArray[i * step] * Math.floor(height / numberOfBars)) + discHeight;
+            barHeight = this.dataArray[i * step] * Math.floor(height / 255);
+            discY = (this.previousDataArray[i * step] * Math.floor(height / 255)) + discHeight;
             if (this.dataArray[i * step] > 0) /*then*/ this.dataArray[i * step] -= 1;
             if (this.previousDataArray[i * step] > 0) /*then*/ this.previousDataArray[i * step] -= 1;
 
@@ -122,24 +133,37 @@ export default class AudioVisualizer extends BaseClass {
             x += barWidth;
         }
 
-        if (this.dataArray.find((value, index) => value > 0) ||
-            this.previousDataArray.find((value, index) => value > 0)) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
+        if ((this.dataArray.find((value, index) => value > 0) ||
+            this.previousDataArray.find((value, index) => value > 0)) &&
+            canContinue) /*then*/ window.requestAnimationFrame(this.reset.bind(this));
     }
 
     start(): void {
-        if (this.audioContext) {
-            this.playerStopped = false;
-            this.draw();
-        }
+        const id: number = Date.now();
+
+        this.drawId = id;
+        if (!this.playerStopped && this.enabled) /*then*/ this.draw(id);
     }
 
     pause(): void {
         this.playerStopped = true;
     }
 
-    close(): void {
-        this.pause();
-        if (this.audioContext.state !== 'closed') /*then*/ this.audioContext.close()
-        this.analyser = this.audioSourceNode = this.audioContext = null;
+    play(): void {
+        this.playerStopped = false;
+    }
+
+    enable(): void {
+        if (this.initialized) {
+            this.audioSourceNode.connect(this.analyser);
+            this.enabled = true;
+        }
+    }
+
+    disable(): void {
+        if (this.isInitialized) {
+            this.audioSourceNode.disconnect(this.analyser);
+            this.enabled = false;
+        }
     }
 }

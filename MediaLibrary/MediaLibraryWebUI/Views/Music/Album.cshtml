@@ -27,7 +27,7 @@
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
                                     <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(song.Title)</h5>
-                                    <span style="cursor: pointer; flex: 0 0 auto"></span>
+                                    <span data-artist-id="@(song.ArtistId)" style="cursor: pointer; flex: 0 0 auto">@(song.Artist?.Name ?? "Unknown Artist")</span>
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-secondary" data-play-id="@(song.Id)" data-tooltip="tooltip" title="Play">

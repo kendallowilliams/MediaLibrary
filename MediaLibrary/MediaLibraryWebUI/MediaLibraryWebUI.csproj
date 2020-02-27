@@ -455,6 +455,7 @@
     <Content Include="Views\Television\Season.cshtml" />
     <Content Include="Views\Podcast\PodcastItems.cshtml" />
     <Content Include="Views\Shared\Modals\AddNewPodcastModal.cshtml" />
+    <Content Include="Views\Shared\Modals\ClearNowPlayingModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -498,6 +499,7 @@
     <TypeScriptCompile Include="lib\app\assets\modals\add-podcast-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\add-song-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\add-to-playlist-modal.ts" />
+    <TypeScriptCompile Include="lib\app\assets\modals\clear-now-playing-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\delete-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\edit-playlist-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\edit-song-modal.ts" />

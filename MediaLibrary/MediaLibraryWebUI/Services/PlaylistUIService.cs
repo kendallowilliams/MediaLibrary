@@ -45,7 +45,7 @@ namespace MediaLibraryWebUI.Services
             switch (sort)
             {
                 case PlaylistSort.DateAdded:
-                    groups = playlists.GroupBy(playlist => playlist.ModifyDate.ToString("MM-dd-yyyy")).OrderBy(group => DateTime.Parse(group.Key));
+                    groups = playlists.GroupBy(playlist => playlist.ModifyDate.ToString("MM-dd-yyyy")).OrderByDescending(group => DateTime.Parse(group.Key));
                     break;
                 case PlaylistSort.AtoZ:
                 default:
