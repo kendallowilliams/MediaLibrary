@@ -52,9 +52,9 @@ export default class Player extends BaseClass implements IView {
             controls = HtmlControls.UIControls();
 
         $(this.getPlayers()).on('ended', e => {
-            this.updatePlayCount(e.currentTarget as HTMLMediaElement, () => this.loadNext());
             if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0;
             this.audioVisualizer.stop();
+            this.updatePlayCount(e.currentTarget as HTMLMediaElement, () => this.loadNext());
         });
         $(this.getPlayers()).prop('volume', this.playerConfiguration.properties.Volume / 100.0);
 
@@ -285,6 +285,7 @@ export default class Player extends BaseClass implements IView {
 
         if (repeat === RepeatTypes.RepeatOne) {
             $(this.getPlayer()).prop('currentTime', 0);
+            if (this.isPlaying()) /*then*/ this.getPlayer().play();
         } else if (repeat === RepeatTypes.RepeatAll) {
             if (shuffle && shuffleEmpty) {
                 this.setUnPlayedShuffleIds(shuffle);
