@@ -22,6 +22,7 @@ export default class EditSongModal {
                     $('#txtEditAlbum').val(data.Album);
                     $('#txtEditArtist').val(data.Artist);
                     $('#txtEditGenre').val(data.Genre);
+                    $('#txtEditPosition').val(data.Position);
                 };
 
             $.get('Music/GetSong/' + id, success);
@@ -32,7 +33,8 @@ export default class EditSongModal {
                 'Title=' + encodeURIComponent($('#txtEditTitle').val() as string) + '&' +
                 'Album=' + encodeURIComponent($('#txtEditAlbum').val() as string) + '&' +
                 'Artist=' + encodeURIComponent($('#txtEditArtist').val() as string) + '&' +
-                'Genre=' + encodeURIComponent($('#txtEditGenre').val() as string),
+                'Genre=' + encodeURIComponent($('#txtEditGenre').val() as string) + '&' +
+                'Position=' + encodeURIComponent($('#txtEditPosition').val() as string),
                 success = () => {
                     this.loadFunc(() => LoadingModal.hideLoading());
                 };

@@ -307,7 +307,8 @@ namespace MediaLibraryWebUI.Controllers
                 Title = track.Title,
                 Album = track.Album?.Title,
                 Artist = track.Artist?.Name,
-                Genre = track.Genre?.Name
+                Genre = track.Genre?.Name,
+                Position = track.Position
             };
 
             return new JsonResult { Data = song, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -346,6 +347,7 @@ namespace MediaLibraryWebUI.Controllers
                     track.AlbumId = album.Id;
                     track.ArtistId = artist.Id;
                     track.GenreId = genre.Id;
+                    track.Position = song.Position;
                     await dataService.Update(track);
                     musicService.ClearData();
                 }

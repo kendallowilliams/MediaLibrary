@@ -14,5 +14,6 @@ namespace MediaLibraryWebUI.Models.Data
         public string Album { get; set; }
         public string Artist { get; set; }
         public string Genre { get; set; }
+        public int? Position { get; set; }
     }
 }

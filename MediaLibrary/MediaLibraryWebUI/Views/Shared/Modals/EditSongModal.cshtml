@@ -35,6 +35,12 @@
                     </div>
                     @Html.TextBox(nameof(Song.Genre), string.Empty, new { @class = "form-control", id = $"txtEdit{nameof(Song.Genre)}" })
                 </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="" style="width: 75px">@(nameof(Song.Position))</span>
+                    </div>
+                    @Html.TextBox(nameof(Song.Position), string.Empty, new { @class = "form-control", id = $"txtEdit{nameof(Song.Position)}", type = "number", pattern = "[0-9]*", min = "0" })
+                </div>
                 @Html.Hidden(nameof(Song.Id), string.Empty, new { id = $"txtEdit{nameof(Song.Id)}" })
             </div>
             <div class="modal-footer">
