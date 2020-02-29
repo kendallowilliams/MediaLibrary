@@ -54,7 +54,7 @@ export default class Player extends BaseClass implements IView {
         $(this.getPlayers()).on('ended', e => {
             this.updatePlayCount(e.currentTarget as HTMLMediaElement, () => this.loadNext());
             if (!this.canPlayNext()) /*then*/ (e.currentTarget as HTMLMediaElement).currentTime = 0;
-            this.audioVisualizer.pause();
+            this.audioVisualizer.stop();
         });
         $(this.getPlayers()).prop('volume', this.playerConfiguration.properties.Volume / 100.0);
 
@@ -84,7 +84,6 @@ export default class Player extends BaseClass implements IView {
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).removeClass('d-none');
             if (mediaType !== MediaTypes.Television) {
                 if (!this.audioVisualizer.isInitialized()) /*then*/ this.audioVisualizer.init();
-                this.audioVisualizer.play();
                 this.audioVisualizer.start();
             }
         });
@@ -92,7 +91,7 @@ export default class Player extends BaseClass implements IView {
         $(this.getPlayers()).on('pause', e => {
             $([buttons.PlayerPauseButton, buttons.HeaderPauseButton]).addClass('d-none');
             $([buttons.PlayerPlayButton, buttons.HeaderPlayButton]).removeClass('d-none');
-            this.audioVisualizer.pause();
+            this.audioVisualizer.stop();
         });
 
         $(this.getPlayers()).on('error', e => null);
@@ -238,10 +237,7 @@ export default class Player extends BaseClass implements IView {
                     $(button).addClass('active');
                     this.audioVisualizer.enable();
 
-                    if (this.isPlaying()) {
-                        this.audioVisualizer.play();
-                        this.audioVisualizer.start();
-                    }
+                    if (this.isPlaying()) /*then*/ this.audioVisualizer.start();
                 });
             }
         });
@@ -270,7 +266,7 @@ export default class Player extends BaseClass implements IView {
                 if (shuffleEnabled && $.inArray(index, this.unPlayedShuffleIds) >= 0) /*then*/ this.unPlayedShuffleIds.splice(this.unPlayedShuffleIds.indexOf(index), 1);
                 this.updateScrollTop();
                 $player.prop('src', url);
-                this.audioVisualizer.pause();
+                this.audioVisualizer.stop();
                 if (triggerPlay) /*then*/ $player.trigger('play');
                 this.enableDisablePreviousNext();
             });
