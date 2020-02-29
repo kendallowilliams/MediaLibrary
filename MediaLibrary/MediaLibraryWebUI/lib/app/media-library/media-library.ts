@@ -17,6 +17,7 @@ import TelevisionConfiguration from '../assets/models/configurations/television-
 import MusicConfiguration from '../assets/models/configurations/music-configuration';
 import Home from './home/home';
 import DeleteModal from '../assets/modals/delete-modal';
+import EditSongModal from '../assets/modals/edit-song-modal';
 
 export default class MediaLibrary extends BaseClass {
     private home: Home;
@@ -34,6 +35,7 @@ export default class MediaLibrary extends BaseClass {
     private musicConfiguration: MusicConfiguration;
     private mainViews: { HomeView: HTMLElement, MediaView: HTMLElement, PlayerView: HTMLElement };
     private deleteModal: DeleteModal;
+    private editSongModal: EditSongModal;
 
     constructor() {
         super();
@@ -56,6 +58,7 @@ export default class MediaLibrary extends BaseClass {
             this.loadStaticViews(() => {
                 LoadingModal.hideLoading();
                 this.deleteModal = new DeleteModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
+                this.editSongModal = new EditSongModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
                 this.home = new Home(this.homeConfiguration);
                 this.player = new Player(this.playerConfiguration);
                 this.music = new Music(this.musicConfiguration, this.player.play.bind(this.player));

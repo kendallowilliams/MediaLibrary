@@ -1,4 +1,5 @@
-﻿@model MediaLibraryWebUI.Models.PlayerViewModel
+﻿@using MediaLibraryWebUI.Repositories
+@model MediaLibraryWebUI.Models.PlayerViewModel
 
 @if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Song && Model.Songs.Any())
 {
@@ -17,6 +18,10 @@
                     <div>
                         <button type="button" class="btn btn-outline-secondary" data-item-index="@(item.Index)" data-tooltip="tooltip" title="Play">
                             <i class="fa fa-play"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary d-none d-lg-inline-block" data-toggle="modal" data-target="#@(HtmlControlsRepository.EditSongModalId)" data-item-id="@(item.Song.Id)" data-tooltip="tooltip"
+                                title="Edit">
+                            <i class="fa fa-edit"></i>
                         </button>
                     </div>
                 </div>

@@ -1,12 +1,12 @@
 ﻿import HtmlControls from '../controls/html-controls';
 import LoadingModal from '../modals/loading-modal';
-import htmlControls from '../controls/html-controls';
-import { ModalEventHandler, ModalEvent } from 'bootstrap';
+import MediaLibraryConfiguration from '../models/configurations/media-library-configuration';
+import { MediaPages } from '../enums/enums';
 
 export default class EditSongModal {
     private modal: HTMLElement;
 
-    constructor(private loadFunc: (callback: () => void) => void = () => null) {
+    constructor(private mediaLibraryConfiguration: MediaLibraryConfiguration, private loadFunc: (mediaPage: MediaPages) => void = () => null) {
         this.modal = HtmlControls.Modals().EditSongModal;
         this.initializeControls();
     }
@@ -34,14 +34,11 @@ export default class EditSongModal {
                 'Album=' + encodeURIComponent($('#txtEditAlbum').val() as string) + '&' +
                 'Artist=' + encodeURIComponent($('#txtEditArtist').val() as string) + '&' +
                 'Genre=' + encodeURIComponent($('#txtEditGenre').val() as string) + '&' +
-                'Position=' + encodeURIComponent($('#txtEditPosition').val() as string),
-                success = () => {
-                    this.loadFunc(() => LoadingModal.hideLoading());
-                };
+                'Position=' + encodeURIComponent($('#txtEditPosition').val() as string);
 
             $(this.modal).modal('hide').on('hidden.bs.modal', () => {
                 LoadingModal.showLoading();
-                $.post('Music/UpdateSong', data, success);
+                $.post('Music/UpdateSong', data, () => this.loadFunc(this.mediaLibraryConfiguration.properties.SelectedMediaPage));
             });
         });
     }

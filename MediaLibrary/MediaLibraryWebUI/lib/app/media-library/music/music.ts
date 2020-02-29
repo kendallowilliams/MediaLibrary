@@ -16,7 +16,6 @@ export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private artist: Artist;
     private album: Album;
-    private editSongModal: EditSongModal;
     private addToPlaylistModal: AddToPlaylistModal;
     private addNewSongModal: AddNewSongModal;
 
@@ -29,7 +28,6 @@ export default class Music extends BaseClass implements IView {
 
     loadView(callback: () => void = () => null): void {
         const success: () => void = () => {
-            this.editSongModal = new EditSongModal(this.loadView.bind(this));
             this.addToPlaylistModal = new AddToPlaylistModal();
             this.addNewSongModal = new AddNewSongModal(this.loadView.bind(this));
             this.initializeControls();
