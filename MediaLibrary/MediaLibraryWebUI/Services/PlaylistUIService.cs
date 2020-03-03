@@ -40,7 +40,7 @@ namespace MediaLibraryWebUI.Services
         public async Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort)
         {
             IEnumerable<IGrouping<string, Playlist>> groups = null;
-            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist, IEnumerable<Track>>(includeExpression: playlist => playlist.PlaylistTracks.Select(item => item.Track));
+            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>(default, default, playlist => playlist.PlaylistTracks.Select(item => item.Track));
            
             switch (sort)
             {

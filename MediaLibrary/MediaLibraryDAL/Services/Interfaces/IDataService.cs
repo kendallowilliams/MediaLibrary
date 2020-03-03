@@ -14,39 +14,9 @@ namespace MediaLibraryDAL.Services.Interfaces
 {
     public interface IDataService
     {
-        Task<T> Get<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
+        Task<T> Get<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken), params Expression<Func<T, object>>[] includes) where T : class, IDataModel;
 
-        Task<T> Get<T, TInclude>(Expression<Func<T, bool>> expression = null, 
-                                 Expression<Func<T, TInclude>> includeExpression = null, 
-                                 CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
-
-        Task<T> Get<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null,
-                                             Expression<Func<T, TInclude1>> includeExpression1 = null,
-                                             Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                             CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
-
-        Task<T> Get<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
-                                                        Expression<Func<T, TInclude1>> includeExpression1 = null,
-                                                        Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                                        Expression<Func<T, TInclude3>> includeExpression3 = null, 
-                                                        CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
-
-        Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
-
-        Task<IEnumerable<T>> GetList<T, TInclude>(Expression<Func<T, bool>> expression = null, 
-                                                  Expression<Func<T, TInclude>> includeExpression = null, 
-                                                  CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
-
-        Task<IEnumerable<T>> GetList<T, TInclude1, TInclude2>(Expression<Func<T, bool>> expression = null,
-                                                              Expression<Func<T, TInclude1>> includeExpression1 = null,
-                                                              Expression<Func<T, TInclude2>> includeExpression2 = null, 
-                                                              CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
-
-        Task<IEnumerable<T>> GetList<T, TInclude1, TInclude2, TInclude3>(Expression<Func<T, bool>> expression = null,
-                                                                         Expression<Func<T, TInclude1>> includeExpression1 = null,
-                                                                         Expression<Func<T, TInclude2>> includeExpression2 = null,
-                                                                         Expression<Func<T, TInclude3>> includeExpression3 = null, 
-                                                                         CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
+        Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken), params Expression<Func<T, object>>[] includes) where T : class, IDataModel;
 
         Task<int> Insert<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
