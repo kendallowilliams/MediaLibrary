@@ -1,6 +1,4 @@
-﻿@using MediaLibraryDAL.DbContexts
-@using MediaLibraryWebUI.Repositories
-@model (IGrouping<string, Track> Group, int PlaylistCount)
+﻿@model (IGrouping<string, Track> Group, int PlaylistCount)
 
 <ul class="list-group list-group-flush">
     @foreach (var song in Model.Group)
