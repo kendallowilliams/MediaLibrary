@@ -40,7 +40,7 @@ namespace MediaLibraryWebUI.Services
         public async Task<IEnumerable<IGrouping<string, Series>>> GetSeriesGroups(SeriesSort sort)
         {
             IEnumerable<IGrouping<string, Series>> groups = null;
-            IEnumerable<Series> series = await dataService.GetList<Series, IEnumerable<Episode>>(includeExpression: s => s.Episodes);
+            IEnumerable<Series> series = await dataService.GetList<Series>(default, default, s => s.Episodes);
 
             switch (sort)
             {

@@ -107,9 +107,7 @@ namespace MediaLibraryWebUI.Controllers
 
                 if (IO_File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(IO_File.ReadAllText(path));
                 ids = items.Select(item => item.Value);
-                songs = await dataService.GetList<Track, Album, Artist>(item => ids.Contains(item.Id),
-                                                                        item => item.Album,
-                                                                        item => item.Artist);
+                songs = await dataService.GetList<Track>(item => ids.Contains(item.Id),default, item => item.Album, item => item.Artist);
                 playerViewModel.Songs = ids.Select(id => songs.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Podcast)
@@ -120,8 +118,7 @@ namespace MediaLibraryWebUI.Controllers
 
                 if (IO_File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(IO_File.ReadAllText(path));
                 ids = items.Select(item => item.Value);
-                podcastItems = await dataService.GetList<PodcastItem, Podcast>(item => ids.Contains(item.Id),
-                                                                               item => item.Podcast);
+                podcastItems = await dataService.GetList<PodcastItem>(item => ids.Contains(item.Id), default, item => item.Podcast);
                 playerViewModel.PodcastItems = ids.Select(id => podcastItems.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Television)
@@ -132,8 +129,7 @@ namespace MediaLibraryWebUI.Controllers
 
                 if (IO_File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(IO_File.ReadAllText(path));
                 ids = items.Select(item => item.Value);
-                episodes = await dataService.GetList<Episode, Series>(item => ids.Contains(item.Id),
-                                                                      item => item.Series);
+                episodes = await dataService.GetList<Episode>(item => ids.Contains(item.Id), default, item => item.Series);
                 playerViewModel.Episodes = ids.Select(id => episodes.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
             }
         }
