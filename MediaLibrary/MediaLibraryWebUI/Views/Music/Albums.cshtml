@@ -1,4 +1,6 @@
-﻿@if (Model.AlbumGroups.Any())
+﻿@model MediaLibraryWebUI.Models.MusicViewModel
+
+@if (Model.AlbumGroups.Any())
 {
     <div id="accordion-albums">
         @foreach (var item in Model.AlbumGroups.Select((group, index) => new { Index = index, Group = group }))
