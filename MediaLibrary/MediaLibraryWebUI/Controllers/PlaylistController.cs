@@ -134,8 +134,9 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<string> lines = tracks.Select(track => $"#EXTINF:{(int)track.Duration},{track.Title}{Environment.NewLine}{$"{path}/Music/File/{track.Id}"}");
             string data = $"#EXTM3U{Environment.NewLine}{string.Join(Environment.NewLine, lines)}";
             byte[] content = Encoding.UTF8.GetBytes(data);
+            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            return new FileContentResult(content, "audio/mpegurl");
+            return File(content, "audio/mpegurl", $"{playlist.Name.Trim()}_{timestamp}.m3u");
         }
 
         public async Task UpdateConfiguration(PlaylistConfiguration playlistConfiguration)
