@@ -128,11 +128,12 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<Episode> episodes = await dataService.GetList<Episode>(episode => episode.SeriesId == seriesId && episode.Season == season);
             string path = $"{Request.Url.GetLeftPart(UriPartial.Authority)}{Request.ApplicationPath}";
             IEnumerable<string> lines = episodes.Select(episode => $"#EXTINF:0,{episode.Title}{Environment.NewLine}{$"{path}/Television/File/{episode.Id}"}");
-
+            Series series = await dataService.Get<Series>(item => item.Id == seriesId);
             string data = $"#EXTM3U{Environment.NewLine}{string.Join(Environment.NewLine, lines)}";
             byte[] content = Encoding.UTF8.GetBytes(data);
+            string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            return new FileContentResult(content, "audio/mpegurl");
+            return File(content, "audio/mpegurl", $"{series.Title.Trim()}_S{seasonted}_{timestamp}");
         }
         
         public async Task<ActionResult> TelevisionConfiguration()
