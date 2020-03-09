@@ -133,7 +133,7 @@ namespace MediaLibraryWebUI.Controllers
             byte[] content = Encoding.UTF8.GetBytes(data);
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
-            return File(content, "audio/mpegurl", $"{series.Title.Trim()}_S{seasonted}_{timestamp}");
+            return File(content, "audio/mpegurl", $"{series.Title.Trim()}_S{season}_{timestamp}");
         }
         
         public async Task<ActionResult> TelevisionConfiguration()
