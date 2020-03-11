@@ -13,7 +13,9 @@ export default class Podcast extends BaseClass implements IView {
     private podcastView: HTMLElement;
     private addNewPodcastModal: AddNewPodcastModal;
 
-    constructor(private podcastConfiguration: PodcastConfiguration, private playFunc: (btn: HTMLButtonElement, single: boolean) => void) {
+    constructor(private podcastConfiguration: PodcastConfiguration,
+        private playFunc: (btn: HTMLButtonElement, single: boolean) => void,
+        private updateActiveMediaFunc: () => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
     }

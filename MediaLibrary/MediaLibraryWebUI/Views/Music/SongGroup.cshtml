@@ -3,7 +3,7 @@
 <ul class="list-group list-group-flush">
     @foreach (var song in Model.Group)
     {
-        <li class="list-group-item">
+        <li class="list-group-item" data-song-id="@(song.Id)">
             <div class="media">
                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
                 <div class="media-body d-flex flex-column" style="overflow-x: auto">

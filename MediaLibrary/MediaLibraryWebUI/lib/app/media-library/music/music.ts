@@ -19,7 +19,9 @@ export default class Music extends BaseClass implements IView {
     private addToPlaylistModal: AddToPlaylistModal;
     private addNewSongModal: AddNewSongModal;
 
-    constructor(private musicConfiguration: MusicConfiguration, private playFunc: (btn: HTMLButtonElement, single: boolean) => void) {
+    constructor(private musicConfiguration: MusicConfiguration,
+        private playFunc: (btn: HTMLButtonElement, single: boolean) => void,
+        private updateActiveMediaFunc: () => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
         this.artist = new Artist(musicConfiguration);
@@ -33,6 +35,7 @@ export default class Music extends BaseClass implements IView {
             this.initializeControls();
             loadTooltips(this.mediaView);
             $('[data-music-tab="' + this.getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
+            this.updateActiveMediaFunc();
             callback();
         }; 
 
@@ -83,12 +86,14 @@ export default class Music extends BaseClass implements IView {
                                 $($btn.attr('data-target')).find('*[data-play-id]').on('click', __e => this.playFunc(__e.currentTarget as HTMLButtonElement, true));
                                 LoadingModal.hideLoading();
                                 $btn.attr('data-group-url', '');
+                                this.updateActiveMediaFunc();
                             });
                         }
                     });
                     $('[data-album-id]').on('click', _e => this.album.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), () => this.loadView()));
                     $('[data-artist-id]').on('click', _e => this.artist.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), () => this.loadView()));
                     $('[data-group-url][data-target="#collapse-songs-0"]').trigger('click');
+                    this.updateActiveMediaFunc();
                 };
             $(HtmlControls.UIControls().MusicTabList).find('*[data-sort-tab]').each((index, _btn) => {
                 if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {

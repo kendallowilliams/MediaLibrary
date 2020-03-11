@@ -35,7 +35,7 @@
                 <ul class="list-group list-group-flush">
                     @foreach (var list in Model.SelectedPlaylist.PlaylistTracks.OrderBy(item => item.CreateDate))
                     {
-                        <li class="list-group-item">
+                        <li class="list-group-item" data-song-id="@(list.Track.Id)">
                             <div class="media">
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.Track.Title)">
                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">

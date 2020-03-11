@@ -17,6 +17,7 @@ export default class Player extends BaseClass implements IView {
     private audioVisualizer: AudioVisualizer;
     private playerView: HTMLElement;
     private clearNowPlayingModal: ClearNowPlayingModal;
+    private currentlyLoadedId: number;
 
     constructor(private playerConfiguration: PlayerConfiguration, private loadFunctions: IPlayerLoadFunctions, private updateActiveMedia: () => void = () => null) {
         super();
@@ -26,6 +27,7 @@ export default class Player extends BaseClass implements IView {
         this.audioVisualizer = new AudioVisualizer(this.playerConfiguration, this.players.MusicPlayer);
         this.clearNowPlayingModal = new ClearNowPlayingModal(() => this.reload(() => this.loadItem()));
         this.initPlayer();
+        this.currentlyLoadedId = 0;
     }
 
     loadView(callback: () => void = () => null): void {
@@ -256,6 +258,7 @@ export default class Player extends BaseClass implements IView {
             this.playerConfiguration.updateConfiguration(() => {
                 $item.addClass('active');
                 $player.attr('data-item-id', id);
+                this.currentlyLoadedId = parseInt(id);
                 $(fields.NowPlayingTitle).text(title.length > 0 ? ': ' + title : title);
                 if (shuffleEnabled && $.inArray(index, this.unPlayedShuffleIds) >= 0) /*then*/ this.unPlayedShuffleIds.splice(this.unPlayedShuffleIds.indexOf(index), 1);
                 this.updateScrollTop();
@@ -495,6 +498,10 @@ export default class Player extends BaseClass implements IView {
                 traditional: true
             });
         });
+    }
+
+    getCurrentlyLoadedId(): number {
+        return this.currentlyLoadedId;
     }
 
     private getPlayerPageEnum(page: string): PlayerPages {

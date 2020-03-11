@@ -11,7 +11,9 @@ export default class Television extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private seasonView: HTMLElement;
 
-    constructor(private televisionConfiguration: TelevisionConfiguration, private playFunc: (btn: HTMLButtonElement) => void) {
+    constructor(private televisionConfiguration: TelevisionConfiguration,
+        private playFunc: (btn: HTMLButtonElement) => void,
+        private updateActiveMediaFunc: () => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
     }

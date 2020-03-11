@@ -5,7 +5,7 @@
     <ul class="list-group list-group-flush">
         @foreach (var item in Model.OrderBy(episode => episode.Id))
         {
-            <li class="list-group-item">
+            <li class="list-group-item" data-episode-id="@(item.Id)">
                 <div class="media">
                     <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">

@@ -13,7 +13,9 @@ export default class Playlist extends BaseClass implements IView {
     private addPlaylistModal: AddNewPlaylistModal;
     private editPlaylistModal: EditPlaylistModal;
 
-    constructor(private playlistConfiguration: PlaylistConfiguration, private playFunc: (btn: HTMLButtonElement) => void) {
+    constructor(private playlistConfiguration: PlaylistConfiguration,
+        private playFunc: (btn: HTMLButtonElement) => void,
+        private updateActiveMediaFunc: () => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
     }
