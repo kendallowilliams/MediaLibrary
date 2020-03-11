@@ -60,10 +60,10 @@ export default class MediaLibrary extends BaseClass {
                 this.deleteModal = new DeleteModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
                 this.editSongModal = new EditSongModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
                 this.home = new Home(this.homeConfiguration);
-                this.music = new Music(this.musicConfiguration, this.playWrapper, this.updateActiveMedia);
-                this.playlist = new Playlist(this.playlistConfiguration, this.playWrapper, this.updateActiveMedia);
-                this.podcast = new Podcast(this.podcastConfiguration, this.playWrapper, this.updateActiveMedia);
-                this.television = new Television(this.televisionConfiguration, this.playWrapper, this.updateActiveMedia);
+                this.music = new Music(this.musicConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
+                this.playlist = new Playlist(this.playlistConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
+                this.podcast = new Podcast(this.podcastConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
+                this.television = new Television(this.televisionConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
                 this.player = new Player(this.playerConfiguration, {
                     loadArtist: (id) => this.music.loadArtist(id, this.loadView.bind(this, MediaPages.Music)),
                     loadAlbum: (id) => this.music.loadAlbum(id, this.loadView.bind(this, MediaPages.Music)),
@@ -88,12 +88,12 @@ export default class MediaLibrary extends BaseClass {
 
         if (this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Music ||
             this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Playlist) {
-            $mediaView.find('list-group-item[data-song-id].active').removeClass('active');
-            $mediaView.find('list-group-item[data-song-id="' + currentId + '"]').addClass('active');
+            $mediaView.find('.list-group-item[data-song-id].active').removeClass('active');
+            $mediaView.find('.list-group-item[data-song-id="' + currentId + '"]').addClass('active');
         } else if (this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Podcast ||
                    this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Television) {
-            $mediaView.find('list-group-item[data-episode-id].active').removeClass('active');
-            $mediaView.find('list-group-item[data-episode-id="' + currentId + '"]').addClass('active');
+            $mediaView.find('.list-group-item[data-episode-id].active').removeClass('active');
+            $mediaView.find('.list-group-item[data-episode-id="' + currentId + '"]').addClass('active');
         }
     }
 
