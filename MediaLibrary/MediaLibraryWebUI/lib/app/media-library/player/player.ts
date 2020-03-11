@@ -16,10 +16,9 @@ export default class Player extends BaseClass implements IView {
     private unPlayedShuffleIds: number[];
     private audioVisualizer: AudioVisualizer;
     private playerView: HTMLElement;
-    private loadFunctions: IPlayerLoadFunctions;
     private clearNowPlayingModal: ClearNowPlayingModal;
 
-    constructor(private playerConfiguration: PlayerConfiguration) {
+    constructor(private playerConfiguration: PlayerConfiguration, private loadFunctions: IPlayerLoadFunctions, private updateActiveMedia: () => void = () => null) {
         super();
         this.players = HtmlControls.Players();
         this.playerView = HtmlControls.Views().PlayerView;
@@ -33,11 +32,6 @@ export default class Player extends BaseClass implements IView {
         this.audioVisualizer.prepareCanvas();
         this.updateScrollTop();
         callback();
-    }
-
-    setLoadFunctions(functions: IPlayerLoadFunctions): void {
-        this.loadFunctions = functions;
-        this.applyLoadFunctions();
     }
 
     private initPlayer(): void {
@@ -266,6 +260,7 @@ export default class Player extends BaseClass implements IView {
                 if (shuffleEnabled && $.inArray(index, this.unPlayedShuffleIds) >= 0) /*then*/ this.unPlayedShuffleIds.splice(this.unPlayedShuffleIds.indexOf(index), 1);
                 this.updateScrollTop();
                 $player.prop('src', url);
+                this.updateActiveMedia();
                 this.audioVisualizer.stop();
                 if (triggerPlay) /*then*/ $player.trigger('play');
                 this.enableDisablePreviousNext();

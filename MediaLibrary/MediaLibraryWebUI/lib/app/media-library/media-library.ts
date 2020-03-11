@@ -60,21 +60,38 @@ export default class MediaLibrary extends BaseClass {
                 this.deleteModal = new DeleteModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
                 this.editSongModal = new EditSongModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
                 this.home = new Home(this.homeConfiguration);
-                this.player = new Player(this.playerConfiguration);
-                this.music = new Music(this.musicConfiguration, this.player.play.bind(this.player));
-                this.playlist = new Playlist(this.playlistConfiguration, this.player.play.bind(this.player));
-                this.podcast = new Podcast(this.podcastConfiguration, this.player.play.bind(this.player));
-                this.television = new Television(this.televisionConfiguration, this.player.play.bind(this.player));
-                this.player.setLoadFunctions({
-                    loadArtist: (id) => this.music.loadArtist(id, () => this.loadView(MediaPages.Music)),
-                    loadAlbum: (id) => this.music.loadAlbum(id, () => this.loadView(MediaPages.Music)),
-                    loadPodcast: (id) => this.podcast.loadPodcast(id, () => this.loadView(MediaPages.Podcast))
-                });
+                this.music = new Music(this.musicConfiguration, this.playWrapper);
+                this.playlist = new Playlist(this.playlistConfiguration, this.playWrapper);
+                this.podcast = new Podcast(this.podcastConfiguration, this.playWrapper);
+                this.television = new Television(this.televisionConfiguration, this.playWrapper);
+                this.player = new Player(this.playerConfiguration, {
+                    loadArtist: (id) => this.music.loadArtist(id, this.loadView.bind(this, MediaPages.Music)),
+                    loadAlbum: (id) => this.music.loadAlbum(id, this.loadView.bind(this, MediaPages.Music)),
+                    loadPodcast: (id) => this.podcast.loadPodcast(id, this.loadView.bind(this, MediaPages.Podcast))
+                },
+                    this.updateActiveMedia.bind(this)
+                );
                 this.loadView(this.mediaLibraryConfiguration.properties.SelectedMediaPage);
             });
         };
 
         this.loadConfigurations(success);
+    }
+
+    private playWrapper(btn: HTMLButtonElement, playSingleItem?: boolean): void {
+        this.player.play.call(this.player, btn, playSingleItem);
+    }
+
+    private updateActiveMedia(): void {
+        if (this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Music) {
+
+        } else if (this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Podcast) {
+
+        } else if (this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Playlist) {
+
+        } else if (this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Television) {
+
+        }
     }
 
     private loadConfigurations(callback: () => void = () => null): void {
@@ -86,12 +103,12 @@ export default class MediaLibrary extends BaseClass {
                             .then(() => $.get('Player/PlayerConfiguration', data => this.playerConfiguration = Configurations.Player(data))
                                 .then(() => $.get('Playlist/PlaylistConfiguration', data => this.playlistConfiguration = Configurations.Playlist(data))
                                     .then(callback)
+                                )
                             )
                         )
                     )
                 )
-            )
-        );
+            );
     }
 
     private loadStaticViews(callback: () => void = () => null) {
