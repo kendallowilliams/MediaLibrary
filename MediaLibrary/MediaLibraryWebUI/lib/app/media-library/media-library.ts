@@ -86,8 +86,8 @@ export default class MediaLibrary extends BaseClass {
         const $mediaView: JQuery<HTMLElement> = $(this.mainViews.MediaView),
               currentId: number = this.player.getCurrentlyLoadedId();
 
-        if (this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Music ||
-            this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Playlist) {
+        if (this.mediaLibraryConfiguration.properties.SelectedMediaPage === MediaPages.Music ||
+            this.mediaLibraryConfiguration.properties.SelectedMediaPage === MediaPages.Playlist) {
             $mediaView.find('.list-group-item[data-song-id].active').removeClass('active');
             $mediaView.find('.list-group-item[data-song-id="' + currentId + '"]').addClass('active');
         } else if (this.mediaLibraryConfiguration.properties.SelectedMediaPage == MediaPages.Podcast ||
