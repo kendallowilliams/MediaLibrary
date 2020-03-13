@@ -460,12 +460,12 @@ export default class Player extends BaseClass implements IView {
         }
     }
 
-    play(btn: HTMLButtonElement, playSingleItem: boolean = false, callback: () => void = () => null): void {
+    play(btn: HTMLButtonElement, playSingleItem: boolean = false, loadPlayer: () => void = () => null): void {
         var $playButtons = $('button[data-play-id]'),
             $playGroups = $('div[data-play-ids]'),
             success = () => this.reload(() => {
                 this.loadItem(null, true);
-                callback();
+                if (this.playerConfiguration.properties.SelectedMediaType === MediaTypes.Television) /*then*/ loadPlayer();
                 LoadingModal.hideLoading();
             }),
             mediaType = $(btn).attr('data-media-type') || getMediaTypesEnumString(MediaTypes.Song),
