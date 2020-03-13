@@ -266,7 +266,13 @@ export default class Player extends BaseClass implements IView {
                 $player.prop('src', url);
                 this.updateActiveMedia();
                 this.audioVisualizer.stop();
-                if (triggerPlay) /*then*/ $player.trigger('play');
+                if (triggerPlay) {
+                    if (this.playerConfiguration.properties.SelectedMediaType == MediaTypes.Television &&
+                        this.playerConfiguration.properties.SelectedPlayerPage != PlayerPages.Index) {
+                        $(HtmlControls.Buttons().PlayerPlaylistToggleButton).trigger('click');
+                    }
+                    $player.trigger('play');
+                }
                 this.enableDisablePreviousNext();
             });
         } else if ($('li[data-play-index].active').length === 1) {
@@ -454,13 +460,14 @@ export default class Player extends BaseClass implements IView {
         }
     }
 
-    play(btn: HTMLButtonElement, playSingleItem: boolean = false): void {
+    play(btn: HTMLButtonElement, playSingleItem: boolean = false, callback: () => void = () => null): void {
         var $playButtons = $('button[data-play-id]'),
             $playGroups = $('div[data-play-ids]'),
-            success = () => {
-                this.reload(() => this.loadItem(null, true));
+            success = () => this.reload(() => {
+                this.loadItem(null, true);
+                callback();
                 LoadingModal.hideLoading();
-            },
+            }),
             mediaType = $(btn).attr('data-media-type') || getMediaTypesEnumString(MediaTypes.Song),
             data = new FormData(),
             $playData = null;

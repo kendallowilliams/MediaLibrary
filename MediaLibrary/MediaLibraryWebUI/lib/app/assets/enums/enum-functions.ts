@@ -26,7 +26,7 @@ export function getMediaPagesEnum(page: string): MediaPages {
     }
 
     return mediaPage;
-}
+};
 
 export function getMediaPagesEnumString(page: MediaPages): string {
     let mediaPage: string;
@@ -54,7 +54,7 @@ export function getMediaPagesEnumString(page: MediaPages): string {
     }
 
     return mediaPage;
-}
+};
 
 export function getSeriesSortEnum(sort: string): SeriesSort {
     let seriesSort: SeriesSort;
@@ -67,7 +67,7 @@ export function getSeriesSortEnum(sort: string): SeriesSort {
     }
 
     return seriesSort;
-}
+};
 
 export function getAlbumSortEnum(sort: string): AlbumSort {
     let albumSort: AlbumSort;
@@ -80,7 +80,7 @@ export function getAlbumSortEnum(sort: string): AlbumSort {
     }
 
     return albumSort;
-}
+};
 
 export function getArtistSortEnum(sort: string): ArtistSort {
     let artistSort: ArtistSort;
@@ -93,7 +93,7 @@ export function getArtistSortEnum(sort: string): ArtistSort {
     }
 
     return artistSort;
-}
+};
 
 export function getMusicTabEnum(tab: string): MusicTabs {
     let musicTab: MusicTabs;
@@ -112,7 +112,7 @@ export function getMusicTabEnum(tab: string): MusicTabs {
     }
 
     return musicTab;
-}
+};
 
 export function getMusicTabEnumString(tab: MusicTabs): string {
     let musicTab: string;
@@ -131,7 +131,7 @@ export function getMusicTabEnumString(tab: MusicTabs): string {
     }
 
     return musicTab;
-}
+};
 
 export function getSongSortEnum(sort: string): SongSort {
     let songSort: SongSort;
@@ -156,7 +156,7 @@ export function getSongSortEnum(sort: string): SongSort {
     }
 
     return songSort;
-}
+};
 
 export function getPlayerPageEnum(page: string): PlayerPages {
     let playerPage: PlayerPages = PlayerPages.Index;
@@ -175,7 +175,7 @@ export function getPlayerPageEnum(page: string): PlayerPages {
     }
 
     return playerPage;
-}
+};
 
 export function getRepeatTypesEnumString(page: RepeatTypes): string {
     let repeatType: string = '';
@@ -196,7 +196,7 @@ export function getRepeatTypesEnumString(page: RepeatTypes): string {
     }
 
     return repeatType;
-}
+};
 
 export function getMediaTypesEnum(type: string): MediaTypes {
     let mediaType: MediaTypes;
@@ -215,7 +215,7 @@ export function getMediaTypesEnum(type: string): MediaTypes {
     }
 
     return mediaType;
-}
+};
 
 export function getMediaTypesEnumString(type: MediaTypes): string {
     let mediaType: string;
@@ -234,7 +234,7 @@ export function getMediaTypesEnumString(type: MediaTypes): string {
     }
 
     return mediaType;
-}
+};
 
 export function getPlaylistSortEnum(sort: string): PlaylistSort {
     let playlistSort: PlaylistSort;
@@ -250,7 +250,7 @@ export function getPlaylistSortEnum(sort: string): PlaylistSort {
     }
 
     return playlistSort;
-}
+};
 
 export function getPodcastSortEnum(sort: string): PodcastSort {
     let podcastSort: PodcastSort;
@@ -269,7 +269,7 @@ export function getPodcastSortEnum(sort: string): PodcastSort {
     }
 
     return podcastSort;
-}
+};
 
 export function getPodcastFilterEnum(filter: string): PodcastFilter {
     let podcastFilter: PodcastFilter;
@@ -288,4 +288,4 @@ export function getPodcastFilterEnum(filter: string): PodcastFilter {
     }
 
     return podcastFilter;
-}
+};

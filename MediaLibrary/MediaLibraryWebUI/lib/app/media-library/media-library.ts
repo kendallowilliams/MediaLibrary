@@ -80,7 +80,7 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private playWrapper(btn: HTMLButtonElement, playSingleItem?: boolean): void {
-        this.player.play.call(this.player, btn, playSingleItem);
+        this.player.play.call(this.player, btn, playSingleItem, () => this.loadView.bind(this, MediaPages.Player));
     }
 
     private updateActiveMedia(): void {
