@@ -267,8 +267,8 @@ export default class Player extends BaseClass implements IView {
                 this.updateActiveMedia();
                 this.audioVisualizer.stop();
                 if (triggerPlay) {
-                    if (this.playerConfiguration.properties.SelectedMediaType == MediaTypes.Television &&
-                        this.playerConfiguration.properties.SelectedPlayerPage != PlayerPages.Index) {
+                    if (this.playerConfiguration.properties.SelectedMediaType === MediaTypes.Television &&
+                        this.playerConfiguration.properties.SelectedPlayerPage === PlayerPages.Index) {
                         $(HtmlControls.Buttons().PlayerPlaylistToggleButton).trigger('click');
                     }
                     $player.trigger('play');
