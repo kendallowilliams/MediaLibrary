@@ -487,9 +487,9 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="lib\app\app.ts" />
+    <TypeScriptCompile Include="lib\app\assets\enums\enum-functions.ts" />
     <TypeScriptCompile Include="lib\app\assets\interfaces\configuration-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\interfaces\media-library-configuration-interface.ts" />
-    <TypeScriptCompile Include="lib\app\assets\interfaces\player-ui-functions-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\interfaces\player-load-functions-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\interfaces\television-configuration-interface.ts" />
     <TypeScriptCompile Include="lib\app\assets\interfaces\home-configuration-interface.ts" />

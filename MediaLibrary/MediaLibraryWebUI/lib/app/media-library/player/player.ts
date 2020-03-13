@@ -10,6 +10,7 @@ import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-
 import LoadingModal from '../../assets/modals/loading-modal';
 import IPlayerLoadFunctions from "../../assets/interfaces/player-load-functions-interface";
 import ClearNowPlayingModal from "../../assets/modals/clear-now-playing-modal";
+import { getRepeatTypesEnumString, getPlayerPageEnum, getMediaTypesEnumString, getMediaTypesEnum } from "../../assets/enums/enum-functions";
 
 export default class Player extends BaseClass implements IView {
     private players: { VideoPlayer: HTMLMediaElement, MusicPlayer: HTMLMediaElement };
@@ -153,7 +154,7 @@ export default class Player extends BaseClass implements IView {
                 repeat = RepeatTypes.None;
             }
 
-            $('button[data-repeat-type="' + this.getRepeatTypesEnumString(repeat) + '"]').removeClass('d-none');
+            $('button[data-repeat-type="' + getRepeatTypesEnumString(repeat) + '"]').removeClass('d-none');
             this.playerConfiguration.properties.Repeat = repeat;
             this.playerConfiguration.updateConfiguration(() => this.enableDisablePreviousNext());
         });
@@ -192,7 +193,7 @@ export default class Player extends BaseClass implements IView {
             this.playerConfiguration.updateConfiguration(() => $(this.getPlayers()).each((index, element) => { (element as HTMLAudioElement).muted = muted; }));
         });
         $(buttons.PlayerFullscreenButton).on('click', () => openFullscreen(this.getPlayer()));
-        $('button[data-repeat-type="' + this.getRepeatTypesEnumString(this.playerConfiguration.properties.Repeat) + '"]').removeClass('d-none');
+        $('button[data-repeat-type="' + getRepeatTypesEnumString(this.playerConfiguration.properties.Repeat) + '"]').removeClass('d-none');
         $(buttons.PlayerPlaylistToggleButton).on('click', e => {
             let page = this.playerConfiguration.properties.SelectedPlayerPage,
                 $player = $(this.getPlayer()),
@@ -201,7 +202,7 @@ export default class Player extends BaseClass implements IView {
 
             $(buttons.PlayerFullscreenButton).addClass('d-none');
             if (page === PlayerPages.Index) {
-                this.playerConfiguration.properties.SelectedPlayerPage = this.getPlayerPageEnum($player.attr('data-player-page'));
+                this.playerConfiguration.properties.SelectedPlayerPage = getPlayerPageEnum($player.attr('data-player-page'));
                 $player.parent().removeClass('d-none');
                 $playerItems.addClass('d-none');
                 $btn.removeClass('active');
@@ -444,7 +445,7 @@ export default class Player extends BaseClass implements IView {
                 $(this.getPlayers()).each((index, element) => {
                     const page = $(element).attr('data-player-page');
 
-                    if (this.getPlayerPageEnum(page) === selectedPlayerPage) /*then*/ $(element).parent().removeClass('d-none');
+                    if (getPlayerPageEnum(page) === selectedPlayerPage) /*then*/ $(element).parent().removeClass('d-none');
                     else $(element).parent().addClass('d-none');
                 })
             );
@@ -460,7 +461,7 @@ export default class Player extends BaseClass implements IView {
                 this.reload(() => this.loadItem(null, true));
                 LoadingModal.hideLoading();
             },
-            mediaType = $(btn).attr('data-media-type') || this.getMediaTypesEnumString(MediaTypes.Song),
+            mediaType = $(btn).attr('data-media-type') || getMediaTypesEnumString(MediaTypes.Song),
             data = new FormData(),
             $playData = null;
 
@@ -486,7 +487,7 @@ export default class Player extends BaseClass implements IView {
         }
         data.append('mediaType', mediaType);
         data.append('itemsJSON', JSON.stringify($playData.get()));
-        this.playerConfiguration.properties.SelectedMediaType = this.getMediaTypesEnum(mediaType);
+        this.playerConfiguration.properties.SelectedMediaType = getMediaTypesEnum(mediaType);
         this.playerConfiguration.updateConfiguration(function () {
             $.ajax({
                 type: 'POST',
@@ -502,83 +503,5 @@ export default class Player extends BaseClass implements IView {
 
     getCurrentlyLoadedId(): number {
         return this.currentlyLoadedId;
-    }
-
-    private getPlayerPageEnum(page: string): PlayerPages {
-        let playerPage: PlayerPages = PlayerPages.Index;
-
-        switch (page) {
-            case 'Audio':
-                playerPage = PlayerPages.Audio;
-                break;
-            case 'Video':
-                playerPage = PlayerPages.Video;
-                break;
-            case 'Index':
-            default:
-                playerPage = PlayerPages.Index;
-                break;
-        }
-
-        return playerPage;
-    }
-
-    private getRepeatTypesEnumString(page: RepeatTypes): string {
-        let repeatType: string = '';
-
-        switch (page) {
-            case RepeatTypes.None:
-                repeatType = 'None';
-                break;
-            case RepeatTypes.RepeatAll:
-                repeatType = 'RepeatAll';
-                break;
-            case RepeatTypes.RepeatOne:
-                repeatType = 'RepeatOne';
-                break;
-            default:
-                repeatType = '';
-                break;
-        }
-
-        return repeatType;
-    }
-
-    private getMediaTypesEnum(type: string): MediaTypes {
-        let mediaType: MediaTypes;
-
-        switch (type) {
-            case 'Television':
-                mediaType = MediaTypes.Television;
-                break;
-            case 'Podcast':
-                mediaType = MediaTypes.Podcast;
-                break;
-            case 'Song':
-            default:
-                mediaType = MediaTypes.Song;
-                break;
-        }
-
-        return mediaType;
-    }
-
-    private getMediaTypesEnumString(type: MediaTypes): string {
-        let mediaType: string;
-
-        switch (type) {
-            case MediaTypes.Television:
-                mediaType = 'Television';
-                break;
-            case MediaTypes.Podcast:
-                mediaType = 'Podcast';
-                break;
-            case MediaTypes.Song:
-            default:
-                mediaType = 'Song';
-                break;
-        }
-
-        return mediaType;
     }
 }

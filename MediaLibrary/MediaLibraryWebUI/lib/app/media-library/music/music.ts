@@ -1,7 +1,7 @@
 ﻿import BaseClass from "../../assets/models/base-class";
 import IView from "../../assets/interfaces/view-interface";
 import MusicConfiguration from "../../assets/models/configurations/music-configuration";
-import { MusicPages, AlbumSort, SongSort, ArtistSort, MusicTabs } from "../../assets/enums/enums";
+import { MusicPages, MusicTabs } from "../../assets/enums/enums";
 import HtmlControls from '../../assets/controls/html-controls';
 import Artist from "./artist";
 import Album from "./album";
@@ -11,6 +11,7 @@ import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap-
 import EditSongModal from "../../assets/modals/edit-song-modal";
 import AddToPlaylistModal from "../../assets/modals/add-to-playlist-modal";
 import AddNewSongModal from "../../assets/modals/add-song-modal";
+import { getMusicTabEnumString, getMusicTabEnum, getSongSortEnum, getArtistSortEnum, getAlbumSortEnum } from "../../assets/enums/enum-functions";
 
 export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -34,7 +35,7 @@ export default class Music extends BaseClass implements IView {
             this.addNewSongModal = new AddNewSongModal(this.loadView.bind(this));
             this.initializeControls();
             loadTooltips(this.mediaView);
-            $('[data-music-tab="' + this.getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
+            $('[data-music-tab="' + getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
             this.updateActiveMediaFunc();
             callback();
         }; 
@@ -103,7 +104,7 @@ export default class Music extends BaseClass implements IView {
                 }
             });
             LoadingModal.showLoading();
-            this.musicConfiguration.properties.SelectedMusicTab = this.getMusicTabEnum($newTab.attr('data-music-tab'));
+            this.musicConfiguration.properties.SelectedMusicTab = getMusicTabEnum($newTab.attr('data-music-tab'));
             disposeTooltips($newView[0]);
             this.musicConfiguration.updateConfiguration(() => $newView.load(url, success));
         });
@@ -113,11 +114,11 @@ export default class Music extends BaseClass implements IView {
                 sortType: string = $(select).attr('data-sort-type');
 
             if (sortType === 'SelectedAlbumSort') {
-                this.musicConfiguration.properties.SelectedAlbumSort = this.getAlbumSortEnum($(select).val() as string);
+                this.musicConfiguration.properties.SelectedAlbumSort = getAlbumSortEnum($(select).val() as string);
             } else if (sortType === 'SelectedArtistSort') {
-                this.musicConfiguration.properties.SelectedArtistSort = this.getArtistSortEnum($(select).val() as string);
+                this.musicConfiguration.properties.SelectedArtistSort = getArtistSortEnum($(select).val() as string);
             } else if (sortType === 'SelectedSongSort') {
-                this.musicConfiguration.properties.SelectedSongSort = this.getSongSortEnum($(select).val() as string);
+                this.musicConfiguration.properties.SelectedSongSort = getSongSortEnum($(select).val() as string);
             }
 
             this.musicConfiguration.updateConfiguration(() => this.loadView());
@@ -127,94 +128,5 @@ export default class Music extends BaseClass implements IView {
             LoadingModal.showLoading();
             $.post('Music/Refresh', () => this.loadView(() => LoadingModal.hideLoading()));
         });
-    }
-
-    private getAlbumSortEnum(sort: string): AlbumSort {
-        let albumSort: AlbumSort;
-
-        switch (sort) {
-            case 'AtoZ':
-            default:
-                albumSort = AlbumSort.AtoZ;
-                break;
-        }
-
-        return albumSort;
-    }
-
-    private getArtistSortEnum(sort: string): ArtistSort {
-        let artistSort: ArtistSort;
-
-        switch (sort) {
-            case 'AtoZ':
-            default:
-                artistSort = ArtistSort.AtoZ;
-                break;
-        }
-
-        return artistSort;
-    }
-
-    private getMusicTabEnum(tab: string): MusicTabs {
-        let musicTab: MusicTabs;
-
-        switch (tab) {
-            case 'Artists':
-                musicTab = MusicTabs.Artists;
-                break;
-            case 'Albums':
-                musicTab = MusicTabs.Albums;
-                break;
-            case 'Songs':
-            default:
-                musicTab = MusicTabs.Songs;
-                break;
-        }
-
-        return musicTab;
-    }
-
-    private getMusicTabEnumString(tab: MusicTabs): string {
-        let musicTab: string;
-
-        switch (tab) {
-            case MusicTabs.Artists:
-                musicTab = 'Artists';
-                break;
-            case MusicTabs.Albums:
-                musicTab = 'Albums';
-                break;
-            case MusicTabs.Songs:
-            default:
-                musicTab = 'Songs';
-                break;
-        }
-
-        return musicTab;
-    }
-
-    private getSongSortEnum(sort: string): SongSort {
-        let songSort: SongSort;
-
-        switch (sort) {
-            case 'Album':
-                songSort = SongSort.Album;
-                break;
-            case 'Artist':
-                songSort = SongSort.Artist;
-                break;
-            case 'DateAdded':
-                songSort = SongSort.DateAdded;
-                break;
-            case 'Genre':
-                songSort = SongSort.Genre;
-                break;
-            case 'AtoZ':
-            default:
-                songSort = SongSort.AtoZ;
-                break;
-        }
-
-        return songSort;
     }
 }

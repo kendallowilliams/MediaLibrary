@@ -2,10 +2,11 @@
 import IView from "../../assets/interfaces/view-interface";
 import TelevisionConfiguration from "../../assets/models/configurations/television-configuration";
 import HtmlControls from '../../assets/controls/html-controls';
-import { TelevisionPages, SeriesSort } from "../../assets/enums/enums";
+import { TelevisionPages } from "../../assets/enums/enums";
 import ITelevisionConfiguration from "../../assets/interfaces/television-configuration-interface";
 import LoadingModal from '../../assets/modals/loading-modal';
 import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
+import { getSeriesSortEnum } from "../../assets/enums/enum-functions";
 
 export default class Television extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -37,7 +38,7 @@ export default class Television extends BaseClass implements IView {
 
         $(this.mediaView).find('*[data-series-action="sort"]').on('change', e => {
             LoadingModal.showLoading();
-            this.televisionConfiguration.properties.SelectedSeriesSort = this.getSeriesSortEnum($(e.currentTarget).val() as string);
+            this.televisionConfiguration.properties.SelectedSeriesSort = getSeriesSortEnum($(e.currentTarget).val() as string);
             this.televisionConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
 
@@ -111,18 +112,5 @@ export default class Television extends BaseClass implements IView {
         this.televisionConfiguration.properties.SelectedSeriesId = 0;
         this.televisionConfiguration.properties.SelectedTelevisionPage = TelevisionPages.Index;
         this.televisionConfiguration.updateConfiguration(callback);
-    }
-
-    private getSeriesSortEnum(sort: string): SeriesSort {
-        let seriesSort: SeriesSort;
-
-        switch (sort) {
-            case 'AtoZ':
-            default:
-                seriesSort = SeriesSort.AtoZ;
-                break;
-        }
-
-        return seriesSort;
     }
 }

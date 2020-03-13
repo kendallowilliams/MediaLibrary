@@ -2,11 +2,12 @@
 import IView from "../../assets/interfaces/view-interface";
 import PlaylistConfiguration from "../../assets/models/configurations/playlist-configuration";
 import HtmlControls from '../../assets/controls/html-controls';
-import { PlaylistPages, PlaylistSort } from "../../assets/enums/enums";
+import { PlaylistPages } from "../../assets/enums/enums";
 import AddNewPlaylistModal from "../../assets/modals/add-playlist-modal";
 import LoadingModal from "../../assets/modals/loading-modal";
 import EditPlaylistModal from "../../assets/modals/edit-playlist-modal";
 import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
+import { getPlaylistSortEnum } from "../../assets/enums/enum-functions";
 
 export default class Playlist extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -40,7 +41,7 @@ export default class Playlist extends BaseClass implements IView {
 
         $(this.mediaView).find('*[data-playlist-action="sort"]').on('change', e => {
             LoadingModal.showLoading();
-            this.playlistConfiguration.properties.SelectedPlaylistSort = this.getPlaylistSortEnum($(e.currentTarget).val() as string);
+            this.playlistConfiguration.properties.SelectedPlaylistSort = getPlaylistSortEnum($(e.currentTarget).val() as string);
             this.playlistConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
 
@@ -56,21 +57,5 @@ export default class Playlist extends BaseClass implements IView {
         this.playlistConfiguration.properties.SelectedPlaylistId = 0;
         this.playlistConfiguration.properties.SelectedPlaylistPage = PlaylistPages.Index;
         this.playlistConfiguration.updateConfiguration(callback);
-    }
-
-    private getPlaylistSortEnum(sort: string): PlaylistSort {
-        let playlistSort: PlaylistSort;
-
-        switch (sort) {
-            case 'DateAdded':
-                playlistSort = PlaylistSort.DateAdded;
-                break;
-            case 'AtoZ':
-            default:
-                playlistSort = PlaylistSort.AtoZ;
-                break;
-        }
-
-        return playlistSort;
     }
 }

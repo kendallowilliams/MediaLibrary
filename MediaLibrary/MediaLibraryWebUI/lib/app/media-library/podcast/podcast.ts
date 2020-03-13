@@ -2,11 +2,12 @@
 import IView from "../../assets/interfaces/view-interface";
 import PodcastConfiguration from "../../assets/models/configurations/podcast-configuration";
 import HtmlControls from '../../assets/controls/html-controls';
-import { PodcastPages, PodcastSort, PodcastFilter } from "../../assets/enums/enums";
+import { PodcastPages } from "../../assets/enums/enums";
 import IPodcastConfiguration from "../../assets/interfaces/podcast-configuration-interface";
 import AddNewPodcastModal from "../../assets/modals/add-podcast-modal";
 import LoadingModal from "../../assets/modals/loading-modal";
 import { disposeTooltips, loadTooltips } from "../../assets/utilities/bootstrap-helper";
+import { getPodcastSortEnum, getPodcastFilterEnum } from "../../assets/enums/enum-functions";
 
 export default class Podcast extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -45,7 +46,7 @@ export default class Podcast extends BaseClass implements IView {
 
         $(this.mediaView).find('[data-podcast-action="sort"]').on('change', e => {
             LoadingModal.showLoading();
-            this.podcastConfiguration.properties.SelectedPodcastSort = this.getPodcastSortEnum($(e.currentTarget).val() as string);
+            this.podcastConfiguration.properties.SelectedPodcastSort = getPodcastSortEnum($(e.currentTarget).val() as string);
             this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
 
@@ -68,7 +69,7 @@ export default class Podcast extends BaseClass implements IView {
 
         $(this.mediaView).find('*[data-podcast-action="filter"]').on('change', e => {
             LoadingModal.showLoading();
-            this.podcastConfiguration.properties.SelectedPodcastFilter = this.getPodcastFilterEnum($(e.currentTarget).val() as string);
+            this.podcastConfiguration.properties.SelectedPodcastFilter = getPodcastFilterEnum($(e.currentTarget).val() as string);
             this.podcastConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
 
@@ -161,43 +162,5 @@ export default class Podcast extends BaseClass implements IView {
         for (let i = first; i <= last; i++) {
             $(this.mediaView).find('*[data-podcast-year][data-item-index="' + i + '"]').removeClass('d-none d-lg-block');
         }
-    }
-
-    private getPodcastSortEnum(sort: string): PodcastSort {
-        let podcastSort: PodcastSort;
-
-        switch (sort) {
-            case 'LastUpdateDate':
-                podcastSort = PodcastSort.LastUpdateDate;
-                break;
-            case 'DateAdded':
-                podcastSort = PodcastSort.DateAdded;
-                break;
-            case 'AtoZ':
-            default:
-                podcastSort = PodcastSort.AtoZ;
-                break;
-        }
-
-        return podcastSort;
-    }
-
-    private getPodcastFilterEnum(filter: string): PodcastFilter {
-        let podcastFilter: PodcastFilter;
-
-        switch (filter) {
-            case 'Downloaded':
-                podcastFilter = PodcastFilter.Downloaded;
-                break;
-            case 'Unplayed':
-                podcastFilter = PodcastFilter.Unplayed;
-                break;
-            case 'All':
-            default:
-                podcastFilter = PodcastFilter.All;
-                break;
-        }
-
-        return podcastFilter;
     }
 }

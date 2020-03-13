@@ -18,6 +18,7 @@ import MusicConfiguration from '../assets/models/configurations/music-configurat
 import Home from './home/home';
 import DeleteModal from '../assets/modals/delete-modal';
 import EditSongModal from '../assets/modals/edit-song-modal';
+import { getMediaPagesEnum, getMediaPagesEnumString } from '../assets/enums/enum-functions';
 
 export default class MediaLibrary extends BaseClass {
     private home: Home;
@@ -49,7 +50,7 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private initializeControls(): void {
-        $('[data-media-page]').on('click', e => this.loadView.call(this, this.getMediaPagesEnum($(e.currentTarget).attr('data-media-page'))));
+        $('[data-media-page]').on('click', e => this.loadView.call(this, getMediaPagesEnum($(e.currentTarget).attr('data-media-page'))));
     }
 
     private load(): void {
@@ -126,7 +127,7 @@ export default class MediaLibrary extends BaseClass {
         LoadingModal.showLoading();
         $('#divNavbar').collapse('hide');
         this.mediaLibraryConfiguration.properties.SelectedMediaPage = mediaPage;
-        this.disableNavItem(this.getMediaPagesEnumString(mediaPage));
+        this.disableNavItem(getMediaPagesEnumString(mediaPage));
         $(container).removeClass('d-none');
         this.mediaLibraryConfiguration.updateConfiguration(() => {
             this.prepareViews();
@@ -181,62 +182,6 @@ export default class MediaLibrary extends BaseClass {
         $('a.nav-link[data-media-page]:not([href])').addClass('d-none');
         $('a.nav-link[data-media-page="' + view + '"][href]').addClass('d-none');
         $('a.nav-link[data-media-page="' + view + '"]:not([href])').removeClass('d-none');
-    }
-
-    private getMediaPagesEnum(page: string): MediaPages {
-        let mediaPage: MediaPages;
-
-        switch (page) {
-            case 'Music':
-                mediaPage = MediaPages.Music;
-                break;
-            case 'Playlist':
-                mediaPage = MediaPages.Playlist;
-                break;
-            case 'Player':
-                mediaPage = MediaPages.Player;
-                break;
-            case 'Podcast':
-                mediaPage = MediaPages.Podcast;
-                break;
-            case 'Television':
-                mediaPage = MediaPages.Television;
-                break;
-            case 'Home':
-            default:
-                mediaPage = MediaPages.Home;
-                break;
-        }
-
-        return mediaPage;
-    }
-
-    private getMediaPagesEnumString(page: MediaPages): string {
-        let mediaPage: string;
-
-        switch (page) {
-            case MediaPages.Music:
-                mediaPage = 'Music';
-                break;
-            case MediaPages.Playlist:
-                mediaPage = 'Playlist';
-                break;
-            case MediaPages.Player:
-                mediaPage = 'Player';
-                break;
-            case MediaPages.Podcast:
-                mediaPage = 'Podcast';
-                break;
-            case MediaPages.Television:
-                mediaPage = 'Television';
-                break;
-            case MediaPages.Home:
-            default:
-                mediaPage = 'Home';
-                break;
-        }
-
-        return mediaPage;
     }
 }
 
