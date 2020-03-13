@@ -104,6 +104,7 @@ export default class Podcast extends BaseClass implements IView {
                 $btn.prop('disabled', 'disabled');
                 $.get($btn.attr('data-download-action'), () => LoadingModal.hideLoading());
             });
+            this.updateActiveMediaFunc();
             LoadingModal.hideLoading();
         },
             id = this.podcastConfiguration.properties.SelectedPodcastId,

@@ -62,6 +62,7 @@ export default class Television extends BaseClass implements IView {
                     this.updateMobileSeasons(parseInt(id));
                     loadTooltips(this.seasonView);
                     $(this.seasonView).find('*[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement));
+                    this.updateActiveMediaFunc();
                     LoadingModal.hideLoading();
                 },
                 series = this.televisionConfiguration.properties.SelectedSeriesId,

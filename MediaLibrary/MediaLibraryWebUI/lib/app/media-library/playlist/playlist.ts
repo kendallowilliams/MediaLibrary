@@ -25,6 +25,7 @@ export default class Playlist extends BaseClass implements IView {
             this.addPlaylistModal = new AddNewPlaylistModal(this.loadView.bind(this));
             this.editPlaylistModal = new EditPlaylistModal(this.loadView.bind(this));
             this.initializeControls();
+            this.updateActiveMediaFunc();
             callback();
         };
 
