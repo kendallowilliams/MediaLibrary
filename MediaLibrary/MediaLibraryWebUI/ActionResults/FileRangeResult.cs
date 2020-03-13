@@ -37,8 +37,8 @@ namespace MediaLibraryWebUI.ActionResults
 
             FileInfo info = new FileInfo(this.fileName);
             bool isPartial = hasValidRange && !(from == 0 && (to == info.Length - 1 || !to.HasValue));
-            response.StatusCode = isPartial ? 206 : 200;
 
+            response.StatusCode = isPartial ? 206 : 200;
             response.ContentType = mediaType;
             response.Headers.Add("Accept-Ranges", "bytes");
 
