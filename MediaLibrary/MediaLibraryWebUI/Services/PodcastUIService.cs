@@ -14,26 +14,14 @@ namespace MediaLibraryWebUI.Services
 {
     [ConfigureAwait(false)]
     [Export(typeof(IPodcastUIService))]
-    public class PodcastUIService : IPodcastUIService
+    public class PodcastUIService : BaseUIService, IPodcastUIService
     {
-        private Func<string, string> getLabel;
         private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PodcastUIService(IDataService dataService)
+        public PodcastUIService(IDataService dataService) : base()
         {
             this.dataService = dataService;
-            getLabel = title =>
-            {
-                char first = title.ToUpper().First();
-                string label = string.Empty;
-
-                if (Char.IsLetter(first)) { label = first.ToString(); }
-                else if (Char.IsDigit(first)) { label = "#"; }
-                else label = "&";
-
-                return label;
-            };
         }
 
         public async Task<IEnumerable<IGrouping<string, Podcast>>> GetPodcastGroups(PodcastSort sort)
@@ -60,7 +48,7 @@ namespace MediaLibraryWebUI.Services
 
         private IEnumerable<IGrouping<string, Podcast>> GetPodcastsAtoZ(IEnumerable<Podcast> podcasts)
         {
-            return podcasts.GroupBy(podcast => getLabel(podcast.Title)).OrderBy(group => group.Key);
+            return podcasts.GroupBy(podcast => getCharLabel(podcast.Title)).OrderBy(group => group.Key);
         }
     }
 }

@@ -15,26 +15,14 @@ namespace MediaLibraryWebUI.Services
 {
     [ConfigureAwait(false)]
     [Export(typeof(ITelevisionUIService))]
-    public class TelevisionUIService : ITelevisionUIService
+    public class TelevisionUIService : BaseUIService, ITelevisionUIService
     {
-        private Func<string, string> getLabel;
         private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public TelevisionUIService(IDataService dataService)
+        public TelevisionUIService(IDataService dataService) : base()
         {
             this.dataService = dataService;
-            getLabel = title =>
-            {
-                char first = title.ToUpper().First();
-                string label = string.Empty;
-
-                if (Char.IsLetter(first)) { label = first.ToString(); }
-                else if (Char.IsDigit(first)) { label = "#"; }
-                else label = "&";
-
-                return label;
-            };
         }
 
         public async Task<IEnumerable<IGrouping<string, Series>>> GetSeriesGroups(SeriesSort sort)
@@ -55,7 +43,7 @@ namespace MediaLibraryWebUI.Services
 
         private IEnumerable<IGrouping<string, Series>> GetSeriessAtoZ(IEnumerable<Series> series)
         {
-            return series.GroupBy(s => getLabel(s.Title)).OrderBy(group => group.Key);
+            return series.GroupBy(s => getCharLabel(s.Title)).OrderBy(group => group.Key);
         }
     }
 }

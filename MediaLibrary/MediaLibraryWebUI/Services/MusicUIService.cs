@@ -14,29 +14,17 @@ namespace MediaLibraryWebUI.Services
 {
     [ConfigureAwait(false)]
     [Export(typeof(IMusicUIService))]
-    public class MusicUIService : IMusicUIService
+    public class MusicUIService : BaseUIService, IMusicUIService
     {
-        private readonly Func<string, string> getLabel;
         private readonly IDataService dataService;
         private IEnumerable<Track> songs;
         private IEnumerable<Artist> artists;
         private IEnumerable<Album> albums;
 
         [ImportingConstructor]
-        public MusicUIService(IDataService dataService)
+        public MusicUIService(IDataService dataService) : base()
         {
             this.dataService = dataService;
-            getLabel = title =>
-            {
-                char first = title.ToUpper().First();
-                string label = string.Empty;
-
-                if (Char.IsLetter(first)) { label = first.ToString(); }
-                else if (Char.IsDigit(first)) { label = "#"; }
-                else label = "&";
-
-                return label;
-            };
         }
 
         public async Task<IEnumerable<Track>> Songs() => songs ?? await dataService.GetList<Track>();
@@ -111,17 +99,17 @@ namespace MediaLibraryWebUI.Services
 
         private IEnumerable<IGrouping<string, Track>> GetSongsAtoZ(IEnumerable<Track> songs)
         {
-            return songs.GroupBy(track => getLabel(track.Title)).OrderBy(group => group.Key);
+            return songs.GroupBy(track => getCharLabel(track.Title)).OrderBy(group => group.Key);
         }
 
         private IEnumerable<IGrouping<string, Album>> GetAlbumsAtoZ(IEnumerable<Album> albums)
         {
-            return albums.GroupBy(album => getLabel(album.Title)).OrderBy(group => group.Key);
+            return albums.GroupBy(album => getCharLabel(album.Title)).OrderBy(group => group.Key);
         }
 
         private IEnumerable<IGrouping<string, Artist>> GetArtistsAtoZ(IEnumerable<Artist> artists)
         {
-            return artists.GroupBy(artist => getLabel(artist.Name)).OrderBy(group => group.Key);
+            return artists.GroupBy(artist => getCharLabel(artist.Name)).OrderBy(group => group.Key);
         }
 
         public void ClearData()

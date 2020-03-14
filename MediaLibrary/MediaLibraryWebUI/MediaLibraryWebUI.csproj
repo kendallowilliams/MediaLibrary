@@ -413,12 +413,15 @@
     <Compile Include="Repositories\PodcastRepository.cs" />
     <Compile Include="Repositories\PlaylistRepository.cs" />
     <Compile Include="Repositories\MusicRepository.cs" />
+    <Compile Include="Services\BaseUIService.cs" />
     <Compile Include="Services\ControllerService.cs" />
     <Compile Include="Services\Interfaces\IControllerService.cs" />
+    <Compile Include="Services\Interfaces\IPlayerUIService.cs" />
     <Compile Include="Services\Interfaces\ITelevisionUIService.cs" />
     <Compile Include="Services\Interfaces\IPlaylistUIService.cs" />
     <Compile Include="Services\Interfaces\IPodcastUIService.cs" />
     <Compile Include="Services\Interfaces\IMusicUIService.cs" />
+    <Compile Include="Services\PlayerUIService.cs" />
     <Compile Include="Services\TelevisionUIService.cs" />
     <Compile Include="Services\PodcastUIService.cs" />
     <Compile Include="Services\PlaylistUIService.cs" />

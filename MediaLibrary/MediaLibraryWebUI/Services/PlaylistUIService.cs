@@ -15,26 +15,14 @@ namespace MediaLibraryWebUI.Services
 {
     [ConfigureAwait(false)]
     [Export(typeof(IPlaylistUIService))]
-    public class PlaylistUIService : IPlaylistUIService
+    public class PlaylistUIService : BaseUIService, IPlaylistUIService
     {
-        private Func<string, string> getLabel;
         private readonly IDataService dataService;
 
         [ImportingConstructor]
-        public PlaylistUIService(IDataService dataService)
+        public PlaylistUIService(IDataService dataService) : base()
         {
             this.dataService = dataService;
-            getLabel = title =>
-            {
-                char first = title.ToUpper().First();
-                string label = string.Empty;
-
-                if (Char.IsLetter(first)) { label = first.ToString(); }
-                else if (Char.IsDigit(first)) { label = "#"; }
-                else label = "&";
-
-                return label;
-            };
         }
 
         public async Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort)
@@ -58,7 +46,7 @@ namespace MediaLibraryWebUI.Services
 
         private IEnumerable<IGrouping<string, Playlist>> GetPlaylistsAtoZ(IEnumerable<Playlist> playlists)
         {
-            return playlists.GroupBy(playlist => getLabel(playlist.Name)).OrderBy(group => group.Key);
+            return playlists.GroupBy(playlist => getCharLabel(playlist.Name)).OrderBy(group => group.Key);
         }
     }
 }

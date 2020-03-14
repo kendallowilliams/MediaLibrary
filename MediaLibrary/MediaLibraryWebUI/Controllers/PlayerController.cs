@@ -5,6 +5,7 @@ using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.Attributes;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Models.Configurations;
+using MediaLibraryWebUI.Services.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,24 +27,16 @@ namespace MediaLibraryWebUI.Controllers
         private readonly ITransactionService transactionService;
         private readonly PlayerViewModel playerViewModel;
         private readonly IDataService dataService;
-        private readonly IFileService fileService;
-        private readonly string fileNamePrefix;
+        private readonly IPlayerUIService playerUIService;
 
         [ImportingConstructor]
         public PlayerController(ITransactionService transactionService, PlayerViewModel playerViewModel, IDataService dataService,
-                                IFileService fileService)
+                                IPlayerUIService playerUIService)
         {
             this.transactionService = transactionService;
             this.playerViewModel = playerViewModel;
             this.dataService = dataService;
-            this.fileService = fileService;
-#if DEV
-            fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}_DEV";
-#elif DEBUG
-            fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}_DEBUG";
-#else
-            fileNamePrefix = $"{nameof(PlayerController)}_{nameof(UpdateNowPlaying)}";
-#endif
+            this.playerUIService = playerUIService;
         }
 
         [CompressContent]
@@ -101,36 +94,15 @@ namespace MediaLibraryWebUI.Controllers
 
             if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Song)
             {
-                string path = Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json");
-                IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
-                IEnumerable<Track> songs = Enumerable.Empty<Track>();
-
-                if (IO_File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(IO_File.ReadAllText(path));
-                ids = items.Select(item => item.Value);
-                songs = await dataService.GetList<Track>(item => ids.Contains(item.Id),default, item => item.Album, item => item.Artist);
-                playerViewModel.Songs = ids.Select(id => songs.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
+                playerViewModel.Songs = await playerUIService.GetNowPlayingSongs();
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Podcast)
             {
-                string path = Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json");
-                IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
-                IEnumerable<PodcastItem> podcastItems = Enumerable.Empty<PodcastItem>();
-
-                if (IO_File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(IO_File.ReadAllText(path));
-                ids = items.Select(item => item.Value);
-                podcastItems = await dataService.GetList<PodcastItem>(item => ids.Contains(item.Id), default, item => item.Podcast);
-                playerViewModel.PodcastItems = ids.Select(id => podcastItems.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
+                playerViewModel.PodcastItems = await playerUIService.GetNowPlayingPodcastItems();
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Television)
             {
-                string path = Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json");
-                IEnumerable<ListItem<int, int>> items = Enumerable.Empty<ListItem<int, int>>();
-                IEnumerable<Episode> episodes = Enumerable.Empty<Episode>();
-
-                if (IO_File.Exists(path)) /*then*/ items = JsonConvert.DeserializeObject<IEnumerable<ListItem<int, int>>>(IO_File.ReadAllText(path));
-                ids = items.Select(item => item.Value);
-                episodes = await dataService.GetList<Episode>(item => ids.Contains(item.Id), default, item => item.Series);
-                playerViewModel.Episodes = ids.Select(id => episodes.FirstOrDefault(item => item.Id == id)).Where(item => item != null);
+                playerViewModel.Episodes = await playerUIService.GetNowPlayingEpisodes();
             }
         }
 
@@ -150,30 +122,11 @@ namespace MediaLibraryWebUI.Controllers
                 playerConfiguration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
             }
 
-            playerConfiguration.CurrentItemIndex = items.FirstOrDefault((item) => item.IsSelected).Id;
+            playerConfiguration.CurrentItemIndex = items.FirstOrDefault((item) => item.IsSelected)?.Id ?? 0;
             playerConfiguration.SelectedMediaType = mediaType;
             configuration.JsonData = JsonConvert.SerializeObject(playerConfiguration);
             await dataService.Update(configuration);
-
-            if (items != null)
-            {
-                string data = JsonConvert.SerializeObject(items);
-
-                if (!Directory.Exists(fileService.RootFolder)) /*then*/ Directory.CreateDirectory(fileService.RootFolder);
-
-                if (mediaType == MediaTypes.Song)
-                {
-                    IO_File.WriteAllText(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json"), data);
-                }
-                else if (mediaType == MediaTypes.Podcast)
-                {
-                    IO_File.WriteAllText(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"), data);
-                }
-                else if (mediaType == MediaTypes.Television)
-                {
-                    IO_File.WriteAllText(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json"), data);
-                }
-            }
+            if (items != null) /*then*/ playerUIService.UpdateNowPlaying(items, mediaType);
         }
 
         public async Task ClearNowPlaying()
@@ -184,19 +137,7 @@ namespace MediaLibraryWebUI.Controllers
             if (configuration != null)
             {
                 playerConfiguration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
-
-                if (playerConfiguration.SelectedMediaType == MediaTypes.Song)
-                {
-                    IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Song)}.json"));
-                }
-                else if (playerConfiguration.SelectedMediaType == MediaTypes.Podcast)
-                {
-                    IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Podcast)}.json"));
-                }
-                else if (playerConfiguration.SelectedMediaType == MediaTypes.Television)
-                {
-                    IO_File.Delete(Path.Combine(fileService.RootFolder, $"{fileNamePrefix}_{nameof(MediaTypes.Television)}.json"));
-                }
+                playerUIService.ClearNowPlaying(playerConfiguration.SelectedMediaType);
             }
         }
 
