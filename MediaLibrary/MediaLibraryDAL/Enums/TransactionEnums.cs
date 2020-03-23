@@ -33,6 +33,9 @@ namespace MediaLibraryDAL.Enums
             /* Music: 301 - 350 */
             Read = 301, ResetData = 302, RefreshMusic = 303,
 
+            /* Audit Logging */
+            LogInfo = 901, LogWarning = 902, LogError = 903,
+
             None = -1
         }
 

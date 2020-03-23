@@ -1,4 +1,5 @@
-﻿using MediaLibraryDAL.DbContexts;
+﻿using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Models.Configurations;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Controllers
@@ -19,12 +21,14 @@ namespace MediaLibraryWebUI.Controllers
     {
         private readonly MediaLibraryViewModel mediaLibraryViewModel;
         private readonly IDataService dataService;
+        private readonly ILogService logService;
 
         [ImportingConstructor]
-        public MediaLibraryController(MediaLibraryViewModel mediaLibraryViewModel, IDataService dataService)
+        public MediaLibraryController(MediaLibraryViewModel mediaLibraryViewModel, IDataService dataService, ILogService logService)
         {
             this.mediaLibraryViewModel = mediaLibraryViewModel;
             this.dataService = dataService;
+            this.logService = logService;
         }
 
         public async Task<ActionResult> Index()
@@ -73,5 +77,7 @@ namespace MediaLibraryWebUI.Controllers
 
             return Json(mediaLibraryViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
+
+        public async Task Log(TransactionTypes transactionType, string message) => await logService.Log(transactionType, message);
     }
 }

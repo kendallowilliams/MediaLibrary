@@ -91,7 +91,9 @@
     <Compile Include="Services\AlbumService.cs" />
     <Compile Include="Services\ArtistService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\Interfaces\ILogService.cs" />
     <Compile Include="Services\Interfaces\IPlayerService.cs" />
+    <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\PlayerService.cs" />
     <Compile Include="Services\ProcessorService.cs" />
     <Compile Include="Services\GenreService.cs" />
