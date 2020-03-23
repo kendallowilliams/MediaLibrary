@@ -54,7 +54,6 @@ export default class Player extends BaseClass implements IView {
 
             if (this.playerConfiguration.properties.SelectedMediaType === MediaTypes.Podcast ||
                 this.playerConfiguration.properties.SelectedMediaType === MediaTypes.Television) {
-                debugger;
                 player.currentTime = parseInt($('[data-play-index="' + currentIndex + '"]').attr('data-current-time'));
             }
         });
