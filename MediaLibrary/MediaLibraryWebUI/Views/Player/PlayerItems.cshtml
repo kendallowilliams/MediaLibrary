@@ -6,7 +6,7 @@
         @foreach (var item in Model.Songs.Select((song, index) => new { Song = song, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Music", new { item.Song.Id })"
-                data-play-index="@(item.Index)" data-item-id="@(item.Song.Id)" data-title="@(item.Song.Title)">
+                data-play-index="@(item.Index)" data-item-id="@(item.Song.Id)" data-title="@(item.Song.Title)" data-current-time="@(item.Song.Progress)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
                         <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.Song.Title)</h5>
@@ -34,7 +34,7 @@ else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Podcast && Mo
         @foreach (var item in Model.PodcastItems.Select((podcastItem, index) => new { PodcastItem = podcastItem, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Podcast", new { item.PodcastItem.Id })"
-                data-play-index="@(item.Index)" data-item-id="@(item.PodcastItem.Id)" data-title="@(item.PodcastItem.Title)">
+                data-play-index="@(item.Index)" data-item-id="@(item.PodcastItem.Id)" data-title="@(item.PodcastItem.Title)" data-current-time="@(item.PodcastItem.Progress)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
                         <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.PodcastItem.Title)</h5>
@@ -58,7 +58,7 @@ else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television &&
         @foreach (var item in Model.Episodes.Select((episode, index) => new { Episode = episode, Index = index }))
         {
             <li class="list-group-item list-group-item-action @(item.Index == Model.Configuration.CurrentItemIndex ? "active" : string.Empty)" data-play-url="@Url.Action("File", "Television", new { item.Episode.Id })"
-                data-play-index="@(item.Index)" data-item-id="@(item.Episode.Id)" data-title="@(item.Episode.Title)">
+                data-play-index="@(item.Index)" data-item-id="@(item.Episode.Id)" data-title="@(item.Episode.Title)" data-current-time="@(item.Episode.Progress)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
                         <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.Episode.Title)</h5>

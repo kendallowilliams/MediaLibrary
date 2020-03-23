@@ -5,6 +5,7 @@
     [Length]       INT           NULL,
     [Url]          VARCHAR (MAX) NOT NULL,
 	[File]		VARCHAR(MAX) NULL,
+    [Progress]    INT DEFAULT (0) NOT NULL,
     [PodcastId]   INT           NOT NULL,
     [PublishDate] DATETIME2      NOT NULL,
 	[PlayCount] INT  DEFAULT (0) NOT NULL,

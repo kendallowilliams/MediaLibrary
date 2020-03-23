@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MediaLibraryWebUI
 {
-    public static class Enums
+    public static class UIEnums
     {
         public enum SongSort { AtoZ = 0, Album, Artist, DateAdded, Genre }
         public enum ArtistSort { AtoZ = 0 }
@@ -21,7 +21,6 @@ namespace MediaLibraryWebUI
         public enum PodcastPages { Index = 0, Podcast }
         public enum TelevisionPages { Index = 0, Series }
         public enum MediaPages { Home = 0, Music, Playlist, Podcast, Player, Television }
-        public enum MediaTypes { Song, Podcast, Television }
         public enum RepeatTypes { None = 0, RepeatOne, RepeatAll }
     }
 }

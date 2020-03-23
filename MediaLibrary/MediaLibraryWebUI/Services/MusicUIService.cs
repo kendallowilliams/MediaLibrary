@@ -8,7 +8,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using static MediaLibraryWebUI.Enums;
+using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Services
 {

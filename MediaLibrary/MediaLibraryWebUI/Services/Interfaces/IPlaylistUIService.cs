@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static MediaLibraryWebUI.Enums;
+using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Services.Interfaces
 {

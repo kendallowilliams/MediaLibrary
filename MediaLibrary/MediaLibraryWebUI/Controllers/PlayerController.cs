@@ -15,7 +15,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using static MediaLibraryWebUI.Enums;
+using static MediaLibraryBLL.Enums;
+using static MediaLibraryWebUI.UIEnums;
 using static System.Environment;
 using IO_File = System.IO.File;
 
@@ -28,15 +29,17 @@ namespace MediaLibraryWebUI.Controllers
         private readonly PlayerViewModel playerViewModel;
         private readonly IDataService dataService;
         private readonly IPlayerUIService playerUIService;
+        private readonly IPlayerService playerService;
 
         [ImportingConstructor]
         public PlayerController(ITransactionService transactionService, PlayerViewModel playerViewModel, IDataService dataService,
-                                IPlayerUIService playerUIService)
+                                IPlayerUIService playerUIService, IPlayerService playerService)
         {
             this.transactionService = transactionService;
             this.playerViewModel = playerViewModel;
             this.dataService = dataService;
             this.playerUIService = playerUIService;
+            this.playerService = playerService;
         }
 
         [CompressContent]
@@ -94,15 +97,15 @@ namespace MediaLibraryWebUI.Controllers
 
             if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Song)
             {
-                playerViewModel.Songs = await playerUIService.GetNowPlayingSongs();
+                playerViewModel.Songs = await playerService.GetNowPlayingSongs();
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Podcast)
             {
-                playerViewModel.PodcastItems = await playerUIService.GetNowPlayingPodcastItems();
+                playerViewModel.PodcastItems = await playerService.GetNowPlayingPodcastItems();
             }
             else if (playerViewModel.Configuration.SelectedMediaType == MediaTypes.Television)
             {
-                playerViewModel.Episodes = await playerUIService.GetNowPlayingEpisodes();
+                playerViewModel.Episodes = await playerService.GetNowPlayingEpisodes();
             }
         }
 
@@ -126,7 +129,7 @@ namespace MediaLibraryWebUI.Controllers
             playerConfiguration.SelectedMediaType = mediaType;
             configuration.JsonData = JsonConvert.SerializeObject(playerConfiguration);
             await dataService.Update(configuration);
-            if (items != null) /*then*/ playerUIService.UpdateNowPlaying(items, mediaType);
+            if (items != null) /*then*/ playerService.UpdateNowPlaying(items, mediaType);
         }
 
         public async Task ClearNowPlaying()
@@ -137,42 +140,13 @@ namespace MediaLibraryWebUI.Controllers
             if (configuration != null)
             {
                 playerConfiguration = JsonConvert.DeserializeObject<PlayerConfiguration>(configuration.JsonData) ?? new PlayerConfiguration();
-                playerUIService.ClearNowPlaying(playerConfiguration.SelectedMediaType);
+                playerService.ClearNowPlaying(playerConfiguration.SelectedMediaType);
             }
         }
 
         public async Task UpdatePlayCount(MediaTypes mediaType, int id)
         {
-            if (mediaType == MediaTypes.Podcast)
-            {
-                PodcastItem podcastItem = await dataService.Get<PodcastItem>(item => item.Id == id);
-
-                if (podcastItem != null)
-                {
-                    podcastItem.PlayCount++;
-                    await dataService.Update(podcastItem);
-                }
-            }
-            else if (mediaType == MediaTypes.Song)
-            {
-                Track track = await dataService.Get<Track>(item => item.Id == id);
-
-                if (track != null)
-                {
-                    track.PlayCount++;
-                    await dataService.Update(track);
-                }
-            }
-            else if (mediaType == MediaTypes.Television)
-            {
-                Episode episode = await dataService.Get<Episode>(item => item.Id == id);
-
-                if (episode != null)
-                {
-                    episode.PlayCount++;
-                    await dataService.Update(episode);
-                }
-            }
+            await playerService.UpdatePlayCount(id, mediaType);
         }
 
         public async Task<ActionResult> PlayerConfiguration()
@@ -185,6 +159,11 @@ namespace MediaLibraryWebUI.Controllers
             }
 
             return Json(playerViewModel.Configuration, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task UpdatePlayerProgress(int id, MediaTypes mediaType, int progress)
+        {
+            await playerService.UpdatePlayerProgress(id, mediaType, progress);
         }
     }
 }

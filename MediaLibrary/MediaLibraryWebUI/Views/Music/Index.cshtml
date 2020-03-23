@@ -5,17 +5,17 @@
         <h2>Music</h2>
         <div class="nav d-block p-1" id="@(HtmlControlsRepository.MusicTabListId)" role="tablist">
             <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.AlbumsContainerId)-tab" data-toggle="tab"
-               role="tab" aria-controls="@(HtmlControlsRepository.AlbumsContainerId)" aria-selected="true" title="@(nameof(Enums.MusicTabs.Albums))" data-music-tab="@(nameof(Enums.MusicTabs.Albums))"
+               role="tab" aria-controls="@(HtmlControlsRepository.AlbumsContainerId)" aria-selected="true" title="@(nameof(UIEnums.MusicTabs.Albums))" data-music-tab="@(nameof(UIEnums.MusicTabs.Albums))"
                data-tooltip="tooltip" href="#@(HtmlControlsRepository.AlbumsContainerId)">
                 <i class="fa fa-compact-disc"></i>
             </a>
             <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.ArtistsContainerId)-tab" data-toggle="tab"
-               role="tab" aria-controls="@(HtmlControlsRepository.ArtistsContainerId)" aria-selected="false" title="@(nameof(Enums.MusicTabs.Artists))" data-music-tab="@(nameof(Enums.MusicTabs.Artists))"
+               role="tab" aria-controls="@(HtmlControlsRepository.ArtistsContainerId)" aria-selected="false" title="@(nameof(UIEnums.MusicTabs.Artists))" data-music-tab="@(nameof(UIEnums.MusicTabs.Artists))"
                data-tooltip="tooltip" href="#@(HtmlControlsRepository.ArtistsContainerId)">
                 <i class="fa fa-user"></i>
             </a>
             <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.SongsContainerId)-tab" data-toggle="tab"
-               role="tab" aria-controls="@(HtmlControlsRepository.SongsContainerId)" aria-selected="false" title="@(nameof(Enums.MusicTabs.Songs))" data-music-tab="@(nameof(Enums.MusicTabs.Songs))"
+               role="tab" aria-controls="@(HtmlControlsRepository.SongsContainerId)" aria-selected="false" title="@(nameof(UIEnums.MusicTabs.Songs))" data-music-tab="@(nameof(UIEnums.MusicTabs.Songs))"
                data-tooltip="tooltip" href="#@(HtmlControlsRepository.SongsContainerId)">
                 <i class="fa fa-music"></i>
             </a>
@@ -27,7 +27,7 @@
                 @Html.DropDownListFor(x => x.Configuration.SelectedAlbumSort,
                                       Model.AlbumSortItems,
                                       null,
-                                      new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Albums ? "" : " d-none"),
+                                      new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Albums ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
                                           data_sort_tab = $"{HtmlControlsRepository.AlbumsContainerId}-tab",
@@ -37,7 +37,7 @@
                 @Html.DropDownListFor(x => x.Configuration.SelectedArtistSort,
                                       Model.ArtistSortItems,
                                       null,
-                                      new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Artists ? "" : " d-none"),
+                                      new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Artists ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
                                           data_sort_tab = $"{HtmlControlsRepository.ArtistsContainerId}-tab",
@@ -47,7 +47,7 @@
                 @Html.DropDownListFor(x => x.Configuration.SelectedSongSort,
                                       Model.SongSortItems,
                                       null,
-                                      new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == Enums.MusicTabs.Songs ? "" : " d-none"),
+                                      new { @class = "custom-select border border-secondary" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Songs ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
                                           data_sort_tab = $"{HtmlControlsRepository.SongsContainerId}-tab",

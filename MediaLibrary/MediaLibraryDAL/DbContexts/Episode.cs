@@ -22,6 +22,7 @@ namespace MediaLibraryDAL.DbContexts
         public System.DateTime CreateDate { get; set; }
         public System.DateTime ModifyDate { get; set; }
         public int PlayCount { get; set; }
+        public int Progress { get; set; }
     
         public virtual Series Series { get; set; }
     }

@@ -26,13 +26,13 @@
     </div>
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-body d-flex m-0 p-0 rounded-top" style="flex: 1 1 auto; overflow-y: auto">
-            <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto; overflow-y: auto"></div>
-            <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto; display: flex; overflow-x: auto" class="@(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Audio ? string.Empty : "d-none") flex-column">
-                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" @(Model.Configuration.Muted ? "muted=\"muted\"" : string.Empty) preload="metadata" data-player-page="@(Enums.PlayerPages.Audio)" />
+            <div id="@(HtmlControlsRepository.PlayerItemsContainerId)" class="@(Model.Configuration.SelectedPlayerPage == UIEnums.PlayerPages.Index ? string.Empty : "d-none")" style="flex: 1 1 auto; overflow-y: auto"></div>
+            <div id="@(HtmlControlsRepository.PlayerAudioContainerId)" style="flex: 1 1 auto; display: flex; overflow-x: auto" class="@(Model.Configuration.SelectedPlayerPage == UIEnums.PlayerPages.Audio ? string.Empty : "d-none") flex-column">
+                <audio id="@(HtmlControlsRepository.MusicPlayerId)" class="d-none" @(Model.Configuration.Muted ? "muted=\"muted\"" : string.Empty) preload="metadata" data-player-page="@(UIEnums.PlayerPages.Audio)" />
                 <canvas id="@(HtmlControlsRepository.AudioVisualizerId)"></canvas>
             </div>
-            <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 1 auto; background-color: black" class="embed-responsive @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
-                <video id="@(HtmlControlsRepository.VideoPlayerId)" @(Model.Configuration.Muted ? "muted=\"muted\"" : string.Empty) preload="metadata" data-player-page="@(Enums.PlayerPages.Video)" class="embed-responsive-item" />
+            <div id="@(HtmlControlsRepository.PlayerVideoContainerId)" style="flex: 1 1 auto; background-color: black" class="embed-responsive @(Model.Configuration.SelectedPlayerPage == UIEnums.PlayerPages.Video ? string.Empty : "d-none")">
+                <video id="@(HtmlControlsRepository.VideoPlayerId)" @(Model.Configuration.Muted ? "muted=\"muted\"" : string.Empty) preload="metadata" data-player-page="@(UIEnums.PlayerPages.Video)" class="embed-responsive-item" />
             </div>
         </div>
         <div class="card-footer d-flex align-items-center" style="flex: 0 0 auto">
@@ -47,18 +47,18 @@
                 <div id="@(HtmlControlsRepository.PlayerTimeId)" class="text-muted" style="flex: 0 0 auto">00:00/00:00</div>
             </div>
             <div style="flex: 0 0 auto">
-                <button id="@(HtmlControlsRepository.PlayerPlaylistToggleButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Index ? "active" : string.Empty)">
+                <button id="@(HtmlControlsRepository.PlayerPlaylistToggleButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == UIEnums.PlayerPages.Index ? "active" : string.Empty)">
                     <i class="fa fa-list-ul"></i>
                 </button>
                 <span class="d-none d-lg-inline-block">
                     <button id="@(HtmlControlsRepository.PlayerShuffleButtonId)" class="btn btn-sm btn-outline-secondary"><i class="fa fa-random"></i></button>
-                    <button id="@(HtmlControlsRepository.PlayerRepeatButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.None))" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Repeat == Enums.RepeatTypes.None ? string.Empty : "d-none")">
+                    <button id="@(HtmlControlsRepository.PlayerRepeatButtonId)" data-repeat-type="@(nameof(UIEnums.RepeatTypes.None))" class="btn btn-sm btn-outline-secondary @(Model.Configuration.Repeat == UIEnums.RepeatTypes.None ? string.Empty : "d-none")">
                         <i class="fa fa-sync"></i>
                     </button>
-                    <button id="@(HtmlControlsRepository.PlayerRepeatOneButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatOne))" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Repeat == Enums.RepeatTypes.RepeatOne ? string.Empty : "d-none")">
+                    <button id="@(HtmlControlsRepository.PlayerRepeatOneButtonId)" data-repeat-type="@(nameof(UIEnums.RepeatTypes.RepeatOne))" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Repeat == UIEnums.RepeatTypes.RepeatOne ? string.Empty : "d-none")">
                         <i class="fa fa-xs fa-sync"><sub>1</sub></i>
                     </button>
-                    <button id="@(HtmlControlsRepository.PlayerRepeatAllButtonId)" data-repeat-type="@(nameof(Enums.RepeatTypes.RepeatAll))" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Repeat == Enums.RepeatTypes.RepeatAll ? string.Empty : "d-none")">
+                    <button id="@(HtmlControlsRepository.PlayerRepeatAllButtonId)" data-repeat-type="@(nameof(UIEnums.RepeatTypes.RepeatAll))" class="btn btn-sm btn-outline-secondary active @(Model.Configuration.Repeat == UIEnums.RepeatTypes.RepeatAll ? string.Empty : "d-none")">
                         <i class="fa fa-sync"></i>
                     </button>
                 </span>
@@ -71,7 +71,7 @@
                         <i class="fa fa-volume-mute"></i>
                     </button>
                 </span>
-                <button id="@(HtmlControlsRepository.PlayerFullscreenButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == Enums.PlayerPages.Video ? string.Empty : "d-none")">
+                <button id="@(HtmlControlsRepository.PlayerFullscreenButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.SelectedPlayerPage == UIEnums.PlayerPages.Video ? string.Empty : "d-none")">
                     <i class="fa fa-expand"></i>
                 </button>
             </div>

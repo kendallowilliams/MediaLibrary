@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static MediaLibraryWebUI.Enums;
+using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Models.Interfaces
 {

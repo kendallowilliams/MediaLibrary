@@ -384,7 +384,7 @@
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\PodcastController.cs" />
     <Compile Include="DataContracts\ScanDirectoryRequest.cs" />
-    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Enums\UIEnums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -46,6 +46,7 @@
           <Property Name="Season" Type="int" />
           <Property Name="Path" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="PlayCount" Type="int" Nullable="false" />
+          <Property Name="Progress" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -111,6 +112,7 @@
           <Property Name="Length" Type="int" />
           <Property Name="Url" Type="varchar(max)" Nullable="false" />
           <Property Name="File" Type="varchar(max)" />
+          <Property Name="Progress" Type="int" Nullable="false" />
           <Property Name="PodcastId" Type="int" Nullable="false" />
           <Property Name="PublishDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="PlayCount" Type="int" Nullable="false" />
@@ -140,6 +142,7 @@
           <Property Name="Position" Type="int" />
           <Property Name="Year" Type="int" />
           <Property Name="Duration" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Progress" Type="int" Nullable="false" />
           <Property Name="PlayCount" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
@@ -160,9 +163,9 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
-          <Property Name="Message" Type="text" />
-          <Property Name="StatusMessage" Type="text" />
-          <Property Name="ErrorMessage" Type="text" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="StatusMessage" Type="nvarchar(max)" />
+          <Property Name="ErrorMessage" Type="nvarchar(max)" />
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
@@ -191,7 +194,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Episode__SeriesI__1DB06A4F">
+        <Association Name="FK__Episode__SeriesI__4B7734FF">
           <End Role="Series" Type="Self.Series" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -205,7 +208,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PodcastIt__Podca__1F98B2C1">
+        <Association Name="FK__PodcastIt__Podca__4C6B5938">
           <End Role="Podcast" Type="Self.Podcast" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -219,7 +222,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__AlbumId__6C190EBB">
+        <Association Name="FK__Track__AlbumId__4F47C5E3">
           <End Role="Album" Type="Self.Album" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -231,7 +234,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__ArtistId__6D0D32F4">
+        <Association Name="FK__Track__ArtistId__503BEA1C">
           <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -243,7 +246,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__GenreId__6EF57B66">
+        <Association Name="FK__Track__GenreId__5224328E">
           <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -255,7 +258,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__PathId__6E01572D">
+        <Association Name="FK__Track__PathId__51300E55">
           <End Role="TrackPath" Type="Self.TrackPath" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -348,27 +351,27 @@
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Album" EntitySet="Album" />
           </AssociationSet>
-          <AssociationSet Name="FK__Episode__SeriesI__1DB06A4F" Association="Self.FK__Episode__SeriesI__1DB06A4F">
+          <AssociationSet Name="FK__Episode__SeriesI__4B7734FF" Association="Self.FK__Episode__SeriesI__4B7734FF">
             <End Role="Series" EntitySet="Series" />
             <End Role="Episode" EntitySet="Episode" />
           </AssociationSet>
-          <AssociationSet Name="FK__PodcastIt__Podca__1F98B2C1" Association="Self.FK__PodcastIt__Podca__1F98B2C1">
+          <AssociationSet Name="FK__PodcastIt__Podca__4C6B5938" Association="Self.FK__PodcastIt__Podca__4C6B5938">
             <End Role="Podcast" EntitySet="Podcast" />
             <End Role="PodcastItem" EntitySet="PodcastItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__AlbumId__6C190EBB" Association="Self.FK__Track__AlbumId__6C190EBB">
+          <AssociationSet Name="FK__Track__AlbumId__4F47C5E3" Association="Self.FK__Track__AlbumId__4F47C5E3">
             <End Role="Album" EntitySet="Album" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__ArtistId__6D0D32F4" Association="Self.FK__Track__ArtistId__6D0D32F4">
+          <AssociationSet Name="FK__Track__ArtistId__503BEA1C" Association="Self.FK__Track__ArtistId__503BEA1C">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__GenreId__6EF57B66" Association="Self.FK__Track__GenreId__6EF57B66">
+          <AssociationSet Name="FK__Track__GenreId__5224328E" Association="Self.FK__Track__GenreId__5224328E">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__PathId__6E01572D" Association="Self.FK__Track__PathId__6E01572D">
+          <AssociationSet Name="FK__Track__PathId__51300E55" Association="Self.FK__Track__PathId__51300E55">
             <End Role="TrackPath" EntitySet="TrackPath" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
@@ -601,6 +604,7 @@
           <Property Name="File" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="PlaylistPodcastItems" Relationship="MediaLibraryDAL.FK_playlist_podcastitem_podcastitem" FromRole="PodcastItem" ToRole="PlaylistPodcastItem" />
           <Property Name="PlayCount" Type="Int32" Nullable="false" />
+          <Property Name="Progress" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Track">
           <Key>
@@ -624,6 +628,7 @@
           <NavigationProperty Name="PlaylistTracks" Relationship="MediaLibraryDAL.FK_playlist_track_track" FromRole="Track" ToRole="PlaylistTrack" />
           <NavigationProperty Name="TrackPath" Relationship="MediaLibraryDAL.FK__Track__PathId__05D8E0BE" FromRole="Track" ToRole="TrackPath" />
           <NavigationProperty Name="Genre" Relationship="MediaLibraryDAL.FK__Track__GenreId__2739D489" FromRole="Track" ToRole="Genre" />
+          <Property Name="Progress" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -631,9 +636,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="StatusMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StatusMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
@@ -902,6 +907,7 @@
           <Property Name="ModifyDate" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="Series" Relationship="MediaLibraryDAL.FK__Episode__SeriesI__08B54D69" FromRole="Episode" ToRole="Series" />
           <Property Name="PlayCount" Type="Int32" Nullable="false" />
+          <Property Name="Progress" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK__Episode__SeriesI__08B54D69">
           <End Type="MediaLibraryDAL.Series" Role="Series" Multiplicity="1">
@@ -997,6 +1003,7 @@
           <EntitySetMapping Name="PodcastItems">
             <EntityTypeMapping TypeName="MediaLibraryDAL.PodcastItem">
               <MappingFragment StoreEntitySet="PodcastItem">
+                <ScalarProperty Name="Progress" ColumnName="Progress" />
                 <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
                 <ScalarProperty Name="File" ColumnName="File" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
@@ -1014,6 +1021,7 @@
           <EntitySetMapping Name="Tracks">
             <EntityTypeMapping TypeName="MediaLibraryDAL.Track">
               <MappingFragment StoreEntitySet="Track">
+                <ScalarProperty Name="Progress" ColumnName="Progress" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
@@ -1090,6 +1098,7 @@
           <EntitySetMapping Name="Episodes">
             <EntityTypeMapping TypeName="MediaLibraryDAL.Episode">
               <MappingFragment StoreEntitySet="Episode">
+                <ScalarProperty Name="Progress" ColumnName="Progress" />
                 <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />

@@ -33,6 +33,7 @@ namespace MediaLibraryDAL.DbContexts
         public int PlayCount { get; set; }
         public System.DateTime CreateDate { get; set; }
         public System.DateTime ModifyDate { get; set; }
+        public int Progress { get; set; }
     
         public virtual Album Album { get; set; }
         public virtual Artist Artist { get; set; }

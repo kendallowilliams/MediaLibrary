@@ -15,7 +15,7 @@ using MediaLibraryWebUI.Attributes;
 using MediaLibraryWebUI.DataContracts;
 using static MediaLibraryDAL.Enums.TransactionEnums;
 using Newtonsoft.Json;
-using static MediaLibraryWebUI.Enums;
+using static MediaLibraryWebUI.UIEnums;
 using MediaLibraryWebUI.Models.Configurations;
 using MediaLibraryWebUI.Models.Data;
 using System.Web;

@@ -7,7 +7,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static MediaLibraryWebUI.Enums;
+using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Models
 {
