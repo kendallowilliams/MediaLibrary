@@ -14,13 +14,11 @@ namespace MediaLibraryBLL.Services
     [Export(typeof(ILogService))]
     public class LogService : ILogService
     {
-        private readonly IDataService dataService;
         private readonly ITransactionService transactionService;
 
         [ImportingConstructor]
-        public LogService(IDataService dataService, ITransactionService transactionService)
+        public LogService(ITransactionService transactionService)
         {
-            this.dataService = dataService;
             this.transactionService = transactionService;
         }
 
