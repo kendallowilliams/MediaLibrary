@@ -15,8 +15,8 @@ export default class AddNewSongModal {
         });
 
         $('[data-song-action="upload"]').on('click', e => {
-            var data = new FormData(),
-                success = () => this.loadFunc(() => LoadingModal.hideLoading());
+            const data = new FormData(),
+                  success = () => this.loadFunc(() => LoadingModal.hideLoading());
 
             $(this.modal).modal('hide');
             if ($('#inpNewSong').prop('files').length > 0) {
