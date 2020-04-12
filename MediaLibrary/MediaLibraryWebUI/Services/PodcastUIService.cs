@@ -16,12 +16,13 @@ namespace MediaLibraryWebUI.Services
     [Export(typeof(IPodcastUIService))]
     public class PodcastUIService : BaseUIService, IPodcastUIService
     {
-        private readonly IDataService dataService;
+        private readonly Lazy<IDataService> lazyDataService;
+        private IDataService dataService => lazyDataService.Value;
 
         [ImportingConstructor]
-        public PodcastUIService(IDataService dataService) : base()
+        public PodcastUIService(Lazy<IDataService> dataService) : base()
         {
-            this.dataService = dataService;
+            this.lazyDataService = dataService;
         }
 
         public async Task<IEnumerable<IGrouping<string, Podcast>>> GetPodcastGroups(PodcastSort sort)

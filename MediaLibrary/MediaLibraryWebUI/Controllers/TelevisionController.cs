@@ -25,19 +25,23 @@ namespace MediaLibraryWebUI.Controllers
     [Export(nameof(MediaPages.Television), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class TelevisionController : BaseController
     {
-        private readonly ITelevisionUIService televisionService;
-        private readonly IDataService dataService;
-        private readonly TelevisionViewModel televisionViewModel;
-        private readonly ITransactionService transactionService;
+        private readonly Lazy<ITelevisionUIService> lazyTelevisionService;
+        private readonly Lazy<IDataService> lazyDataService;
+        private readonly Lazy<TelevisionViewModel> lazyTelevisionViewModel;
+        private readonly Lazy<ITransactionService> lazyTransactionService;
+        private ITelevisionUIService televisionService => lazyTelevisionService.Value;
+        private IDataService dataService => lazyDataService.Value;
+        private TelevisionViewModel televisionViewModel => lazyTelevisionViewModel.Value;
+        private ITransactionService transactionService => lazyTransactionService.Value;
 
         [ImportingConstructor]
-        public TelevisionController(ITelevisionUIService televisionService, IDataService dataService, TelevisionViewModel televisionViewModel,
-                                    ITransactionService transactionService)
+        public TelevisionController(Lazy<ITelevisionUIService> televisionService, Lazy<IDataService> dataService, Lazy<TelevisionViewModel> televisionViewModel,
+                                    Lazy<ITransactionService> transactionService)
         {
-            this.televisionService = televisionService;
-            this.dataService = dataService;
-            this.televisionViewModel = televisionViewModel;
-            this.transactionService = transactionService;
+            this.lazyTelevisionService = televisionService;
+            this.lazyDataService = dataService;
+            this.lazyTelevisionViewModel = televisionViewModel;
+            this.lazyTransactionService = transactionService;
         }
 
         [CompressContent]

@@ -19,16 +19,19 @@ namespace MediaLibraryWebUI.Controllers
     [Export("MediaLibrary", typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class MediaLibraryController : BaseController
     {
-        private readonly MediaLibraryViewModel mediaLibraryViewModel;
-        private readonly IDataService dataService;
-        private readonly ILogService logService;
+        private readonly Lazy<MediaLibraryViewModel> lazyMediaLibraryViewModel;
+        private readonly Lazy<IDataService> lazyDataService;
+        private readonly Lazy<ILogService> lazyLogService;
+        private MediaLibraryViewModel mediaLibraryViewModel => lazyMediaLibraryViewModel.Value;
+        private IDataService dataService => lazyDataService.Value;
+        private ILogService logService => lazyLogService.Value;
 
         [ImportingConstructor]
-        public MediaLibraryController(MediaLibraryViewModel mediaLibraryViewModel, IDataService dataService, ILogService logService)
+        public MediaLibraryController(Lazy<MediaLibraryViewModel> mediaLibraryViewModel, Lazy<IDataService> dataService, Lazy<ILogService> logService)
         {
-            this.mediaLibraryViewModel = mediaLibraryViewModel;
-            this.dataService = dataService;
-            this.logService = logService;
+            this.lazyMediaLibraryViewModel = mediaLibraryViewModel;
+            this.lazyDataService = dataService;
+            this.lazyLogService = logService;
         }
 
         public async Task<ActionResult> Index()

@@ -17,12 +17,13 @@ namespace MediaLibraryWebUI.Services
     [Export(typeof(ITelevisionUIService))]
     public class TelevisionUIService : BaseUIService, ITelevisionUIService
     {
-        private readonly IDataService dataService;
+        private readonly Lazy<IDataService> lazyDataService;
+        private IDataService dataService => lazyDataService.Value;
 
         [ImportingConstructor]
-        public TelevisionUIService(IDataService dataService) : base()
+        public TelevisionUIService(Lazy<IDataService> dataService) : base()
         {
-            this.dataService = dataService;
+            this.lazyDataService = dataService;
         }
 
         public async Task<IEnumerable<IGrouping<string, Series>>> GetSeriesGroups(SeriesSort sort)

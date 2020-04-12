@@ -16,15 +16,16 @@ namespace MediaLibraryWebUI.Services
     [Export(typeof(IMusicUIService))]
     public class MusicUIService : BaseUIService, IMusicUIService
     {
-        private readonly IDataService dataService;
+        private readonly Lazy<IDataService> lazyDataService;
+        private IDataService dataService => lazyDataService.Value;
         private IEnumerable<Track> songs;
         private IEnumerable<Artist> artists;
         private IEnumerable<Album> albums;
 
         [ImportingConstructor]
-        public MusicUIService(IDataService dataService) : base()
+        public MusicUIService(Lazy<IDataService> dataService) : base()
         {
-            this.dataService = dataService;
+            this.lazyDataService = dataService;
         }
 
         public async Task<IEnumerable<Track>> Songs() => songs ?? await dataService.GetList<Track>();

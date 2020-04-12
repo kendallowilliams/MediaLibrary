@@ -22,19 +22,23 @@ namespace MediaLibraryWebUI.Controllers
     [Export(nameof(MediaPages.Playlist), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlaylistController : BaseController
     {
-        private readonly IPlaylistUIService playlistService;
-        private readonly IDataService dataService;
-        private readonly PlaylistViewModel playlistViewModel;
-        private readonly ITransactionService transactionService;
+        private readonly Lazy<IPlaylistUIService> lazyPlaylistService;
+        private readonly Lazy<IDataService> lazyDataService;
+        private readonly Lazy<PlaylistViewModel> lazyPlaylistViewModel;
+        private readonly Lazy<ITransactionService> lazyTransactionService;
+        private IPlaylistUIService playlistService => lazyPlaylistService.Value;
+        private IDataService dataService => lazyDataService.Value;
+        private PlaylistViewModel playlistViewModel => lazyPlaylistViewModel.Value;
+        private ITransactionService transactionService => lazyTransactionService.Value;
 
         [ImportingConstructor]
-        public PlaylistController(IPlaylistUIService playlistService, IDataService dataService, PlaylistViewModel playlistViewModel,
-                                  ITransactionService transactionService)
+        public PlaylistController(Lazy<IPlaylistUIService> playlistService, Lazy<IDataService> dataService, Lazy<PlaylistViewModel> playlistViewModel,
+                                  Lazy<ITransactionService> transactionService)
         {
-            this.playlistService = playlistService;
-            this.dataService = dataService;
-            this.playlistViewModel = playlistViewModel;
-            this.transactionService = transactionService;
+            this.lazyPlaylistService = playlistService;
+            this.lazyDataService = dataService;
+            this.lazyPlaylistViewModel = playlistViewModel;
+            this.lazyTransactionService = transactionService;
         }
 
         [CompressContent]

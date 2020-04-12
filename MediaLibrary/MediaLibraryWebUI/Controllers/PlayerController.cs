@@ -25,21 +25,26 @@ namespace MediaLibraryWebUI.Controllers
     [Export(nameof(MediaPages.Player), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PlayerController : BaseController
     {
-        private readonly ITransactionService transactionService;
-        private readonly PlayerViewModel playerViewModel;
-        private readonly IDataService dataService;
-        private readonly IPlayerUIService playerUIService;
-        private readonly IPlayerService playerService;
+        private readonly Lazy<ITransactionService> lazyTransactionService;
+        private readonly Lazy<PlayerViewModel> lazyPlayerViewModel;
+        private readonly Lazy<IDataService> lazyDataService;
+        private readonly Lazy<IPlayerUIService> lazyPlayerUIService;
+        private readonly Lazy<IPlayerService> lazyPlayerService;
+        private ITransactionService transactionService => lazyTransactionService.Value;
+        private PlayerViewModel playerViewModel => lazyPlayerViewModel.Value;
+        private IDataService dataService => lazyDataService.Value;
+        private IPlayerUIService playerUIService => lazyPlayerUIService.Value;
+        private IPlayerService playerService => lazyPlayerService.Value;
 
         [ImportingConstructor]
-        public PlayerController(ITransactionService transactionService, PlayerViewModel playerViewModel, IDataService dataService,
-                                IPlayerUIService playerUIService, IPlayerService playerService)
+        public PlayerController(Lazy<ITransactionService> transactionService, Lazy<PlayerViewModel> playerViewModel, Lazy<IDataService> dataService,
+                                Lazy<IPlayerUIService> playerUIService, Lazy<IPlayerService> playerService)
         {
-            this.transactionService = transactionService;
-            this.playerViewModel = playerViewModel;
-            this.dataService = dataService;
-            this.playerUIService = playerUIService;
-            this.playerService = playerService;
+            this.lazyTransactionService = transactionService;
+            this.lazyPlayerViewModel = playerViewModel;
+            this.lazyDataService = dataService;
+            this.lazyPlayerUIService = playerUIService;
+            this.lazyPlayerService = playerService;
         }
 
         [CompressContent]

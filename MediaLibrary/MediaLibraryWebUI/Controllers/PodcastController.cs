@@ -25,26 +25,33 @@ namespace MediaLibraryWebUI.Controllers
     [Export(nameof(MediaPages.Podcast), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class PodcastController : BaseController
     {
-        private readonly IPodcastUIService podcastUIService;
-        private readonly IDataService dataService;
-        private readonly PodcastViewModel podcastViewModel;
-        private readonly IPodcastService podcastService;
-        private readonly IControllerService controllerService;
-        private readonly ITransactionService transactionService;
-        private readonly IFileService fileService;
+        private readonly Lazy<IPodcastUIService> lazyPodcastUIService;
+        private readonly Lazy<IDataService> lazyDataService;
+        private readonly Lazy<PodcastViewModel> lazyPodcastViewModel;
+        private readonly Lazy<IPodcastService> lazyPodcastService;
+        private readonly Lazy<IControllerService> lazyControllerService;
+        private readonly Lazy<ITransactionService> lazyTransactionService;
+        private readonly Lazy<IFileService> lazyFileService;
+        private IPodcastUIService podcastUIService => lazyPodcastUIService.Value;
+        private IDataService dataService => lazyDataService.Value;
+        private PodcastViewModel podcastViewModel => lazyPodcastViewModel.Value;
+        private IPodcastService podcastService => lazyPodcastService.Value;
+        private IControllerService controllerService => lazyControllerService.Value;
+        private ITransactionService transactionService => lazyTransactionService.Value;
+        private IFileService fileService => lazyFileService.Value;
 
         [ImportingConstructor]
-        public PodcastController(IPodcastUIService podcastUIService, IDataService dataService, PodcastViewModel podcastViewModel,
-                                 IPodcastService podcastService, IControllerService controllerService, ITransactionService transactionService,
-                                 IFileService fileService)
+        public PodcastController(Lazy<IPodcastUIService> podcastUIService, Lazy<IDataService> dataService, Lazy<PodcastViewModel> podcastViewModel,
+                                 Lazy<IPodcastService> podcastService, Lazy<IControllerService> controllerService, Lazy<ITransactionService> transactionService,
+                                 Lazy<IFileService> fileService)
         {
-            this.podcastUIService = podcastUIService;
-            this.dataService = dataService;
-            this.podcastViewModel = podcastViewModel;
-            this.podcastService = podcastService;
-            this.controllerService = controllerService;
-            this.transactionService = transactionService;
-            this.fileService = fileService;
+            this.lazyPodcastUIService = podcastUIService;
+            this.lazyDataService = dataService;
+            this.lazyPodcastViewModel = podcastViewModel;
+            this.lazyPodcastService = podcastService;
+            this.lazyControllerService = controllerService;
+            this.lazyTransactionService = transactionService;
+            this.lazyFileService = fileService;
         }
 
         [CompressContent]

@@ -23,9 +23,13 @@ namespace MediaLibraryWebUI.Services
     [Export(typeof(IPlayerUIService))]
     public class PlayerUIService : BaseUIService, IPlayerUIService
     {
+        private readonly Lazy<IDataService> lazyDataService;
+        private IDataService dataService => lazyDataService.Value;
+
         [ImportingConstructor]
-        public PlayerUIService() : base()
+        public PlayerUIService(Lazy<IDataService> dataService) : base()
         {
+            this.lazyDataService = dataService;
         }
     }
 }

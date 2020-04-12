@@ -17,12 +17,13 @@ namespace MediaLibraryWebUI.Services
     [Export(typeof(IPlaylistUIService))]
     public class PlaylistUIService : BaseUIService, IPlaylistUIService
     {
-        private readonly IDataService dataService;
+        private readonly Lazy<IDataService> lazyDataService;
+        private IDataService dataService => lazyDataService.Value;
 
         [ImportingConstructor]
-        public PlaylistUIService(IDataService dataService) : base()
+        public PlaylistUIService(Lazy<IDataService> dataService) : base()
         {
-            this.dataService = dataService;
+            this.lazyDataService = dataService;
         }
 
         public async Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort)

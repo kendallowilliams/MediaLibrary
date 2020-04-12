@@ -12,7 +12,7 @@ using MediaLibraryDAL.DbContexts;
 
 namespace MediaLibraryWebUI.Services
 {
-    [Export(typeof(IControllerService)), PartCreationPolicy(CreationPolicy.NonShared)]
+    [Export(typeof(IControllerService))]
     public class ControllerService : IControllerService
     {
         private readonly ITransactionService transactionService;

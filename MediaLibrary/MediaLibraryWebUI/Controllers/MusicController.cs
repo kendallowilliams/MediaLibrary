@@ -29,26 +29,33 @@ namespace MediaLibraryWebUI.Controllers
     [Export(nameof(MediaPages.Music), typeof(IController)), PartCreationPolicy(CreationPolicy.NonShared)]
     public class MusicController : BaseController
     {
-        private readonly IDataService dataService;
-        private readonly IMusicUIService musicService;
-        private readonly MusicViewModel musicViewModel;
-        private readonly ITrackService trackService;
-        private readonly IFileService fileService;
-        private readonly IControllerService controllerService;
-        private readonly ITransactionService transactionService;
+        private readonly Lazy<IDataService> lazyDataService;
+        private readonly Lazy<IMusicUIService> lazyMusicService;
+        private readonly Lazy<MusicViewModel> lazyMusicViewModel;
+        private readonly Lazy<ITrackService> lazyTrackService;
+        private readonly Lazy<IFileService> lazyFileService;
+        private readonly Lazy<IControllerService> lazyControllerService;
+        private readonly Lazy<ITransactionService> lazyTransactionService;
+        private IDataService dataService => lazyDataService.Value;
+        private IMusicUIService musicService => lazyMusicService.Value;
+        private MusicViewModel musicViewModel => lazyMusicViewModel.Value;
+        private ITrackService trackService => lazyTrackService.Value;
+        private IFileService fileService => lazyFileService.Value;
+        private IControllerService controllerService => lazyControllerService.Value;
+        private ITransactionService transactionService => lazyTransactionService.Value;
 
         [ImportingConstructor]
-        public MusicController(IDataService dataService, IMusicUIService musicService, MusicViewModel musicViewModel,
-                               ITrackService trackService, IFileService fileService, IControllerService controllerService,
-                               ITransactionService transactionService)
+        public MusicController(Lazy<IDataService> dataService, Lazy<IMusicUIService> musicService, Lazy<MusicViewModel> musicViewModel,
+                               Lazy<ITrackService> trackService, Lazy<IFileService> fileService, Lazy<IControllerService> controllerService,
+                               Lazy<ITransactionService> transactionService)
         {
-            this.dataService = dataService;
-            this.musicService = musicService;
-            this.musicViewModel = musicViewModel;
-            this.trackService = trackService;
-            this.fileService = fileService;
-            this.controllerService = controllerService;
-            this.transactionService = transactionService;
+            this.lazyDataService = dataService;
+            this.lazyMusicService = musicService;
+            this.lazyMusicViewModel = musicViewModel;
+            this.lazyTrackService = trackService;
+            this.lazyFileService = fileService;
+            this.lazyControllerService = controllerService;
+            this.lazyTransactionService = transactionService;
         }
 
         [CompressContent]
