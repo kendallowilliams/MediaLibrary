@@ -46,6 +46,7 @@ namespace MediaLibraryBLL.Services
                 if (podcastItem != null)
                 {
                     podcastItem.PlayCount++;
+                    podcastItem.LastPlayedDate = DateTime.Now;
                     await dataService.Update(podcastItem);
                 }
             }
@@ -56,6 +57,7 @@ namespace MediaLibraryBLL.Services
                 if (track != null)
                 {
                     track.PlayCount++;
+                    track.LastPlayedDate = DateTime.Now;
                     await dataService.Update(track);
                 }
             }
@@ -66,6 +68,7 @@ namespace MediaLibraryBLL.Services
                 if (episode != null)
                 {
                     episode.PlayCount++;
+                    episode.LastPlayedDate = DateTime.Now;
                     await dataService.Update(episode);
                 }
             }

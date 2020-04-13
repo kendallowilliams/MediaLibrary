@@ -32,6 +32,7 @@ namespace MediaLibraryDAL.DbContexts
         public string File { get; set; }
         public int PlayCount { get; set; }
         public int Progress { get; set; }
+        public Nullable<System.DateTime> LastPlayedDate { get; set; }
     
         public virtual Podcast Podcast { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

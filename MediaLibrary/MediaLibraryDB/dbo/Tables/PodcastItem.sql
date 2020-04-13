@@ -9,6 +9,7 @@
     [PodcastId]   INT           NOT NULL,
     [PublishDate] DATETIME2      NOT NULL,
 	[PlayCount] INT  DEFAULT (0) NOT NULL,
+    [LastPlayedDate] DATETIME2      NULL,
     [CreateDate]  DATETIME2      DEFAULT (getdate()) NOT NULL,
     [ModifyDate]  DATETIME2      DEFAULT (getdate()) NOT NULL,
     PRIMARY KEY NONCLUSTERED ([Id] ASC),

@@ -11,5 +11,6 @@ namespace MediaLibraryWebUI.Services.Interfaces
     public interface IPlaylistUIService
     {
         Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort);
+        Task<IEnumerable<Playlist>> GetSystemPlaylists();
     }
 }

@@ -23,6 +23,7 @@ namespace MediaLibraryDAL.DbContexts
         public System.DateTime ModifyDate { get; set; }
         public int PlayCount { get; set; }
         public int Progress { get; set; }
+        public Nullable<System.DateTime> LastPlayedDate { get; set; }
     
         public virtual Series Series { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\KOW\Source\Repos\kendallowilliams\MediaLibrary\MediaLibrary\MediaLibraryDAL\DbContexts\MediaLibrary.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Kendall Williams\Source\Repos\MediaLibrary\MediaLibrary\MediaLibraryDAL\DbContexts\MediaLibrary.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

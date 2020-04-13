@@ -53,13 +53,14 @@ namespace MediaLibraryWebUI.Services
             return playlists.GroupBy(playlist => getCharLabel(playlist.Name)).OrderBy(group => group.Key);
         }
 
-        private async Task<IEnumerable<Playlist>> GetSystemPlaylists()
+        public async Task<IEnumerable<Playlist>> GetSystemPlaylists()
         {
-            IEnumerable<Track> tracks = await dataService.GetList<Track>();
+            IEnumerable<Track> tracks = await dataService.GetList<Track>(default, default, track => track.Album, track => track.Artist);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
 
-            playlists = PlaylistRepository.GetSystemPlaylists(25).Select(item => new Playlist()
+            playlists = PlaylistRepository.GetSystemPlaylists(25).Select((item, index) => new Playlist()
             {
+                Id = -(++index),
                 Name = item.Key,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
