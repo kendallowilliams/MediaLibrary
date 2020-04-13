@@ -3,7 +3,7 @@
   <PropertyGroup>
     <StartupScript>(Blank)</StartupScript>
     <StartAction>StartNone</StartAction>
-    <TargetConnectionString>Data Source=KSERVER;Initial Catalog=MediaLibrary;Persist Security Info=True;User ID=kserver_sql_dev;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
-    <TargetDatabase>MediaLibrary</TargetDatabase>
+    <TargetConnectionString>Data Source=KSERVER;Initial Catalog=MediaLibrary_DEV;Persist Security Info=True;User ID=kserver_sql_dev;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</TargetConnectionString>
+    <TargetDatabase>MediaLibrary_DEV</TargetDatabase>
   </PropertyGroup>
 </Project>

@@ -144,6 +144,7 @@
           <Property Name="Duration" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Progress" Type="int" Nullable="false" />
           <Property Name="PlayCount" Type="int" Nullable="false" />
+          <Property Name="LastPlayedDate" Type="datetime2" Precision="7" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -222,7 +223,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__AlbumId__4F47C5E3">
+        <Association Name="FK__Track__AlbumId__671F4F74">
           <End Role="Album" Type="Self.Album" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -234,7 +235,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__ArtistId__503BEA1C">
+        <Association Name="FK__Track__ArtistId__681373AD">
           <End Role="Artist" Type="Self.Artist" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -246,7 +247,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__GenreId__5224328E">
+        <Association Name="FK__Track__GenreId__69FBBC1F">
           <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
           <End Role="Track" Type="Self.Track" Multiplicity="*" />
           <ReferentialConstraint>
@@ -258,7 +259,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Track__PathId__51300E55">
+        <Association Name="FK__Track__PathId__690797E6">
           <End Role="TrackPath" Type="Self.TrackPath" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -359,19 +360,19 @@
             <End Role="Podcast" EntitySet="Podcast" />
             <End Role="PodcastItem" EntitySet="PodcastItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__AlbumId__4F47C5E3" Association="Self.FK__Track__AlbumId__4F47C5E3">
+          <AssociationSet Name="FK__Track__AlbumId__671F4F74" Association="Self.FK__Track__AlbumId__671F4F74">
             <End Role="Album" EntitySet="Album" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__ArtistId__503BEA1C" Association="Self.FK__Track__ArtistId__503BEA1C">
+          <AssociationSet Name="FK__Track__ArtistId__681373AD" Association="Self.FK__Track__ArtistId__681373AD">
             <End Role="Artist" EntitySet="Artist" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__GenreId__5224328E" Association="Self.FK__Track__GenreId__5224328E">
+          <AssociationSet Name="FK__Track__GenreId__69FBBC1F" Association="Self.FK__Track__GenreId__69FBBC1F">
             <End Role="Genre" EntitySet="Genre" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
-          <AssociationSet Name="FK__Track__PathId__51300E55" Association="Self.FK__Track__PathId__51300E55">
+          <AssociationSet Name="FK__Track__PathId__690797E6" Association="Self.FK__Track__PathId__690797E6">
             <End Role="TrackPath" EntitySet="TrackPath" />
             <End Role="Track" EntitySet="Track" />
           </AssociationSet>
@@ -629,6 +630,7 @@
           <NavigationProperty Name="TrackPath" Relationship="MediaLibraryDAL.FK__Track__PathId__05D8E0BE" FromRole="Track" ToRole="TrackPath" />
           <NavigationProperty Name="Genre" Relationship="MediaLibraryDAL.FK__Track__GenreId__2739D489" FromRole="Track" ToRole="Genre" />
           <Property Name="Progress" Type="Int32" Nullable="false" />
+          <Property Name="LastPlayedDate" Type="DateTime" Precision="7" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -1021,6 +1023,7 @@
           <EntitySetMapping Name="Tracks">
             <EntityTypeMapping TypeName="MediaLibraryDAL.Track">
               <MappingFragment StoreEntitySet="Track">
+                <ScalarProperty Name="LastPlayedDate" ColumnName="LastPlayedDate" />
                 <ScalarProperty Name="Progress" ColumnName="Progress" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />

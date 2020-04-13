@@ -34,6 +34,7 @@ namespace MediaLibraryDAL.DbContexts
         public System.DateTime CreateDate { get; set; }
         public System.DateTime ModifyDate { get; set; }
         public int Progress { get; set; }
+        public Nullable<System.DateTime> LastPlayedDate { get; set; }
     
         public virtual Album Album { get; set; }
         public virtual Artist Artist { get; set; }

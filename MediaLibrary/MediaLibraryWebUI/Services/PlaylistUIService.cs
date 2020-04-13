@@ -10,6 +10,7 @@ using System.Web;
 using static MediaLibraryWebUI.UIEnums;
 using Fody;
 using MediaLibraryWebUI.Models;
+using MediaLibraryWebUI.Repositories;
 
 namespace MediaLibraryWebUI.Services
 {
@@ -30,6 +31,8 @@ namespace MediaLibraryWebUI.Services
         {
             IEnumerable<IGrouping<string, Playlist>> groups = null;
             IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>(default, default, playlist => playlist.PlaylistTracks.Select(item => item.Track));
+
+            playlists = playlists.Concat(await GetSystemPlaylists());
            
             switch (sort)
             {
@@ -48,6 +51,22 @@ namespace MediaLibraryWebUI.Services
         private IEnumerable<IGrouping<string, Playlist>> GetPlaylistsAtoZ(IEnumerable<Playlist> playlists)
         {
             return playlists.GroupBy(playlist => getCharLabel(playlist.Name)).OrderBy(group => group.Key);
+        }
+
+        private async Task<IEnumerable<Playlist>> GetSystemPlaylists()
+        {
+            IEnumerable<Track> tracks = await dataService.GetList<Track>();
+            IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
+
+            playlists = PlaylistRepository.GetSystemPlaylists(25).Select(item => new Playlist()
+            {
+                Name = item.Key,
+                CreateDate = DateTime.Now,
+                ModifyDate = DateTime.Now,
+                PlaylistTracks = item.Value(tracks).Select(track => new PlaylistTrack() { Track = track }).ToList()
+            });
+
+            return playlists;
         }
     }
 }
