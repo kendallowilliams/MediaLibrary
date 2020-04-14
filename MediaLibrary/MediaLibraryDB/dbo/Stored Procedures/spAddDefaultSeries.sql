@@ -1099,9 +1099,9 @@ INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Slaver Wea
 INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Eye of the Beholder',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/15.mp4'));
 INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Jihad',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/16.mp4'));
 /* STAR TREK: THE ANIMATED SERIES SEASON TWO */
-INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Pirates of Orion',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/01.mp4'));
-INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Bem',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/02.mp4'));
-INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Practical Joker',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/03.mp4'));
-INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Albatross',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/04.mp4'));
-INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('How Sharper Than a Serpent''s Tooth',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/05.mp4'));
-INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Counter-Clock Incident',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/06.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Pirates of Orion',@StarTrekTASId,2,CONCAT(@StarTrekTASPath,'/S2','/01.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Bem',@StarTrekTASId,2,CONCAT(@StarTrekTASPath,'/S2','/02.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Practical Joker',@StarTrekTASId,2,CONCAT(@StarTrekTASPath,'/S2','/03.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Albatross',@StarTrekTASId,2,CONCAT(@StarTrekTASPath,'/S2','/04.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('How Sharper Than a Serpent''s Tooth',@StarTrekTASId,2,CONCAT(@StarTrekTASPath,'/S2','/05.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Counter-Clock Incident',@StarTrekTASId,2,CONCAT(@StarTrekTASPath,'/S2','/06.mp4'));
