@@ -8,13 +8,15 @@ DECLARE @BewitchedId int,
 		@StrangersWithCandyId int,
 		@WonderWomanId int,
 		@XenaId int,
+		@StarTrekTASId int,
 		@BewitchedPath VARCHAR(256) = N'$(series_root)/BEWITCHED',
 		@GoldenGirlsPath VARCHAR(256) = N'$(series_root)/GOLDEN_GIRLS',
 		@MamasFamilyPath VARCHAR(256) = N'$(series_root)/MAMAS_FAMILY',
 		@RoseannePath VARCHAR(256) = N'$(series_root)/ROSEANNE',
 		@StrangersWithCandyPath VARCHAR(256) = N'$(series_root)/STRANGERS_WITH_CANDY',
 		@WonderWomanPath VARCHAR(256) = N'$(series_root)/WONDER_WOMAN',
-		@XenaPath VARCHAR(256) = N'$(series_root)/XENA';
+		@XenaPath VARCHAR(256) = N'$(series_root)/XENA',
+		@StarTrekTASPath VARCHAR(256) = N'$(series_root)/STAR_TREK_TAS';
 
 DELETE Series;
 
@@ -25,6 +27,7 @@ INSERT INTO Series ([Title]) VALUES ('Roseanne');
 INSERT INTO Series ([Title]) VALUES ('Strangers With Candy');
 INSERT INTO Series ([Title]) VALUES ('Wonder Woman');
 INSERT INTO Series ([Title]) VALUES ('Xena: Warrior Princess');
+INSERT INTO Series ([Title]) VALUES ('Star Trek: The Animated Series');
 
 SELECT @BewitchedId = Id FROM Series WHERE Title = 'Bewitched';
 SELECT @GoldenGirlsId = Id FROM Series WHERE Title = 'Golden Girls';
@@ -33,6 +36,7 @@ SELECT @RoseanneId = Id FROM Series WHERE Title = 'Roseanne';
 SELECT @StrangersWithCandyId = Id FROM Series WHERE Title = 'Strangers With Candy';
 SELECT @WonderWomanId = Id FROM Series WHERE Title = 'Wonder Woman';
 SELECT @XenaId = Id FROM Series WHERE Title = 'Xena: Warrior Princess';
+SELECT @StarTrekTASId = Id FROM Series WHERE Title = 'Star Trek: The Animated Series';
 
 /*ROSEANNE SEASON ONE*/
 INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Life and Stuff',@RoseanneId,1,CONCAT(@RoseannePath,'/S1','/01.mp4'));
@@ -1077,3 +1081,27 @@ INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Guess Who''s G
 INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Look Who''s Breathing',@MamasFamilyId,6,CONCAT(@MamasFamilyPath,'/S6','/18.mp4'));
 INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('There Is Nothing Like the Dames',@MamasFamilyId,6,CONCAT(@MamasFamilyPath,'/S6','/19.mp4'));
 INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Bye-Bye -- Baby!',@MamasFamilyId,6,CONCAT(@MamasFamilyPath,'/S6','/20.mp4'));
+/* STAR TREK: THE ANIMATED SERIES SEASON ONE */
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Beyond the Farthest Star',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/01.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Yesteryear',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/02.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('One of Our Planets Is Missing',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/03.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Lorelei Signal',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/04.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('More Tribbles, More Troubles',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/05.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Survivor',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/06.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Infinite Vulcan',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/07.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Magicks of Megas-tu',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/08.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Once Upon a Planet',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/09.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Mudd''s Passion',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/10.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Terratin Incident',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/11.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Time Trap',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/12.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Ambergris Element',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/13.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Slaver Weapon',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/14.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Eye of the Beholder',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/15.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Jihad',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S1','/16.mp4'));
+/* STAR TREK: THE ANIMATED SERIES SEASON TWO */
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Pirates of Orion',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/01.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Bem',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/02.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Practical Joker',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/03.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('Albatross',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/04.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('How Sharper Than a Serpent''s Tooth',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/05.mp4'));
+INSERT INTO Episode ([Title],[SeriesId],[Season],[Path]) VALUES ('The Counter-Clock Incident',@StarTrekTASId,1,CONCAT(@StarTrekTASPath,'/S2','/06.mp4'));
