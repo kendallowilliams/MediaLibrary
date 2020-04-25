@@ -31,6 +31,9 @@
         <EntityTypeShape EntityType="MediaLibraryDAL.Series" Width="1.5" PointX="3.375" PointY="11.75" />
         <EntityTypeShape EntityType="MediaLibraryDAL.Episode" Width="1.5" PointX="5.625" PointY="12.5" />
         <AssociationConnector Association="MediaLibraryDAL.FK__Episode__SeriesI__08B54D69" />
+        <EntityTypeShape EntityType="MediaLibraryDAL.PlaylistEpisode" Width="1.5" PointX="7.875" PointY="12.125" />
+        <AssociationConnector Association="MediaLibraryDAL.FK_playlist_episode_episode" />
+        <AssociationConnector Association="MediaLibraryDAL.FK_playlist_episode_playlist" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

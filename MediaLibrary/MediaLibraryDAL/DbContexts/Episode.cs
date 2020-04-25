@@ -14,6 +14,12 @@ namespace MediaLibraryDAL.DbContexts
     
     public partial class Episode
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Episode()
+        {
+            this.PlaylistEpisodes = new HashSet<PlaylistEpisode>();
+        }
+    
         public int Id { get; set; }
         public string Title { get; set; }
         public int SeriesId { get; set; }
@@ -26,5 +32,7 @@ namespace MediaLibraryDAL.DbContexts
         public Nullable<System.DateTime> LastPlayedDate { get; set; }
     
         public virtual Series Series { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlaylistEpisode> PlaylistEpisodes { get; set; }
     }
 }

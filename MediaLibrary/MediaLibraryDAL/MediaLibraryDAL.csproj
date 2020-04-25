@@ -130,6 +130,9 @@
     <Compile Include="DbContexts\Playlist.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
+    <Compile Include="DbContexts\PlaylistEpisode.cs">
+      <DependentUpon>MediaLibrary.tt</DependentUpon>
+    </Compile>
     <Compile Include="DbContexts\PlaylistPodcastItem.cs">
       <DependentUpon>MediaLibrary.tt</DependentUpon>
     </Compile>
