@@ -36,7 +36,12 @@
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-header" id="heading-playlist-@(Model.SelectedPlaylist.Id)">
             <h5 class="mb-0">
-                Songs
+                @if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Music)
+                {<span>Songs</span> }
+                else if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Podcast)
+                { <span>Episodes</span> }
+                else if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Episode)
+                { <span>Episodes</span>}
             </h5>
         </div>
         <div class="card-body m-0 p-0" style="flex: 1 1 auto; overflow-y: auto">
@@ -69,9 +74,72 @@
                     }
                 </ul>
             }
+            else if (Model.SelectedPlaylist.PlaylistPodcastItems.Any())
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var list in Model.SelectedPlaylist.PlaylistPodcastItems.OrderBy(item => item.CreateDate))
+                    {
+                        <li class="list-group-item" data-song-id="@(list.PodcastItem.Id)">
+                            <div class="media">
+                                <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.PodcastItem.Title)">
+                                <div class="media-body d-flex flex-column" style="overflow-x: auto">
+                                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(list.PodcastItem.Title)</h5>
+                                    <div style="flex: 0 0 auto">
+                                        <span data-podcast-id="@(list.PodcastItem.PodcastId)" style="cursor: pointer">@(list.PodcastItem.Podcast?.Title ?? "Unknown Album")</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline-secondary" data-play-id="@(list.PodcastItem.Id)" data-tooltip="tooltip" title="Play">
+                                        <i class="fa fa-play"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
+                                            data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
+                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else if (Model.SelectedPlaylist.PlaylistEpisodes.Any())
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var list in Model.SelectedPlaylist.PlaylistEpisodes.OrderBy(item => item.CreateDate))
+                    {
+                        <li class="list-group-item" data-song-id="@(list.Episode.Id)">
+                            <div class="media">
+                                <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(list.Episode.Title)">
+                                <div class="media-body d-flex flex-column" style="overflow-x: auto">
+                                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(list.Episode.Title)</h5>
+                                    <div style="flex: 0 0 auto">
+                                        <span data-album-id="@(list.Episode.SeriesId)" style="cursor: pointer">@(list.Episode.Series?.Title ?? "Unknown Album")</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline-secondary" data-play-id="@(list.Episode.Id)" data-tooltip="tooltip" title="Play">
+                                        <i class="fa fa-play"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
+                                            data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
+                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
             else
             {
-                <span>No songs added.</span>
+                if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Music)
+                {<span>No songs added.</span> }
+                else if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Podcast)
+                { <span>No episodes added.</span> }
+                else if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Episode)
+                { <span>No episodes added.</span>}
             }
         </div>
     </div>

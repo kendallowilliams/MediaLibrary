@@ -59,7 +59,7 @@ namespace MediaLibraryWebUI.Services
         public async Task<IEnumerable<Playlist>> GetSystemPlaylists()
         {
             IEnumerable<Track> tracks = await dataService.GetList<Track>(default, default, track => track.Album, track => track.Artist);
-            IEnumerable<PodcastItem> podcastItems = await dataService.GetList<PodcastItem>(default, default);
+            IEnumerable<PodcastItem> podcastItems = await dataService.GetList<PodcastItem>(default, default, item => item.Podcast);
             IEnumerable<Episode> episodes = await dataService.GetList<Episode>(default, default, episode => episode.Series);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
 

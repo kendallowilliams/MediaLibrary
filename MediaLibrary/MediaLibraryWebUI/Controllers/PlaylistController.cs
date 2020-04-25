@@ -56,7 +56,7 @@ namespace MediaLibraryWebUI.Controllers
                 (playlistViewModel.Configuration.SelectedPlaylistId < 0 ||
                  await dataService.Exists<Playlist>(album => album.Id == playlistViewModel.Configuration.SelectedPlaylistId)))
             {
-                result = await Get(playlistViewModel.Configuration.SelectedPlaylistId);
+                result = await Get(playlistViewModel.Configuration.SelectedPlaylistId, playlistViewModel.Configuration.SelectedPlaylistTab);
             }
             else
             {
@@ -111,7 +111,7 @@ namespace MediaLibraryWebUI.Controllers
             await dataService.Update(playlist);
         }
 
-        private async Task<ActionResult> Get(int id)
+        private async Task<ActionResult> Get(int id, PlaylistTabs type)
         {
             if (id > 0)
             {
@@ -124,7 +124,7 @@ namespace MediaLibraryWebUI.Controllers
             {
                 IEnumerable<Playlist> systemPlaylists = await playlistService.GetSystemPlaylists();
 
-                playlistViewModel.SelectedPlaylist = systemPlaylists.FirstOrDefault(playlist => playlist.Id == id);
+                playlistViewModel.SelectedPlaylist = systemPlaylists.FirstOrDefault(playlist => playlist.Id == id && playlist.Type == (int)type);
             }
 
             return PartialView("Playlist", playlistViewModel);
