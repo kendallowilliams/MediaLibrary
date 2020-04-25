@@ -16,5 +16,6 @@ namespace MediaLibraryWebUI.Models.Configurations
         public int SelectedPlaylistId { get; set; }
         public PlaylistPages SelectedPlaylistPage { get; set; }
         public PlaylistSort SelectedPlaylistSort { get; set; }
+        public PlaylistTabs SelectedPlaylistTab { get; set; }
     }
 }

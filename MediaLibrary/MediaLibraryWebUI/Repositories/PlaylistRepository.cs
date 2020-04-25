@@ -1,6 +1,7 @@
 ﻿using MediaLibraryBLL.Models;
 using MediaLibraryBLL.Models.Interfaces;
 using MediaLibraryDAL.DbContexts;
+using MediaLibraryDAL.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Repositories
 {
-    using SYSTEM_PLAYLIST = KeyValuePair<string, Func<IEnumerable<Track>, IEnumerable<Track>>>;
+    using SYSTEM_PLAYLIST = KeyValuePair<string, Func<IEnumerable<IPlayableItem>, IEnumerable<IPlayableItem>>>;
 
     public static class PlaylistRepository
     {
@@ -19,13 +20,13 @@ namespace MediaLibraryWebUI.Repositories
             yield return new ListItem<object, PlaylistSort>(null, "A to Z", PlaylistSort.AtoZ);
         }
 
-        public static IEnumerable<SYSTEM_PLAYLIST> GetSystemPlaylists(int count)
+        public static IEnumerable<SYSTEM_PLAYLIST> GetSystemPlaylists<T>(int count) where T : IPlayableItem
         {
-            yield return new SYSTEM_PLAYLIST($"Top {count} Most Played", tracks => tracks.OrderByDescending(track => track.PlayCount).Take(count));
-            yield return new SYSTEM_PLAYLIST($"Top {count} Recently Added", tracks => tracks.OrderByDescending(track => track.CreateDate).Take(count));
-            yield return new SYSTEM_PLAYLIST($"Top {count} Recently Played", tracks => tracks.Where(track => track.LastPlayedDate.HasValue)
-                                                                                             .OrderByDescending(track => track.LastPlayedDate.Value)
-                                                                                             .Take(count));
+            yield return new SYSTEM_PLAYLIST($"Top {count} Most Played", items => items.OrderByDescending(item => item.PlayCount).Take(count));
+            yield return new SYSTEM_PLAYLIST($"Top {count} Recently Added", items => items.OrderByDescending(item => item.CreateDate).Take(count));
+            yield return new SYSTEM_PLAYLIST($"Top {count} Recently Played", items => items.Where(item => item.LastPlayedDate.HasValue)
+                                                                                           .OrderByDescending(item => item.LastPlayedDate.Value)
+                                                                                           .Take(count));
         }
     }
 }

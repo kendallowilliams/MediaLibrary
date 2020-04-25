@@ -54,6 +54,9 @@ namespace MediaLibraryWebUI.Repositories
         public static string SongsContainerId { get => "songs-container"; }
         public static string ArtistsContainerId { get => "artists-container"; }
         public static string AlbumsContainerId { get => "albums-container"; }
+        public static string MusicPlaylistContainerId { get => "music-playlist-container"; }
+        public static string PodcastPlaylistContainerId { get => "podcast-playlist-container"; }
+        public static string EpisodePlaylistContainerId { get => "episode-playlist-container"; }
         #endregion Container Ids
 
         #region UI Control Ids
@@ -62,6 +65,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string PlayerTimeId { get => "player-time"; }
         public static string AudioVisualizerId { get => "audio-visualizer"; }
         public static string MusicTabListId { get => "music-tab-list"; }
+        public static string PlaylistTabListId { get => "playlist-tab-list"; }
         #endregion UI Control Ids
 
         #region UI Field Ids
@@ -78,6 +82,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string EditSongModalId { get => "edit-song-modal"; }
         public static string LoadingModalId { get => "loading-modal"; }
         public static string ClearNowPlayingModalId { get => "clear-now-playing-modal"; }
+        public static string DownloadM3UPlaylistModalId { get => "download-m3u-playlist-modal"; }
         #endregion Modal Ids
     }
 }

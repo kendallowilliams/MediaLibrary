@@ -11,6 +11,7 @@ using static MediaLibraryWebUI.UIEnums;
 using Fody;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Repositories;
+using MediaLibraryWebUI.Models.Configurations;
 
 namespace MediaLibraryWebUI.Services
 {
@@ -30,7 +31,9 @@ namespace MediaLibraryWebUI.Services
         public async Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort)
         {
             IEnumerable<IGrouping<string, Playlist>> groups = null;
-            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>(default, default, playlist => playlist.PlaylistTracks.Select(item => item.Track));
+            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>(default, default, playlist => playlist.PlaylistTracks,
+                                                                                                    playlist => playlist.PlaylistPodcastItems,
+                                                                                                    playlist => playlist.PlaylistEpisodes);
 
             playlists = playlists.Concat(await GetSystemPlaylists());
            
@@ -56,16 +59,39 @@ namespace MediaLibraryWebUI.Services
         public async Task<IEnumerable<Playlist>> GetSystemPlaylists()
         {
             IEnumerable<Track> tracks = await dataService.GetList<Track>(default, default, track => track.Album, track => track.Artist);
+            IEnumerable<PodcastItem> podcastItems = await dataService.GetList<PodcastItem>(default, default);
+            IEnumerable<Episode> episodes = await dataService.GetList<Episode>(default, default, episode => episode.Series);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
 
-            playlists = PlaylistRepository.GetSystemPlaylists(25).Select((item, index) => new Playlist()
+            playlists = PlaylistRepository.GetSystemPlaylists<Track>(25).Select((item, index) => new Playlist()
             {
                 Id = -(++index),
                 Name = item.Key,
+                Type = (int)PlaylistTabs.Music,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
-                PlaylistTracks = item.Value(tracks).Select(track => new PlaylistTrack() { Track = track }).ToList()
+                PlaylistTracks = item.Value(tracks).Select(track => new PlaylistTrack() { Track = (Track)track }).ToList()
             });
+
+            playlists = playlists.Concat(PlaylistRepository.GetSystemPlaylists<PodcastItem>(25).Select((item, index) => new Playlist()
+            {
+                Id = -(++index),
+                Name = item.Key,
+                Type = (int)PlaylistTabs.Podcast,
+                CreateDate = DateTime.Now,
+                ModifyDate = DateTime.Now,
+                PlaylistPodcastItems = item.Value(podcastItems).Select(_item => new PlaylistPodcastItem() { PodcastItem = (PodcastItem)_item }).ToList()
+            }));
+
+            playlists = playlists.Concat(PlaylistRepository.GetSystemPlaylists<Episode>(25).Select((item, index) => new Playlist()
+            {
+                Id = -(++index),
+                Name = item.Key,
+                Type = (int)PlaylistTabs.Episode,
+                CreateDate = DateTime.Now,
+                ModifyDate = DateTime.Now,
+                PlaylistEpisodes = item.Value(episodes).Select(episode => new PlaylistEpisode() { Episode = (Episode)episode }).ToList()
+            }));
 
             return playlists;
         }

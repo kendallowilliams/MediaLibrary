@@ -66,6 +66,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="ModifyDate" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
@@ -619,6 +620,7 @@
           <NavigationProperty Name="PlaylistTracks" Relationship="MediaLibraryDAL.FK_playlist_track_playlist" FromRole="Playlist" ToRole="PlaylistTrack" />
           <NavigationProperty Name="PlaylistPodcastItems" Relationship="MediaLibraryDAL.FK_playlist_podcastitem_playlist" FromRole="Playlist" ToRole="PlaylistPodcastItem" />
           <NavigationProperty Name="PlaylistEpisodes" Relationship="MediaLibraryDAL.FK_playlist_episode_playlist" FromRole="Playlist" ToRole="PlaylistEpisode" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="PlaylistTrack">
           <Key>
@@ -1071,6 +1073,7 @@
           <EntitySetMapping Name="Playlists">
             <EntityTypeMapping TypeName="MediaLibraryDAL.Playlist">
               <MappingFragment StoreEntitySet="Playlist">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

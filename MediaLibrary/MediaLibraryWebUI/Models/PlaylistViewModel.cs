@@ -7,6 +7,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Models
 {
@@ -23,5 +24,9 @@ namespace MediaLibraryWebUI.Models
         public Playlist SelectedPlaylist { get; set; }
         public IEnumerable<IGrouping<string, Playlist>> PlaylistGroups { get; set; }
         public IEnumerable<SelectListItem> PlaylistSortItems { get; }
+        public IEnumerable<SelectListItem> PlaylistTabItems { get => Enum.GetValues(typeof(PlaylistTabs))
+                                                                         .Cast<PlaylistTabs>()
+                                                                         .Select(item => item.ToString())
+                                                                         .Select(item => new SelectListItem { Text = item, Value = item }); }
     }
 }

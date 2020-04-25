@@ -47,6 +47,11 @@ export const enum PlaylistPages {
     Index = 0,
     Playlist
 }
+export const enum PlaylistTabs {
+    Music = 0,
+    Podcast,
+    Episode
+}
 export const enum PodcastPages {
     Index = 0,
     Podcast

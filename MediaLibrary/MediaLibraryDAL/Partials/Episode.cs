@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class Episode : IDataModel
+    public partial class Episode : IPlayableItem
     {
     }
 }

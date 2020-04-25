@@ -1,4 +1,4 @@
-﻿import { MediaPages, SeriesSort, AlbumSort, ArtistSort, MusicTabs, SongSort, MediaTypes, RepeatTypes, PlayerPages, PlaylistSort, PodcastSort, PodcastFilter } from "./enums";
+﻿import { MediaPages, SeriesSort, AlbumSort, ArtistSort, MusicTabs, SongSort, MediaTypes, RepeatTypes, PlayerPages, PlaylistSort, PodcastSort, PodcastFilter, PlaylistTabs } from "./enums";
 
 export function getMediaPagesEnum(page: string): MediaPages {
     let mediaPage: MediaPages;
@@ -178,7 +178,7 @@ export function getPlayerPageEnum(page: string): PlayerPages {
 };
 
 export function getRepeatTypesEnumString(page: RepeatTypes): string {
-    let repeatType: string = '';
+    let repeatType: string;
 
     switch (page) {
         case RepeatTypes.None:
@@ -288,4 +288,42 @@ export function getPodcastFilterEnum(filter: string): PodcastFilter {
     }
 
     return podcastFilter;
+};
+
+export function getPlaylistTabEnumString(tab: PlaylistTabs): string {
+    let playlistTab: string;
+
+    switch (tab) {
+        case PlaylistTabs.Podcast:
+            playlistTab = 'Podcast';
+            break;
+        case PlaylistTabs.Episode:
+            playlistTab = 'Episode';
+            break;
+        case PlaylistTabs.Music:
+        default:
+            playlistTab = 'Music';
+            break;
+    }
+
+    return playlistTab;
+};
+
+export function getPlaylistTabEnum(tab: string): PlaylistTabs {
+    let playlistTab: PlaylistTabs;
+
+    switch (tab) {
+        case 'Podcast':
+            playlistTab = PlaylistTabs.Podcast;
+            break;
+        case 'Episode':
+            playlistTab = PlaylistTabs.Episode;
+            break;
+        case 'Music':
+        default:
+            playlistTab = PlaylistTabs.Music;
+            break;
+    }
+
+    return playlistTab;
 };

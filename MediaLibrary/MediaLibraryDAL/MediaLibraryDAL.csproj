@@ -159,6 +159,7 @@
     </Compile>
     <Compile Include="Enums\TransactionEnums.cs" />
     <Compile Include="Models\Interfaces\IDataModel.cs" />
+    <Compile Include="Models\Interfaces\IPlayableItem.cs" />
     <Compile Include="Models\MediaData.cs" />
     <Compile Include="Partials\Configuration.cs" />
     <Compile Include="Partials\MediaLibraryEntities.cs" />

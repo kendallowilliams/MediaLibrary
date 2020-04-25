@@ -1,4 +1,6 @@
-﻿<div class="modal fade" id="@(HtmlControlsRepository.NewPlaylistModalId)" tabindex="-1" role="dialog" aria-labelledby="modalNewPlaylistTitle" aria-hidden="true">
+﻿@model MediaLibraryWebUI.Models.PlaylistViewModel
+
+<div class="modal fade" id="@(HtmlControlsRepository.NewPlaylistModalId)" tabindex="-1" role="dialog" aria-labelledby="modalNewPlaylistTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,6 +13,10 @@
                 <div class="form-group">
                     <label for="txtNewPlaylist">Playlist</label>
                     <input type="text" class="form-control" id="txtNewPlaylist" name="playlistName" placeholder="Playlist name">
+                </div>
+                <div class="form-group">
+                    <label for="ddlPlaylistType">Type</label>
+                    @Html.DropDownList("playlistType", Model.PlaylistTabItems, new { @class = "form-control", id = "ddlPlaylistType" })
                 </div>
             </div>
             <div class="modal-footer">

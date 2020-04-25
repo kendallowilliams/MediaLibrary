@@ -16,8 +16,12 @@
                     <i class="fa fa-edit"></i>
                 </button>
             }
-            <a class="btn btn-outline-secondary" href="@Url.Action("GetM3UPlaylist", "Playlist", new { Model.SelectedPlaylist.Id})"
-               data-tooltip="tooltip" title="Download M3U playlist"><i class="fa fa-download"></i></a>
+            <button class="btn btn-outline-secondary" data-href="@Url.Action("GetM3UPlaylist", "Playlist", new { Model.SelectedPlaylist.Id })"
+                    data-random-href="@Url.Action("GetM3UPlaylist", "Playlist", new { Model.SelectedPlaylist.Id, random = true })"
+                    data-toggle="modal" data-target="#@(HtmlControlsRepository.DownloadM3UPlaylistModalId)"
+                    data-tooltip="tooltip" title="Download M3U playlist" data-playlist-name="@(Model.SelectedPlaylist.Name)">
+                <i class="fa fa-download"></i>
+            </button>
             @if (Model.SelectedPlaylist.Id > 0)
             {
                 <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { Model.SelectedPlaylist.Id }))"
@@ -74,3 +78,4 @@
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/EditPlaylistModal.cshtml")
+@Html.Partial("~/Views/Shared/Modals/DownloadM3UPlaylistModal.cshtml")

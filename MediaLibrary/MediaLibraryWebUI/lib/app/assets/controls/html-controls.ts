@@ -42,14 +42,18 @@
         PlayerVolumeContainer: document.getElementById('player-volume-container'),
         SongsContainer: document.getElementById('songs-container'),
         ArtistsContainer: document.getElementById('artists-container'),
-        AlbumsContainer: document.getElementById('albums-container')
+        AlbumsContainer: document.getElementById('albums-container'),
+        MusicPlaylistContainer: document.getElementById('music-playlist-container'),
+        PodcastPlaylistContainer: document.getElementById('podcast-playlist-container'),
+        EpisodePlaylistContainer: document.getElementById('episode-playlist-container')
     }),
     UIControls: () => ({
         PlayerSlider: document.getElementById('player-slider'),
         VolumeSlider: document.getElementById('volume-slider'),
         PlayerTime: document.getElementById('player-time'),
         AudioVisualizer: document.getElementById('audio-visualizer') as HTMLCanvasElement,
-        MusicTabList: document.getElementById('music-tab-list')
+        MusicTabList: document.getElementById('music-tab-list'),
+        PlaylistTabList: document.getElementById('playlist-tab-list')
     }),
     UIFields: () => ({
         NowPlayingTitle: document.getElementById('player-title')
@@ -63,6 +67,7 @@
         EdiPlaylistModal: document.getElementById('edit-playlist-modal'),
         EditSongModal: document.getElementById('edit-song-modal'),
         LoadingModal: document.getElementById('loading-modal'),
-        ClearNowPlayingModal: document.getElementById('clear-now-playing-modal')
+        ClearNowPlayingModal: document.getElementById('clear-now-playing-modal'),
+        DownloadM3UPlaylistModel: document.getElementById('download-m3u-playlist-modal')
     })
 }

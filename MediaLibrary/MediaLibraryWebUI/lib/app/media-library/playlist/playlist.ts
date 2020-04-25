@@ -7,12 +7,14 @@ import AddNewPlaylistModal from "../../assets/modals/add-playlist-modal";
 import LoadingModal from "../../assets/modals/loading-modal";
 import EditPlaylistModal from "../../assets/modals/edit-playlist-modal";
 import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
-import { getPlaylistSortEnum } from "../../assets/enums/enum-functions";
+import { getPlaylistSortEnum, getPlaylistTabEnumString, getPlaylistTabEnum } from "../../assets/enums/enum-functions";
+import DownloadM3UPlaylistModal from "../../assets/modals/download-m3u-playlist-modal";
 
 export default class Playlist extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private addPlaylistModal: AddNewPlaylistModal;
     private editPlaylistModal: EditPlaylistModal;
+    private downloadM3UPlaylistModal: DownloadM3UPlaylistModal;
 
     constructor(private playlistConfiguration: PlaylistConfiguration,
         private playFunc: (btn: HTMLButtonElement) => void,
@@ -25,8 +27,10 @@ export default class Playlist extends BaseClass implements IView {
         const success: () => void = () => {
             this.addPlaylistModal = new AddNewPlaylistModal(this.loadView.bind(this));
             this.editPlaylistModal = new EditPlaylistModal(this.loadView.bind(this));
+            this.downloadM3UPlaylistModal = new DownloadM3UPlaylistModal();
             this.initializeControls();
             this.updateActiveMediaFunc();
+            $('[data-playlist-tab="' + getPlaylistTabEnumString(this.playlistConfiguration.properties.SelectedPlaylistTab) + '"]').tab('show');
             callback();
         };
 
@@ -50,6 +54,14 @@ export default class Playlist extends BaseClass implements IView {
             this.playlistConfiguration.properties.SelectedPlaylistId = parseInt($(e.currentTarget).attr('data-playlist-id'));
             this.playlistConfiguration.properties.SelectedPlaylistPage = PlaylistPages.Playlist;
             this.playlistConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
+        });
+
+        $(HtmlControls.UIControls().PlaylistTabList).find('*[data-toggle="tab"]').on('shown.bs.tab', e => {
+            const $newTab = $(e.target),
+                $oldTab = $(e.relatedTarget);
+
+            this.playlistConfiguration.properties.SelectedPlaylistTab = getPlaylistTabEnum($newTab.attr('data-playlist-tab'));
+            this.playlistConfiguration.updateConfiguration();
         });
     }
 
