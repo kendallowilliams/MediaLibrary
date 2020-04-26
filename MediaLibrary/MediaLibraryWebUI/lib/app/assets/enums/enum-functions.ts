@@ -313,8 +313,8 @@ export function getPlaylistTabEnumString(tab: PlaylistTabs): string {
         case PlaylistTabs.Podcast:
             playlistTab = 'Podcast';
             break;
-        case PlaylistTabs.Episode:
-            playlistTab = 'Episode';
+        case PlaylistTabs.Television:
+            playlistTab = 'Television';
             break;
         case PlaylistTabs.Music:
         default:
@@ -332,8 +332,8 @@ export function getPlaylistTabEnum(tab: string): PlaylistTabs {
         case 'Podcast':
             playlistTab = PlaylistTabs.Podcast;
             break;
-        case 'Episode':
-            playlistTab = PlaylistTabs.Episode;
+        case 'Television':
+            playlistTab = PlaylistTabs.Television;
             break;
         case 'Music':
         default:
