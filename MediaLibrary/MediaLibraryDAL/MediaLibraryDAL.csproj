@@ -163,6 +163,7 @@
     <Compile Include="Models\MediaData.cs" />
     <Compile Include="Partials\Configuration.cs" />
     <Compile Include="Partials\MediaLibraryEntities.cs" />
+    <Compile Include="Partials\PlaylistEpisode.cs" />
     <Compile Include="Partials\PlaylistTrack.cs" />
     <Compile Include="Partials\PlaylistPodcastItem.cs" />
     <Compile Include="Partials\PodcastItem.cs" />

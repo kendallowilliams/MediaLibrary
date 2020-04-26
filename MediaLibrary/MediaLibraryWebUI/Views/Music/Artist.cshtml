@@ -34,7 +34,8 @@
                                     @if (Model.Playlists.Any())
                                     {
                                     <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))" data-item-id="@(item.Id)"
-                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist">
+                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist"
+                                            data-playlist-type="@(nameof(UIEnums.PlaylistTabs.Music))">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                     }

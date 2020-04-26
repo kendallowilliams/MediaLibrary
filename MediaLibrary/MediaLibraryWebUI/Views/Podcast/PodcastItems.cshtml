@@ -1,9 +1,9 @@
-﻿@model IEnumerable<MediaLibraryDAL.DbContexts.PodcastItem>
+﻿@model (bool HasPlaylists, IOrderedEnumerable<MediaLibraryDAL.DbContexts.PodcastItem> PodcastItems)
 
-@if (Model.Any())
+@if (Model.PodcastItems.Any())
 {
     <ul class="list-group list-group-flush">
-        @foreach (var item in Model.OrderByDescending(item => item.PublishDate))
+        @foreach (var item in Model.PodcastItems.OrderByDescending(item => item.PublishDate))
         {
             <li class="list-group-item" data-episode-id="@(item.Id)">
                 <div class="media">
@@ -21,6 +21,14 @@
                                 data-tooltip="tooltip" title="Play">
                             <i class="fa fa-play"></i>
                         </button>
+                        @if (Model.HasPlaylists)
+                        {
+                            <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddPodcastItemToPlaylist", "Podcast"))" data-item-id="@(item.Id)"
+                                    data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist"
+                                    data-playlist-type="@(nameof(UIEnums.PlaylistTabs.Podcast))">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        }
                         <button class="btn btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
                                 data-tooltip="tooltip" title="Download episode" data-podcast-action="download"
                                 @(!string.IsNullOrWhiteSpace(item.File) ? "disabled=\"disabled\"" : string.Empty)>

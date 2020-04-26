@@ -65,6 +65,8 @@ namespace MediaLibraryWebUI.Controllers
                 podcastViewModel.Configuration = JsonConvert.DeserializeObject<PodcastConfiguration>(configuration.JsonData);
             }
 
+            podcastViewModel.PodcastGroups = await podcastUIService.GetPodcastGroups(podcastViewModel.Configuration.SelectedPodcastSort);
+
             if (podcastViewModel.Configuration.SelectedPodcastPage == PodcastPages.Podcast &&
                 await dataService.Exists<Podcast>(podcast => podcast.Id == podcastViewModel.Configuration.SelectedPodcastId))
             {
@@ -72,7 +74,6 @@ namespace MediaLibraryWebUI.Controllers
             }
             else
             {
-                podcastViewModel.PodcastGroups = await podcastUIService.GetPodcastGroups(podcastViewModel.Configuration.SelectedPodcastSort);
                 result = PartialView(podcastViewModel);
             }
 
@@ -132,12 +133,13 @@ namespace MediaLibraryWebUI.Controllers
         {
             Func<PodcastItem, bool> expression = null;
             IEnumerable<PodcastItem> podcastItems = await dataService.GetList<PodcastItem>(item => item.PodcastId == id && item.PublishDate.Year == year);
+            bool hasPlaylists = await dataService.Exists<Playlist>(item => item.Type == (int)PlaylistTabs.Podcast);
 
             if (filter == PodcastFilter.Downloaded) /*then*/ expression = item => !string.IsNullOrWhiteSpace(item.File);
             else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => item.PlayCount == 0;
             if (expression != null) /*then*/ podcastItems = podcastItems.Where(expression);
 
-            return PartialView("PodcastItems", podcastItems.OrderByDescending(item => item.PublishDate));
+            return PartialView("PodcastItems", (hasPlaylists, podcastItems.OrderByDescending(item => item.PublishDate)));
         }
 
         public async Task DownloadPodcastItem(int id)
@@ -239,6 +241,23 @@ namespace MediaLibraryWebUI.Controllers
             }
 
             return Json(podcastViewModel.Configuration, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task AddPodcastItemToPlaylist(int itemId, int playlistId)
+        {
+            PlaylistPodcastItem item = new PlaylistPodcastItem() { PlaylistId = playlistId, PodcastItemId = itemId };
+            Transaction transaction = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPlaylistPodcastItem);
+                await dataService.Insert(item);
+                await transactionService.UpdateTransactionCompleted(transaction, $"Playlist: {playlistId}, PodcastItem: {itemId}");
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
     }
 }

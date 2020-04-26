@@ -1,4 +1,4 @@
-﻿@model (IGrouping<string, Track> Group, int PlaylistCount)
+﻿@model (IGrouping<string, Track> Group, bool HasPlaylists)
 
 <ul class="list-group list-group-flush">
     @foreach (var song in Model.Group)
@@ -20,10 +20,11 @@
                             title="Edit">
                         <i class="fa fa-edit"></i>
                     </button>
-                    @if (Model.PlaylistCount > 0)
+                    @if (Model.HasPlaylists)
                     {
                     <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
-                            data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist">
+                            data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist"
+                            data-playlist-type="@(nameof(UIEnums.PlaylistTabs.Music))">
                         <i class="fa fa-plus"></i>
                     </button>
                     }

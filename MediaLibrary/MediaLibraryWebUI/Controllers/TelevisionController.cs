@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static MediaLibraryDAL.Enums.TransactionEnums;
 using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Controllers
@@ -120,8 +121,9 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> GetSeason(int series, int season)
         {
             IEnumerable<Episode> episodes = await dataService.GetList<Episode>(item => item.SeriesId == series && item.Season == season);
+            bool hasPlaylists = await dataService.Exists<Playlist>(item => item.Type == (int)PlaylistTabs.Episode);
 
-            return PartialView("Season", episodes);
+            return PartialView("Season", (hasPlaylists, episodes));
         }
 
 #if !DEBUG && !DEV
@@ -150,6 +152,23 @@ namespace MediaLibraryWebUI.Controllers
             }
 
             return Json(televisionViewModel.Configuration, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task AddEpisodeToPlaylist(int itemId, int playlistId)
+        {
+            PlaylistEpisode item = new PlaylistEpisode() { PlaylistId = playlistId, EpisodeId = itemId };
+            Transaction transaction = null;
+
+            try
+            {
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.AddPlaylistEpisode);
+                await dataService.Insert(item);
+                await transactionService.UpdateTransactionCompleted(transaction, $"Playlist: {playlistId}, Track: {itemId}");
+            }
+            catch (Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
         }
     }
 }

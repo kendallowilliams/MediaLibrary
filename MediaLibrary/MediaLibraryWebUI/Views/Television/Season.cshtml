@@ -1,9 +1,9 @@
-﻿@model IEnumerable<MediaLibraryDAL.DbContexts.Episode>
+﻿@model (bool HasPlaylists, IEnumerable<MediaLibraryDAL.DbContexts.Episode> Episodes)
 
-@if (Model.Any())
+@if (Model.Episodes.Any())
 {
     <ul class="list-group list-group-flush">
-        @foreach (var item in Model.OrderBy(episode => episode.Id))
+        @foreach (var item in Model.Episodes.OrderBy(episode => episode.Id))
         {
             <li class="list-group-item" data-episode-id="@(item.Id)">
                 <div class="media">
@@ -17,6 +17,14 @@
                                 data-tooltip="tooltip" title="Play">
                             <i class="fa fa-play"></i>
                         </button>
+                        @if (Model.HasPlaylists)
+                        {
+                            <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddEpisodeToPlaylist", "Television"))" data-item-id="@(item.Id)"
+                                    data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist"
+                                    data-playlist-type="@(nameof(UIEnums.PlaylistTabs.Episode))">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        }
                     </div>
                 </div>
             </li>

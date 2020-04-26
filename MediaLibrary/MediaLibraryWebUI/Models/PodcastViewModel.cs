@@ -28,5 +28,6 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<PodcastItem> PodcastItems { get; set; }
         public IEnumerable<SelectListItem> PodcastSortItems { get; }
         public IEnumerable<SelectListItem> PodcastFilterItems { get; }
+        public bool HasPlaylists { get; set; }
     }
 }

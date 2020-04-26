@@ -101,9 +101,9 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> GetSongGroup(string key)
         {
             IGrouping<string, Track> group = musicViewModel.SongGroups.FirstOrDefault(item => item.Key == key);
-            int playlistCount = await dataService.Count<Playlist>();
+            bool hasPlaylists = await dataService.Exists<Playlist>(item => item.Type == (int)PlaylistTabs.Music);
 
-            return PartialView("~/Views/Music/SongGroup.cshtml", (Group: group, PlaylistCount: playlistCount));
+            return PartialView("~/Views/Music/SongGroup.cshtml", (Group: group, PlaylistCount: hasPlaylists));
         }
 
 #if !DEBUG && !DEV
