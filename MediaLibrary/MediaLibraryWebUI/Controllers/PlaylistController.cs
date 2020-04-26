@@ -116,7 +116,6 @@ namespace MediaLibraryWebUI.Controllers
             if (id > 0)
             {
                 playlistViewModel.SelectedPlaylist = await dataService.Get<Playlist>(item => item.Id == id, default,
-                                                                                     playlist => playlist.PlaylistTracks.Select(list => list.Track),
                                                                                      item => item.PlaylistTracks.Select(list => list.Track.Album),
                                                                                      item => item.PlaylistTracks.Select(list => list.Track.Artist),
                                                                                      item => item.PlaylistPodcastItems.Select(list => list.PodcastItem.Podcast),
