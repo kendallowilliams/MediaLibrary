@@ -127,18 +127,18 @@
             @if (podcastPlaylistGroups.Any())
             {
                 <div id="accordion-playlists-@(UIEnums.PlaylistTabs.Podcast)" style="flex: 1 1 auto; overflow-y: auto">
-                    @foreach (var item in podcastPlaylistGroups.Select((group, index) => new { Index = index, Group = group }))
+                    @foreach (var item in podcastPlaylistGroups.Select((group, index) => new { Index = index + musicPlaylistGroups.Count(), Group = group }))
                     {
                         <div class="card">
                             <div class="card-header" id="heading-playlists-@(item.Index)">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index + musicPlaylistGroups.Count())">
+                                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)">
                                         @(item.Group.Key)
                                     </button>
                                 </h5>
                             </div>
 
-                            <div id="collapse-playlists-@(item.Index + musicPlaylistGroups.Count())" class="collapse @(item.Index == 0 ? "show" : "")" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Podcast)">
+                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Podcast)">
                                 <ul class="list-group list-group-flush">
                                     @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Podcast))
                                     {
@@ -177,18 +177,18 @@
             @if (episodePlaylistGroups.Any())
             {
                 <div id="accordion-playlists-@(UIEnums.PlaylistTabs.Episode)" style="flex: 1 1 auto; overflow-y: auto">
-                    @foreach (var item in episodePlaylistGroups.Select((group, index) => new { Index = index, Group = group }))
+                    @foreach (var item in episodePlaylistGroups.Select((group, index) => new { Index = index + musicPlaylistGroups.Count() + podcastPlaylistGroups.Count(), Group = group }))
                     {
                         <div class="card">
                             <div class="card-header" id="heading-playlists-@(item.Index)">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index + musicPlaylistGroups.Count() + podcastPlaylistGroups.Count())">
+                                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)">
                                         @(item.Group.Key)
                                     </button>
                                 </h5>
                             </div>
 
-                            <div id="collapse-playlists-@(item.Index + musicPlaylistGroups.Count() + podcastPlaylistGroups.Count())" class="collapse @(item.Index == 0 ? "show" : "")" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Episode)">
+                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Episode)">
                                 <ul class="list-group list-group-flush">
                                     @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Episode))
                                     {
