@@ -13,7 +13,7 @@ export default class DeleteModal {
 
     private initializeControls(): void {
         $(this.modal).on('show.bs.modal', e => {
-            var $btn = $(e.relatedTarget),
+            const $btn = $(e.relatedTarget),
                 url = $btn.attr('data-delete-action'),
                 type = $btn.attr('data-delete-type'),
                 $button = $(this.modal).find('[data-item-action="delete"]');
@@ -23,7 +23,7 @@ export default class DeleteModal {
         });
 
         $(this.modal).on('hide.bs.modal', e => {
-            var $button = $(this.modal).find('[data-item-action="delete"]');
+            const $button = $(this.modal).find('[data-item-action="delete"]');
 
             $('#modalDeleteItemTitle').text('Delete');
             $button.attr('data-delete-url', '');
