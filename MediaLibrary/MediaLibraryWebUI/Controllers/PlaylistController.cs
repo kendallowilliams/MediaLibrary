@@ -60,7 +60,7 @@ namespace MediaLibraryWebUI.Controllers
             }
             else
             {
-                playlistViewModel.PlaylistGroups = await playlistService.GetPlaylistGroups(playlistViewModel.Configuration.SelectedPlaylistSort);
+                playlistViewModel.PlaylistGroups = await playlistService.GetPlaylistGroups(playlistViewModel.Configuration);
                 result = PartialView(playlistViewModel);
             }
 

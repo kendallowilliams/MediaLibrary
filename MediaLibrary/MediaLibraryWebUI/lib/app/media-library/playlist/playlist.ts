@@ -7,7 +7,7 @@ import AddNewPlaylistModal from "../../assets/modals/add-playlist-modal";
 import LoadingModal from "../../assets/modals/loading-modal";
 import EditPlaylistModal from "../../assets/modals/edit-playlist-modal";
 import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
-import { getPlaylistSortEnum, getPlaylistTabEnumString, getPlaylistTabEnum } from "../../assets/enums/enum-functions";
+import { getPlaylistSortEnum, getPlaylistTabEnumString, getPlaylistTabEnum, getPlaylistSortEnumString } from "../../assets/enums/enum-functions";
 import DownloadM3UPlaylistModal from "../../assets/modals/download-m3u-playlist-modal";
 
 export default class Playlist extends BaseClass implements IView {
@@ -44,8 +44,17 @@ export default class Playlist extends BaseClass implements IView {
         $(this.mediaView).find('*[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement));
 
         $(this.mediaView).find('*[data-playlist-action="sort"]').on('change', e => {
+            const $target = $(e.currentTarget),
+                sortType = $target.attr('data-sort-type');
+
             LoadingModal.showLoading();
-            this.playlistConfiguration.properties.SelectedPlaylistSort = getPlaylistSortEnum($(e.currentTarget).val() as string);
+            if (sortType === 'SelectedMusicPlaylistSort') {
+                this.playlistConfiguration.properties.SelectedMusicPlaylistSort = getPlaylistSortEnum($target.val() as string);
+            } else if (sortType === 'SelectedPodcastPlaylistSort') {
+                this.playlistConfiguration.properties.SelectedPodcastPlaylistSort = getPlaylistSortEnum($target.val() as string);
+            }else if (sortType === 'SelectedEpisodePlaylistSort') {
+                this.playlistConfiguration.properties.SelectedEpisodePlaylistSort = getPlaylistSortEnum($target.val() as string);
+            }
             this.playlistConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
 
@@ -62,6 +71,14 @@ export default class Playlist extends BaseClass implements IView {
 
             this.playlistConfiguration.properties.SelectedPlaylistTab = getPlaylistTabEnum($newTab.attr('data-playlist-tab'));
             this.playlistConfiguration.updateConfiguration();
+
+            $(HtmlControls.UIControls().PlaylistTabList).find('*[data-sort-tab]').each((index, _btn) => {
+                if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
+                    $(_btn).removeClass('d-none');
+                } else {
+                    $(_btn).addClass('d-none');
+                }
+            });
         });
     }
 

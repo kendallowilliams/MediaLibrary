@@ -252,6 +252,22 @@ export function getPlaylistSortEnum(sort: string): PlaylistSort {
     return playlistSort;
 };
 
+export function getPlaylistSortEnumString(sort: PlaylistSort): string {
+    let playlistSort: string;
+
+    switch (sort) {
+        case PlaylistSort.DateAdded:
+            playlistSort = 'DateAdded';
+            break;
+        case PlaylistSort.AtoZ:
+        default:
+            playlistSort = 'AtoZ';
+            break;
+    }
+
+    return playlistSort;
+};
+
 export function getPodcastSortEnum(sort: string): PodcastSort {
     let podcastSort: PodcastSort;
 

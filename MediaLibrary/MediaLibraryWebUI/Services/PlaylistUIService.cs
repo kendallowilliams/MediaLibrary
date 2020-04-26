@@ -28,24 +28,31 @@ namespace MediaLibraryWebUI.Services
             this.lazyDataService = dataService;
         }
 
-        public async Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistSort sort)
+        public async Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistConfiguration configuration)
         {
-            IEnumerable<IGrouping<string, Playlist>> groups = null;
+            IEnumerable<IGrouping<string, Playlist>> groups = Enumerable.Empty<IGrouping<string, Playlist>>();
             IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>(default, default, playlist => playlist.PlaylistTracks,
                                                                                                     playlist => playlist.PlaylistPodcastItems,
                                                                                                     playlist => playlist.PlaylistEpisodes);
+            var playlistTypeSortMappings = PlaylistRepository.GetPlaylistTypePlaylistSortMappings();
 
             playlists = playlists.Concat(await GetSystemPlaylists());
            
-            switch (sort)
+            foreach(var group in playlists.GroupBy(playlist => playlist.Type))
             {
-                case PlaylistSort.DateAdded:
-                    groups = playlists.GroupBy(playlist => playlist.ModifyDate.ToString("MM-dd-yyyy")).OrderByDescending(group => DateTime.Parse(group.Key));
-                    break;
-                case PlaylistSort.AtoZ:
-                default:
-                    groups = GetPlaylistsAtoZ(playlists.OrderBy(playlist => playlist.Name));
-                    break;
+                var mapping = playlistTypeSortMappings.FirstOrDefault(item => item.Key == (PlaylistTabs)group.Key);
+
+                switch (mapping.Value(configuration))
+                {
+                    case PlaylistSort.DateAdded:
+                        groups = groups.Concat(group.GroupBy(playlist => playlist.ModifyDate.ToString("MM-dd-yyyy"))
+                                       .OrderByDescending(_group => DateTime.Parse(_group.Key)));
+                        break;
+                    case PlaylistSort.AtoZ:
+                    default:
+                        groups = groups.Concat(GetPlaylistsAtoZ(group.OrderBy(playlist => playlist.Name)));
+                        break;
+                }
             }
 
             return groups;

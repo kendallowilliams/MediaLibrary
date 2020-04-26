@@ -29,17 +29,45 @@
             </a>
             <div class="float-right d-none d-lg-block">
                 <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewPlaylistModalId)" data-tooltip="tooltip" title="Add playlist"><i class="fa fa-plus"></i></button>
-                @Html.DropDownListFor(x => x.Configuration.SelectedPlaylistSort,
+                @Html.DropDownListFor(x => x.Configuration.SelectedMusicPlaylistSort,
                                         Model.PlaylistSortItems,
                                         null,
                                         new
-                                            {
-                                                @class = "custom-select border border-secondary",
+                                        {
+                                            @class = "custom-select border border-secondary d-none",
                                             style = "width: 135px",
                                             title = "Sort by",
                                             data_playlist_action = "sort",
-                                            data_tooltip = "tooltip"
-                })
+                                            data_tooltip = "tooltip",
+                                            data_sort_type = nameof(Model.Configuration.SelectedMusicPlaylistSort),
+                                            data_sort_tab = $"{HtmlControlsRepository.MusicPlaylistContainerId}-tab"
+                                        })
+                @Html.DropDownListFor(x => x.Configuration.SelectedPodcastPlaylistSort,
+                                        Model.PlaylistSortItems,
+                                        null,
+                                        new
+                                        {
+                                            @class = "custom-select border border-secondary d-none",
+                                            style = "width: 135px",
+                                            title = "Sort by",
+                                            data_playlist_action = "sort",
+                                            data_tooltip = "tooltip",
+                                            data_sort_type = nameof(Model.Configuration.SelectedPodcastPlaylistSort),
+                                            data_sort_tab = $"{HtmlControlsRepository.PodcastPlaylistContainerId}-tab"
+                                        })
+              @Html.DropDownListFor(x => x.Configuration.SelectedEpisodePlaylistSort,
+                                      Model.PlaylistSortItems,
+                                      null,
+                                      new
+                                      {
+                                          @class = "custom-select border border-secondary d-none",
+                                          style = "width: 135px",
+                                          title = "Sort by",
+                                          data_playlist_action = "sort",
+                                          data_tooltip = "tooltip",
+                                          data_sort_type = nameof(Model.Configuration.SelectedEpisodePlaylistSort),
+                                          data_sort_tab = $"{HtmlControlsRepository.EpisodePlaylistContainerId}-tab"
+                                      })
             </div>
         </div>
         <hr />
