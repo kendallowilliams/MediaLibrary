@@ -143,18 +143,46 @@ namespace MediaLibraryWebUI.Controllers
         {
             Random rand = new Random(DateTime.Now.Millisecond);
             IEnumerable<Playlist> systemPlaylists = id < 0 ? await playlistService.GetSystemPlaylists() : Enumerable.Empty<Playlist>();
-            Playlist playlist = id > 0 ? await dataService.Get<Playlist>(list => list.Id == id, default, list => list.PlaylistTracks.Select(item => item.Track)) :
+            Playlist playlist = id > 0 ? await dataService.Get<Playlist>(list => list.Id == id, default, list => list.PlaylistTracks.Select(item => item.Track), 
+                                                                                                                 list => list.PlaylistPodcastItems.Select(item => item.PodcastItem),
+                                                                                                                 list => list.PlaylistEpisodes.Select(item => item.Episode)) :
                                          systemPlaylists.FirstOrDefault(item => item.Id == id);
             IEnumerable<PlaylistTrack> playlistTracks = random ? playlist.PlaylistTracks.OrderBy(item => rand.Next()) :
                                                                  playlist.PlaylistTracks.OrderBy(item => item.CreateDate);
-            IEnumerable <Track> tracks = playlistTracks.Select(list => list.Track);
+            IEnumerable<PlaylistPodcastItem> playlistPodcastItems = random ? playlist.PlaylistPodcastItems.OrderBy(item => rand.Next()) :
+                                                                             playlist.PlaylistPodcastItems.OrderBy(item => item.CreateDate);
+            IEnumerable<PlaylistEpisode> playlistEpisodes = random ? playlist.PlaylistEpisodes.OrderBy(item => rand.Next()) :
+                                                                     playlist.PlaylistEpisodes.OrderBy(item => item.CreateDate);
+            IEnumerable<Track> tracks = playlistTracks.Select(list => list.Track);
+            IEnumerable<PodcastItem> podcastItems = playlistPodcastItems.Select(list => list.PodcastItem);
+            IEnumerable<Episode> episodes = playlistEpisodes.Select(list => list.Episode);
             string path = $"{Request.Url.GetLeftPart(UriPartial.Authority)}{Request.ApplicationPath}";
-            IEnumerable<string> lines = tracks.Select(track => $"#EXTINF:{(int)track.Duration},{track.Title}{Environment.NewLine}{$"{path}/Music/File/{track.Id}"}");
+            IEnumerable<string> lines = GetM3UPlaylistLines((PlaylistTabs)playlist.Type, path, tracks, podcastItems, episodes);
             string data = $"#EXTM3U{Environment.NewLine}{string.Join(Environment.NewLine, lines)}";
             byte[] content = Encoding.UTF8.GetBytes(data);
             string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
 
             return File(content, "audio/mpegurl", $"{playlist.Name.Trim()}_{timestamp}.m3u");
+        }
+
+        private IEnumerable<string> GetM3UPlaylistLines(PlaylistTabs type, string path, IEnumerable<Track> songs, IEnumerable<PodcastItem> podcastItems, IEnumerable<Episode> episodes)
+        {
+            IEnumerable<string> lines = Enumerable.Empty<string>();
+
+            if (type == PlaylistTabs.Music)
+            {
+                lines = songs.Select(track => $"#EXTINF:{(int)track.Duration},{track.Title}{Environment.NewLine}{$"{path}/Music/File/{track.Id}"}");
+            }
+            else if (type == PlaylistTabs.Podcast)
+            {
+                lines = podcastItems.Select(item => $"#EXTINF:{(int)item.Length},{item.Title}{Environment.NewLine}{$"{path}/Podcast/File/{item.Id}"}");
+            }
+            else if (type == PlaylistTabs.Television)
+            {
+                lines = episodes.Select(episode => $"#EXTINF:0,{episode.Title}{Environment.NewLine}{$"{path}/Television/File/{episode.Id}"}");
+            }
+
+            return lines;
         }
 
         public async Task UpdateConfiguration(PlaylistConfiguration playlistConfiguration)
