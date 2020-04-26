@@ -50,7 +50,7 @@ export const enum PlaylistPages {
 export const enum PlaylistTabs {
     Music = 0,
     Podcast,
-    Episode
+    Television
 }
 export const enum PodcastPages {
     Index = 0,

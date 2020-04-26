@@ -6,6 +6,6 @@ export default interface IPlaylistConfiguration extends IConfiguration {
     SelectedPlaylistPage: PlaylistPages;
     SelectedMusicPlaylistSort: PlaylistSort;
     SelectedPodcastPlaylistSort: PlaylistSort;
-    SelectedEpisodePlaylistSort: PlaylistSort;
+    SelectedTelevisionPlaylistSort: PlaylistSort;
     SelectedPlaylistTab: PlaylistTabs;
 }

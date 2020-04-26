@@ -35,7 +35,7 @@ namespace MediaLibraryWebUI.Repositories
         {
             yield return new PLAYLIST_TYPE_SORT_MAPPING(PlaylistTabs.Music, configuration => configuration.SelectedMusicPlaylistSort);
             yield return new PLAYLIST_TYPE_SORT_MAPPING(PlaylistTabs.Podcast, configuration => configuration.SelectedPodcastPlaylistSort);
-            yield return new PLAYLIST_TYPE_SORT_MAPPING(PlaylistTabs.Episode, configuration => configuration.SelectedEpisodePlaylistSort);
+            yield return new PLAYLIST_TYPE_SORT_MAPPING(PlaylistTabs.Television, configuration => configuration.SelectedTelevisionPlaylistSort);
         }
     }
 }

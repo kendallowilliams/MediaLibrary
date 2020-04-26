@@ -95,7 +95,7 @@ namespace MediaLibraryWebUI.Services
             {
                 Id = -(++index + count),
                 Name = item.Key,
-                Type = (int)PlaylistTabs.Episode,
+                Type = (int)PlaylistTabs.Television,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
                 PlaylistEpisodes = item.Value(episodes).Select(episode => new PlaylistEpisode() { Episode = (Episode)episode }).ToList()

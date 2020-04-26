@@ -121,7 +121,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> GetSeason(int series, int season)
         {
             IEnumerable<Episode> episodes = await dataService.GetList<Episode>(item => item.SeriesId == series && item.Season == season);
-            bool hasPlaylists = await dataService.Exists<Playlist>(item => item.Type == (int)PlaylistTabs.Episode);
+            bool hasPlaylists = await dataService.Exists<Playlist>(item => item.Type == (int)PlaylistTabs.Television);
 
             return PartialView("Season", (hasPlaylists, episodes));
         }

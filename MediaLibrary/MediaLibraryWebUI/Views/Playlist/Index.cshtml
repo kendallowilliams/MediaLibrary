@@ -3,7 +3,7 @@
 @{
     var musicPlaylistGroups = Model.PlaylistGroups.Where(group => group.Any(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Music));
     var podcastPlaylistGroups = Model.PlaylistGroups.Where(group => group.Any(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Podcast));
-    var episodePlaylistGroups = Model.PlaylistGroups.Where(group => group.Any(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Episode));
+    var episodePlaylistGroups = Model.PlaylistGroups.Where(group => group.Any(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Television));
 
     ViewBag.Title = "Playlists";
 }
@@ -23,7 +23,7 @@
                 <i class="fa fa-podcast"></i>
             </a>
             <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.EpisodePlaylistContainerId)-tab" data-toggle="tab"
-               role="tab" title="@(nameof(UIEnums.PlaylistTabs.Episode))" data-playlist-tab="@(nameof(UIEnums.PlaylistTabs.Episode))"
+               role="tab" title="@(nameof(UIEnums.PlaylistTabs.Television))" data-playlist-tab="@(nameof(UIEnums.PlaylistTabs.Television))"
                data-tooltip="tooltip" href="#@(HtmlControlsRepository.EpisodePlaylistContainerId)">
                 <i class="fa fa-tv"></i>
             </a>
@@ -55,7 +55,7 @@
                                             data_sort_type = nameof(Model.Configuration.SelectedPodcastPlaylistSort),
                                             data_sort_tab = $"{HtmlControlsRepository.PodcastPlaylistContainerId}-tab"
                                         })
-              @Html.DropDownListFor(x => x.Configuration.SelectedEpisodePlaylistSort,
+              @Html.DropDownListFor(x => x.Configuration.SelectedTelevisionPlaylistSort,
                                       Model.PlaylistSortItems,
                                       null,
                                       new
@@ -65,7 +65,7 @@
                                           title = "Sort by",
                                           data_playlist_action = "sort",
                                           data_tooltip = "tooltip",
-                                          data_sort_type = nameof(Model.Configuration.SelectedEpisodePlaylistSort),
+                                          data_sort_type = nameof(Model.Configuration.SelectedTelevisionPlaylistSort),
                                           data_sort_tab = $"{HtmlControlsRepository.EpisodePlaylistContainerId}-tab"
                                       })
             </div>
@@ -176,7 +176,7 @@
         <div class="tab-pane fade" id="@(HtmlControlsRepository.EpisodePlaylistContainerId)" role="tabpanel">
             @if (episodePlaylistGroups.Any())
             {
-                <div id="accordion-playlists-@(UIEnums.PlaylistTabs.Episode)" style="flex: 1 1 auto; overflow-y: auto">
+                <div id="accordion-playlists-@(UIEnums.PlaylistTabs.Television)" style="flex: 1 1 auto; overflow-y: auto">
                     @foreach (var item in episodePlaylistGroups.Select((group, index) => new { Index = index + musicPlaylistGroups.Count() + podcastPlaylistGroups.Count(), Group = group }))
                     {
                         <div class="card">
@@ -189,9 +189,9 @@
                             </div>
 
                             <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == musicPlaylistGroups.Count() + podcastPlaylistGroups.Count() ? "show" : "")" 
-                                 data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Episode)">
+                                 data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Television)">
                                 <ul class="list-group list-group-flush">
-                                    @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Episode))
+                                    @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Television))
                                     {
                                         <li class="list-group-item">
                                             <div class="media">

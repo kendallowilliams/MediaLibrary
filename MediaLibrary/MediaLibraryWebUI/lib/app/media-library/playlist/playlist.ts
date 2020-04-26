@@ -52,8 +52,8 @@ export default class Playlist extends BaseClass implements IView {
                 this.playlistConfiguration.properties.SelectedMusicPlaylistSort = getPlaylistSortEnum($target.val() as string);
             } else if (sortType === 'SelectedPodcastPlaylistSort') {
                 this.playlistConfiguration.properties.SelectedPodcastPlaylistSort = getPlaylistSortEnum($target.val() as string);
-            }else if (sortType === 'SelectedEpisodePlaylistSort') {
-                this.playlistConfiguration.properties.SelectedEpisodePlaylistSort = getPlaylistSortEnum($target.val() as string);
+            }else if (sortType === 'SelectedTelevisionPlaylistSort') {
+                this.playlistConfiguration.properties.SelectedTelevisionPlaylistSort = getPlaylistSortEnum($target.val() as string);
             }
             this.playlistConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
         });
