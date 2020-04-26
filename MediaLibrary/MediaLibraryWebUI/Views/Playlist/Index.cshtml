@@ -138,7 +138,7 @@
                                 </h5>
                             </div>
 
-                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Podcast)">
+                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == musicPlaylistGroups.Count() ? "show" : "")" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Podcast)">
                                 <ul class="list-group list-group-flush">
                                     @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Podcast))
                                     {
@@ -188,7 +188,8 @@
                                 </h5>
                             </div>
 
-                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Episode)">
+                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == musicPlaylistGroups.Count() + podcastPlaylistGroups.Count() ? "show" : "")" 
+                                 data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Episode)">
                                 <ul class="list-group list-group-flush">
                                     @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Episode))
                                     {
