@@ -43,6 +43,8 @@ namespace MediaLibraryWebUI.Controllers
                 mediaLibraryViewModel.Configuration = JsonConvert.DeserializeObject<MediaLibraryConfiguration>(configuration.JsonData) ?? new MediaLibraryConfiguration();
             }
 
+            mediaLibraryViewModel.Playlists = await dataService.GetList<Playlist>();
+
             return View(mediaLibraryViewModel);
         }
 

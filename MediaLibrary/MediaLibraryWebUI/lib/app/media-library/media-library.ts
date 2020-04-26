@@ -19,6 +19,7 @@ import Home from './home/home';
 import DeleteModal from '../assets/modals/delete-modal';
 import EditSongModal from '../assets/modals/edit-song-modal';
 import { getMediaPagesEnum, getMediaPagesEnumString } from '../assets/enums/enum-functions';
+import AddToPlaylistModal from '../assets/modals/add-to-playlist-modal';
 
 export default class MediaLibrary extends BaseClass {
     private home: Home;
@@ -37,6 +38,7 @@ export default class MediaLibrary extends BaseClass {
     private mainViews: { HomeView: HTMLElement, MediaView: HTMLElement, PlayerView: HTMLElement };
     private deleteModal: DeleteModal;
     private editSongModal: EditSongModal;
+    private addToPlaylistModal: AddToPlaylistModal;
 
     constructor() {
         super();
@@ -60,6 +62,7 @@ export default class MediaLibrary extends BaseClass {
                 LoadingModal.hideLoading();
                 this.deleteModal = new DeleteModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
                 this.editSongModal = new EditSongModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
+                this.addToPlaylistModal = new AddToPlaylistModal();
                 this.home = new Home(this.homeConfiguration);
                 this.music = new Music(this.musicConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
                 this.playlist = new Playlist(this.playlistConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));

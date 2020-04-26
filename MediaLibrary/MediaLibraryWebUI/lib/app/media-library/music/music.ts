@@ -8,8 +8,6 @@ import Album from "./album";
 import LoadingModal from "../../assets/modals/loading-modal";
 import IMusicConfiguration from "../../assets/interfaces/music-configuration-interface";
 import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap-helper';
-import EditSongModal from "../../assets/modals/edit-song-modal";
-import AddToPlaylistModal from "../../assets/modals/add-to-playlist-modal";
 import AddNewSongModal from "../../assets/modals/add-song-modal";
 import { getMusicTabEnumString, getMusicTabEnum, getSongSortEnum, getArtistSortEnum, getAlbumSortEnum } from "../../assets/enums/enum-functions";
 
@@ -17,7 +15,6 @@ export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private artist: Artist;
     private album: Album;
-    private addToPlaylistModal: AddToPlaylistModal;
     private addNewSongModal: AddNewSongModal;
 
     constructor(private musicConfiguration: MusicConfiguration,
@@ -31,7 +28,6 @@ export default class Music extends BaseClass implements IView {
 
     loadView(callback: () => void = () => null): void {
         const success: () => void = () => {
-            this.addToPlaylistModal = new AddToPlaylistModal();
             this.addNewSongModal = new AddNewSongModal(this.loadView.bind(this));
             this.initializeControls();
             loadTooltips(this.mediaView);

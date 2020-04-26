@@ -1,4 +1,5 @@
-﻿using MediaLibraryWebUI.Models.Configurations;
+﻿using MediaLibraryDAL.DbContexts;
+using MediaLibraryWebUI.Models.Configurations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -13,6 +14,9 @@ namespace MediaLibraryWebUI.Models
         [ImportingConstructor]
         public MediaLibraryViewModel()
         {
+            Playlists = Enumerable.Empty<Playlist>();
         }
+
+        public IEnumerable<Playlist> Playlists { get; set; }
     }
 }

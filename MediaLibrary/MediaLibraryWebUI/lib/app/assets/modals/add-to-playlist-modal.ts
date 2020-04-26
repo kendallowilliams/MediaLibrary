@@ -11,11 +11,15 @@ export default class AddToPlaylistModal {
 
     private initializeControls(): void {
         $(this.modal).on('show.bs.modal', function (e) {
-            var $btn = $(e.relatedTarget),
+            const $btn = $(e.relatedTarget),
                 url = $btn.attr('data-playlist-url'),
-                id = $btn.attr('data-item-id');
+                id = $btn.attr('data-item-id'),
+                type = $btn.attr('data-playlist-type');
+
             $('[data-playlist-item="enabled"]').attr('data-playlist-url', url);
             $('[data-playlist-item="enabled"]').attr('data-item-id', id);
+            $('[data-playlist-item]').addClass('d-none');
+            $('[data-playlist-item][data-playlist-type="' + type + '"]').removeClass('d-none');
         });
 
         $(this.modal).on('hide.bs.modal', function (e) {
@@ -24,7 +28,7 @@ export default class AddToPlaylistModal {
         });
 
         $('[data-playlist-action="add"]').on('click', e => {
-            var $btn = $(e.currentTarget),
+            const $btn = $(e.currentTarget),
                 url = $btn.attr('data-playlist-url'),
                 id = $btn.attr('data-item-id'),
                 playlistId = $btn.attr('data-playlist-id');
