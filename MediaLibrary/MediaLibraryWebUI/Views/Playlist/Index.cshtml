@@ -149,7 +149,7 @@
             @if (episodePlaylistGroups.Any())
             {
                 <div id="accordion-playlists" style="flex: 1 1 auto; overflow-y: auto">
-                    @foreach (var item in Model.PlaylistGroups.Select((group, index) => new { Index = index, Group = group }))
+                    @foreach (var item in episodePlaylistGroups.Select((group, index) => new { Index = index, Group = group }))
                     {
                         <div class="card">
                             <div class="card-header" id="heading-playlists-@(item.Index)">
