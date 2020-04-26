@@ -76,7 +76,7 @@
         <div class="tab-pane fade" id="@(HtmlControlsRepository.MusicPlaylistContainerId)" role="tabpanel">
             @if (musicPlaylistGroups.Any())
             {
-                <div id="accordion-playlists" style="flex: 1 1 auto; overflow-y: auto">
+                <div id="accordion-playlists-@(UIEnums.PlaylistTabs.Music)" style="flex: 1 1 auto; overflow-y: auto">
                     @foreach (var item in musicPlaylistGroups.Select((group, index) => new { Index = index, Group = group }))
                     {
                         <div class="card">
@@ -88,7 +88,7 @@
                                 </h5>
                             </div>
 
-                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-playlists-@(item.Index)" data-parent="#accordion-playlists">
+                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-playlists-@(item.Index)" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Music)">
                                 <ul class="list-group list-group-flush">
                                     @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Music))
                                     {
@@ -126,7 +126,7 @@
         <div class="tab-pane fade" id="@(HtmlControlsRepository.PodcastPlaylistContainerId)" role="tabpanel">
             @if (podcastPlaylistGroups.Any())
             {
-                <div id="accordion-playlists" style="flex: 1 1 auto; overflow-y: auto">
+                <div id="accordion-playlists-@(UIEnums.PlaylistTabs.Podcast)" style="flex: 1 1 auto; overflow-y: auto">
                     @foreach (var item in podcastPlaylistGroups.Select((group, index) => new { Index = index, Group = group }))
                     {
                         <div class="card">
@@ -138,7 +138,7 @@
                                 </h5>
                             </div>
 
-                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-playlists-@(item.Index)" data-parent="#accordion-playlists">
+                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-playlists-@(item.Index)" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Podcast)">
                                 <ul class="list-group list-group-flush">
                                     @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Podcast))
                                     {
@@ -176,7 +176,7 @@
         <div class="tab-pane fade" id="@(HtmlControlsRepository.EpisodePlaylistContainerId)" role="tabpanel">
             @if (episodePlaylistGroups.Any())
             {
-                <div id="accordion-playlists" style="flex: 1 1 auto; overflow-y: auto">
+                <div id="accordion-playlists-@(UIEnums.PlaylistTabs.Episode)" style="flex: 1 1 auto; overflow-y: auto">
                     @foreach (var item in episodePlaylistGroups.Select((group, index) => new { Index = index, Group = group }))
                     {
                         <div class="card">
@@ -188,7 +188,7 @@
                                 </h5>
                             </div>
 
-                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-playlists-@(item.Index)" data-parent="#accordion-playlists">
+                            <div id="collapse-playlists-@(item.Index)" class="collapse @(item.Index == 0 ? "show" : "")" aria-labelledby="heading-playlists-@(item.Index)" data-parent="#accordion-playlists-@(UIEnums.PlaylistTabs.Episode)">
                                 <ul class="list-group list-group-flush">
                                     @foreach (var playlist in item.Group.Where(playlist => playlist.Type == (int)UIEnums.PlaylistTabs.Episode))
                                     {
