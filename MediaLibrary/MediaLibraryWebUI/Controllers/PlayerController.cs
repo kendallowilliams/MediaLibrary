@@ -17,8 +17,6 @@ using System.Web;
 using System.Web.Mvc;
 using static MediaLibraryBLL.Enums;
 using static MediaLibraryWebUI.UIEnums;
-using static System.Environment;
-using IO_File = System.IO.File;
 
 namespace MediaLibraryWebUI.Controllers
 {
