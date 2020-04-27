@@ -4,7 +4,7 @@
         PlayerView: document.getElementById('player-view'),
         MediaView: document.getElementById('media-view'),
         PodcastView: document.getElementById('podcast-view'),
-        SeasonView: document.getElementById('season-view'),
+        SeasonView: document.getElementById('season-view')
     }),
     Players: () => ({
         MusicPlayer: document.getElementById('music-player') as HTMLMediaElement,

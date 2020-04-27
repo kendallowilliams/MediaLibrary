@@ -9,17 +9,21 @@ import EditPlaylistModal from "../../assets/modals/edit-playlist-modal";
 import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
 import { getPlaylistSortEnum, getPlaylistTabEnumString, getPlaylistTabEnum, getPlaylistSortEnumString } from "../../assets/enums/enum-functions";
 import DownloadM3UPlaylistModal from "../../assets/modals/download-m3u-playlist-modal";
+import IPlayerLoadFunctions from "../../assets/interfaces/player-load-functions-interface";
 
 export default class Playlist extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private addPlaylistModal: AddNewPlaylistModal;
     private editPlaylistModal: EditPlaylistModal;
     private downloadM3UPlaylistModal: DownloadM3UPlaylistModal;
+    private playlistView: HTMLElement;
 
     constructor(private playlistConfiguration: PlaylistConfiguration,
         private playFunc: (btn: HTMLButtonElement) => void,
-        private updateActiveMediaFunc: () => void) {
+        private updateActiveMediaFunc: () => void,
+        private loadFunctions: IPlayerLoadFunctions) {
         super();
+        this.playlistView = HtmlControls.Views().MediaView;
         this.mediaView = HtmlControls.Views().MediaView;
     }
 
@@ -30,6 +34,7 @@ export default class Playlist extends BaseClass implements IView {
             this.downloadM3UPlaylistModal = new DownloadM3UPlaylistModal();
             this.initializeControls();
             this.updateActiveMediaFunc();
+            this.applyLoadFunctions();
             $('[data-playlist-tab="' + getPlaylistTabEnumString(this.playlistConfiguration.properties.SelectedPlaylistTab) + '"]').tab('show');
             callback();
         };
@@ -86,5 +91,12 @@ export default class Playlist extends BaseClass implements IView {
         this.playlistConfiguration.properties.SelectedPlaylistId = 0;
         this.playlistConfiguration.properties.SelectedPlaylistPage = PlaylistPages.Index;
         this.playlistConfiguration.updateConfiguration(callback);
+    }
+
+    private applyLoadFunctions(): void {
+        $(this.playlistView).find('*[data-artist-id]').on('click', e => this.loadFunctions.loadArtist(parseInt($(e.currentTarget).attr('data-artist-id'))));
+        $(this.playlistView).find('*[data-album-id]').on('click', e => this.loadFunctions.loadAlbum(parseInt($(e.currentTarget).attr('data-album-id'))));
+        $(this.playlistView).find('*[data-podcast-id]').on('click', e => this.loadFunctions.loadPodcast(parseInt($(e.currentTarget).attr('data-podcast-id'))));
+        $(this.playlistView).find('*[data-series-id]').on('click', e => this.loadFunctions.loadSeries(parseInt($(e.currentTarget).attr('data-series-id'))));
     }
 }
