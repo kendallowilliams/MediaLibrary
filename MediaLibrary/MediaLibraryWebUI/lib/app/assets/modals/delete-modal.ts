@@ -34,7 +34,10 @@ export default class DeleteModal {
                 url = $btn.attr('data-delete-url');
             
             LoadingModal.showLoading();
-            $(this.modal).modal('hide').on('hidden.bs.modal', () => $.get(url, () => this.loadFunc(this.mediaLibraryConfiguration.properties.SelectedMediaPage)));
+            $.get(url, () => {
+                this.loadFunc(this.mediaLibraryConfiguration.properties.SelectedMediaPage);
+                LoadingModal.hideLoading();
+            });
         });
     }
 }
