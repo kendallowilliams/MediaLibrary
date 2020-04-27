@@ -37,6 +37,7 @@ export default class DeleteModal {
             $.get(url, () => {
                 this.loadFunc(this.mediaLibraryConfiguration.properties.SelectedMediaPage);
                 LoadingModal.hideLoading();
+                $(this.modal).modal('hide');
             });
         });
     }
