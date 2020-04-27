@@ -66,11 +66,14 @@
                                     <button class="btn btn-outline-secondary" data-play-id="@(list.Track.Id)" data-tooltip="tooltip" title="Play">
                                         <i class="fa fa-play"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
-                                            data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
-                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if (Model.SelectedPlaylist.Id > 0)
+                                    {
+                                        <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
+                                                data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
+                                                data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -95,11 +98,14 @@
                                     <button class="btn btn-outline-secondary" data-play-id="@(list.PodcastItem.Id)" data-tooltip="tooltip" title="Play">
                                         <i class="fa fa-play"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
-                                            data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
-                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if (Model.SelectedPlaylist.Id > 0)
+                                    {
+                                        <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
+                                                data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
+                                                data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -124,11 +130,14 @@
                                     <button class="btn btn-outline-secondary" data-play-id="@(list.Episode.Id)" data-tooltip="tooltip" title="Play">
                                         <i class="fa fa-play"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
-                                            data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
-                                            data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @if (Model.SelectedPlaylist.Id > 0)
+                                    {
+                                        <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylistItem", "Playlist", new { list.Id, list.PlaylistId }))"
+                                                data-tooltip="tooltip" title="Remove song" data-delete-type="song" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
+                                                data-toggle="modal" data-target="#@(HtmlControlsRepository.DeleteModalId)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    }
                                 </div>
                             </div>
                         </li>
