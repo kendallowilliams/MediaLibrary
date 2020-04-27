@@ -103,7 +103,7 @@
                                                     <button class="btn btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
                                                         <i class="fa fa-list"></i>
                                                     </button>
-                                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
+                                                    <button class="btn btn-outline-danger @(playlist.Id < 0 ? "invisible" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
                                                             data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
                                                             data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                                                         <i class="fa fa-trash"></i>
@@ -153,7 +153,7 @@
                                                     <button class="btn btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
                                                         <i class="fa fa-list"></i>
                                                     </button>
-                                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
+                                                    <button class="btn btn-outline-danger @(playlist.Id < 0 ? "invisible" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
                                                             data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
                                                             data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                                                         <i class="fa fa-trash"></i>
@@ -204,7 +204,7 @@
                                                     <button class="btn btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
                                                         <i class="fa fa-list"></i>
                                                     </button>
-                                                    <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
+                                                    <button class="btn btn-outline-danger @(playlist.Id < 0 ? "invisible" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
                                                             data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
                                                             data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                                                         <i class="fa fa-trash"></i>
