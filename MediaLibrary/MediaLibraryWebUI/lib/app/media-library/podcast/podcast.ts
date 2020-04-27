@@ -53,7 +53,7 @@ export default class Podcast extends BaseClass implements IView {
         $(this.mediaView).find('*[data-podcast-id]').on('click', e => this.loadPodcast(parseInt($(e.currentTarget).attr('data-podcast-id')), () => this.loadView()));
         
         $(this.mediaView).find('*[data-podcast-year]').on('click', e => {
-            var year = $(e.currentTarget).attr('data-podcast-year'),
+            const year = $(e.currentTarget).attr('data-podcast-year'),
                 years = $(this.podcastView).attr('data-podcast-years').split(','),
                 currentIndex = years.indexOf(this.getSelectedYear());
 
@@ -79,7 +79,7 @@ export default class Podcast extends BaseClass implements IView {
         });
     }
 
-    loadPodcast(id: number, callback: () => void = () => null) {
+    loadPodcast(id: number, callback: () => void = () => null): void {
         if (Number.isInteger(id)) {
             this.podcastConfiguration.properties.SelectedPodcastPage = PodcastPages.Podcast;
             this.podcastConfiguration.properties.SelectedPodcastId = id;

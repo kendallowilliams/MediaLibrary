@@ -84,7 +84,7 @@ export default class Television extends BaseClass implements IView {
         });
     }
 
-    loadSeries(id: number, callback: () => void = () => null) {
+    loadSeries(id: number, callback: () => void = () => null): void {
         if (Number.isInteger(id)) {
             this.televisionConfiguration.properties.SelectedTelevisionPage = TelevisionPages.Series;
             this.televisionConfiguration.properties.SelectedSeriesId = id;
