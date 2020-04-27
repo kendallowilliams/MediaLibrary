@@ -84,14 +84,22 @@ export default class Television extends BaseClass implements IView {
         });
     }
 
+    loadSeries(id: number, callback: () => void = () => null) {
+        if (Number.isInteger(id)) {
+            this.televisionConfiguration.properties.SelectedTelevisionPage = TelevisionPages.Series;
+            this.televisionConfiguration.properties.SelectedSeriesId = id;
+            this.televisionConfiguration.updateConfiguration(callback);
+        }
+    }
+
     private updateMobileSeasons(season: number): void {
-        let minSeasonCount = 5,
+        const minSeasonCount = 5,
             numItemsBefore = Math.ceil(minSeasonCount / 2) - 1,
             numItemsAfter = minSeasonCount - numItemsBefore - 1,
-            first = season - numItemsBefore,
-            last = season + numItemsAfter,
             cssSelector = '[data-season-id]:not([data-season-id="+"]):not([data-season-id="-"]',
             numSeasons = $(cssSelector).length;
+        let first = season - numItemsBefore,
+            last = season + numItemsAfter;
 
         $(cssSelector).addClass('d-none d-lg-block');
 
@@ -103,7 +111,7 @@ export default class Television extends BaseClass implements IView {
             last = numSeasons;
         }
 
-        for (var i = first; i <= last; i++) {
+        for (let i = first; i <= last; i++) {
             $(this.mediaView).find('*[data-season-id="' + i + '"]').removeClass('d-none d-lg-block');
         }
     }

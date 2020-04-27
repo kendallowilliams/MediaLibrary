@@ -91,7 +91,7 @@
                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
                                     <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(list.PodcastItem.Title)</h5>
                                     <div style="flex: 0 0 auto">
-                                        <span data-podcast-id="@(list.PodcastItem.PodcastId)" style="cursor: pointer">@(list.PodcastItem.Podcast?.Title ?? "Unknown Album")</span>
+                                        <span data-podcast-id="@(list.PodcastItem.PodcastId)" style="cursor: pointer">@(list.PodcastItem.Podcast?.Title ?? "Unknown Podcast")</span>
                                     </div>
                                 </div>
                                 <div>
@@ -123,7 +123,7 @@
                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
                                     <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(list.Episode.Title)</h5>
                                     <div style="flex: 0 0 auto">
-                                        <span data-series-id="@(list.Episode.SeriesId)" style="cursor: pointer">@(list.Episode.Series?.Title ?? "Unknown Album")</span>
+                                        <span data-series-id="@(list.Episode.SeriesId)" style="cursor: pointer">@(list.Episode.Series?.Title ?? "Unknown Series")</span>
                                     </div>
                                 </div>
                                 <div>

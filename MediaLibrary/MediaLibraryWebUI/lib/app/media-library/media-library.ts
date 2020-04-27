@@ -20,6 +20,7 @@ import DeleteModal from '../assets/modals/delete-modal';
 import EditSongModal from '../assets/modals/edit-song-modal';
 import { getMediaPagesEnum, getMediaPagesEnumString } from '../assets/enums/enum-functions';
 import AddToPlaylistModal from '../assets/modals/add-to-playlist-modal';
+import IPlayerLoadFunctions from '../assets/interfaces/player-load-functions-interface';
 
 export default class MediaLibrary extends BaseClass {
     private home: Home;
@@ -56,7 +57,13 @@ export default class MediaLibrary extends BaseClass {
     }
 
     private load(): void {
-        const success: () => void = () => {
+        const loadFunctions: IPlayerLoadFunctions = {
+                loadArtist: (id) => this.music.loadArtist(id, this.loadView.bind(this, MediaPages.Music)),
+                loadAlbum: (id) => this.music.loadAlbum(id, this.loadView.bind(this, MediaPages.Music)),
+                loadPodcast: (id) => this.podcast.loadPodcast(id, this.loadView.bind(this, MediaPages.Podcast)),
+                loadSeries: (id) => this.television.loadSeries(id, this.loadView.bind(this, MediaPages.Television))
+            },
+            success: () => void = () => {
             LoadingModal.showLoading();
             this.loadStaticViews(() => {
                 LoadingModal.hideLoading();
@@ -65,16 +72,10 @@ export default class MediaLibrary extends BaseClass {
                 this.addToPlaylistModal = new AddToPlaylistModal();
                 this.home = new Home(this.homeConfiguration);
                 this.music = new Music(this.musicConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
-                this.playlist = new Playlist(this.playlistConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
+                this.playlist = new Playlist(this.playlistConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this), loadFunctions);
                 this.podcast = new Podcast(this.podcastConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
                 this.television = new Television(this.televisionConfiguration, this.playWrapper.bind(this), this.updateActiveMedia.bind(this));
-                this.player = new Player(this.playerConfiguration, {
-                    loadArtist: (id) => this.music.loadArtist(id, this.loadView.bind(this, MediaPages.Music)),
-                    loadAlbum: (id) => this.music.loadAlbum(id, this.loadView.bind(this, MediaPages.Music)),
-                    loadPodcast: (id) => this.podcast.loadPodcast(id, this.loadView.bind(this, MediaPages.Podcast))
-                },
-                    this.updateActiveMedia.bind(this)
-                );
+                this.player = new Player(this.playerConfiguration, loadFunctions, this.updateActiveMedia.bind(this));
                 this.loadView(this.mediaLibraryConfiguration.properties.SelectedMediaPage);
             });
         };

@@ -92,7 +92,7 @@ export default class Podcast extends BaseClass implements IView {
     }
 
     private loadPodcastView(item): void {
-        var success = () => {
+        const success = () => {
             $(item).parent('li.page-item:first').addClass('active');
             this.updateMobileYears(parseInt($(item).attr('data-item-index')));
             loadTooltips(this.podcastView);
@@ -120,15 +120,15 @@ export default class Podcast extends BaseClass implements IView {
     }
 
     private updateMobileYears(position: number): void {
-        let minYearCount = 5,
+        const minYearCount = 5,
             maxYearCount = 10,
             numItemsBefore = Math.ceil(minYearCount / 2) - 1,
             numItemsAfter = minYearCount - numItemsBefore - 1,
-            first = position - numItemsBefore,
-            last = position + numItemsAfter,
             cssSelector = '[data-podcast-year]:not([data-podcast-year="+"]):not([data-podcast-year="-"]',
             numYears = $(cssSelector).length,
             delta = numYears - maxYearCount;
+        let first = position - numItemsBefore,
+            last = position + numItemsAfter;
 
         $(cssSelector).addClass('d-none d-lg-block');
 
