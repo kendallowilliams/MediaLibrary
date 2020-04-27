@@ -426,7 +426,7 @@ export default class Player extends BaseClass implements IView {
                 this.updateSelectedPlayerPage();
                 $(containers.PlayerItemsContainer).find('[data-item-index]').on('click', e => {
                     const index = parseInt($(e.currentTarget).attr('data-item-index')),
-                        item = $(containers.PlayerItemsContainer).find('li[data-play-index="' + index + '"]')[0];
+                        item: HTMLElement = $(containers.PlayerItemsContainer).find('li[data-play-index="' + index + '"]')[0];
 
                     this.loadItem(item, true);
                 });
