@@ -24,8 +24,11 @@ namespace MediaLibraryWebUI.Repositories
 
         public static IEnumerable<SYSTEM_PLAYLIST> GetSystemPlaylists<T>(int count) where T : IPlayableItem
         {
-            yield return new SYSTEM_PLAYLIST($"Top {count} Most Played", items => items.OrderByDescending(item => item.PlayCount).Take(count));
-            yield return new SYSTEM_PLAYLIST($"Top {count} Recently Added", items => items.OrderByDescending(item => item.CreateDate).Take(count));
+            yield return new SYSTEM_PLAYLIST($"Top {count} Most Played", items => items.Where(item => item.PlayCount > 0)
+                                                                                       .OrderByDescending(item => item.PlayCount)
+                                                                                       .Take(count));
+            yield return new SYSTEM_PLAYLIST($"Top {count} Recently Added", items => items.OrderByDescending(item => item.CreateDate)
+                                                                                          .Take(count));
             yield return new SYSTEM_PLAYLIST($"Top {count} Recently Played", items => items.Where(item => item.LastPlayedDate.HasValue)
                                                                                            .OrderByDescending(item => item.LastPlayedDate.Value)
                                                                                            .Take(count));
