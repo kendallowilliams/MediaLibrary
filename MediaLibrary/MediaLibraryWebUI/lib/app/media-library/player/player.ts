@@ -435,6 +435,7 @@ export default class Player extends BaseClass implements IView {
             };
 
         disposeTooltips(containers.PlayerItemsContainer);
+        $(HtmlControls.UIFields().NowPlayingTitle).text('');
         $(containers.PlayerItemsContainer).html('');
         $(containers.PlayerItemsContainer).load('Player/GetPlayerItems', success);
     }
