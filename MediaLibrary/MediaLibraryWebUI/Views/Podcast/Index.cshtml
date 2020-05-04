@@ -4,11 +4,11 @@
     <div style="flex: 0 0 auto">
         <h2>Podcasts</h2>
         <div class="p-1">
-            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewPodcastModalId)" data-tooltip="tooltip" title="Add podcast"><i class="fa fa-plus"></i></button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewPodcastModalId)" data-tooltip="tooltip" title="Add podcast"><i class="fa fa-plus"></i></button>
             @Html.DropDownListFor(x => x.Configuration.SelectedPodcastSort,
                                   Model.PodcastSortItems,
                                   null,
-                                  new { @class = "custom-select border border-secondary float-right",
+                                  new { @class = "form-control form-control-sm border border-secondary float-right align-middle",
                                         style = "width: 150px",
                                         title = "Sort by",
                                         data_podcast_action = "sort",
@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-header p-0" id="heading-podcasts-@(item.Index)">
                         <h5 class="mb-0">
-                            <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-podcasts-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-podcasts-@(item.Index)">
+                            <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-podcasts-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-podcasts-@(item.Index)">
                                 @(item.Group.Key)
                             </button>
                         </h5>
@@ -44,14 +44,14 @@
                                             <span style="flex: 0 0 auto">@(podcast.PodcastItems.Count()) episode@(podcast.PodcastItems.Count() == 1 ? string.Empty : "s")</span>
                                         </div>
                                         <div>
-                                            <button class="btn btn-outline-secondary d-none" data-tooltip="tooltip" title="@(podcast.Description)" data-placement="left"
+                                            <button class="btn btn-sm btn-outline-secondary d-none" data-tooltip="tooltip" title="@(podcast.Description)" data-placement="left"
                                                     data-html="true">
                                                 <i class="fa fa-info-circle"></i>
                                             </button>
-                                            <buton class="btn btn-outline-secondary" data-podcast-id="@(podcast.Id)" data-tooltip="tooltip" title="View podcast">
+                                            <buton class="btn btn-sm btn-outline-secondary" data-podcast-id="@(podcast.Id)" data-tooltip="tooltip" title="View podcast">
                                                 <i class="fa fa-list"></i>
                                             </buton>
-                                            <button class="btn btn-outline-danger" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
+                                            <button class="btn btn-sm btn-outline-danger" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
                                                     data-tooltip="tooltip" title="Delete podcast" data-delete-type="podcast"
                                                     data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                                                 <i class="fa fa-trash"></i>

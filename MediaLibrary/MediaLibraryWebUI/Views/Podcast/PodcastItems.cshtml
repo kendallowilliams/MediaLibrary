@@ -13,23 +13,23 @@
                         <span style="flex: 0 0 auto">@(item.PublishDate)</span>
                     </div>
                     <div>
-                        <button class="btn btn-outline-secondary d-none d-lg-inline-block" data-tooltip="tooltip" title="@(item.Description)" data-placement="left"
+                        <button class="btn btn-sm btn-outline-secondary d-none d-lg-inline-block" data-tooltip="tooltip" title="@(item.Description)" data-placement="left"
                                 data-html="true">
                             <i class="fa fa-info-circle"></i>
                         </button>
-                        <button class="btn btn-outline-secondary" data-play-id="@(item.Id)" data-media-type="@(Enums.MediaTypes.Podcast)"
+                        <button class="btn btn-sm btn-outline-secondary" data-play-id="@(item.Id)" data-media-type="@(Enums.MediaTypes.Podcast)"
                                 data-tooltip="tooltip" title="Play">
                             <i class="fa fa-play"></i>
                         </button>
                         @if (Model.HasPlaylists)
                         {
-                            <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddPodcastItemToPlaylist", "Podcast"))" data-item-id="@(item.Id)"
+                            <button type="button" class="btn btn-sm btn-outline-secondary" data-playlist-url="@(Url.Action("AddPodcastItemToPlaylist", "Podcast"))" data-item-id="@(item.Id)"
                                     data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist"
                                     data-playlist-type="@(nameof(UIEnums.PlaylistTabs.Podcast))">
                                 <i class="fa fa-plus"></i>
                             </button>
                         }
-                        <button class="btn btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
+                        <button class="btn btn-sm btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
                                 data-tooltip="tooltip" title="Download episode" data-podcast-action="download"
                                 @(!string.IsNullOrWhiteSpace(item.File) ? "disabled=\"disabled\"" : string.Empty)>
                             <i class="fa fa-download"></i>
