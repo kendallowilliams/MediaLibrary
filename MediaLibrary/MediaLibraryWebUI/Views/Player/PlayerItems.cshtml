@@ -9,9 +9,9 @@
                 data-play-index="@(item.Index)" data-item-id="@(item.Song.Id)" data-title="@(item.Song.Title)" data-current-time="@(item.Song.Progress)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                        <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.Song.Title)</h5>
+                        <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(item.Song.Title)</span>
                         <div style="flex: 0 0 auto">
-                            <span data-album-id="@(item.Song.Album?.Id)" style="cursor: pointer">@(item.Song.Album?.Title ?? "Unknown Album")</span> - <span data-artist-id="@(item.Song.Artist?.Id)" style="cursor: pointer" class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</span>
+                            <small data-album-id="@(item.Song.Album?.Id)" style="cursor: pointer">@(item.Song.Album?.Title ?? "Unknown Album")</small> - <small data-artist-id="@(item.Song.Artist?.Id)" style="cursor: pointer" class="text-muted">@(item.Song.Artist?.Name ?? "Unknown Artist")</small>
                         </div>
                     </div>
                     <div>
@@ -37,9 +37,9 @@ else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Podcast && Mo
                 data-play-index="@(item.Index)" data-item-id="@(item.PodcastItem.Id)" data-title="@(item.PodcastItem.Title)" data-current-time="@(item.PodcastItem.Progress)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                        <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.PodcastItem.Title)</h5>
+                        <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(item.PodcastItem.Title)</span>
                         <div style="flex: 0 0 auto">
-                            <span data-podcast-id="@(item.PodcastItem.PodcastId)" style="cursor: pointer">@(item.PodcastItem.Podcast?.Title ?? "Unknown Podcast")</span> - <span class="text-muted">@(item.PodcastItem?.Podcast?.Author ?? "Unknown Author")</span>
+                            <small data-podcast-id="@(item.PodcastItem.PodcastId)" style="cursor: pointer">@(item.PodcastItem.Podcast?.Title ?? "Unknown Podcast")</small> - <small class="text-muted">@(item.PodcastItem?.Podcast?.Author ?? "Unknown Author")</small>
                         </div>
                     </div>
                     <div>
@@ -61,9 +61,9 @@ else if (Model.Configuration.SelectedMediaType == Enums.MediaTypes.Television &&
                 data-play-index="@(item.Index)" data-item-id="@(item.Episode.Id)" data-title="@(item.Episode.Title)" data-current-time="@(item.Episode.Progress)">
                 <div class="media">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                        <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.Episode.Title)</h5>
+                        <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(item.Episode.Title)</span>
                         <div style="flex: 0 0 auto">
-                            <span data-series-id="@(item.Episode.SeriesId)" style="cursor: pointer">@(item.Episode.Series?.Title ?? "Unknown Series")</span> - <span class="text-muted">@(item.Episode.Season.HasValue ? $"Season {item.Episode.Season.Value}" : "Unknown Season")</span>
+                            <small data-series-id="@(item.Episode.SeriesId)" style="cursor: pointer">@(item.Episode.Series?.Title ?? "Unknown Series")</small> - <small class="text-muted">@(item.Episode.Season.HasValue ? $"Season {item.Episode.Season.Value}" : "Unknown Season")</small>
                         </div>
                     </div>
                     <div>
