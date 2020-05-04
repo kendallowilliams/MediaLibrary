@@ -23,7 +23,7 @@
             @foreach (var item in Model.SeriesGroups.Select((group, index) => new { Index = index, Group = group }))
             {
                 <div class="card">
-                    <div class="card-header" id="heading-series-@(item.Index)">
+                    <div class="card-header p-0" id="heading-series-@(item.Index)">
                         <h5 class="mb-0">
                             <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-series-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-series-@(item.Index)">
                                 @(item.Group.Key)

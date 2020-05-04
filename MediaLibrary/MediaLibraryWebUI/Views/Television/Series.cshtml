@@ -16,12 +16,12 @@
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-header" id="heading-series-@(Model.SelectedSeries.Id)" style="flex: 0 0 auto">
             <ul class="pagination justify-content-center m-0">
-                <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="-">&laquo;</a></li>
+                <li class="page-item pagination-sm"><a class="page-link" href="javascript: void(0);" data-season-id="-">&laquo;</a></li>
                 @foreach (var item in Model.SelectedSeries.Episodes.Select(episode => episode.Season).Distinct().Select((season, index) => new { Index = index, Season = season }).OrderBy(item => item.Season))
                 {
-                    <li class="page-item"><a class="page-link" href="javascript: void(0);" data-item-index="@(item.Index)" data-season-id="@(item.Season)">@(item.Season)</a></li>
+                    <li class="page-item pagination-sm"><a class="page-link" href="javascript: void(0);" data-item-index="@(item.Index)" data-season-id="@(item.Season)">@(item.Season)</a></li>
                 }
-                <li class="page-item"><a class="page-link" href="javascript: void(0);" data-season-id="+">&raquo;</a></li>
+                <li class="page-item pagination-sm"><a class="page-link" href="javascript: void(0);" data-season-id="+">&raquo;</a></li>
             </ul>
         </div>
         <div class="card-body m-0 p-0" id="@(HtmlControlsRepository.SeasonViewId)" style="flex: 1 1 auto; overflow-y: auto"></div>
