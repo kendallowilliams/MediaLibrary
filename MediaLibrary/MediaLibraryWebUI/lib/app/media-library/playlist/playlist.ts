@@ -79,9 +79,9 @@ export default class Playlist extends BaseClass implements IView {
 
             $(HtmlControls.UIControls().PlaylistTabList).find('*[data-sort-tab]').each((index, _btn) => {
                 if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
-                    $(_btn).removeClass('d-none');
+                    $(_btn).addClass('d-inline-block').removeClass('d-none');
                 } else {
-                    $(_btn).addClass('d-none');
+                    $(_btn).removeClass('d-inline-block').addClass('d-none');
                 }
             });
         });

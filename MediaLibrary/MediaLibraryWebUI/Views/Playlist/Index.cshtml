@@ -12,29 +12,29 @@
     <div style="flex: 0 0 auto">
         <h2>Playlists</h2>
         <div class="nav d-block p-1" id="@(HtmlControlsRepository.PlaylistTabListId)" role="tablist">
-            <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.MusicPlaylistContainerId)-tab" data-toggle="tab"
+            <a class="btn btn-sm btn-outline-secondary" id="@(HtmlControlsRepository.MusicPlaylistContainerId)-tab" data-toggle="tab"
                role="tab" title="@(nameof(UIEnums.PlaylistTabs.Music))" data-playlist-tab="@(nameof(UIEnums.PlaylistTabs.Music))"
                data-tooltip="tooltip" href="#@(HtmlControlsRepository.MusicPlaylistContainerId)">
                 <i class="fa fa-music"></i>
             </a>
-            <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.PodcastPlaylistContainerId)-tab" data-toggle="tab"
+            <a class="btn btn-sm btn-outline-secondary" id="@(HtmlControlsRepository.PodcastPlaylistContainerId)-tab" data-toggle="tab"
                role="tab" title="@(nameof(UIEnums.PlaylistTabs.Podcast))" data-playlist-tab="@(nameof(UIEnums.PlaylistTabs.Podcast))"
                data-tooltip="tooltip" href="#@(HtmlControlsRepository.PodcastPlaylistContainerId)">
                 <i class="fa fa-podcast"></i>
             </a>
-            <a class="btn btn-outline-secondary" id="@(HtmlControlsRepository.EpisodePlaylistContainerId)-tab" data-toggle="tab"
+            <a class="btn btn-sm btn-outline-secondary" id="@(HtmlControlsRepository.EpisodePlaylistContainerId)-tab" data-toggle="tab"
                role="tab" title="@(nameof(UIEnums.PlaylistTabs.Television))" data-playlist-tab="@(nameof(UIEnums.PlaylistTabs.Television))"
                data-tooltip="tooltip" href="#@(HtmlControlsRepository.EpisodePlaylistContainerId)">
                 <i class="fa fa-tv"></i>
             </a>
             <div class="float-right d-none d-lg-block">
-                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewPlaylistModalId)" data-tooltip="tooltip" title="Add playlist"><i class="fa fa-plus"></i></button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewPlaylistModalId)" data-tooltip="tooltip" title="Add playlist"><i class="fa fa-plus"></i></button>
                 @Html.DropDownListFor(x => x.Configuration.SelectedMusicPlaylistSort,
                                         Model.PlaylistSortItems,
                                         null,
                                         new
                                         {
-                                            @class = "custom-select border border-secondary d-none",
+                                            @class = "form-control form-control-sm border border-secondary d-none align-middle",
                                             style = "width: 135px",
                                             title = "Sort by",
                                             data_playlist_action = "sort",
@@ -47,7 +47,7 @@
                                         null,
                                         new
                                         {
-                                            @class = "custom-select border border-secondary d-none",
+                                            @class = "form-control form-control-sm border border-secondary d-none align-middle",
                                             style = "width: 135px",
                                             title = "Sort by",
                                             data_playlist_action = "sort",
@@ -60,7 +60,7 @@
                                       null,
                                       new
                                       {
-                                          @class = "custom-select border border-secondary d-none",
+                                          @class = "form-control form-control-sm border border-secondary d-none align-middle",
                                           style = "width: 135px",
                                           title = "Sort by",
                                           data_playlist_action = "sort",
@@ -82,7 +82,7 @@
                         <div class="card">
                             <div class="card-header p-0" id="heading-playlists-@(item.Index)">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)">
+                                    <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)">
                                         @(item.Group.Key)
                                     </button>
                                 </h5>
@@ -100,10 +100,10 @@
                                                     <span style="flex: 0 0 auto">@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</span>
                                                 </div>
                                                 <div>
-                                                    <button class="btn btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
                                                         <i class="fa fa-list"></i>
                                                     </button>
-                                                    <button class="btn btn-outline-danger @(playlist.Id < 0 ? "d-none" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
+                                                    <button class="btn btn-sm btn-outline-danger @(playlist.Id < 0 ? "d-none" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
                                                             data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
                                                             data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                                                         <i class="fa fa-trash"></i>
@@ -132,7 +132,7 @@
                         <div class="card">
                             <div class="card-header p-0" id="heading-playlists-@(item.Index)">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)">
+                                    <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)">
                                         @(item.Group.Key)
                                     </button>
                                 </h5>
@@ -150,10 +150,10 @@
                                                     <span style="flex: 0 0 auto">@(playlist.PlaylistPodcastItems.Count()) episode@(playlist.PlaylistPodcastItems.Count() == 1 ? string.Empty : "s")</span>
                                                 </div>
                                                 <div>
-                                                    <button class="btn btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
                                                         <i class="fa fa-list"></i>
                                                     </button>
-                                                    <button class="btn btn-outline-danger @(playlist.Id < 0 ? "d-none" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
+                                                    <button class="btn btn-sm btn-outline-danger @(playlist.Id < 0 ? "d-none" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
                                                             data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
                                                             data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                                                         <i class="fa fa-trash"></i>
@@ -182,7 +182,7 @@
                         <div class="card">
                             <div class="card-header p-0" id="heading-playlists-@(item.Index)">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)">
+                                    <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-playlists-@(item.Index)">
                                         @(item.Group.Key)
                                     </button>
                                 </h5>
@@ -201,10 +201,10 @@
                                                     <span style="flex: 0 0 auto">@(playlist.PlaylistEpisodes.Count()) episode@(playlist.PlaylistEpisodes.Count() == 1 ? string.Empty : "s")</span>
                                                 </div>
                                                 <div>
-                                                    <button class="btn btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
+                                                    <button class="btn btn-sm btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
                                                         <i class="fa fa-list"></i>
                                                     </button>
-                                                    <button class="btn btn-outline-danger @(playlist.Id < 0 ? "d-none" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
+                                                    <button class="btn btn-sm btn-outline-danger @(playlist.Id < 0 ? "d-none" : string.Empty)" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { playlist.Id }))"
                                                             data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))"
                                                             data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
                                                         <i class="fa fa-trash"></i>
