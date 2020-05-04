@@ -37,14 +37,14 @@
         <hr />
     </div>
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
-        <div class="card-header" id="heading-playlist-@(Model.SelectedPlaylist.Id)">
+        <div class="card-header p-0" id="heading-playlist-@(Model.SelectedPlaylist.Id)">
             <h5 class="mb-0">
                 @if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Music)
-                {<span>Songs</span> }
+                { <button class="btn btn-link">Songs</button> }
                 else if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Podcast)
-                { <span>Episodes</span> }
+                { <button class="btn btn-link">Episodes</button> }
                 else if (Model.SelectedPlaylist.Type == (int)UIEnums.PlaylistTabs.Television)
-                { <span>Episodes</span>}
+                { <button class="btn btn-link">Episodes</button> }
             </h5>
         </div>
         <div class="card-body m-0 p-0" style="flex: 1 1 auto; overflow-y: auto">
