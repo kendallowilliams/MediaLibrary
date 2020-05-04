@@ -21,7 +21,7 @@
 
     @if (Model.SeriesGroups.Any())
     {
-        <div id="accordion-series" style="flex: 1 1 auto; overflow-y: auto">
+        <div id="accordion-series" style="flex: 1 1 auto; overflow-y: auto" class="accordion">
             @foreach (var item in Model.SeriesGroups.Select((group, index) => new { Index = index, Group = group }))
             {
                 <div class="card">

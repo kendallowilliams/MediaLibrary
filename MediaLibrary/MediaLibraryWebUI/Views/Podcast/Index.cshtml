@@ -20,7 +20,7 @@
 
     @if (Model.PodcastGroups.Any())
     {
-        <div id="accordion-podcasts" style="flex: 1 1 auto; overflow-y: auto">
+        <div id="accordion-podcasts" style="flex: 1 1 auto; overflow-y: auto" class="accordion">
             @foreach (var item in Model.PodcastGroups.Select((group, index) => new { Index = index, Group = group }))
             {
                 <div class="card">

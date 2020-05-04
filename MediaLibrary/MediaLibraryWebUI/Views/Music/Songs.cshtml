@@ -2,7 +2,7 @@
 
 @if (Model.SongGroups.Any())
 {
-<div id="accordion-songs">
+<div id="accordion-songs" class="accordion">
     @foreach (var item in Model.SongGroups.Select((group, index) => new { Index = index, Group = group }))
     {
         <div class="card">
