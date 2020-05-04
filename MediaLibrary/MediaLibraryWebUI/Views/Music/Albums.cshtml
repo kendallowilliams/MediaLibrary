@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header p-0" id="heading-albums-@(item.Index)">
                     <h5 class="mb-0">
-                        <button class="btn btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-albums-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-albums-@(item.Index)">
+                        <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-albums-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-albums-@(item.Index)">
                             @(item.Group.Key)
                         </button>
                     </h5>
@@ -26,12 +26,12 @@
                                         <span data-artist-id="@(album.Artist?.Id)" style="cursor: pointer; flex: 0 0 auto">@(album.Artist?.Name ?? "Unknown Artist")</span>
                                     </div>
                                     <div>
-                                        <button class="btn btn-outline-secondary" data-tooltip="tooltip" title="View album" data-album-id="@(album.Id)">
+                                        <button class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="View album" data-album-id="@(album.Id)">
                                             <i class="fa fa-list"></i>
                                         </button>
                                         @if (Model.Playlists.Any())
                                         {
-                                        <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))"
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-playlist-url="@(Url.Action("AddAlbumToPlaylist", "Music"))"
                                                 data-item-id="@(album.Id)" data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist"
                                                 data-playlist-type="@(nameof(UIEnums.PlaylistTabs.Music))">
                                             <i class="fa fa-plus"></i>

@@ -94,9 +94,9 @@ export default class Music extends BaseClass implements IView {
                 };
             $(HtmlControls.UIControls().MusicTabList).find('*[data-sort-tab]').each((index, _btn) => {
                 if ($(_btn).attr('data-sort-tab') === $newTab.attr('id')) {
-                    $(_btn).removeClass('d-none');
+                    $(_btn).removeClass('d-none').addClass('d-inline-block');
                 } else {
-                    $(_btn).addClass('d-none');
+                    $(_btn).removeClass('d-inline-block').addClass('d-none');
                 }
             });
             LoadingModal.showLoading();

@@ -4,14 +4,14 @@
     <div style="flex: 0 0 auto">
         <h2>@(Model.SelectedAlbum.Title)</h2>
         <div class="p-1">
-            <button class="btn btn-outline-secondary" data-back-button="album" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
+            <button class="btn btn-sm btn-outline-secondary" data-back-button="album" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
         </div>
         <hr />
     </div>
     <div class="card" style="flex: 1 1 auto; overflow-y: auto">
         <div class="card-header p-0" id="heading-artist-@(Model.SelectedAlbum.Id)">
             <h5 class="mb-0">
-                <button class="btn btn-link">Songs</button>
+                <button class="btn btn-sm btn-link">Songs</button>
             </h5>
         </div>
         <div class="card-body m-0 p-0" style="flex: 1 1 auto; overflow-y: auto">
@@ -28,16 +28,16 @@
                                     <span data-artist-id="@(song.ArtistId)" style="cursor: pointer; flex: 0 0 auto">@(song.Artist?.Name ?? "Unknown Artist")</span>
                                 </div>
                                 <div>
-                                    <button class="btn btn-outline-secondary" data-play-id="@(song.Id)" data-tooltip="tooltip" title="Play">
+                                    <button class="btn btn-sm btn-outline-secondary" data-play-id="@(song.Id)" data-tooltip="tooltip" title="Play">
                                         <i class="fa fa-play"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary d-none d-lg-inline-block" data-toggle="modal" data-target="#@(HtmlControlsRepository.EditSongModalId)" data-item-id="@(song.Id)" data-tooltip="tooltip"
+                                    <button type="button" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-block" data-toggle="modal" data-target="#@(HtmlControlsRepository.EditSongModalId)" data-item-id="@(song.Id)" data-tooltip="tooltip"
                                             title="Edit">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     @if (Model.Playlists.Any())
                                     {
-                                        <button type="button" class="btn btn-outline-secondary" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-playlist-url="@(Url.Action("AddTrackToPlaylist", "Music"))" data-item-id="@(song.Id)"
                                                 data-toggle="modal" data-target="#@(HtmlControlsRepository.AddToPlaylistModalId)" data-tooltip="tooltip" title="Add to playlist"
                                                 data-playlist-type="@(nameof(UIEnums.PlaylistTabs.Music))">
                                             <i class="fa fa-plus"></i>
