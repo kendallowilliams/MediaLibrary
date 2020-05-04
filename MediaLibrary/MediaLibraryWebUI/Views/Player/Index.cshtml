@@ -12,11 +12,11 @@
                 <h2 id="@(HtmlControlsRepository.NowPlayingTitleId)" class="text-truncate"></h2>
             </div>
             <div class="p-1" style="flex: 0 0 auto">
-                <button id="@(HtmlControlsRepository.PlayerAudioVisualizerButtonId)" class="btn btn-outline-secondary @(Model.Configuration.AudioVisualizerEnabled ? "active" : string.Empty)"
+                <button id="@(HtmlControlsRepository.PlayerAudioVisualizerButtonId)" class="btn btn-sm btn-outline-secondary @(Model.Configuration.AudioVisualizerEnabled ? "active" : string.Empty)"
                         data-tooltip="tooltip" title="Toggle audio visualizer">
                     <i class="fa fa-eye" />
                 </button>
-                <button id="@(HtmlControlsRepository.PlayerClearButtonId)" class="btn btn-outline-danger" data-delete-action="@(Url.Action("ClearNowPlaying", "Player"))"
+                <button id="@(HtmlControlsRepository.PlayerClearButtonId)" class="btn btn-sm btn-outline-danger" data-delete-action="@(Url.Action("ClearNowPlaying", "Player"))"
                         title="Clear now playing" data-delete-type="now playing" data-tooltip="tooltip" data-target="#@(HtmlControlsRepository.ClearNowPlayingModalId)" data-toggle="modal">
                     <i class="fa fa-trash" />
                 </button>
