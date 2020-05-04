@@ -96,8 +96,8 @@
                                             <div class="media">
                                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(playlist.Name)">
                                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                                                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(playlist.Name)</h5>
-                                                    <span style="flex: 0 0 auto">@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</span>
+                                                    <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(playlist.Name)</span>
+                                                    <small style="flex: 0 0 auto">@(playlist.PlaylistTracks.Count()) song@(playlist.PlaylistTracks.Count() == 1 ? string.Empty : "s")</small>
                                                 </div>
                                                 <div>
                                                     <button class="btn btn-sm btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
@@ -146,8 +146,8 @@
                                             <div class="media">
                                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(playlist.Name)">
                                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                                                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(playlist.Name)</h5>
-                                                    <span style="flex: 0 0 auto">@(playlist.PlaylistPodcastItems.Count()) episode@(playlist.PlaylistPodcastItems.Count() == 1 ? string.Empty : "s")</span>
+                                                    <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(playlist.Name)</span>
+                                                    <small style="flex: 0 0 auto">@(playlist.PlaylistPodcastItems.Count()) episode@(playlist.PlaylistPodcastItems.Count() == 1 ? string.Empty : "s")</small>
                                                 </div>
                                                 <div>
                                                     <button class="btn btn-sm btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
@@ -197,8 +197,8 @@
                                             <div class="media">
                                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(playlist.Name)">
                                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                                                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(playlist.Name)</h5>
-                                                    <span style="flex: 0 0 auto">@(playlist.PlaylistEpisodes.Count()) episode@(playlist.PlaylistEpisodes.Count() == 1 ? string.Empty : "s")</span>
+                                                    <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(playlist.Name)</span>
+                                                    <small style="flex: 0 0 auto">@(playlist.PlaylistEpisodes.Count()) episode@(playlist.PlaylistEpisodes.Count() == 1 ? string.Empty : "s")</small>
                                                 </div>
                                                 <div>
                                                     <button class="btn btn-sm btn-outline-secondary" data-playlist-id="@(playlist.Id)" data-tooltip="tooltip" title="View playlist">
