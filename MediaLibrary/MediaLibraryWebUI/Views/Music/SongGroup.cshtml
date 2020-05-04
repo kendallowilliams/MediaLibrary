@@ -7,9 +7,9 @@
             <div class="media">
                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(song.Title)">
                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(song.Title)</h5>
+                    <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(song.Title)</span>
                     <div style="flex: 0 0 auto">
-                        <span data-album-id="@(song.Album?.Id)" style="cursor: pointer">@(song.Album?.Title ?? "Unknown Album")</span> - <span data-artist-id="@(song.Artist?.Id)" style="cursor: pointer" class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</span>
+                        <small data-album-id="@(song.Album?.Id)" style="cursor: pointer">@(song.Album?.Title ?? "Unknown Album")</small> - <small data-artist-id="@(song.Artist?.Id)" style="cursor: pointer" class="text-muted">@(song.Artist?.Name ?? "Unknown Artist")</small>
                     </div>
                 </div>
                 <div>

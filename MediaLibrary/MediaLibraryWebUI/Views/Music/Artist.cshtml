@@ -24,8 +24,8 @@
                             <div class="media">
                                 <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
                                 <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                                    <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(item.Title)</h5>
-                                    <span style="cursor: pointer; flex: 0 0 auto">@($"{item.Tracks.Count()} songs")</span>
+                                    <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(item.Title)</span>
+                                    <small style="cursor: pointer; flex: 0 0 auto">@($"{item.Tracks.Count()} songs")</small>
                                 </div>
                                 <div>
                                     <button class="btn btn-sm btn-outline-secondary" data-album-id="@(item.Id)" data-tooltip="tooltip" title="View album">

@@ -26,8 +26,8 @@
                                 <div class="media">
                                     <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(artist.Name)">
                                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                                        <h5 class="mt-0 text-truncate" style="flex: 0 0 auto">@(artist.Name)</h5>
-                                        <span style="cursor: pointer; flex: 0 0 auto">@(txtAlbums)</span>
+                                        <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(artist.Name)</span>
+                                        <small style="cursor: pointer; flex: 0 0 auto">@(txtAlbums)</small>
                                     </div>
                                     <div>
                                         <button class="btn btn-sm btn-outline-secondary" data-tooltip="tooltip" title="View artist" data-artist-id="@(artist.Id)">
