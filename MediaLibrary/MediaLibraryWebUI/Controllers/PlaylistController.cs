@@ -219,8 +219,9 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> GetPlaylists()
         {
             IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>();
+            string json = JsonConvert.SerializeObject(playlists);
 
-            return Json(playlists, JsonRequestBehavior.AllowGet);
+            return Json(JsonConvert.DeserializeObject<IEnumerable<Playlist>>(json), JsonRequestBehavior.AllowGet);
         }
     }
 }

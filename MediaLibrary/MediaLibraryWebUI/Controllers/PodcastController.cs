@@ -263,8 +263,9 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> GetPodcasts()
         {
             IEnumerable<Podcast> podcasts = await dataService.GetList<Podcast>();
+            string json = JsonConvert.SerializeObject(podcasts);
 
-            return Json(podcasts, JsonRequestBehavior.AllowGet);
+            return Json(JsonConvert.DeserializeObject<IEnumerable<Podcast>>(json), JsonRequestBehavior.AllowGet);
         }
     }
 }
