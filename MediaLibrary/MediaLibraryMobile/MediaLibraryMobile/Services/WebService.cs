@@ -21,14 +21,14 @@ namespace MediaLibraryMobile.Services
 
         }
 
-        public async Task<IEnumerable<T>> Get<T>(string baseUrl, string relativePath)
+        public async Task<IEnumerable<T>> Get<T>(Uri baseUri, string relativePath)
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
             HttpResponseMessage response = default;
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(baseUrl);
+                client.BaseAddress = baseUri;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "");
                 response = await client.GetAsync(relativePath);

@@ -22,19 +22,35 @@ namespace MediaLibraryMobile.Controllers
         private readonly PodcastViewModel podcastViewModel;
         private IDictionary<Pages, NavigationPage> pages;
         private readonly IWebService webService;
+        private Uri baseUri;
+        private readonly ISharedPreferencesService sharedPreferencesService;
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
-                              IWebService webService)
+                              IWebService webService, ISharedPreferencesService sharedPreferencesService)
         {
+            string baseAddress = string.Empty;
+
             this.mainViewModel = mainViewModel;
             this.playlistViewModel = playlistViewModel;
             this.podcastViewModel = podcastViewModel;
             this.webService = webService;
+            this.sharedPreferencesService = sharedPreferencesService;
             this.mainViewModel.MenuItems = MainRepository.GetMenuItems();
             this.mainViewModel.MenuItemCommand = new Command(MenuItemClicked);
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
-
+#if DEBUG
+            if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG")))
+            {
+                this.sharedPreferencesService.SetString("BASE_URI_DEBUG", baseAddress = "http://kserver/MediaLibraryDEV/");
+            }
+#else
+            if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI")))
+            {
+                this.sharedPreferencesService.SetString("BASE_URI", uri = "http://kserver/MediaLibrary/");
+            }
+#endif
+            baseUri = new Uri(baseAddress);
             pages = new Dictionary<Pages, NavigationPage>()
             {
                 { Pages.Playlist, new NavigationPage(playlistViewModel.View) },
@@ -53,12 +69,27 @@ namespace MediaLibraryMobile.Controllers
             pages.TryGetValue(page, out target);
             (mainViewModel.View as MasterDetailPage).Detail = target;
 
-            await LoadPodcasts();
+            switch(page)
+            {
+                case Pages.Playlist:
+                    await LoadPlaylists();
+                    break;
+                case Pages.Podcast:
+                    await LoadPodcasts();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private async Task LoadPodcasts()
         {
-            this.podcastViewModel.Podcasts = await webService.Get<Podcast>("http://10.0.2.2:51124", "Podcast/GetPodcasts");
+            this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcasts");
+        }
+
+        private async Task LoadPlaylists()
+        {
+            this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylists");
         }
     }
 }

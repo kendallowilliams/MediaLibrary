@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MediaLibraryMobile.Services.Interfaces
 {
-    public interface IWebService
+    public interface ISharedPreferencesService
     {
-        Task<IEnumerable<T>> Get<T>(Uri baseUri, string relativePath);
+        void SetString(string key, string value);
+        string GetString(string key);
     }
 }
