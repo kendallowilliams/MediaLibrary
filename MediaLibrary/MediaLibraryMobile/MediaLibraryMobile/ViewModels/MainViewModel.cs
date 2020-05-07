@@ -13,8 +13,8 @@ namespace MediaLibraryMobile.ViewModels
     public class MainViewModel : BaseViewModel<IView>
     {
         private IDictionary<Pages, string> menuItems;
-        private ICommand menuItemCommand;
         private KeyValuePair<Pages, string> selectedMenuItem;
+        private bool isPresented;
 
          [ImportingConstructor]
         public MainViewModel(IMainView mainView, IMenuView menuView): base(mainView)
@@ -25,7 +25,7 @@ namespace MediaLibraryMobile.ViewModels
         }
 
         public IDictionary<Pages, string> MenuItems { get => menuItems; set => SetProperty<IDictionary<Pages, string>>(ref menuItems, value); }
-        public ICommand MenuItemCommand { get => menuItemCommand; set => SetProperty<ICommand>(ref menuItemCommand, value); }
         public KeyValuePair<Pages, string> SelectedMenuItem { get => selectedMenuItem; set => SetProperty<KeyValuePair<Pages, string>>(ref selectedMenuItem, value); }
+        public bool IsPresented { get => isPresented; set => SetProperty<bool>(ref isPresented, value); }
     }
 }

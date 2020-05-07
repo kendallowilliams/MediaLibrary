@@ -11,6 +11,7 @@ using static MediaLibraryMobile.Enums;
 using MediaLibraryMobile.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -37,8 +38,7 @@ namespace MediaLibraryMobile.Controllers
             this.webService = webService;
             this.sharedPreferencesService = sharedPreferencesService;
             this.mainViewModel.MenuItems = MainRepository.GetMenuItems();
-            this.mainViewModel.MenuItemCommand = new Command(MenuItemClicked);
-            this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
+            this.mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
 #if DEBUG
             if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG")))
             {
@@ -56,31 +56,32 @@ namespace MediaLibraryMobile.Controllers
                 { Pages.Playlist, new NavigationPage(playlistViewModel.View) },
                 { Pages.Podcast, new NavigationPage(podcastViewModel.View) }
             };
+            this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
+        }
+
+        private async void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SelectedMenuItem")
+            {
+                switch (mainViewModel.SelectedMenuItem.Key)
+                {
+                    case Pages.Playlist:
+                        await LoadPlaylists();
+                        break;
+                    case Pages.Podcast:
+                        await LoadPodcasts();
+                        break;
+                    default:
+                        break;
+                }
+
+                pages.TryGetValue(mainViewModel.SelectedMenuItem.Key, out NavigationPage target);
+                (mainViewModel.View as MasterDetailPage).Detail = target;
+                mainViewModel.IsPresented = false;
+            }
         }
 
         public Page GetMainView() => mainViewModel.View;
-
-        private async void MenuItemClicked(object _page)
-        {
-            Pages page = (Pages)_page;
-            NavigationPage target = default;
-
-            this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault(item => item.Key == (Pages)page);
-            pages.TryGetValue(page, out target);
-            (mainViewModel.View as MasterDetailPage).Detail = target;
-
-            switch(page)
-            {
-                case Pages.Playlist:
-                    await LoadPlaylists();
-                    break;
-                case Pages.Podcast:
-                    await LoadPodcasts();
-                    break;
-                default:
-                    break;
-            }
-        }
 
         private async Task LoadPodcasts()
         {

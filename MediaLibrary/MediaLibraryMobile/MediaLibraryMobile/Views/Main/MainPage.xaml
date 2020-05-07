@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="MediaLibraryMobile.Views.MainPage"
              xmlns:pages="clr-namespace:MediaLibraryMobile.Views"
-             xmlns:ViewModels="clr-namespace:MediaLibraryMobile.ViewModels">
+             xmlns:ViewModels="clr-namespace:MediaLibraryMobile.ViewModels"
+             IsPresented="{Binding IsPresented, Mode=TwoWay}">
 
     <MasterDetailPage.Master>
         <ContentPage Title="Master" />
