@@ -5,11 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="MediaLibraryMobile.Views.PlaylistPage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Refresh" />
-    </ContentPage.ToolbarItems>
-
-    <RefreshView>
+    <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding LoadCommand}">
         <CollectionView x:Name="ItemsCollectionView"
                 ItemsSource="{Binding Playlists}">
             <d:CollectionView.ItemsSource>

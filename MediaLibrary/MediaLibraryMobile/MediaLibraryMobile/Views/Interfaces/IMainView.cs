@@ -9,5 +9,6 @@ namespace MediaLibraryMobile.Views.Interfaces
     {
         Page Master { get; set; }
         Page Detail { get; set; }
+        INavigation Navigation { get; }
     }
 }

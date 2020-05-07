@@ -39,6 +39,8 @@ namespace MediaLibraryMobile.Controllers
             this.sharedPreferencesService = sharedPreferencesService;
             this.mainViewModel.MenuItems = MainRepository.GetMenuItems();
             this.mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
+            this.playlistViewModel.LoadCommand = new Command(async () => await LoadPlaylists());
+            this.podcastViewModel.LoadCommand = new Command(async () => await LoadPodcasts());
 #if DEBUG
             if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG")))
             {
@@ -85,12 +87,16 @@ namespace MediaLibraryMobile.Controllers
 
         private async Task LoadPodcasts()
         {
+            this.podcastViewModel.IsRefreshing = true;
             this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcasts");
+            this.podcastViewModel.IsRefreshing = false;
         }
 
         private async Task LoadPlaylists()
         {
+            this.playlistViewModel.IsRefreshing = true;
             this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylists");
+            this.playlistViewModel.IsRefreshing = false;
         }
     }
 }

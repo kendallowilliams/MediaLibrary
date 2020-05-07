@@ -18,7 +18,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <Grid Padding="10">
-                            <Button Text="{Binding Value}" d:Text="{Binding .}" FontSize="20"/>
+                            <Label Text="{Binding Value}" d:Text="{Binding .}" FontSize="20"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
