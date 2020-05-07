@@ -47,7 +47,7 @@ namespace MediaLibraryMobile.Controllers
 #else
             if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI")))
             {
-                this.sharedPreferencesService.SetString("BASE_URI", uri = "http://kserver/MediaLibrary/");
+                this.sharedPreferencesService.SetString("BASE_URI", baseAddress = "http://kserver/MediaLibrary/");
             }
 #endif
             baseUri = new Uri(baseAddress);
