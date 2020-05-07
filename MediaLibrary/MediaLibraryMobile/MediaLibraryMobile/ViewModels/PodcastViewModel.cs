@@ -9,19 +9,22 @@ using System.Windows.Input;
 namespace MediaLibraryMobile.ViewModels
 {
     [Export]
-    public class PodcastViewModel : BaseViewModel<IPodcastView>
+    public class PodcastViewModel : BaseViewModel<IPodcastsView>
     {
-        private readonly IPodcastView podcastView;
+        private readonly IPodcastsView podcastsView;
         private IEnumerable<Podcast> podcasts;
         private ICommand loadPodcastsCommand;
         private ICommand loadPodcastCommand;
         private bool isRefreshing;
         private Podcast selectedPodcast;
+        private readonly IPodcastView podcastView;
 
         [ImportingConstructor]
-        public PodcastViewModel(IPodcastView podcastView) : base(podcastView)
+        public PodcastViewModel(IPodcastsView podcastsView, IPodcastView podcastView) : base(podcastsView)
         {
+            this.podcastsView = podcastsView;
             this.podcastView = podcastView;
+            this.podcastView.BindingContext = this;
         }
 
         public IEnumerable<Podcast> Podcasts { get => podcasts; set => SetProperty<IEnumerable<Podcast>>(ref podcasts, value); }
@@ -29,5 +32,6 @@ namespace MediaLibraryMobile.ViewModels
         public bool IsRefreshing { get => isRefreshing; set => SetProperty<bool>(ref isRefreshing, value); }
         public Podcast SelectedPodcast { get => selectedPodcast; set => SetProperty<Podcast>(ref selectedPodcast, value); }
         public ICommand LoadPodcastCommand { get => loadPodcastCommand; set => SetProperty<ICommand>(ref loadPodcastCommand, value); }
+        public IPodcastView PodcastView { get => podcastView; }
     }
 }

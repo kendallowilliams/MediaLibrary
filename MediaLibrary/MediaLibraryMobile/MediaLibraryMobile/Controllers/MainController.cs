@@ -43,8 +43,8 @@ namespace MediaLibraryMobile.Controllers
             this.podcastViewModel.PropertyChanged += PodcastViewModel_PropertyChanged;
             this.playlistViewModel.LoadPlaylistsCommand = new Command(async () => await LoadPlaylists());
             this.podcastViewModel.LoadPodcastsCommand = new Command(async () => await LoadPodcasts());
-            this.playlistViewModel.LoadPlaylistCommand = new Command(async () => await LoadPlaylists());
-            this.podcastViewModel.LoadPodcastCommand = new Command(async () => await LoadPodcasts());
+            this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
+            this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
 #if DEBUG
             if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG")))
             {
@@ -65,14 +65,14 @@ namespace MediaLibraryMobile.Controllers
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
         }
 
-        private void PodcastViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void PodcastViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PodcastViewModel.SelectedPodcast))
             {
             }
         }
 
-        private void PlaylistViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void PlaylistViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylist))
             {
@@ -115,6 +115,18 @@ namespace MediaLibraryMobile.Controllers
             this.playlistViewModel.IsRefreshing = true;
             this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylists");
             this.playlistViewModel.IsRefreshing = false;
+        }
+
+        private async Task LoadPodcast(object id)
+        {
+            this.podcastViewModel.SelectedPodcast = this.podcastViewModel.Podcasts.FirstOrDefault(item => item.Id == (int)id);
+            await podcastViewModel.View.Navigation.PushAsync(podcastViewModel.PodcastView as ContentPage);
+        }
+
+        private async Task LoadPlaylist(object id)
+        {
+            this.playlistViewModel.SelectedPlaylist = this.playlistViewModel.Playlists.FirstOrDefault(item => item.Id == (int)id);
+            await playlistViewModel.View.Navigation.PushAsync(playlistViewModel.PlaylistView as ContentPage);
         }
     }
 }

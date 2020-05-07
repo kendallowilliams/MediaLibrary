@@ -1,5 +1,4 @@
-﻿using MediaLibraryMobile.Views.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -8,15 +7,16 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using MediaLibraryMobile.Views.Interfaces;
 
-namespace MediaLibraryMobile.Views.Podcast
+namespace MediaLibraryMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    [Export(typeof(IPodcastView))]
-    public partial class PodcastPage : ContentPage, IPodcastView
+    [Export(typeof(IPlaylistsView))]
+    public partial class PlaylistsPage : ContentPage, IPlaylistsView
     {
         [ImportingConstructor]
-        public PodcastPage()
+        public PlaylistsPage()
         {
             InitializeComponent();
         }

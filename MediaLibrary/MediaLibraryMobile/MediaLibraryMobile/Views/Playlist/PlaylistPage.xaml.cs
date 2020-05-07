@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediaLibraryMobile.Views.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -7,9 +8,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using MediaLibraryMobile.Views.Interfaces;
 
-namespace MediaLibraryMobile.Views
+namespace MediaLibraryMobile.Views.Playlist
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [Export(typeof(IPlaylistView))]

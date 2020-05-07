@@ -1,22 +1,22 @@
-﻿using MediaLibraryMobile.Views.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediaLibraryMobile.Views.Interfaces;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace MediaLibraryMobile.Views.Podcast
+namespace MediaLibraryMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    [Export(typeof(IPodcastView))]
-    public partial class PodcastPage : ContentPage, IPodcastView
+    [Export(typeof(IPodcastsView))]
+    public partial class PodcastsPage : ContentPage, IPodcastsView
     {
         [ImportingConstructor]
-        public PodcastPage()
+        public PodcastsPage()
         {
             InitializeComponent();
         }
