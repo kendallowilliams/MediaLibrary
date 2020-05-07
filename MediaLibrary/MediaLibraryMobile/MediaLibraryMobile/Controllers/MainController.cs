@@ -10,6 +10,7 @@ using System.Linq;
 using static MediaLibraryMobile.Enums;
 using MediaLibraryMobile.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
+using System.Threading.Tasks;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -43,7 +44,7 @@ namespace MediaLibraryMobile.Controllers
 
         public Page GetMainView() => mainViewModel.View;
 
-        private void MenuItemClicked(object _page)
+        private async void MenuItemClicked(object _page)
         {
             Pages page = (Pages)_page;
             NavigationPage target = default;
@@ -51,11 +52,13 @@ namespace MediaLibraryMobile.Controllers
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault(item => item.Key == (Pages)page);
             pages.TryGetValue(page, out target);
             (mainViewModel.View as MasterDetailPage).Detail = target;
+
+            //await LoadPodcasts();
         }
 
-        private async void LoadPodcasts()
+        private async Task LoadPodcasts()
         {
-            this.podcastViewModel.Podcasts = await webService.Get<Podcast>("https://media.kowmylk.com/Podcast/GetPodcasts");
+            this.podcastViewModel.Podcasts = await webService.Get<Podcast>("https://10.0.2.2:44373", "Podcast/GetPodcasts");
         }
     }
 }

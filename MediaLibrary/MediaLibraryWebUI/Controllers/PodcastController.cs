@@ -259,5 +259,12 @@ namespace MediaLibraryWebUI.Controllers
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
         }
+
+        public async Task<ActionResult> GetPodcasts()
+        {
+            IEnumerable<Podcast> podcasts = await dataService.GetList<Podcast>();
+
+            return Json(podcasts, JsonRequestBehavior.AllowGet);
+        }
     }
 }

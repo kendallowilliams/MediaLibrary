@@ -215,5 +215,12 @@ namespace MediaLibraryWebUI.Controllers
 
             return Json(playlistViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
+
+        public async Task<ActionResult> GetPlaylists()
+        {
+            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>();
+
+            return Json(playlists, JsonRequestBehavior.AllowGet);
+        }
     }
 }

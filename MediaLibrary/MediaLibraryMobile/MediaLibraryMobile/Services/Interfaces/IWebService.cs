@@ -7,6 +7,6 @@ namespace MediaLibraryMobile.Services.Interfaces
 {
     public interface IWebService
     {
-        Task<IEnumerable<T>> Get<T>(string url);
+        Task<IEnumerable<T>> Get<T>(string baseUrl, string relativePath);
     }
 }
