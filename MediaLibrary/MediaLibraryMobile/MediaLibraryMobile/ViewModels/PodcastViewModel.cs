@@ -13,8 +13,10 @@ namespace MediaLibraryMobile.ViewModels
     {
         private readonly IPodcastView podcastView;
         private IEnumerable<Podcast> podcasts;
-        private ICommand loadCommand;
+        private ICommand loadPodcastsCommand;
+        private ICommand loadPodcastCommand;
         private bool isRefreshing;
+        private Podcast selectedPodcast;
 
         [ImportingConstructor]
         public PodcastViewModel(IPodcastView podcastView) : base(podcastView)
@@ -23,7 +25,9 @@ namespace MediaLibraryMobile.ViewModels
         }
 
         public IEnumerable<Podcast> Podcasts { get => podcasts; set => SetProperty<IEnumerable<Podcast>>(ref podcasts, value); }
-        public ICommand LoadCommand { get => loadCommand; set => SetProperty<ICommand>(ref loadCommand, value); }
+        public ICommand LoadPodcastsCommand { get => loadPodcastsCommand; set => SetProperty<ICommand>(ref loadPodcastsCommand, value); }
         public bool IsRefreshing { get => isRefreshing; set => SetProperty<bool>(ref isRefreshing, value); }
+        public Podcast SelectedPodcast { get => selectedPodcast; set => SetProperty<Podcast>(ref selectedPodcast, value); }
+        public ICommand LoadPodcastCommand { get => loadPodcastCommand; set => SetProperty<ICommand>(ref loadPodcastCommand, value); }
     }
 }

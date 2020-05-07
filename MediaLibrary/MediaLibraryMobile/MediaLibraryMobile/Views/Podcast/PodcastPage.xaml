@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="MediaLibraryMobile.Views.PodcastPage">
-    <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding LoadCommand}">
+    <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding LoadPodcastsCommand}">
         <CollectionView x:Name="ItemsCollectionView"
                 ItemsSource="{Binding Podcasts}">
             <d:CollectionView.ItemsSource>
@@ -31,6 +31,9 @@
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
                                 FontSize="13" />
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=BindingContext.LoadPodcastCommand, Source={RelativeSource AncestorType={Type ContentPage}}}"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

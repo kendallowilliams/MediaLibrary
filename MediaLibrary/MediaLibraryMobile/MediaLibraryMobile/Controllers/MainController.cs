@@ -39,8 +39,12 @@ namespace MediaLibraryMobile.Controllers
             this.sharedPreferencesService = sharedPreferencesService;
             this.mainViewModel.MenuItems = MainRepository.GetMenuItems();
             this.mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
-            this.playlistViewModel.LoadCommand = new Command(async () => await LoadPlaylists());
-            this.podcastViewModel.LoadCommand = new Command(async () => await LoadPodcasts());
+            this.playlistViewModel.PropertyChanged += PlaylistViewModel_PropertyChanged;
+            this.podcastViewModel.PropertyChanged += PodcastViewModel_PropertyChanged;
+            this.playlistViewModel.LoadPlaylistsCommand = new Command(async () => await LoadPlaylists());
+            this.podcastViewModel.LoadPodcastsCommand = new Command(async () => await LoadPodcasts());
+            this.playlistViewModel.LoadPlaylistCommand = new Command(async () => await LoadPlaylists());
+            this.podcastViewModel.LoadPodcastCommand = new Command(async () => await LoadPodcasts());
 #if DEBUG
             if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG")))
             {
@@ -61,9 +65,23 @@ namespace MediaLibraryMobile.Controllers
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
         }
 
+        private void PodcastViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(PodcastViewModel.SelectedPodcast))
+            {
+            }
+        }
+
+        private void PlaylistViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylist))
+            {
+            }
+        }
+
         private async void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "SelectedMenuItem")
+            if (e.PropertyName == nameof(MainViewModel.SelectedMenuItem))
             {
                 switch (mainViewModel.SelectedMenuItem.Key)
                 {

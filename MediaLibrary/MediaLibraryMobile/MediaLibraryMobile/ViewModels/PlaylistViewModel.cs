@@ -13,8 +13,10 @@ namespace MediaLibraryMobile.ViewModels
     {
         private readonly IPlaylistView playlistView;
         private IEnumerable<Playlist> playlists;
-        private ICommand loadCommand;
+        private ICommand loadPlaylistsCommand;
+        private ICommand loadPlaylistCommand;
         private bool isRefreshing;
+        private Playlist selectedPlaylist;
 
         [ImportingConstructor]
         public PlaylistViewModel(IPlaylistView playlistView): base(playlistView)
@@ -23,7 +25,9 @@ namespace MediaLibraryMobile.ViewModels
         }
 
         public IEnumerable<Playlist> Playlists { get => playlists; set => SetProperty<IEnumerable<Playlist>>(ref playlists, value); }
-        public ICommand LoadCommand { get => loadCommand; set => SetProperty<ICommand>(ref loadCommand, value); }
+        public ICommand LoadPlaylistsCommand { get => loadPlaylistsCommand; set => SetProperty<ICommand>(ref loadPlaylistsCommand, value); }
+        public ICommand LoadPlaylistCommand { get => loadPlaylistCommand; set => SetProperty<ICommand>(ref loadPlaylistCommand, value); }
         public bool IsRefreshing { get => isRefreshing; set => SetProperty<bool>(ref isRefreshing, value); }
+        public Playlist SelectedPlaylist { get => selectedPlaylist; set => SetProperty<Playlist>(ref selectedPlaylist, value); }
     }
 }
