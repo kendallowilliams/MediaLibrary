@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryDAL", "MediaLibraryDAL\MediaLibraryDAL.csproj", "{15905C13-FAA9-4FE5-B6A0-359EB83CD9E3}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryBLL", "MediaLibraryBLL\MediaLibraryBLL.csproj", "{E38C9EB6-EBBD-404A-9BF3-F2143A132B9D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryConsole", "MediaLibraryConsole\MediaLibraryConsole.csproj", "{43BD1230-BF8C-40CF-B7E4-0BE261E41894}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryMobile.Android", "MediaLibraryMobile\MediaLibraryMobile.Android\MediaLibraryMobile.Android.csproj", "{9598EF48-5AF0-48D6-A326-8EE730D7F370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryMobile", "MediaLibraryMobile\MediaLibraryMobile\MediaLibraryMobile.csproj", "{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +52,21 @@ Global
 		{43BD1230-BF8C-40CF-B7E4-0BE261E41894}.DEV|Any CPU.Build.0 = DEV|Any CPU
 		{43BD1230-BF8C-40CF-B7E4-0BE261E41894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43BD1230-BF8C-40CF-B7E4-0BE261E41894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.DEV|Any CPU.ActiveCfg = Debug|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.DEV|Any CPU.Build.0 = Debug|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.DEV|Any CPU.Deploy.0 = Debug|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9598EF48-5AF0-48D6-A326-8EE730D7F370}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.DEV|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.DEV|Any CPU.Build.0 = Debug|Any CPU
+		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -60,3 +60,7 @@
 /MediaLibrary/MediaLibraryBLL/bin/DEV
 /MediaLibrary/MediaLibraryWebUI/node_modules
 /MediaLibrary/MediaLibraryWebUI/lib/app/**/*.js
+/MediaLibrary/MediaLibraryMobile/MediaLibraryMobile/bin/Debug/netstandard2.0
+/MediaLibrary/MediaLibraryMobile/MediaLibraryMobile.Android/bin/Debug
+/MediaLibrary/MediaLibraryMobile/MediaLibraryMobile.Android/obj
+/MediaLibrary/MediaLibraryMobile/MediaLibraryMobile/obj
