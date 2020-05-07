@@ -53,12 +53,12 @@ namespace MediaLibraryMobile.Controllers
             pages.TryGetValue(page, out target);
             (mainViewModel.View as MasterDetailPage).Detail = target;
 
-            //await LoadPodcasts();
+            await LoadPodcasts();
         }
 
         private async Task LoadPodcasts()
         {
-            this.podcastViewModel.Podcasts = await webService.Get<Podcast>("https://10.0.2.2:44373", "Podcast/GetPodcasts");
+            this.podcastViewModel.Podcasts = await webService.Get<Podcast>("http://10.0.2.2:51124", "Podcast/GetPodcasts");
         }
     }
 }
