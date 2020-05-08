@@ -22,8 +22,14 @@ namespace MediaLibraryMobile
         {
             using (CompositionContainer container = GetMEF())
             {
-                MainController controller = container.GetExportedValue<MainController>();
-                MainPage = controller.GetMainView();
+                LoginController loginController = container.GetExportedValue<LoginController>();
+
+                loginController.LoadMain = () =>
+                {
+                    MainController controller = container.GetExportedValue<MainController>();
+                    MainPage = controller.GetMainView();
+                };
+                MainPage = loginController.GetLoginView();
             }
         }
 
