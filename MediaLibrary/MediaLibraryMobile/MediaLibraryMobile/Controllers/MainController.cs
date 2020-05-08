@@ -41,8 +41,8 @@ namespace MediaLibraryMobile.Controllers
             this.mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
             this.playlistViewModel.PropertyChanged += PlaylistViewModel_PropertyChanged;
             this.podcastViewModel.PropertyChanged += PodcastViewModel_PropertyChanged;
-            this.playlistViewModel.LoadPlaylistsCommand = new Command(async () => await LoadPlaylists());
-            this.podcastViewModel.LoadPodcastsCommand = new Command(async () => await LoadPodcasts());
+            this.playlistViewModel.LoadPlaylistsCommand = new Command(async refresh => await LoadPlaylists(refresh));
+            this.podcastViewModel.LoadPodcastsCommand = new Command(async refresh => await LoadPodcasts(refresh));
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
 #if DEBUG
@@ -65,14 +65,14 @@ namespace MediaLibraryMobile.Controllers
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
         }
 
-        private async void PodcastViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void PodcastViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PodcastViewModel.SelectedPodcast))
             {
             }
         }
 
-        private async void PlaylistViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void PlaylistViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylist))
             {
@@ -86,10 +86,10 @@ namespace MediaLibraryMobile.Controllers
                 switch (mainViewModel.SelectedMenuItem.Key)
                 {
                     case Pages.Playlist:
-                        await LoadPlaylists();
+                        await LoadPlaylists(!playlistViewModel.Playlists.Any());
                         break;
                     case Pages.Podcast:
-                        await LoadPodcasts();
+                        await LoadPodcasts(!podcastViewModel.Podcasts.Any());
                         break;
                     default:
                         break;
@@ -103,18 +103,24 @@ namespace MediaLibraryMobile.Controllers
 
         public Page GetMainView() => mainViewModel.View;
 
-        private async Task LoadPodcasts()
+        private async Task LoadPodcasts(object refresh)
         {
-            this.podcastViewModel.IsRefreshing = true;
-            this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcasts");
-            this.podcastViewModel.IsRefreshing = false;
+            if ((bool)refresh)
+            {
+                this.podcastViewModel.IsRefreshing = true;
+                this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcasts");
+                this.podcastViewModel.IsRefreshing = false;
+            }
         }
 
-        private async Task LoadPlaylists()
+        private async Task LoadPlaylists(object refresh)
         {
-            this.playlistViewModel.IsRefreshing = true;
-            this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylists");
-            this.playlistViewModel.IsRefreshing = false;
+            if ((bool)refresh)
+            {
+                this.playlistViewModel.IsRefreshing = true;
+                this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylists");
+                this.playlistViewModel.IsRefreshing = false;
+            }
         }
 
         private async Task LoadPodcast(object id)

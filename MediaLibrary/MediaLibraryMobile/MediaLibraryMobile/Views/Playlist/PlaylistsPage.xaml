@@ -6,6 +6,9 @@
              mc:Ignorable="d"
              x:Class="MediaLibraryMobile.Views.PlaylistsPage">
     <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding LoadPlaylistsCommand}">
+        <RefreshView.CommandParameter>
+            <x:Boolean>True</x:Boolean>
+        </RefreshView.CommandParameter>
         <CollectionView x:Name="ItemsCollectionView"
                 ItemsSource="{Binding Playlists}">
             <d:CollectionView.ItemsSource>
