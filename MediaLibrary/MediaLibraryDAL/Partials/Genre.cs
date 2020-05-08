@@ -11,12 +11,12 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Genre: IDataModel
     {
-        public Genre(string name)
+        public Genre(string name): base()
         {
             Name = name;
         }
 
-        public Genre(int id, string name)
+        public Genre(int id, string name): base()
         {
             Id = id;
             Name = name;

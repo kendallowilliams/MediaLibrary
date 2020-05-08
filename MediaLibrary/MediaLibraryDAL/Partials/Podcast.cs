@@ -11,7 +11,7 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Podcast: IDataModel
     {
-        public Podcast(string title, string url, string imageUrl, string description, string author)
+        public Podcast(string title, string url, string imageUrl, string description, string author) : base()
         {
             Title = title;
             Url = url;

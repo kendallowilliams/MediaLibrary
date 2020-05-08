@@ -11,7 +11,7 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Album: IDataModel
     {
-        public Album(string title)
+        public Album(string title): base()
         {
             Id = default(int);
             Title = title;
@@ -19,7 +19,7 @@ namespace MediaLibraryDAL.DbContexts
             GenreId = default(int);
         }
 
-        public Album(int id, string title)
+        public Album(int id, string title): base()
         {
             Id = id;
             Title = title;
@@ -27,7 +27,7 @@ namespace MediaLibraryDAL.DbContexts
             GenreId = default(int);
         }
 
-        public Album(MediaData data, int? artistId, int? genreId)
+        public Album(MediaData data, int? artistId, int? genreId): base()
         {
             Title = data.Album;
             ArtistId = artistId;

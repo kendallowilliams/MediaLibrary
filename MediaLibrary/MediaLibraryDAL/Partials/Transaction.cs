@@ -11,13 +11,13 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Transaction : IDataModel
     {
-        public Transaction()
+        public Transaction() : base()
         {
             Status = (int)TransactionStatus.NotStarted;
             Type = (int)TransactionTypes.None;
         }
 
-        public Transaction(TransactionTypes transactionType)
+        public Transaction(TransactionTypes transactionType) : base()
         {
             Status = (int)TransactionStatus.NotStarted;
             Type = (int)transactionType;

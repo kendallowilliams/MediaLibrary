@@ -11,10 +11,9 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class Playlist: IDataModel
     {
-        public Playlist(string name)
+        public Playlist(string name): base()
         {
             Name = name;
-            PlaylistTracks = new HashSet<PlaylistTrack>();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class PodcastItem: IPlayableItem
     {
-        public PodcastItem(string title, string description, string url, long length, DateTime publishDate, int podcastId)
+        public PodcastItem(string title, string description, string url, long length, DateTime publishDate, int podcastId) : base()
         {
             Title = title;
             Url = url;

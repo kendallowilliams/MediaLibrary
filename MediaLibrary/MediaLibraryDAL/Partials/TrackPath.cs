@@ -11,7 +11,7 @@ namespace MediaLibraryDAL.DbContexts
 {
     public partial class TrackPath: IDataModel
     {
-        public TrackPath(string location)
+        public TrackPath(string location) : base()
         {
             Location = location;
             LastScanDate = DateTime.Now;
