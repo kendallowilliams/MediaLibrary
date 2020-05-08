@@ -1,5 +1,6 @@
 ﻿using MediaLibraryMobile.Services.Interfaces;
 using Newtonsoft.Json;
+using Org.Apache.Http.Authentication;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -21,16 +22,18 @@ namespace MediaLibraryMobile.Services
 
         }
 
-        public async Task<IEnumerable<T>> Get<T>(Uri baseUri, string relativePath)
+        public async Task<IEnumerable<T>> Get<T>(Uri baseUri, string relativePath, string username, string password)
         {
             IEnumerable<T> results = Enumerable.Empty<T>();
             HttpResponseMessage response = default;
+            string credentials = $"{username}:{password}",
+                   authorization = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = baseUri;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authorization);
                 response = await client.GetAsync(relativePath);
 
                 if (response.IsSuccessStatusCode)
@@ -40,6 +43,25 @@ namespace MediaLibraryMobile.Services
             }
 
             return results;
+        }
+
+        public async Task<bool> IsAuthorized(Uri baseUri, string relativePath, string username, string password)
+        {
+            bool authorized = false;
+            HttpResponseMessage response = default;
+            string credentials = $"{username}:{password}",
+                   authorization = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = baseUri;
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authorization);
+                response = await client.GetAsync(relativePath);
+                authorized = response.IsSuccessStatusCode;
+            }
+
+            return authorized;
         }
     }
 }

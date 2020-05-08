@@ -47,15 +47,9 @@ namespace MediaLibraryMobile.Controllers
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
 #if DEBUG
-            if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG")))
-            {
-                this.sharedPreferencesService.SetString("BASE_URI_DEBUG", baseAddress = "http://kserver/MediaLibraryDEV/");
-            }
+            baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG");
 #else
-            if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI")))
-            {
-                this.sharedPreferencesService.SetString("BASE_URI", baseAddress = "http://kserver/MediaLibrary/");
-            }
+            baseAddress = this.sharedPreferencesService.GetString("BASE_URI");
 #endif
             baseUri = new Uri(baseAddress);
             pages = new Dictionary<Pages, NavigationPage>()

@@ -26,6 +26,7 @@ namespace MediaLibraryMobile.Services
         public void SetString(string key, string value)
         {
             sharedPreferencesEditor.PutString(key, value);
+            sharedPreferencesEditor.Commit();
         }
 
         public string GetString(string key)
