@@ -43,7 +43,8 @@ namespace MediaLibraryBLL.Services
                 IQueryable<T> query = db.Set<T>();
 
                 db.Database.CommandTimeout = timeout;
-                
+                db.Configuration.ProxyCreationEnabled = false;
+
                 foreach (var include in includes)
                 {
                     query = query.Include(include);
@@ -66,6 +67,7 @@ namespace MediaLibraryBLL.Services
                 IQueryable<T> query = db.Set<T>();
 
                 db.Database.CommandTimeout = timeout;
+                db.Configuration.ProxyCreationEnabled = false;
 
                 foreach (var include in includes)
                 {
