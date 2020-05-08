@@ -5,6 +5,7 @@ using System.ComponentModel.Composition;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryMobile.Views.Interfaces;
 using System.Windows.Input;
+using System.Linq;
 
 namespace MediaLibraryMobile.ViewModels
 {
@@ -25,6 +26,7 @@ namespace MediaLibraryMobile.ViewModels
             this.podcastsView = podcastsView;
             this.podcastView = podcastView;
             this.podcastView.BindingContext = this;
+            podcasts = Enumerable.Empty<Podcast>();
         }
 
         public IEnumerable<Podcast> Podcasts { get => podcasts; set => SetProperty<IEnumerable<Podcast>>(ref podcasts, value); }

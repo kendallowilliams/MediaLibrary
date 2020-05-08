@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel.Composition;
 using MediaLibraryMobile.Views.Interfaces;
 using System.Windows.Input;
+using System.Linq;
 
 namespace MediaLibraryMobile.ViewModels
 {
@@ -25,6 +26,7 @@ namespace MediaLibraryMobile.ViewModels
             this.playlistsView = playlistsView;
             this.playlistView = playlistView;
             this.playlistView.BindingContext = this;
+            playlists = Enumerable.Empty<Playlist>();
         }
 
         public IEnumerable<Playlist> Playlists { get => playlists; set => SetProperty<IEnumerable<Playlist>>(ref playlists, value); }
