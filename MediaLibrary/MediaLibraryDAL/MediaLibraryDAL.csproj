@@ -165,8 +165,6 @@
     <Compile Include="Models\Interfaces\IPlayableItem.cs" />
     <Compile Include="Models\MediaData.cs" />
     <Compile Include="Partials\Configuration.cs" />
-    <Compile Include="Partials\Interfaces\IPlaylist.cs" />
-    <Compile Include="Partials\Interfaces\IPodcast.cs" />
     <Compile Include="Partials\MediaLibraryEntities.cs" />
     <Compile Include="Partials\PlaylistEpisode.cs" />
     <Compile Include="Partials\PlaylistTrack.cs" />
@@ -200,7 +198,9 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Partials\Interfaces\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="DbContexts\MediaLibrary.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
