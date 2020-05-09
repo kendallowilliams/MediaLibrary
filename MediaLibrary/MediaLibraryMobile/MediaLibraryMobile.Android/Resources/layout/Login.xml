@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
     <LinearLayout
         android:id="@+id/loginLayout"
         android:orientation="vertical"
@@ -13,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Welcome to KOW Moosic"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="25dp"
             android:textAlignment="center"
             android:textSize="25dp"
             android:textStyle="bold" />
@@ -22,13 +23,13 @@
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter username" />
+            android:hint="Username" />
         <EditText
             android:id="@+id/txtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="Enter password" />
+            android:hint="Password" />
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
