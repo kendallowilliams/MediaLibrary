@@ -216,6 +216,7 @@ namespace MediaLibraryWebUI.Controllers
             return Json(playlistViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
 
+        [CompressContent]
         public async Task<ActionResult> GetPlaylistsJSON()
         {
             Task<IEnumerable<Playlist>> dbPlaylists = dataService.GetList<Playlist>(default, default, item => item.PlaylistEpisodes,

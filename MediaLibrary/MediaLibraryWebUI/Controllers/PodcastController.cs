@@ -261,6 +261,7 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
+        [CompressContent]
         public async Task<ActionResult> GetPodcastsJSON()
         {
             IEnumerable<Podcast> podcasts = await dataService.GetList<Podcast>(default, default, item => item.PodcastItems);
