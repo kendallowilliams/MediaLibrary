@@ -226,7 +226,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<Playlist> playlists = await Task.WhenAll(dbPlaylists, systemPlaylists).ContinueWith(task => task.Result.SelectMany(item => item));
             string json = JsonConvert.SerializeObject(playlists, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
 
-            return Json(JsonConvert.DeserializeObject<IEnumerable<Playlist>>(json), JsonRequestBehavior.AllowGet);
+            return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
         }
     }
 }

@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -265,7 +266,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<Podcast> podcasts = await dataService.GetList<Podcast>(default, default, item => item.PodcastItems);
             string json = JsonConvert.SerializeObject(podcasts, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
 
-            return Json(JsonConvert.DeserializeObject<IEnumerable<Podcast>>(json), JsonRequestBehavior.AllowGet);
+            return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
         }
     }
 }
