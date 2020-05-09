@@ -216,9 +216,14 @@ namespace MediaLibraryWebUI.Controllers
             return Json(playlistViewModel.Configuration, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<ActionResult> GetPlaylists()
+        public async Task<ActionResult> GetPlaylistsJSON()
         {
-            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>();
+            Task<IEnumerable<Playlist>> dbPlaylists = dataService.GetList<Playlist>(default, default, item => item.PlaylistEpisodes,
+                                                                                                    item => item.PlaylistPodcastItems,
+                                                                                                    item => item.PlaylistTracks),
+                                        systemPlaylists = playlistService.GetSystemPlaylists();
+
+            IEnumerable<Playlist> playlists = await Task.WhenAll(dbPlaylists, systemPlaylists).ContinueWith(task => task.Result.SelectMany(item => item));
             string json = JsonConvert.SerializeObject(playlists);
 
             return Json(JsonConvert.DeserializeObject<IEnumerable<Playlist>>(json), JsonRequestBehavior.AllowGet);
