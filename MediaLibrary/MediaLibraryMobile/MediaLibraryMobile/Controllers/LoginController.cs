@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MediaLibraryMobile.Controllers
@@ -27,7 +28,6 @@ namespace MediaLibraryMobile.Controllers
             this.sharedPreferencesService = sharedPreferencesService;
             this.loginViewModel = loginViewModel;
             this.loginViewModel.PropertyChanged += LoginViewModel_PropertyChanged;
-            this.loginViewModel.LoginCommand = new Command(Login);
 #if DEBUG
             if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG")))
             {
@@ -42,20 +42,22 @@ namespace MediaLibraryMobile.Controllers
             baseUri = new Uri(baseAddress);
         }
 
-        public Page GetLoginView() => loginViewModel.View;
-
-        public Action LoadMain { get => loadMain; set => loadMain = value; }
+        public LoginViewModel GetLoginViewModel() => loginViewModel;
 
         private void LoginViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
 
         }
 
-        private async void Login()
+        public async Task Login(Action success = default, Action failure = default)
         {
             if (await webService.IsAuthorized(baseUri, string.Empty, loginViewModel.Username, loginViewModel.Password))
             {
-                loadMain();
+                success?.Invoke();
+            }
+            else
+            {
+                failure?.Invoke();
             }
         }
     }

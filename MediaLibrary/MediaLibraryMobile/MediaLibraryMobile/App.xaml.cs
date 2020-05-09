@@ -20,19 +20,10 @@ namespace MediaLibraryMobile
 
         protected override void OnStart()
         {
-            using (CompositionContainer container = GetMEF())
+            using (CompositionContainer _container = GetMEF())
             {
-                LoginController loginController = container.GetExportedValue<LoginController>();
-
-                loginController.LoadMain = () =>
-                {
-                    using (CompositionContainer _container = GetMEF())
-                    {
-                        MainController controller = _container.GetExportedValue<MainController>();
-                        MainPage = controller.GetMainView();
-                    }
-                };
-                MainPage = loginController.GetLoginView();
+                MainController controller = _container.GetExportedValue<MainController>();
+                MainPage = controller.GetMainView();
             }
         }
 
@@ -44,7 +35,7 @@ namespace MediaLibraryMobile
         {
         }
 
-        private CompositionContainer GetMEF()
+        public static CompositionContainer GetMEF(params object[] attributedParts)
         {
             CompositionContainer container = default;
             var catalog = new AggregateCatalog();
@@ -58,7 +49,7 @@ namespace MediaLibraryMobile
 
             try
             {
-                container.ComposeParts(this);
+                container.ComposeParts(attributedParts);
             }
             catch(CompositionException ex)
             {
