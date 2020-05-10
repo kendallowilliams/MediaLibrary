@@ -29,31 +29,20 @@ namespace MediaLibraryMobile.Services
             HttpResponseMessage response = default;
             string credentials = $"{username}:{password}",
                    authorization = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
+            HttpClientHandler handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate };
 
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(handler))
             {
                 client.BaseAddress = baseUri;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authorization);
                 client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
                 response = await client.GetAsync(relativePath);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string json = string.Empty;
-
-                    if (response.Content.Headers.ContentEncoding.Contains("gzip"))
-                    {
-                        GZipStream stream = new GZipStream(await response.Content.ReadAsStreamAsync(), CompressionMode.Decompress);
-                        byte[] content = new byte[stream.BaseStream.Length];
-                        json = Encoding.UTF8.GetString(content);
-                    }
-                    else
-                    {
-                        json = await response.Content.ReadAsStringAsync();
-                    }
-
-                    results = JsonConvert.DeserializeObject<IEnumerable<T>>(json);
+                    results = JsonConvert.DeserializeObject<IEnumerable<T>>(await response.Content.ReadAsStringAsync());
                 }
             }
 

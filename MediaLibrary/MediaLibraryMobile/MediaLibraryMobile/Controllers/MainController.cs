@@ -81,10 +81,10 @@ namespace MediaLibraryMobile.Controllers
                 switch (mainViewModel.SelectedMenuItem.Key)
                 {
                     case Pages.Playlist:
-                        await LoadPlaylists(!playlistViewModel.Playlists.Any());
+                        if (!playlistViewModel.Playlists.Any()) /*then*/ this.playlistViewModel.IsRefreshing = true;
                         break;
                     case Pages.Podcast:
-                        await LoadPodcasts(!podcastViewModel.Podcasts.Any());
+                        if (!podcastViewModel.Podcasts.Any()) /*then*/ this.podcastViewModel.IsRefreshing = true;
                         break;
                     default:
                         break;
@@ -102,7 +102,6 @@ namespace MediaLibraryMobile.Controllers
         {
             if ((bool)refresh)
             {
-                this.podcastViewModel.IsRefreshing = true;
                 this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcastsJSON");
                 this.podcastViewModel.IsRefreshing = false;
             }
@@ -112,7 +111,6 @@ namespace MediaLibraryMobile.Controllers
         {
             if ((bool)refresh)
             {
-                this.playlistViewModel.IsRefreshing = true;
                 this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylistsJSON");
                 this.playlistViewModel.IsRefreshing = false;
             }
