@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -51,20 +52,16 @@ namespace MediaLibraryWebUI.Attributes
 
                 if (AcceptEncoding.Contains("gzip"))
                 {
-                    Response.Filter = new System.IO.Compression.GZipStream(Response.Filter,
-                                                System.IO.Compression.CompressionMode.Compress);
+                    Response.Filter = new GZipStream(Response.Filter, CompressionMode.Compress);
                     Response.Headers.Remove("Content-Encoding");
                     Response.AppendHeader("Content-Encoding", "gzip");
                 }
                 else
                 {
-                    Response.Filter = new System.IO.Compression.DeflateStream(Response.Filter,
-                                                System.IO.Compression.CompressionMode.Compress);
+                    Response.Filter = new DeflateStream(Response.Filter, CompressionMode.Compress);
                     Response.Headers.Remove("Content-Encoding");
                     Response.AppendHeader("Content-Encoding", "deflate");
                 }
-
-
             }
 
             // Allow proxy servers to cache encoded and unencoded versions separately
