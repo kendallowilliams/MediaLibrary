@@ -123,7 +123,7 @@ namespace MediaLibraryWebUI.Controllers
             }
             else
             {
-                IEnumerable<Playlist> systemPlaylists = await playlistService.GetSystemPlaylists(true);
+                IEnumerable<Playlist> systemPlaylists = await playlistService.GetSystemPlaylists(true, true);
 
                 playlistViewModel.SelectedPlaylist = systemPlaylists.FirstOrDefault(playlist => playlist.Id == id);
             }
@@ -142,7 +142,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> GetM3UPlaylist(int id, bool random = false)
         {
             Random rand = new Random(DateTime.Now.Millisecond);
-            IEnumerable<Playlist> systemPlaylists = id < 0 ? await playlistService.GetSystemPlaylists(true) : Enumerable.Empty<Playlist>();
+            IEnumerable<Playlist> systemPlaylists = id < 0 ? await playlistService.GetSystemPlaylists(true, true) : Enumerable.Empty<Playlist>();
             Playlist playlist = id > 0 ? await dataService.Get<Playlist>(list => list.Id == id, default, list => list.PlaylistTracks.Select(item => item.Track), 
                                                                                                                  list => list.PlaylistPodcastItems.Select(item => item.PodcastItem),
                                                                                                                  list => list.PlaylistEpisodes.Select(item => item.Episode)) :
@@ -225,9 +225,10 @@ namespace MediaLibraryWebUI.Controllers
                                         systemPlaylistTask = playlistService.GetSystemPlaylists(true);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
             string json = string.Empty;
+            JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
 
-            await Task.WhenAll(dbPlaylistTasks, systemPlaylistTask).ContinueWith(task => playlists = task.Result.SelectMany(item => item));
-            json = JsonConvert.SerializeObject(playlists, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
+            playlists = await Task.WhenAll(dbPlaylistTasks, systemPlaylistTask).ContinueWith(task => task.Result.SelectMany(item => item).ToList());
+            json = JsonConvert.SerializeObject(playlists, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
 
             return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
         }

@@ -12,6 +12,7 @@ using Fody;
 using MediaLibraryWebUI.Models;
 using MediaLibraryWebUI.Repositories;
 using MediaLibraryWebUI.Models.Configurations;
+using System.Linq.Expressions;
 
 namespace MediaLibraryWebUI.Services
 {
@@ -63,7 +64,7 @@ namespace MediaLibraryWebUI.Services
             return playlists.GroupBy(playlist => getCharLabel(playlist.Name)).OrderBy(group => group.Key);
         }
 
-        public async Task<IEnumerable<Playlist>> GetSystemPlaylists(bool includeItems = false)
+        public async Task<IEnumerable<Playlist>> GetSystemPlaylists(bool includeItems = false, bool includeReferences = false)
         {
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
             int count = 0;
@@ -73,11 +74,17 @@ namespace MediaLibraryWebUI.Services
 
             if (includeItems)
             {
-                Task<IEnumerable<Track>> trackTasks = dataService.GetList<Track>(default, default, track => track.Album, track => track.Artist)
+                var trackParams = includeReferences ? new Expression<Func<Track, object>>[] { track => track.Album, track => track.Artist } :
+                                                       new Expression<Func<Track, object>>[0];
+                Task<IEnumerable<Track>> trackTasks = dataService.GetList<Track>(default, default, trackParams)
                                                                  .ContinueWith(task => tracks = task.Result);
-                Task<IEnumerable<PodcastItem>> podcastItemTask = dataService.GetList<PodcastItem>(default, default, item => item.Podcast)
+                var podcastItemParams = includeReferences ? new Expression<Func<PodcastItem, object>>[] { item => item.Podcast } :
+                                                            new Expression<Func<PodcastItem, object>>[0];
+                Task<IEnumerable<PodcastItem>> podcastItemTask = dataService.GetList<PodcastItem>(default, default, podcastItemParams)
                                                                  .ContinueWith(task => podcastItems = task.Result);
-                Task<IEnumerable<Episode>> episodeTask = dataService.GetList<Episode>(default, default, episode => episode.Series)
+                var episodeParams = includeReferences ? new Expression<Func<Episode, object>>[] { episode => episode.Series } :
+                                                        new Expression<Func<Episode, object>>[0];
+                Task<IEnumerable<Episode>> episodeTask = dataService.GetList<Episode>(default, default, episodeParams)
                                                                  .ContinueWith(task => episodes = task.Result);
 
                 await Task.WhenAll(trackTasks, podcastItemTask, episodeTask);
