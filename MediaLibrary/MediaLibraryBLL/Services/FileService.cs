@@ -12,7 +12,7 @@ using System.Web;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Models;
 using MediaLibraryDAL.Services.Interfaces;
-using static MediaLibraryDAL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums;
 
 namespace MediaLibraryBLL.Services
 {

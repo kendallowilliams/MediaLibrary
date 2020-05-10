@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaLibraryDAL.Enums
+namespace MediaLibraryDAL
 {
-    public static class TransactionEnums
+    public static class Enums
     {
+        public enum PlaylistTypes { Music, Podcast, Television }
         public enum TransactionTypes : int
         {
             /* Tracks: 0 - 50 */
@@ -39,7 +40,7 @@ namespace MediaLibraryDAL.Enums
             None = -1
         }
 
-        public enum TransactionStatus : int 
+        public enum TransactionStatus : int
         {
             NotStarted,
             Started,

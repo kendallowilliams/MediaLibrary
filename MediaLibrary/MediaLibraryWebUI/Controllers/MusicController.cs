@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using MediaLibraryWebUI.Attributes;
 using MediaLibraryWebUI.DataContracts;
-using static MediaLibraryDAL.Enums.TransactionEnums;
+using static MediaLibraryDAL.Enums;
 using Newtonsoft.Json;
 using static MediaLibraryWebUI.UIEnums;
 using MediaLibraryWebUI.Models.Configurations;

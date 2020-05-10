@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static MediaLibraryDAL.Enums;
 
 namespace MediaLibraryWebUI
 {
@@ -18,7 +19,7 @@ namespace MediaLibraryWebUI
         public enum MusicPages { Index = 0, Album, Artist }
         public enum PlayerPages { Index = 0, Audio, Video }
         public enum PlaylistPages { Index = 0, Playlist }
-        public enum PlaylistTabs { Music = 0, Podcast, Television }
+        public enum PlaylistTabs { Music = PlaylistTypes.Music, Podcast = PlaylistTypes.Podcast, Television = PlaylistTypes.Television }
         public enum PodcastPages { Index = 0, Podcast }
         public enum TelevisionPages { Index = 0, Series }
         public enum MediaPages { Home = 0, Music, Playlist, Podcast, Player, Television }
