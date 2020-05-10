@@ -3,7 +3,7 @@
   <PropertyGroup>
     <SelectedDevice>q_10_0_-_api_29</SelectedDevice>
     <DefaultDevice>q_10_0_-_api_29</DefaultDevice>
-    <AndroidDesignerPreferredTheme>Theme.DeviceDefault</AndroidDesignerPreferredTheme>
+    <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
     <AndroidDesignerPreferredDevice>pixel_3a_xl</AndroidDesignerPreferredDevice>
   </PropertyGroup>
 </Project>

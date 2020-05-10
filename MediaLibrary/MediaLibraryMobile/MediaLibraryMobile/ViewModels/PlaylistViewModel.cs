@@ -17,9 +17,13 @@ namespace MediaLibraryMobile.ViewModels
         private readonly IPlaylistView playlistView;
         private IEnumerable<Playlist> playlists;
         private IEnumerable<PlaylistGroup> playlistGroups;
-        private ICommand loadPlaylistsCommand;
-        private ICommand loadPlaylistCommand;
-        private bool isRefreshing;
+        private ICommand loadPlaylistsCommand,
+                         loadPlaylistCommand,
+                         playCommand;
+        private bool isRefreshing,
+                     selectedPlaylistHasTracks,
+                     selectedPlaylistHasEpisodes,
+                     selectedPlaylistHasPodcastItems;
         private Playlist selectedPlaylist;
 
         [ImportingConstructor]
@@ -35,7 +39,11 @@ namespace MediaLibraryMobile.ViewModels
         public IEnumerable<PlaylistGroup> PlaylistGroups { get => playlistGroups; set => SetProperty<IEnumerable<PlaylistGroup>>(ref playlistGroups, value); }
         public ICommand LoadPlaylistsCommand { get => loadPlaylistsCommand; set => SetProperty<ICommand>(ref loadPlaylistsCommand, value); }
         public ICommand LoadPlaylistCommand { get => loadPlaylistCommand; set => SetProperty<ICommand>(ref loadPlaylistCommand, value); }
+        public ICommand PlayCommand { get => playCommand; set => SetProperty<ICommand>(ref playCommand, value); }
         public bool IsRefreshing { get => isRefreshing; set => SetProperty<bool>(ref isRefreshing, value); }
+        public bool SelectedPlaylistHasTracks { get => selectedPlaylistHasTracks; set => SetProperty<bool>(ref selectedPlaylistHasTracks, value); }
+        public bool SelectedPlaylistHasEpisodes { get => selectedPlaylistHasEpisodes; set => SetProperty<bool>(ref selectedPlaylistHasEpisodes, value); }
+        public bool SelectedPlaylistHasPodcastItems { get => selectedPlaylistHasPodcastItems; set => SetProperty<bool>(ref selectedPlaylistHasPodcastItems, value); }
         public Playlist SelectedPlaylist { get => selectedPlaylist; set => SetProperty<Playlist>(ref selectedPlaylist, value); }
         public IPlaylistView PlaylistView { get => playlistView; }
     }

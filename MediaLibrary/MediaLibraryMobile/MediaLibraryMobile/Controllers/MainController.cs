@@ -73,7 +73,9 @@ namespace MediaLibraryMobile.Controllers
         {
             if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylist))
             {
-
+                this.playlistViewModel.SelectedPlaylistHasEpisodes = this.playlistViewModel.SelectedPlaylist.PlaylistEpisodes.Any();
+                this.playlistViewModel.SelectedPlaylistHasTracks = this.playlistViewModel.SelectedPlaylist.PlaylistTracks.Any();
+                this.playlistViewModel.SelectedPlaylistHasPodcastItems = this.playlistViewModel.SelectedPlaylist.PlaylistPodcastItems.Any();
             }
             else if (e.PropertyName == nameof(PlaylistViewModel.Playlists))
             {
