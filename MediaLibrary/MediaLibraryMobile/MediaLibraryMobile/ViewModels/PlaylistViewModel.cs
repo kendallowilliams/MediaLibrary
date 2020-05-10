@@ -6,6 +6,7 @@ using System.ComponentModel.Composition;
 using MediaLibraryMobile.Views.Interfaces;
 using System.Windows.Input;
 using System.Linq;
+using MediaLibraryMobile.Models;
 
 namespace MediaLibraryMobile.ViewModels
 {
@@ -15,6 +16,7 @@ namespace MediaLibraryMobile.ViewModels
         private readonly IPlaylistsView playlistsView;
         private readonly IPlaylistView playlistView;
         private IEnumerable<Playlist> playlists;
+        private IEnumerable<PlaylistGroup> playlistGroups;
         private ICommand loadPlaylistsCommand;
         private ICommand loadPlaylistCommand;
         private bool isRefreshing;
@@ -30,6 +32,7 @@ namespace MediaLibraryMobile.ViewModels
         }
 
         public IEnumerable<Playlist> Playlists { get => playlists; set => SetProperty<IEnumerable<Playlist>>(ref playlists, value); }
+        public IEnumerable<PlaylistGroup> PlaylistGroups { get => playlistGroups; set => SetProperty<IEnumerable<PlaylistGroup>>(ref playlistGroups, value); }
         public ICommand LoadPlaylistsCommand { get => loadPlaylistsCommand; set => SetProperty<ICommand>(ref loadPlaylistsCommand, value); }
         public ICommand LoadPlaylistCommand { get => loadPlaylistCommand; set => SetProperty<ICommand>(ref loadPlaylistCommand, value); }
         public bool IsRefreshing { get => isRefreshing; set => SetProperty<bool>(ref isRefreshing, value); }

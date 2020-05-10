@@ -13,6 +13,8 @@ using MediaLibraryDAL.DbContexts;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using Android.Util;
+using MediaLibraryMobile.Models;
+using static MediaLibraryDAL.Enums;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -71,10 +73,16 @@ namespace MediaLibraryMobile.Controllers
         {
             if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylist))
             {
+
+            }
+            else if (e.PropertyName == nameof(PlaylistViewModel.Playlists))
+            {
+                this.playlistViewModel.PlaylistGroups = this.playlistViewModel.Playlists.GroupBy(item => ((PlaylistTypes)item.Type).ToString())
+                                                                                        .Select(group => new PlaylistGroup(group.Key, group));
             }
         }
 
-        private async void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void MainViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(MainViewModel.SelectedMenuItem))
             {

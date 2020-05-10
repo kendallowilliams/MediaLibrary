@@ -9,8 +9,7 @@
         <RefreshView.CommandParameter>
             <x:Boolean>True</x:Boolean>
         </RefreshView.CommandParameter>
-        <CollectionView x:Name="ItemsCollectionView"
-                ItemsSource="{Binding Playlists}">
+        <CollectionView ItemsSource="{Binding PlaylistGroups}" IsGrouped="True">
             <d:CollectionView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>First Item</x:String>
@@ -21,6 +20,18 @@
                     <x:String>Sixth Item</x:String>
                 </x:Array>
             </d:CollectionView.ItemsSource>
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding Name}" 
+                                d:Text="{Binding .}"
+                                Style="{DynamicResource ListItemTextStyle}" 
+                                BackgroundColor="LightGray"
+                                FontSize="Large"
+                                FontAttributes="Bold" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10">
