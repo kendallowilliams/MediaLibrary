@@ -86,7 +86,7 @@ namespace MediaLibraryWebUI.Services
             playlists = PlaylistRepository.GetSystemPlaylists<Track>(25).Select((item, index) => new Playlist()
             {
                 Id = -(++index + count),
-                Name = item.Key,
+                Name = $"{item.Key} [{PlaylistTabs.Music}]",
                 Type = (int)PlaylistTabs.Music,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
@@ -96,7 +96,7 @@ namespace MediaLibraryWebUI.Services
             playlists = playlists.Concat(PlaylistRepository.GetSystemPlaylists<PodcastItem>(25).Select((item, index) => new Playlist()
             {
                 Id = -(++index + count),
-                Name = item.Key,
+                Name = $"{item.Key} [{PlaylistTabs.Podcast}]",
                 Type = (int)PlaylistTabs.Podcast,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
@@ -106,7 +106,7 @@ namespace MediaLibraryWebUI.Services
             playlists = playlists.Concat(PlaylistRepository.GetSystemPlaylists<Episode>(25).Select((item, index) => new Playlist()
             {
                 Id = -(++index + count),
-                Name = item.Key,
+                Name = $"{item.Key} [{PlaylistTabs.Television}]",
                 Type = (int)PlaylistTabs.Television,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
