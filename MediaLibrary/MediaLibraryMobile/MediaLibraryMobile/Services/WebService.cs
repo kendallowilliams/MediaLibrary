@@ -4,6 +4,7 @@ using Org.Apache.Http.Authentication;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -34,11 +35,25 @@ namespace MediaLibraryMobile.Services
                 client.BaseAddress = baseUri;
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authorization);
+                client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
                 response = await client.GetAsync(relativePath);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    results = JsonConvert.DeserializeObject<IEnumerable<T>>(await response.Content.ReadAsStringAsync());
+                    string json = string.Empty;
+
+                    if (response.Content.Headers.ContentEncoding.Contains("gzip"))
+                    {
+                        GZipStream stream = new GZipStream(await response.Content.ReadAsStreamAsync(), CompressionMode.Decompress);
+                        byte[] content = new byte[stream.BaseStream.Length];
+                        json = Encoding.UTF8.GetString(content);
+                    }
+                    else
+                    {
+                        json = await response.Content.ReadAsStringAsync();
+                    }
+
+                    results = JsonConvert.DeserializeObject<IEnumerable<T>>(json);
                 }
             }
 
