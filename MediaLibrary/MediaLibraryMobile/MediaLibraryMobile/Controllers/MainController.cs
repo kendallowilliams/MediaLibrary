@@ -24,6 +24,7 @@ namespace MediaLibraryMobile.Controllers
         private readonly MainViewModel mainViewModel;
         private readonly PlaylistViewModel playlistViewModel;
         private readonly PodcastViewModel podcastViewModel;
+        private readonly PlayerViewModel playerViewModel;
         private IDictionary<Pages, NavigationPage> pages;
         private readonly IWebService webService;
         private Uri baseUri;
@@ -31,13 +32,14 @@ namespace MediaLibraryMobile.Controllers
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
-                              IWebService webService, ISharedPreferencesService sharedPreferencesService)
+                              IWebService webService, ISharedPreferencesService sharedPreferencesService, PlayerViewModel playerViewModel)
         {
             string baseAddress = string.Empty;
 
             this.mainViewModel = mainViewModel;
             this.playlistViewModel = playlistViewModel;
             this.podcastViewModel = podcastViewModel;
+            this.playerViewModel = playerViewModel;
             this.webService = webService;
             this.sharedPreferencesService = sharedPreferencesService;
             this.mainViewModel.MenuItems = MainRepository.GetMenuItems();
@@ -48,6 +50,7 @@ namespace MediaLibraryMobile.Controllers
             this.podcastViewModel.LoadPodcastsCommand = new Command(async refresh => await LoadPodcasts(refresh));
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
+            this.playlistViewModel.PlayCommand = new Command(Play);
 #if DEBUG
             baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG");
 #else
@@ -136,6 +139,11 @@ namespace MediaLibraryMobile.Controllers
         {
             this.playlistViewModel.SelectedPlaylist = this.playlistViewModel.Playlists.FirstOrDefault(item => item.Id == (int)id);
             await playlistViewModel.View.Navigation.PushAsync(playlistViewModel.PlaylistView as ContentPage);
+        }
+
+        private void Play(object id)
+        {
+            this.playlistViewModel.View.Navigation.PushAsync(playerViewModel.View as ContentPage);
         }
     }
 }
