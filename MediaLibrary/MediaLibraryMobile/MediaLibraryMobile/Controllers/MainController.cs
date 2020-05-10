@@ -103,7 +103,7 @@ namespace MediaLibraryMobile.Controllers
             if ((bool)refresh)
             {
                 this.podcastViewModel.IsRefreshing = true;
-                this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcasts");
+                this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcastsJSON");
                 this.podcastViewModel.IsRefreshing = false;
             }
         }
@@ -113,7 +113,7 @@ namespace MediaLibraryMobile.Controllers
             if ((bool)refresh)
             {
                 this.playlistViewModel.IsRefreshing = true;
-                this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylists");
+                this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylistsJSON");
                 this.playlistViewModel.IsRefreshing = false;
             }
         }

@@ -224,10 +224,12 @@ namespace MediaLibraryWebUI.Controllers
                                                                                                           item => item.PlaylistTracks),
                                         systemPlaylistTask = playlistService.GetSystemPlaylists(true);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
+            string json = string.Empty;
 
             await Task.WhenAll(dbPlaylistTasks, systemPlaylistTask).ContinueWith(task => playlists = task.Result.SelectMany(item => item));
+            json = JsonConvert.SerializeObject(playlists, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
 
-            return Json(playlists, JsonRequestBehavior.AllowGet);
+            return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
         }
     }
 }
