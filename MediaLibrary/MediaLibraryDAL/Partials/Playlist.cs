@@ -1,5 +1,6 @@
 ﻿using MediaLibraryDAL.Models;
 using MediaLibraryDAL.Models.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace MediaLibraryDAL.DbContexts
             Name = name;
         }
 
+        [JsonIgnore]
         public string Description 
         {
             get
