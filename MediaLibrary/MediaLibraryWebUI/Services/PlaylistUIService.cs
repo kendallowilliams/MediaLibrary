@@ -63,13 +63,25 @@ namespace MediaLibraryWebUI.Services
             return playlists.GroupBy(playlist => getCharLabel(playlist.Name)).OrderBy(group => group.Key);
         }
 
-        public async Task<IEnumerable<Playlist>> GetSystemPlaylists()
+        public async Task<IEnumerable<Playlist>> GetSystemPlaylists(bool includeItems = false)
         {
-            IEnumerable<Track> tracks = await dataService.GetList<Track>(default, default, track => track.Album, track => track.Artist);
-            IEnumerable<PodcastItem> podcastItems = await dataService.GetList<PodcastItem>(default, default, item => item.Podcast);
-            IEnumerable<Episode> episodes = await dataService.GetList<Episode>(default, default, episode => episode.Series);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
             int count = 0;
+            IEnumerable<Track> tracks = Enumerable.Empty<Track>();
+            IEnumerable<PodcastItem> podcastItems = Enumerable.Empty<PodcastItem>();
+            IEnumerable<Episode> episodes = Enumerable.Empty<Episode>();
+
+            if (includeItems)
+            {
+                Task<IEnumerable<Track>> trackTasks = dataService.GetList<Track>(default, default, track => track.Album, track => track.Artist)
+                                                                 .ContinueWith(task => tracks = task.Result);
+                Task<IEnumerable<PodcastItem>> podcastItemTask = dataService.GetList<PodcastItem>(default, default, item => item.Podcast)
+                                                                 .ContinueWith(task => podcastItems = task.Result);
+                Task<IEnumerable<Episode>> episodeTask = dataService.GetList<Episode>(default, default, episode => episode.Series)
+                                                                 .ContinueWith(task => episodes = task.Result);
+
+                await Task.WhenAll(trackTasks, podcastItemTask, episodeTask);
+            }
 
             playlists = PlaylistRepository.GetSystemPlaylists<Track>(25).Select((item, index) => new Playlist()
             {

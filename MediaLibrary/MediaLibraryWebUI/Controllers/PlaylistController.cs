@@ -123,7 +123,7 @@ namespace MediaLibraryWebUI.Controllers
             }
             else
             {
-                IEnumerable<Playlist> systemPlaylists = await playlistService.GetSystemPlaylists();
+                IEnumerable<Playlist> systemPlaylists = await playlistService.GetSystemPlaylists(true);
 
                 playlistViewModel.SelectedPlaylist = systemPlaylists.FirstOrDefault(playlist => playlist.Id == id);
             }
@@ -142,7 +142,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> GetM3UPlaylist(int id, bool random = false)
         {
             Random rand = new Random(DateTime.Now.Millisecond);
-            IEnumerable<Playlist> systemPlaylists = id < 0 ? await playlistService.GetSystemPlaylists() : Enumerable.Empty<Playlist>();
+            IEnumerable<Playlist> systemPlaylists = id < 0 ? await playlistService.GetSystemPlaylists(true) : Enumerable.Empty<Playlist>();
             Playlist playlist = id > 0 ? await dataService.Get<Playlist>(list => list.Id == id, default, list => list.PlaylistTracks.Select(item => item.Track), 
                                                                                                                  list => list.PlaylistPodcastItems.Select(item => item.PodcastItem),
                                                                                                                  list => list.PlaylistEpisodes.Select(item => item.Episode)) :
@@ -219,7 +219,11 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> GetPlaylists()
         {
-            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>();
+            Task<IEnumerable<Playlist>> dbPlaylistTasks = dataService.GetList<Playlist>(),
+                                        systemPlaylistTask = playlistService.GetSystemPlaylists();
+            IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
+
+            await Task.WhenAll(dbPlaylistTasks, systemPlaylistTask).ContinueWith(task => playlists = task.Result.SelectMany(item => item));
 
             return Json(playlists, JsonRequestBehavior.AllowGet);
         }
