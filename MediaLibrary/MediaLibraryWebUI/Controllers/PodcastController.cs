@@ -261,11 +261,19 @@ namespace MediaLibraryWebUI.Controllers
         }
 
         [CompressContent]
-        public async Task<ActionResult> GetPodcasts()
+        public async Task<ActionResult> GetPodcastsJSON()
         {
             IEnumerable<Podcast> podcasts = await dataService.GetList<Podcast>();
 
             return Json(podcasts, JsonRequestBehavior.AllowGet);
+        }
+
+        [CompressContent]
+        public async Task<ActionResult> GetPodcastJSON(int id)
+        {
+            Podcast podcast = await dataService.Get<Podcast>(item => item.Id == id, default, item => item.PodcastItems);
+
+            return Json(podcast, JsonRequestBehavior.AllowGet);
         }
     }
 }

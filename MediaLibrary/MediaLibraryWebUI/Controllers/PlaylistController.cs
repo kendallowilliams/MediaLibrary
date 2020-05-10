@@ -217,10 +217,12 @@ namespace MediaLibraryWebUI.Controllers
         }
 
         [CompressContent]
-        public async Task<ActionResult> GetPlaylists()
+        public async Task<ActionResult> GetPlaylistsJSON()
         {
-            Task<IEnumerable<Playlist>> dbPlaylistTasks = dataService.GetList<Playlist>(),
-                                        systemPlaylistTask = playlistService.GetSystemPlaylists();
+            Task<IEnumerable<Playlist>> dbPlaylistTasks = dataService.GetList<Playlist>(default, default, item => item.PlaylistEpisodes,
+                                                                                                          item => item.PlaylistPodcastItems,
+                                                                                                          item => item.PlaylistTracks),
+                                        systemPlaylistTask = playlistService.GetSystemPlaylists(true);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
 
             await Task.WhenAll(dbPlaylistTasks, systemPlaylistTask).ContinueWith(task => playlists = task.Result.SelectMany(item => item));

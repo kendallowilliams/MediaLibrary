@@ -44,6 +44,7 @@ namespace MediaLibraryBLL.Services
 
                 db.Database.CommandTimeout = timeout;
                 db.Configuration.ProxyCreationEnabled = false;
+                db.Configuration.LazyLoadingEnabled = false;
 
                 foreach (var include in includes)
                 {
@@ -68,6 +69,7 @@ namespace MediaLibraryBLL.Services
 
                 db.Database.CommandTimeout = timeout;
                 db.Configuration.ProxyCreationEnabled = false;
+                db.Configuration.LazyLoadingEnabled = false;
 
                 foreach (var include in includes)
                 {
