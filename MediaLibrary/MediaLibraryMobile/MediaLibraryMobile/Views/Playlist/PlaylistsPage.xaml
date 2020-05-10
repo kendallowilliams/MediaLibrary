@@ -29,7 +29,7 @@
                                 LineBreakMode="NoWrap" 
                                 Style="{DynamicResource ListItemTextStyle}" 
                                 FontSize="16" />
-                        <Label Text="{Binding Name}" 
+                        <Label Text="{Binding Path=PlaylistTracks.Count}" 
                                 d:Text="Author"
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
