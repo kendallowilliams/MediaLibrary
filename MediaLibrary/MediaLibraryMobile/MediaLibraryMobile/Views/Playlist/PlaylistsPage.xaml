@@ -30,7 +30,7 @@
                                 Style="{DynamicResource ListItemTextStyle}" 
                                 FontSize="16" />
                         <Label Text="{Binding Description}" 
-                                d:Text="Author"
+                                d:Text="{Binding .}"
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
                                 FontSize="13" />
