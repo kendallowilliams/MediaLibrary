@@ -16,7 +16,6 @@ namespace MediaLibraryMobile.Controllers
         private readonly IWebService webService;
         private readonly LoginViewModel loginViewModel;
         private readonly ISharedPreferencesService sharedPreferencesService;
-        private Action loadMain;
         private Uri baseUri;
 
         [ImportingConstructor]

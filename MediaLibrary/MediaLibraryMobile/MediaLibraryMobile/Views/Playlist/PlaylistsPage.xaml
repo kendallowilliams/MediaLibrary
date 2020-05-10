@@ -24,11 +24,10 @@
                 <DataTemplate>
                     <StackLayout Padding="10">
                         <Label Text="{Binding Name}" 
-                                d:Text="{Binding .}"
-                                Style="{DynamicResource ListItemTextStyle}" 
-                                BackgroundColor="LightGray"
-                                FontSize="Large"
-                                FontAttributes="Bold" />
+                               Style="{DynamicResource ListItemTextStyle}" 
+                               BackgroundColor="LightGray"
+                               FontSize="Large"
+                               FontAttributes="Bold" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
