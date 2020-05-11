@@ -37,7 +37,7 @@ namespace MediaLibraryWebUI.Services
                                                                                                     playlist => playlist.PlaylistEpisodes);
             var playlistTypeSortMappings = PlaylistRepository.GetPlaylistTypePlaylistSortMappings();
 
-            playlists = playlists.Concat(await GetSystemPlaylists());
+            playlists = playlists.Concat(await GetSystemPlaylists(true, true));
            
             foreach(var group in playlists.GroupBy(playlist => playlist.Type))
             {
