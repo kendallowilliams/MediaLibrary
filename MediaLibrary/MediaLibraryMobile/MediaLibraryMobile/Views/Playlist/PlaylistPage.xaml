@@ -7,7 +7,8 @@
              x:Class="MediaLibraryMobile.Views.Playlist.PlaylistPage"
              Title="{Binding SelectedPlaylist.Name}">
     <StackLayout>
-        <CollectionView ItemsSource="{Binding Path=SelectedPlaylist.PlaylistTracks}" IsVisible="{Binding Path=BindingContext.SelectedPlaylistHasTracks, Source={RelativeSource AncestorType={Type ContentPage}}}">
+        <CollectionView ItemsSource="{Binding Path=SelectedPlaylist.PlaylistTracks}" IsVisible="{Binding Path=BindingContext.SelectedPlaylistHasTracks, Source={RelativeSource AncestorType={Type ContentPage}}}"
+                        SelectedItem="">
             <d:CollectionView.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>First Item</x:String>
@@ -33,7 +34,7 @@
                                 FontSize="13" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=BindingContext.PlayCommand, Source={RelativeSource AncestorType={Type ContentPage}}}"
-                                                  CommandParameter="{Binding Track.Id}"></TapGestureRecognizer>
+                                                  CommandParameter="{Binding Track}"></TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                 </DataTemplate>

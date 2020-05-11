@@ -16,6 +16,7 @@ using Android.Util;
 using MediaLibraryMobile.Models;
 using static MediaLibraryDAL.Enums;
 using LibVLCSharp.Shared;
+using Xamarin.Forms.Internals;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -47,6 +48,7 @@ namespace MediaLibraryMobile.Controllers
             this.mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
             this.playlistViewModel.PropertyChanged += PlaylistViewModel_PropertyChanged;
             this.podcastViewModel.PropertyChanged += PodcastViewModel_PropertyChanged;
+            this.playerViewModel.PropertyChanged += PlayerViewModel_PropertyChanged;
             this.playlistViewModel.LoadPlaylistsCommand = new Command(async refresh => await LoadPlaylists(refresh));
             this.podcastViewModel.LoadPodcastsCommand = new Command(async refresh => await LoadPodcasts(refresh));
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
@@ -65,6 +67,14 @@ namespace MediaLibraryMobile.Controllers
                 { Pages.Player, new NavigationPage(playerViewModel.View) }
             };
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
+        }
+
+        private void PlayerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(PlayerViewModel.MediaItems))
+            {
+                //playerViewModel.MediaPlayer.Play();
+            }
         }
 
         private void PodcastViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -144,14 +154,65 @@ namespace MediaLibraryMobile.Controllers
             await playlistViewModel.View.Navigation.PushAsync(playlistViewModel.PlaylistView as ContentPage);
         }
 
-        private void Play(object id)
+        private void Play(object item)
         {
-            string controller = ((PlaylistTypes)this.playlistViewModel.SelectedPlaylist.Type).ToString();
-            Media media = new Media(this.playerViewModel.LibVLC, new Uri(baseUri, $"{controller}/File/{id}"));
+            Playlist playlist = playlistViewModel.SelectedPlaylist;
+            IEnumerable<int> itemIds = GetPlaylistItemIds(playlist);
+            PlaylistTypes playlistType = (PlaylistTypes)playlist.Type;
+            string controller = playlistType.ToString();
+            IEnumerable<Media> mediaItems = itemIds.Select(_id => new Media(playerViewModel.LibVLC, new Uri(baseUri, $"{controller}/File/{_id}")));
+            int playIndex = GetPlaylistItemIndex(playlist, item);
 
-            this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault(item => item.Key == Pages.Player);
-            this.playerViewModel.MediaPlayer.Play(media);
-            
+            mainViewModel.SelectedMenuItem = mainViewModel.MenuItems.FirstOrDefault(_item => _item.Key == Pages.Player);
+            playerViewModel.MediaItems = mediaItems;
+            playerViewModel.MediaPlayer.Play(mediaItems.ElementAt(playIndex));
+        }
+
+        private IEnumerable<int> GetPlaylistItemIds(Playlist playlist)
+        {
+            IEnumerable<int> ids = Enumerable.Empty<int>();
+            PlaylistTypes playlistType = (PlaylistTypes)playlistViewModel.SelectedPlaylist.Type;
+
+            switch (playlistType)
+            {
+                case PlaylistTypes.Music:
+                    ids = playlist.PlaylistTracks.Select(item => item.Track).Select(item => item.Id);
+                    break;
+                case PlaylistTypes.Podcast:
+                    ids = playlist.PlaylistPodcastItems.Select(item => item.PodcastItem).Select(item => item.Id);
+                    break;
+                case PlaylistTypes.Television:
+                    ids = playlist.PlaylistEpisodes.Select(item => item.Episode).Select(item => item.Id);
+                    break;
+                default:
+                    break;
+            }
+
+            return ids;
+        }
+
+        private int GetPlaylistItemIndex(Playlist playlist, object item)
+        {
+            int id;
+            PlaylistTypes playlistType = (PlaylistTypes)playlistViewModel.SelectedPlaylist.Type;
+
+            switch (playlistType)
+            {
+                case PlaylistTypes.Music:
+                    id = playlist.PlaylistTracks.Select(_item => _item.Track).IndexOf(item);
+                    break;
+                case PlaylistTypes.Podcast:
+                    id = playlist.PlaylistPodcastItems.Select(_item => _item.PodcastItem).IndexOf(item);
+                    break;
+                case PlaylistTypes.Television:
+                    id = playlist.PlaylistEpisodes.Select(_item => _item.Episode).IndexOf(item);
+                    break;
+                default:
+                    id = default;
+                    break;
+            }
+
+            return id;
         }
     }
 }
