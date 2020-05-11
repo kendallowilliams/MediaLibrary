@@ -22,7 +22,7 @@ namespace MediaLibraryMobile.ViewModels
             Core.Initialize();
             this.playerView = playerView;
             LibVLC = new LibVLC();
-            MediaPlayer = new MediaPlayer(libVLC);
+            MediaPlayer = new MediaPlayer(libVLC) { EnableHardwareDecoding = true };
         }
 
         public MediaPlayer MediaPlayer { get => mediaPlayer; set => SetProperty<MediaPlayer>(ref mediaPlayer, value); }

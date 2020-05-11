@@ -61,7 +61,8 @@ namespace MediaLibraryMobile.Controllers
             pages = new Dictionary<Pages, NavigationPage>()
             {
                 { Pages.Playlist, new NavigationPage(playlistViewModel.View) },
-                { Pages.Podcast, new NavigationPage(podcastViewModel.View) }
+                { Pages.Podcast, new NavigationPage(podcastViewModel.View) },
+                { Pages.Player, new NavigationPage(playerViewModel.View) }
             };
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
         }
@@ -100,6 +101,7 @@ namespace MediaLibraryMobile.Controllers
                     case Pages.Podcast:
                         if (!podcastViewModel.Podcasts.Any()) /*then*/ this.podcastViewModel.IsRefreshing = true;
                         break;
+                    case Pages.Player:
                     default:
                         break;
                 }
@@ -147,7 +149,7 @@ namespace MediaLibraryMobile.Controllers
             string controller = ((PlaylistTypes)this.playlistViewModel.SelectedPlaylist.Type).ToString();
             Media media = new Media(this.playerViewModel.LibVLC, new Uri(baseUri, $"{controller}/File/{id}"));
 
-            this.playlistViewModel.View.Navigation.PushAsync(playerViewModel.View as ContentPage);
+            this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault(item => item.Key == Pages.Player);
             this.playerViewModel.MediaPlayer.Play(media);
             
         }

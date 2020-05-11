@@ -6,6 +6,6 @@ namespace MediaLibraryMobile
 {
     public static class Enums
     {
-        public enum Pages { Playlist, Podcast }
+        public enum Pages { Playlist, Podcast, Player }
     }
 }
