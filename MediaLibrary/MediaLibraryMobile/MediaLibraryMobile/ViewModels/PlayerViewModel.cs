@@ -13,19 +13,19 @@ namespace MediaLibraryMobile.ViewModels
     public class PlayerViewModel : BaseViewModel<IPlayerView>
     {
         private readonly IPlayerView playerView;
-        private readonly MediaPlayer mediaPlayer;
-        private readonly LibVLC libVLC;
+        private MediaPlayer mediaPlayer;
+        private LibVLC libVLC;
 
         [ImportingConstructor]
         public PlayerViewModel(IPlayerView playerView) : base(playerView)
         {
+            Core.Initialize();
             this.playerView = playerView;
-            libVLC = new LibVLC();
-            mediaPlayer = new MediaPlayer(libVLC);
+            LibVLC = new LibVLC();
+            MediaPlayer = new MediaPlayer(libVLC);
         }
 
-        public MediaPlayer MediaPlayer { get => mediaPlayer; }
-
-        public LibVLC LibVLC { get => libVLC; }
+        public MediaPlayer MediaPlayer { get => mediaPlayer; set => SetProperty<MediaPlayer>(ref mediaPlayer, value); }
+        public LibVLC LibVLC { get => libVLC; set => SetProperty<LibVLC>(ref libVLC, value); }
     }
 }

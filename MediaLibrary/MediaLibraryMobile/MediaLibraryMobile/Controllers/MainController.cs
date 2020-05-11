@@ -15,6 +15,7 @@ using System.ComponentModel;
 using Android.Util;
 using MediaLibraryMobile.Models;
 using static MediaLibraryDAL.Enums;
+using LibVLCSharp.Shared;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -143,7 +144,12 @@ namespace MediaLibraryMobile.Controllers
 
         private void Play(object id)
         {
+            string controller = ((PlaylistTypes)this.playlistViewModel.SelectedPlaylist.Type).ToString();
+            Media media = new Media(this.playerViewModel.LibVLC, new Uri(baseUri, $"{controller}/File/{id}"));
+
             this.playlistViewModel.View.Navigation.PushAsync(playerViewModel.View as ContentPage);
+            this.playerViewModel.MediaPlayer.Play(media);
+            
         }
     }
 }
