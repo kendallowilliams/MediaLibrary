@@ -11,5 +11,7 @@ namespace MediaLibraryBLL.Services.Interfaces
     {
         Task<byte[]> DownloadData(string address);
         Task<bool> DownloadFile(string address, string filename);
+        Task<IEnumerable<T>> Get<T>(Uri baseUri, string relativePath, string username = default, string password = default);
+        Task<bool> IsAuthorized(Uri baseUri, string relativePath, string username = default, string password = default);
     }
 }

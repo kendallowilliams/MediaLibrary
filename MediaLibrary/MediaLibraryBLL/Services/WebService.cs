@@ -8,6 +8,10 @@ using System.Web;
 using Fody;
 using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace MediaLibraryBLL.Services
 {
@@ -70,6 +74,50 @@ namespace MediaLibraryBLL.Services
             }
 
             return await tcs.Task;
+        }
+        public async Task<IEnumerable<T>> Get<T>(Uri baseUri, string relativePath, string username, string password)
+        {
+            IEnumerable<T> results = Enumerable.Empty<T>();
+            HttpResponseMessage response = default;
+            string credentials = $"{username}:{password}",
+                   authorization = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
+            HttpClientHandler handler = new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate };
+
+            using (var client = new HttpClient(handler))
+            {
+                client.BaseAddress = baseUri;
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authorization);
+                client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                response = await client.GetAsync(relativePath);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    results = JsonConvert.DeserializeObject<IEnumerable<T>>(await response.Content.ReadAsStringAsync());
+                }
+            }
+
+            return results;
+        }
+
+        public async Task<bool> IsAuthorized(Uri baseUri, string relativePath, string username, string password)
+        {
+            bool authorized = false;
+            HttpResponseMessage response = default;
+            string credentials = $"{username}:{password}",
+                   authorization = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = baseUri;
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authorization);
+                response = await client.GetAsync(relativePath);
+                authorized = response.IsSuccessStatusCode;
+            }
+
+            return authorized;
         }
     }
 }
