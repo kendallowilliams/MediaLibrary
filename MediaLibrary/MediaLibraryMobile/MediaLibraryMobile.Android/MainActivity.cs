@@ -8,12 +8,20 @@ using Android.Widget;
 using Android.OS;
 using System.Collections.Generic;
 using MediaLibraryMobile.Droid.Services;
+using System.ComponentModel.Composition.Hosting;
 
 namespace MediaLibraryMobile.Droid
 {
     [Activity(Label = "MediaLibraryMobile", Icon = "@mipmap/icon", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        private readonly CompositionContainer container;
+
+        public MainActivity()
+        {
+            container = MefService.GetMEFContainer();
+        }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -24,7 +32,6 @@ namespace MediaLibraryMobile.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            using var container = MefService.GetMEFContainer();
             LoadApplication(container.GetExportedValue<App>());
         }
 
@@ -33,6 +40,11 @@ namespace MediaLibraryMobile.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        protected override void OnDestroy()
+        {
+            if (container != null) /*then*/ container.Dispose();
         }
     }
 }

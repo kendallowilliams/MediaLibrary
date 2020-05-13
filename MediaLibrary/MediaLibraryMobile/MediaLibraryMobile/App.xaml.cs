@@ -15,18 +15,18 @@ namespace MediaLibraryMobile
     [Export]
     public partial class App : Application
     {
-        private readonly MainController mainController;
+        private readonly Lazy<MainController> lazyMainController;
 
         [ImportingConstructor]
-        public App(MainController mainController)
+        public App(Lazy<MainController> lazyMainController)
         {
             InitializeComponent();
-            this.mainController = mainController;
+            this.lazyMainController = lazyMainController;
         }
 
         protected override void OnStart()
         {
-            MainPage = mainController.GetMainView();
+            MainPage = lazyMainController.Value.GetMainView();
         }
 
         protected override void OnSleep()

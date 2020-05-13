@@ -8,6 +8,6 @@
              xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              Title="Player">
     <ContentPage.Content>
-        <vlc:PlaybackControls MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}" />
+        <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}" />
     </ContentPage.Content>
 </ContentPage>
