@@ -66,7 +66,7 @@
                                 FontSize="13" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=BindingContext.PlayCommand, Source={RelativeSource AncestorType={Type ContentPage}}}"
-                                                  CommandParameter="{Binding Episode.Id}"></TapGestureRecognizer>
+                                                  CommandParameter="{Binding Episode}"></TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                 </DataTemplate>
@@ -98,7 +98,7 @@
                                 FontSize="13" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=BindingContext.PlayCommand, Source={RelativeSource AncestorType={Type ContentPage}}}"
-                                                  CommandParameter="{Binding PlaylistItem.Id}"></TapGestureRecognizer>
+                                                  CommandParameter="{Binding PlaylistItem}"></TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                 </DataTemplate>
