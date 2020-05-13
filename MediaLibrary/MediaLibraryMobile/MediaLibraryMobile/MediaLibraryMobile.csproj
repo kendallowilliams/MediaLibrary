@@ -24,15 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Java.Interop">
-      <HintPath>$(DevEnvDir)ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v1.0\Java.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Android">
-      <HintPath>$(DevEnvDir)ReferenceAssemblies\Micrsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\Main\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>

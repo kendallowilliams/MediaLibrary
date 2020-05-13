@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
 
-namespace MediaLibraryMobile.Services
+namespace MMediaLibraryMobile.Droid.Services
 {
     [Export(typeof(ISharedPreferencesService))]
     public class SharedPreferencesService : ISharedPreferencesService, IDisposable
