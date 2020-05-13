@@ -12,7 +12,6 @@ using MediaLibraryMobile.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using Android.Util;
 using MediaLibraryMobile.Models;
 using static MediaLibraryDAL.Enums;
 using LibVLCSharp.Shared;
@@ -27,9 +26,9 @@ namespace MediaLibraryMobile.Controllers
         private readonly PlaylistViewModel playlistViewModel;
         private readonly PodcastViewModel podcastViewModel;
         private readonly PlayerViewModel playerViewModel;
-        private IDictionary<Pages, NavigationPage> pages;
+        private readonly IDictionary<Pages, NavigationPage> pages;
         private readonly IWebService webService;
-        private Uri baseUri;
+        private readonly Uri baseUri;
         private readonly ISharedPreferencesService sharedPreferencesService;
 
         [ImportingConstructor]

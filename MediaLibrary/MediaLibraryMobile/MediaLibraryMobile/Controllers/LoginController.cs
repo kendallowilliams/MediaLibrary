@@ -1,5 +1,4 @@
-﻿using Android.Util;
-using MediaLibraryMobile.Services.Interfaces;
+﻿using MediaLibraryMobile.Services.Interfaces;
 using MediaLibraryMobile.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,7 @@ namespace MediaLibraryMobile.Controllers
         private readonly IWebService webService;
         private readonly LoginViewModel loginViewModel;
         private readonly ISharedPreferencesService sharedPreferencesService;
-        private Uri baseUri;
+        private readonly Uri baseUri;
 
         [ImportingConstructor]
         public LoginController(LoginViewModel loginViewModel, IWebService webService, ISharedPreferencesService sharedPreferencesService)
