@@ -7,20 +7,23 @@ using MediaLibraryDAL.Services.Interfaces;
 using System.ComponentModel.Composition;
 using System.ComponentModel;
 using MediaLibraryMobile.Controllers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MediaLibraryMobile
 {
     public partial class App : Application
     {
-
         public App()
         {
             InitializeComponent();
         }
 
+        public IEnumerable<Type> AdditionalTypes { get; set; }
+
         protected override void OnStart()
         {
-            using (CompositionContainer _container = GetMEF())
+            using (CompositionContainer _container = GetMEF(AdditionalTypes))
             {
                 MainController controller = _container.GetExportedValue<MainController>();
                 MainPage = controller.GetMainView();
@@ -35,7 +38,7 @@ namespace MediaLibraryMobile
         {
         }
 
-        public static CompositionContainer GetMEF(params object[] attributedParts)
+        public static CompositionContainer GetMEF(IEnumerable<Type> additionalTypes = default, params object[] attributedParts)
         {
             CompositionContainer container = default;
             var catalog = new AggregateCatalog();
@@ -44,6 +47,7 @@ namespace MediaLibraryMobile
 
             catalog.Catalogs.Add(appCatalog);
             catalog.Catalogs.Add(dalCatalog);
+            foreach (var type in additionalTypes ?? Enumerable.Empty<Type>()) { catalog.Catalogs.Add(new AssemblyCatalog(type.Assembly)); }
 
             container = new CompositionContainer(catalog);
 

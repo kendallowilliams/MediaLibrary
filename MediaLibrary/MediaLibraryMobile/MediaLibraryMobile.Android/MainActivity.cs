@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.Collections.Generic;
 
 namespace MediaLibraryMobile.Droid
 {
@@ -14,6 +15,8 @@ namespace MediaLibraryMobile.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            IEnumerable<Type> additionalTypes = new List<Type>() { typeof(LoginActivity) };
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -21,7 +24,7 @@ namespace MediaLibraryMobile.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            LoadApplication(new App() { AdditionalTypes = additionalTypes });
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

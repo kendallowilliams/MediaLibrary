@@ -27,7 +27,9 @@ namespace MediaLibraryMobile.Droid
 
         public LoginActivity()
         {
-            using(var container = App.GetMEF())
+            IEnumerable<Type> additionalTypes = new List<Type>() { typeof(LoginActivity) };
+
+            using (var container = App.GetMEF(additionalTypes))
             {
                 loginController = container.GetExportedValue<LoginController>();
                 loginViewModel = loginController.GetLoginViewModel();
