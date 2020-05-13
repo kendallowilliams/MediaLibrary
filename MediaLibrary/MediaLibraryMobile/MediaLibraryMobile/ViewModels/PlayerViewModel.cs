@@ -1,5 +1,4 @@
-﻿using Android.Media;
-using LibVLCSharp.Shared;
+﻿using LibVLCSharp.Shared;
 using MediaLibraryMobile.Views.Interfaces;
 using System;
 using System.Collections.Generic;
