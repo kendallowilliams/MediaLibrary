@@ -11,6 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\MediaLibraryBLL\Services\Interfaces\IWebService.cs" Link="Services\Interfaces\IWebService.cs" />
+    <Compile Include="..\..\MediaLibraryBLL\Services\WebService.cs" Link="Services\WebService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConfigureAwait.Fody" Version="3.3.1" />
+    <PackageReference Include="Fody" Version="6.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="LibVLCSharp.Forms" Version="3.4.5" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
@@ -20,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MediaLibraryBLL\MediaLibraryBLL.csproj" />
     <ProjectReference Include="..\..\MediaLibraryDAL\MediaLibraryDAL.csproj" />
   </ItemGroup>
 
