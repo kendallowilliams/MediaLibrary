@@ -16,6 +16,8 @@ using static MediaLibraryDAL.Enums;
 using LibVLCSharp.Shared;
 using Xamarin.Forms.Internals;
 using MediaLibraryBLL.Services.Interfaces;
+using LibVLCSharp.Forms.Shared;
+using System.Threading;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -66,13 +68,19 @@ namespace MediaLibraryMobile.Controllers
                 { Pages.Player, new NavigationPage(playerViewModel.View) }
             };
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
+            InitializePlayer();
         }
 
         private void PlayerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(PlayerViewModel.MediaItems))
+            if (e.PropertyName == nameof(PlayerViewModel.MediaUris))
             {
-                //playerViewModel.MediaPlayer.Play();
+                playerViewModel.SelectedPlayIndex = -1;
+            }
+            else if (e.PropertyName == nameof(PlayerViewModel.SelectedPlayIndex))
+            {
+                Media media = new Media(playerViewModel.LibVLC, playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex));
+                ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
             }
         }
 
@@ -153,18 +161,57 @@ namespace MediaLibraryMobile.Controllers
             await playlistViewModel.View.Navigation.PushAsync(playlistViewModel.PlaylistView as ContentPage);
         }
 
+        private void InitializePlayer()
+        {
+            playerViewModel.MediaPlayer.EndReached += MediaPlayer_EndReached;
+            /*playerViewModel.MediaPlayer.Forward += MediaPlayer_Forward;
+            playerViewModel.MediaPlayer.Backward += MediaPlayer_Backward;*/
+        }
+
+        private void MediaPlayer_Backward(object sender, EventArgs e)
+        {
+            if (playerViewModel.SelectedPlayIndex > 0)
+            {
+                playerViewModel.SelectedPlayIndex = playerViewModel.SelectedPlayIndex - 1;
+            }
+        }
+
+        private void MediaPlayer_Forward(object sender, EventArgs e)
+        {
+            int lastIndex = playerViewModel.MediaUris.Count() - 1;
+
+            if (playerViewModel.SelectedPlayIndex < lastIndex)
+            {
+                playerViewModel.SelectedPlayIndex = playerViewModel.SelectedPlayIndex + 1;
+            }
+        }
+
+        private void MediaPlayer_EndReached(object sender, EventArgs e)
+        {
+            int lastIndex = playerViewModel.MediaUris.Count() - 1;
+
+            if (playerViewModel.SelectedPlayIndex < lastIndex)
+            {
+                playerViewModel.SelectedPlayIndex = playerViewModel.SelectedPlayIndex + 1;
+            }
+        }
+
         private void Play(object item)
         {
             Playlist playlist = playlistViewModel.SelectedPlaylist;
             IEnumerable<int> itemIds = GetPlaylistItemIds(playlist);
             PlaylistTypes playlistType = (PlaylistTypes)playlist.Type;
             string controller = playlistType.ToString();
-            IEnumerable<Media> mediaItems = itemIds.Select(_id => new Media(playerViewModel.LibVLC, new Uri(baseUri, $"{controller}/File/{_id}")));
+            IEnumerable<Uri> mediaUris = itemIds.Select(_id => new Uri(baseUri, $"{controller}/File/{_id}"));
             int playIndex = GetPlaylistItemIndex(playlist, item);
+            playerViewModel.MediaUris = mediaUris;
 
-            mainViewModel.SelectedMenuItem = mainViewModel.MenuItems.FirstOrDefault(_item => _item.Key == Pages.Player);
-            playerViewModel.MediaItems = mediaItems;
-            playerViewModel.MediaPlayer.Play(mediaItems.ElementAt(playIndex));
+            if (mainViewModel.SelectedMenuItem.Key != Pages.Player)
+            {
+                mainViewModel.SelectedMenuItem = mainViewModel.MenuItems.FirstOrDefault(_item => _item.Key == Pages.Player);
+            }
+
+            playerViewModel.SelectedPlayIndex = playIndex;
         }
 
         private IEnumerable<int> GetPlaylistItemIds(Playlist playlist)
