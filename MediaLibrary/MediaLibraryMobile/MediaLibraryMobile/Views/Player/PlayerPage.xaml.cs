@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace MediaLibraryMobile.Views.Player
+namespace MediaLibraryMobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     [Export(typeof(IPlayerView))]

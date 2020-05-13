@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="MediaLibraryMobile.Views.Player.PlayerPage"
+             x:Class="MediaLibraryMobile.Views.PlayerPage"
              xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              Title="Player">
     <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}" />
