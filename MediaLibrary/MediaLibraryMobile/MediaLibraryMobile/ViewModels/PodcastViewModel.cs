@@ -12,7 +12,6 @@ namespace MediaLibraryMobile.ViewModels
     [Export]
     public class PodcastViewModel : BaseViewModel<IPodcastsView>
     {
-        private readonly IPodcastsView podcastsView;
         private IEnumerable<Podcast> podcasts;
         private ICommand loadPodcastsCommand;
         private ICommand loadPodcastCommand;
@@ -23,7 +22,6 @@ namespace MediaLibraryMobile.ViewModels
         [ImportingConstructor]
         public PodcastViewModel(IPodcastsView podcastsView, IPodcastView podcastView) : base(podcastsView)
         {
-            this.podcastsView = podcastsView;
             this.podcastView = podcastView;
             this.podcastView.BindingContext = this;
             podcasts = Enumerable.Empty<Podcast>();

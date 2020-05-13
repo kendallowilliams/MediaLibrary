@@ -15,6 +15,7 @@ using MediaLibraryMobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Binding;
+using MediaLibraryMobile.Droid.Services;
 
 namespace MediaLibraryMobile.Droid
 {
@@ -27,13 +28,9 @@ namespace MediaLibraryMobile.Droid
 
         public LoginActivity()
         {
-            IEnumerable<Type> additionalTypes = new List<Type>() { typeof(LoginActivity) };
-
-            using (var container = App.GetMEF(additionalTypes))
-            {
-                loginController = container.GetExportedValue<LoginController>();
-                loginViewModel = loginController.GetLoginViewModel();
-            }
+            using var container = MefService.GetMEFContainer();
+            loginController = container.GetExportedValue<LoginController>();
+            loginViewModel = loginController.GetLoginViewModel();
         }
 
         protected override void OnCreate(Bundle savedInstanceState)

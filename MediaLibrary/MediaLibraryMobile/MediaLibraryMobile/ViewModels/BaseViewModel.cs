@@ -12,7 +12,7 @@ namespace MediaLibraryMobile.ViewModels
     public class BaseViewModel<TView>: IViewModel where TView: IView
     {
         private string title;
-        private TView view;
+        private readonly TView view;
 
         public BaseViewModel(TView view)
         {

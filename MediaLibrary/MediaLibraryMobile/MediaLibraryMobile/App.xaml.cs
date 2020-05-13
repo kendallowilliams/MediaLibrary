@@ -12,22 +12,21 @@ using System.Linq;
 
 namespace MediaLibraryMobile
 {
+    [Export]
     public partial class App : Application
     {
-        public App()
+        private readonly MainController mainController;
+
+        [ImportingConstructor]
+        public App(MainController mainController)
         {
             InitializeComponent();
+            this.mainController = mainController;
         }
-
-        public IEnumerable<Type> AdditionalTypes { get; set; }
 
         protected override void OnStart()
         {
-            using (CompositionContainer _container = GetMEF(AdditionalTypes))
-            {
-                MainController controller = _container.GetExportedValue<MainController>();
-                MainPage = controller.GetMainView();
-            }
+            MainPage = mainController.GetMainView();
         }
 
         protected override void OnSleep()
@@ -36,31 +35,6 @@ namespace MediaLibraryMobile
 
         protected override void OnResume()
         {
-        }
-
-        public static CompositionContainer GetMEF(IEnumerable<Type> additionalTypes = default, params object[] attributedParts)
-        {
-            CompositionContainer container = default;
-            var catalog = new AggregateCatalog();
-            var appCatalog = new AssemblyCatalog(typeof(App).Assembly);
-            var dalCatalog = new AssemblyCatalog(typeof(IDataService).Assembly);
-
-            catalog.Catalogs.Add(appCatalog);
-            catalog.Catalogs.Add(dalCatalog);
-            foreach (var type in additionalTypes ?? Enumerable.Empty<Type>()) { catalog.Catalogs.Add(new AssemblyCatalog(type.Assembly)); }
-
-            container = new CompositionContainer(catalog);
-
-            try
-            {
-                container.ComposeParts(attributedParts);
-            }
-            catch(CompositionException ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-
-            return container;
         }
     }
 }

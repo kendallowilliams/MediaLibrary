@@ -13,7 +13,6 @@ namespace MediaLibraryMobile.ViewModels
     [Export]
     public class PlaylistViewModel : BaseViewModel<IPlaylistsView>
     {
-        private readonly IPlaylistsView playlistsView;
         private readonly IPlaylistView playlistView;
         private IEnumerable<Playlist> playlists;
         private IEnumerable<PlaylistGroup> playlistGroups;
@@ -29,7 +28,6 @@ namespace MediaLibraryMobile.ViewModels
         [ImportingConstructor]
         public PlaylistViewModel(IPlaylistsView playlistsView, IPlaylistView playlistView): base(playlistsView)
         {
-            this.playlistsView = playlistsView;
             this.playlistView = playlistView;
             this.playlistView.BindingContext = this;
             playlists = Enumerable.Empty<Playlist>();

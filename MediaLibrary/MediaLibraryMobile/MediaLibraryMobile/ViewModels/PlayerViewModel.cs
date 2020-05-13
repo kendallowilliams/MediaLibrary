@@ -12,7 +12,6 @@ namespace MediaLibraryMobile.ViewModels
     [Export]
     public class PlayerViewModel : BaseViewModel<IPlayerView>
     {
-        private readonly IPlayerView playerView;
         private MediaPlayer mediaPlayer;
         private LibVLC libVLC;
         private IEnumerable<Media> mediaItems;
@@ -21,7 +20,6 @@ namespace MediaLibraryMobile.ViewModels
         public PlayerViewModel(IPlayerView playerView) : base(playerView)
         {
             Core.Initialize();
-            this.playerView = playerView;
             LibVLC = new LibVLC();
             MediaPlayer = new MediaPlayer(libVLC) { EnableHardwareDecoding = true };
             mediaItems = Enumerable.Empty<Media>();

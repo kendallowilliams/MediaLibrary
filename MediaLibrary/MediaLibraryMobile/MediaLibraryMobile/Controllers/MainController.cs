@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.Composition;
 using MediaLibraryMobile.ViewModels;
-using MediaLibraryMobile.Views.Interfaces;
 using Xamarin.Forms;
 using MediaLibraryMobile.Repository;
 using System.Linq;
@@ -16,6 +15,7 @@ using MediaLibraryMobile.Models;
 using static MediaLibraryDAL.Enums;
 using LibVLCSharp.Shared;
 using Xamarin.Forms.Internals;
+using MediaLibraryBLL.Services.Interfaces;
 
 namespace MediaLibraryMobile.Controllers
 {
