@@ -24,6 +24,8 @@ namespace MediaLibraryMobile.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            Lazy<App> app = container.GetExport<App>();
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -32,7 +34,7 @@ namespace MediaLibraryMobile.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            LoadApplication(container.GetExportedValue<App>());
+            LoadApplication(app.Value);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -40,11 +42,6 @@ namespace MediaLibraryMobile.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        protected override void OnDestroy()
-        {
-            if (container != null) /*then*/ container.Dispose();
         }
     }
 }
