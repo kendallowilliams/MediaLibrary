@@ -8,14 +8,14 @@
              xmlns:behaviors="clr-namespace:MediaLibraryMobile.Behaviors"
              Title="Player">
     <Grid>
-        <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls}">
+        <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls}" AutoPlay="{Binding AutoPlayEnabled}">
             <MediaElement.Behaviors>
                 <behaviors:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" />
             </MediaElement.Behaviors>
         </MediaElement>
         <Grid.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Left" Command="{Binding Path=BindingContext.NextCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
-            <SwipeGestureRecognizer Direction="Right" Command="{Binding Path=BindingContext.PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+            <SwipeGestureRecognizer Direction="Left" Command="{Binding NextCommand}" />
+            <SwipeGestureRecognizer Direction="Right" Command="{Binding PreviousCommand}" />
         </Grid.GestureRecognizers>
     </Grid>
 </ContentPage>

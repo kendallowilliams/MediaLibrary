@@ -15,7 +15,8 @@ namespace MediaLibraryMobile.ViewModels
         private IEnumerable<string> mediaUris;
         private int? selectedPlayIndex;
         private string source;
-        private bool showPlaybackControls;
+        private bool showPlaybackControls,
+                     autoPlayEnabled;
         private ICommand mediaEndedCommand,
                          nextCommand,
                          previousCommand;
@@ -25,12 +26,14 @@ namespace MediaLibraryMobile.ViewModels
         {
             mediaUris = Enumerable.Empty<string>();
             ShowPlaybackControls = true;
+            AutoPlayEnabled = true;
         }
 
         public IEnumerable<string> MediaUris { get => mediaUris; set => SetProperty<IEnumerable<string>>(ref mediaUris, value); }
         public int? SelectedPlayIndex { get => selectedPlayIndex; set => SetProperty<int?>(ref selectedPlayIndex, value); }
         public string Source { get => source; set => SetProperty<string>(ref source, value); }
         public bool ShowPlaybackControls { get => showPlaybackControls; set => SetProperty<bool>(ref showPlaybackControls, value); }
+        public bool AutoPlayEnabled { get => autoPlayEnabled; set => SetProperty<bool>(ref autoPlayEnabled, value); }
         public ICommand MediaEndedCommand { get => mediaEndedCommand; set => SetProperty<ICommand>(ref mediaEndedCommand, value); }
         public ICommand PreviousCommand { get => previousCommand; set => SetProperty<ICommand>(ref previousCommand, value); }
         public ICommand NextCommand { get => nextCommand; set => SetProperty<ICommand>(ref nextCommand, value); }
