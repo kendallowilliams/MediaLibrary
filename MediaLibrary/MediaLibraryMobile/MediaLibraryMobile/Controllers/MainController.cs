@@ -83,7 +83,7 @@ namespace MediaLibraryMobile.Controllers
                     Uri uri = playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value);
                     Media media = new Media(playerViewModel.LibVLC, uri);
 
-                    playerViewModel.MediaPlayer?.Dispose();
+                    playerViewModel.MediaPlayer.Media?.Dispose();
                     if (playerViewModel.IsPlaying) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
                 }
             }
