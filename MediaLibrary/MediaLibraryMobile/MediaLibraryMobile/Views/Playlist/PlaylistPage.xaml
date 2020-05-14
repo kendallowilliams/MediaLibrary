@@ -98,7 +98,7 @@
                                 FontSize="13" />
                         <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding Path=BindingContext.PlayCommand, Source={RelativeSource AncestorType={Type ContentPage}}}"
-                                                  CommandParameter="{Binding PlaylistItem}"></TapGestureRecognizer>
+                                                  CommandParameter="{Binding PodcastItem}"></TapGestureRecognizer>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                 </DataTemplate>

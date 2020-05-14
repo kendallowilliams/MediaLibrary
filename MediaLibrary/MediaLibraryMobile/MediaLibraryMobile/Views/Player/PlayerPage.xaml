@@ -7,13 +7,15 @@
              x:Class="MediaLibraryMobile.Views.PlayerPage"
              xmlns:behaviors="clr-namespace:MediaLibraryMobile.Behaviors"
              Title="Player">
-    <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls}">
-        <MediaElement.Behaviors>
-            <behaviors:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" />
-        </MediaElement.Behaviors>
-        <MediaElement.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Left" Command="{Binding Path=BindingContext.PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
-            <SwipeGestureRecognizer Direction="Right" Command="{Binding Path=BindingContext.NextCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
-        </MediaElement.GestureRecognizers>
-    </MediaElement>
+    <Grid>
+        <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls}">
+            <MediaElement.Behaviors>
+                <behaviors:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" />
+            </MediaElement.Behaviors>
+        </MediaElement>
+        <Grid.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Left" Command="{Binding Path=BindingContext.NextCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+            <SwipeGestureRecognizer Direction="Right" Command="{Binding Path=BindingContext.PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+        </Grid.GestureRecognizers>
+    </Grid>
 </ContentPage>
