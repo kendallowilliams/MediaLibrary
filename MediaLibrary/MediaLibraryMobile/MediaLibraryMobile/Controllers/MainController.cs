@@ -53,6 +53,7 @@ namespace MediaLibraryMobile.Controllers
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
             this.playlistViewModel.PlayCommand = new Command(Play);
+            this.playerViewModel.MediaEndedCommand = new Command(MediaEnded);
 #if DEBUG
             baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG");
 #else
@@ -66,7 +67,6 @@ namespace MediaLibraryMobile.Controllers
                 { Pages.Player, new NavigationPage(playerViewModel.View) }
             };
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
-            InitializePlayer();
         }
 
         private void PlayerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -158,32 +158,7 @@ namespace MediaLibraryMobile.Controllers
             await playlistViewModel.View.Navigation.PushAsync(playlistViewModel.PlaylistView as ContentPage);
         }
 
-        private void InitializePlayer()
-        {
-            //playerViewModel.MediaPlayer.EndReached += MediaPlayer_EndReached;
-            //playerViewModel.MediaPlayer.Forward += MediaPlayer_Forward;
-            //playerViewModel.MediaPlayer.Backward += MediaPlayer_Backward;
-        }
-
-        private void MediaPlayer_Backward(object sender, EventArgs e)
-        {
-            if (playerViewModel.SelectedPlayIndex > 0)
-            {
-                playerViewModel.SelectedPlayIndex--;
-            }
-        }
-
-        private void MediaPlayer_Forward(object sender, EventArgs e)
-        {
-            int lastIndex = playerViewModel.MediaUris.Count() - 1;
-
-            if (playerViewModel.SelectedPlayIndex < lastIndex)
-            {
-                playerViewModel.SelectedPlayIndex++;
-            }
-        }
-
-        private void MediaPlayer_EndReached(object sender, EventArgs e)
+        private void MediaEnded(object data)
         {
             int lastIndex = playerViewModel.MediaUris.Count() - 1;
 

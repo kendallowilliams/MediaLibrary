@@ -5,6 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="MediaLibraryMobile.Views.PlayerPage"
+             xmlns:behaviors="clr-namespace:MediaLibraryMobile.Behaviors"
              Title="Player">
-    <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls}" />
+    <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls}">
+        <MediaElement.Behaviors>
+            <behaviors:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" />
+        </MediaElement.Behaviors>
+    </MediaElement>
 </ContentPage>
