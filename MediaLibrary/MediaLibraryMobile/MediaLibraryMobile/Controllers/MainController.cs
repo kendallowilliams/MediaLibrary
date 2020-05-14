@@ -77,7 +77,7 @@ namespace MediaLibraryMobile.Controllers
             }
             else if (e.PropertyName == nameof(PlayerViewModel.SelectedPlayIndex))
             {
-                if (playerViewModel.SelectedPlayIndex.HasValue) /*then*/ playerViewModel.Source = playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value).OriginalString;
+                if (playerViewModel.SelectedPlayIndex.HasValue) /*then*/ playerViewModel.Source = playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value);
             }
         }
 
@@ -199,7 +199,7 @@ namespace MediaLibraryMobile.Controllers
             IEnumerable<int> itemIds = GetPlaylistItemIds(playlist);
             PlaylistTypes playlistType = (PlaylistTypes)playlist.Type;
             string controller = playlistType.ToString();
-            IEnumerable<Uri> mediaUris = itemIds.Select(_id => new Uri(baseUri, $"{controller}/File/{_id}"));
+            IEnumerable<string> mediaUris = itemIds.Select(_id => new Uri(baseUri, $"{controller}/File/{_id}").OriginalString);
             int playIndex = GetPlaylistItemIndex(playlist, item);
             playerViewModel.MediaUris = mediaUris;
 

@@ -11,7 +11,7 @@ namespace MediaLibraryMobile.ViewModels
     [Export]
     public class PlayerViewModel : BaseViewModel<IPlayerView>
     {
-        private IEnumerable<Uri> mediaUris;
+        private IEnumerable<string> mediaUris;
         private int? selectedPlayIndex;
         private string source;
         private bool showPlaybackControls;
@@ -19,11 +19,11 @@ namespace MediaLibraryMobile.ViewModels
         [ImportingConstructor]
         public PlayerViewModel(IPlayerView playerView) : base(playerView)
         {
-            mediaUris = Enumerable.Empty<Uri>();
+            mediaUris = Enumerable.Empty<string>();
             showPlaybackControls = true;
         }
 
-        public IEnumerable<Uri> MediaUris { get => mediaUris; set => SetProperty<IEnumerable<Uri>>(ref mediaUris, value); }
+        public IEnumerable<string> MediaUris { get => mediaUris; set => SetProperty<IEnumerable<string>>(ref mediaUris, value); }
         public int? SelectedPlayIndex { get => selectedPlayIndex; set => SetProperty<int?>(ref selectedPlayIndex, value); }
         public string Source { get => source; set => SetProperty<string>(ref source, value); }
         public bool ShowPlaybackControls { get => showPlaybackControls; set => SetProperty<bool>(ref showPlaybackControls, value); }
