@@ -6,5 +6,5 @@
              mc:Ignorable="d"
              x:Class="MediaLibraryMobile.Views.PlayerPage"
              Title="Player">
-    <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls, Mode=TwoWay}" />
+    <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls}" />
 </ContentPage>

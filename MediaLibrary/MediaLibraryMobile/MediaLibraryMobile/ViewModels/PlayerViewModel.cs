@@ -20,7 +20,7 @@ namespace MediaLibraryMobile.ViewModels
         public PlayerViewModel(IPlayerView playerView) : base(playerView)
         {
             mediaUris = Enumerable.Empty<string>();
-            showPlaybackControls = true;
+            ShowPlaybackControls = true;
         }
 
         public IEnumerable<string> MediaUris { get => mediaUris; set => SetProperty<IEnumerable<string>>(ref mediaUris, value); }
