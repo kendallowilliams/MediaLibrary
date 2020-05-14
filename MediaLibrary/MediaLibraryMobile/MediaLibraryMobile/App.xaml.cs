@@ -22,6 +22,7 @@ namespace MediaLibraryMobile
         {
             InitializeComponent();
             this.lazyMainController = lazyMainController;
+            Device.SetFlags(new string[] { "MediaElement_Experimental" });
         }
 
         protected override void OnStart()

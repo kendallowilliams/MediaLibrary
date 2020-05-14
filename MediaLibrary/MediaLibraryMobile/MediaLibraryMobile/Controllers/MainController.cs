@@ -13,10 +13,8 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using MediaLibraryMobile.Models;
 using static MediaLibraryDAL.Enums;
-using LibVLCSharp.Shared;
 using Xamarin.Forms.Internals;
 using MediaLibraryBLL.Services.Interfaces;
-using LibVLCSharp.Forms.Shared;
 using System.Threading;
 
 namespace MediaLibraryMobile.Controllers
@@ -79,11 +77,7 @@ namespace MediaLibraryMobile.Controllers
             }
             else if (e.PropertyName == nameof(PlayerViewModel.SelectedPlayIndex))
             {
-                Media media = playerViewModel.SelectedPlayIndex.HasValue ? 
-                    new Media(playerViewModel.LibVLC, playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value)) :
-                    default;
-                playerViewModel.MediaPlayer.Media?.Dispose();
-                if (playerViewModel.SelectedPlayIndex.HasValue) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
+                if (playerViewModel.SelectedPlayIndex.HasValue) /*then*/ playerViewModel.Source = playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value).OriginalString;
             }
         }
 
@@ -166,9 +160,9 @@ namespace MediaLibraryMobile.Controllers
 
         private void InitializePlayer()
         {
-            playerViewModel.MediaPlayer.EndReached += MediaPlayer_EndReached;
-            playerViewModel.MediaPlayer.Forward += MediaPlayer_Forward;
-            playerViewModel.MediaPlayer.Backward += MediaPlayer_Backward;
+            //playerViewModel.MediaPlayer.EndReached += MediaPlayer_EndReached;
+            //playerViewModel.MediaPlayer.Forward += MediaPlayer_Forward;
+            //playerViewModel.MediaPlayer.Backward += MediaPlayer_Backward;
         }
 
         private void MediaPlayer_Backward(object sender, EventArgs e)
