@@ -9,10 +9,10 @@
              xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              Title="Player">
     <Grid>
-        <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}" />
         <Grid.GestureRecognizers>
             <SwipeGestureRecognizer Direction="Left" Command="{Binding NextCommand}" />
             <SwipeGestureRecognizer Direction="Right" Command="{Binding PreviousCommand}" />
         </Grid.GestureRecognizers>
+        <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}" />
     </Grid>
 </ContentPage>
