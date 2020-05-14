@@ -6,13 +6,10 @@
              mc:Ignorable="d"
              x:Class="MediaLibraryMobile.Views.PlayerPage"
              xmlns:behaviors="clr-namespace:MediaLibraryMobile.Behaviors"
+             xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              Title="Player">
     <Grid>
-        <MediaElement Source="{Binding Source}" ShowsPlaybackControls="{Binding ShowPlaybackControls}" AutoPlay="{Binding AutoPlayEnabled}">
-            <MediaElement.Behaviors>
-                <behaviors:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" />
-            </MediaElement.Behaviors>
-        </MediaElement>
+        <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}" />
         <Grid.GestureRecognizers>
             <SwipeGestureRecognizer Direction="Left" Command="{Binding NextCommand}" />
             <SwipeGestureRecognizer Direction="Right" Command="{Binding PreviousCommand}" />

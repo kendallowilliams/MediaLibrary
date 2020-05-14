@@ -16,6 +16,7 @@ using static MediaLibraryDAL.Enums;
 using Xamarin.Forms.Internals;
 using MediaLibraryBLL.Services.Interfaces;
 using System.Threading;
+using LibVLCSharp.Shared;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -53,9 +54,7 @@ namespace MediaLibraryMobile.Controllers
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
             this.playlistViewModel.PlayCommand = new Command(Play);
-            this.playerViewModel.MediaEndedCommand = new Command(MediaEnded);
-            this.playerViewModel.NextCommand = new Command(Next);
-            this.playerViewModel.PreviousCommand = new Command(Previous);
+            InitializeMediaPlayer();
 #if DEBUG
             baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG");
 #else
@@ -79,7 +78,13 @@ namespace MediaLibraryMobile.Controllers
             }
             else if (e.PropertyName == nameof(PlayerViewModel.SelectedPlayIndex))
             {
-                if (playerViewModel.SelectedPlayIndex.HasValue) /*then*/ playerViewModel.Source = playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value);
+                if (playerViewModel.SelectedPlayIndex.HasValue)
+                {
+                    Uri uri = playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value);
+                    Media media = new Media(playerViewModel.LibVLC, uri);
+
+                    if (playerViewModel.IsPlaying) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
+                }
             }
         }
 
@@ -160,14 +165,19 @@ namespace MediaLibraryMobile.Controllers
             await playlistViewModel.View.Navigation.PushAsync(playlistViewModel.PlaylistView as ContentPage);
         }
 
-        private void MediaEnded(object data)
+        private void InitializeMediaPlayer()
         {
-            int lastIndex = playerViewModel.MediaUris.Count() - 1;
+            playerViewModel.MediaPlayer.Paused += (sender, args) => playerViewModel.IsPlaying = false;
+            playerViewModel.MediaPlayer.Playing += (sender, args) => playerViewModel.IsPlaying = true;
+            playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
+            playerViewModel.MediaPlayer.EndReached += EndReached;
+            playerViewModel.NextCommand = new Command(Next);
+            playerViewModel.PreviousCommand = new Command(Previous);
+        }
 
-            if (playerViewModel.SelectedPlayIndex < lastIndex)
-            {
-                playerViewModel.SelectedPlayIndex++;
-            }
+        private void EndReached(object sender, EventArgs args)
+        {
+            Next();
         }
 
         private void Next()
@@ -194,7 +204,7 @@ namespace MediaLibraryMobile.Controllers
             IEnumerable<int> itemIds = GetPlaylistItemIds(playlist);
             PlaylistTypes playlistType = (PlaylistTypes)playlist.Type;
             string controller = playlistType.ToString();
-            IEnumerable<string> mediaUris = itemIds.Select(_id => new Uri(baseUri, $"{controller}/File/{_id}").OriginalString);
+            IEnumerable<Uri> mediaUris = itemIds.Select(_id => new Uri(baseUri, $"{controller}/File/{_id}"));
             int playIndex = GetPlaylistItemIndex(playlist, item);
             playerViewModel.MediaUris = mediaUris;
 
@@ -203,6 +213,7 @@ namespace MediaLibraryMobile.Controllers
                 mainViewModel.SelectedMenuItem = mainViewModel.MenuItems.FirstOrDefault(_item => _item.Key == Pages.Player);
             }
 
+            playerViewModel.IsPlaying = true;
             playerViewModel.SelectedPlayIndex = playIndex;
         }
 
