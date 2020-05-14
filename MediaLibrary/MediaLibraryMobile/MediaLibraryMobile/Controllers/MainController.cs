@@ -54,6 +54,8 @@ namespace MediaLibraryMobile.Controllers
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
             this.playlistViewModel.PlayCommand = new Command(Play);
             this.playerViewModel.MediaEndedCommand = new Command(MediaEnded);
+            this.playerViewModel.NextCommand = new Command(Next);
+            this.playerViewModel.PreviousCommand = new Command(Previous);
 #if DEBUG
             baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG");
 #else
@@ -165,6 +167,24 @@ namespace MediaLibraryMobile.Controllers
             if (playerViewModel.SelectedPlayIndex < lastIndex)
             {
                 playerViewModel.SelectedPlayIndex++;
+            }
+        }
+
+        private void Next()
+        {
+            int lastIndex = playerViewModel.MediaUris.Count() - 1;
+
+            if (playerViewModel.SelectedPlayIndex < lastIndex)
+            {
+                playerViewModel.SelectedPlayIndex++;
+            }
+        }
+
+        private void Previous()
+        {
+            if (playerViewModel.SelectedPlayIndex > 0)
+            {
+                playerViewModel.SelectedPlayIndex--;
             }
         }
 

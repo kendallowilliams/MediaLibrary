@@ -11,5 +11,9 @@
         <MediaElement.Behaviors>
             <behaviors:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" />
         </MediaElement.Behaviors>
+        <MediaElement.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Left" Command="{Binding PreviousCommand}" />
+            <SwipeGestureRecognizer Direction="Right" Command="{Binding NextCommand}" />
+        </MediaElement.GestureRecognizers>
     </MediaElement>
 </ContentPage>
