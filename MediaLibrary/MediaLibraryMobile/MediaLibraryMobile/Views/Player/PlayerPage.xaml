@@ -12,8 +12,8 @@
             <behaviors:EventToCommandBehavior EventName="MediaEnded" Command="{Binding MediaEndedCommand}" />
         </MediaElement.Behaviors>
         <MediaElement.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Left" Command="{Binding PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
-            <SwipeGestureRecognizer Direction="Right" Command="{Binding NextCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+            <SwipeGestureRecognizer Direction="Left" Command="{Binding Path=BindingContext.PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
+            <SwipeGestureRecognizer Direction="Right" Command="{Binding Path=BindingContext.NextCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" />
         </MediaElement.GestureRecognizers>
     </MediaElement>
 </ContentPage>
