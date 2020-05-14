@@ -15,7 +15,7 @@ namespace MediaLibraryMobile.ViewModels
         private MediaPlayer mediaPlayer;
         private LibVLC libVLC;
         private IEnumerable<Uri> mediaUris;
-        private int selectedPlayIndex;
+        private int? selectedPlayIndex;
 
         [ImportingConstructor]
         public PlayerViewModel(IPlayerView playerView) : base(playerView)
@@ -24,12 +24,11 @@ namespace MediaLibraryMobile.ViewModels
             LibVLC = new LibVLC();
             MediaPlayer = new MediaPlayer(libVLC) { EnableHardwareDecoding = true };
             mediaUris = Enumerable.Empty<Uri>();
-            selectedPlayIndex = -1;
         }
 
         public MediaPlayer MediaPlayer { get => mediaPlayer; set => SetProperty<MediaPlayer>(ref mediaPlayer, value); }
         public LibVLC LibVLC { get => libVLC; set => SetProperty<LibVLC>(ref libVLC, value); }
         public IEnumerable<Uri> MediaUris { get => mediaUris; set => SetProperty<IEnumerable<Uri>>(ref mediaUris, value); }
-        public int SelectedPlayIndex { get => selectedPlayIndex; set => SetProperty<int>(ref selectedPlayIndex, value); }
+        public int? SelectedPlayIndex { get => selectedPlayIndex; set => SetProperty<int?>(ref selectedPlayIndex, value); }
     }
 }

@@ -75,12 +75,15 @@ namespace MediaLibraryMobile.Controllers
         {
             if (e.PropertyName == nameof(PlayerViewModel.MediaUris))
             {
-                playerViewModel.SelectedPlayIndex = -1;
+                playerViewModel.SelectedPlayIndex = null;
             }
             else if (e.PropertyName == nameof(PlayerViewModel.SelectedPlayIndex))
             {
-                Media media = new Media(playerViewModel.LibVLC, playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex));
-                ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
+                Media media = playerViewModel.SelectedPlayIndex.HasValue ? 
+                    new Media(playerViewModel.LibVLC, playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value)) :
+                    default;
+                playerViewModel.MediaPlayer.Media?.Dispose();
+                if (playerViewModel.SelectedPlayIndex.HasValue) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
             }
         }
 
@@ -164,15 +167,15 @@ namespace MediaLibraryMobile.Controllers
         private void InitializePlayer()
         {
             playerViewModel.MediaPlayer.EndReached += MediaPlayer_EndReached;
-            /*playerViewModel.MediaPlayer.Forward += MediaPlayer_Forward;
-            playerViewModel.MediaPlayer.Backward += MediaPlayer_Backward;*/
+            playerViewModel.MediaPlayer.Forward += MediaPlayer_Forward;
+            playerViewModel.MediaPlayer.Backward += MediaPlayer_Backward;
         }
 
         private void MediaPlayer_Backward(object sender, EventArgs e)
         {
             if (playerViewModel.SelectedPlayIndex > 0)
             {
-                playerViewModel.SelectedPlayIndex = playerViewModel.SelectedPlayIndex - 1;
+                playerViewModel.SelectedPlayIndex--;
             }
         }
 
@@ -182,7 +185,7 @@ namespace MediaLibraryMobile.Controllers
 
             if (playerViewModel.SelectedPlayIndex < lastIndex)
             {
-                playerViewModel.SelectedPlayIndex = playerViewModel.SelectedPlayIndex + 1;
+                playerViewModel.SelectedPlayIndex++;
             }
         }
 
@@ -192,7 +195,7 @@ namespace MediaLibraryMobile.Controllers
 
             if (playerViewModel.SelectedPlayIndex < lastIndex)
             {
-                playerViewModel.SelectedPlayIndex = playerViewModel.SelectedPlayIndex + 1;
+                playerViewModel.SelectedPlayIndex++;
             }
         }
 
