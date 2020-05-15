@@ -80,9 +80,11 @@ namespace MediaLibraryMobile.Controllers
             {
                 if (playerViewModel.SelectedPlayIndex.HasValue)
                 {
-                    Uri uri = playerViewModel.MediaUris.ElementAt(playerViewModel.SelectedPlayIndex.Value);
+                    int index = playerViewModel.SelectedPlayIndex.Value;
+                    Uri uri = playerViewModel.MediaUris.ElementAt(index);
                     Media media = new Media(playerViewModel.LibVLC, uri);
 
+                    playerViewModel.Title = GetPlaylistItemTitle(playlistViewModel.SelectedPlaylist, index);
                     playerViewModel.MediaPlayer.Media?.Dispose();
                     if (playerViewModel.IsPlaying) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
                 }
@@ -221,6 +223,7 @@ namespace MediaLibraryMobile.Controllers
 
             playerViewModel.IsPlaying = true;
             playerViewModel.SelectedPlayIndex = playIndex;
+            playerViewModel.Title = GetPlaylistItemTitle(playlist, playIndex);
         }
 
         private IEnumerable<int> GetPlaylistItemIds(Playlist playlist)
@@ -268,6 +271,30 @@ namespace MediaLibraryMobile.Controllers
             }
 
             return id;
+        }
+
+        private string GetPlaylistItemTitle(Playlist playlist, int index)
+        {
+            string title;
+            PlaylistTypes playlistType = (PlaylistTypes)playlistViewModel.SelectedPlaylist.Type;
+
+            switch (playlistType)
+            {
+                case PlaylistTypes.Music:
+                    title = playlist.PlaylistTracks.Select(_item => _item.Track).ElementAt(index).Title;
+                    break;
+                case PlaylistTypes.Podcast:
+                    title = playlist.PlaylistPodcastItems.Select(_item => _item.PodcastItem).ElementAt(index).Title;
+                    break;
+                case PlaylistTypes.Television:
+                    title = playlist.PlaylistEpisodes.Select(_item => _item.Episode).ElementAt(index).Title;
+                    break;
+                default:
+                    title = "No item selected...";
+                    break;
+            }
+
+            return title;
         }
     }
 }

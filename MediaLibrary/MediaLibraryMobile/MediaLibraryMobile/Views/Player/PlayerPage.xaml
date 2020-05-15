@@ -9,7 +9,7 @@
              xmlns:fontawesome="clr-namespace:FontAwesome"
              xmlns:themes="clr-namespace:LibVLCSharp.Forms.Shared.Themes;assembly=LibVLCSharp.Forms"
              xmlns:controls="clr-namespace:MediaLibraryMobile.Controls"
-             Title="Player">
+             Title="{Binding Title}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,7 +20,8 @@
     <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}">
         <vlc:MediaPlayerElement.PlaybackControls>
             <controls:CustomPlaybackControls NextCommand="{Binding Path=BindingContext.NextCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
-                                             PreviousCommand="{Binding Path=BindingContext.PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
+                                             PreviousCommand="{Binding Path=BindingContext.PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                             ShowAndHideAutomatically="{Binding Path=BindingContext.AutomaticallyHideControls, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
                 <controls:CustomPlaybackControls.Resources>
                     <Style x:Key="PreviousButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
                         <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.StepBackward}" />
