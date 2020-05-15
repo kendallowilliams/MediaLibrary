@@ -54,8 +54,6 @@ namespace MediaLibraryMobile.Controllers
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
             this.playlistViewModel.PlayCommand = new Command(Play);
-            this.playerViewModel.NextCommand = new Command(Next);
-            this.playerViewModel.PreviousCommand = new Command(Previous);
             InitializeMediaPlayer();
 #if DEBUG
             baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG");
@@ -88,6 +86,10 @@ namespace MediaLibraryMobile.Controllers
                     playerViewModel.MediaPlayer.Media?.Dispose();
                     if (playerViewModel.IsPlaying) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
                 }
+            }
+            else if (e.PropertyName == nameof(PlayerViewModel.NextCommand) || e.PropertyName == nameof(PlayerViewModel.PreviousCommand))
+            {
+
             }
         }
 
@@ -170,6 +172,8 @@ namespace MediaLibraryMobile.Controllers
 
         private void InitializeMediaPlayer()
         {
+            playerViewModel.NextCommand = new Command(Next);
+            playerViewModel.PreviousCommand = new Command(Previous);
             playerViewModel.MediaPlayer.Paused += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.Playing += (sender, args) => playerViewModel.IsPlaying = true;
             playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;

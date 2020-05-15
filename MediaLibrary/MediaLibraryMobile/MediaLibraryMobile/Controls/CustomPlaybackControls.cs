@@ -12,12 +12,13 @@ namespace MediaLibraryMobile.Controls
     {
         public CustomPlaybackControls() : base()
         {
-
+            IsRewindButtonVisible = false;
+            IsSeekButtonVisible = false;
         }
 
-        public static readonly BindableProperty PreviousCommandProperty = BindableProperty.Create("PreviousCommand", typeof(ICommand), typeof(CustomPlaybackControls));
+        public static readonly BindableProperty PreviousCommandProperty = BindableProperty.Create(nameof(PreviousCommand), typeof(ICommand), typeof(CustomPlaybackControls));
 
-        public static readonly BindableProperty NextCommandProperty = BindableProperty.Create("NextCommand", typeof(ICommand), typeof(CustomPlaybackControls));
+        public static readonly BindableProperty NextCommandProperty = BindableProperty.Create(nameof(NextCommand), typeof(ICommand), typeof(CustomPlaybackControls));
 
         public ICommand PreviousCommand { get => (ICommand)GetValue(PreviousCommandProperty); set => SetValue(PreviousCommandProperty, value); }
 
