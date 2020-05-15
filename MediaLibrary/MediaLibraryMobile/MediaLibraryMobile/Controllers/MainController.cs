@@ -54,6 +54,8 @@ namespace MediaLibraryMobile.Controllers
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
             this.playlistViewModel.PlayCommand = new Command(Play);
+            this.playerViewModel.NextCommand = new Command(Next);
+            this.playerViewModel.PreviousCommand = new Command(Previous);
             InitializeMediaPlayer();
 #if DEBUG
             baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG");
@@ -172,8 +174,6 @@ namespace MediaLibraryMobile.Controllers
             playerViewModel.MediaPlayer.Playing += (sender, args) => playerViewModel.IsPlaying = true;
             playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.EndReached += EndReached;
-            playerViewModel.NextCommand = new Command(Next);
-            playerViewModel.PreviousCommand = new Command(Previous);
         }
 
         private void EndReached(object sender, EventArgs args)

@@ -7,12 +7,80 @@
              x:Class="MediaLibraryMobile.Views.PlayerPage"
              xmlns:behaviors="clr-namespace:MediaLibraryMobile.Behaviors"
              xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:themes="clr-namespace:LibVLCSharp.Forms.Shared.Themes;assembly=LibVLCSharp.Forms"
+             xmlns:controls="clr-namespace:MediaLibraryMobile.Controls"
              Title="Player">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <themes:Generic />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid>
-        <Grid.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Left" Command="{Binding NextCommand}" />
-            <SwipeGestureRecognizer Direction="Right" Command="{Binding PreviousCommand}" />
-        </Grid.GestureRecognizers>
-        <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}" />
+        <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}">
+            <vlc:MediaPlayerElement.PlaybackControls>
+                <controls:CustomPlaybackControls NextCommand="{Binding NextCommand}" PreviousCommand="{Binding PreviousCommand}">
+                    <controls:CustomPlaybackControls.Resources>
+                        <Style x:Key="PreviousButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+                            <!--<Setter Property="IsVisible" Value="{TemplateBinding IsRewindButtonVisible}" />-->
+                            <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.StepBackward}" />
+                            <Setter Property="Command" Value="{TemplateBinding PreviousCommand}" />
+                        </Style>
+                        <Style x:Key="NextButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+                            <!--<Setter Property="IsVisible" Value="{TemplateBinding IsRewindButtonVisible}" />-->
+                            <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.StepForward}" />
+                            <Setter Property="Command" Value="{TemplateBinding NextCommand}" />
+                        </Style>
+                    </controls:CustomPlaybackControls.Resources>
+                    <controls:CustomPlaybackControls.ControlTemplate>
+                        <ControlTemplate>
+                            <StackLayout IsVisible="{TemplateBinding MediaPlayer, Converter={StaticResource ObjectToBoolConverter}}" Spacing="0">
+                                <Label Text="{TemplateBinding ErrorMessage}" Style="{TemplateBinding MessageStyle}"
+                                       IsVisible="{TemplateBinding ErrorMessage, Converter={StaticResource ObjectToBoolConverter}}" />
+                                <ProgressBar Style="{TemplateBinding BufferingProgressBarStyle}" Progress="{TemplateBinding BufferingProgress}" 
+                                             IsVisible="{TemplateBinding BufferingProgress, Converter={StaticResource BufferingProgressToBoolConverter}}" />
+                                <Label x:Name="AspectRatioLabel" Style="{TemplateBinding MessageStyle}"/>
+
+                                <StackLayout x:Name="ControlsPanel" Style="{TemplateBinding ControlsPanelStyle}">
+                                    <StackLayout Orientation="Horizontal" >
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                                            <Label x:Name="ElapsedTimeLabel" Style="{TemplateBinding ElapsedTimeLabelStyle}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                            <Label x:Name="RemainingTimeLabel" Style="{TemplateBinding RemainingTimeLabelStyle}"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" IsVisible="{TemplateBinding IsSeekBarVisible}" Spacing="0">
+                                        <Slider x:Name="SeekBar" Style="{TemplateBinding SeekBarStyle}" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Style="{TemplateBinding ButtonBarStyle}">
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center">
+                                            <Button x:Name="AudioTracksSelectionButton" Style="{TemplateBinding AudioTracksSelectionButtonStyle}" />
+                                            <Button x:Name="ClosedCaptionsSelectionButton" Style="{TemplateBinding ClosedCaptionsSelectionButtonStyle}" />
+                                        </StackLayout>
+                                        <ContentPresenter Content="{TemplateBinding ButtonBarStartArea}" HorizontalOptions="Start" VerticalOptions="Center" />
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                                            <Button x:Name="PreviousButton" Style="{StaticResource Key=PreviousButtonStyle}" />
+                                            <Button x:Name="RewindButton" Style="{TemplateBinding RewindButtonStyle}" />
+                                            <Button x:Name="PlayPauseButton" Style="{TemplateBinding PlayPauseButtonStyle}" />
+                                            <Button x:Name="StopButton" Style="{TemplateBinding StopButtonStyle}" />
+                                            <Button x:Name="SeekButton" Style="{TemplateBinding SeekButtonStyle}" />
+                                            <Button x:Name="NextButton" Style="{StaticResource Key=NextButtonStyle}" />
+                                        </StackLayout>
+                                        <ContentPresenter Content="{TemplateBinding ButtonBarEndArea}" HorizontalOptions="End" VerticalOptions="Center" />
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Center">
+                                            <Button x:Name="AspectRatioButton" Style="{TemplateBinding AspectRatioButtonStyle}" />
+                                            <Button x:Name="CastButton" Style="{TemplateBinding CastButtonStyle}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </ControlTemplate>
+                    </controls:CustomPlaybackControls.ControlTemplate>
+                </controls:CustomPlaybackControls>
+            </vlc:MediaPlayerElement.PlaybackControls>
+        </vlc:MediaPlayerElement>
     </Grid>
 </ContentPage>
