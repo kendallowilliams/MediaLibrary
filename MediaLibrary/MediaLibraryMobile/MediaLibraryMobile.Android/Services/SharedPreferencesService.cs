@@ -5,22 +5,35 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
+using Xamarin.Essentials;
 
 namespace MMediaLibraryMobile.Droid.Services
 {
     [Export(typeof(ISharedPreferencesService))]
-    public class SharedPreferencesService : ISharedPreferencesService, IDisposable
+    public class SharedPreferencesService : ISharedPreferencesService
     {
-        private readonly ISharedPreferences sharedPreferences;
-        private readonly ISharedPreferencesEditor sharedPreferencesEditor;
-        private readonly Context context;
+        private ISharedPreferences sharedPreferences;
+        private ISharedPreferencesEditor sharedPreferencesEditor;
+        private Context context;
 
         [ImportingConstructor]
         public SharedPreferencesService()
         {
-            this.context = Android.App.Application.Context;
-            sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(context);
-            sharedPreferencesEditor = sharedPreferences.Edit();
+            Action Initialize = () =>
+            {
+                context = Android.App.Application.Context;
+                sharedPreferences = PreferenceManager.GetDefaultSharedPreferences(context);
+                sharedPreferencesEditor = sharedPreferences.Edit();
+            };
+
+            if (MainThread.IsMainThread)
+            {
+                Initialize.Invoke();
+            }
+            else
+            {
+                MainThread.BeginInvokeOnMainThread(Initialize);
+            }
         }
 
         public void SetString(string key, string value)

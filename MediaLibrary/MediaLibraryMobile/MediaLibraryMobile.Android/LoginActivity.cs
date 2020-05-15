@@ -16,6 +16,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Binding;
 using MediaLibraryMobile.Droid.Services;
+using MediaLibraryMobile.Services.Interfaces;
+using XBinding = Xamarin.Forms.Binding;
+using XCheckBox = Android.Widget.CheckBox;
 
 namespace MediaLibraryMobile.Droid
 {
@@ -35,17 +38,25 @@ namespace MediaLibraryMobile.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            using var _container = MefService.GetMEFContainer();
+            ISharedPreferencesService sharedPreferencesService = _container.GetExportedValue<ISharedPreferencesService>();
+
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Login);
 
             binding = new Login(this);
             binding.btnLogin.Click += LoginClicked;
             binding.txtUsername.SetBindingContext(loginViewModel);
-            binding.txtUsername.SetBinding(nameof(LoginViewModel.Username), new Xamarin.Forms.Binding(nameof(EditText.Text)));
+            binding.txtUsername.SetBinding(nameof(EditText.Text), new XBinding(nameof(LoginViewModel.Username)));
             binding.txtPassword.SetBindingContext(loginViewModel);
-            binding.txtPassword.SetBinding(nameof(LoginViewModel.Password), new Xamarin.Forms.Binding(nameof(EditText.Text)));
+            binding.txtPassword.SetBinding(nameof(EditText.Text), new XBinding(nameof(LoginViewModel.Password)));
             binding.chkRememberMe.SetBindingContext(loginViewModel);
-            binding.chkRememberMe.SetBinding(nameof(LoginViewModel.RememberMe), new Xamarin.Forms.Binding(nameof(Android.Widget.CheckBox.Checked)));
+            binding.chkRememberMe.SetBinding(nameof(XCheckBox.Checked), new XBinding(nameof(LoginViewModel.RememberMe)));
+
+            if (bool.TryParse(sharedPreferencesService.GetString(nameof(LoginViewModel.RememberMe)), out bool loggedIn) && loggedIn)
+            {
+                binding.btnLogin.CallOnClick();
+            }
         }
 
         private async void LoginClicked(object sender, EventArgs args)

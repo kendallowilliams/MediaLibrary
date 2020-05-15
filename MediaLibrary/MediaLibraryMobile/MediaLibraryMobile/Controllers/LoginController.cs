@@ -52,10 +52,12 @@ namespace MediaLibraryMobile.Controllers
         {
             if (await webService.IsAuthorized(baseUri, string.Empty, loginViewModel.Username, loginViewModel.Password))
             {
+                if (loginViewModel.RememberMe) /*then*/ sharedPreferencesService.SetString(nameof(LoginViewModel.RememberMe), bool.TrueString);
                 success?.Invoke();
             }
             else
             {
+                sharedPreferencesService.SetString(nameof(LoginViewModel.RememberMe), bool.FalseString);
                 failure?.Invoke();
             }
         }
