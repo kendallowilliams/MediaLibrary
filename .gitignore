@@ -64,3 +64,4 @@
 /MediaLibrary/MediaLibraryMobile/MediaLibraryMobile.Android/bin/Debug
 /MediaLibrary/MediaLibraryMobile/MediaLibraryMobile.Android/obj
 /MediaLibrary/MediaLibraryMobile/MediaLibraryMobile/obj
+*.csproj.user
