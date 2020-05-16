@@ -65,11 +65,7 @@ namespace MediaLibraryMobile.Droid
 
         private void LoginSucceeded()
         {
-            RunOnUiThread(() =>
-            {
-                StartActivity(typeof(MainActivity));
-                Finish();
-            });
+            RunOnUiThread(() => StartActivity(typeof(MainActivity));
         }
 
         private void LoginFailed()

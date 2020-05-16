@@ -65,3 +65,5 @@
 /MediaLibrary/MediaLibraryMobile/MediaLibraryMobile.Android/obj
 /MediaLibrary/MediaLibraryMobile/MediaLibraryMobile/obj
 *.csproj.user
+/MediaLibrary/MediaLibraryMobile/MediaLibraryMobile/bin/Release/netstandard2.0
+/MediaLibrary/MediaLibraryMobile/MediaLibraryMobile.Android/bin/Release
