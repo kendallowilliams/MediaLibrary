@@ -7,7 +7,6 @@ using Xamarin.Forms;
 using MediaLibraryMobile.Repository;
 using System.Linq;
 using static MediaLibraryMobile.Enums;
-using MediaLibraryMobile.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using System.Threading.Tasks;
 using System.ComponentModel;
@@ -17,6 +16,7 @@ using Xamarin.Forms.Internals;
 using MediaLibraryBLL.Services.Interfaces;
 using System.Threading;
 using LibVLCSharp.Shared;
+using Xamarin.Essentials;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -30,11 +30,10 @@ namespace MediaLibraryMobile.Controllers
         private readonly IDictionary<Pages, NavigationPage> pages;
         private readonly IWebService webService;
         private readonly Uri baseUri;
-        private readonly ISharedPreferencesService sharedPreferencesService;
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
-                              IWebService webService, ISharedPreferencesService sharedPreferencesService, PlayerViewModel playerViewModel)
+                              IWebService webService, PlayerViewModel playerViewModel)
         {
             string baseAddress = string.Empty;
 
@@ -43,7 +42,6 @@ namespace MediaLibraryMobile.Controllers
             this.podcastViewModel = podcastViewModel;
             this.playerViewModel = playerViewModel;
             this.webService = webService;
-            this.sharedPreferencesService = sharedPreferencesService;
             this.mainViewModel.MenuItems = MainRepository.GetMenuItems();
             this.mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
             this.playlistViewModel.PropertyChanged += PlaylistViewModel_PropertyChanged;
@@ -56,9 +54,9 @@ namespace MediaLibraryMobile.Controllers
             this.playlistViewModel.PlayCommand = new Command(Play);
             InitializeMediaPlayer();
 #if DEBUG
-            baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG");
+            baseAddress = Preferences.Get("BASE_URI_DEBUG", default(string));
 #else
-            baseAddress = this.sharedPreferencesService.GetString("BASE_URI");
+            baseAddress = Preferences.Get("BASE_URI", default(string));
 #endif
             baseUri = new Uri(baseAddress);
             pages = new Dictionary<Pages, NavigationPage>()

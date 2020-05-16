@@ -1,11 +1,11 @@
 ﻿using MediaLibraryBLL.Services.Interfaces;
-using MediaLibraryMobile.Services.Interfaces;
 using MediaLibraryMobile.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace MediaLibraryMobile.Controllers
@@ -15,33 +15,29 @@ namespace MediaLibraryMobile.Controllers
     {
         private readonly IWebService webService;
         private readonly LoginViewModel loginViewModel;
-        private readonly ISharedPreferencesService sharedPreferencesService;
         private readonly Uri baseUri;
 
         [ImportingConstructor]
-        public LoginController(LoginViewModel loginViewModel, IWebService webService, ISharedPreferencesService sharedPreferencesService)
+        public LoginController(LoginViewModel loginViewModel, IWebService webService)
         {
             string baseAddress = string.Empty;
 
             this.webService = webService;
-            this.sharedPreferencesService = sharedPreferencesService;
             this.loginViewModel = loginViewModel;
             this.loginViewModel.PropertyChanged += LoginViewModel_PropertyChanged;
 #if DEBUG
-            if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI_DEBUG")))
+            if (string.IsNullOrWhiteSpace(baseAddress = Preferences.Get("BASE_URI_DEBUG", default(string))))
             {
-                this.sharedPreferencesService.SetString("BASE_URI_DEBUG", baseAddress = "http://kserver/MediaLibraryDEV/");
+                Preferences.Set("BASE_URI_DEBUG", baseAddress = "http://kserver/MediaLibraryDEV/");
             }
 #else
-            if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI")))
+            if (string.IsNullOrWhiteSpace(baseAddress = Preferences.Get("BASE_URI", default(string))))
             {
-                this.sharedPreferencesService.SetString("BASE_URI", baseAddress = "https://media.kowmylk.com/");
+                Preferences.Set("BASE_URI", baseAddress = "https://media.kowmylk.com/");
             }
 #endif
             baseUri = new Uri(baseAddress);
         }
-
-        public ISharedPreferencesService SharedPreferencesService => sharedPreferencesService;
 
         public LoginViewModel LoginViewModel => loginViewModel;
 
@@ -52,14 +48,14 @@ namespace MediaLibraryMobile.Controllers
 
         public async Task Login(Action success = default, Action failure = default)
         {
-            if (await webService.IsAuthorized(baseUri, string.Empty, loginViewModel.Username, loginViewModel.Password))
+            if (await webService.IsAuthorized(baseUri, string.Empty, loginViewModel.Username, loginViewModel.Password).ConfigureAwait(true))
             {
-                if (loginViewModel.RememberMe) /*then*/ sharedPreferencesService.SetString(nameof(LoginViewModel.RememberMe), bool.TrueString);
+                if (loginViewModel.RememberMe) /*then*/ Preferences.Set(nameof(LoginViewModel.RememberMe), true);
                 success?.Invoke();
             }
             else
             {
-                sharedPreferencesService.SetString(nameof(LoginViewModel.RememberMe), bool.FalseString);
+                Preferences.Set(nameof(LoginViewModel.RememberMe), false);
                 failure?.Invoke();
             }
         }

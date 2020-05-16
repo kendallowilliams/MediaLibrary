@@ -16,9 +16,11 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Binding;
 using MediaLibraryMobile.Droid.Services;
-using MediaLibraryMobile.Services.Interfaces;
 using XBinding = Xamarin.Forms.Binding;
 using XCheckBox = Android.Widget.CheckBox;
+using XPlatform = Xamarin.Essentials.Platform;
+using Xamarin.Essentials;
+using Android.Content.PM;
 
 namespace MediaLibraryMobile.Droid
 {
@@ -31,16 +33,16 @@ namespace MediaLibraryMobile.Droid
 
         public LoginActivity()
         {
+            using var container = MefService.GetMEFContainer();
+            loginController = container.GetExportedValue<LoginController>();
+            loginViewModel = loginController.LoginViewModel;
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
+            base.OnCreate(savedInstanceState); 
+            XPlatform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.Login);
-
-            using var container = MefService.GetMEFContainer();
-            loginController = container.GetExportedValue<LoginController>();
-            loginViewModel = loginController.LoginViewModel;
 
             binding = new Login(this);
             binding.btnLogin.Click += LoginClicked;
@@ -48,10 +50,16 @@ namespace MediaLibraryMobile.Droid
             binding.txtPassword.TextChanged += (sender, args) => loginViewModel.Password = String.Concat(args.Text);
             binding.chkRememberMe.CheckedChange += (sender, args) => loginViewModel.RememberMe = args.IsChecked;
 
-            if (bool.TryParse(loginController.SharedPreferencesService.GetString(nameof(LoginViewModel.RememberMe)), out bool loggedIn) && loggedIn)
+            if (Preferences.Get(nameof(LoginViewModel.RememberMe), default(bool)))
             {
                 binding.btnLogin.CallOnClick();
             }
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        {
+            XPlatform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         private async void LoginClicked(object sender, EventArgs args)
