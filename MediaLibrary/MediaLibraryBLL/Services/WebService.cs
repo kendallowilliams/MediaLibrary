@@ -76,9 +76,9 @@ namespace MediaLibraryBLL.Services
             return await tcs.Task;
         }
 
-        public async Task<IEnumerable<T>> Get<T>(Uri baseUri, string relativePath, string username, string password)
+        public async Task<T> Get<T>(Uri baseUri, string relativePath, string username, string password)
         {
-            IEnumerable<T> results = Enumerable.Empty<T>();
+            T results = default;
             HttpResponseMessage response = default;
             string credentials = $"{username}:{password}",
                    authorization = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
@@ -95,7 +95,7 @@ namespace MediaLibraryBLL.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    results = JsonConvert.DeserializeObject<IEnumerable<T>>(await response.Content.ReadAsStringAsync());
+                    results = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
                 }
             }
 
