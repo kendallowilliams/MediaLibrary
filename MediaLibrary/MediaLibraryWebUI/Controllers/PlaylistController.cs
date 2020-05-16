@@ -222,7 +222,7 @@ namespace MediaLibraryWebUI.Controllers
             Task<IEnumerable<Playlist>> dbPlaylistTasks = dataService.GetList<Playlist>(default, default, item => item.PlaylistEpisodes,
                                                                                                           item => item.PlaylistPodcastItems,
                                                                                                           item => item.PlaylistTracks),
-                                        systemPlaylistTask = playlistService.GetSystemPlaylists();
+                                        systemPlaylistTask = playlistService.GetSystemPlaylists(true);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
             string json = string.Empty;
             JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
