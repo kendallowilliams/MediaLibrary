@@ -30,8 +30,8 @@ namespace MediaLibraryMobile.Controllers
         private readonly IDictionary<Pages, NavigationPage> pages;
         private readonly IWebService webService;
         private readonly Uri baseUri;
-        public string username,
-                      password;
+        public readonly string username,
+                               password;
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
@@ -39,6 +39,8 @@ namespace MediaLibraryMobile.Controllers
         {
             string baseAddress = string.Empty;
 
+            username = Preferences.Get(nameof(LoginViewModel.Username), default(string), "login");
+            password = Preferences.Get(nameof(LoginViewModel.Password), default(string), "login");
             this.mainViewModel = mainViewModel;
             this.playlistViewModel = playlistViewModel;
             this.podcastViewModel = podcastViewModel;
@@ -55,7 +57,7 @@ namespace MediaLibraryMobile.Controllers
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
             this.playlistViewModel.PlayCommand = new Command(Play);
             InitializeMediaPlayer();
-#if DEBUG
+#if !DEBUG
             baseAddress = Preferences.Get("BASE_URI_DEBUG", default(string));
 #else
             baseAddress = Preferences.Get("BASE_URI", default(string));
@@ -68,8 +70,6 @@ namespace MediaLibraryMobile.Controllers
                 { Pages.Player, new NavigationPage(playerViewModel.View) }
             };
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
-            username = Preferences.Get(nameof(LoginViewModel.Username), "login");
-            password = Preferences.Get(nameof(LoginViewModel.Password), "login");
         }
 
         private void PlayerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
