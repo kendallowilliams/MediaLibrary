@@ -25,21 +25,22 @@ namespace MediaLibraryMobile.Droid
     [Activity(Label = "Login", MainLauncher = true)]
     public class LoginActivity : Activity
     {
-        private readonly LoginController loginController;
-        private readonly LoginViewModel loginViewModel;
+        private LoginController loginController;
+        private LoginViewModel loginViewModel;
         private Login binding;
 
         public LoginActivity()
         {
-            using var container = MefService.GetMEFContainer();
-            loginController = container.GetExportedValue<LoginController>();
-            loginViewModel = loginController.LoginViewModel;
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Login);
+
+            using var container = MefService.GetMEFContainer();
+            loginController = container.GetExportedValue<LoginController>();
+            loginViewModel = loginController.LoginViewModel;
 
             binding = new Login(this);
             binding.btnLogin.Click += LoginClicked;
