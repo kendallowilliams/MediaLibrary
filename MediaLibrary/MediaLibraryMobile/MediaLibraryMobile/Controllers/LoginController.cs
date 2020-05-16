@@ -35,13 +35,15 @@ namespace MediaLibraryMobile.Controllers
 #else
             if (string.IsNullOrWhiteSpace(baseAddress = this.sharedPreferencesService.GetString("BASE_URI")))
             {
-                this.sharedPreferencesService.SetString("BASE_URI", baseAddress = "https://kserver/MediaLibrary/");
+                this.sharedPreferencesService.SetString("BASE_URI", baseAddress = "https://media.kowmylk.com/");
             }
 #endif
             baseUri = new Uri(baseAddress);
         }
 
-        public LoginViewModel GetLoginViewModel() => loginViewModel;
+        public ISharedPreferencesService SharedPreferencesService => sharedPreferencesService;
+
+        public LoginViewModel LoginViewModel => loginViewModel;
 
         private void LoginViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

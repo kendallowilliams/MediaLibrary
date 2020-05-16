@@ -33,14 +33,11 @@ namespace MediaLibraryMobile.Droid
         {
             using var container = MefService.GetMEFContainer();
             loginController = container.GetExportedValue<LoginController>();
-            loginViewModel = loginController.GetLoginViewModel();
+            loginViewModel = loginController.LoginViewModel;
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            using var _container = MefService.GetMEFContainer();
-            ISharedPreferencesService sharedPreferencesService = _container.GetExportedValue<ISharedPreferencesService>();
-
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Login);
 
@@ -50,7 +47,7 @@ namespace MediaLibraryMobile.Droid
             binding.txtPassword.TextChanged += (sender, args) => loginViewModel.Password = String.Concat(args.Text);
             binding.chkRememberMe.CheckedChange += (sender, args) => loginViewModel.RememberMe = args.IsChecked;
 
-            if (bool.TryParse(sharedPreferencesService.GetString(nameof(LoginViewModel.RememberMe)), out bool loggedIn) && loggedIn)
+            if (bool.TryParse(loginController.SharedPreferencesService.GetString(nameof(LoginViewModel.RememberMe)), out bool loggedIn) && loggedIn)
             {
                 binding.btnLogin.CallOnClick();
             }
