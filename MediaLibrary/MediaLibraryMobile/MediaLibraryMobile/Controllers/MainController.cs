@@ -57,7 +57,7 @@ namespace MediaLibraryMobile.Controllers
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
             this.playlistViewModel.PlayCommand = new Command(Play);
             InitializeMediaPlayer();
-#if !DEBUG
+#if DEBUG
             baseAddress = Preferences.Get("BASE_URI_DEBUG", default(string));
 #else
             baseAddress = Preferences.Get("BASE_URI", default(string));

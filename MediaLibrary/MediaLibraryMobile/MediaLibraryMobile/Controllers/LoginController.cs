@@ -25,7 +25,7 @@ namespace MediaLibraryMobile.Controllers
             this.webService = webService;
             this.loginViewModel = loginViewModel;
             this.loginViewModel.PropertyChanged += LoginViewModel_PropertyChanged;
-#if !DEBUG
+#if DEBUG
             if (string.IsNullOrWhiteSpace(baseAddress = Preferences.Get("BASE_URI_DEBUG", default(string))))
             {
                 Preferences.Set("BASE_URI_DEBUG", baseAddress = "http://kserver/MediaLibraryDEV/");
