@@ -75,6 +75,7 @@ namespace MediaLibraryBLL.Services
 
             return await tcs.Task;
         }
+
         public async Task<IEnumerable<T>> Get<T>(Uri baseUri, string relativePath, string username, string password)
         {
             IEnumerable<T> results = Enumerable.Empty<T>();

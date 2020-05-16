@@ -48,14 +48,20 @@ namespace MediaLibraryMobile.Controllers
 
         public async Task Login(Action success = default, Action failure = default)
         {
-            if (await webService.IsAuthorized(baseUri, string.Empty, loginViewModel.Username, loginViewModel.Password).ConfigureAwait(true))
+            if (await webService.IsAuthorized(baseUri, string.Empty, loginViewModel.Username, loginViewModel.Password))
             {
-                if (loginViewModel.RememberMe) /*then*/ Preferences.Set(nameof(LoginViewModel.RememberMe), true);
+                Preferences.Set(nameof(LoginViewModel.Username), loginViewModel.Username, "login");
+                Preferences.Set(nameof(LoginViewModel.Password), loginViewModel.Password, "login");
+
+                if (loginViewModel.RememberMe)
+                {
+                    Preferences.Set(nameof(LoginViewModel.RememberMe), true, "login");
+                }
                 success?.Invoke();
             }
             else
             {
-                Preferences.Set(nameof(LoginViewModel.RememberMe), false);
+                Preferences.Clear("login");
                 failure?.Invoke();
             }
         }

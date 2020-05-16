@@ -30,6 +30,8 @@ namespace MediaLibraryMobile.Controllers
         private readonly IDictionary<Pages, NavigationPage> pages;
         private readonly IWebService webService;
         private readonly Uri baseUri;
+        public string username,
+                      password;
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
@@ -66,6 +68,8 @@ namespace MediaLibraryMobile.Controllers
                 { Pages.Player, new NavigationPage(playerViewModel.View) }
             };
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
+            username = Preferences.Get(nameof(LoginViewModel.Username), "login");
+            password = Preferences.Get(nameof(LoginViewModel.Password), "login");
         }
 
         private void PlayerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -144,7 +148,7 @@ namespace MediaLibraryMobile.Controllers
         {
             if ((bool)refresh)
             {
-                this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcastsJSON");
+                this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcastsJSON", username, password);
                 this.podcastViewModel.IsRefreshing = false;
             }
         }
@@ -153,7 +157,7 @@ namespace MediaLibraryMobile.Controllers
         {
             if ((bool)refresh)
             {
-                this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylistsJSON");
+                this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylistsJSON", username, password);
                 this.playlistViewModel.IsRefreshing = false;
             }
         }
