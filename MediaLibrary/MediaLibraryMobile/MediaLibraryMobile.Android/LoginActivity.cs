@@ -46,12 +46,9 @@ namespace MediaLibraryMobile.Droid
 
             binding = new Login(this);
             binding.btnLogin.Click += LoginClicked;
-            binding.txtUsername.SetBindingContext(loginViewModel);
-            binding.txtUsername.SetBinding(nameof(EditText.Text), new XBinding(nameof(LoginViewModel.Username)));
-            binding.txtPassword.SetBindingContext(loginViewModel);
-            binding.txtPassword.SetBinding(nameof(EditText.Text), new XBinding(nameof(LoginViewModel.Password)));
-            binding.chkRememberMe.SetBindingContext(loginViewModel);
-            binding.chkRememberMe.SetBinding(nameof(XCheckBox.Checked), new XBinding(nameof(LoginViewModel.RememberMe)));
+            binding.txtUsername.TextChanged += (sender, args) => loginViewModel.Username = String.Concat(args.Text);
+            binding.txtPassword.TextChanged += (sender, args) => loginViewModel.Password = String.Concat(args.Text);
+            binding.chkRememberMe.CheckedChange += (sender, args) => loginViewModel.RememberMe = args.IsChecked;
 
             if (bool.TryParse(sharedPreferencesService.GetString(nameof(LoginViewModel.RememberMe)), out bool loggedIn) && loggedIn)
             {
