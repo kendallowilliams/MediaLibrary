@@ -148,7 +148,7 @@ namespace MediaLibraryMobile.Controllers
         {
             if ((bool)refresh)
             {
-                this.podcastViewModel.Podcasts = await webService.Get<Podcast>(baseUri, "Podcast/GetPodcastsJSON", username, password);
+                this.podcastViewModel.Podcasts = await webService.Get<IEnumerable<Podcast>>(baseUri, "Podcast/GetPodcastsJSON", username, password);
                 this.podcastViewModel.IsRefreshing = false;
             }
         }
@@ -157,7 +157,7 @@ namespace MediaLibraryMobile.Controllers
         {
             if ((bool)refresh)
             {
-                this.playlistViewModel.Playlists = await webService.Get<Playlist>(baseUri, "Playlist/GetPlaylistsJSON", username, password);
+                this.playlistViewModel.Playlists = await webService.Get<IEnumerable<Playlist>>(baseUri, "Playlist/GetPlaylistsJSON", username, password);
                 this.playlistViewModel.IsRefreshing = false;
             }
         }
