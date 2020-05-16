@@ -222,13 +222,41 @@ namespace MediaLibraryWebUI.Controllers
             Task<IEnumerable<Playlist>> dbPlaylistTasks = dataService.GetList<Playlist>(default, default, item => item.PlaylistEpisodes,
                                                                                                           item => item.PlaylistPodcastItems,
                                                                                                           item => item.PlaylistTracks),
-                                        systemPlaylistTask = playlistService.GetSystemPlaylists(true);
+                                        systemPlaylistTask = playlistService.GetSystemPlaylists();
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
             string json = string.Empty;
             JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
 
             playlists = await Task.WhenAll(dbPlaylistTasks, systemPlaylistTask).ContinueWith(task => task.Result.SelectMany(item => item).ToList());
-            json = JsonConvert.SerializeObject(playlists, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+            json = JsonConvert.SerializeObject(playlists, settings);
+
+            return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
+        }
+
+        [CompressContent]
+        public async Task<ActionResult> GetPlaylistItemsJSON(int id)
+        {
+            Playlist playlist = default;
+            string json = string.Empty;
+            JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, MaxDepth = 3 };
+
+            if (id > 0)
+            {
+                await dataService.Get<Playlist>(item => item.Id == id, default, item => item.PlaylistEpisodes,
+                                                                                item => item.PlaylistEpisodes.Select(_item => _item.Episode),
+                                                                                item => item.PlaylistPodcastItems,
+                                                                                item => item.PlaylistPodcastItems.Select(_item => _item.PodcastItem),
+                                                                                item => item.PlaylistTracks,
+                                                                                item => item.PlaylistTracks.Select(_item => _item.Track.Album),
+                                                                                item => item.PlaylistTracks.Select(_item => _item.Track.Artist))
+                                 .ContinueWith(task => playlist = task.Result);
+            }
+            else
+            {
+                await playlistService.GetSystemPlaylists(true, true).ContinueWith(task => playlist = task.Result.FirstOrDefault(item => item.Id == id));
+            }
+
+            json = JsonConvert.SerializeObject(playlist, settings);
 
             return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
         }
