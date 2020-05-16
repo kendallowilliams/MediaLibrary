@@ -234,7 +234,7 @@ namespace MediaLibraryWebUI.Controllers
         }
 
         [CompressContent]
-        public async Task<ActionResult> GetPlaylistItemsJSON(int id)
+        public async Task<ActionResult> GetPlaylistJSON(int id)
         {
             Playlist playlist = default;
             string json = string.Empty;

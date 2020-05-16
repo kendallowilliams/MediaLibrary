@@ -170,7 +170,7 @@ namespace MediaLibraryMobile.Controllers
 
         private async Task LoadPlaylist(object id)
         {
-            this.playlistViewModel.SelectedPlaylist = this.playlistViewModel.Playlists.FirstOrDefault(item => item.Id == (int)id);
+            this.playlistViewModel.SelectedPlaylist = await webService.Get<Playlist>(baseUri, $"Playlist/GetPlaylistJSON/{id}", username, password);
             await playlistViewModel.View.Navigation.PushAsync(playlistViewModel.PlaylistView as ContentPage);
         }
 
