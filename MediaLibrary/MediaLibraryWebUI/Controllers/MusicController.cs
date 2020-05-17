@@ -192,7 +192,7 @@ namespace MediaLibraryWebUI.Controllers
             Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
             musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
-            musicViewModel.SelectedAlbum = await dataService.GetAlt<Album>(album => album.Id == id, default, "Track.Artist");
+            musicViewModel.SelectedAlbum = await dataService.GetAlt<Album>(album => album.Id == id, default, "Tracks.Artist");
             musicViewModel.SelectedAlbum.Tracks = musicViewModel.SelectedAlbum.Tracks?.OrderBy(song => song.Position).ThenBy(song => song.Title).ToList();
 
             return PartialView("Album", musicViewModel);
@@ -203,7 +203,7 @@ namespace MediaLibraryWebUI.Controllers
             Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
 
             musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
-            musicViewModel.SelectedArtist = await dataService.GetAlt<Artist>(artist => artist.Id == id, default, "Album.Track");
+            musicViewModel.SelectedArtist = await dataService.GetAlt<Artist>(artist => artist.Id == id, default, "Albums.Track");
             return PartialView("Artist", musicViewModel);
         }
 

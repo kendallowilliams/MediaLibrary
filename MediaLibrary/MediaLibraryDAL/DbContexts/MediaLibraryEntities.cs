@@ -42,6 +42,22 @@ namespace MediaLibraryDAL.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Album>().ToTable(nameof(Album));
+            modelBuilder.Entity<Artist>().ToTable(nameof(Artist));
+            modelBuilder.Entity<Configuration>().ToTable(nameof(Configuration));
+            modelBuilder.Entity<Episode>().ToTable(nameof(Episode));
+            modelBuilder.Entity<Genre>().ToTable(nameof(Genre));
+            modelBuilder.Entity<Playlist>().ToTable(nameof(Playlist));
+            modelBuilder.Entity<PlaylistEpisode>().ToTable(nameof(PlaylistEpisode));
+            modelBuilder.Entity<PlaylistPodcastItem>().ToTable(nameof(PlaylistPodcastItem));
+            modelBuilder.Entity<PlaylistTrack>().ToTable(nameof(PlaylistTrack));
+            modelBuilder.Entity<Podcast>().ToTable(nameof(Podcast));
+            modelBuilder.Entity<PodcastItem>().ToTable(nameof(PodcastItem));
+            modelBuilder.Entity<Series>().ToTable(nameof(Series));
+            modelBuilder.Entity<Track>().ToTable(nameof(Track));
+            modelBuilder.Entity<TrackPath>().ToTable(nameof(TrackPath));
+            modelBuilder.Entity<Transaction>().ToTable(nameof(Transaction));
+
             modelBuilder.Entity<Album>(entity =>
             {
                 entity.HasKey(e => e.Id)
