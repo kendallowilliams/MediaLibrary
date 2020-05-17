@@ -53,6 +53,9 @@
   <PropertyGroup>
     <AndroidGenerateLayoutBindings>true</AndroidGenerateLayoutBindings>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEV|AnyCPU'">
+    <OutputPath>bin\DEV\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Java.Interop" />
     <Reference Include="Mono.Android" />
