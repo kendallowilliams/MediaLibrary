@@ -238,7 +238,7 @@ namespace MediaLibraryWebUI.Controllers
         {
             Playlist playlist = default;
             string json = string.Empty;
-            JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore, MaxDepth = 3 };
+            JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
 
             if (id > 0)
             {

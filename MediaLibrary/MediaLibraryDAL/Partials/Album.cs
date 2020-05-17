@@ -1,5 +1,6 @@
 ﻿using MediaLibraryDAL.Models;
 using MediaLibraryDAL.Models.Interfaces;
+using MediaLibraryDAL.Partials.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using static MediaLibraryDAL.Enums;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class Album: IDataModel
+    public partial class Album: IDataModel, IAlbumJSON
     {
         public Album(string title): base()
         {
