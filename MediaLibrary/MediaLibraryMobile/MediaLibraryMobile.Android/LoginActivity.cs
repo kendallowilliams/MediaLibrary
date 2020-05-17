@@ -19,7 +19,6 @@ using XCheckBox = Android.Widget.CheckBox;
 using XPlatform = Xamarin.Essentials.Platform;
 using Xamarin.Essentials;
 using Android.Content.PM;
-using MediaLibraryMobile.Services;
 
 namespace MediaLibraryMobile.Droid
 {

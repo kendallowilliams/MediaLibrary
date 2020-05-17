@@ -8,7 +8,6 @@ using Android.Widget;
 using Android.OS;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
-using MediaLibraryMobile.Services;
 
 namespace MediaLibraryMobile.Droid
 {
