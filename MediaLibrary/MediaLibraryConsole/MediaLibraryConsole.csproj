@@ -104,10 +104,6 @@
       <Project>{e38c9eb6-ebbd-404a-9bf3-f2143a132b9d}</Project>
       <Name>MediaLibraryBLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MediaLibraryDAL\MediaLibraryDAL.csproj">
-      <Project>{15905c13-faa9-4fe5-b6a0-359eb83cd9e3}</Project>
-      <Name>MediaLibraryDAL</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

@@ -30,10 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MediaLibraryDAL\MediaLibraryDAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Views\Main\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
