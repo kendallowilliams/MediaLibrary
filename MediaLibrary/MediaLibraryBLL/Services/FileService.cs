@@ -153,8 +153,8 @@ namespace MediaLibraryBLL.Services
                         }
                     }
 
-                    albumsToDelete = await dataService.GetList<Album>(album => album.Tracks.Count() == 0, default, album => album.Tracks);
-                    artistsToDelete = await dataService.GetList<Artist>(artist => artist.Tracks.Count() == 0, default, artist => artist.Tracks);
+                    albumsToDelete = await dataService.GetList<Album>(album => album.Track.Count() == 0, default, album => album.Track);
+                    artistsToDelete = await dataService.GetList<Artist>(artist => artist.Track.Count() == 0, default, artist => artist.Track);
                     foreach (Album album in albumsToDelete) { await dataService.Delete<Album>(album.Id); }
                     foreach (Artist artist in artistsToDelete) { await dataService.Delete<Artist>(artist.Id); }
                     path.LastScanDate = DateTime.Now;

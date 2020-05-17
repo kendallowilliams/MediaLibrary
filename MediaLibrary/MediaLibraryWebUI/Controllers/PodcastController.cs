@@ -100,8 +100,8 @@ namespace MediaLibraryWebUI.Controllers
         public async Task RemovePodcast(int id)
         {
             Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Podcast));
-            Podcast podcast = await dataService.Get<Podcast>(item => item.Id == id, default, item => item.PodcastItems);
-            IEnumerable<string> episodes = podcast.PodcastItems.Where(item => !string.IsNullOrWhiteSpace(item.File))
+            Podcast podcast = await dataService.Get<Podcast>(item => item.Id == id, default, item => item.PodcastItem);
+            IEnumerable<string> episodes = podcast.PodcastItem.Where(item => !string.IsNullOrWhiteSpace(item.File))
                                                                .Select(item => item.File);
 
             foreach (string file in episodes) { fileService.Delete(file); }
@@ -123,8 +123,8 @@ namespace MediaLibraryWebUI.Controllers
 
             if (filter == PodcastFilter.Downloaded) /*then*/ expression = item => !string.IsNullOrWhiteSpace(item.File);
             else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => item.PlayCount == 0;
-            podcastViewModel.SelectedPodcast = await dataService.Get<Podcast>(podcast => podcast.Id == id, default, podcast => podcast.PodcastItems);
-            if (expression != null) /*then*/ podcastViewModel.SelectedPodcast.PodcastItems = podcastViewModel.SelectedPodcast.PodcastItems.Where(expression).ToList();
+            podcastViewModel.SelectedPodcast = await dataService.Get<Podcast>(podcast => podcast.Id == id, default, podcast => podcast.PodcastItem);
+            if (expression != null) /*then*/ podcastViewModel.SelectedPodcast.PodcastItem = podcastViewModel.SelectedPodcast.PodcastItem.Where(expression).ToList();
 
             return PartialView("Podcast", podcastViewModel);
         }
@@ -271,7 +271,7 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> GetPodcastJSON(int id)
         {
-            Podcast podcast = await dataService.Get<Podcast>(item => item.Id == id, default, item => item.PodcastItems);
+            Podcast podcast = await dataService.Get<Podcast>(item => item.Id == id, default, item => item.PodcastItem);
 
             return Json(podcast, JsonRequestBehavior.AllowGet);
         }

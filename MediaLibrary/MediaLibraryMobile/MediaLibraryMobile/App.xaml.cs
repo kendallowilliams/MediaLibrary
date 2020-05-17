@@ -3,7 +3,6 @@ using System;
 using System.ComponentModel.Composition.Hosting;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using MediaLibraryDAL.Services.Interfaces;
 using System.ComponentModel.Composition;
 using System.ComponentModel;
 using MediaLibraryMobile.Controllers;

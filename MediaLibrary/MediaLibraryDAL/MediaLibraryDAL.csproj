@@ -5,7 +5,33 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DbContexts\" />
+    <Compile Remove="Models\Album.cs" />
+    <Compile Remove="Models\Artist.cs" />
+    <Compile Remove="Models\Genre.cs" />
+    <Compile Remove="Models\Playlist.cs" />
+    <Compile Remove="Models\Podcast.cs" />
+    <Compile Remove="Models\PodcastFile.cs" />
+    <Compile Remove="Models\PodcastItem.cs" />
+    <Compile Remove="Models\Track.cs" />
+    <Compile Remove="Models\TrackFile.cs" />
+    <Compile Remove="Models\TrackPath.cs" />
+    <Compile Remove="Models\Transaction.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ConfigureAwait.Fody" Version="3.3.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
   </ItemGroup>
 
 </Project>

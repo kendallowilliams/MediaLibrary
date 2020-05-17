@@ -32,9 +32,9 @@ namespace MediaLibraryWebUI.Services
         public async Task<IEnumerable<IGrouping<string, Playlist>>> GetPlaylistGroups(PlaylistConfiguration configuration)
         {
             IEnumerable<IGrouping<string, Playlist>> groups = Enumerable.Empty<IGrouping<string, Playlist>>();
-            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>(default, default, playlist => playlist.PlaylistTracks,
-                                                                                                    playlist => playlist.PlaylistPodcastItems,
-                                                                                                    playlist => playlist.PlaylistEpisodes);
+            IEnumerable<Playlist> playlists = await dataService.GetList<Playlist>(default, default, playlist => playlist.PlaylistTrack,
+                                                                                                    playlist => playlist.PlaylistPodcastItem,
+                                                                                                    playlist => playlist.PlaylistEpisode);
             var playlistTypeSortMappings = PlaylistRepository.GetPlaylistTypePlaylistSortMappings();
 
             playlists = playlists.Concat(await GetSystemPlaylists(true));
@@ -97,7 +97,7 @@ namespace MediaLibraryWebUI.Services
                 Type = (int)PlaylistTabs.Music,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
-                PlaylistTracks = item.Value(tracks).Select(track => new PlaylistTrack() { Track = (Track)track }).ToList()
+                PlaylistTrack = item.Value(tracks).Select(track => new PlaylistTrack() { Track = (Track)track }).ToList()
             }).ToList();
             count = playlists.Count();
             playlists = playlists.Concat(PlaylistRepository.GetSystemPlaylists<PodcastItem>(25).Select((item, index) => new Playlist()
@@ -107,7 +107,7 @@ namespace MediaLibraryWebUI.Services
                 Type = (int)PlaylistTabs.Podcast,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
-                PlaylistPodcastItems = item.Value(podcastItems).Select(_item => new PlaylistPodcastItem() { PodcastItem = (PodcastItem)_item }).ToList()
+                PlaylistPodcastItem = item.Value(podcastItems).Select(_item => new PlaylistPodcastItem() { PodcastItem = (PodcastItem)_item }).ToList()
             }).ToList());
             count = playlists.Count();
             playlists = playlists.Concat(PlaylistRepository.GetSystemPlaylists<Episode>(25).Select((item, index) => new Playlist()
@@ -117,7 +117,7 @@ namespace MediaLibraryWebUI.Services
                 Type = (int)PlaylistTabs.Television,
                 CreateDate = DateTime.Now,
                 ModifyDate = DateTime.Now,
-                PlaylistEpisodes = item.Value(episodes).Select(episode => new PlaylistEpisode() { Episode = (Episode)episode }).ToList()
+                PlaylistEpisode = item.Value(episodes).Select(episode => new PlaylistEpisode() { Episode = (Episode)episode }).ToList()
             }).ToList());
 
             return playlists;

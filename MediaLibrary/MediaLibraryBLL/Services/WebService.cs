@@ -6,7 +6,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using Fody;
-using MediaLibraryDAL.Models;
 using MediaLibraryBLL.Services.Interfaces;
 using System.Net.Http;
 using System.Net.Http.Headers;

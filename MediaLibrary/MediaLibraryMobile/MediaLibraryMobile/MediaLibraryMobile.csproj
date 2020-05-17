@@ -68,4 +68,8 @@
   <ItemGroup>
     <Folder Include="Converters\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MediaLibraryDAL\MediaLibraryDAL.csproj" />
+  </ItemGroup>
 </Project>
