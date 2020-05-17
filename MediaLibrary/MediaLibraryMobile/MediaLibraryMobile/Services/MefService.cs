@@ -2,18 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using MediaLibraryDAL.Services.Interfaces;
 
-namespace MediaLibraryMobile.Droid.Services
+namespace MediaLibraryMobile.Services
 {
     public class MefService
     {
@@ -22,11 +13,9 @@ namespace MediaLibraryMobile.Droid.Services
             CompositionContainer container;
             var catalog = new AggregateCatalog();
             var baseCatalog = new AssemblyCatalog(typeof(App).Assembly);
-            var droidCatalog = new AssemblyCatalog(typeof(MefService).Assembly);
             var dalCatalog = new AssemblyCatalog(typeof(IDataService).Assembly);
 
             catalog.Catalogs.Add(baseCatalog);
-            catalog.Catalogs.Add(droidCatalog);
             catalog.Catalogs.Add(dalCatalog);
             container = new CompositionContainer(catalog);
 

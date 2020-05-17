@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 
@@ -15,12 +14,12 @@ using MediaLibraryMobile.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Binding;
-using MediaLibraryMobile.Droid.Services;
 using XBinding = Xamarin.Forms.Binding;
 using XCheckBox = Android.Widget.CheckBox;
 using XPlatform = Xamarin.Essentials.Platform;
 using Xamarin.Essentials;
 using Android.Content.PM;
+using MediaLibraryMobile.Services;
 
 namespace MediaLibraryMobile.Droid
 {
