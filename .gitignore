@@ -71,3 +71,5 @@
 *.sqlproj.user
 /ML/ML_Console/bin/DEV
 /ML/ML_Mobile/MediaLibraryMobile.Android/obj/Debug/90
+/ML/ML_Mobile/MediaLibraryMobile/bin/Debug/netstandard2.0
+/ML/ML_Mobile/MediaLibraryMobile.Android/bin/Debug

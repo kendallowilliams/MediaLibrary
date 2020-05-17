@@ -73,6 +73,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ML_BLL\MediaLibraryBLL.csproj" />
+    <ProjectReference Include="..\..\ML_DAL\MediaLibraryDAL.csproj" />
   </ItemGroup>
 </Project>
