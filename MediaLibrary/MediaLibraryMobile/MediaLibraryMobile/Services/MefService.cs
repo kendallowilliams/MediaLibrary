@@ -6,7 +6,7 @@ using MediaLibraryDAL.Services.Interfaces;
 
 namespace MediaLibraryMobile.Services
 {
-    public class MefService
+    public static class MefService
     {
         public static CompositionContainer GetMEFContainer(params object[] attributedParts)
         {
