@@ -7,7 +7,7 @@ namespace MediaLibraryDAL.DbContexts
     {
         public Track()
         {
-            PlaylistTrack = new HashSet<PlaylistTrack>();
+            PlaylistTracks = new HashSet<PlaylistTrack>();
         }
 
         public int Id { get; set; }
@@ -30,6 +30,6 @@ namespace MediaLibraryDAL.DbContexts
         public virtual Artist Artist { get; set; }
         public virtual Genre Genre { get; set; }
         public virtual TrackPath Path { get; set; }
-        public virtual ICollection<PlaylistTrack> PlaylistTrack { get; set; }
+        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
     }
 }

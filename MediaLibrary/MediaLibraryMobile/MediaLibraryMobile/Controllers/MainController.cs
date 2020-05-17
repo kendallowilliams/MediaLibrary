@@ -108,9 +108,9 @@ namespace MediaLibraryMobile.Controllers
         {
             if (e.PropertyName == nameof(PlaylistViewModel.SelectedPlaylist))
             {
-                this.playlistViewModel.SelectedPlaylistHasEpisodes = this.playlistViewModel.SelectedPlaylist.PlaylistEpisode.Any();
-                this.playlistViewModel.SelectedPlaylistHasTracks = this.playlistViewModel.SelectedPlaylist.PlaylistTrack.Any();
-                this.playlistViewModel.SelectedPlaylistHasPodcastItems = this.playlistViewModel.SelectedPlaylist.PlaylistPodcastItem.Any();
+                this.playlistViewModel.SelectedPlaylistHasEpisodes = this.playlistViewModel.SelectedPlaylist.PlaylistEpisodes.Any();
+                this.playlistViewModel.SelectedPlaylistHasTracks = this.playlistViewModel.SelectedPlaylist.PlaylistTracks.Any();
+                this.playlistViewModel.SelectedPlaylistHasPodcastItems = this.playlistViewModel.SelectedPlaylist.PlaylistPodcastItems.Any();
             }
             else if (e.PropertyName == nameof(PlaylistViewModel.Playlists))
             {
@@ -236,13 +236,13 @@ namespace MediaLibraryMobile.Controllers
             switch (playlistType)
             {
                 case PlaylistTypes.Music:
-                    ids = playlist.PlaylistTrack.Select(item => item.Track).Select(item => item.Id);
+                    ids = playlist.PlaylistTracks.Select(item => item.Track).Select(item => item.Id);
                     break;
                 case PlaylistTypes.Podcast:
-                    ids = playlist.PlaylistPodcastItem.Select(item => item.PodcastItem).Select(item => item.Id);
+                    ids = playlist.PlaylistPodcastItems.Select(item => item.PodcastItem).Select(item => item.Id);
                     break;
                 case PlaylistTypes.Television:
-                    ids = playlist.PlaylistEpisode.Select(item => item.Episode).Select(item => item.Id);
+                    ids = playlist.PlaylistEpisodes.Select(item => item.Episode).Select(item => item.Id);
                     break;
                 default:
                     break;
@@ -259,13 +259,13 @@ namespace MediaLibraryMobile.Controllers
             switch (playlistType)
             {
                 case PlaylistTypes.Music:
-                    id = playlist.PlaylistTrack.Select(_item => _item.Track).IndexOf(item);
+                    id = playlist.PlaylistTracks.Select(_item => _item.Track).IndexOf(item);
                     break;
                 case PlaylistTypes.Podcast:
-                    id = playlist.PlaylistPodcastItem.Select(_item => _item.PodcastItem).IndexOf(item);
+                    id = playlist.PlaylistPodcastItems.Select(_item => _item.PodcastItem).IndexOf(item);
                     break;
                 case PlaylistTypes.Television:
-                    id = playlist.PlaylistEpisode.Select(_item => _item.Episode).IndexOf(item);
+                    id = playlist.PlaylistEpisodes.Select(_item => _item.Episode).IndexOf(item);
                     break;
                 default:
                     id = default;
@@ -283,13 +283,13 @@ namespace MediaLibraryMobile.Controllers
             switch (playlistType)
             {
                 case PlaylistTypes.Music:
-                    title = playlist.PlaylistTrack.Select(_item => _item.Track).ElementAt(index).Title;
+                    title = playlist.PlaylistTracks.Select(_item => _item.Track).ElementAt(index).Title;
                     break;
                 case PlaylistTypes.Podcast:
-                    title = playlist.PlaylistPodcastItem.Select(_item => _item.PodcastItem).ElementAt(index).Title;
+                    title = playlist.PlaylistPodcastItems.Select(_item => _item.PodcastItem).ElementAt(index).Title;
                     break;
                 case PlaylistTypes.Television:
-                    title = playlist.PlaylistEpisode.Select(_item => _item.Episode).ElementAt(index).Title;
+                    title = playlist.PlaylistEpisodes.Select(_item => _item.Episode).ElementAt(index).Title;
                     break;
                 default:
                     title = "No item selected...";

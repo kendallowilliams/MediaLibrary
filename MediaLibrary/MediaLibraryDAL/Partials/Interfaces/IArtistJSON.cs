@@ -11,8 +11,8 @@ namespace MediaLibraryDAL.Partials.Interfaces
     public interface IArtistJSON
     {
         [JsonIgnore]
-        ICollection<Album> Album { get; set; }
+        ICollection<Album> Albums { get; set; }
         [JsonIgnore]
-        ICollection<Track> Track { get; set; }
+        ICollection<Track> Tracks { get; set; }
     }
 }

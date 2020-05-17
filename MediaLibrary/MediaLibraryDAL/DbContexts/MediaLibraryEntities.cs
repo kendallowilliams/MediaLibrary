@@ -15,21 +15,21 @@ namespace MediaLibraryDAL.DbContexts
         {
         }
 
-        public virtual DbSet<Album> Album { get; set; }
-        public virtual DbSet<Artist> Artist { get; set; }
-        public virtual DbSet<Configuration> Configuration { get; set; }
-        public virtual DbSet<Episode> Episode { get; set; }
-        public virtual DbSet<Genre> Genre { get; set; }
-        public virtual DbSet<Playlist> Playlist { get; set; }
-        public virtual DbSet<PlaylistEpisode> PlaylistEpisode { get; set; }
-        public virtual DbSet<PlaylistPodcastItem> PlaylistPodcastItem { get; set; }
-        public virtual DbSet<PlaylistTrack> PlaylistTrack { get; set; }
-        public virtual DbSet<Podcast> Podcast { get; set; }
-        public virtual DbSet<PodcastItem> PodcastItem { get; set; }
+        public virtual DbSet<Album> Albums { get; set; }
+        public virtual DbSet<Artist> Artists { get; set; }
+        public virtual DbSet<Configuration> Configurations { get; set; }
+        public virtual DbSet<Episode> Episodes { get; set; }
+        public virtual DbSet<Genre> Genres { get; set; }
+        public virtual DbSet<Playlist> Playlists { get; set; }
+        public virtual DbSet<PlaylistEpisode> PlaylistEpisodes { get; set; }
+        public virtual DbSet<PlaylistPodcastItem> PlaylistPodcastItems { get; set; }
+        public virtual DbSet<PlaylistTrack> PlaylistTracks { get; set; }
+        public virtual DbSet<Podcast> Podcasts { get; set; }
+        public virtual DbSet<PodcastItem> PodcastItems { get; set; }
         public virtual DbSet<Series> Series { get; set; }
-        public virtual DbSet<Track> Track { get; set; }
-        public virtual DbSet<TrackPath> TrackPath { get; set; }
-        public virtual DbSet<Transaction> Transaction { get; set; }
+        public virtual DbSet<Track> Tracks { get; set; }
+        public virtual DbSet<TrackPath> TrackPaths { get; set; }
+        public virtual DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -58,13 +58,13 @@ namespace MediaLibraryDAL.DbContexts
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Artist)
-                    .WithMany(p => p.Album)
+                    .WithMany(p => p.Albums)
                     .HasForeignKey(d => d.ArtistId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK__Album__ArtistId__6EF57B66");
 
                 entity.HasOne(d => d.Genre)
-                    .WithMany(p => p.Album)
+                    .WithMany(p => p.Albums)
                     .HasForeignKey(d => d.GenreId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK__Album__GenreId__6FE99F9F");
@@ -118,7 +118,7 @@ namespace MediaLibraryDAL.DbContexts
                     .HasMaxLength(256);
 
                 entity.HasOne(d => d.Series)
-                    .WithMany(p => p.Episode)
+                    .WithMany(p => p.Episodes)
                     .HasForeignKey(d => d.SeriesId)
                     .HasConstraintName("FK__Episode__SeriesI__3D2915A8");
             });
@@ -166,12 +166,12 @@ namespace MediaLibraryDAL.DbContexts
                 entity.Property(e => e.ModifyDate).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Episode)
-                    .WithMany(p => p.PlaylistEpisode)
+                    .WithMany(p => p.PlaylistEpisodes)
                     .HasForeignKey(d => d.EpisodeId)
                     .HasConstraintName("FK_playlist_episode_episode");
 
                 entity.HasOne(d => d.Playlist)
-                    .WithMany(p => p.PlaylistEpisode)
+                    .WithMany(p => p.PlaylistEpisodes)
                     .HasForeignKey(d => d.PlaylistId)
                     .HasConstraintName("FK_playlist_episode_playlist");
             });
@@ -187,12 +187,12 @@ namespace MediaLibraryDAL.DbContexts
                 entity.Property(e => e.ModifyDate).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Playlist)
-                    .WithMany(p => p.PlaylistPodcastItem)
+                    .WithMany(p => p.PlaylistPodcastItems)
                     .HasForeignKey(d => d.PlaylistId)
                     .HasConstraintName("FK_playlist_podcastitem_playlist");
 
                 entity.HasOne(d => d.PodcastItem)
-                    .WithMany(p => p.PlaylistPodcastItem)
+                    .WithMany(p => p.PlaylistPodcastItems)
                     .HasForeignKey(d => d.PodcastItemId)
                     .HasConstraintName("FK_playlist_podcastitem_podcastitem");
             });
@@ -208,12 +208,12 @@ namespace MediaLibraryDAL.DbContexts
                 entity.Property(e => e.ModifyDate).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Playlist)
-                    .WithMany(p => p.PlaylistTrack)
+                    .WithMany(p => p.PlaylistTracks)
                     .HasForeignKey(d => d.PlaylistId)
                     .HasConstraintName("FK_playlist_track_playlist");
 
                 entity.HasOne(d => d.Track)
-                    .WithMany(p => p.PlaylistTrack)
+                    .WithMany(p => p.PlaylistTracks)
                     .HasForeignKey(d => d.TrackId)
                     .HasConstraintName("FK_playlist_track_track");
             });
@@ -268,7 +268,7 @@ namespace MediaLibraryDAL.DbContexts
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Podcast)
-                    .WithMany(p => p.PodcastItem)
+                    .WithMany(p => p.PodcastItems)
                     .HasForeignKey(d => d.PodcastId)
                     .HasConstraintName("FK__PodcastIt__Podca__3E1D39E1");
             });
@@ -312,25 +312,25 @@ namespace MediaLibraryDAL.DbContexts
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Album)
-                    .WithMany(p => p.Track)
+                    .WithMany(p => p.Tracks)
                     .HasForeignKey(d => d.AlbumId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK__Track__AlbumId__2CF2ADDF");
 
                 entity.HasOne(d => d.Artist)
-                    .WithMany(p => p.Track)
+                    .WithMany(p => p.Tracks)
                     .HasForeignKey(d => d.ArtistId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK__Track__ArtistId__2DE6D218");
 
                 entity.HasOne(d => d.Genre)
-                    .WithMany(p => p.Track)
+                    .WithMany(p => p.Tracks)
                     .HasForeignKey(d => d.GenreId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK__Track__GenreId__2FCF1A8A");
 
                 entity.HasOne(d => d.Path)
-                    .WithMany(p => p.Track)
+                    .WithMany(p => p.Tracks)
                     .HasForeignKey(d => d.PathId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK__Track__PathId__2EDAF651");

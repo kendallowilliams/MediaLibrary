@@ -7,7 +7,7 @@ namespace MediaLibraryDAL.DbContexts
     {
         public TrackPath()
         {
-            Track = new HashSet<Track>();
+            Tracks = new HashSet<Track>();
         }
 
         public int Id { get; set; }
@@ -16,6 +16,6 @@ namespace MediaLibraryDAL.DbContexts
         public DateTime CreateDate { get; set; }
         public DateTime ModifyDate { get; set; }
 
-        public virtual ICollection<Track> Track { get; set; }
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }

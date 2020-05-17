@@ -7,9 +7,9 @@ namespace MediaLibraryDAL.DbContexts
     {
         public Playlist()
         {
-            PlaylistEpisode = new HashSet<PlaylistEpisode>();
-            PlaylistPodcastItem = new HashSet<PlaylistPodcastItem>();
-            PlaylistTrack = new HashSet<PlaylistTrack>();
+            PlaylistEpisodes = new HashSet<PlaylistEpisode>();
+            PlaylistPodcastItems = new HashSet<PlaylistPodcastItem>();
+            PlaylistTracks = new HashSet<PlaylistTrack>();
         }
 
         public int Id { get; set; }
@@ -18,8 +18,8 @@ namespace MediaLibraryDAL.DbContexts
         public DateTime CreateDate { get; set; }
         public DateTime ModifyDate { get; set; }
 
-        public virtual ICollection<PlaylistEpisode> PlaylistEpisode { get; set; }
-        public virtual ICollection<PlaylistPodcastItem> PlaylistPodcastItem { get; set; }
-        public virtual ICollection<PlaylistTrack> PlaylistTrack { get; set; }
+        public virtual ICollection<PlaylistEpisode> PlaylistEpisodes { get; set; }
+        public virtual ICollection<PlaylistPodcastItem> PlaylistPodcastItems { get; set; }
+        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; set; }
     }
 }

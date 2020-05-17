@@ -18,6 +18,10 @@ namespace MediaLibraryDAL.Services.Interfaces
 
         Task<IEnumerable<T>> GetList<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken), params Expression<Func<T, object>>[] includes) where T : class, IDataModel;
 
+        Task<T> GetAlt<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken), params string[] includePaths) where T : class, IDataModel;
+
+        Task<IEnumerable<T>> GetListAlt<T>(Expression<Func<T, bool>> expression = null, CancellationToken token = default(CancellationToken), params string[] includePaths) where T : class, IDataModel;
+
         Task<int> Insert<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;
 
         Task<int> Insert<T>(IEnumerable<T> entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel;

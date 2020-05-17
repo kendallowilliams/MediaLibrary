@@ -78,6 +78,52 @@ namespace MediaLibraryBLL.Services
             return result;
         }
 
+        public async Task<IEnumerable<T>> GetListAlt<T>(Expression<Func<T, bool>> expression = null,
+                                             CancellationToken token = default(CancellationToken),
+                                             params string[] includePaths) where T : class, IDataModel
+        {
+            IEnumerable<T> results = Enumerable.Empty<T>();
+
+            using (var db = new MediaLibraryEntities())
+            {
+                IQueryable<T> query = db.Set<T>();
+
+                db.Database.SetCommandTimeout(timeout);
+
+                foreach (var include in includePaths)
+                {
+                    query = query.Include(include);
+                }
+
+                results = await (expression != null ? query.Where(expression) : query).ToListAsync(token);
+            }
+
+            return results;
+        }
+
+        public async Task<T> GetAlt<T>(Expression<Func<T, bool>> expression = null,
+                                    CancellationToken token = default(CancellationToken),
+                                    params string[] includePaths) where T : class, IDataModel
+        {
+            T result = default(T);
+
+            using (var db = new MediaLibraryEntities())
+            {
+                IQueryable<T> query = db.Set<T>();
+
+                db.Database.SetCommandTimeout(timeout);
+
+                foreach (var include in includePaths)
+                {
+                    query = query.Include(include);
+                }
+
+                result = await (expression != null ? query.Where(expression) : query).FirstOrDefaultAsync(token);
+            }
+
+            return result;
+        }
+
         public async Task<int> Insert<T>(T entity, CancellationToken token = default(CancellationToken)) where T : class, IDataModel
         {
             int result = default(int);

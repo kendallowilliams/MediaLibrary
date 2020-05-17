@@ -27,13 +27,13 @@ namespace MediaLibraryDAL.DbContexts
                 switch((PlaylistTypes)this.Type)
                 {
                     case PlaylistTypes.Music:
-                        description = PlaylistTrack.Count() == 1 ? "1 song" : $"{PlaylistTrack.Count()} songs";
+                        description = PlaylistTracks.Count() == 1 ? "1 song" : $"{PlaylistTracks.Count()} songs";
                         break;
                     case PlaylistTypes.Podcast:
-                        description = PlaylistPodcastItem.Count() == 1 ? "1 episode" : $"{PlaylistPodcastItem.Count()} episodes";
+                        description = PlaylistPodcastItems.Count() == 1 ? "1 episode" : $"{PlaylistPodcastItems.Count()} episodes";
                         break;
                     case PlaylistTypes.Television:
-                        description = PlaylistEpisode.Count() == 1 ? "1 episode" : $"{PlaylistEpisode.Count()} episodes";
+                        description = PlaylistEpisodes.Count() == 1 ? "1 episode" : $"{PlaylistEpisodes.Count()} episodes";
                         break;
                     default:
                         break;

@@ -15,6 +15,6 @@ namespace MediaLibraryDAL.Partials.Interfaces
         [JsonIgnore]
         Genre Genre { get; set; }
         [JsonIgnore]
-        ICollection<Track> Track { get; set; }
+        ICollection<Track> Tracks { get; set; }
     }
 }

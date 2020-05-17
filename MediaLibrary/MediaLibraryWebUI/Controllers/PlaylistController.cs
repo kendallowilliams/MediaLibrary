@@ -115,11 +115,11 @@ namespace MediaLibraryWebUI.Controllers
         {
             if (id > 0)
             {
-                playlistViewModel.SelectedPlaylist = await dataService.Get<Playlist>(item => item.Id == id, default,
-                                                                                     item => item.PlaylistTrack.Select(list => list.Track.Album),
-                                                                                     item => item.PlaylistTrack.Select(list => list.Track.Artist),
-                                                                                     item => item.PlaylistPodcastItem.Select(list => list.PodcastItem.Podcast),
-                                                                                     item => item.PlaylistEpisode.Select(list => list.Episode.Series));
+                playlistViewModel.SelectedPlaylist = await dataService.GetAlt<Playlist>(item => item.Id == id, default,
+                                                                                        "PlaylistTracks.Track.Album",
+                                                                                        "PlaylistTracks.Track.Artist",
+                                                                                        "PlaylistPodcastItems.PodcastItem.Podcast",
+                                                                                        "PlaylistEpisodes.Episode.Series");
             }
             else
             {
@@ -143,16 +143,16 @@ namespace MediaLibraryWebUI.Controllers
         {
             Random rand = new Random(DateTime.Now.Millisecond);
             IEnumerable<Playlist> systemPlaylists = id < 0 ? await playlistService.GetSystemPlaylists(true, true) : Enumerable.Empty<Playlist>();
-            Playlist playlist = id > 0 ? await dataService.Get<Playlist>(list => list.Id == id, default, list => list.PlaylistTrack.Select(item => item.Track), 
-                                                                                                                 list => list.PlaylistPodcastItem.Select(item => item.PodcastItem),
-                                                                                                                 list => list.PlaylistEpisode.Select(item => item.Episode)) :
+            Playlist playlist = id > 0 ? await dataService.Get<Playlist>(list => list.Id == id, default, list => list.PlaylistTracks.Select(item => item.Track), 
+                                                                                                                 list => list.PlaylistPodcastItems.Select(item => item.PodcastItem),
+                                                                                                                 list => list.PlaylistEpisodes.Select(item => item.Episode)) :
                                          systemPlaylists.FirstOrDefault(item => item.Id == id);
-            IEnumerable<PlaylistTrack> playlistTracks = random ? playlist.PlaylistTrack.OrderBy(item => rand.Next()) :
-                                                                 playlist.PlaylistTrack.OrderBy(item => item.CreateDate);
-            IEnumerable<PlaylistPodcastItem> playlistPodcastItems = random ? playlist.PlaylistPodcastItem.OrderBy(item => rand.Next()) :
-                                                                             playlist.PlaylistPodcastItem.OrderBy(item => item.CreateDate);
-            IEnumerable<PlaylistEpisode> playlistEpisodes = random ? playlist.PlaylistEpisode.OrderBy(item => rand.Next()) :
-                                                                     playlist.PlaylistEpisode.OrderBy(item => item.CreateDate);
+            IEnumerable<PlaylistTrack> playlistTracks = random ? playlist.PlaylistTracks.OrderBy(item => rand.Next()) :
+                                                                 playlist.PlaylistTracks.OrderBy(item => item.CreateDate);
+            IEnumerable<PlaylistPodcastItem> playlistPodcastItems = random ? playlist.PlaylistPodcastItems.OrderBy(item => rand.Next()) :
+                                                                             playlist.PlaylistPodcastItems.OrderBy(item => item.CreateDate);
+            IEnumerable<PlaylistEpisode> playlistEpisodes = random ? playlist.PlaylistEpisodes.OrderBy(item => rand.Next()) :
+                                                                     playlist.PlaylistEpisodes.OrderBy(item => item.CreateDate);
             IEnumerable<Track> tracks = playlistTracks.Select(list => list.Track);
             IEnumerable<PodcastItem> podcastItems = playlistPodcastItems.Select(list => list.PodcastItem);
             IEnumerable<Episode> episodes = playlistEpisodes.Select(list => list.Episode);
@@ -219,9 +219,9 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> GetPlaylistsJSON()
         {
-            Task<IEnumerable<Playlist>> dbPlaylistTasks = dataService.GetList<Playlist>(default, default, item => item.PlaylistEpisode,
-                                                                                                          item => item.PlaylistPodcastItem,
-                                                                                                          item => item.PlaylistTrack),
+            Task<IEnumerable<Playlist>> dbPlaylistTasks = dataService.GetList<Playlist>(default, default, item => item.PlaylistEpisodes,
+                                                                                                          item => item.PlaylistPodcastItems,
+                                                                                                          item => item.PlaylistTracks),
                                         systemPlaylistTask = playlistService.GetSystemPlaylists(true);
             IEnumerable<Playlist> playlists = Enumerable.Empty<Playlist>();
             string json = string.Empty;
@@ -242,13 +242,10 @@ namespace MediaLibraryWebUI.Controllers
 
             if (id > 0)
             {
-                await dataService.Get<Playlist>(item => item.Id == id, default, item => item.PlaylistEpisode,
-                                                                                item => item.PlaylistEpisode.Select(_item => _item.Episode),
-                                                                                item => item.PlaylistPodcastItem,
-                                                                                item => item.PlaylistPodcastItem.Select(_item => _item.PodcastItem),
-                                                                                item => item.PlaylistTrack,
-                                                                                item => item.PlaylistTrack.Select(_item => _item.Track.Album),
-                                                                                item => item.PlaylistTrack.Select(_item => _item.Track.Artist))
+                await dataService.GetAlt<Playlist>(item => item.Id == id, default, "PlaylistEpisodes.Episode",
+                                                                                   "PlaylistPodcastItems.PodcastItem",
+                                                                                   "PlaylistTracks.Track.Album",
+                                                                                   "PlaylistTracks.Track.Artist")
                                  .ContinueWith(task => playlist = task.Result);
             }
             else

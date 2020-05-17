@@ -7,7 +7,7 @@ namespace MediaLibraryDAL.DbContexts
     {
         public Episode()
         {
-            PlaylistEpisode = new HashSet<PlaylistEpisode>();
+            PlaylistEpisodes = new HashSet<PlaylistEpisode>();
         }
 
         public int Id { get; set; }
@@ -22,6 +22,6 @@ namespace MediaLibraryDAL.DbContexts
         public DateTime ModifyDate { get; set; }
 
         public virtual Series Series { get; set; }
-        public virtual ICollection<PlaylistEpisode> PlaylistEpisode { get; set; }
+        public virtual ICollection<PlaylistEpisode> PlaylistEpisodes { get; set; }
     }
 }

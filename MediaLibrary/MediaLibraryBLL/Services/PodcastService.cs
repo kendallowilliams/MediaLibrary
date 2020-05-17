@@ -121,7 +121,7 @@ namespace MediaLibraryBLL.Services
                   .ToList();
                 
                 await dataService.Insert(podcastItems);
-                podcast.PodcastItem = podcastItems.ToList();
+                podcast.PodcastItems = podcastItems.ToList();
                 await dataService.Update(podcast);
             }
 
