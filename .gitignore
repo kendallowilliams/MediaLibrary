@@ -69,3 +69,5 @@
 /ML/MLMobile/MLMobile.Android/bin/Release
 /ML/ML_DAL/obj
 *.sqlproj.user
+/ML/ML_Console/bin/DEV
+/ML/ML_Mobile/MediaLibraryMobile.Android/obj/Debug/90
