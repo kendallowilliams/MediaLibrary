@@ -67,3 +67,4 @@
 *.csproj.user
 /MediaLibrary/MediaLibraryMobile/MediaLibraryMobile/bin/Release/netstandard2.0
 /MediaLibrary/MediaLibraryMobile/MediaLibraryMobile.Android/bin/Release
+/MediaLibrary/MediaLibraryDAL/obj

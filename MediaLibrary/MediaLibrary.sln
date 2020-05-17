@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryMobile.Android"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaLibraryMobile", "MediaLibraryMobile\MediaLibraryMobile\MediaLibraryMobile.csproj", "{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryDAL", "MediaLibraryDAL\MediaLibraryDAL.csproj", "{921B7736-315B-4392-8E03-68F01FB86143}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,12 @@ Global
 		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.DEV|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC7AC459-5F9D-4513-A3FF-5958EABBC98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{921B7736-315B-4392-8E03-68F01FB86143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{921B7736-315B-4392-8E03-68F01FB86143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{921B7736-315B-4392-8E03-68F01FB86143}.DEV|Any CPU.ActiveCfg = Debug|Any CPU
+		{921B7736-315B-4392-8E03-68F01FB86143}.DEV|Any CPU.Build.0 = Debug|Any CPU
+		{921B7736-315B-4392-8E03-68F01FB86143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{921B7736-315B-4392-8E03-68F01FB86143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
