@@ -9,6 +9,8 @@ namespace MediaLibraryDAL.Partials.Interfaces
     public interface IPodcastItemJSON
     {
         [JsonIgnore]
+        Podcast Podcast { get; set; }
+        [JsonIgnore]
         ICollection<PlaylistPodcastItem> PlaylistPodcastItems { get; set; }
     }
 }
