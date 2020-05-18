@@ -45,5 +45,6 @@ namespace MediaLibraryMobile.ViewModels
         public ICommand NextCommand { get => nextCommand; set => SetProperty<ICommand>(ref nextCommand, value); }
         public MediaPlayer MediaPlayer { get => mediaPlayer; set => SetProperty<MediaPlayer>(ref mediaPlayer, value); }
         public LibVLC LibVLC { get => libVLC; set => SetProperty<LibVLC>(ref libVLC, value); }
+        public double CurrentPosition { get => Math.Floor(mediaPlayer.Position * mediaPlayer.Length / 1000); }
     }
 }

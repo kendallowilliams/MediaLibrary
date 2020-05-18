@@ -12,7 +12,7 @@ using System.Linq;
 namespace MediaLibraryMobile
 {
     [Export]
-    public partial class App : Application
+    public partial class App : Application, IDisposable
     {
         private readonly Lazy<MainController> lazyMainController;
 
@@ -26,6 +26,7 @@ namespace MediaLibraryMobile
 
         protected override void OnStart()
         {
+            lazyMainController.Value.Startup();
             MainPage = lazyMainController.Value.GetMainView();
         }
 
@@ -35,6 +36,11 @@ namespace MediaLibraryMobile
 
         protected override void OnResume()
         {
+        }
+
+        public void Dispose()
+        {
+            lazyMainController.Value.Shutdown();
         }
     }
 }

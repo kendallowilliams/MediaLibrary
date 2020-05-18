@@ -1,4 +1,5 @@
 ﻿using MediaLibraryBLL.Services.Interfaces;
+using MediaLibraryMobile.Controllers.Interfaces;
 using MediaLibraryMobile.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Xamarin.Forms;
 namespace MediaLibraryMobile.Controllers
 {
     [Export]
-    public class LoginController
+    public class LoginController : IController
     {
         private readonly IWebService webService;
         private readonly LoginViewModel loginViewModel;
@@ -40,6 +41,14 @@ namespace MediaLibraryMobile.Controllers
         }
 
         public LoginViewModel LoginViewModel => loginViewModel;
+
+        public void Startup()
+        {
+        }
+
+        public void Shutdown()
+        {
+        }
 
         private void LoginViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

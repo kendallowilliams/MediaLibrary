@@ -17,11 +17,12 @@ using MediaLibraryBLL.Services.Interfaces;
 using System.Threading;
 using LibVLCSharp.Shared;
 using Xamarin.Essentials;
+using MediaLibraryMobile.Controllers.Interfaces;
 
 namespace MediaLibraryMobile.Controllers
 {
     [Export]
-    public class MainController
+    public class MainController : IController
     {
         private readonly MainViewModel mainViewModel;
         private readonly PlaylistViewModel playlistViewModel;
@@ -32,6 +33,7 @@ namespace MediaLibraryMobile.Controllers
         private readonly Uri baseUri;
         public readonly string username,
                                password;
+        private readonly double playPreviousPosition = 5;
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
@@ -70,6 +72,19 @@ namespace MediaLibraryMobile.Controllers
                 { Pages.Player, new NavigationPage(playerViewModel.View) }
             };
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
+        }
+
+        private bool CanPlayPrevious() => playerViewModel.SelectedPlayIndex > 0 || playerViewModel.CurrentPosition > playPreviousPosition;
+        private bool CanPlayNext() => (playerViewModel.SelectedPlayIndex + 1) < playerViewModel.MediaUris.Count();
+
+        public void Startup()
+        {
+        }
+
+        public void Shutdown()
+        {
+            playerViewModel.LibVLC?.Dispose();
+            playerViewModel.MediaPlayer?.Dispose();
         }
 
         private void PlayerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -176,18 +191,33 @@ namespace MediaLibraryMobile.Controllers
 
         private void InitializeMediaPlayer()
         {
-            playerViewModel.NextCommand = new Command(Next);
-            playerViewModel.PreviousCommand = new Command(Previous);
+            playerViewModel.NextCommand = new Command(Next, CanPlayNext);
+            playerViewModel.PreviousCommand = new Command(Previous, CanPlayPrevious);
             playerViewModel.MediaPlayer.Paused += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.Playing += (sender, args) => playerViewModel.IsPlaying = true;
             playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.EndReached += EndReached;
+            playerViewModel.MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
+        }
+
+        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e) => ChangeCanExecute();
+
+        private void ChangeCanExecute()
+        {
+            Action canExecute = () =>
+            {
+                (playerViewModel.NextCommand as Command).ChangeCanExecute();
+                (playerViewModel.PreviousCommand as Command).ChangeCanExecute();
+            };
+
+            if (MainThread.IsMainThread) /*then*/ canExecute();
+            else MainThread.BeginInvokeOnMainThread(canExecute);
         }
 
         private void EndReached(object sender, EventArgs args)
         {
             // update play count
-            Next();
+            Next(); 
         }
 
         private void Next()
@@ -198,14 +228,14 @@ namespace MediaLibraryMobile.Controllers
             {
                 playerViewModel.SelectedPlayIndex++;
             }
+            ChangeCanExecute();
         }
 
         private void Previous()
         {
-            double position = Math.Floor(playerViewModel.MediaPlayer.Position * playerViewModel.MediaPlayer.Length / 1000);
-
-            if (position > 5) /*then*/ playerViewModel.MediaPlayer.Position = 0;
-            else if (playerViewModel.SelectedPlayIndex > 0) /*then*/ playerViewModel.SelectedPlayIndex--;
+            if (playerViewModel.CurrentPosition > playPreviousPosition) /*then*/ playerViewModel.MediaPlayer.Position = 0;
+            else if (playerViewModel.SelectedPlayIndex > 0) /*then*/ playerViewModel.SelectedPlayIndex--; 
+            ChangeCanExecute();
         }
 
         private void Play(object item)
@@ -225,7 +255,8 @@ namespace MediaLibraryMobile.Controllers
 
             playerViewModel.IsPlaying = true;
             playerViewModel.SelectedPlayIndex = playIndex;
-            playerViewModel.Title = GetPlaylistItemTitle(playlist, playIndex);
+            playerViewModel.Title = GetPlaylistItemTitle(playlist, playIndex); 
+            ChangeCanExecute();
         }
 
         private IEnumerable<int> GetPlaylistItemIds(Playlist playlist)
