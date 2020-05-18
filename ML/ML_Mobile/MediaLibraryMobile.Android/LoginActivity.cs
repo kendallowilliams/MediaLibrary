@@ -70,12 +70,14 @@ namespace MediaLibraryMobile.Droid
 
         private void LoginSucceeded()
         {
+            binding.lblError.Text = string.Empty;
             RunOnUiThread(() => StartActivity(typeof(MainActivity)));
             Finish();
         }
 
         private void LoginFailed()
         {
+            binding.lblError.Text = "Invalid username/password.";
             binding.loginLayout.Visibility = ViewStates.Visible;
             binding.progressBarLayout.Visibility = ViewStates.Gone;
         }
