@@ -191,27 +191,12 @@ namespace MediaLibraryMobile.Controllers
 
         private void InitializeMediaPlayer()
         {
-            playerViewModel.NextCommand = new Command(Next, CanPlayNext);
-            playerViewModel.PreviousCommand = new Command(Previous, CanPlayPrevious);
+            playerViewModel.NextCommand = new Command(Next);
+            playerViewModel.PreviousCommand = new Command(Previous);
             playerViewModel.MediaPlayer.Paused += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.Playing += (sender, args) => playerViewModel.IsPlaying = true;
             playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.EndReached += EndReached;
-            playerViewModel.MediaPlayer.PositionChanged += MediaPlayer_PositionChanged;
-        }
-
-        private void MediaPlayer_PositionChanged(object sender, MediaPlayerPositionChangedEventArgs e) => ChangeCanExecute();
-
-        private void ChangeCanExecute()
-        {
-            Action canExecute = () =>
-            {
-                (playerViewModel.NextCommand as Command).ChangeCanExecute();
-                (playerViewModel.PreviousCommand as Command).ChangeCanExecute();
-            };
-
-            if (MainThread.IsMainThread) /*then*/ canExecute();
-            else MainThread.BeginInvokeOnMainThread(canExecute);
         }
 
         private void EndReached(object sender, EventArgs args)
@@ -224,18 +209,13 @@ namespace MediaLibraryMobile.Controllers
         {
             int lastIndex = playerViewModel.MediaUris.Count() - 1;
 
-            if (playerViewModel.SelectedPlayIndex < lastIndex)
-            {
-                playerViewModel.SelectedPlayIndex++;
-            }
-            ChangeCanExecute();
+            if (playerViewModel.SelectedPlayIndex < lastIndex) /*then*/ playerViewModel.SelectedPlayIndex++;
         }
 
         private void Previous()
         {
             if (playerViewModel.CurrentPosition > playPreviousPosition) /*then*/ playerViewModel.MediaPlayer.Position = 0;
-            else if (playerViewModel.SelectedPlayIndex > 0) /*then*/ playerViewModel.SelectedPlayIndex--; 
-            ChangeCanExecute();
+            else if (playerViewModel.SelectedPlayIndex > 0) /*then*/ playerViewModel.SelectedPlayIndex--;
         }
 
         private void Play(object item)
@@ -255,8 +235,7 @@ namespace MediaLibraryMobile.Controllers
 
             playerViewModel.IsPlaying = true;
             playerViewModel.SelectedPlayIndex = playIndex;
-            playerViewModel.Title = GetPlaylistItemTitle(playlist, playIndex); 
-            ChangeCanExecute();
+            playerViewModel.Title = GetPlaylistItemTitle(playlist, playIndex);
         }
 
         private IEnumerable<int> GetPlaylistItemIds(Playlist playlist)

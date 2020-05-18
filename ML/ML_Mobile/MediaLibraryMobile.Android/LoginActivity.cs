@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
+﻿using Android.App;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
-using MediaLibraryMobile.Controllers;
-using MediaLibraryMobile.ViewModels;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
 using Binding;
-using XBinding = Xamarin.Forms.Binding;
-using XCheckBox = Android.Widget.CheckBox;
-using XPlatform = Xamarin.Essentials.Platform;
-using Xamarin.Essentials;
-using Android.Content.PM;
+using MediaLibraryMobile.Controllers;
 using MediaLibraryMobile.Services;
+using MediaLibraryMobile.ViewModels;
+using System;
+using Xamarin.Essentials;
+using XPlatform = Xamarin.Essentials.Platform;
 
 namespace MediaLibraryMobile.Droid
 {
@@ -39,7 +29,7 @@ namespace MediaLibraryMobile.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState); 
+            base.OnCreate(savedInstanceState);
             XPlatform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.Login);
 

@@ -1,14 +1,10 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using System.Collections.Generic;
-using System.ComponentModel.Composition.Hosting;
+using Android.Runtime;
 using MediaLibraryMobile.Services;
+using System;
+using System.ComponentModel.Composition.Hosting;
 
 namespace MediaLibraryMobile.Droid
 {
