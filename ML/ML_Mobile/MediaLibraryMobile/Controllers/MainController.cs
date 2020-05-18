@@ -202,7 +202,9 @@ namespace MediaLibraryMobile.Controllers
 
         private void Previous()
         {
-            if (playerViewModel.MediaPlayer.Position > .05) /*then*/ playerViewModel.MediaPlayer.Position = 0;
+            double position = Math.Floor(playerViewModel.MediaPlayer.Position * playerViewModel.MediaPlayer.Length / 1000);
+
+            if (position > 5) /*then*/ playerViewModel.MediaPlayer.Position = 0;
             else if (playerViewModel.SelectedPlayIndex > 0) /*then*/ playerViewModel.SelectedPlayIndex--;
         }
 
