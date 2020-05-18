@@ -17,6 +17,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Converters\**" />
+    <EmbeddedResource Remove="Converters\**" />
+    <None Remove="Converters\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\..\ML_BLL\Services\Interfaces\IWebService.cs" Link="Services\Interfaces\IWebService.cs" />
     <Compile Include="..\..\ML_BLL\Services\WebService.cs" Link="Services\WebService.cs" />
   </ItemGroup>
@@ -78,7 +84,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Services\Interfaces\" />
   </ItemGroup>
 
