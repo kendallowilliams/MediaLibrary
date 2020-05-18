@@ -49,7 +49,7 @@ namespace MediaLibraryMobile.Droid
             binding.txtPassword.TextChanged += (sender, args) => loginViewModel.Password = String.Concat(args.Text);
             binding.chkRememberMe.CheckedChange += (sender, args) => loginViewModel.RememberMe = args.IsChecked;
 
-            if (Preferences.Get(nameof(LoginViewModel.RememberMe), default(bool)))
+            if (loginViewModel.RememberMe = Preferences.Get(nameof(LoginViewModel.RememberMe), default(bool), "login"))
             {
                 binding.btnLogin.CallOnClick();
             }
