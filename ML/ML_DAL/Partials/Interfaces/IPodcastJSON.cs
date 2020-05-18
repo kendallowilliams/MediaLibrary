@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MediaLibraryDAL.Partials.Interfaces
 {
-    public interface IPodcast
+    public interface IPodcastJSON
     {
         [JsonIgnore]
         ICollection<PodcastItem> PodcastItems { get; set; }

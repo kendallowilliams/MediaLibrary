@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MediaLibraryDAL.Partials.Interfaces
 {
-    public interface IPlaylist
+    public interface IPlaylistJSON
     {
         [JsonIgnore]
         ICollection<PlaylistTrack> PlaylistTracks { get; set; }

@@ -1,5 +1,6 @@
 ﻿using MediaLibraryDAL.Models;
 using MediaLibraryDAL.Models.Interfaces;
+using MediaLibraryDAL.Partials.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using static MediaLibraryDAL.Enums;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class Track: IPlayableItem
+    public partial class Track: IPlayableItem, ITrackJSON
     {
         public Track(MediaData data, int? pathId, int? genreId, int? albumId, int? artistId) : base()
         {

@@ -1,4 +1,5 @@
 ﻿using MediaLibraryDAL.Models.Interfaces;
+using MediaLibraryDAL.Partials.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MediaLibraryDAL.DbContexts
 {
-    public partial class Episode : IPlayableItem
+    public partial class Episode : IPlayableItem, IEpisodeJSON
     {
     }
 }
