@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -35,8 +36,14 @@ namespace MediaLibraryDAL.DbContexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=kserver;Initial Catalog=MediaLibrary_DEBUG;User ID=kserver_sql_debug;Password=kserver_sql_debug;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+#if DEBUG
+                string connectionString = ConfigurationManager.AppSettings["MediaLibraryDEBUGConnectionString"];
+#elif DEV
+                string connectionString = ConfigurationManager.AppSettings["MediaLibraryDEVConnectionString"];
+#else
+                string connectionString = ConfigurationManager.AppSettings["MediaLibraryConnectionString"];
+#endif
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 
