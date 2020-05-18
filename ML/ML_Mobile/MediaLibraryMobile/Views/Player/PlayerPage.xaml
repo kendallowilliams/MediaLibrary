@@ -10,19 +10,17 @@
              xmlns:themes="clr-namespace:LibVLCSharp.Forms.Shared.Themes;assembly=LibVLCSharp.Forms"
              xmlns:controls="clr-namespace:MediaLibraryMobile.Controls"
              Title="{Binding Title}">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <themes:Generic />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>
     <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVLC}">
         <vlc:MediaPlayerElement.PlaybackControls>
             <controls:CustomPlaybackControls NextCommand="{Binding Path=BindingContext.NextCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
                                              PreviousCommand="{Binding Path=BindingContext.PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                                              ShowAndHideAutomatically="{Binding Path=BindingContext.AutomaticallyHideControls, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
                 <controls:CustomPlaybackControls.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <themes:Generic />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
                     <Style x:Key="PreviousButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
                         <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.StepBackward}" />
                         <Setter Property="Command" Value="{TemplateBinding PreviousCommand}" />
@@ -40,7 +38,6 @@
                             <ProgressBar Style="{TemplateBinding BufferingProgressBarStyle}" Progress="{TemplateBinding BufferingProgress}" 
                                              IsVisible="{TemplateBinding BufferingProgress, Converter={StaticResource BufferingProgressToBoolConverter}}" />
                             <Label x:Name="AspectRatioLabel" Style="{TemplateBinding MessageStyle}"/>
-
                             <StackLayout x:Name="ControlsPanel" Style="{TemplateBinding ControlsPanelStyle}">
                                 <StackLayout Orientation="Horizontal" >
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
