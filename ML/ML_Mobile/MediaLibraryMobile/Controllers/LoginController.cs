@@ -16,16 +16,22 @@ namespace MediaLibraryMobile.Controllers
     {
         private readonly IWebService webService;
         private readonly LoginViewModel loginViewModel;
-        private readonly Uri baseUri;
+        private Uri baseUri;
 
         [ImportingConstructor]
         public LoginController(LoginViewModel loginViewModel, IWebService webService)
         {
-            string baseAddress = string.Empty;
 
             this.webService = webService;
             this.loginViewModel = loginViewModel;
             this.loginViewModel.PropertyChanged += LoginViewModel_PropertyChanged;
+        }
+
+        public LoginViewModel LoginViewModel => loginViewModel;
+
+        public void Startup()
+        {
+            string baseAddress = string.Empty;
 #if DEBUG
             if (string.IsNullOrWhiteSpace(baseAddress = Preferences.Get("BASE_URI_DEBUG", default(string))))
             {
@@ -38,12 +44,12 @@ namespace MediaLibraryMobile.Controllers
             }
 #endif
             baseUri = new Uri(baseAddress);
-        }
 
-        public LoginViewModel LoginViewModel => loginViewModel;
-
-        public void Startup()
-        {
+            if (Preferences.Get(nameof(LoginViewModel.RememberMe), default(bool), "login"))
+            {
+                loginViewModel.Username = Preferences.Get(nameof(LoginViewModel.Username), default(string), "login");
+                loginViewModel.Password = Preferences.Get(nameof(LoginViewModel.Password), default(string), "login");
+            }
         }
 
         public void Shutdown()

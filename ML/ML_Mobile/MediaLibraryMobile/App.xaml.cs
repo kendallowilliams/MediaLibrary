@@ -21,13 +21,13 @@ namespace MediaLibraryMobile
         {
             InitializeComponent();
             this.lazyMainController = lazyMainController;
+            lazyMainController.Value.Startup();
             Device.SetFlags(new string[] { "MediaElement_Experimental" });
+            MainPage = lazyMainController.Value.GetMainView();
         }
 
         protected override void OnStart()
         {
-            lazyMainController.Value.Startup();
-            MainPage = lazyMainController.Value.GetMainView();
         }
 
         protected override void OnSleep()
