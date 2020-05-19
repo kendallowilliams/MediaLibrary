@@ -14,7 +14,9 @@
         <vlc:MediaPlayerElement.PlaybackControls>
             <controls:CustomPlaybackControls NextCommand="{Binding Path=BindingContext.NextCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
                                              PreviousCommand="{Binding Path=BindingContext.PreviousCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                             ShowAndHideAutomatically="{Binding Path=BindingContext.AutomaticallyHideControls, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
+                                             RandomCommand="{Binding Path=BindingContext.RandomCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                             ShowAndHideAutomatically="{Binding Path=BindingContext.AutomaticallyHideControls, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                             IsRandom="{Binding Path=BindingContext.IsRandom, Source={RelativeSource AncestorType={x:Type ContentPage}}}">
                 <controls:CustomPlaybackControls.Resources>
                     <ResourceDictionary>
                         <ResourceDictionary.MergedDictionaries>
@@ -28,6 +30,15 @@
                     <Style x:Key="NextButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
                         <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.StepForward}" />
                         <Setter Property="Command" Value="{TemplateBinding NextCommand}" />
+                    </Style>
+                    <Style x:Key="RandomButtonStyle" BasedOn="{StaticResource ButtonStyle}" TargetType="Button">
+                        <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.Random}" />
+                        <Setter Property="Command" Value="{TemplateBinding RandomCommand}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{TemplateBinding IsRandom}" Value="True" TargetType="Button">
+                                <Setter Property="TextColor" Value="DimGray" />
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </controls:CustomPlaybackControls.Resources>
                 <controls:CustomPlaybackControls.ControlTemplate>
@@ -52,6 +63,7 @@
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal" Style="{TemplateBinding ButtonBarStyle}">
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center">
+                                        <Button x:Name="RandomButton" Style="{StaticResource Key=RandomButtonStyle}" />
                                         <Button x:Name="AudioTracksSelectionButton" Style="{TemplateBinding AudioTracksSelectionButtonStyle}" />
                                         <Button x:Name="ClosedCaptionsSelectionButton" Style="{TemplateBinding ClosedCaptionsSelectionButtonStyle}" />
                                     </StackLayout>

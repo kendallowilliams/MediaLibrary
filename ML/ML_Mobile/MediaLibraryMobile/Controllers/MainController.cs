@@ -193,6 +193,7 @@ namespace MediaLibraryMobile.Controllers
         {
             playerViewModel.NextCommand = new Command(Next);
             playerViewModel.PreviousCommand = new Command(Previous);
+            playerViewModel.RandomCommand = new Command(ToggleRandom);
             playerViewModel.MediaPlayer.Paused += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.Playing += (sender, args) => playerViewModel.IsPlaying = true;
             playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
@@ -220,6 +221,11 @@ namespace MediaLibraryMobile.Controllers
         {
             if (playerViewModel.CurrentPosition > playPreviousPosition) /*then*/ playerViewModel.MediaPlayer.Position = 0;
             else if (playerViewModel.SelectedPlayIndex > 0) /*then*/ playerViewModel.SelectedPlayIndex--;
+        }
+
+        private void ToggleRandom()
+        {
+            playerViewModel.IsRandom = !playerViewModel.IsRandom;
         }
 
         private void Play(object item)
