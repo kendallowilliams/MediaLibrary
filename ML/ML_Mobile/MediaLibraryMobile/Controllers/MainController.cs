@@ -70,8 +70,7 @@ namespace MediaLibraryMobile.Controllers
             pages = new Dictionary<Pages, NavigationPage>()
             {
                 { Pages.Playlist, new NavigationPage(playlistViewModel.View) },
-                { Pages.Podcast, new NavigationPage(podcastViewModel.View) },
-                { Pages.Player, new NavigationPage(playerViewModel.View) }
+                { Pages.Podcast, new NavigationPage(podcastViewModel.View) }
             };
             this.mainViewModel.SelectedMenuItem = this.mainViewModel.MenuItems.FirstOrDefault();
         }
@@ -148,7 +147,6 @@ namespace MediaLibraryMobile.Controllers
                     case Pages.Podcast:
                         if (!podcastViewModel.Podcasts.Any()) /*then*/ this.podcastViewModel.IsRefreshing = true;
                         break;
-                    case Pages.Player:
                     default:
                         break;
                 }
@@ -233,15 +231,10 @@ namespace MediaLibraryMobile.Controllers
             IEnumerable<Uri> mediaUris = itemIds.Select(_id => new Uri(baseUri, $"{controller}/File/{_id}"));
             int playIndex = GetPlaylistItemIndex(playlist, item);
             playerViewModel.MediaUris = mediaUris;
-
-            if (mainViewModel.SelectedMenuItem.Key != Pages.Player)
-            {
-                mainViewModel.SelectedMenuItem = mainViewModel.MenuItems.FirstOrDefault(_item => _item.Key == Pages.Player);
-            }
-
             playerViewModel.IsPlaying = true;
             playerViewModel.SelectedPlayIndex = playIndex;
             playerViewModel.Title = GetPlaylistItemTitle(playlist, playIndex);
+            GoToPlayer();
         }
 
         private IEnumerable<int> GetPlaylistItemIds(Playlist playlist)
@@ -339,12 +332,10 @@ namespace MediaLibraryMobile.Controllers
             return id;
         }
 
-        private void GoToPlayer()
+        private async void GoToPlayer()
         {
-            if (mainViewModel.SelectedMenuItem.Key != Pages.Player)
-            {
-                mainViewModel.SelectedMenuItem = mainViewModel.MenuItems.FirstOrDefault(_item => _item.Key == Pages.Player);
-            }
+            pages.TryGetValue(mainViewModel.SelectedMenuItem.Key, out NavigationPage target);
+            await target.Navigation.PushAsync(playerViewModel.View as ContentPage);
         }
     }
 }

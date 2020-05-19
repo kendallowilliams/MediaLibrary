@@ -4,7 +4,23 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:themes="clr-namespace:LibVLCSharp.Forms.Shared.Themes;assembly=LibVLCSharp.Forms"
              x:Class="MediaLibraryMobile.Views.PodcastsPage" Title="Podcasts">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <themes:Generic />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding PlayerCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="{StaticResource FontAwesomeSolid}" Glyph="{x:Static fontawesome:FontAwesomeIcons.Headphones}" Size="20" />
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding LoadPodcastsCommand}">
         <RefreshView.CommandParameter>
             <x:Boolean>True</x:Boolean>
