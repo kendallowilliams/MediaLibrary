@@ -18,7 +18,8 @@ namespace MediaLibraryMobile.ViewModels
         private IEnumerable<PlaylistGroup> playlistGroups;
         private ICommand loadPlaylistsCommand,
                          loadPlaylistCommand,
-                         playCommand;
+                         playCommand,
+                         playerCommand;
         private bool isRefreshing,
                      selectedPlaylistHasTracks,
                      selectedPlaylistHasEpisodes,
@@ -38,6 +39,7 @@ namespace MediaLibraryMobile.ViewModels
         public ICommand LoadPlaylistsCommand { get => loadPlaylistsCommand; set => SetProperty<ICommand>(ref loadPlaylistsCommand, value); }
         public ICommand LoadPlaylistCommand { get => loadPlaylistCommand; set => SetProperty<ICommand>(ref loadPlaylistCommand, value); }
         public ICommand PlayCommand { get => playCommand; set => SetProperty<ICommand>(ref playCommand, value); }
+        public ICommand PlayerCommand { get => playerCommand; set => SetProperty<ICommand>(ref playerCommand, value); }
         public bool IsRefreshing { get => isRefreshing; set => SetProperty<bool>(ref isRefreshing, value); }
         public bool SelectedPlaylistHasTracks { get => selectedPlaylistHasTracks; set => SetProperty<bool>(ref selectedPlaylistHasTracks, value); }
         public bool SelectedPlaylistHasEpisodes { get => selectedPlaylistHasEpisodes; set => SetProperty<bool>(ref selectedPlaylistHasEpisodes, value); }

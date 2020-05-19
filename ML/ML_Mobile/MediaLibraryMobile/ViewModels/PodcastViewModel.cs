@@ -13,8 +13,9 @@ namespace MediaLibraryMobile.ViewModels
     public class PodcastViewModel : BaseViewModel<IPodcastsView>
     {
         private IEnumerable<Podcast> podcasts;
-        private ICommand loadPodcastsCommand;
-        private ICommand loadPodcastCommand;
+        private ICommand loadPodcastsCommand,
+                         loadPodcastCommand,
+                         playerCommand;
         private bool isRefreshing;
         private Podcast selectedPodcast;
         private readonly IPodcastView podcastView;
@@ -29,6 +30,7 @@ namespace MediaLibraryMobile.ViewModels
 
         public IEnumerable<Podcast> Podcasts { get => podcasts; set => SetProperty<IEnumerable<Podcast>>(ref podcasts, value); }
         public ICommand LoadPodcastsCommand { get => loadPodcastsCommand; set => SetProperty<ICommand>(ref loadPodcastsCommand, value); }
+        public ICommand PlayerCommand { get => playerCommand; set => SetProperty<ICommand>(ref playerCommand, value); }
         public bool IsRefreshing { get => isRefreshing; set => SetProperty<bool>(ref isRefreshing, value); }
         public Podcast SelectedPodcast { get => selectedPodcast; set => SetProperty<Podcast>(ref selectedPodcast, value); }
         public ICommand LoadPodcastCommand { get => loadPodcastCommand; set => SetProperty<ICommand>(ref loadPodcastCommand, value); }

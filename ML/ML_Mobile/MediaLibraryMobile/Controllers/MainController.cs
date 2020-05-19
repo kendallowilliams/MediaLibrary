@@ -55,9 +55,11 @@ namespace MediaLibraryMobile.Controllers
             this.playerViewModel.PropertyChanged += PlayerViewModel_PropertyChanged;
             this.playlistViewModel.LoadPlaylistsCommand = new Command(async refresh => await LoadPlaylists(refresh));
             this.podcastViewModel.LoadPodcastsCommand = new Command(async refresh => await LoadPodcasts(refresh));
+            this.podcastViewModel.PlayerCommand = new Command(GoToPlayer);
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
             this.playlistViewModel.PlayCommand = new Command(Play);
+            this.playlistViewModel.PlayerCommand = new Command(GoToPlayer);
             InitializeMediaPlayer();
 #if DEBUG
             baseAddress = Preferences.Get("BASE_URI_DEBUG", default(string));
@@ -335,6 +337,14 @@ namespace MediaLibraryMobile.Controllers
             }
 
             return id;
+        }
+
+        private void GoToPlayer()
+        {
+            if (mainViewModel.SelectedMenuItem.Key != Pages.Player)
+            {
+                mainViewModel.SelectedMenuItem = mainViewModel.MenuItems.FirstOrDefault(_item => _item.Key == Pages.Player);
+            }
         }
     }
 }
