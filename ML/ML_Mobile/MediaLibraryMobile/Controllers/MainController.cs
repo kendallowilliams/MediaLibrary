@@ -202,11 +202,7 @@ namespace MediaLibraryMobile.Controllers
         private async void EndReached(object sender, EventArgs args)
         {
             Playlist playlist = playlistViewModel.SelectedPlaylist;
-            var data = new 
-            { 
-                mediaType = ((PlaylistTypes)playlist.Type).ToString(), 
-                id = GetPlaylistItemId(playlist, playerViewModel.SelectedPlayIndex.Value) 
-            };
+            var data = new { mediaType = playlist.Type, id = GetPlaylistItemId(playlist, playerViewModel.SelectedPlayIndex.Value) };
 
             await webService.PostJSON(baseUri, "Player/UpdatePlayCount", data, username, password);
             Next(); 
