@@ -33,6 +33,7 @@ namespace MediaLibraryMobile.Droid
             XPlatform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.Login);
 
+            loginController.Startup();
             binding = new Login(this);
             binding.btnLogin.Click += LoginClicked;
             binding.txtUsername.TextChanged += (sender, args) => loginViewModel.Username = String.Concat(args.Text);
