@@ -206,7 +206,7 @@ namespace MediaLibraryMobile.Controllers
             Task updateTask = webService.PostJSON(baseUri, "Player/UpdatePlayCount", data, username, password);
             
             Next();
-            await updateTask;
+            try { await updateTask; } catch (Exception ex) { };
         }
 
         private void Next()
