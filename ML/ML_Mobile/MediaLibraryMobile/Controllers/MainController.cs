@@ -199,9 +199,16 @@ namespace MediaLibraryMobile.Controllers
             playerViewModel.MediaPlayer.EndReached += EndReached;
         }
 
-        private void EndReached(object sender, EventArgs args)
+        private async void EndReached(object sender, EventArgs args)
         {
-            // update play count
+            Playlist playlist = playlistViewModel.SelectedPlaylist;
+            var data = new 
+            { 
+                mediaType = ((PlaylistTypes)playlist.Type).ToString(), 
+                id = GetPlaylistItemId(playlist, playerViewModel.SelectedPlayIndex.Value) 
+            };
+
+            await webService.PostJSON(baseUri, "Player/UpdatePlayCount", data, username, password);
             Next(); 
         }
 
@@ -307,6 +314,30 @@ namespace MediaLibraryMobile.Controllers
             }
 
             return title;
+        }
+
+        private int GetPlaylistItemId(Playlist playlist, int index)
+        {
+            int id;
+            PlaylistTypes playlistType = (PlaylistTypes)playlistViewModel.SelectedPlaylist.Type;
+
+            switch (playlistType)
+            {
+                case PlaylistTypes.Music:
+                    id = playlist.PlaylistTracks.Select(_item => _item.Track).ElementAt(index).Id;
+                    break;
+                case PlaylistTypes.Podcast:
+                    id = playlist.PlaylistPodcastItems.Select(_item => _item.PodcastItem).ElementAt(index).Id;
+                    break;
+                case PlaylistTypes.Television:
+                    id = playlist.PlaylistEpisodes.Select(_item => _item.Episode).ElementAt(index).Id;
+                    break;
+                default:
+                    id = -1;
+                    break;
+            }
+
+            return id;
         }
     }
 }

@@ -101,6 +101,21 @@ namespace MediaLibraryBLL.Services
             return results;
         }
 
+        public async Task PostJSON(Uri baseUri, string relativePath, object objectToSerialize, string username, string password)
+        {
+            HttpResponseMessage response = default;
+            string credentials = $"{username}:{password}",
+                   authorization = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = baseUri;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authorization);
+                response = await client.PostAsync(relativePath, new StringContent(JsonConvert.SerializeObject(objectToSerialize), Encoding.UTF8, "application/json"));
+                response.EnsureSuccessStatusCode();
+            }
+        }
+
         public async Task<bool> IsAuthorized(Uri baseUri, string relativePath, string username, string password)
         {
             bool authorized = false;
