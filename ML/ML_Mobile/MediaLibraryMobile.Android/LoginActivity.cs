@@ -13,7 +13,7 @@ using XPlatform = Xamarin.Essentials.Platform;
 
 namespace MediaLibraryMobile.Droid
 {
-    [Activity(Label = "Login", MainLauncher = true)]
+    [Activity(MainLauncher = true)]
     public class LoginActivity : Activity
     {
         private LoginController loginController;
