@@ -35,7 +35,7 @@
                         <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.Random}" />
                         <Setter Property="Command" Value="{TemplateBinding RandomCommand}" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{TemplateBinding IsRandom}" Value="True" TargetType="Button">
+                            <DataTrigger Binding="{TemplateBinding IsRandom}" Value="False" TargetType="Button">
                                 <Setter Property="TextColor" Value="DimGray" />
                             </DataTrigger>
                         </Style.Triggers>

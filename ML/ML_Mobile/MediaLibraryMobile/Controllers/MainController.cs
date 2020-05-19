@@ -34,6 +34,7 @@ namespace MediaLibraryMobile.Controllers
         public readonly string username,
                                password;
         private readonly double playPreviousPosition = 5;
+        private int? nextIndex;
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
@@ -76,7 +77,7 @@ namespace MediaLibraryMobile.Controllers
         }
 
         private bool CanPlayPrevious() => playerViewModel.SelectedPlayIndex > 0 || playerViewModel.CurrentPosition > playPreviousPosition;
-        private bool CanPlayNext() => (playerViewModel.SelectedPlayIndex + 1) < playerViewModel.MediaUris.Count();
+        private bool CanPlayNext() => (playerViewModel.SelectedPlayIndex + 1) < playerViewModel.MediaItems.Count();
 
         public void Startup()
         {
@@ -90,26 +91,32 @@ namespace MediaLibraryMobile.Controllers
 
         private void PlayerViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(PlayerViewModel.MediaUris))
+            if (e.PropertyName == nameof(PlayerViewModel.MediaItems))
             {
-                playerViewModel.SelectedPlayIndex = null;
+                if (!playerViewModel.IsPlaying) /*then*/ playerViewModel.SelectedPlayIndex = null;
             }
             else if (e.PropertyName == nameof(PlayerViewModel.SelectedPlayIndex))
             {
                 if (playerViewModel.SelectedPlayIndex.HasValue)
                 {
                     int index = playerViewModel.SelectedPlayIndex.Value;
-                    Uri uri = playerViewModel.MediaUris.ElementAt(index);
-                    Media media = new Media(playerViewModel.LibVLC, uri);
+                    (int Id, string Title, Uri Uri) mediaItem = playerViewModel.MediaItems.ElementAt(index);
+                    Media media = new Media(playerViewModel.LibVLC, mediaItem.Uri);
 
-                    playerViewModel.Title = GetPlaylistItemTitle(playlistViewModel.SelectedPlaylist, index);
+                    playerViewModel.Title = mediaItem.Title;
                     playerViewModel.MediaPlayer.Media?.Dispose();
                     if (playerViewModel.IsPlaying) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
                 }
             }
-            else if (e.PropertyName == nameof(PlayerViewModel.NextCommand) || e.PropertyName == nameof(PlayerViewModel.PreviousCommand))
+            else if (e.PropertyName == nameof(PlayerViewModel.IsRandom))
             {
+                nextIndex = null;
 
+                if (playerViewModel.IsRandom && playlistViewModel.SelectedPlaylist != null)
+                {
+                    playerViewModel.MediaItems = GetPlaylistMediaItems(playlistViewModel.SelectedPlaylist, true);
+                    nextIndex = 0;
+                }
             }
         }
 
@@ -212,58 +219,68 @@ namespace MediaLibraryMobile.Controllers
 
         private void Next()
         {
-            int lastIndex = playerViewModel.MediaUris.Count() - 1;
+            int lastIndex = playerViewModel.MediaItems.Count() - 1;
 
-            if (playerViewModel.SelectedPlayIndex < lastIndex) /*then*/ playerViewModel.SelectedPlayIndex++;
+            if (nextIndex.HasValue)
+            {
+                playerViewModel.SelectedPlayIndex = 0;
+                nextIndex = null;
+            }
+            else if (playerViewModel.SelectedPlayIndex < lastIndex) /*then*/ playerViewModel.SelectedPlayIndex++;
         }
 
         private void Previous()
         {
-            if (playerViewModel.CurrentPosition > playPreviousPosition) /*then*/ playerViewModel.MediaPlayer.Position = 0;
+            if (nextIndex.HasValue)
+            {
+                playerViewModel.SelectedPlayIndex = 0;
+                nextIndex = null;
+            }
+            else if (playerViewModel.CurrentPosition > playPreviousPosition) /*then*/ playerViewModel.MediaPlayer.Position = 0;
             else if (playerViewModel.SelectedPlayIndex > 0) /*then*/ playerViewModel.SelectedPlayIndex--;
         }
 
-        private void ToggleRandom()
-        {
-            playerViewModel.IsRandom = !playerViewModel.IsRandom;
-        }
-
+        private void ToggleRandom() => playerViewModel.IsRandom = !playerViewModel.IsRandom;
+        
         private void Play(object item)
         {
             Playlist playlist = playlistViewModel.SelectedPlaylist;
-            IEnumerable<int> itemIds = GetPlaylistItemIds(playlist);
-            PlaylistTypes playlistType = (PlaylistTypes)playlist.Type;
-            string controller = playlistType.ToString();
-            IEnumerable<Uri> mediaUris = itemIds.Select(_id => new Uri(baseUri, $"{controller}/File/{_id}"));
-            int playIndex = GetPlaylistItemIndex(playlist, item);
-            playerViewModel.MediaUris = mediaUris;
+            int playIndex = GetPlaylistItemIndex(playlist, item),
+                itemId = GetPlaylistItemId(playlist, playIndex);
+
+            playerViewModel.MediaItems = GetPlaylistMediaItems(playlist, playerViewModel.IsRandom);
             playerViewModel.IsPlaying = true;
+            playIndex = playerViewModel.IsRandom ? playerViewModel.MediaItems.IndexOf(_item => _item.Id == itemId) : playIndex;
             playerViewModel.SelectedPlayIndex = playIndex;
-            playerViewModel.Title = GetPlaylistItemTitle(playlist, playIndex);
+            playerViewModel.Title = playerViewModel.MediaItems.ElementAt(playIndex).Title;
             GoToPlayer();
         }
 
-        private IEnumerable<int> GetPlaylistItemIds(Playlist playlist)
+        private IEnumerable<(int, string, Uri)> GetPlaylistMediaItems(Playlist playlist, bool random = default)
         {
-            IEnumerable<int> ids = Enumerable.Empty<int>();
+            IEnumerable<(int, string, Uri)> mediaItems = Enumerable.Empty<(int, string, Uri)>();
             PlaylistTypes playlistType = (PlaylistTypes)playlistViewModel.SelectedPlaylist.Type;
+            string controller = playlistType.ToString();
 
             switch (playlistType)
             {
                 case PlaylistTypes.Music:
-                    ids = playlist.PlaylistTracks.Select(item => item.Track).Select(item => item.Id);
+                    mediaItems = playlist.PlaylistTracks.Select(item => item.Track)
+                                                        .Select(track => (track.Id, track.Title, new Uri(baseUri, $"{controller}/File/{track.Id}")));
                     break;
                 case PlaylistTypes.Podcast:
-                    ids = playlist.PlaylistPodcastItems.Select(item => item.PodcastItem).Select(item => item.Id);
+                    mediaItems = playlist.PlaylistPodcastItems.Select(item => item.PodcastItem)
+                                                              .Select(item => (item.Id, item.Title, new Uri(baseUri, $"{controller}/File/{item.Id}")));
                     break;
                 case PlaylistTypes.Television:
-                    ids = playlist.PlaylistEpisodes.Select(item => item.Episode).Select(item => item.Id);
+                    mediaItems = playlist.PlaylistEpisodes.Select(item => item.Episode)
+                                                          .Select(episode => (episode.Id, episode.Title, new Uri(baseUri, $"{controller}/File/{episode.Id}")));
                     break;
                 default:
                     break;
             }
 
-            return ids;
+            return random ? mediaItems.OrderBy(item => Guid.NewGuid()) : mediaItems;
         }
 
         private int GetPlaylistItemIndex(Playlist playlist, object item)
@@ -288,30 +305,6 @@ namespace MediaLibraryMobile.Controllers
             }
 
             return id;
-        }
-
-        private string GetPlaylistItemTitle(Playlist playlist, int index)
-        {
-            string title;
-            PlaylistTypes playlistType = (PlaylistTypes)playlistViewModel.SelectedPlaylist.Type;
-
-            switch (playlistType)
-            {
-                case PlaylistTypes.Music:
-                    title = playlist.PlaylistTracks.Select(_item => _item.Track).ElementAt(index).Title;
-                    break;
-                case PlaylistTypes.Podcast:
-                    title = playlist.PlaylistPodcastItems.Select(_item => _item.PodcastItem).ElementAt(index).Title;
-                    break;
-                case PlaylistTypes.Television:
-                    title = playlist.PlaylistEpisodes.Select(_item => _item.Episode).ElementAt(index).Title;
-                    break;
-                default:
-                    title = "No item selected...";
-                    break;
-            }
-
-            return title;
         }
 
         private int GetPlaylistItemId(Playlist playlist, int index)

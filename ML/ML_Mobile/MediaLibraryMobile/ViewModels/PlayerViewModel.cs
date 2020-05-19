@@ -13,7 +13,7 @@ namespace MediaLibraryMobile.ViewModels
     [Export]
     public class PlayerViewModel : BaseViewModel<IPlayerView>
     {
-        private IEnumerable<Uri> mediaUris;
+        private IEnumerable<(int, string, Uri)> mediaItems;
         private int? selectedPlayIndex;
         private MediaPlayer mediaPlayer;
         private LibVLC libVLC;
@@ -30,14 +30,14 @@ namespace MediaLibraryMobile.ViewModels
         {
             Core.Initialize();
 
-            mediaUris = Enumerable.Empty<Uri>();
+            mediaItems = Enumerable.Empty<(int, string, Uri)>();
             LibVLC = new LibVLC();
             MediaPlayer = new MediaPlayer(LibVLC) { EnableHardwareDecoding = true };
             ShowPlaybackControls = true;
             AutomaticallyHideControls = false;
         }
 
-        public IEnumerable<Uri> MediaUris { get => mediaUris; set => SetProperty<IEnumerable<Uri>>(ref mediaUris, value); }
+        public IEnumerable<(int Id, string Title, Uri Uri)> MediaItems { get => mediaItems; set => SetProperty<IEnumerable<(int, string, Uri)>>(ref mediaItems, value); }
         public int? SelectedPlayIndex { get => selectedPlayIndex; set => SetProperty<int?>(ref selectedPlayIndex, value); }
         public bool ShowPlaybackControls { get => showPlaybackControls; set => SetProperty<bool>(ref showPlaybackControls, value); }
         public bool IsPlaying { get => isPlaying; set => SetProperty<bool>(ref isPlaying, value); }
