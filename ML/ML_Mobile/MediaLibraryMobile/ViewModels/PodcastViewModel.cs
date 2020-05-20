@@ -15,6 +15,7 @@ namespace MediaLibraryMobile.ViewModels
         private IEnumerable<Podcast> podcasts;
         private ICommand loadPodcastsCommand,
                          loadPodcastCommand,
+                         playCommand,
                          playerCommand;
         private bool isRefreshing;
         private Podcast selectedPodcast;
@@ -31,6 +32,7 @@ namespace MediaLibraryMobile.ViewModels
         public IEnumerable<Podcast> Podcasts { get => podcasts; set => SetProperty<IEnumerable<Podcast>>(ref podcasts, value); }
         public ICommand LoadPodcastsCommand { get => loadPodcastsCommand; set => SetProperty<ICommand>(ref loadPodcastsCommand, value); }
         public ICommand PlayerCommand { get => playerCommand; set => SetProperty<ICommand>(ref playerCommand, value); }
+        public ICommand PlayCommand { get => playCommand; set => SetProperty<ICommand>(ref playCommand, value); }
         public bool IsRefreshing { get => isRefreshing; set => SetProperty<bool>(ref isRefreshing, value); }
         public Podcast SelectedPodcast { get => selectedPodcast; set => SetProperty<Podcast>(ref selectedPodcast, value); }
         public ICommand LoadPodcastCommand { get => loadPodcastCommand; set => SetProperty<ICommand>(ref loadPodcastCommand, value); }

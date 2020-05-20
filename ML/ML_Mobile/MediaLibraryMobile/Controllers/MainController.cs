@@ -59,8 +59,9 @@ namespace MediaLibraryMobile.Controllers
             this.podcastViewModel.PlayerCommand = new Command(GoToPlayer);
             this.playlistViewModel.LoadPlaylistCommand = new Command(async id => await LoadPlaylist(id));
             this.podcastViewModel.LoadPodcastCommand = new Command(async id => await LoadPodcast(id));
-            this.playlistViewModel.PlayCommand = new Command(Play);
+            this.playlistViewModel.PlayCommand = new Command(PlaylistPlay);
             this.playlistViewModel.PlayerCommand = new Command(GoToPlayer);
+            this.podcastViewModel.PlayCommand = new Command(PodcastPlay);
             InitializeMediaPlayer();
 #if DEBUG
             baseAddress = Preferences.Get("BASE_URI_DEBUG", default(string));
@@ -242,7 +243,7 @@ namespace MediaLibraryMobile.Controllers
 
         private void ToggleRandom() => playerViewModel.IsRandom = !playerViewModel.IsRandom;
         
-        private void Play(object item)
+        private void PlaylistPlay(object item)
         {
             Playlist playlist = playlistViewModel.SelectedPlaylist;
             int playIndex = GetPlaylistItemIndex(playlist, item),
@@ -255,6 +256,11 @@ namespace MediaLibraryMobile.Controllers
             playerViewModel.Title = playerViewModel.MediaItems.ElementAt(playIndex).Title;
             nextIndex = playerViewModel.IsRandom ? 0 : default;
             GoToPlayer();
+        }
+
+        private void PodcastPlay(object item)
+        {
+
         }
 
         private IEnumerable<(int, string, Uri)> GetPlaylistMediaItems(Playlist playlist, bool random = default)
