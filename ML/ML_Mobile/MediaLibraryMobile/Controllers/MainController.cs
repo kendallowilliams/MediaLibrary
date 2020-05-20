@@ -281,7 +281,7 @@ namespace MediaLibraryMobile.Controllers
                     break;
             }
 
-            return random ? mediaItems.OrderBy(item => Guid.NewGuid()) : mediaItems;
+            return (random ? mediaItems.OrderBy(item => Guid.NewGuid()) : mediaItems).ToList();
         }
 
         private int GetPlaylistItemIndex(Playlist playlist, object item)
