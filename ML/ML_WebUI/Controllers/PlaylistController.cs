@@ -143,9 +143,9 @@ namespace MediaLibraryWebUI.Controllers
         {
             Random rand = new Random(DateTime.Now.Millisecond);
             IEnumerable<Playlist> systemPlaylists = id < 0 ? await playlistService.GetSystemPlaylists(true, true) : Enumerable.Empty<Playlist>();
-            Playlist playlist = id > 0 ? await dataService.Get<Playlist>(list => list.Id == id, default, list => list.PlaylistTracks.Select(item => item.Track), 
-                                                                                                                 list => list.PlaylistPodcastItems.Select(item => item.PodcastItem),
-                                                                                                                 list => list.PlaylistEpisodes.Select(item => item.Episode)) :
+            Playlist playlist = id > 0 ? await dataService.GetAlt<Playlist>(list => list.Id == id, default, "PlaylistTracks.Track", 
+                                                                                                            "PlaylistPodcastItems.PodcastItem",
+                                                                                                            "PlaylistEpisodes.Episode") :
                                          systemPlaylists.FirstOrDefault(item => item.Id == id);
             IEnumerable<PlaylistTrack> playlistTracks = random ? playlist.PlaylistTracks.OrderBy(item => rand.Next()) :
                                                                  playlist.PlaylistTracks.OrderBy(item => item.CreateDate);
