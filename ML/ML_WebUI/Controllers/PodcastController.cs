@@ -13,7 +13,9 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -263,17 +265,21 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> GetPodcastsJSON()
         {
+            JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
             IEnumerable<Podcast> podcasts = await dataService.GetList<Podcast>();
+            string json = JsonConvert.SerializeObject(podcasts, settings);
 
-            return Json(podcasts, JsonRequestBehavior.AllowGet);
+            return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
         }
 
         [CompressContent]
         public async Task<ActionResult> GetPodcastJSON(int id)
         {
+            JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
             Podcast podcast = await dataService.Get<Podcast>(item => item.Id == id, default, item => item.PodcastItems);
+            string json = JsonConvert.SerializeObject(podcast, settings);
 
-            return Json(podcast, JsonRequestBehavior.AllowGet);
+            return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
         }
     }
 }

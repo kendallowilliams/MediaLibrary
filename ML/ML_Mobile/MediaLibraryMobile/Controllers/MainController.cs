@@ -186,7 +186,7 @@ namespace MediaLibraryMobile.Controllers
 
         private async Task LoadPodcast(object id)
         {
-            this.podcastViewModel.SelectedPodcast = this.podcastViewModel.Podcasts.FirstOrDefault(item => item.Id == (int)id);
+            this.podcastViewModel.SelectedPodcast = await webService.Get<Podcast>(baseUri, $"Podcast/GetPodcastJSON/{id}", username, password);
             await podcastViewModel.View.Navigation.PushAsync(podcastViewModel.PodcastView as ContentPage);
         }
 
