@@ -254,7 +254,7 @@ namespace MediaLibraryMobile.Controllers
             playIndex = playerViewModel.IsRandom ? playerViewModel.MediaItems.IndexOf(_item => _item.Id == itemId) : playIndex;
             playerViewModel.SelectedPlayIndex = playIndex;
             playerViewModel.Title = playerViewModel.MediaItems.ElementAt(playIndex).Title;
-            nextIndex = playerViewModel.IsRandom ? 0 : default;
+            nextIndex = playerViewModel.IsRandom ? new int?(0) : null;
             GoToPlayer();
         }
 
