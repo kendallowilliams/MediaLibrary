@@ -23,7 +23,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <CollectionView ItemsSource="{Binding Path=SelectedPodcast.PodcastItems}" SelectedItem="">
+            <CollectionView ItemsSource="{Binding Path=SelectedPodcastItems}">
                 <d:CollectionView.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>First Item</x:String>

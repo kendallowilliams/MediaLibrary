@@ -171,8 +171,11 @@ namespace MediaLibraryMobile.Controllers
         {
             if ((bool)refresh)
             {
-                this.podcastViewModel.Podcasts = await webService.Get<IEnumerable<Podcast>>(baseUri, "Podcast/GetPodcastsJSON", username, password);
-                this.podcastViewModel.IsRefreshing = false;
+                IEnumerable<Podcast> podcasts = await webService.Get<IEnumerable<Podcast>>(baseUri, "Podcast/GetPodcastsJSON", username, password);
+
+                podcastViewModel.Podcasts.Clear();
+                foreach (var podcast in podcasts) { podcastViewModel.Podcasts.Add(podcast); }
+                podcastViewModel.IsRefreshing = false;
             }
         }
 
@@ -180,20 +183,23 @@ namespace MediaLibraryMobile.Controllers
         {
             if ((bool)refresh)
             {
-                this.playlistViewModel.Playlists = await webService.Get<IEnumerable<Playlist>>(baseUri, "Playlist/GetPlaylistsJSON", username, password);
-                this.playlistViewModel.IsRefreshing = false;
+                playlistViewModel.Playlists = await webService.Get<IEnumerable<Playlist>>(baseUri, "Playlist/GetPlaylistsJSON", username, password);
+                playlistViewModel.IsRefreshing = false;
             }
         }
 
         private async Task LoadPodcast(object id)
         {
-            this.podcastViewModel.SelectedPodcast = await webService.Get<Podcast>(baseUri, $"Podcast/GetPodcastJSON/{id}", username, password);
+            podcastViewModel.SelectedPodcast = await webService.Get<Podcast>(baseUri, $"Podcast/GetPodcastJSON/{id}", username, password);
+
+            podcastViewModel.SelectedPodcastItems.Clear();
+            foreach (var item in podcastViewModel.SelectedPodcast.PodcastItems) { podcastViewModel.SelectedPodcastItems.Add(item); }
             await podcastViewModel.View.Navigation.PushAsync(podcastViewModel.PodcastView as ContentPage);
         }
 
         private async Task LoadPlaylist(object id)
         {
-            this.playlistViewModel.SelectedPlaylist = await webService.Get<Playlist>(baseUri, $"Playlist/GetPlaylistJSON/{id}", username, password);
+            playlistViewModel.SelectedPlaylist = await webService.Get<Playlist>(baseUri, $"Playlist/GetPlaylistJSON/{id}", username, password);
             await playlistViewModel.View.Navigation.PushAsync(playlistViewModel.PlaylistView as ContentPage);
         }
 
