@@ -35,6 +35,7 @@ namespace MediaLibraryMobile.Controllers
                                password;
         private readonly double playPreviousPosition = 5;
         private int? nextIndex;
+        private int retryCount;
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
@@ -215,9 +216,19 @@ namespace MediaLibraryMobile.Controllers
             playerViewModel.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
         }
 
-        private void MediaPlayer_EncounteredError(object sender, EventArgs e)
+        private async void MediaPlayer_EncounteredError(object sender, EventArgs e)
         {
-
+            if (retryCount < 5)
+            {
+                await Task.Delay(5000);
+                if (!playerViewModel.IsPlaying) /*then*/ playerViewModel.MediaPlayer.Play();
+                retryCount++;
+            }
+            else
+            {
+                retryCount = 0;
+                if (!playerViewModel.IsPlaying) /*then*/ Next();
+            }
         }
 
         private async void EndReached(object sender, EventArgs args)

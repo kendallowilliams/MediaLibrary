@@ -49,8 +49,8 @@ namespace MediaLibraryMobile.Droid
 
         protected override void OnDestroy()
         {
-            container?.Dispose();
             base.OnDestroy();
+            container?.Dispose();
         }
     }
 }
