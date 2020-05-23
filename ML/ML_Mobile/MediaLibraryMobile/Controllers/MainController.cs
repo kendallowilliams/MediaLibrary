@@ -212,6 +212,12 @@ namespace MediaLibraryMobile.Controllers
             playerViewModel.MediaPlayer.Playing += (sender, args) => playerViewModel.IsPlaying = true;
             playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.EndReached += EndReached;
+            playerViewModel.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+        }
+
+        private void MediaPlayer_EncounteredError(object sender, EventArgs e)
+        {
+
         }
 
         private async void EndReached(object sender, EventArgs args)
