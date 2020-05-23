@@ -210,18 +210,28 @@ namespace MediaLibraryMobile.Controllers
             playerViewModel.PreviousCommand = new Command(Previous);
             playerViewModel.RandomCommand = new Command(ToggleRandom);
             playerViewModel.MediaPlayer.Paused += (sender, args) => playerViewModel.IsPlaying = false;
-            playerViewModel.MediaPlayer.Playing += (sender, args) => playerViewModel.IsPlaying = true;
+            playerViewModel.MediaPlayer.Playing += MediaPlayer_Playing; ;
             playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.EndReached += EndReached;
             playerViewModel.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
+        }
+
+        private void MediaPlayer_Playing(object sender, EventArgs e)
+        {
+            playerViewModel.IsPlaying = true;
+            retryCount = 0;
         }
 
         private async void MediaPlayer_EncounteredError(object sender, EventArgs e)
         {
             if (retryCount < 5)
             {
+                int index = playerViewModel.SelectedPlayIndex.Value;
+                (int Id, string Title, Uri Uri) mediaItem = playerViewModel.MediaItems.ElementAt(index);
+                Media media = new Media(playerViewModel.LibVLC, mediaItem.Uri);
+
+                if (!playerViewModel.IsPlaying) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
                 await Task.Delay(5000);
-                if (!playerViewModel.IsPlaying) /*then*/ playerViewModel.MediaPlayer.Play();
                 retryCount++;
             }
             else
