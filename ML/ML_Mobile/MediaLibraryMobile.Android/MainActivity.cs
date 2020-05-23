@@ -37,7 +37,7 @@ namespace MediaLibraryMobile.Droid
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-
+            container?.Dispose();
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -49,7 +49,7 @@ namespace MediaLibraryMobile.Droid
 
         protected override void OnDestroy()
         {
-            app.Dispose();
+            container?.Dispose();
             base.OnDestroy();
         }
     }
