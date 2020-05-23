@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Net.Compilers.3.5.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.3.5.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.Toolset.3.6.0\build\Microsoft.Net.Compilers.Toolset.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.Toolset.3.6.0\build\Microsoft.Net.Compilers.Toolset.props')" />
   <Import Project="..\packages\ConfigureAwait.Fody.3.3.1\build\ConfigureAwait.Fody.props" Condition="Exists('..\packages\ConfigureAwait.Fody.3.3.1\build\ConfigureAwait.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -699,7 +699,7 @@
     <Error Condition="!Exists('..\packages\Fody.6.1.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.1.1\build\Fody.targets'))" />
     <Error Condition="!Exists('..\packages\ConfigureAwait.Fody.3.3.1\build\ConfigureAwait.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ConfigureAwait.Fody.3.3.1\build\ConfigureAwait.Fody.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Data.SqlClient.SNI.1.1.1\build\net46\Microsoft.Data.SqlClient.SNI.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.3.5.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.3.5.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.Toolset.3.6.0\build\Microsoft.Net.Compilers.Toolset.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.Toolset.3.6.0\build\Microsoft.Net.Compilers.Toolset.props'))" />
   </Target>
   <Import Project="..\packages\Fody.6.1.1\build\Fody.targets" Condition="Exists('..\packages\Fody.6.1.1\build\Fody.targets')" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.1.1\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.1.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />
