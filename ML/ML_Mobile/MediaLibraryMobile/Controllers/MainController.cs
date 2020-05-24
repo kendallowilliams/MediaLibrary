@@ -211,7 +211,7 @@ namespace MediaLibraryMobile.Controllers
             playerViewModel.RandomCommand = new Command(ToggleRandom);
             playerViewModel.MediaPlayer.Paused += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.Playing += MediaPlayer_Playing; ;
-            playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
+            //playerViewModel.MediaPlayer.Stopped += (sender, args) => playerViewModel.IsPlaying = false;
             playerViewModel.MediaPlayer.EndReached += EndReached;
             playerViewModel.MediaPlayer.EncounteredError += MediaPlayer_EncounteredError;
         }
@@ -232,12 +232,12 @@ namespace MediaLibraryMobile.Controllers
 
                 retryCount++; // increment counter first in case this attempt triggers another error
                 await Task.Delay(5000);
-                if (!playerViewModel.IsPlaying) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
+                if (playerViewModel.MediaPlayer.State != VLCState.Playing) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
             }
             else
             {
                 retryCount = 0;
-                if (!playerViewModel.IsPlaying) /*then*/ Next();
+                if (playerViewModel.MediaPlayer.State != VLCState.Playing) /*then*/ Next();
             }
         }
 
