@@ -231,13 +231,13 @@ namespace MediaLibraryMobile.Controllers
                 Media media = new Media(playerViewModel.LibVLC, mediaItem.Uri);
 
                 retryCount++; // increment counter first in case this attempt triggers another error
-                await Task.Delay(5000);
-                if (playerViewModel.MediaPlayer.State != VLCState.Playing) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
+                await Task.Delay(5000).ConfigureAwait(true);
+                ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
             }
             else
             {
                 retryCount = 0;
-                if (playerViewModel.MediaPlayer.State != VLCState.Playing) /*then*/ Next();
+                Next();
             }
         }
 
@@ -247,7 +247,7 @@ namespace MediaLibraryMobile.Controllers
             var data = new { mediaType = playlist.Type, id = GetPlaylistItemId(playlist, playerViewModel.SelectedPlayIndex.Value) };
             Task updateTask = webService.PostJSON(baseUri, "Player/UpdatePlayCount", data, username, password);
 
-            try { await updateTask; } catch (Exception ex) { };
+            try { await updateTask.ConfigureAwait(true); } catch (Exception ex) { };
             Next();
         }
 
