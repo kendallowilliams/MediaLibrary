@@ -246,9 +246,9 @@ namespace MediaLibraryMobile.Controllers
             Playlist playlist = playlistViewModel.SelectedPlaylist;
             var data = new { mediaType = playlist.Type, id = GetPlaylistItemId(playlist, playerViewModel.SelectedPlayIndex.Value) };
             Task updateTask = webService.PostJSON(baseUri, "Player/UpdatePlayCount", data, username, password);
-            
-            Next();
+
             try { await updateTask; } catch (Exception ex) { };
+            Next();
         }
 
         private void Next()
