@@ -228,11 +228,10 @@ namespace MediaLibraryMobile.Controllers
             {
                 int index = playerViewModel.SelectedPlayIndex.Value;
                 (int Id, string Title, Uri Uri) mediaItem = playerViewModel.MediaItems.ElementAt(index);
-                Media media = new Media(playerViewModel.LibVLC, mediaItem.Uri);
 
                 retryCount++; // increment counter first in case this attempt triggers another error
                 await Task.Delay(5000).ConfigureAwait(true);
-                ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
+                ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(new Media(playerViewModel.LibVLC, mediaItem.Uri)));
             }
             else
             {
