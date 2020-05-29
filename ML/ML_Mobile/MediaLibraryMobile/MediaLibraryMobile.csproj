@@ -84,10 +84,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\ML_DAL\MediaLibraryDAL.csproj" />
   </ItemGroup>
 </Project>

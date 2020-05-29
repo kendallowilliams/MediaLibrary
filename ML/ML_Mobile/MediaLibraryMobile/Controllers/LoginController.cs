@@ -1,5 +1,6 @@
 ﻿using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryMobile.Controllers.Interfaces;
+using MediaLibraryMobile.Services.Interfaces;
 using MediaLibraryMobile.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,14 @@ namespace MediaLibraryMobile.Controllers
     public class LoginController : IController
     {
         private readonly IWebService webService;
+        private readonly ILogService logService;
         private readonly LoginViewModel loginViewModel;
         private Uri baseUri;
 
         [ImportingConstructor]
-        public LoginController(LoginViewModel loginViewModel, IWebService webService)
+        public LoginController(LoginViewModel loginViewModel, IWebService webService, ILogService logService)
         {
-
+            this.logService = logService;
             this.webService = webService;
             this.loginViewModel = loginViewModel;
             this.loginViewModel.PropertyChanged += LoginViewModel_PropertyChanged;

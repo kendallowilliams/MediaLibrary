@@ -3,8 +3,12 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using MediaLibraryMobile.Services;
+using MediaLibraryMobile.Services.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
 
 namespace MediaLibraryMobile.Droid
 {
@@ -14,9 +18,12 @@ namespace MediaLibraryMobile.Droid
         private readonly CompositionContainer container;
         private App app;
 
+        [Import]
+        private ILogService logService;
+
         public MainActivity()
         {
-            container = MefService.GetMEFContainer();
+            container = MefService.GetMEFContainer(new List<Assembly>() { typeof(MainActivity).Assembly }, this);
         }
 
         protected override void OnCreate(Bundle savedInstanceState)

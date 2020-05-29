@@ -18,6 +18,7 @@ using System.Threading;
 using LibVLCSharp.Shared;
 using Xamarin.Essentials;
 using MediaLibraryMobile.Controllers.Interfaces;
+using MediaLibraryMobile.Services.Interfaces;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -30,6 +31,7 @@ namespace MediaLibraryMobile.Controllers
         private readonly PlayerViewModel playerViewModel;
         private readonly IDictionary<Pages, NavigationPage> pages;
         private readonly IWebService webService;
+        private readonly ILogService logService;
         private readonly Uri baseUri;
         public readonly string username,
                                password;
@@ -39,7 +41,7 @@ namespace MediaLibraryMobile.Controllers
 
         [ImportingConstructor]
         public MainController(MainViewModel mainViewModel, PlaylistViewModel playlistViewModel, PodcastViewModel podcastViewModel,
-                              IWebService webService, PlayerViewModel playerViewModel)
+                              IWebService webService, PlayerViewModel playerViewModel, ILogService logService)
         {
             string baseAddress = string.Empty;
 
@@ -50,6 +52,7 @@ namespace MediaLibraryMobile.Controllers
             this.podcastViewModel = podcastViewModel;
             this.playerViewModel = playerViewModel;
             this.webService = webService;
+            this.logService = logService;
             this.mainViewModel.MenuItems = MainRepository.GetMenuItems();
             this.mainViewModel.PropertyChanged += MainViewModel_PropertyChanged;
             this.playlistViewModel.PropertyChanged += PlaylistViewModel_PropertyChanged;
