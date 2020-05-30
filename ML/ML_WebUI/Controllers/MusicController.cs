@@ -379,7 +379,7 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> GetAlbums()
         {
-            if (musicViewModel.AlbumGroups == null) /*then*/ musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.AlbumSort);
+            if (musicViewModel.AlbumGroups == null || !musicViewModel.AlbumGroups.Any()) /*then*/ musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.AlbumSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Albums", musicViewModel);
@@ -388,7 +388,7 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> GetArtists()
         {
-            if (musicViewModel.ArtistGroups == null) /*then*/ musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.ArtistSort);
+            if (musicViewModel.ArtistGroups == null || !musicViewModel.ArtistGroups.Any()) /*then*/ musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.ArtistSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Artists", musicViewModel);
@@ -397,7 +397,7 @@ namespace MediaLibraryWebUI.Controllers
         [CompressContent]
         public async Task<ActionResult> GetSongs()
         {
-            if (musicViewModel.SongGroups == null) /*then*/ musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.SongSort);
+            if (musicViewModel.SongGroups == null || !musicViewModel.SongGroups.Any()) /*then*/ musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.SongSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Songs", musicViewModel);

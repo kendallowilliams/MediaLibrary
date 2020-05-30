@@ -26,6 +26,5 @@ export default class Search extends BaseClass {
     private search() {
         const query = $(HtmlControls.UIControls().SearchQuery).val();
 
-        alert(query);
     }
 };
