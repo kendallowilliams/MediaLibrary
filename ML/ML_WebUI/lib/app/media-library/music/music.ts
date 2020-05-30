@@ -10,11 +10,13 @@ import IMusicConfiguration from "../../assets/interfaces/music-configuration-int
 import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap-helper';
 import AddNewSongModal from "../../assets/modals/add-song-modal";
 import { getMusicTabEnumString, getMusicTabEnum, getSongSortEnum, getArtistSortEnum, getAlbumSortEnum } from "../../assets/enums/enum-functions";
+import Search from "./search";
 
 export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
     private artist: Artist;
     private album: Album;
+    private search: Search;
     private addNewSongModal: AddNewSongModal;
 
     constructor(private musicConfiguration: MusicConfiguration,
@@ -22,8 +24,9 @@ export default class Music extends BaseClass implements IView {
         private updateActiveMediaFunc: () => void) {
         super();
         this.mediaView = HtmlControls.Views().MediaView;
-        this.artist = new Artist(musicConfiguration);
-        this.album = new Album(musicConfiguration);
+        this.artist = new Artist(musicConfiguration, this.loadView.bind(this));
+        this.album = new Album(musicConfiguration, this.loadView.bind(this));
+        this.search = new Search(musicConfiguration, this.loadView.bind(this));
     }
 
     loadView(callback: () => void = () => null): void {
@@ -57,8 +60,6 @@ export default class Music extends BaseClass implements IView {
             playSingle: boolean = properties.SelectedMusicTab === MusicTabs.Songs && properties.SelectedMusicPage === MusicPages.Index;
 
         $('[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement, playSingle));
-        $('[data-back-button="artist"]').on('click', () => this.artist.goBack(() => this.loadView.call(this)));
-        $('[data-back-button="album"]').on('click', () => this.album.goBack(() => this.loadView.call(this)));
         $('[data-album-id]').on('click', _e => this.album.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), () => this.loadView()));
         $('[data-artist-id]').on('click', _e => this.artist.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), () => this.loadView()));
 
@@ -124,5 +125,13 @@ export default class Music extends BaseClass implements IView {
             LoadingModal.showLoading();
             $.post('Music/Refresh', () => this.loadView(() => LoadingModal.hideLoading()));
         });
+
+        $('[data-music-action="search"]').on('click', e => {
+            this.search.loadSearch(() => this.loadView());
+        });
+
+        this.search.initializeControls();
+        this.album.initializeControls();
+        this.artist.initializeControls();
     }
 }

@@ -580,6 +580,7 @@
     <Content Include="Views\Shared\Modals\AddNewPodcastModal.cshtml" />
     <Content Include="Views\Shared\Modals\ClearNowPlayingModal.cshtml" />
     <Content Include="Views\Shared\Modals\DownloadM3UPlaylistModal.cshtml" />
+    <Content Include="Views\Music\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -641,6 +642,7 @@
     <TypeScriptCompile Include="lib\app\media-library\music\album.ts" />
     <TypeScriptCompile Include="lib\app\media-library\music\artist.ts" />
     <TypeScriptCompile Include="lib\app\media-library\music\music.ts" />
+    <TypeScriptCompile Include="lib\app\media-library\music\search.ts" />
     <TypeScriptCompile Include="lib\app\media-library\player\player.ts" />
     <TypeScriptCompile Include="lib\app\media-library\playlist\playlist.ts" />
     <TypeScriptCompile Include="lib\app\media-library\podcast\podcast.ts" />

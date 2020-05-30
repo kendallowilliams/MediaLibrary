@@ -1,25 +1,31 @@
 ﻿import BaseClass from "../../assets/models/base-class";
 import MusicConfiguration from "../../assets/models/configurations/music-configuration";
 import { MusicPages } from "../../assets/enums/enums";
+import HtmlControls from "../../assets/controls/html-controls";
 
-export default class Artist extends BaseClass {
+export default class Search extends BaseClass {
     constructor(private musicConfiguration: MusicConfiguration, private reload: () => void) {
         super();
     }
 
     initializeControls(): void {
-        $('[data-back-button="artist"]').on('click', () => this.goBack(this.reload));
+        $('[data-back-button="search"]').on('click', () => this.goBack(this.reload));
+        $('[data-action="search"]').on('click', this.search);
     }
 
-    loadArtist(id: number, callback: () => void = () => null): void {
-        this.musicConfiguration.properties.SelectedArtistId = id;
-        this.musicConfiguration.properties.SelectedMusicPage = MusicPages.Artist;
+    loadSearch(callback: () => void = () => null): void {
+        this.musicConfiguration.properties.SelectedMusicPage = MusicPages.Search;
         this.musicConfiguration.updateConfiguration(callback);
     }
 
     private goBack(callback: () => void = () => null): void {
-        this.musicConfiguration.properties.SelectedArtistId = 0;
         this.musicConfiguration.properties.SelectedMusicPage = MusicPages.Index;
         this.musicConfiguration.updateConfiguration(callback);
     }
-}
+
+    private search() {
+        const query = $(HtmlControls.UIControls().SearchQuery).val();
+
+        alert(query);
+    }
+};

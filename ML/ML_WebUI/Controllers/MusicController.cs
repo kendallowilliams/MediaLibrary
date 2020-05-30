@@ -81,6 +81,10 @@ namespace MediaLibraryWebUI.Controllers
             {
                 result = await GetArtist(musicViewModel.Configuration.SelectedArtistId);
             }
+            else if (musicViewModel.Configuration.SelectedMusicPage == MusicPages.Search)
+            {
+                result = PartialView("~/Views/Music/Search.cshtml", musicViewModel);
+            }
             else
             {
                 Task songGroupTask = musicService.GetSongGroups(musicViewModel.Configuration.SelectedSongSort).ContinueWith(task => musicViewModel.SongGroups = task.Result),

@@ -20,14 +20,17 @@
                 <i class="fa fa-music"></i>
             </a>
             <div class="float-right d-none d-lg-block">
-                <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewSongModalId)" data-tooltip="tooltip" title="Add new song">
+                <button class="btn btn-sm btn-outline-secondary" data-music-action="search" data-tooltip="tooltip" title="Search music"><i class="fa fa-search"></i></button>
+                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewSongModalId)" data-tooltip="tooltip" title="Add new song">
                     <i class="fa fa-plus"></i>
                 </button>
                 <button class="btn btn-sm btn-outline-secondary" data-music-action="refresh" data-tooltip="tooltip" title="Check for new music"><i class="fa fa-sync"></i></button>
                 @Html.DropDownListFor(x => x.Configuration.SelectedAlbumSort,
                                       Model.AlbumSortItems,
                                       null,
-                                      new { @class = "form-control border border-secondary form-control-sm align-middle" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Albums ? "" : " d-none"),
+                                      new
+                                           {
+                                               @class = "form-control border border-secondary form-control-sm align-middle" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Albums ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
                                           data_sort_tab = $"{HtmlControlsRepository.AlbumsContainerId}-tab",
@@ -37,7 +40,9 @@
                 @Html.DropDownListFor(x => x.Configuration.SelectedArtistSort,
                                       Model.ArtistSortItems,
                                       null,
-                                      new { @class = "form-control form-control-sm border border-secondary align-middle" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Artists ? "" : " d-none"),
+                                      new
+                                           {
+                                               @class = "form-control form-control-sm border border-secondary align-middle" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Artists ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
                                           data_sort_tab = $"{HtmlControlsRepository.ArtistsContainerId}-tab",
@@ -47,7 +52,9 @@
                 @Html.DropDownListFor(x => x.Configuration.SelectedSongSort,
                                       Model.SongSortItems,
                                       null,
-                                      new { @class = "form-control form-control-sm border border-secondary align-middle" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Songs ? "" : " d-none"),
+                                      new
+                                           {
+                                               @class = "form-control form-control-sm border border-secondary align-middle" + (Model.Configuration.SelectedMusicTab == UIEnums.MusicTabs.Songs ? "" : " d-none"),
                                           style = "width: 135px",
                                           title = "Sort by",
                                           data_sort_tab = $"{HtmlControlsRepository.SongsContainerId}-tab",

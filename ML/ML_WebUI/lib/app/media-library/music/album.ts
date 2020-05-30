@@ -3,12 +3,12 @@ import MusicConfiguration from "../../assets/models/configurations/music-configu
 import { MusicPages } from "../../assets/enums/enums";
 
 export default class Album extends BaseClass {
-    constructor(private musicConfiguration: MusicConfiguration) {
+    constructor(private musicConfiguration: MusicConfiguration, private reload: () => void) {
         super();
     }
 
     initializeControls(): void {
-        $('[data-back-button="album"]').on('click', () => this.goBack());
+        $('[data-back-button="album"]').on('click', () => this.goBack(this.reload));
     }
 
     loadAlbum(id: number, callback: () => void = () => null): void {
@@ -17,7 +17,7 @@ export default class Album extends BaseClass {
         this.musicConfiguration.updateConfiguration(callback);
     }
 
-    goBack(callback: () => void = () => null): void {
+    private goBack(callback: () => void = () => null): void {
         this.musicConfiguration.properties.SelectedAlbumId = 0;
         this.musicConfiguration.properties.SelectedMusicPage = MusicPages.Index;
         this.musicConfiguration.updateConfiguration(callback);

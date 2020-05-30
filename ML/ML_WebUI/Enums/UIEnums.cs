@@ -16,7 +16,7 @@ namespace MediaLibraryWebUI
         public enum PodcastFilter { All = 0, Downloaded, Unplayed }
         public enum PlaylistSort { AtoZ = 0, DateAdded }
         public enum MusicTabs { Albums = 0, Artists, Songs }
-        public enum MusicPages { Index = 0, Album, Artist }
+        public enum MusicPages { Index = 0, Album, Artist, Search }
         public enum PlayerPages { Index = 0, Audio, Video }
         public enum PlaylistPages { Index = 0, Playlist }
         public enum PlaylistTabs { Music = PlaylistTypes.Music, Podcast = PlaylistTypes.Podcast, Television = PlaylistTypes.Television }
