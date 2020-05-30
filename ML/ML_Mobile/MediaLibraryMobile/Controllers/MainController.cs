@@ -19,6 +19,7 @@ using LibVLCSharp.Shared;
 using Xamarin.Essentials;
 using MediaLibraryMobile.Controllers.Interfaces;
 using MediaLibraryMobile.Services.Interfaces;
+using Newtonsoft.Json;
 
 namespace MediaLibraryMobile.Controllers
 {
@@ -110,7 +111,9 @@ namespace MediaLibraryMobile.Controllers
 
                     playerViewModel.Title = mediaItem.Title;
                     playerViewModel.MediaPlayer.Media?.Dispose();
-                    if (playerViewModel.IsPlaying) /*then*/ ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
+
+                    if (playerViewModel.IsPlaying) /*then*/ Play(media);
+                    else /*then*/ playerViewModel.MediaPlayer.Media = media;
                 }
             }
             else if (e.PropertyName == nameof(PlayerViewModel.IsRandom))
@@ -227,14 +230,20 @@ namespace MediaLibraryMobile.Controllers
 
         private async void MediaPlayer_EncounteredError(object sender, EventArgs e)
         {
+            string here = $"{nameof(MainController)}{nameof(MediaPlayer_EncounteredError)}";
+
+            logService.Error(here, "Media player error.");
+
             if (retryCount < 5)
             {
                 int index = playerViewModel.SelectedPlayIndex.Value;
                 (int Id, string Title, Uri Uri) mediaItem = playerViewModel.MediaItems.ElementAt(index);
+                logService.Info(here, $"Retry count: {retryCount}");
+                logService.Info(here, $"Retry media info: {JsonConvert.SerializeObject(mediaItem)}");
 
                 retryCount++; // increment counter first in case this attempt triggers another error
                 await Task.Delay(5000).ConfigureAwait(true);
-                ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(new Media(playerViewModel.LibVLC, mediaItem.Uri)));
+                Play(new Media(playerViewModel.LibVLC, mediaItem.Uri));
             }
             else
             {
@@ -242,6 +251,8 @@ namespace MediaLibraryMobile.Controllers
                 Next();
             }
         }
+
+        private void Play(Media media) => ThreadPool.QueueUserWorkItem(_ => playerViewModel.MediaPlayer.Play(media));
 
         private async void EndReached(object sender, EventArgs args)
         {
