@@ -5,14 +5,24 @@ import HtmlControls from "../../assets/controls/html-controls";
 
 export default class Search extends BaseClass {
     private searchTimeout: number;
+    private searchDelay: number;
 
     constructor(private musicConfiguration: MusicConfiguration, private reload: () => void) {
         super();
+        this.searchDelay = 1; 
     }
 
     initializeControls(): void {
         $('[data-back-button="search"]').on('click', () => this.goBack(this.reload));
         $('[data-music-action="search-music"]').on('click', this.search);
+        $(HtmlControls.UIControls().SearchQuery).on('input', () => {
+            if (this.searchTimeout) {
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = null;
+            }
+
+            this.searchTimeout = setTimeout(this.search, this.searchDelay * 1000);
+        });
     }
 
     loadSearch(callback: () => void = () => null): void {
@@ -26,7 +36,8 @@ export default class Search extends BaseClass {
     }
 
     private async search() {
-        const query = $(HtmlControls.UIControls().SearchQuery).val() as string,
+        const input = HtmlControls.UIControls().SearchQuery,
+            query = $(input).val() as string,
             $btn = $('[data-music-action="search-music"]'),
             showHideLoading = searching => {
                 if (searching) {
@@ -39,7 +50,7 @@ export default class Search extends BaseClass {
             },
             containers = HtmlControls.Containers();
 
-        if (query.length > 3) {
+        if (input.checkValidity()) {
             showHideLoading(true);
 
             $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, function () {

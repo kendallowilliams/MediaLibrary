@@ -57,7 +57,7 @@
         AudioVisualizer: document.getElementById('audio-visualizer') as HTMLCanvasElement,
         MusicTabList: document.getElementById('music-tab-list'),
         PlaylistTabList: document.getElementById('playlist-tab-list'),
-        SearchQuery: document.getElementById('search-query')
+        SearchQuery: document.getElementById('search-query') as HTMLInputElement
     }),
     UIFields: () => ({
         NowPlayingTitle: document.getElementById('player-title')
