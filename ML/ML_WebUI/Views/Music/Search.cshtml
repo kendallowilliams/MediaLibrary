@@ -18,14 +18,10 @@
             </div>
         </div>
         <hr />
-        <div id="@(HtmlControlsRepository.SearchSongsContainerId)">
-
-        </div>
-        <div id="@(HtmlControlsRepository.SearchArtistsContainerId)">
-
-        </div>
-        <div id="@(HtmlControlsRepository.SearchAlbumsContainerId)">
-
-        </div>
+        <div id="@(HtmlControlsRepository.SearchSongsContainerId)">@Html.Partial("~/Views/Music/Songs.cshtml", Model)</div>
+        <hr />
+        <div id="@(HtmlControlsRepository.SearchArtistsContainerId)">@Html.Partial("~/Views/Music/Artists.cshtml", Model)</div>
+        <hr />
+        <div id="@(HtmlControlsRepository.SearchAlbumsContainerId)">@Html.Partial("~/Views/Music/Albums.cshtml", Model)</div>
     </div>
 </div>
