@@ -54,22 +54,18 @@ export default class Search extends BaseClass {
         if (input.checkValidity()) {
             showHideLoading(true);
 
-            $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, function () {
-                $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, function () {
-                    $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, function () {
+            $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, () => {
+                $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, () => {
+                    $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, () => {
                         showHideLoading(false);
-                        $('[data-group-url]').each((index, element) => {
-                            LoadingModal.showLoading();
-                            $($(element).attr('data-target')).load($(element).attr('data-group-url'), () => {
-                                $(element).trigger('click');
-                                LoadingModal.hideLoading();
-                            });
-                        });
                     });
                 });
             });
 
         } else {
+            $(containers.SearchAlbumsContainer).html('<div>No albums.</div>');
+            $(containers.SearchArtistsContainer).html('<div>No artists.</div>');
+            $(containers.SearchSongsContainer).html('<div>No songs.</div>');
             showHideLoading(false);
         }
     }

@@ -2,25 +2,36 @@
 
 @if (Model.SongGroups.Any())
 {
-<div id="accordion-songs" class="accordion">
-    @foreach (var item in Model.SongGroups.Select((group, index) => new { Index = index, Group = group }))
-    {
-        <div class="card">
-            <div class="card-header p-0" id="heading-songs-@(item.Index)">
-                <h5 class="mb-0">
-                    <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-songs-@(item.Index)" aria-expanded="false" 
-                            aria-controls="collapse-songs-@(item.Index)" data-group-url="@(Url.Action("GetSongGroup", "Music", new { item.Group.Key, Sort = Model.Configuration.SelectedSongSort }))">
-                        @(item.Group.Key)
-                    </button>
-                </h5>
-            </div>
+    <div id="accordion-songs" class="@(Model.IsSearchResponse ? string.Empty : "accordion")">
+        @foreach (var item in Model.SongGroups.Select((group, index) => new { Index = index, Group = group }))
+        {
+            <div class="card">
+                <div class="card-header p-0" id="heading-songs-@(item.Index)">
+                    <h5 class="mb-0">
+                        @if (Model.IsSearchResponse)
+                        {
+                            <button class="btn btn-sm" disabled="disabled">@(item.Group.Key)</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-songs-@(item.Index)"
+                                    data-group-url="@(Url.Action("GetSongGroup", "Music", new { item.Group.Key, Sort = Model.Configuration.SelectedSongSort }))">
+                                @(item.Group.Key)
+                            </button>
+                        }
+                    </h5>
+                </div>
 
-            <div id="collapse-songs-@(item.Index)" class="collapse" aria-labelledby="heading-songs-@(item.Index)" data-parent="#accordion-songs"
-                 data-play-ids="@(string.Join(",", item.Group.Select(song => song.Id)))">
+                <div id="collapse-songs-@(item.Index)" class="@(Model.IsSearchResponse ? string.Empty : "collapse")" data-parent="#accordion-songs"
+                     data-play-ids="@(string.Join(",", item.Group.Select(song => song.Id)))">
+                    @if (Model.IsSearchResponse)
+                    {
+                        Html.RenderPartial("~/Views/Music/SongGroup.cshtml", (Model.SongGroups.FirstOrDefault(), Model.Playlists.Any()));
+                    }
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 }
 else
 {

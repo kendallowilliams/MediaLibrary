@@ -435,6 +435,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<IGrouping<string, Album>> albumGroups = await musicService.GetAlbumGroups(AlbumSort.None);
             IEnumerable<Album> albums = albumGroups.SelectMany(group => group).AsParallel().Where(album => album.Title.ToLower().Contains(query.ToLower()));
 
+            musicViewModel.IsSearchResponse = true;
             musicViewModel.AlbumGroups = albums.GroupBy(album => "Albums");
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
@@ -449,6 +450,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<IGrouping<string, Artist>> artistGroups = await musicService.GetArtistGroups(ArtistSort.None);
             IEnumerable<Artist> artists = artistGroups.SelectMany(group => group).AsParallel().Where(artist => artist.Name.ToLower().Contains(query.ToLower()));
 
+            musicViewModel.IsSearchResponse = true;
             musicViewModel.ArtistGroups = artists.GroupBy(artist => "Artists");
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
@@ -463,7 +465,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<IGrouping<string, Track>> songGroups = await musicService.GetSongGroups(SongSort.None);
             IEnumerable<Track> songs = songGroups.SelectMany(group => group).AsParallel().Where(song => song.Title.ToLower().Contains(query.ToLower()));
 
-            musicViewModel.Configuration.SelectedSongSort = SongSort.None;
+            musicViewModel.IsSearchResponse = true;
             musicViewModel.SongGroups = songs.GroupBy(song => "Songs");
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 

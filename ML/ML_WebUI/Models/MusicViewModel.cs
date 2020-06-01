@@ -46,5 +46,6 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<SelectListItem> SongSortItems { get; }
         public Artist SelectedArtist { get; set; }
         public Album SelectedAlbum { get; set; }
+        public bool IsSearchResponse { get; set; }
     }
 }
