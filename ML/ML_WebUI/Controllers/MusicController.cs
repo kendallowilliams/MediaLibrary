@@ -436,7 +436,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<Album> albums = albumGroups.SelectMany(group => group).AsParallel().Where(album => album.Title.ToLower().Contains(query.ToLower()));
 
             musicViewModel.IsSearchResponse = true;
-            musicViewModel.AlbumGroups = albums.GroupBy(album => "Albums");
+            musicViewModel.AlbumGroups = albums.OrderBy(album => album.Title).GroupBy(album => "Albums");
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Albums", musicViewModel);
@@ -451,7 +451,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<Artist> artists = artistGroups.SelectMany(group => group).AsParallel().Where(artist => artist.Name.ToLower().Contains(query.ToLower()));
 
             musicViewModel.IsSearchResponse = true;
-            musicViewModel.ArtistGroups = artists.GroupBy(artist => "Artists");
+            musicViewModel.ArtistGroups = artists.OrderBy(artist => artist.Name).GroupBy(artist => "Artists");
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Artists", musicViewModel);
@@ -466,7 +466,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<Track> songs = songGroups.SelectMany(group => group).AsParallel().Where(song => song.Title.ToLower().Contains(query.ToLower()));
 
             musicViewModel.IsSearchResponse = true;
-            musicViewModel.SongGroups = songs.GroupBy(song => "Songs");
+            musicViewModel.SongGroups = songs.OrderBy(song => song.Title).GroupBy(song => "Songs");
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Songs", musicViewModel);
