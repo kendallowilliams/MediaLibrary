@@ -9,11 +9,23 @@
                 <div class="input-group">
                     <input type="text" data-search="query" class="form-control form-control-sm" id="@(HtmlControlsRepository.SearchQueryId)" />
                     <div class="input-group-append">
-                        <button data-action="search" class="btn btn-sm btn-outline-success"><i class="fa fa-search"></i></button>
+                        <button data-music-action="search-music" class="btn btn-sm btn-outline-success">
+                            <i class="fa fa-search" data-searching-visible="false"></i>
+                            <i class="fa fa-spinner fa-spin d-none" data-searching-visible="true"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
         <hr />
+        <div id="@(HtmlControlsRepository.SearchSongsContainerId)">
+
+        </div>
+        <div id="@(HtmlControlsRepository.SearchArtistsContainerId)">
+
+        </div>
+        <div id="@(HtmlControlsRepository.SearchAlbumsContainerId)">
+
+        </div>
     </div>
 </div>

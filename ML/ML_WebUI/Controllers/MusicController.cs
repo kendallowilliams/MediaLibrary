@@ -58,7 +58,9 @@ namespace MediaLibraryWebUI.Controllers
             this.lazyTransactionService = transactionService;
         }
 
+#if !DEBUG && !DEV
         [CompressContent]
+#endif
         public async Task<ActionResult> Index()
         {
             ActionResult result = null;
@@ -101,11 +103,15 @@ namespace MediaLibraryWebUI.Controllers
             return result;
         }
 
+#if !DEBUG && !DEV
         [CompressContent]
-        public async Task<ActionResult> GetSongGroup(string key)
+#endif
+        public async Task<ActionResult> GetSongGroup(string key, SongSort sort)
         {
-            IGrouping<string, Track> group = musicViewModel.SongGroups.FirstOrDefault(item => item.Key == key);
+            IGrouping<string, Track> group = default;
             bool hasPlaylists = await dataService.Exists<Playlist>(item => item.Type == (int)PlaylistTabs.Music);
+
+            await musicService.GetSongGroups(sort).ContinueWith(task => group = task.Result.FirstOrDefault(item => item.Key == key));
 
             return PartialView("~/Views/Music/SongGroup.cshtml", (Group: group, PlaylistCount: hasPlaylists));
         }
@@ -376,28 +382,34 @@ namespace MediaLibraryWebUI.Controllers
             }
         }
 
+#if !DEBUG && !DEV
         [CompressContent]
+#endif
         public async Task<ActionResult> GetAlbums()
         {
-            if (musicViewModel.AlbumGroups == null || !musicViewModel.AlbumGroups.Any()) /*then*/ musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.AlbumSort);
+            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.AlbumSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Albums", musicViewModel);
         }
 
+#if !DEBUG && !DEV
         [CompressContent]
+#endif
         public async Task<ActionResult> GetArtists()
         {
-            if (musicViewModel.ArtistGroups == null || !musicViewModel.ArtistGroups.Any()) /*then*/ musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.ArtistSort);
+            musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.ArtistSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Artists", musicViewModel);
         }
 
+#if !DEBUG && !DEV
         [CompressContent]
+#endif
         public async Task<ActionResult> GetSongs()
         {
-            if (musicViewModel.SongGroups == null || !musicViewModel.SongGroups.Any()) /*then*/ musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.SongSort);
+            musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.SongSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Songs", musicViewModel);
@@ -413,6 +425,48 @@ namespace MediaLibraryWebUI.Controllers
             }
 
             return Json(musicViewModel.Configuration, JsonRequestBehavior.AllowGet);
+        }
+
+#if !DEBUG && !DEV
+        [CompressContent]
+#endif
+        public async Task<ActionResult> SearchAlbums(string query)
+        {
+            IEnumerable<IGrouping<string, Album>> albumGroups = await musicService.GetAlbumGroups(AlbumSort.None);
+            IEnumerable<Album> albums = albumGroups.SelectMany(group => group).AsParallel().Where(album => album.Title.ToLower().Contains(query.ToLower()));
+
+            musicViewModel.AlbumGroups = albums.GroupBy(album => "Albums");
+            musicViewModel.Playlists = await dataService.GetList<Playlist>();
+
+            return PartialView("Albums", musicViewModel);
+        }
+
+#if !DEBUG && !DEV
+        [CompressContent]
+#endif
+        public async Task<ActionResult> SearchArtists(string query)
+        {
+            IEnumerable<IGrouping<string, Artist>> artistGroups = await musicService.GetArtistGroups(ArtistSort.None);
+            IEnumerable<Artist> artists = artistGroups.SelectMany(group => group).AsParallel().Where(artist => artist.Name.ToLower().Contains(query.ToLower()));
+
+            musicViewModel.ArtistGroups = artists.GroupBy(artist => "Artists");
+            musicViewModel.Playlists = await dataService.GetList<Playlist>();
+
+            return PartialView("Artists", musicViewModel);
+        }
+
+#if !DEBUG && !DEV
+        [CompressContent]
+#endif
+        public async Task<ActionResult> SearchSongs(string query)
+        {
+            IEnumerable<IGrouping<string, Track>> songGroups = await musicService.GetSongGroups(SongSort.None);
+            IEnumerable<Track> songs = songGroups.SelectMany(group => group).AsParallel().Where(song => song.Title.ToLower().Contains(query.ToLower()));
+
+            musicViewModel.SongGroups = songs.GroupBy(song => "Songs");
+            musicViewModel.Playlists = await dataService.GetList<Playlist>();
+
+            return PartialView("Songs", musicViewModel);
         }
     }
 }

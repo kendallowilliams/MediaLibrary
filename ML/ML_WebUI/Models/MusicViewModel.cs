@@ -13,7 +13,7 @@ using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Models
 {
-    [Export]
+    [Export, PartCreationPolicy(CreationPolicy.NonShared)]
     public class MusicViewModel : ViewModel<MusicConfiguration>
     {
         [ImportingConstructor]

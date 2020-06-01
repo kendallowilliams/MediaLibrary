@@ -8,9 +8,9 @@ namespace MediaLibraryWebUI
 {
     public static class UIEnums
     {
-        public enum SongSort { AtoZ = 0, Album, Artist, DateAdded, Genre }
-        public enum ArtistSort { AtoZ = 0 }
-        public enum AlbumSort { AtoZ = 0 }
+        public enum SongSort { AtoZ = 0, Album, Artist, DateAdded, Genre, None = -1 }
+        public enum ArtistSort { AtoZ = 0, None = -1 }
+        public enum AlbumSort { AtoZ = 0, None = -1 }
         public enum SeriesSort { AtoZ = 0 }
         public enum PodcastSort { LastUpdateDate = 0, AtoZ, DateAdded }
         public enum PodcastFilter { All = 0, Downloaded, Unplayed }

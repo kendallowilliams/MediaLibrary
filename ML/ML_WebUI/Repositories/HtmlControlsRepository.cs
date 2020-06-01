@@ -57,6 +57,9 @@ namespace MediaLibraryWebUI.Repositories
         public static string MusicPlaylistContainerId { get => "music-playlist-container"; }
         public static string PodcastPlaylistContainerId { get => "podcast-playlist-container"; }
         public static string EpisodePlaylistContainerId { get => "episode-playlist-container"; }
+        public static string SearchSongsContainerId { get => "search-songs-container"; }
+        public static string SearchArtistsContainerId { get => "search-artists-container"; }
+        public static string SearchAlbumsContainerId { get => "search-albums-container"; }
         #endregion Container Ids
 
         #region UI Control Ids

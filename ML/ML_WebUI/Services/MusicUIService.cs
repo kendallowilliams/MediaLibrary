@@ -56,8 +56,10 @@ namespace MediaLibraryWebUI.Services
                     groups = songs.GroupBy(song => song.Genre?.Name ?? "Unknown Genre").OrderBy(group => group.Key);
                     break;
                 case SongSort.AtoZ:
-                default:
                     groups = GetSongsAtoZ(songs);
+                    break;
+                default:
+                    groups = songs.GroupBy(song => "Songs");
                     break;
             }
 
@@ -76,6 +78,9 @@ namespace MediaLibraryWebUI.Services
                 case AlbumSort.AtoZ:
                     groups = GetAlbumsAtoZ(albums.OrderBy(album => album.Title));
                     break;
+                default:
+                    groups = albums.GroupBy(album => "Albums");
+                    break;
             }
 
             return groups;
@@ -92,6 +97,9 @@ namespace MediaLibraryWebUI.Services
             {
                 case ArtistSort.AtoZ:
                     groups = GetArtistsAtoZ(artists.OrderBy(artist => artist.Name));
+                    break;
+                default:
+                    groups = artists.GroupBy(artist => "Artists");
                     break;
             }
 

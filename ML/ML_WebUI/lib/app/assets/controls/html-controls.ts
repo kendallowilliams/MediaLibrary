@@ -45,7 +45,10 @@
         AlbumsContainer: document.getElementById('albums-container'),
         MusicPlaylistContainer: document.getElementById('music-playlist-container'),
         PodcastPlaylistContainer: document.getElementById('podcast-playlist-container'),
-        EpisodePlaylistContainer: document.getElementById('episode-playlist-container')
+        EpisodePlaylistContainer: document.getElementById('episode-playlist-container'),
+        SearchSongsContainer: document.getElementById('search-songs-container'),
+        SearchArtistsContainer: document.getElementById('search-artists-container'),
+        SearchAlbumsContainer: document.getElementById('search-albums-container')
     }),
     UIControls: () => ({
         PlayerSlider: document.getElementById('player-slider'),

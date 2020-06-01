@@ -4,13 +4,15 @@ import { MusicPages } from "../../assets/enums/enums";
 import HtmlControls from "../../assets/controls/html-controls";
 
 export default class Search extends BaseClass {
+    private searchTimeout: number;
+
     constructor(private musicConfiguration: MusicConfiguration, private reload: () => void) {
         super();
     }
 
     initializeControls(): void {
         $('[data-back-button="search"]').on('click', () => this.goBack(this.reload));
-        $('[data-action="search"]').on('click', this.search);
+        $('[data-music-action="search-music"]').on('click', this.search);
     }
 
     loadSearch(callback: () => void = () => null): void {
@@ -23,8 +25,33 @@ export default class Search extends BaseClass {
         this.musicConfiguration.updateConfiguration(callback);
     }
 
-    private search() {
-        const query = $(HtmlControls.UIControls().SearchQuery).val();
+    private async search() {
+        const query = $(HtmlControls.UIControls().SearchQuery).val() as string,
+            $btn = $('[data-music-action="search-music"]'),
+            showHideLoading = searching => {
+                if (searching) {
+                    $btn.find('[data-searching-visible="false"]').addClass('d-none');
+                    $btn.find('[data-searching-visible="true"]').removeClass('d-none');
+                } else {
+                    $btn.find('[data-searching-visible="true"]').addClass('d-none');
+                    $btn.find('[data-searching-visible="false"]').removeClass('d-none');
+                }
+            },
+            containers = HtmlControls.Containers();
 
+        if (query.length > 3) {
+            showHideLoading(true);
+
+            $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, function () {
+                $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, function () {
+                    $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, function () {
+                        showHideLoading(false);
+                    });
+                });
+            });
+
+        } else {
+            showHideLoading(false);
+        }
     }
 };
