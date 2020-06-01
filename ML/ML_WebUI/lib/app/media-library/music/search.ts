@@ -2,6 +2,7 @@
 import MusicConfiguration from "../../assets/models/configurations/music-configuration";
 import { MusicPages } from "../../assets/enums/enums";
 import HtmlControls from "../../assets/controls/html-controls";
+import LoadingModal from "../../assets/modals/loading-modal";
 
 export default class Search extends BaseClass {
     private searchTimeout: number;
@@ -57,6 +58,13 @@ export default class Search extends BaseClass {
                 $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, function () {
                     $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, function () {
                         showHideLoading(false);
+                        $('[data-group-url]').each((index, element) => {
+                            LoadingModal.showLoading();
+                            $($(element).attr('data-target')).load($(element).attr('data-group-url'), () => {
+                                $(element).trigger('click');
+                                LoadingModal.hideLoading();
+                            });
+                        });
                     });
                 });
             });

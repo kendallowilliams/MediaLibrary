@@ -463,6 +463,7 @@ namespace MediaLibraryWebUI.Controllers
             IEnumerable<IGrouping<string, Track>> songGroups = await musicService.GetSongGroups(SongSort.None);
             IEnumerable<Track> songs = songGroups.SelectMany(group => group).AsParallel().Where(song => song.Title.ToLower().Contains(query.ToLower()));
 
+            musicViewModel.Configuration.SelectedSongSort = SongSort.None;
             musicViewModel.SongGroups = songs.GroupBy(song => "Songs");
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 

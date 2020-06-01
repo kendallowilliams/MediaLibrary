@@ -17,8 +17,10 @@
                     </div>
                 </div>
             </div>
+            <hr />
         </div>
-        <hr />
+    </div>
+    <div style="flex: 1 1 auto; overflow-y: auto">
         <div id="@(HtmlControlsRepository.SearchSongsContainerId)">@Html.Partial("~/Views/Music/Songs.cshtml", Model)</div>
         <hr />
         <div id="@(HtmlControlsRepository.SearchArtistsContainerId)">@Html.Partial("~/Views/Music/Artists.cshtml", Model)</div>
