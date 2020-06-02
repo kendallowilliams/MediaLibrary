@@ -3,12 +3,14 @@
 <div class="d-flex flex-column" style="flex: 1 1 auto; overflow-y: auto">
     <div style="flex: 0 0 auto">
         <h4>Search Music</h4>
-        <div class="p-1">
-            <button class="btn btn-sm btn-outline-secondary" data-back-button="search" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
-            <a class="btn btn-sm btn-outline-secondary" href="#@(HtmlControlsRepository.SearchSongsContainerId)"><i class="fa fa-music"></i></a>
-            <a class="btn btn-sm btn-outline-secondary" href="#@(HtmlControlsRepository.SearchArtistsContainerId)"><i class="fa fa-user"></i></a>
-            <a class="btn btn-sm btn-outline-secondary" href="#@(HtmlControlsRepository.SearchAlbumsContainerId)"><i class="fa fa-compact-disc"></i></a>
-            <div class="float-right">
+        <div class="d-flex">
+            <div style="flex: 1 1 auto">
+                <button class="btn btn-sm btn-outline-secondary" data-back-button="search" data-tooltip="tooltip" title="Go back"><i class="fa fa-arrow-circle-left"></i></button>
+                <a class="btn btn-sm btn-outline-secondary" href="#@(HtmlControlsRepository.SearchSongsContainerId)"><i class="fa fa-music"></i></a>
+                <a class="btn btn-sm btn-outline-secondary" href="#@(HtmlControlsRepository.SearchArtistsContainerId)"><i class="fa fa-user"></i></a>
+                <a class="btn btn-sm btn-outline-secondary" href="#@(HtmlControlsRepository.SearchAlbumsContainerId)"><i class="fa fa-compact-disc"></i></a>
+            </div>
+            <div style="flex: 0 0 auto">
                 <div class="input-group">
                     <input type="text" data-search="query" class="form-control form-control-sm" id="@(HtmlControlsRepository.SearchQueryId)"
                            required="required" minlength="3" />
@@ -20,8 +22,8 @@
                     </div>
                 </div>
             </div>
-            <hr />
         </div>
+        <hr />
     </div>
     <div style="flex: 1 1 auto; overflow-y: auto">
         <div id="@(HtmlControlsRepository.SearchSongsContainerId)">@Html.Partial("~/Views/Music/Songs.cshtml", Model)</div>
