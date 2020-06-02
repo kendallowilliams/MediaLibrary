@@ -48,6 +48,7 @@ export default class Search extends BaseClass {
                     $btn.find('[data-searching-visible="true"]').addClass('d-none');
                     $btn.find('[data-searching-visible="false"]').removeClass('d-none');
                 }
+                $btn.prop('disabled', searching);
             },
             containers = HtmlControls.Containers();
 
