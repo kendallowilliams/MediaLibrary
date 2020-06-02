@@ -36,7 +36,7 @@ namespace MediaLibraryMobile.Controllers
         private readonly Uri baseUri;
         public readonly string username,
                                password;
-        private readonly double playPreviousPosition = 5;
+        private readonly double playPreviousPosition = 3;
         private int? nextIndex;
         private int retryCount;
 
@@ -283,7 +283,7 @@ namespace MediaLibraryMobile.Controllers
                 playerViewModel.SelectedPlayIndex = 0;
                 nextIndex = null;
             }
-            else if (playerViewModel.CurrentPosition > playPreviousPosition) /*then*/ playerViewModel.MediaPlayer.Position = 0;
+            else if (playerViewModel.CurrentPosition > playPreviousPosition || playerViewModel.SelectedPlayIndex == 0) /*then*/ playerViewModel.MediaPlayer.Position = 0;
             else if (playerViewModel.SelectedPlayIndex > 0) /*then*/ playerViewModel.SelectedPlayIndex--;
         }
 
