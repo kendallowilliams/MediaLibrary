@@ -30,7 +30,8 @@ export default class Music extends BaseClass implements IView {
             this.loadView.bind(this),
             this.playFunc.bind(this),
             this.loadAlbum.bind(this),
-            this.loadArtist.bind(this)
+            this.loadArtist.bind(this),
+            this.updateActiveMediaFunc.bind(this)
         );
     }
 
@@ -41,6 +42,7 @@ export default class Music extends BaseClass implements IView {
             loadTooltips(this.mediaView);
             $('[data-music-tab="' + getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
             this.updateActiveMediaFunc();
+            if (this.musicConfiguration.properties.SelectedMusicPage === MusicPages.Search) /*then*/ this.search.search();
             callback();
         }; 
 

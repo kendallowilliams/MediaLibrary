@@ -12,7 +12,8 @@ export default class Search extends BaseClass {
         private reload: () => void,
         private playFunc: (btn: HTMLButtonElement, single: boolean) => void,
         private loadAlbum: (id: number, callback: () => void) => void,
-        private loadArtist: (id: number, callback: () => void) => void) {
+        private loadArtist: (id: number, callback: () => void) => void,
+        private updateActiveMediaFunc: () => void = () => null) {
         super();
         this.searchDelay = 1; 
     }
@@ -44,7 +45,7 @@ export default class Search extends BaseClass {
         this.musicConfiguration.updateConfiguration(callback);
     }
 
-    private search() {
+    search() {
         const input = HtmlControls.UIControls().SearchQuery,
             query = $(input).val() as string,
             $btn = $('[data-music-action="search-music"]'),
@@ -77,6 +78,7 @@ export default class Search extends BaseClass {
                                 this.playFunc(e.currentTarget as HTMLButtonElement, true);
                             });
 
+                            this.updateActiveMediaFunc();
                             showHideLoading(false);
                             LoadingModal.hideLoading();
                         });
