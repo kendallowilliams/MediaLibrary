@@ -18,8 +18,11 @@ export default class Search extends BaseClass {
     }
 
     initializeControls(): void {
-        $('[data-back-button="search"]').on('click', () => this.goBack(this.reload));
-        $('[data-music-action="search-music"]').on('click', this.search);
+        $('[data-back-button="search"]').on('click', () => {
+            this.musicConfiguration.properties.PreviousSearchQuery = '';
+            this.musicConfiguration.updateConfiguration(() => this.goBack(this.reload));
+        });
+        $('[data-music-action="search-music"]').on('click', this.search.bind(this));
         $(HtmlControls.UIControls().SearchQuery).on('input', () => {
             if (this.searchTimeout) {
                 clearTimeout(this.searchTimeout);
@@ -58,28 +61,33 @@ export default class Search extends BaseClass {
 
         if (input.checkValidity()) {
             showHideLoading(true);
+            LoadingModal.showLoading();
 
-            $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, () => {
-                $('[data-album-id]').on('click', _e => this.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), this.reload));
+            this.musicConfiguration.properties.PreviousSearchQuery = query;
+            this.musicConfiguration.updateConfiguration(() => {
+                $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, () => {
+                    $('[data-album-id]').on('click', _e => this.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), this.reload));
 
-                $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, () => {
-                    $('[data-artist-id]').on('click', _e => this.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), this.reload));
+                    $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, () => {
+                        $('[data-artist-id]').on('click', _e => this.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), this.reload));
 
-                    $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, () => {
-                        $(containers.SearchSongsContainer).find('[data-play-id]').on('click', e => {
-                            this.playFunc(e.currentTarget as HTMLButtonElement, true);
+                        $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, () => {
+                            $(containers.SearchSongsContainer).find('[data-play-id]').on('click', e => {
+                                this.playFunc(e.currentTarget as HTMLButtonElement, true);
+                            });
+
+                            showHideLoading(false);
+                            LoadingModal.hideLoading();
                         });
-
-                        showHideLoading(false);
                     });
                 });
             });
-
         } else {
             $(containers.SearchAlbumsContainer).html('<div>No albums.</div>');
             $(containers.SearchArtistsContainer).html('<div>No artists.</div>');
             $(containers.SearchSongsContainer).html('<div>No songs.</div>');
             showHideLoading(false);
+            LoadingModal.hideLoading();
         }
     }
 };

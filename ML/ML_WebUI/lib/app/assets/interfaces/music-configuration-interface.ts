@@ -9,4 +9,5 @@ export default interface IMusicConfiguration extends IConfiguration {
     SelectedSongSort: SongSort;
     SelectedMusicTab: MusicTabs;
     SelectedMusicPage: MusicPages;
+    PreviousSearchQuery: string;
 }

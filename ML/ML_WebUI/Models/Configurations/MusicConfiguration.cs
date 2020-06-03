@@ -21,5 +21,6 @@ namespace MediaLibraryWebUI.Models.Configurations
         public SongSort SelectedSongSort { get; set; }
         public MusicTabs SelectedMusicTab { get; set; }
         public MusicPages SelectedMusicPage { get; set; }
+        public string PreviousSearchQuery { get; set; }
     }
 }
