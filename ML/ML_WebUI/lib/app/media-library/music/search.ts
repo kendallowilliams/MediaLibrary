@@ -8,7 +8,9 @@ export default class Search extends BaseClass {
     private searchTimeout: number;
     private searchDelay: number;
 
-    constructor(private musicConfiguration: MusicConfiguration, private reload: () => void) {
+    constructor(private musicConfiguration: MusicConfiguration,
+        private reload: () => void,
+        private playFunc: (btn: HTMLButtonElement, single: boolean) => void) {
         super();
         this.searchDelay = 1; 
     }
@@ -22,7 +24,7 @@ export default class Search extends BaseClass {
                 this.searchTimeout = null;
             }
 
-            this.searchTimeout = setTimeout(this.search, this.searchDelay * 1000);
+            this.searchTimeout = setTimeout(this.search.bind(this), this.searchDelay * 1000);
         });
     }
 
@@ -36,7 +38,7 @@ export default class Search extends BaseClass {
         this.musicConfiguration.updateConfiguration(callback);
     }
 
-    private async search() {
+    private search() {
         const input = HtmlControls.UIControls().SearchQuery,
             query = $(input).val() as string,
             $btn = $('[data-music-action="search-music"]'),
@@ -58,6 +60,10 @@ export default class Search extends BaseClass {
             $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, () => {
                 $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, () => {
                     $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, () => {
+                        $(containers.SearchSongsContainer).find('[data-play-id]').on('click', e => {
+                            this.playFunc(e.currentTarget as HTMLButtonElement, true);
+                        });
+
                         showHideLoading(false);
                     });
                 });
