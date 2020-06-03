@@ -61,7 +61,7 @@ export default class Search extends BaseClass {
             },
             containers = HtmlControls.Containers();
 
-        if (input.checkValidity()) {
+        if (query && query.length >= input.minLength) {
             showHideLoading(true);
             LoadingModal.showLoading();
 
