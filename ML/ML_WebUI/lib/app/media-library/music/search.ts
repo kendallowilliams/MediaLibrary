@@ -31,6 +31,7 @@ export default class Search extends BaseClass {
 
             this.searchTimeout = setTimeout(this.search.bind(this), this.searchDelay * 1000);
         });
+        $(HtmlControls.UIControls().SearchQuery).val(this.musicConfiguration.properties.PreviousSearchQuery);
     }
 
     loadSearch(callback: () => void = () => null): void {
