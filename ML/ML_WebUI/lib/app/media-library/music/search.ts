@@ -10,7 +10,9 @@ export default class Search extends BaseClass {
 
     constructor(private musicConfiguration: MusicConfiguration,
         private reload: () => void,
-        private playFunc: (btn: HTMLButtonElement, single: boolean) => void) {
+        private playFunc: (btn: HTMLButtonElement, single: boolean) => void,
+        private loadAlbum: (id: number, callback: () => void) => void,
+        private loadArtist: (id: number, callback: () => void) => void) {
         super();
         this.searchDelay = 1; 
     }
@@ -58,7 +60,11 @@ export default class Search extends BaseClass {
             showHideLoading(true);
 
             $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, () => {
+                $('[data-album-id]').on('click', _e => this.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), this.reload));
+
                 $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, () => {
+                    $('[data-artist-id]').on('click', _e => this.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), this.reload));
+
                     $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, () => {
                         $(containers.SearchSongsContainer).find('[data-play-id]').on('click', e => {
                             this.playFunc(e.currentTarget as HTMLButtonElement, true);

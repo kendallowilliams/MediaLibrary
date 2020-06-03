@@ -26,7 +26,12 @@ export default class Music extends BaseClass implements IView {
         this.mediaView = HtmlControls.Views().MediaView;
         this.artist = new Artist(musicConfiguration, this.loadView.bind(this));
         this.album = new Album(musicConfiguration, this.loadView.bind(this));
-        this.search = new Search(musicConfiguration, this.loadView.bind(this), this.playFunc.bind(this));
+        this.search = new Search(musicConfiguration,
+            this.loadView.bind(this),
+            this.playFunc.bind(this),
+            this.loadAlbum.bind(this),
+            this.loadArtist.bind(this)
+        );
     }
 
     loadView(callback: () => void = () => null): void {
