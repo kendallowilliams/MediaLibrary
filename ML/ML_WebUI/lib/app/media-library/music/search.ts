@@ -86,11 +86,15 @@ export default class Search extends BaseClass {
                 });
             });
         } else {
-            $(containers.SearchAlbumsContainer).html('<div>No albums.</div>');
-            $(containers.SearchArtistsContainer).html('<div>No artists.</div>');
-            $(containers.SearchSongsContainer).html('<div>No songs.</div>');
-            showHideLoading(false);
-            LoadingModal.hideLoading();
+            LoadingModal.showLoading();
+            this.musicConfiguration.properties.PreviousSearchQuery = '';
+            this.musicConfiguration.updateConfiguration(() => {
+                $(containers.SearchAlbumsContainer).html('<div>No albums.</div>');
+                $(containers.SearchArtistsContainer).html('<div>No artists.</div>');
+                $(containers.SearchSongsContainer).html('<div>No songs.</div>');
+                showHideLoading(false);
+                LoadingModal.hideLoading();
+            });
         }
     }
 };
