@@ -45,6 +45,24 @@ export default class Search extends BaseClass {
         this.musicConfiguration.updateConfiguration(callback);
     }
 
+    private _loadAlbum(id: number) {
+        LoadingModal.showLoading();
+        this.musicConfiguration.properties.PreviousSearchQuery = '';
+        this.musicConfiguration.updateConfiguration(() => {
+            this.loadAlbum(id, this.reload);
+            LoadingModal.hideLoading();
+        });
+    }
+
+    private _loadArtist(id: number) {
+        LoadingModal.showLoading();
+        this.musicConfiguration.properties.PreviousSearchQuery = '';
+        this.musicConfiguration.updateConfiguration(() => {
+            this.loadArtist(id, this.reload);
+            LoadingModal.hideLoading();
+        });
+    }
+
     search() {
         const input = HtmlControls.UIControls().SearchQuery,
             query = $(input).val() as string,
@@ -74,8 +92,8 @@ export default class Search extends BaseClass {
                                 this.playFunc(e.currentTarget as HTMLButtonElement, true);
                             });
 
-                            $('[data-artist-id]').on('click', _e => this.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), this.reload));
-                            $('[data-album-id]').on('click', _e => this.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), this.reload));
+                            $('[data-artist-id]').on('click', _e => this._loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id'))));
+                            $('[data-album-id]').on('click', _e => this._loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id'))));
                             this.updateActiveMediaFunc();
                             showHideLoading(false);
                             LoadingModal.hideLoading();
