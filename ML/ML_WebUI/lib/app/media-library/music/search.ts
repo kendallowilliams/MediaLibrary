@@ -68,16 +68,14 @@ export default class Search extends BaseClass {
             this.musicConfiguration.properties.PreviousSearchQuery = query;
             this.musicConfiguration.updateConfiguration(() => {
                 $(containers.SearchAlbumsContainer).load('Music/SearchAlbums', { query: query }, () => {
-                    $('[data-album-id]').on('click', _e => this.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), this.reload));
-
                     $(containers.SearchArtistsContainer).load('Music/SearchArtists', { query: query }, () => {
-                        $('[data-artist-id]').on('click', _e => this.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), this.reload));
-
                         $(containers.SearchSongsContainer).load('Music/SearchSongs', { query: query }, () => {
                             $(containers.SearchSongsContainer).find('[data-play-id]').on('click', e => {
                                 this.playFunc(e.currentTarget as HTMLButtonElement, true);
                             });
 
+                            $('[data-artist-id]').on('click', _e => this.loadArtist(parseInt($(_e.currentTarget).attr('data-artist-id')), this.reload));
+                            $('[data-album-id]').on('click', _e => this.loadAlbum(parseInt($(_e.currentTarget).attr('data-album-id')), this.reload));
                             this.updateActiveMediaFunc();
                             showHideLoading(false);
                             LoadingModal.hideLoading();
