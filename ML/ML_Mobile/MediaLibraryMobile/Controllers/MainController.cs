@@ -99,7 +99,7 @@ namespace MediaLibraryMobile.Controllers
         {
             if (e.PropertyName == nameof(PlayerViewModel.MediaItems))
             {
-                if (!playerViewModel.IsPlaying) /*then*/ playerViewModel.SelectedPlayIndex = null;
+                if (!(playerViewModel.IsRandom && playerViewModel.IsPlaying)) /*then*/ playerViewModel.SelectedPlayIndex = null;
             }
             else if (e.PropertyName == nameof(PlayerViewModel.SelectedPlayIndex))
             {
