@@ -387,7 +387,10 @@ namespace MediaLibraryWebUI.Controllers
 #endif
         public async Task<ActionResult> GetAlbums()
         {
-            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.AlbumSort);
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
+
+            musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
+            musicViewModel.AlbumGroups = await musicService.GetAlbumGroups(musicViewModel.Configuration.SelectedAlbumSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Albums", musicViewModel);
@@ -398,7 +401,10 @@ namespace MediaLibraryWebUI.Controllers
 #endif
         public async Task<ActionResult> GetArtists()
         {
-            musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.ArtistSort);
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
+
+            musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
+            musicViewModel.ArtistGroups = await musicService.GetArtistGroups(musicViewModel.Configuration.SelectedArtistSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Artists", musicViewModel);
@@ -409,7 +415,10 @@ namespace MediaLibraryWebUI.Controllers
 #endif
         public async Task<ActionResult> GetSongs()
         {
-            musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.SongSort);
+            Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Music));
+
+            musicViewModel.Configuration = JsonConvert.DeserializeObject<MusicConfiguration>(configuration.JsonData) ?? new MusicConfiguration();
+            musicViewModel.SongGroups = await musicService.GetSongGroups(musicViewModel.Configuration.SelectedSongSort);
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Songs", musicViewModel);

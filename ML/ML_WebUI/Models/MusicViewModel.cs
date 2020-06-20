@@ -34,9 +34,6 @@ namespace MediaLibraryWebUI.Models
         public IEnumerable<IGrouping<string, Track>> SongGroups { get; set; }
         public IEnumerable<IGrouping<string, Artist>> ArtistGroups { get; set; }
         public IEnumerable<IGrouping<string, Album>> AlbumGroups { get; set; }
-        public SongSort SongSort { get; set; }
-        public AlbumSort AlbumSort { get; set; }
-        public ArtistSort ArtistSort { get; set; }
         public IEnumerable<Track> Songs { get; set; }
         public IEnumerable<Artist> Artists { get; set; }
         public IEnumerable<Album> Albums { get; set; }
