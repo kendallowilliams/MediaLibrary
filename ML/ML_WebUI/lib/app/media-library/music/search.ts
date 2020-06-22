@@ -97,6 +97,7 @@ export default class Search extends BaseClass {
                             this.updateActiveMediaFunc();
                             showHideLoading(false);
                             LoadingModal.hideLoading();
+                            $(HtmlControls.UIControls().SearchQuery).focus();
                         });
                     });
                 });
