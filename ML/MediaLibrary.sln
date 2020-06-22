@@ -19,6 +19,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWebUI", "ML_Web
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{B269A033-7BD7-4420-9AAE-F4CF463041BF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wearable", "Wearable", "{AE21FD90-A6F3-4B47-A0DE-499714322973}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWearable", "MediaLibraryWearable\MediaLibraryWearable\MediaLibraryWearable.csproj", "{94FA6C27-872F-4B3B-B3B7-267332F84B6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaLibraryWearable.Tizen", "MediaLibraryWearable\MediaLibraryWearable.Tizen\MediaLibraryWearable.Tizen.csproj", "{D8C57A27-3F51-46EB-9A07-1E28F0677C89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +68,18 @@ Global
 		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.DEV|Any CPU.Build.0 = DEV|Any CPU
 		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52918049-D1A3-4610-BFD2-4A3A1084D0E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94FA6C27-872F-4B3B-B3B7-267332F84B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FA6C27-872F-4B3B-B3B7-267332F84B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94FA6C27-872F-4B3B-B3B7-267332F84B6F}.DEV|Any CPU.ActiveCfg = Debug|Any CPU
+		{94FA6C27-872F-4B3B-B3B7-267332F84B6F}.DEV|Any CPU.Build.0 = Debug|Any CPU
+		{94FA6C27-872F-4B3B-B3B7-267332F84B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94FA6C27-872F-4B3B-B3B7-267332F84B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8C57A27-3F51-46EB-9A07-1E28F0677C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8C57A27-3F51-46EB-9A07-1E28F0677C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8C57A27-3F51-46EB-9A07-1E28F0677C89}.DEV|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8C57A27-3F51-46EB-9A07-1E28F0677C89}.DEV|Any CPU.Build.0 = Debug|Any CPU
+		{D8C57A27-3F51-46EB-9A07-1E28F0677C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8C57A27-3F51-46EB-9A07-1E28F0677C89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +87,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{60C001D8-8E3A-46F6-B235-E6DF3C3F26EE} = {B269A033-7BD7-4420-9AAE-F4CF463041BF}
 		{9598EF48-5AF0-48D6-A326-8EE730D7F370} = {B269A033-7BD7-4420-9AAE-F4CF463041BF}
+		{94FA6C27-872F-4B3B-B3B7-267332F84B6F} = {AE21FD90-A6F3-4B47-A0DE-499714322973}
+		{D8C57A27-3F51-46EB-9A07-1E28F0677C89} = {AE21FD90-A6F3-4B47-A0DE-499714322973}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80F35DA4-F124-4B3C-8F87-F0BBECDE0DA1}

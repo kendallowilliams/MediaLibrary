@@ -79,3 +79,7 @@
 /ML/ML_Mobile/MediaLibraryMobile/bin/Release/netstandard2.0
 /ML/ML_Mobile/MediaLibraryMobile.Android/bin/Release
 *.designer.cs
+/ML/MediaLibraryWearable/MediaLibraryWearable/bin/**
+/ML/MediaLibraryWearable/MediaLibraryWearable.Tizen/bin/**
+/ML/MediaLibraryWearable/MediaLibraryWearable.Tizen/obj
+/ML/MediaLibraryWearable/MediaLibraryWearable/obj
