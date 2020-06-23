@@ -54,13 +54,13 @@ namespace MediaLibraryBLL.Services
         public IEnumerable<string> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false)
         {
             SearchOption searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-            return Directory.EnumerateDirectories(path, searchPattern, searchOption);
+            return Directory.Exists(path) ? Directory.EnumerateDirectories(path, searchPattern, searchOption) : Enumerable.Empty<string>();
         }
 
         public IEnumerable<string> EnumerateFiles(string path, string searchPattern = "*", bool recursive = false)
         {
             SearchOption searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-            return Directory.EnumerateFiles(path, searchPattern, searchOption);
+            return Directory.Exists(path) ? Directory.EnumerateFiles(path, searchPattern, searchOption) : Enumerable.Empty<string>();
         }
 
         public async Task Write(string path, byte[] data)
@@ -126,7 +126,11 @@ namespace MediaLibraryBLL.Services
                     IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.PathId == path.Id);
                     IEnumerable<string> existingFiles = tracks.Select(track => Path.Combine(path.Location, track.FileName)),
                                         files = EnumerateFiles(path.Location).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower())),
-                                        deletedFiles = existingFiles.Where(file => !File.Exists(file));
+                                        deletedFiles = existingFiles.Where(file => !File.Exists(file)),
+                                        existingDirectories = paths.Where(_path => !path.Equals(_path) && 
+                                                                                   _path.Location.StartsWith(path.Location))
+                                                                   .Select(_path => _path.Location),
+                                        directories = EnumerateDirectories(path.Location, recursive: true);
 
                     foreach (string file in files.Except(existingFiles))
                     {
@@ -151,6 +155,13 @@ namespace MediaLibraryBLL.Services
                         {
                             await transactionService.UpdateTransactionErrored(deleteTransaction, ex);
                         }
+                    }
+
+                    foreach (string directory in directories.Except(existingDirectories))
+                    {
+                            IEnumerable<string> _files = EnumerateFiles(directory, recursive: true);
+
+                            foreach(string file in _files) { await ReadMediaFile(file); }
                     }
 
                     albumsToDelete = await dataService.GetList<Album>(album => album.Tracks.Count() == 0, default, album => album.Tracks);
