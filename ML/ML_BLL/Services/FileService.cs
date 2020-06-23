@@ -159,7 +159,7 @@ namespace MediaLibraryBLL.Services
 
                     foreach (string directory in directories.Except(existingDirectories))
                     {
-                            IEnumerable<string> _files = EnumerateFiles(directory, recursive: true);
+                            IEnumerable<string> _files = EnumerateFiles(directory, recursive: true).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()));
 
                             foreach(string file in _files) { await ReadMediaFile(file); }
                     }
