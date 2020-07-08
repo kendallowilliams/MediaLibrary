@@ -229,7 +229,7 @@ namespace MediaLibraryWebUI.Controllers
 #if DEBUG
                 request = new ScanDirectoryRequest()
                 {
-                    Path = System.Configuration.ConfigurationManager.AppSettings["MediaLibraryRoot_DEBUG"],
+                    Path = System.Configuration.ConfigurationManager.AppSettings["MediaLibraryRoot"],
                     Recursive = true
                 };
 #endif

@@ -65,7 +65,7 @@ namespace MediaLibraryBLL.Services
             {
                 transaction.Status = (int)TransactionStatus.Errored;
                 transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
-                transaction.ErrorMessage = exception.Message;
+                transaction.ErrorMessage = exception.ToString();
                 transaction.ModifyDate = DateTime.Now;
                 await dataService.Update(transaction);
             }
