@@ -34,6 +34,7 @@ export default class AudioVisualizer extends BaseClass {
 
     init(): void {
         if (this.playerConfiguration.properties.AudioVisualizerEnabled) {
+            // eslint-disable-next-line
             this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
             this.analyser = this.audioContext.createAnalyser();
             this.audioSourceNode = this.audioContext.createMediaElementSource(this.audioElement);
