@@ -41,8 +41,7 @@ namespace MediaLibraryBLL.Services
             this.trackService = trackService;
             this.transactionService = transactionService;
             this.dataService = dataService;
-            fileTypes = ConfigurationManager.AppSettings["FileTypes"].Split(new[] { ',' })
-                                                                     .Select(fileType => fileType.ToLower());
+            fileTypes = ConfigurationManager.AppSettings["FileTypes"].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         }
 
         public string MusicFolder { get => Path.Combine(RootFolder, "Music"); }
@@ -85,7 +84,7 @@ namespace MediaLibraryBLL.Services
             try
             {
                 IEnumerable<string> allFiles = EnumerateFiles(path, recursive: recursive);
-                var fileGroups = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()))
+                var fileGroups = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase))
                                          .GroupBy(file => new { directory = Path.GetDirectoryName(file) });
 
                 foreach (var group in fileGroups)
@@ -125,7 +124,7 @@ namespace MediaLibraryBLL.Services
                 {
                     IEnumerable<Track> tracks = await dataService.GetList<Track>(track => track.PathId == path.Id);
                     IEnumerable<string> existingFiles = tracks.Select(track => Path.Combine(path.Location, track.FileName)),
-                                        files = EnumerateFiles(path.Location).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower())),
+                                        files = EnumerateFiles(path.Location).Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase)),
                                         deletedFiles = existingFiles.Where(file => !File.Exists(file)),
                                         existingDirectories = paths.Where(_path => !path.Equals(_path) && 
                                                                                    _path.Location.StartsWith(path.Location))
@@ -159,7 +158,7 @@ namespace MediaLibraryBLL.Services
 
                     foreach (string directory in directories.Except(existingDirectories))
                     {
-                            IEnumerable<string> _files = EnumerateFiles(directory, recursive: true).Where(file => fileTypes.Contains(Path.GetExtension(file).ToLower()));
+                            IEnumerable<string> _files = EnumerateFiles(directory, recursive: true).Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase));
 
                             foreach(string file in _files) { await ReadMediaFile(file); }
                     }
