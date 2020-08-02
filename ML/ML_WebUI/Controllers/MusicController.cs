@@ -22,6 +22,7 @@ using System.Web;
 using System.IO;
 using IO_File = System.IO.File;
 using Fody;
+using static MediaLibraryBLL.Extensions.StringExtensions;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -442,7 +443,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> SearchAlbums(string query)
         {
             IEnumerable<IGrouping<string, Album>> albumGroups = await musicService.GetAlbumGroups(AlbumSort.None);
-            IEnumerable<Album> albums = albumGroups.SelectMany(group => group).AsParallel().Where(album => album.Title.ToLower().Contains(query.ToLower()));
+            IEnumerable<Album> albums = albumGroups.SelectMany(group => group).AsParallel().Where(album => album.Title.Contains(query, StringComparison.OrdinalIgnoreCase));
 
             musicViewModel.IsSearchResponse = true;
             musicViewModel.AlbumGroups = albums.OrderBy(album => album.Title).GroupBy(album => "Albums");
@@ -457,7 +458,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> SearchArtists(string query)
         {
             IEnumerable<IGrouping<string, Artist>> artistGroups = await musicService.GetArtistGroups(ArtistSort.None);
-            IEnumerable<Artist> artists = artistGroups.SelectMany(group => group).AsParallel().Where(artist => artist.Name.ToLower().Contains(query.ToLower()));
+            IEnumerable<Artist> artists = artistGroups.SelectMany(group => group).AsParallel().Where(artist => artist.Name.Contains(query, StringComparison.OrdinalIgnoreCase));
 
             musicViewModel.IsSearchResponse = true;
             musicViewModel.ArtistGroups = artists.OrderBy(artist => artist.Name).GroupBy(artist => "Artists");
@@ -472,7 +473,7 @@ namespace MediaLibraryWebUI.Controllers
         public async Task<ActionResult> SearchSongs(string query)
         {
             IEnumerable<IGrouping<string, Track>> songGroups = await musicService.GetSongGroups(SongSort.None);
-            IEnumerable<Track> songs = songGroups.SelectMany(group => group).AsParallel().Where(song => song.Title.ToLower().Contains(query.ToLower()));
+            IEnumerable<Track> songs = songGroups.SelectMany(group => group).AsParallel().Where(song => song.Title.Contains(query, StringComparison.OrdinalIgnoreCase));
 
             musicViewModel.IsSearchResponse = true;
             musicViewModel.SongGroups = songs.OrderBy(song => song.Title).GroupBy(song => "Songs");
