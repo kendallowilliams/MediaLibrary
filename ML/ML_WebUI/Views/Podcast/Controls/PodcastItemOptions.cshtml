@@ -1,0 +1,29 @@
+﻿@model PodcastItem
+    
+@{ 
+
+}
+
+<div class="d-flex flex-column" data-podcast-item-options="@(Model.Id)">
+    @if (!Model.LastPlayedDate.HasValue)
+    {
+        <button class="btn btn-sm btn-outline-secondary mb-1" data-mark-played-action="@(Url.Action(nameof(PodcastController.MarkPodcastItemPlayed), "Podcast", new { Model.Id }))"
+                data-podcast-action="mark-played">Mark as played</button>
+    }
+    else
+    {
+        <button class="btn btn-sm btn-outline-secondary mb-1" data-mark-played-action="@(Url.Action(nameof(PodcastController.MarkPodcastItemUnplayed), "Podcast", new { Model.Id }))"
+                data-podcast-action="mark-played">Mark as unplayed</button>
+    }
+
+    @if (string.IsNullOrWhiteSpace(Model.File))
+    {
+        <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.DownloadPodcastItem), "Podcast", new { Model.Id }))"
+                data-podcast-action="download">Download</button>
+    }
+    else
+    {
+        <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.RemovePodcastItemDownload), "Podcast", new { Model.Id }))"
+                data-podcast-action="download">Remove Download</button>
+    }
+</div>

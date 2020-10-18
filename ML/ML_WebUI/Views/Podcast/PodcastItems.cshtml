@@ -10,7 +10,10 @@
                     <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
                         <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(item.Title)</span>
-                        <small style="flex: 0 0 auto">@(item.PublishDate)</small>
+                        <small style="flex: 0 0 auto">
+                            <span>@(item.PublishDate)</span>
+                            <span class="text-danger ml-2 @(!item.LastPlayedDate.HasValue ? "d-none" : string.Empty)">PLAYED</span>
+                        </small>
                     </div>
                     <div>
                         <button class="btn btn-sm btn-outline-secondary d-none" data-tooltip="tooltip" title="@(item.Description)" data-placement="left"
@@ -29,11 +32,10 @@
                                 <i class="fa fa-plus"></i>
                             </button>
                         }
-                        <button class="btn btn-sm btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
-                                data-tooltip="tooltip" title="Download episode" data-podcast-action="download"
-                                @(!string.IsNullOrWhiteSpace(item.File) ? "disabled=\"disabled\"" : string.Empty)>
-                            <i class="fa fa-download"></i>
+                        <button class="btn btn-sm btn-outline-secondary" data-toggle="popover" data-podcast-item-options-popover="@(item.Id)">
+                            <i class="fa fa-ellipsis-v"></i>
                         </button>
+                        <div class="d-none">@(Html.Partial("~/Views/Podcast/Controls/PodcastItemOptions.cshtml", item))</div>
                     </div>
                 </div>
             </li>
