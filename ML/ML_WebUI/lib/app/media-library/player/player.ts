@@ -107,7 +107,7 @@ export default class Player extends BaseClass implements IView {
     }
 
     private initPlayerControls(): void {
-        const $volumeSlider = $('<div id="volume-slider"></div>').addClass('m-1'),
+        const $volumeSlider = $('<div id="volume-slider" class="m-1"></div>'),
             buttons = HtmlControls.Buttons(),
             containers = HtmlControls.Containers(),
             controls = HtmlControls.UIControls();

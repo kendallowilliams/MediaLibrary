@@ -32,15 +32,10 @@
                                 <i class="fa fa-plus"></i>
                             </button>
                         }
-                        <button class="btn btn-sm btn-outline-secondary" data-download-action="@(Url.Action("DownloadPodcastItem", "Podcast", new { item.Id }))"
-                                data-tooltip="tooltip" title="Download episode" data-podcast-action="download"
-                                @(!string.IsNullOrWhiteSpace(item.File) ? "disabled=\"disabled\"" : string.Empty)>
-                            <i class="fa fa-download"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-secondary" data-mark-played-id="@(item.Id)" data-media-type="@(Enums.MediaTypes.Podcast)"
-                                data-tooltip="tooltip" title="Mark as played">
+                        <button class="btn btn-sm btn-outline-secondary" data-toggle="popover" data-podcast-item-options-popover="@(item.Id)">
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
+                        <div class="d-none">@(Html.Partial("~/Views/Podcast/Controls/PodcastItemOptions.cshtml", item))</div>
                     </div>
                 </div>
             </li>

@@ -581,6 +581,7 @@
     <Content Include="Views\Shared\Modals\ClearNowPlayingModal.cshtml" />
     <Content Include="Views\Shared\Modals\DownloadM3UPlaylistModal.cshtml" />
     <Content Include="Views\Music\Search.cshtml" />
+    <Content Include="Views\Podcast\Controls\PodcastItemOptions.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

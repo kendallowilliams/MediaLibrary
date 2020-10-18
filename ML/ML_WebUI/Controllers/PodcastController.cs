@@ -124,7 +124,7 @@ namespace MediaLibraryWebUI.Controllers
             Func<PodcastItem, bool> expression = null;
 
             if (filter == PodcastFilter.Downloaded) /*then*/ expression = item => !string.IsNullOrWhiteSpace(item.File);
-            else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => item.PlayCount == 0;
+            else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => !item.LastPlayedDate.HasValue;
             podcastViewModel.SelectedPodcast = await dataService.Get<Podcast>(podcast => podcast.Id == id, default, podcast => podcast.PodcastItems);
             if (expression != null) /*then*/ podcastViewModel.SelectedPodcast.PodcastItems = podcastViewModel.SelectedPodcast.PodcastItems.Where(expression).ToList();
 
@@ -138,7 +138,7 @@ namespace MediaLibraryWebUI.Controllers
             bool hasPlaylists = await dataService.Exists<Playlist>(item => item.Type == (int)PlaylistTabs.Podcast);
 
             if (filter == PodcastFilter.Downloaded) /*then*/ expression = item => !string.IsNullOrWhiteSpace(item.File);
-            else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => item.PlayCount == 0;
+            else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => !item.LastPlayedDate.HasValue;
             if (expression != null) /*then*/ podcastItems = podcastItems.Where(expression);
 
             return PartialView("PodcastItems", (hasPlaylists, podcastItems.OrderByDescending(item => item.PublishDate)));
@@ -165,6 +165,48 @@ namespace MediaLibraryWebUI.Controllers
                 }
             }
             catch(Exception ex)
+            {
+                await transactionService.UpdateTransactionErrored(transaction, ex);
+            }
+        }
+
+        public async Task RemovePodcastItemDownload(int id)
+        {
+            Transaction transaction = new Transaction(TransactionTypes.RemoveEpisodeDownload);
+
+            try
+            {
+                Transaction existingTransaction = await dataService.Get<Transaction>(item => item.Type == (int)TransactionTypes.DownloadEpisode &&
+                                                                                             item.Status == (int)TransactionStatus.InProcess &&
+                                                                                             id.ToString().Equals(item.Message));
+                PodcastItem podcastItem = await dataService.Get<PodcastItem>(item => item.Id == id);
+
+                await dataService.Insert(transaction);
+
+                if (existingTransaction == null)
+                {
+                    if (!string.IsNullOrWhiteSpace(podcastItem.File))
+                    {
+                        if (System.IO.File.Exists(podcastItem.File))
+                        {
+                            System.IO.File.Delete(podcastItem.File);
+                        }
+
+                        podcastItem.File = null;
+                        await dataService.Update(podcastItem);
+                        await transactionService.UpdateTransactionCompleted(transaction);
+                    }
+                    else
+                    {
+                        await transactionService.UpdateTransactionCompleted(transaction, $"Download not found or does not exist.");
+                    }
+                }
+                else
+                {
+                    await transactionService.UpdateTransactionCompleted(transaction, $"Podcast episode ({id}) download in progress.");
+                }
+            }
+            catch (Exception ex)
             {
                 await transactionService.UpdateTransactionErrored(transaction, ex);
             }
@@ -280,6 +322,28 @@ namespace MediaLibraryWebUI.Controllers
             string json = JsonConvert.SerializeObject(podcast, settings);
 
             return new ContentResult() { Content = json, ContentEncoding = Encoding.UTF8, ContentType = "application/json" };
+        }
+
+        public async Task MarkPodcastItemPlayed(int id)
+        {
+            PodcastItem podcastItem = await dataService.Get<PodcastItem>(item => item.Id == id);
+
+            if (!podcastItem.LastPlayedDate.HasValue)
+            {
+                podcastItem.LastPlayedDate = DateTime.Now;
+                await dataService.Update(podcastItem);
+            }
+        }
+
+        public async Task MarkPodcastItemUnplayed(int id)
+        {
+            PodcastItem podcastItem = await dataService.Get<PodcastItem>(item => item.Id == id);
+
+            if (podcastItem.LastPlayedDate.HasValue)
+            {
+                podcastItem.LastPlayedDate = null;
+                await dataService.Update(podcastItem);
+            }
         }
     }
 }
