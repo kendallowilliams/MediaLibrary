@@ -79,4 +79,3 @@
 /ML/ML_Mobile/MediaLibraryMobile/bin/Release/netstandard2.0
 /ML/ML_Mobile/MediaLibraryMobile.Android/bin/Release
 *.designer.cs
-/ML/ML_WebUI/package-lock.json

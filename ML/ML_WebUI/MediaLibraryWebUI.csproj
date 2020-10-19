@@ -479,6 +479,7 @@
     <Content Include="lib\app\tsconfig.json" />
     <Content Include="lib\require.js\require.min.js.map" />
     <Content Include="lib\jquery-ui-1.12.1.custom\package.json" />
+    <Content Include="package-lock.json" />
     <None Include="Properties\PublishProfiles\KSERVER_DEV.pubxml" />
     <None Include="Properties\PublishProfiles\KSERVER_PROD.pubxml" />
     <Content Include="Web.config">
