@@ -476,7 +476,6 @@
     <Content Include="lib\require.js\require.js" />
     <Content Include="lib\require.js\require.min.js" />
     <Content Include="package.json" />
-    <Content Include="package-lock.json" />
     <Content Include="lib\app\tsconfig.json" />
     <Content Include="lib\require.js\require.min.js.map" />
     <Content Include="lib\jquery-ui-1.12.1.custom\package.json" />
