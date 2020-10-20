@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Text;
+using System.Threading;
 
 namespace MediaLibraryBLL.Services
 {
@@ -23,9 +24,9 @@ namespace MediaLibraryBLL.Services
         {
         }
 
-        public async Task<byte[]> DownloadData(string address)
+        public async Task<byte[]> DownloadData(string address, CancellationToken token = default, Action<int, long, long> progressChanged = null)
         {
-            TaskCompletionSource<byte[]> tcs = new TaskCompletionSource<byte[]>();
+            TaskCompletionSource<byte[]> tcs = new TaskCompletionSource<byte[]>(token);
 
             using (WebClient client = new WebClient())
             {
@@ -33,6 +34,10 @@ namespace MediaLibraryBLL.Services
                 {
                     Uri uri = new Uri(address);
 
+                    client.DownloadProgressChanged += (sender, args) =>
+                    {
+                        progressChanged?.Invoke(args.ProgressPercentage, args.BytesReceived, args.TotalBytesToReceive);
+                    };
                     client.DownloadDataCompleted += (sender, args) =>
                     {
                         if (args.Error == null) { tcs.SetResult(args.Result); }
@@ -40,7 +45,7 @@ namespace MediaLibraryBLL.Services
                     };
                     client.DownloadDataAsync(uri);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     tcs.SetException(ex);
                 }
@@ -49,9 +54,9 @@ namespace MediaLibraryBLL.Services
             return await tcs.Task;
         }
 
-        public async Task<bool> DownloadFile(string address, string filename)
+        public async Task<bool> DownloadFile(string address, string filename, CancellationToken token = default, Action<int, long, long> progressChanged = null)
         {
-            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+            TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(token);
 
             using (WebClient client = new WebClient())
             {
@@ -59,6 +64,10 @@ namespace MediaLibraryBLL.Services
                 {
                     Uri uri = new Uri(address);
 
+                    client.DownloadProgressChanged += (sender, args) =>
+                    {
+                        progressChanged?.Invoke(args.ProgressPercentage, args.BytesReceived, args.TotalBytesToReceive);
+                    };
                     client.DownloadFileCompleted += (sender, args) =>
                     {
                         if (args.Error == null) { tcs.SetResult(true); }

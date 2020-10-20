@@ -1,11 +1,11 @@
-﻿@model (bool HasPlaylists, IOrderedEnumerable<MediaLibraryDAL.DbContexts.PodcastItem> PodcastItems)
+﻿@model (bool HasPlaylists, IOrderedEnumerable<MediaLibraryDAL.DbContexts.PodcastItem> PodcastItems, IEnumerable<int> DownloadIds)
 
 @if (Model.PodcastItems.Any())
 {
     <ul class="list-group list-group-flush">
         @foreach (var item in Model.PodcastItems.OrderByDescending(item => item.PublishDate))
         {
-            <li class="list-group-item" data-episode-id="@(item.Id)">
+            <li class="list-group-item" data-episode-id="@(item.Id)" data-active-download="@(Model.DownloadIds.Contains(item.Id) ? "true" : "false")">
                 <div class="media">
                     <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
                     <div class="media-body d-flex flex-column" style="overflow-x: auto">
@@ -35,7 +35,7 @@
                         <button class="btn btn-sm btn-outline-secondary" data-toggle="popover" data-podcast-item-options-popover="@(item.Id)">
                             <i class="fa fa-ellipsis-v"></i>
                         </button>
-                        <div class="d-none">@(Html.Partial("~/Views/Podcast/Controls/PodcastItemOptions.cshtml", item))</div>
+                        <div class="d-none">@(Html.Partial("~/Views/Podcast/Controls/PodcastItemOptions.cshtml", (item, Model.DownloadIds.Contains(item.Id))))</div>
                     </div>
                 </div>
             </li>

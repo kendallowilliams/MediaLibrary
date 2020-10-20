@@ -131,17 +131,24 @@ namespace MediaLibraryWebUI.Controllers
             return PartialView("Podcast", podcastViewModel);
         }
 
+        [CompressContent]
         public async Task<ActionResult> GetPodcastItems(int id, int year, PodcastFilter filter = default(PodcastFilter))
         {
             Func<PodcastItem, bool> expression = null;
             IEnumerable<PodcastItem> podcastItems = await dataService.GetList<PodcastItem>(item => item.PodcastId == id && item.PublishDate.Year == year);
             bool hasPlaylists = await dataService.Exists<Playlist>(item => item.Type == (int)PlaylistTabs.Podcast);
+            IEnumerable<Transaction> inProcessDownloads = await dataService.GetList<Transaction>(item => item.Status == (int)TransactionStatus.InProcess &&
+                                                                                                          item.Type == (int)TransactionTypes.DownloadEpisode);
+            IEnumerable<int> downloadIds = inProcessDownloads.Select(item => item.Message)
+                                                             .Where(item => !string.IsNullOrWhiteSpace(item))
+                                                             .Select(item => new { Valid = int.TryParse(item, out int value), Id = value })
+                                                             .Select(item => item.Id);
 
             if (filter == PodcastFilter.Downloaded) /*then*/ expression = item => !string.IsNullOrWhiteSpace(item.File);
             else if (filter == PodcastFilter.Unplayed) /*then*/ expression = item => !item.LastPlayedDate.HasValue;
             if (expression != null) /*then*/ podcastItems = podcastItems.Where(expression);
 
-            return PartialView("PodcastItems", (hasPlaylists, podcastItems.OrderByDescending(item => item.PublishDate)));
+            return PartialView("PodcastItems", (hasPlaylists, podcastItems.OrderByDescending(item => item.PublishDate), downloadIds));
         }
 
         public async Task DownloadPodcastItem(int id)
