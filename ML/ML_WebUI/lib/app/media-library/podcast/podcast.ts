@@ -112,21 +112,23 @@ export default class Podcast extends BaseClass implements IView {
             });
             $(this.mediaView).find('*[data-play-id]').on('click', e => this.playFunc(e.currentTarget as HTMLButtonElement, true));
             $(this.mediaView).find('*[data-podcast-action="download"]').on('click', e => {
-                const $btn = $(e.currentTarget);
+                const $btn = $(e.currentTarget),
+                    id = $btn.attr('data-item-id');
 
                 LoadingModal.showLoading();
                 $btn.tooltip('dispose');
-                $.get($btn.attr('data-download-action'), () => {
+                $.post($btn.attr('data-download-action'), { id: id }, () => {
                     LoadingModal.hideLoading();
                     $('[data-podcast-year="' + this.getSelectedYear() + '"]').click();
                 });
             });
             $(this.mediaView).find('*[data-podcast-action="mark-played"]').on('click', e => {
-                const $btn = $(e.currentTarget);
+                const $btn = $(e.currentTarget),
+                    id = $btn.attr('data-item-id');
 
                 LoadingModal.showLoading();
                 $btn.tooltip('dispose');
-                $.get($btn.attr('data-mark-played-action'), () => {
+                $.post($btn.attr('data-mark-played-action'), { id: id }, () => {
                     LoadingModal.hideLoading();
                     $('[data-podcast-year="' + this.getSelectedYear() + '"]').click();
                 });

@@ -7,23 +7,23 @@
 <div class="d-flex flex-column" data-podcast-item-options="@(Model.Id)">
     @if (!Model.LastPlayedDate.HasValue)
     {
-        <button class="btn btn-sm btn-outline-secondary mb-1" data-mark-played-action="@(Url.Action(nameof(PodcastController.MarkPodcastItemPlayed), "Podcast", new { Model.Id }))"
-                data-podcast-action="mark-played">Mark as played</button>
+        <button class="btn btn-sm btn-outline-secondary mb-1" data-mark-played-action="@(Url.Action(nameof(PodcastController.MarkPodcastItemPlayed), "Podcast"))"
+                data-podcast-action="mark-played" data-item-id="@(Model.Id)">Mark as played</button>
     }
     else
     {
-        <button class="btn btn-sm btn-outline-secondary mb-1" data-mark-played-action="@(Url.Action(nameof(PodcastController.MarkPodcastItemUnplayed), "Podcast", new { Model.Id }))"
-                data-podcast-action="mark-played">Mark as unplayed</button>
+        <button class="btn btn-sm btn-outline-secondary mb-1" data-mark-played-action="@(Url.Action(nameof(PodcastController.MarkPodcastItemUnplayed), "Podcast"))"
+                data-podcast-action="mark-played" data-item-id="@(Model.Id)">Mark as unplayed</button>
     }
 
     @if (string.IsNullOrWhiteSpace(Model.File))
     {
-        <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.DownloadPodcastItem), "Podcast", new { Model.Id }))"
-                data-podcast-action="download">Download</button>
+        <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.DownloadPodcastItem), "Podcast"))"
+                data-podcast-action="download" data-item-id="@(Model.Id)">Download</button>
     }
     else
     {
-        <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.RemovePodcastItemDownload), "Podcast", new { Model.Id }))"
-                data-podcast-action="download">Remove Download</button>
+        <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.RemovePodcastItemDownload), "Podcast"))"
+                data-podcast-action="download" data-item-id="@(Model.Id)">Remove Download</button>
     }
 </div>
