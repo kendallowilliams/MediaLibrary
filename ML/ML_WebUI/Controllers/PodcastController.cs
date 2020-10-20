@@ -153,7 +153,8 @@ namespace MediaLibraryWebUI.Controllers
                 Transaction existingTransaction = await dataService.Get<Transaction>(item => item.Type == (int)TransactionTypes.DownloadEpisode &&
                                                                                              item.Status == (int)TransactionStatus.InProcess &&
                                                                                              id.ToString().Equals(item.Message));
-                await dataService.Insert(transaction);
+
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.DownloadEpisode);
 
                 if (existingTransaction == null)
                 {
@@ -181,7 +182,7 @@ namespace MediaLibraryWebUI.Controllers
                                                                                              id.ToString().Equals(item.Message));
                 PodcastItem podcastItem = await dataService.Get<PodcastItem>(item => item.Id == id);
 
-                await dataService.Insert(transaction);
+                transaction = await transactionService.GetNewTransaction(TransactionTypes.RemoveEpisodeDownload);
 
                 if (existingTransaction == null)
                 {

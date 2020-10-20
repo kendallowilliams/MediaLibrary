@@ -153,6 +153,7 @@ namespace MediaLibraryBLL.Services
                         podcastItem.File = fileName;
                         File.WriteAllBytes(fileName, await webService.DownloadData(podcastItem.Url));
                         await dataService.Update(podcastItem);
+                        await transactionService.UpdateTransactionCompleted(transaction);
                     }
                     else
                     {
