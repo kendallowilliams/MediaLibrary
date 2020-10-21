@@ -137,8 +137,9 @@ export default class Podcast extends BaseClass implements IView {
             LoadingModal.hideLoading();
 
             if ($(this.podcastView).find('[data-active-download="true"]').length > 0) /*then*/ window.setTimeout(() => {
+                if ($(this.podcastView).find('[data-active-download="true"]').length > 0) {
                     $('[data-podcast-year="' + this.getSelectedYear() + '"]').click();
-                }, 5000);
+                }}, 5000);
         },
             id = this.podcastConfiguration.properties.SelectedPodcastId,
             year = $(item).attr('data-podcast-year'),
