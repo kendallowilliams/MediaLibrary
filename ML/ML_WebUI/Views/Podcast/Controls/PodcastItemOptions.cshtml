@@ -1,29 +1,44 @@
-﻿@model PodcastItem
+﻿@model (PodcastItem PodcastItem, bool IsDownloading)
     
 @{ 
 
 }
 
-<div class="d-flex flex-column" data-podcast-item-options="@(Model.Id)">
-    @if (!Model.LastPlayedDate.HasValue)
+<div class="d-flex flex-column" data-podcast-item-options="@(Model.PodcastItem.Id)">
+    @if (!Model.PodcastItem.LastPlayedDate.HasValue)
     {
         <button class="btn btn-sm btn-outline-secondary mb-1" data-mark-played-action="@(Url.Action(nameof(PodcastController.MarkPodcastItemPlayed), "Podcast"))"
-                data-podcast-action="mark-played" data-item-id="@(Model.Id)">Mark as played</button>
+                data-podcast-action="mark-played" data-item-id="@(Model.PodcastItem.Id)">
+            Mark as played
+        </button>
     }
     else
     {
         <button class="btn btn-sm btn-outline-secondary mb-1" data-mark-played-action="@(Url.Action(nameof(PodcastController.MarkPodcastItemUnplayed), "Podcast"))"
-                data-podcast-action="mark-played" data-item-id="@(Model.Id)">Mark as unplayed</button>
+                data-podcast-action="mark-played" data-item-id="@(Model.PodcastItem.Id)">
+            Mark as unplayed
+        </button>
     }
 
-    @if (string.IsNullOrWhiteSpace(Model.File))
+
+    @if (Model.IsDownloading)
+    {
+        <button class="btn btn-sm btn-outline-secondary mb-1" disabled="disabled">
+            Downloading <i class="fa fa-spinner fa-pulse"></i>
+        </button>
+    }
+    else if (string.IsNullOrWhiteSpace(Model.PodcastItem.File))
     {
         <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.DownloadPodcastItem), "Podcast"))"
-                data-podcast-action="download" data-item-id="@(Model.Id)">Download</button>
+                data-podcast-action="download" data-item-id="@(Model.PodcastItem.Id)">
+            Download
+        </button>
     }
     else
     {
         <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.RemovePodcastItemDownload), "Podcast"))"
-                data-podcast-action="download" data-item-id="@(Model.Id)">Remove Download</button>
+                data-podcast-action="download" data-item-id="@(Model.PodcastItem.Id)">
+            Remove Download
+        </button>
     }
 </div>
