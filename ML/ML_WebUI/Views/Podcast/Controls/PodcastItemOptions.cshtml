@@ -20,14 +20,7 @@
         </button>
     }
 
-
-    @if (Model.IsDownloading)
-    {
-        <button class="btn btn-sm btn-outline-secondary mb-1" disabled="disabled">
-            Downloading <i class="fa fa-spinner fa-pulse"></i>
-        </button>
-    }
-    else if (string.IsNullOrWhiteSpace(Model.PodcastItem.File))
+    @if (string.IsNullOrWhiteSpace(Model.PodcastItem.File) && !Model.IsDownloading)
     {
         <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.DownloadPodcastItem), "Podcast"))"
                 data-podcast-action="download" data-item-id="@(Model.PodcastItem.Id)">
@@ -36,7 +29,12 @@
     }
     else
     {
-        <button class="btn btn-sm btn-outline-secondary mb-1" data-download-action="@(Url.Action(nameof(PodcastController.RemovePodcastItemDownload), "Podcast"))"
+        <button class="btn btn-sm btn-outline-secondary mb-1 @(Model.IsDownloading ? string.Empty : "d-none")" disabled="disabled" 
+                data-item-id="@(Model.PodcastItem.Id)" data-podcast-action="downloading">
+            Downloading <i class="fa fa-spinner fa-pulse"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-secondary mb-1 @(Model.IsDownloading ? "d-none" : string.Empty)" 
+                data-download-action="@(Url.Action(nameof(PodcastController.RemovePodcastItemDownload), "Podcast"))"
                 data-podcast-action="download" data-item-id="@(Model.PodcastItem.Id)">
             Remove Download
         </button>
