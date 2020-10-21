@@ -135,11 +135,7 @@ export default class Podcast extends BaseClass implements IView {
             });
             this.updateActiveMediaFunc();
             LoadingModal.hideLoading();
-
-            if ($(this.podcastView).find('[data-active-download="true"]').length > 0) /*then*/ window.setTimeout(() => {
-                if ($(this.podcastView).find('[data-active-download="true"]').length > 0) {
-                    $('[data-podcast-year="' + this.getSelectedYear() + '"]').click();
-                }}, 5000);
+            this.refreshPodcastDownloads();
         },
             id = this.podcastConfiguration.properties.SelectedPodcastId,
             year = $(item).attr('data-podcast-year'),
@@ -151,6 +147,24 @@ export default class Podcast extends BaseClass implements IView {
             disposePopovers(this.podcastView);
             $(this.podcastView).load('Podcast/GetPodcastItems', { id: id, year: year, filter: filter }, success);
         }
+    }
+
+    private refreshPodcastDownloads(): void {
+        if ($(this.podcastView).find('[data-active-download="true"]').length > 0) /*then*/ window.setTimeout(() => {
+            $(this.podcastView).find('[data-active-download="true"]').each((index, element) => {
+                const id = $(element).attr('data-episode-id');
+
+                $.get('Podcast/IsDownloading?id=' + id, data => {
+                    if (data && (data as string).toLowerCase() === 'true') {
+                        this.refreshPodcastDownloads();
+                    } else {
+                        $(element).removeAttr('data-active-download');
+                        $('[data-podcast-action="downloading"][data-item-id="' + id + '"]').addClass('d-none');
+                        $('[data-podcast-action="download"][data-item-id="' + id + '"]').removeClass('d-none');
+                    }
+                });
+            });
+        }, 5000);
     }
 
     private updateMobileYears(position: number): void {
