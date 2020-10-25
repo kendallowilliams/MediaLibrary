@@ -30,7 +30,7 @@ namespace MediaLibraryBLL.Services
         {
             Transaction transaction = new Transaction(transactionType);
 
-            transaction.Status = (int)TransactionStatus.Started;
+            transaction.Status = (int)TransactionStatus.Created;
             transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
             await dataService.Insert(transaction);
 
@@ -71,8 +71,8 @@ namespace MediaLibraryBLL.Services
             }
         }
 
-        public async Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType) =>
-            await dataService.Get<Transaction>(t => t.Type == (int)transactionType && t.Status == (int)TransactionStatus.InProcess);
+        public async Task<IEnumerable<Transaction>> GetActiveTransactionsByType(TransactionTypes transactionType) =>
+            await dataService.GetList<Transaction>(t => t.Type == (int)transactionType && t.Status == (int)TransactionStatus.InProcess);
 
         public async Task CleanUpTransactions()
         {

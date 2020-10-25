@@ -22,18 +22,22 @@ export default class ManageDirectoriesModal {
 
     private loadMusicDirectory(path: string): void {
         LoadingModal.showLoading();
-        $(this.modal).find('.modal-body').load('Music/GetMusicDirectory?path=' + path, () => {
-            $(this.modal).find('[data-directory-action="get"]').on('click', e => {
+
+        $(this.modal).tooltip('dispose').find('.modal-body').load('Music/GetMusicDirectory?path=' + path, () => {
+            const $modal = $(this.modal);
+
+            $modal.find('[data-directory-action="get"]').on('click', e => {
                 const path = $(e.currentTarget).attr('data-directory-path');
 
                 this.loadMusicDirectory(encodeURIComponent(path));
             });
-            $(this.modal).find('[data-directory-action-type="remove"]').on('click', e => {
+            $modal.find('[data-directory-action-type="remove"]').on('click', e => {
                 this.removeMusicDirectory(e.currentTarget);
             });
-            $(this.modal).find('[data-directory-action-type="add"]').on('click', e => {
+            $modal.find('[data-directory-action-type="add"]').on('click', e => {
                 this.addMusicDirectory(e.currentTarget);
             });
+            $modal.find('[data-toggle="tooltip"]').tooltip();
             LoadingModal.hideLoading();
         });
     }

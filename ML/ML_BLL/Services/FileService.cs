@@ -79,7 +79,7 @@ namespace MediaLibraryBLL.Services
             if (File.Exists(path)) { File.Delete(path); }
         }
 
-        public async Task ReadDirectory(Transaction transaction, string path, bool recursive = true)
+        public async Task ReadDirectory(Transaction transaction, string path, bool recursive = false)
         {
             try
             {

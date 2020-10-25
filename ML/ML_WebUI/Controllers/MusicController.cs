@@ -227,7 +227,10 @@ namespace MediaLibraryWebUI.Controllers
 
             try
             {
-                Transaction existingTransaction = await transactionService.GetActiveTransactionByType(TransactionTypes.Read);
+                IEnumerable<Transaction> existingTransactions = await transactionService.GetActiveTransactionsByType(TransactionTypes.Read);
+                var existingTransaction = existingTransactions.Where(item => !string.IsNullOrWhiteSpace(item.Message))
+                                                              .Select(item => new { item.Id, Directories = JsonConvert.DeserializeObject<IEnumerable<string>>(item.Message) })
+                                                              .FirstOrDefault(item => item.Directories.Contains(request.Path, StringComparer.OrdinalIgnoreCase));
 
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
 
@@ -243,6 +246,10 @@ namespace MediaLibraryWebUI.Controllers
                     }
                     else if (existingTransaction == null)
                     {
+                        IEnumerable<string> directories = fileService.EnumerateDirectories(request.Path, recursive: request.Recursive);
+
+                        transaction.Message = JsonConvert.SerializeObject(request.Recursive ? directories : Enumerable.Empty<string>().Append(request.Path));
+                        await dataService.Update(transaction);
                         await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Path, request.Recursive).ContinueWith(task => musicService.ClearData()),
                                                                               transaction);
                     }
@@ -479,7 +486,10 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> GetMusicDirectory(string path)
         {
-            IEnumerable<string> directories = Enumerable.Empty<string>();
+            IEnumerable<Transaction> existingTransactions = await transactionService.GetActiveTransactionsByType(TransactionTypes.Read);
+            IEnumerable<string> directories = Enumerable.Empty<string>(),
+                                activeDirectories = existingTransactions.Where(item => !string.IsNullOrWhiteSpace(item.Message))
+                                                                        .SelectMany(item => JsonConvert.DeserializeObject<IEnumerable<string>>(item.Message));
             IEnumerable<TrackPath> includedTrackPaths = Enumerable.Empty<TrackPath>();
             MusicDirectory musicDirectory = default;
             string rootPath = WebConfigurationManager.AppSettings["MediaLibraryRoot"],
@@ -503,6 +513,7 @@ namespace MediaLibraryWebUI.Controllers
                 int fileCount = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase)).Count();
 
                 directory.FileCount = fileCount;
+                directory.IsLoading = activeDirectories.Contains(directory.Path, StringComparer.OrdinalIgnoreCase);
             }
 
             return PartialView("~/Views/Shared/Controls/MusicDirectory.cshtml", musicDirectory);

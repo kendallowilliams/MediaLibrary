@@ -19,7 +19,7 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         Task UpdateTransactionErrored(Transaction transaction, Exception exception);
 
-        Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType);
+        Task<IEnumerable<Transaction>> GetActiveTransactionsByType(TransactionTypes transactionType);
 
         Task CleanUpTransactions();
     }

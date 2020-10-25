@@ -42,8 +42,7 @@ namespace MediaLibraryDAL
 
         public enum TransactionStatus : int
         {
-            NotStarted,
-            Started,
+            Created,
             InProcess,
             Errored,
             Cancelled,

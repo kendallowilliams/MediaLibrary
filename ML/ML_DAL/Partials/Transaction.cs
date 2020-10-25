@@ -13,13 +13,15 @@ namespace MediaLibraryDAL.DbContexts
     {
         public Transaction() : base()
         {
-            Status = (int)TransactionStatus.NotStarted;
+            Status = (int)TransactionStatus.Created;
+            StatusMessage = TransactionStatus.Created.ToString();
             Type = (int)TransactionTypes.None;
         }
 
         public Transaction(TransactionTypes transactionType) : base()
         {
-            Status = (int)TransactionStatus.NotStarted;
+            Status = (int)TransactionStatus.Created;
+            StatusMessage = TransactionStatus.Created.ToString();
             Type = (int)transactionType;
         }
     }
