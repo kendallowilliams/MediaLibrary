@@ -26,5 +26,9 @@ namespace MediaLibraryBLL.Services.Interfaces
         Task ReadMediaFile(string path);
 
         void Delete(string path);
+
+        IEnumerable<string> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false);
+
+        IEnumerable<string> EnumerateFiles(string path, string searchPattern = "*", bool recursive = false);
     }
 }

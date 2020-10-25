@@ -1,0 +1,38 @@
+﻿@model MusicDirectory
+
+<div class="d-flex flex-row flex-wrap flex-fill">
+    @foreach (var item in Model.SubDirectories)
+    {
+        string directoryName = item.Path.Split(new char[] { Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+
+        if (directoryName.Equals(".."))
+        {
+            <div class="mb-1">
+                <button class="btn btn-sm btn-outline-secondary" data-directory-action="get" data-directory-path="@(item.Path)"><i class="fa fa-arrow-left fa-1x"></i></button>
+            </div>
+        }
+        else
+        {
+            <div class="input-group input-group-sm mb-1">
+                <input class="form-control font-weight-bold" readonly="readonly" value="@(directoryName)" />
+                <div class="input-group-append">
+                    @if (item.Id.HasValue)
+                    {
+                        <button class="btn btn-sm btn-outline-danger" data-path-id="@(item.Id)" data-directory-action-type="remove"
+                                data-directory-action="@(Url.Action(nameof(MusicController.RemoveMusicDirectory), "Music"))">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    }
+                    else if (item.FileCount > 0)
+                    {
+                        <button class="btn btn-sm btn-outline-primary" data-directory-action="@(Url.Action(nameof(MusicController.AddMusicDirectory), "Music"))"
+                                data-directory-path="@(item.Path)" data-directory-action-type="add">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    }
+                    <button class="btn btn-sm btn-outline-secondary" data-directory-action="get" data-directory-path="@(item.Path)"><i class="fa fa-arrow-right"></i></button>
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -87,6 +87,7 @@ namespace MediaLibraryWebUI.Repositories
         public static string LoadingModalId { get => "loading-modal"; }
         public static string ClearNowPlayingModalId { get => "clear-now-playing-modal"; }
         public static string DownloadM3UPlaylistModalId { get => "download-m3u-playlist-modal"; }
+        public static string ManageDirectoriesModalId { get => "manage-directories-modal"; }
         #endregion Modal Ids
     }
 }

@@ -23,6 +23,7 @@ using System.IO;
 using IO_File = System.IO.File;
 using Fody;
 using static MediaLibraryBLL.Extensions.StringExtensions;
+using System.Web.Configuration;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -227,18 +228,12 @@ namespace MediaLibraryWebUI.Controllers
             try
             {
                 Transaction existingTransaction = await transactionService.GetActiveTransactionByType(TransactionTypes.Read);
-#if DEBUG
-                request = new ScanDirectoryRequest()
-                {
-                    Path = System.Configuration.ConfigurationManager.AppSettings["MediaLibraryRoot"],
-                    Recursive = true
-                };
-#endif
+
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
 
                 if (request.IsValid())
                 {
-                    TrackPath path = await dataService.Get<TrackPath>(item => item.Location.Equals(request.Path, StringComparison.CurrentCultureIgnoreCase));
+                    TrackPath path = await dataService.Get<TrackPath>(item => item.Location == request.Path);
 
                     if (path != null)
                     {
@@ -480,6 +475,59 @@ namespace MediaLibraryWebUI.Controllers
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Songs", musicViewModel);
+        }
+
+        public async Task<ActionResult> GetMusicDirectory(string path)
+        {
+            IEnumerable<string> directories = Enumerable.Empty<string>();
+            IEnumerable<TrackPath> includedTrackPaths = Enumerable.Empty<TrackPath>();
+            MusicDirectory musicDirectory = default;
+            string rootPath = WebConfigurationManager.AppSettings["MediaLibraryRoot"],
+                   targetPath = string.IsNullOrWhiteSpace(path) ? rootPath : path;
+            DirectoryInfo rootPathInfo = new DirectoryInfo(rootPath),
+                          targetPathInfo = new DirectoryInfo(targetPath);
+            bool isSafePath = fileService.EnumerateDirectories(rootPathInfo.FullName, recursive: true)
+                                         .Any(item => item.Equals(targetPathInfo.FullName));
+
+            if (!isSafePath) /*then*/ targetPathInfo = rootPathInfo;
+            directories = Directory.EnumerateDirectories(targetPathInfo.FullName);
+            includedTrackPaths = await dataService.GetList<TrackPath>(item => directories.Contains(item.Location));
+            musicDirectory = new MusicDirectory(targetPathInfo.FullName, directories.OrderBy(item => item, StringComparer.OrdinalIgnoreCase), includedTrackPaths);
+            if (!rootPathInfo.FullName.Equals(targetPathInfo.FullName, StringComparison.OrdinalIgnoreCase)) /*then*/
+                musicDirectory.SubDirectories = musicDirectory.SubDirectories.Prepend(new MusicDirectory(Path.Combine(targetPathInfo.FullName, "..")));
+
+            foreach(var directory in musicDirectory.SubDirectories)
+            {
+                IEnumerable<string> allFiles = fileService.EnumerateFiles(directory.Path, recursive: false),
+                                    fileTypes = WebConfigurationManager.AppSettings["FileTypes"].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                int fileCount = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase)).Count();
+
+                directory.FileCount = fileCount;
+            }
+
+            return PartialView("~/Views/Shared/Controls/MusicDirectory.cshtml", musicDirectory);
+        }
+
+        public async Task AddMusicDirectory(string path)
+        {
+            ScanDirectoryRequest request = new ScanDirectoryRequest(path);
+            bool pathExists = await dataService.Exists<TrackPath>(item => item.Location == path);
+
+            if (!pathExists)
+            {
+                await Scan(request);
+            }
+        }
+
+        public async Task RemoveMusicDirectory(int id)
+        {
+            TrackPath path = await dataService.Get<TrackPath>(item => item.Id == id);
+
+            if (path != null)
+            {
+                await dataService.Delete<TrackPath>(id);
+                musicService.ClearData();
+            }
         }
     }
 }

@@ -72,6 +72,7 @@
         EditSongModal: document.getElementById('edit-song-modal'),
         LoadingModal: document.getElementById('loading-modal'),
         ClearNowPlayingModal: document.getElementById('clear-now-playing-modal'),
-        DownloadM3UPlaylistModel: document.getElementById('download-m3u-playlist-modal')
+        DownloadM3UPlaylistModal: document.getElementById('download-m3u-playlist-modal'),
+        ManageDirectoriesModal: document.getElementById('manage-directories-modal')
     })
 }

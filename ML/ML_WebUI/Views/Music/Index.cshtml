@@ -21,6 +21,9 @@
             </a>
             <div class="float-right d-none d-lg-block">
                 <button class="btn btn-sm btn-outline-secondary" data-music-action="search" data-tooltip="tooltip" title="Search music"><i class="fa fa-search"></i></button>
+                <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.ManageDirectoriesModalId)" data-tooltip="tooltip" title="Manage directories">
+                    <i class="fa fa-folder"></i>
+                </button>
                 <button class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#@(HtmlControlsRepository.NewSongModalId)" data-tooltip="tooltip" title="Add new song">
                     <i class="fa fa-upload"></i>
                 </button>
@@ -73,3 +76,4 @@
 </div>
 
 @Html.Partial("~/Views/Shared/Modals/AddNewSongModal.cshtml", Model)
+@Html.Partial("~/Views/Shared/Modals/ManageDirectoriesModal.cshtml", Model)

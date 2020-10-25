@@ -11,6 +11,7 @@ import { loadTooltips, disposeTooltips } from '../../assets/utilities/bootstrap-
 import AddNewSongModal from "../../assets/modals/add-song-modal";
 import { getMusicTabEnumString, getMusicTabEnum, getSongSortEnum, getArtistSortEnum, getAlbumSortEnum } from "../../assets/enums/enum-functions";
 import Search from "./search";
+import ManageDirectoriesModal from "../../assets/modals/manage-directories-modal";
 
 export default class Music extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -18,6 +19,7 @@ export default class Music extends BaseClass implements IView {
     private album: Album;
     private search: Search;
     private addNewSongModal: AddNewSongModal;
+    private manageDirectoriesModal: ManageDirectoriesModal;
 
     constructor(private musicConfiguration: MusicConfiguration,
         private playFunc: (btn: HTMLButtonElement, single: boolean) => void,
@@ -38,6 +40,7 @@ export default class Music extends BaseClass implements IView {
     loadView(callback: () => void = () => null): void {
         const success: () => void = () => {
             this.addNewSongModal = new AddNewSongModal(this.loadView.bind(this));
+            this.manageDirectoriesModal = new ManageDirectoriesModal(this.loadView.bind(this));
             this.initializeControls();
             loadTooltips(this.mediaView);
             $('[data-music-tab="' + getMusicTabEnumString(this.musicConfiguration.properties.SelectedMusicTab) + '"]').tab('show');
