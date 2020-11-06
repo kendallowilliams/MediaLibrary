@@ -167,11 +167,11 @@ namespace MediaLibraryWebUI.Services
             {
                 IEnumerable<string> allFiles = fileService.EnumerateFiles(directory.Path, recursive: false),
                                     fileTypes = WebConfigurationManager.AppSettings["FileTypes"].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                int fileCount = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase)).Count();
 
-                directory.FileCount = fileCount;
+                directory.HasFiles = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase)).Any();
                 directory.IsLoading = activeDirectories.Contains(directory.Path, StringComparer.OrdinalIgnoreCase);
                 directory.TransactionId = transactionData.FirstOrDefault(item => item.Directories.Contains(directory.Path, StringComparer.OrdinalIgnoreCase))?.Id;
+                directory.HasDirectories = fileService.EnumerateDirectories(directory.Path).Any();
             }
 
             return musicDirectory;

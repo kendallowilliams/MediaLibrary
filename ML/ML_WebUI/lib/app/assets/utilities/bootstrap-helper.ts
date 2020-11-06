@@ -1,5 +1,5 @@
 ﻿export function loadTooltips(parent: HTMLElement): void {
-    if (parent) /*then*/ $(parent).find('*[data-tooltip="tooltip"]').tooltip({ trigger: 'hover' });
+    if (parent) /*then*/ $(parent).find('*[data-tooltip="tooltip"]').tooltip({ trigger: 'hover', placement: 'auto' });
 }
 
 export function disposeTooltips(parent: HTMLElement): void {

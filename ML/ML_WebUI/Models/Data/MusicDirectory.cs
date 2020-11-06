@@ -40,7 +40,8 @@ namespace MediaLibraryWebUI.Models.Data
 
         public IEnumerable<MusicDirectory> SubDirectories { get; set; }
 
-        public int FileCount { get; set; }
+        public bool HasFiles { get; set; }
+        public bool HasDirectories { get; set; }
         public bool IsLoading { get; set; }
     }
 }

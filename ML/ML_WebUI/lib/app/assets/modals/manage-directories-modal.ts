@@ -1,6 +1,7 @@
 ﻿import HtmlControls from '../controls/html-controls';
 import MediaLibraryConfiguration from '../models/configurations/media-library-configuration';
 import LoadingModal from './loading-modal';
+import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
 
 export default class ManageDirectoriesModal {
     private modal: HTMLElement;
@@ -16,14 +17,17 @@ export default class ManageDirectoriesModal {
         });
 
         $(this.modal).on('hide.bs.modal', e => {
+            disposeTooltips(this.modal);
             $(this.modal).find('.modal-body').html('');
         });
     }
 
     private loadMusicDirectory(path: string): void {
-        LoadingModal.showLoading();
+        const $modal = $(this.modal);
 
-        $(this.modal).tooltip('dispose').find('.modal-body').load('Music/GetMusicDirectory?path=' + path, () => {
+        LoadingModal.showLoading();
+        disposeTooltips(this.modal);
+        $modal.find('.modal-body').load('Music/GetMusicDirectory?path=' + path, () => {
             const $modal = $(this.modal);
 
             $modal.find('[data-directory-action="get"]').on('click', e => {
@@ -37,7 +41,7 @@ export default class ManageDirectoriesModal {
             $modal.find('[data-directory-action-type="add"]').on('click', e => {
                 this.addMusicDirectory(e.currentTarget);
             });
-            $modal.find('[data-toggle="tooltip"]').tooltip();
+            loadTooltips(this.modal);
             LoadingModal.hideLoading();
             this.refreshDirectories();
         });
