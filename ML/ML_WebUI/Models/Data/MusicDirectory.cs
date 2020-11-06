@@ -36,6 +36,8 @@ namespace MediaLibraryWebUI.Models.Data
 
         public int? Id { get; set; }
 
+        public int? TransactionId { get; set; }
+
         public IEnumerable<MusicDirectory> SubDirectories { get; set; }
 
         public int FileCount { get; set; }

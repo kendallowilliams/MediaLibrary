@@ -39,6 +39,7 @@ export default class ManageDirectoriesModal {
             });
             $modal.find('[data-toggle="tooltip"]').tooltip();
             LoadingModal.hideLoading();
+            this.refreshDirectories();
         });
     }
 
@@ -62,5 +63,25 @@ export default class ManageDirectoriesModal {
         LoadingModal.showLoading();
         $(this.modal).modal('hide');
         $.post(action, { id: id }, () => this.loadFunc(() => LoadingModal.hideLoading()));
+    }
+
+    private refreshDirectories(id: string = null): void {
+        const $items = !id ? $('[data-directory-status="loading"]') :
+                             $('[data-directory-status="monitoring"][data-transaction-id="' + id + '"]');
+
+        if ($items.length > 0) /*then*/ window.setTimeout(() => {
+            $items.each((index, element) => {
+                const itemId = $(element).attr('data-transaction-id');
+
+                $(element).attr('data-directory-status', 'monitoring');
+                $.get('Music/IsScanCompleted?id=' + itemId, data => {
+                    if (data && (data as string).toLowerCase() === 'false') {
+                        this.refreshDirectories(itemId);
+                    } else {
+                        $(element).find('i').replaceWith('<i class="fa fa-check"></i>');
+                    }
+                });
+            });
+        }, 5000);
     }
 }

@@ -486,37 +486,14 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task<ActionResult> GetMusicDirectory(string path)
         {
-            IEnumerable<Transaction> existingTransactions = await transactionService.GetActiveTransactionsByType(TransactionTypes.Read);
-            IEnumerable<string> directories = Enumerable.Empty<string>(),
-                                activeDirectories = existingTransactions.Where(item => !string.IsNullOrWhiteSpace(item.Message))
-                                                                        .SelectMany(item => JsonConvert.DeserializeObject<IEnumerable<string>>(item.Message));
-            IEnumerable<TrackPath> includedTrackPaths = Enumerable.Empty<TrackPath>();
-            MusicDirectory musicDirectory = default;
-            string rootPath = WebConfigurationManager.AppSettings["MediaLibraryRoot"],
-                   targetPath = string.IsNullOrWhiteSpace(path) ? rootPath : path;
-            DirectoryInfo rootPathInfo = new DirectoryInfo(rootPath),
-                          targetPathInfo = new DirectoryInfo(targetPath);
-            bool isSafePath = fileService.EnumerateDirectories(rootPathInfo.FullName, recursive: true)
-                                         .Any(item => item.Equals(targetPathInfo.FullName));
-
-            if (!isSafePath) /*then*/ targetPathInfo = rootPathInfo;
-            directories = Directory.EnumerateDirectories(targetPathInfo.FullName);
-            includedTrackPaths = await dataService.GetList<TrackPath>(item => directories.Contains(item.Location));
-            musicDirectory = new MusicDirectory(targetPathInfo.FullName, directories.OrderBy(item => item, StringComparer.OrdinalIgnoreCase), includedTrackPaths);
-            if (!rootPathInfo.FullName.Equals(targetPathInfo.FullName, StringComparison.OrdinalIgnoreCase)) /*then*/
-                musicDirectory.SubDirectories = musicDirectory.SubDirectories.Prepend(new MusicDirectory(Path.Combine(targetPathInfo.FullName, "..")));
-
-            foreach(var directory in musicDirectory.SubDirectories)
-            {
-                IEnumerable<string> allFiles = fileService.EnumerateFiles(directory.Path, recursive: false),
-                                    fileTypes = WebConfigurationManager.AppSettings["FileTypes"].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                int fileCount = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase)).Count();
-
-                directory.FileCount = fileCount;
-                directory.IsLoading = activeDirectories.Contains(directory.Path, StringComparer.OrdinalIgnoreCase);
-            }
+            MusicDirectory musicDirectory = await musicService.GetMusicDirectory(path);
 
             return PartialView("~/Views/Shared/Controls/MusicDirectory.cshtml", musicDirectory);
+        }
+
+        public async Task<bool> IsScanCompleted(int id)
+        {
+            return await dataService.Exists<Transaction>(item => item.Id == id && item.Status == (int)TransactionStatus.Completed);
         }
 
         public async Task AddMusicDirectory(string path)

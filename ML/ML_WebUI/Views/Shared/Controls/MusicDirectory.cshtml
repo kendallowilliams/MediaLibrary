@@ -20,7 +20,8 @@
 
                     @if (item.IsLoading)
                     {
-                        <button class="btn btn-outline-success" disabled="disabled">
+                        <button class="btn btn-outline-success" disabled="disabled" data-transaction-id="@(item.TransactionId)" data-directory-status="loading"
+                                style="cursor: default">
                             <i class="fa fa-spinner fa-spin"></i>
                         </button>
                     }

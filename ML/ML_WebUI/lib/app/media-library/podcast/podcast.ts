@@ -150,8 +150,10 @@ export default class Podcast extends BaseClass implements IView {
     }
 
     private refreshPodcastDownloads(): void {
-        if ($(this.podcastView).find('[data-active-download="true"]').length > 0) /*then*/ window.setTimeout(() => {
-            $(this.podcastView).find('[data-active-download="true"]').each((index, element) => {
+        const $items = $(this.podcastView).find('[data-active-download="true"]');
+
+        if ($items.length > 0) /*then*/ window.setTimeout(() => {
+            $items.each((index, element) => {
                 const id = $(element).attr('data-episode-id');
 
                 $.get('Podcast/IsDownloading?id=' + id, data => {
