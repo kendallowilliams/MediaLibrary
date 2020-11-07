@@ -13,16 +13,19 @@ export default class ManageDirectoriesModal {
 
     private initializeControls(): void {
         $(this.modal).on('show.bs.modal', e => {
-            this.loadMusicDirectory('');
         });
 
         $(this.modal).on('hide.bs.modal', e => {
             disposeTooltips(this.modal);
             $(this.modal).find('.modal-body').html('');
         });
+
+        $('[data-music-action="manage-directories"]').on('click', e => {
+            this.loadMusicDirectory(null, () => $(this.modal).modal('show'));
+        });
     }
 
-    private loadMusicDirectory(path: string): void {
+    private loadMusicDirectory(path: string = null, callback: () => void = () => null): void {
         const $modal = $(this.modal);
 
         LoadingModal.showLoading();
@@ -42,6 +45,7 @@ export default class ManageDirectoriesModal {
                 this.addMusicDirectory(e.currentTarget);
             });
             loadTooltips(this.modal);
+            callback();
             LoadingModal.hideLoading();
             this.refreshDirectories();
         });
