@@ -13,13 +13,13 @@ namespace MediaLibraryBLL.Services.Interfaces
     {
         Task<Transaction> GetNewTransaction(TransactionTypes transactionType);
 
-        Task UpdateTransactionCompleted(Transaction transaction, string statusMessage = null);
+        Task UpdateTransactionCompleted(Transaction transaction, string message = null);
 
         Task UpdateTransactionInProcess(Transaction transaction);
 
         Task UpdateTransactionErrored(Transaction transaction, Exception exception);
 
-        Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType);
+        Task<IEnumerable<Transaction>> GetActiveTransactionsByType(TransactionTypes transactionType);
 
         Task CleanUpTransactions();
     }

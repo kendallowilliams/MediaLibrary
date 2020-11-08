@@ -4,7 +4,7 @@ export default class DownloadM3UPlaylistModal {
     private modal: HTMLElement;
 
     constructor() {
-        this.modal = HtmlControls.Modals().DownloadM3UPlaylistModel;
+        this.modal = HtmlControls.Modals().DownloadM3UPlaylistModal;
         this.initializeControls();
     }
 

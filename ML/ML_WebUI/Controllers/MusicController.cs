@@ -23,6 +23,7 @@ using System.IO;
 using IO_File = System.IO.File;
 using Fody;
 using static MediaLibraryBLL.Extensions.StringExtensions;
+using System.Web.Configuration;
 
 namespace MediaLibraryWebUI.Controllers
 {
@@ -226,19 +227,16 @@ namespace MediaLibraryWebUI.Controllers
 
             try
             {
-                Transaction existingTransaction = await transactionService.GetActiveTransactionByType(TransactionTypes.Read);
-#if DEBUG
-                request = new ScanDirectoryRequest()
-                {
-                    Path = System.Configuration.ConfigurationManager.AppSettings["MediaLibraryRoot"],
-                    Recursive = true
-                };
-#endif
+                IEnumerable<Transaction> existingTransactions = await transactionService.GetActiveTransactionsByType(TransactionTypes.Read);
+                var existingTransaction = existingTransactions.Where(item => !string.IsNullOrWhiteSpace(item.Message))
+                                                              .Select(item => new { item.Id, Directories = JsonConvert.DeserializeObject<IEnumerable<string>>(item.Message) })
+                                                              .FirstOrDefault(item => item.Directories.Contains(request.Path, StringComparer.OrdinalIgnoreCase));
+
                 transaction = await transactionService.GetNewTransaction(TransactionTypes.Read);
 
                 if (request.IsValid())
                 {
-                    TrackPath path = await dataService.Get<TrackPath>(item => item.Location.Equals(request.Path, StringComparison.CurrentCultureIgnoreCase));
+                    TrackPath path = await dataService.Get<TrackPath>(item => item.Location == request.Path);
 
                     if (path != null)
                     {
@@ -248,6 +246,10 @@ namespace MediaLibraryWebUI.Controllers
                     }
                     else if (existingTransaction == null)
                     {
+                        IEnumerable<string> directories = fileService.EnumerateDirectories(request.Path, recursive: request.Recursive);
+
+                        transaction.Message = JsonConvert.SerializeObject(request.Recursive ? directories : Enumerable.Empty<string>().Append(request.Path));
+                        await dataService.Update(transaction);
                         await controllerService.QueueBackgroundWorkItem(ct => fileService.ReadDirectory(transaction, request.Path, request.Recursive).ContinueWith(task => musicService.ClearData()),
                                                                               transaction);
                     }
@@ -480,6 +482,40 @@ namespace MediaLibraryWebUI.Controllers
             musicViewModel.Playlists = await dataService.GetList<Playlist>();
 
             return PartialView("Songs", musicViewModel);
+        }
+
+        public async Task<ActionResult> GetMusicDirectory(string path)
+        {
+            MusicDirectory musicDirectory = await musicService.GetMusicDirectory(path);
+
+            return PartialView("~/Views/Shared/Controls/MusicDirectory.cshtml", musicDirectory);
+        }
+
+        public async Task<bool> IsScanCompleted(int id)
+        {
+            return await dataService.Exists<Transaction>(item => item.Id == id && item.Status == (int)TransactionStatus.Completed);
+        }
+
+        public async Task AddMusicDirectory(string path)
+        {
+            ScanDirectoryRequest request = new ScanDirectoryRequest(path);
+            bool pathExists = await dataService.Exists<TrackPath>(item => item.Location == path);
+
+            if (!pathExists)
+            {
+                await Scan(request);
+            }
+        }
+
+        public async Task RemoveMusicDirectory(int id)
+        {
+            TrackPath path = await dataService.Get<TrackPath>(item => item.Id == id);
+
+            if (path != null)
+            {
+                await dataService.Delete<TrackPath>(id);
+                musicService.ClearData();
+            }
         }
     }
 }
