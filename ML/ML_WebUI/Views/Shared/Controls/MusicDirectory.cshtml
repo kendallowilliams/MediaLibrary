@@ -30,10 +30,9 @@
         if (item.HasFiles || item.HasDirectories)
         {
             <div class="input-group input-group-sm mb-1">
-                <input class="form-control font-weight-bold text-truncate" readonly="readonly" value="@(directoryName)" />
-                @if (item.IsLoading || item.Id.HasValue || item.HasFiles || item.HasDirectories)
+                @if (item.IsLoading || item.Id.HasValue || item.HasFiles)
                 {
-                    <div class="input-group-append">
+                    <div class="input-group-prepend">
                         @if (item.IsLoading)
                         {
                             <button class="btn btn-outline-success" disabled="disabled" data-transaction-id="@(item.TransactionId)" data-directory-status="loading"
@@ -57,13 +56,16 @@
                                 <i class="fa fa-folder-plus"></i>
                             </button>
                         }
-                        @if (item.HasDirectories)
-                        {
-                            <button class="btn btn-outline-secondary" data-directory-action="get" data-directory-path="@(item.Path)"
-                                    data-tooltip="tooltip" title="Browse">
-                                <i class="fa fa-arrow-right"></i>
-                            </button>
-                        }
+                    </div>
+                }
+                <input class="form-control font-weight-bold text-truncate" readonly="readonly" value="@(directoryName)" />
+                @if (item.HasDirectories)
+                {
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" data-directory-action="get" data-directory-path="@(item.Path)"
+                                data-tooltip="tooltip" title="Browse">
+                            <i class="fa fa-arrow-right"></i>
+                        </button>
                     </div>
                 }
             </div>
