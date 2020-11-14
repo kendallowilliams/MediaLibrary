@@ -484,6 +484,9 @@ namespace MediaLibraryWebUI.Controllers
             return PartialView("Songs", musicViewModel);
         }
 
+#if !DEBUG && !DEV
+        [CompressContent]
+#endif
         public async Task<ActionResult> GetMusicDirectory(string path)
         {
             MusicDirectory musicDirectory = await musicService.GetMusicDirectory(path);
