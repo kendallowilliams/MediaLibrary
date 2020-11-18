@@ -30,19 +30,20 @@ namespace MediaLibraryBLL.Services
         {
             Transaction transaction = new Transaction(transactionType);
 
-            transaction.Status = (int)TransactionStatus.Started;
-            transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
+            transaction.Status = (int)TransactionStatus.Created;
+            transaction.StatusMessage = $"{TransactionStatus.Created} [{Enum.GetName(typeof(TransactionTypes), transaction.Type)}]";
             await dataService.Insert(transaction);
 
             return transaction;
         }
 
-        public async Task UpdateTransactionCompleted(Transaction transaction, string statusMessage = null)
+        public async Task UpdateTransactionCompleted(Transaction transaction, string message = null)
         {
             if (transaction != null)
             {
                 transaction.Status = (int)TransactionStatus.Completed;
-                transaction.StatusMessage = statusMessage ?? $"{transaction.Status} [{transaction.Type}]";
+                transaction.StatusMessage = $"{TransactionStatus.Completed} [{Enum.GetName(typeof(TransactionTypes), transaction.Type)}]";
+                transaction.Message = message;
                 transaction.ModifyDate = DateTime.Now;
                 await dataService.Update(transaction);
             }
@@ -53,7 +54,7 @@ namespace MediaLibraryBLL.Services
             if (transaction != null)
             {
                 transaction.Status = (int)TransactionStatus.InProcess;
-                transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
+                transaction.StatusMessage = $"{TransactionStatus.InProcess} [{Enum.GetName(typeof(TransactionTypes), transaction.Type)}]";
                 transaction.ModifyDate = DateTime.Now;
                 await dataService.Update(transaction);
             }
@@ -64,15 +65,15 @@ namespace MediaLibraryBLL.Services
             if (transaction != null)
             {
                 transaction.Status = (int)TransactionStatus.Errored;
-                transaction.StatusMessage = $"{transaction.Status} [{transaction.Type}]";
+                transaction.StatusMessage = $"{TransactionStatus.Errored} [{Enum.GetName(typeof(TransactionTypes), transaction.Type)}]";
                 transaction.ErrorMessage = exception.ToString();
                 transaction.ModifyDate = DateTime.Now;
                 await dataService.Update(transaction);
             }
         }
 
-        public async Task<Transaction> GetActiveTransactionByType(TransactionTypes transactionType) =>
-            await dataService.Get<Transaction>(t => t.Type == (int)transactionType && t.Status == (int)TransactionStatus.InProcess);
+        public async Task<IEnumerable<Transaction>> GetActiveTransactionsByType(TransactionTypes transactionType) =>
+            await dataService.GetList<Transaction>(t => t.Type == (int)transactionType && t.Status == (int)TransactionStatus.InProcess);
 
         public async Task CleanUpTransactions()
         {

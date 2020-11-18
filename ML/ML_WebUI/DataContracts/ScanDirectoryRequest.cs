@@ -8,6 +8,18 @@ namespace MediaLibraryWebUI.DataContracts
 {
     public class ScanDirectoryRequest
     {
+        public ScanDirectoryRequest() { }
+
+        public ScanDirectoryRequest(string path)
+        {
+            Path = path;
+        }
+
+        public ScanDirectoryRequest(string path, bool recursive) : this(path)
+        {
+            Recursive = recursive;
+        }
+
         public string Path { get; set; }
         public bool Recursive { get; set; }
 

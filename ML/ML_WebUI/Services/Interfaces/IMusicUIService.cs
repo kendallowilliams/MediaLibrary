@@ -1,4 +1,5 @@
 ﻿using MediaLibraryDAL.DbContexts;
+using MediaLibraryWebUI.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace MediaLibraryWebUI.Services.Interfaces
         Task<IEnumerable<IGrouping<string, Album>>> GetAlbumGroups(AlbumSort sort = default(AlbumSort));
         Task<IEnumerable<IGrouping<string, Artist>>> GetArtistGroups(ArtistSort sort = default(ArtistSort));
         void ClearData();
+        Task<MusicDirectory> GetMusicDirectory(string path);
     }
 }

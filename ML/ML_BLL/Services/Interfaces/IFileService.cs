@@ -19,12 +19,16 @@ namespace MediaLibraryBLL.Services.Interfaces
 
         Task Write(string path, byte[] data);
 
-        Task ReadDirectory(Transaction transaction, string path, bool recursive = true);
+        Task ReadDirectory(Transaction transaction, string path, bool recursive = false);
 
         Task CheckForMusicUpdates(Transaction transaction);
 
         Task ReadMediaFile(string path);
 
         void Delete(string path);
+
+        IEnumerable<string> EnumerateDirectories(string path, string searchPattern = "*", bool recursive = false);
+
+        IEnumerable<string> EnumerateFiles(string path, string searchPattern = "*", bool recursive = false);
     }
 }

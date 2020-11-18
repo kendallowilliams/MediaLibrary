@@ -8,12 +8,12 @@
             <li class="list-group-item" data-episode-id="@(item.Id)" data-active-download="@(Model.DownloadIds.Contains(item.Id) ? "true" : "false")">
                 <div class="media">
                     <img class="mr-3 track-img" src="@(Url.Content("~/Content/images/audio.png"))" title="@(item.Title)">
-                    <div class="media-body d-flex flex-column" style="overflow-x: auto">
-                        <span class="mt-0 text-truncate font-weight-bold" style="flex: 0 0 auto">@(item.Title)</span>
-                        <small style="flex: 0 0 auto">
-                            <span>@(item.PublishDate)</span>
-                            <span class="text-danger ml-2 @(!item.LastPlayedDate.HasValue ? "d-none" : string.Empty)">PLAYED</span>
-                        </small>
+                    <div class="media-body d-flex flex-column text-truncate">
+                        <div class="mt-0 font-weight-bold text-truncate">@(item.Title)</div>
+                        <div class="d-flex">
+                            <small class="text-truncate">@(item.PublishDate)</small>
+                            <small class="text-danger ml-2 flex-fill @(!item.LastPlayedDate.HasValue ? "d-none" : string.Empty)">PLAYED</small>
+                        </div>
                     </div>
                     <div>
                         <button class="btn btn-sm btn-outline-secondary d-none" data-tooltip="tooltip" title="@(item.Description)" data-placement="left"

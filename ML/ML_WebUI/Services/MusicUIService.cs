@@ -1,13 +1,19 @@
 ﻿using Fody;
+using MediaLibraryBLL.Services.Interfaces;
 using MediaLibraryDAL.DbContexts;
 using MediaLibraryDAL.Services.Interfaces;
+using MediaLibraryWebUI.Models.Data;
 using MediaLibraryWebUI.Services.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
+using static MediaLibraryDAL.Enums;
 using static MediaLibraryWebUI.UIEnums;
 
 namespace MediaLibraryWebUI.Services
@@ -17,15 +23,21 @@ namespace MediaLibraryWebUI.Services
     public class MusicUIService : BaseUIService, IMusicUIService
     {
         private readonly Lazy<IDataService> lazyDataService;
+        private readonly Lazy<IFileService> lazyFileService;
+        private readonly Lazy<ITransactionService> lazyTransactionService;
         private IDataService dataService => lazyDataService.Value;
+        private IFileService fileService => lazyFileService.Value;
+        private ITransactionService transactionService => lazyTransactionService.Value;
         private IEnumerable<Track> songs;
         private IEnumerable<Artist> artists;
         private IEnumerable<Album> albums;
 
         [ImportingConstructor]
-        public MusicUIService(Lazy<IDataService> dataService) : base()
+        public MusicUIService(Lazy<IDataService> dataService, Lazy<IFileService> fileService, Lazy<ITransactionService> transactionService) : base()
         {
             this.lazyDataService = dataService;
+            this.lazyFileService = fileService;
+            this.lazyTransactionService = transactionService;
         }
 
         public async Task<IEnumerable<Track>> Songs() => songs ?? await dataService.GetList<Track>();
@@ -126,6 +138,43 @@ namespace MediaLibraryWebUI.Services
             songs = null;
             artists = null;
             albums = null;
+        }
+
+        public async Task<MusicDirectory> GetMusicDirectory(string path)
+        {
+            IEnumerable<Transaction> existingTransactions = await transactionService.GetActiveTransactionsByType(TransactionTypes.Read);
+            var transactionData = existingTransactions.Where(item => !string.IsNullOrWhiteSpace(item.Message))
+                                                      .Select(item => new { item.Id, Directories = JsonConvert.DeserializeObject<IEnumerable<string>>(item.Message) });
+            IEnumerable<string> directories = Enumerable.Empty<string>(),
+                                activeDirectories = transactionData.SelectMany(item => item.Directories);
+            IEnumerable<TrackPath> includedTrackPaths = Enumerable.Empty<TrackPath>();
+            MusicDirectory musicDirectory = default;
+            string rootPath = WebConfigurationManager.AppSettings["MediaLibraryRoot"],
+                   targetPath = string.IsNullOrWhiteSpace(path) ? rootPath : path;
+            DirectoryInfo rootPathInfo = new DirectoryInfo(rootPath),
+                          targetPathInfo = new DirectoryInfo(targetPath);
+            bool isSafePath = fileService.EnumerateDirectories(rootPathInfo.FullName, recursive: true)
+                                         .Any(item => item.Equals(targetPathInfo.FullName));
+
+            if (!isSafePath) /*then*/ targetPathInfo = rootPathInfo;
+            directories = Directory.EnumerateDirectories(targetPathInfo.FullName);
+            includedTrackPaths = await dataService.GetList<TrackPath>(item => directories.Contains(item.Location));
+            musicDirectory = new MusicDirectory(targetPathInfo.FullName, directories.OrderBy(item => item, StringComparer.OrdinalIgnoreCase), includedTrackPaths);
+            if (!rootPathInfo.FullName.Equals(targetPathInfo.FullName, StringComparison.OrdinalIgnoreCase)) /*then*/
+                musicDirectory.SubDirectories = musicDirectory.SubDirectories.Prepend(new MusicDirectory(Path.Combine(targetPathInfo.FullName, "..")));
+
+            foreach (var directory in musicDirectory.SubDirectories)
+            {
+                IEnumerable<string> allFiles = fileService.EnumerateFiles(directory.Path, recursive: false),
+                                    fileTypes = WebConfigurationManager.AppSettings["FileTypes"].Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+
+                directory.HasFiles = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase)).Any();
+                directory.IsLoading = activeDirectories.Contains(directory.Path, StringComparer.OrdinalIgnoreCase);
+                directory.TransactionId = transactionData.FirstOrDefault(item => item.Directories.Contains(directory.Path, StringComparer.OrdinalIgnoreCase))?.Id;
+                directory.HasDirectories = fileService.EnumerateDirectories(directory.Path).Any();
+            }
+
+            return musicDirectory;
         }
     }
 }

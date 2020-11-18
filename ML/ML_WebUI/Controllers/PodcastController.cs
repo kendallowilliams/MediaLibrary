@@ -84,7 +84,7 @@ namespace MediaLibraryWebUI.Controllers
 
         public async Task AddPodcast(string rssFeed)
         {
-            Podcast podcast = await dataService.Get<Podcast>(item => item.Url.Equals(rssFeed, StringComparison.CurrentCultureIgnoreCase)) ?? 
+            Podcast podcast = await dataService.Get<Podcast>(item => item.Url.Trim() == rssFeed.Trim()) ?? 
                               await podcastService.AddPodcast(rssFeed);
 
             Configuration configuration = await dataService.Get<Configuration>(item => item.Type == nameof(MediaPages.Podcast));
