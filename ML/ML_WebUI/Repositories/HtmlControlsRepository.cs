@@ -24,6 +24,8 @@ namespace MediaLibraryWebUI.Repositories
         public static string HeaderControlsContainerId { get => "header-controls-container"; }
         public static string HeaderPlayButtonId { get => "btn-header-play"; }
         public static string HeaderPreviousButtonId { get => "btn-header-previous"; }
+        public static string HeaderBackwardButtonId { get => "btn-header-backward"; }
+        public static string HeaderForwardButtonId { get => "btn-header-forward"; }
         public static string HeaderNextButtonId { get => "btn-header-next"; }
         public static string HeaderPauseButtonId { get => "btn-header-pause"; }
         public static string HeaderShuffleButtonId { get => "btn-header-shuffle"; }
@@ -32,6 +34,8 @@ namespace MediaLibraryWebUI.Repositories
         public static string HeaderRepeatAllButtonId { get => "btn-header-repeat-all"; }
         public static string PlayerPlayButtonId { get => "btn-player-play"; }
         public static string PlayerPreviousButtonId { get => "btn-player-previous"; }
+        public static string PlayerBackwardButtonId { get => "btn-player-backward"; }
+        public static string PlayerForwardButtonId { get => "btn-player-forward"; }
         public static string PlayerNextButtonId { get => "btn-player-next"; }
         public static string PlayerPauseButtonId { get => "btn-player-pause"; }
         public static string PlayerShuffleButtonId { get => "btn-player-shuffle"; }

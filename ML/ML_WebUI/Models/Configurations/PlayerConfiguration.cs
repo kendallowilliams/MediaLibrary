@@ -16,10 +16,11 @@ namespace MediaLibraryWebUI.Models.Configurations
             Repeat = RepeatTypes.None;
             SelectedPlayerPage = PlayerPages.Index;
             Volume = 100;
+            SkipForwardSeconds = SkipBackwardSeconds = 15;
         }
 
         public MediaTypes SelectedMediaType { get; set; }
-        
+
         public int CurrentItemIndex { get; set; }
 
         public bool AutoPlay { get; set; }
@@ -35,5 +36,9 @@ namespace MediaLibraryWebUI.Models.Configurations
         public bool Muted { get; set; }
 
         public bool AudioVisualizerEnabled { get; set; }
+
+        public int SkipForwardSeconds { get; set; }
+
+        public int SkipBackwardSeconds { get; set; }
     }
 }

@@ -148,6 +148,8 @@ export default class Player extends BaseClass implements IView {
         $(controls.PlayerSlider).on('slidestop', (e, ui) => $(e.currentTarget).attr('data-slide-started', 'false'));
         $([buttons.HeaderNextButton, buttons.PlayerNextButton]).on('click', () => this.loadNext());
         $([buttons.HeaderPreviousButton, buttons.PlayerPreviousButton]).on('click', () => this.loadPrevious());
+        $([buttons.HeaderBackwardButton, buttons.PlayerBackwardButton]).on('click', () => this.skipBackward());
+        $([buttons.HeaderForwardButton, buttons.PlayerForwardButton]).on('click', () => this.skipForward());
         $([buttons.HeaderPauseButton, buttons.PlayerPauseButton]).on('click', () => $(this.getPlayer()).attr('data-playing', 'false').trigger('pause'));
         $([buttons.HeaderPlayButton, buttons.PlayerPlayButton]).on('click', () => {
             if (this.getPlayer().currentSrc) /*then*/ $(this.getPlayer()).trigger('play');
@@ -523,7 +525,7 @@ export default class Player extends BaseClass implements IView {
         });
     }
 
-    getCurrentlyLoadedId(): number {
+    public getCurrentlyLoadedId(): number {
         return this.currentlyLoadedId;
     }
 
@@ -540,5 +542,17 @@ export default class Player extends BaseClass implements IView {
             $('[data-play-index="' + currentIndex + '"]').attr('data-current-time', progress);
             $.post('Player/UpdatePlayerProgress', data);
         }
+    }
+
+    private skipForward(): void {
+        const player: HTMLMediaElement = this.getPlayer();
+
+        player.currentTime += this.playerConfiguration.properties.SkipForwardSeconds;
+    }
+
+    private skipBackward(): void {
+        const player: HTMLMediaElement = this.getPlayer();
+
+        player.currentTime -= this.playerConfiguration.properties.SkipForwardSeconds;
     }
 }
