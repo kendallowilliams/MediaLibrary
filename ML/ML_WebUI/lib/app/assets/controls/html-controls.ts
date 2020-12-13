@@ -13,6 +13,8 @@
     Buttons: () => ({
         HeaderPlayButton: document.getElementById('btn-header-play'),
         HeaderPreviousButton: document.getElementById('btn-header-previous'),
+        HeaderBackwardButton: document.getElementById('btn-header-backward'),
+        HeaderForwardButton: document.getElementById('btn-header-forward'),
         HeaderNextButton: document.getElementById('btn-header-next'),
         HeaderPauseButton: document.getElementById('btn-header-pause'),
         HeaderShuffleButton: document.getElementById('btn-header-shuffle'),
@@ -21,6 +23,8 @@
         HeaderRepeatAllButton: document.getElementById('btn-header-repeat-all'),
         PlayerPlayButton: document.getElementById('btn-player-play'),
         PlayerPreviousButton: document.getElementById('btn-player-previous'),
+        PlayerBackwardButton: document.getElementById('btn-player-backward'),
+        PlayerForwardButton: document.getElementById('btn-player-forward'),
         PlayerNextButton: document.getElementById('btn-player-next'),
         PlayerPauseButton: document.getElementById('btn-player-pause'),
         PlayerShuffleButton: document.getElementById('btn-player-shuffle'),
