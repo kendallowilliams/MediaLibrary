@@ -11,4 +11,6 @@ export default interface IPlayerConfiguration extends IConfiguration {
     Volume: number;
     Muted: boolean;
     AudioVisualizerEnabled: boolean;
+    SkipForwardSeconds: number;
+    SkipBackwardSeconds: number;
 }
