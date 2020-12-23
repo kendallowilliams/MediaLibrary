@@ -559,7 +559,7 @@ export default class Player extends BaseClass implements IView {
     private skipBackward(): void {
         const player: HTMLMediaElement = this.getPlayer(),
             currentTime: number = player.currentTime,
-            updatedTime: number = currentTime + this.playerConfiguration.properties.SkipForwardSeconds;
+            updatedTime: number = currentTime - this.playerConfiguration.properties.SkipForwardSeconds;
 
         if (updatedTime < 0) {
             player.currentTime = 0;
