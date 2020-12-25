@@ -549,8 +549,7 @@ export default class Player extends BaseClass implements IView {
             currentTime: number = player.currentTime,
             updatedTime: number = currentTime + this.playerConfiguration.properties.SkipForwardSeconds;
 
-        if (updatedTime >= player.duration) /*then*/ player.currentTime = player.duration;
-        else /*then*/ player.currentTime = updatedTime;
+        if (updatedTime <= (player.duration - 1)) /*then*/ player.currentTime = updatedTime;
     }
 
     private skipBackward(): void {
