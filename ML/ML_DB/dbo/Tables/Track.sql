@@ -2,7 +2,7 @@
     [Id]          INT           IDENTITY (1, 1) NOT NULL,
     [FileName]   VARCHAR (256) NOT NULL,
     [PathId]     INT           NULL,
-    [Title]       VARCHAR (150) NOT NULL,
+    [Title]      VARCHAR (150) NOT NULL,
     [AlbumId]    INT           NULL,
     [GenreId]    INT           NULL,
     [ArtistId]   INT           NULL,
