@@ -593,6 +593,7 @@
     <Content Include="Views\Shared\Modals\Reusable\AlertModal.cshtml" />
     <Content Include="Views\Shared\Modals\Reusable\ErrorModal.cshtml" />
     <Content Include="Views\Shared\Modals\Reusable\ConfirmModal.cshtml" />
+    <Content Include="Views\Shared\Modals\Reusable\WarningModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

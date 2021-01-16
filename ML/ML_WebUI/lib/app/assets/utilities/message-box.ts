@@ -3,16 +3,17 @@
 function initialize(): void {
     const $alertModal = $(HtmlControls.Modals().AlertModal),
         $confirmModal = $(HtmlControls.Modals().ConfirmModal),
-        $errorModal = $(HtmlControls.Modals().ErrorModal);
+        $errorModal = $(HtmlControls.Modals().ErrorModal),
+        $warningModal = $(HtmlControls.Modals().WarningModal);
 
-    $([$alertModal, $confirmModal, $errorModal]).each((index, element) => {
+    $([$alertModal, $confirmModal, $errorModal, $warningModal]).each((index, element) => {
         if ($(element).attr('data-initialized') !== 'true') {
             $(element).on('hidden.bs.modal', e => {
                 const $title = $(e.currentTarget).find('.modal-title'),
                     $body = $(e.currentTarget).find('.modal-body');
 
-                $title.text('');
-                $body.text('');
+                $title.html('');
+                $body.html('');
             });
         }
     });
@@ -29,6 +30,10 @@ function initialize(): void {
 
     if ($errorModal.attr('data-initialized') !== 'true') {
         $errorModal.attr('data-initialized', 'true');
+    }
+
+    if ($warningModal.attr('data-initialized') !== 'true') {
+        $warningModal.attr('data-initialized', 'true');
     }
 }
 
@@ -52,6 +57,17 @@ export function alert(title: string, message: string, isHtml = false): void {
 
 export function showError(title: string, message: string): void {
     const $modal = $(HtmlControls.Modals().ErrorModal),
+        $title = $modal.find('.modal-title'),
+        $body = $modal.find('.modal-body');
+
+    if ($modal.attr('data-initialized') !== 'true') /*then*/ initialize();
+    $title.text(title);
+    $body.text(message);
+    $modal.modal('show');
+}
+
+export function showWarning(title: string, message: string): void {
+    const $modal = $(HtmlControls.Modals().WarningModal),
         $title = $modal.find('.modal-title'),
         $body = $modal.find('.modal-body');
 

@@ -80,6 +80,7 @@
         ManageDirectoriesModal: document.getElementById('manage-directories-modal'),
         AlertModal: document.getElementById('alert-modal'),
         ErrorModal: document.getElementById('error-modal'),
-        ConfirmModal: document.getElementById('confirm-modal')
+        ConfirmModal: document.getElementById('confirm-modal'),
+        WarningModal: document.getElementById('warning-modal')
     })
 }
