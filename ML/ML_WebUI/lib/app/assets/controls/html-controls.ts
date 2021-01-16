@@ -77,6 +77,9 @@
         LoadingModal: document.getElementById('loading-modal'),
         ClearNowPlayingModal: document.getElementById('clear-now-playing-modal'),
         DownloadM3UPlaylistModal: document.getElementById('download-m3u-playlist-modal'),
-        ManageDirectoriesModal: document.getElementById('manage-directories-modal')
+        ManageDirectoriesModal: document.getElementById('manage-directories-modal'),
+        AlertModal: document.getElementById('alert-modal'),
+        ErrorModal: document.getElementById('error-modal'),
+        ConfirmModal: document.getElementById('confirm-modal')
     })
 }

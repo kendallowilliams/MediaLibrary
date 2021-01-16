@@ -590,6 +590,9 @@
     <Content Include="Views\Podcast\Controls\PodcastItemOptions.cshtml" />
     <Content Include="Views\Shared\Modals\ManageDirectoriesModal.cshtml" />
     <Content Include="Views\Shared\Controls\MusicDirectory.cshtml" />
+    <Content Include="Views\Shared\Modals\Reusable\AlertModal.cshtml" />
+    <Content Include="Views\Shared\Modals\Reusable\ErrorModal.cshtml" />
+    <Content Include="Views\Shared\Modals\Reusable\ConfirmModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -646,6 +649,7 @@
     <TypeScriptCompile Include="lib\app\assets\utilities\bootstrap-helper.ts" />
     <TypeScriptCompile Include="lib\app\assets\utilities\element.ts" />
     <TypeScriptCompile Include="lib\app\assets\utilities\math.ts" />
+    <TypeScriptCompile Include="lib\app\assets\utilities\message-box.ts" />
     <TypeScriptCompile Include="lib\app\media-library\audio-visualizer\audio-visualizer.ts" />
     <TypeScriptCompile Include="lib\app\media-library\home\home.ts" />
     <TypeScriptCompile Include="lib\app\media-library\media-library.ts" />

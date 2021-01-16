@@ -1,7 +1,7 @@
 ﻿@model (PodcastItem PodcastItem, bool IsDownloading)
-    
-@{ 
 
+@{
+    string unique = Guid.NewGuid().ToString("N");
 }
 
 <div class="d-flex flex-column" data-podcast-item-options="@(Model.PodcastItem.Id)">
@@ -29,14 +29,17 @@
     }
     else
     {
-        <button class="btn btn-sm btn-outline-secondary mb-1 @(Model.IsDownloading ? string.Empty : "d-none")" disabled="disabled" 
+        <button class="btn btn-sm btn-outline-secondary mb-1 @(Model.IsDownloading ? string.Empty : "d-none")" disabled="disabled"
                 data-item-id="@(Model.PodcastItem.Id)" data-podcast-action="downloading">
             Downloading <i class="fa fa-spinner fa-pulse"></i>
         </button>
-        <button class="btn btn-sm btn-outline-secondary mb-1 @(Model.IsDownloading ? "d-none" : string.Empty)" 
+        <button class="btn btn-sm btn-outline-secondary mb-1 @(Model.IsDownloading ? "d-none" : string.Empty)"
                 data-download-action="@(Url.Action(nameof(PodcastController.RemovePodcastItemDownload), "Podcast"))"
                 data-podcast-action="download" data-item-id="@(Model.PodcastItem.Id)">
             Remove Download
         </button>
     }
+
+    <button class="btn btn-sm btn-outline-secondary mb-1" data-podcast-action="show-description" data-title="@(Model.PodcastItem.Title)" 
+            data-message="@(Model.PodcastItem.Description)">Description</button>
 </div>
