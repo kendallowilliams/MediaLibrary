@@ -78,6 +78,18 @@ export default class Podcast extends BaseClass implements IView {
             LoadingModal.showLoading();
             $.post('Podcast/RefreshPodcast', { id: this.podcastConfiguration.properties.SelectedPodcastId }, () => this.loadView(() => LoadingModal.hideLoading()));
         });
+        $(this.mediaView).find('*[data-podcast-action="delete"]').on('click', e => {
+            const $btn = $(e.currentTarget),
+                id = $btn.attr('data-item-id'),
+                title = 'Delete podcast',
+                message = 'Are you sure you want to remove this podcast?',
+                callback = () => {
+                    LoadingModal.showLoading();
+                    $.post('Podcast/RemovePodcast', { id: id }, () => this.loadView(() => LoadingModal.hideLoading()));
+                };
+
+            MessageBox.confirm(title, message, true, callback);
+        });
     }
 
     loadPodcast(id: number, callback: () => void = () => null): void {

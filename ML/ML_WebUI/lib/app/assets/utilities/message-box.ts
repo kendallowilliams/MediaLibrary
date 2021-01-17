@@ -24,7 +24,6 @@ function initialize(): void {
 
     if ($confirmModal.attr('data-initialized') !== 'true') {
         $confirmModal.find('[data-button="callback"]').off();
-        $confirmModal.off('hide.bs.modal');
         $confirmModal.attr('data-initialized', 'true');
     }
 
@@ -88,8 +87,11 @@ export function confirm(title: string, message: string, showYesNo: boolean, call
     if ($modal.attr('data-initialized') !== 'true') /*then*/ initialize();
     $title.text(title);
     $body.text(message);
-    $btnContainer.find('[data-button="callback"]').on('click', () => {
-        $modal.on('hide.bs.modal', callback);
+    $btnContainer.find('[data-button="callback"]').off('click').on('click', () => {
+        $modal.on('hide.bs.modal', () => {
+            callback();
+            $modal.off('hide.bs.modal');
+        });
         $modal.modal('hide');
     });
     $([$okCancelContainer, $yesNoContainer]).addClass('d-none');
