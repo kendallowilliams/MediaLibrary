@@ -71,7 +71,6 @@
         NewSongModal: document.getElementById('new-song-modal'),
         NewPodcastModal: document.getElementById('new-podcast-modal'),
         AddToPlaylistModal: document.getElementById('add-to-playlist-modal'),
-        DeleteModal: document.getElementById('delete-modal'),
         EdiPlaylistModal: document.getElementById('edit-playlist-modal'),
         EditSongModal: document.getElementById('edit-song-modal'),
         LoadingModal: document.getElementById('loading-modal'),
