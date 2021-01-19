@@ -9,15 +9,14 @@ import { openFullscreen } from "../../assets/utilities/element";
 import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
 import LoadingModal from '../../assets/modals/loading-modal';
 import IPlayerLoadFunctions from "../../assets/interfaces/player-load-functions-interface";
-import ClearNowPlayingModal from "../../assets/modals/clear-now-playing-modal";
 import { getRepeatTypesEnumString, getPlayerPageEnum, getMediaTypesEnumString, getMediaTypesEnum } from "../../assets/enums/enum-functions";
+import * as MessageBox from '../../assets/utilities/message-box';
 
 export default class Player extends BaseClass implements IView {
     private players: { VideoPlayer: HTMLMediaElement, MusicPlayer: HTMLMediaElement };
     private unPlayedShuffleIds: number[];
     private audioVisualizer: AudioVisualizer;
     private playerView: HTMLElement;
-    private clearNowPlayingModal: ClearNowPlayingModal;
     private currentlyLoadedId: number;
 
     constructor(private playerConfiguration: PlayerConfiguration, private loadFunctions: IPlayerLoadFunctions, private updateActiveMedia: () => void = () => null) {
@@ -26,7 +25,6 @@ export default class Player extends BaseClass implements IView {
         this.playerView = HtmlControls.Views().PlayerView;
         this.unPlayedShuffleIds = [];
         this.audioVisualizer = new AudioVisualizer(this.playerConfiguration, this.players.MusicPlayer);
-        this.clearNowPlayingModal = new ClearNowPlayingModal(() => this.reload(() => this.loadItem()));
         this.initPlayer();
         this.currentlyLoadedId = 0;
     }
@@ -251,6 +249,14 @@ export default class Player extends BaseClass implements IView {
                     if (this.isPlaying()) /*then*/ this.audioVisualizer.start();
                 });
             }
+        });
+        $(buttons.PlayerClearButton).on('click', e => {
+            const title = 'Clear now playing',
+                message = 'Are you sure you want to clear now playing?';
+
+            MessageBox.confirm(title, message, true, () => {
+                $.post('Player/ClearNowPlaying', null, () => this.reload(() => this.loadItem()));
+            });
         });
     }
 

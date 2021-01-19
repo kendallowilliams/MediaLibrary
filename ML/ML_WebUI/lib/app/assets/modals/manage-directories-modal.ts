@@ -2,6 +2,7 @@
 import MediaLibraryConfiguration from '../models/configurations/media-library-configuration';
 import LoadingModal from './loading-modal';
 import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-helper";
+import * as MessageBox from '../../assets/utilities/message-box';
 
 export default class ManageDirectoriesModal {
     private modal: HTMLElement;
@@ -54,23 +55,31 @@ export default class ManageDirectoriesModal {
     private addMusicDirectory(btn: HTMLElement): void {
         const $btn = $(btn),
             action = $btn.attr('data-directory-action'),
-            path = $btn.attr('data-directory-path');
+            path = $btn.attr('data-directory-path'),
+            title = 'Add directory',
+            message = 'Are you sure you want to add '.concat(path).concat('?');
 
-        LoadingModal.showLoading();
-        $(this.modal).modal('hide');
-        $.post(action, { path: path }, () => {
-            LoadingModal.hideLoading();
+        MessageBox.confirm(title, message, true, () => {
+            LoadingModal.showLoading();
+            $(this.modal).modal('hide');
+            $.post(action, { path: path }, () => {
+                LoadingModal.hideLoading();
+            });
         });
     }
 
     private removeMusicDirectory(btn: HTMLElement): void {
         const $btn = $(btn),
             action = $btn.attr('data-directory-action'),
-            id = $btn.attr('data-path-id');
+            id = $btn.attr('data-path-id'),
+            title = 'Remove directory',
+            message = 'Are you sure you want to remove this directory?';
 
-        LoadingModal.showLoading();
-        $(this.modal).modal('hide');
-        $.post(action, { id: id }, () => this.loadFunc(() => LoadingModal.hideLoading()));
+        MessageBox.confirm(title, message, true, () => {
+            LoadingModal.showLoading();
+            $(this.modal).modal('hide');
+            $.post(action, { id: id }, () => this.loadFunc(() => LoadingModal.hideLoading()));
+        });
     }
 
     private refreshDirectories(id: string = null): void {

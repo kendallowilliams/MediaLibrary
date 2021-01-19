@@ -27,9 +27,7 @@
             }
             @if (Model.SelectedPlaylist.Id > 0)
             {
-                <button class="btn btn-sm btn-outline-danger" data-delete-action="@(Url.Action("RemovePlaylist", "Playlist", new { Model.SelectedPlaylist.Id }))"
-                        data-tooltip="tooltip" title="Delete playlist" data-delete-type="playlist" data-refresh-view="@(nameof(UIEnums.MediaPages.Playlist))" data-toggle="modal"
-                        data-target="#@(HtmlControlsRepository.DeleteModalId)">
+                <button class="btn btn-sm btn-outline-danger" data-playlist-action="delete" data-item-id="@(Model.SelectedPlaylist.Id)" data-tooltip="tooltip" title="Delete playlist">
                     <i class="fa fa-trash"></i>
                 </button>
             }

@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-header p-0" id="heading-podcasts-@(item.Index)">
                         <h5 class="mb-0">
-                            <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-podcasts-@(item.Index)" aria-expanded="@(item.Index == 0 ? "true" : "false")" aria-controls="collapse-podcasts-@(item.Index)">
+                            <button class="btn btn-sm btn-link w-100 text-left" data-toggle="collapse" data-target="#collapse-podcasts-@(item.Index)">
                                 @(item.Group.Key)
                             </button>
                         </h5>
@@ -51,9 +51,7 @@
                                             <buton class="btn btn-sm btn-outline-secondary" data-podcast-id="@(podcast.Id)" data-tooltip="tooltip" title="View podcast">
                                                 <i class="fa fa-list"></i>
                                             </buton>
-                                            <button class="btn btn-sm btn-outline-danger" data-delete-action="@(Url.Action("RemovePodcast", "Podcast", new { podcast.Id }))"
-                                                    data-tooltip="tooltip" title="Delete podcast" data-delete-type="podcast"
-                                                    data-target="#@(HtmlControlsRepository.DeleteModalId)" data-toggle="modal">
+                                            <button class="btn btn-sm btn-outline-danger" data-podcast-action="delete" data-item-id="@(podcast.Id)" data-tooltip="tooltip" title="Delete podcast">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </div>
