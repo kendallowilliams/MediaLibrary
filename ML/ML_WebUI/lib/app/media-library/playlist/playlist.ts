@@ -10,6 +10,7 @@ import { loadTooltips, disposeTooltips } from "../../assets/utilities/bootstrap-
 import { getPlaylistSortEnum, getPlaylistTabEnumString, getPlaylistTabEnum, getPlaylistSortEnumString } from "../../assets/enums/enum-functions";
 import DownloadM3UPlaylistModal from "../../assets/modals/download-m3u-playlist-modal";
 import IPlayerLoadFunctions from "../../assets/interfaces/player-load-functions-interface";
+import * as MessageBox from '../../assets/utilities/message-box';
 
 export default class Playlist extends BaseClass implements IView {
     private readonly mediaView: HTMLElement;
@@ -68,6 +69,18 @@ export default class Playlist extends BaseClass implements IView {
             this.playlistConfiguration.properties.SelectedPlaylistId = parseInt($(e.currentTarget).attr('data-playlist-id'));
             this.playlistConfiguration.properties.SelectedPlaylistPage = PlaylistPages.Playlist;
             this.playlistConfiguration.updateConfiguration(() => this.loadView(() => LoadingModal.hideLoading()));
+        });
+
+        $(this.mediaView).find('*[data-playlist-action="delete"]').on('click', e => {
+            const $btn = $(e.currentTarget),
+                id = $btn.attr('data-item-id'),
+                title = 'Delete playlist',
+                message = 'Are you sure you want to delete this playlist?';
+
+            MessageBox.confirm(title, message, true, () => {
+                LoadingModal.showLoading();
+                $.post('Playlist/RemovePlaylist', { id: id }, () => this.loadView(() => LoadingModal.hideLoading()));
+            });
         });
 
         $(HtmlControls.UIControls().PlaylistTabList).find('*[data-toggle="tab"]').on('shown.bs.tab', e => {
