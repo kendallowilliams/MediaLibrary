@@ -568,7 +568,6 @@
     <Content Include="Views\Podcast\Podcast.cshtml" />
     <Content Include="Views\Music\Album.cshtml" />
     <Content Include="Views\Music\Artist.cshtml" />
-    <Content Include="Views\Shared\Modals\DeleteModal.cshtml" />
     <Content Include="Views\Shared\Modals\AddToPlaylistModal.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Shared\Modals\LoadingModal.cshtml" />
@@ -584,7 +583,6 @@
     <Content Include="Views\Television\Season.cshtml" />
     <Content Include="Views\Podcast\PodcastItems.cshtml" />
     <Content Include="Views\Shared\Modals\AddNewPodcastModal.cshtml" />
-    <Content Include="Views\Shared\Modals\ClearNowPlayingModal.cshtml" />
     <Content Include="Views\Shared\Modals\DownloadM3UPlaylistModal.cshtml" />
     <Content Include="Views\Music\Search.cshtml" />
     <Content Include="Views\Podcast\Controls\PodcastItemOptions.cshtml" />
@@ -628,9 +626,7 @@
     <TypeScriptCompile Include="lib\app\assets\modals\add-podcast-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\add-song-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\add-to-playlist-modal.ts" />
-    <TypeScriptCompile Include="lib\app\assets\modals\clear-now-playing-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\download-m3u-playlist-modal.ts" />
-    <TypeScriptCompile Include="lib\app\assets\modals\delete-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\edit-playlist-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\edit-song-modal.ts" />
     <TypeScriptCompile Include="lib\app\assets\modals\manage-directories-modal.ts" />
