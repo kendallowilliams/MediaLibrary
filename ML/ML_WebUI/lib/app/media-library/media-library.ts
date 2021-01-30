@@ -16,7 +16,6 @@ import PodcastConfiguration from '../assets/models/configurations/podcast-config
 import TelevisionConfiguration from '../assets/models/configurations/television-configuration';
 import MusicConfiguration from '../assets/models/configurations/music-configuration';
 import Home from './home/home';
-import DeleteModal from '../assets/modals/delete-modal';
 import EditSongModal from '../assets/modals/edit-song-modal';
 import { getMediaPagesEnum, getMediaPagesEnumString } from '../assets/enums/enum-functions';
 import AddToPlaylistModal from '../assets/modals/add-to-playlist-modal';
@@ -37,7 +36,6 @@ export default class MediaLibrary extends BaseClass {
     private televisionConfiguration: TelevisionConfiguration;
     private musicConfiguration: MusicConfiguration;
     private mainViews: { HomeView: HTMLElement, MediaView: HTMLElement, PlayerView: HTMLElement };
-    private deleteModal: DeleteModal;
     private editSongModal: EditSongModal;
     private addToPlaylistModal: AddToPlaylistModal;
 
@@ -67,7 +65,6 @@ export default class MediaLibrary extends BaseClass {
             LoadingModal.showLoading();
             this.loadStaticViews(() => {
                 LoadingModal.hideLoading();
-                this.deleteModal = new DeleteModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
                 this.editSongModal = new EditSongModal(this.mediaLibraryConfiguration, this.loadView.bind(this));
                 this.addToPlaylistModal = new AddToPlaylistModal();
                 this.home = new Home(this.homeConfiguration);
