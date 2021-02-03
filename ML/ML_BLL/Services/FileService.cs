@@ -85,9 +85,9 @@ namespace MediaLibraryBLL.Services
             {
                 IEnumerable<string> allFiles = EnumerateFiles(path, recursive: recursive);
                 var fileGroups = allFiles.Where(file => fileTypes.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase))
-                                         .GroupBy(file => new { directory = Path.GetDirectoryName(file) });
+                                         .GroupBy(file => Path.GetDirectoryName(file), StringComparer.OrdinalIgnoreCase);
 
-                foreach (var group in fileGroups)
+                foreach (var group in fileGroups.Where(item => Directory.Exists(item.Key)))
                 {
                     foreach (string file in group) { await ReadMediaFile(file); }
                 }
