@@ -1,12 +1,12 @@
 ﻿@model MediaLibraryWebUI.Models.MediaLibraryViewModel
 
 <div id="@(HtmlControlsRepository.HomeViewId)" class="@(Model.Configuration.SelectedMediaPage != UIEnums.MediaPages.Home ? "d-none" : string.Empty) flex-column"
-     style="flex: 1 1 auto; overflow-y: auto; display: flex" data-action-url="@Url.Action("Index", "Home")"></></div>
+     style="flex: 1 1 auto; overflow-y: auto; display: flex" data-action-url="@Url.Action("Index", "Home")"></div>
 <div id="@(HtmlControlsRepository.PlayerViewId)" class="@(Model.Configuration.SelectedMediaPage != UIEnums.MediaPages.Player ? "d-none" : string.Empty) flex-column"
-     style="flex: 1 1 auto; overflow-y: auto; display: flex" data-action-url="@Url.Action("Index", "Player")"></></div>
+     style="flex: 1 1 auto; overflow-y: auto; display: flex" data-action-url="@Url.Action("Index", "Player")"></div>
 <div id="@(HtmlControlsRepository.MediaViewId)" class="@((Model.Configuration.SelectedMediaPage == UIEnums.MediaPages.Home ||
                                                           Model.Configuration.SelectedMediaPage == UIEnums.MediaPages.Player) ? "d-none" : string.Empty) flex-column"
-     style="flex: 1 1 auto; overflow-y: auto; display: flex"></></div>
+     style="flex: 1 1 auto; overflow-y: auto; display: flex"></div>
 
 @Html.Partial("~/Views/Shared/Modals/EditSongModal.cshtml")
 @Html.Partial("~/Views/Shared/Modals/AddToPlaylistModal.cshtml", Model)
